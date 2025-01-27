@@ -41,7 +41,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
   const finalTranslateY = useSpring(
     useTransform(scrollYProgress, 
       [0.4, 0.6, 0.8, 1], 
-      [0, 100, 200, 300]  // Adjusted values for smoother transition
+      [0, 80, 160, 240]  // Reduced values for less vertical movement
     ),
     springConfig
   );
@@ -49,7 +49,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
   const rowSpacing = useSpring(
     useTransform(scrollYProgress,
       [0.4, 0.6, 0.8, 1],
-      [40, 60, 80, 100]  // More gradual spacing increase
+      [30, 45, 60, 75]  // Reduced spacing values
     ),
     springConfig
   );
@@ -81,7 +81,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
   const scale = useSpring(
     useTransform(scrollYProgress,
       [0.4, 0.6, 0.8, 1],
-      [1, 0.98, 0.96, 0.94]  // More subtle scale reduction
+      [1, 0.98, 0.96, 0.94]
     ),
     springConfig
   );
@@ -115,7 +115,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
   return (
     <div
       ref={ref}
-      className="h-[150vh] relative flex flex-col items-center justify-start overflow-hidden antialiased [perspective:1000px] [transform-style:preserve-3d]"
+      className="h-[130vh] relative flex flex-col items-center justify-start overflow-hidden antialiased [perspective:1000px] [transform-style:preserve-3d]"
     >
       <div className="w-full">
         <CapsuleHeader />
@@ -129,7 +129,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
           opacity,
           scale,
         }}
-        className="relative w-full -mt-16"
+        className="relative w-full -mt-20"
       >
         <motion.div 
           style={{ gap: rowSpacing }}
