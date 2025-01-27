@@ -25,19 +25,20 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
     offset: ["start start", "end start"],
   });
 
-  const springConfig = { stiffness: 60, damping: 15, mass: 0.5 };
+  // Faster spring config for quicker animations
+  const springConfig = { stiffness: 80, damping: 12, mass: 0.4 };
 
   const translateX = useSpring(
-    useTransform(scrollYProgress, [0, 0.5], [0, 150]),
+    useTransform(scrollYProgress, [0, 0.3], [0, 150]),
     springConfig
   );
   const translateXReverse = useSpring(
-    useTransform(scrollYProgress, [0, 0.5], [0, -150]),
+    useTransform(scrollYProgress, [0, 0.3], [0, -150]),
     springConfig
   );
 
   const rotateX = useSpring(
-    useTransform(scrollYProgress, [0, 0.4], [25, 0]),
+    useTransform(scrollYProgress, [0, 0.25], [25, 0]),
     springConfig
   );
   const opacity = useSpring(
@@ -45,11 +46,11 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
     springConfig
   );
   const rotateZ = useSpring(
-    useTransform(scrollYProgress, [0, 0.4], [15, 0]),
+    useTransform(scrollYProgress, [0, 0.25], [15, 0]),
     springConfig
   );
   const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.5], [-300, 0]),
+    useTransform(scrollYProgress, [0, 0.3], [-300, 0]),
     springConfig
   );
 
@@ -82,7 +83,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
   return (
     <div
       ref={ref}
-      className="h-[150vh] overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      className="h-[120vh] overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
     >
       <CapsuleHeader />
       <ParallaxHeader opacity={navOpacity} />
@@ -94,9 +95,9 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
           translateY,
           opacity,
         }}
-        className="relative -mt-20 mb-20"
+        className="relative -mt-20 mb-20 w-full max-w-[90vw] mx-auto scale-[0.85] lg:scale-100"
       >
-        <div className="space-y-40">
+        <div className="space-y-32 md:space-y-40">
           <CapsuleRow 
             capsules={firstRow} 
             translateX={translateX} 
