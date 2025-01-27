@@ -20,54 +20,42 @@ export const DesktopGrid = ({ capsules }: DesktopGridProps) => {
   );
 
   return (
-    <div className="w-full max-w-[90vw] 2xl:max-w-7xl mx-auto space-y-8 px-4 py-8">
-      {rows.map((row, rowIndex) => (
-        <motion.div
-          key={rowIndex}
-          initial="hidden"
-          animate="visible"
-          className={`flex ${
-            rowIndex % 2 === 0 ? "flex-row" : "flex-row-reverse"
-          } justify-center items-center gap-8`}
-        >
-          {row.map((capsule, index) => (
-            <motion.div
-              key={capsule.title}
-              custom={{ index, isEven: rowIndex % 2 === 0 }}
-              variants={{
-                hidden: ({ isEven }) => ({
-                  x: isEven ? -100 : 100,
-                  opacity: 0,
-                }),
-                visible: {
-                  x: 0,
-                  opacity: 1,
-                  transition: {
-                    duration: 0.5,
-                    delay: index * 0.1,
-                    ease: "easeOut",
-                  },
-                },
-              }}
-              whileHover={{
-                scale: 1.02,
-                transition: { duration: 0.2 },
-              }}
-              animate={{
-                y: [0, -8, 0],
-                transition: {
-                  duration: 4,
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                  delay: index * 0.2,
-                },
-              }}
-            >
-              <CapsuleCard {...capsule} isDesktop />
-            </motion.div>
-          ))}
-        </motion.div>
-      ))}
+    <div className="w-full overflow-hidden py-8">
+      {rows.map((row, rowIndex) => {
+        const isEven = rowIndex % 2 === 0;
+        const duration = 20 + rowIndex * 5; // Varying speeds for each row
+
+        return (
+          <motion.div
+            key={rowIndex}
+            className="flex py-4 mb-4"
+            initial={{ x: isEven ? "0%" : "-100%" }}
+            animate={{ 
+              x: isEven ? "-100%" : "0%",
+            }}
+            transition={{
+              duration: duration,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+          >
+            {/* Double the row to create seamless loop */}
+            <div className="flex gap-8 animate-none">
+              {[...row, ...row].map((capsule, index) => (
+                <motion.div
+                  key={`${capsule.title}-${index}`}
+                  whileHover={{
+                    scale: 1.02,
+                    transition: { duration: 0.2 },
+                  }}
+                >
+                  <CapsuleCard {...capsule} isDesktop />
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        );
+      })}
     </div>
   );
 };
