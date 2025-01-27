@@ -10,6 +10,7 @@ interface CapsuleLayoutProps {
     title: string;
     link: string;
     icon: LucideIcon;
+    colorKey: string;
   }[];
 }
 
