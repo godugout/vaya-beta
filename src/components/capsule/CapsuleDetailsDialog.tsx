@@ -9,7 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Eye, Info } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { AddMemoryButton } from "@/components/memory/AddMemoryButton";
+import AddMemoryButton from "@/components/memory/AddMemoryButton";
 
 interface CapsuleDetailsDialogProps {
   capsule: {
