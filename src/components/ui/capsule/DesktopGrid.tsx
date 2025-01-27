@@ -19,13 +19,17 @@ export const DesktopGrid = ({ capsules }: DesktopGridProps) => {
       transition={{ duration: 0.5 }}
       className="w-full max-w-7xl mx-auto px-4"
     >
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center py-12">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center py-12">
         {capsules.map((capsule, index) => (
           <motion.div
             key={capsule.title}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
+            style={{
+              transformStyle: "preserve-3d",
+              transform: `translateZ(${Math.sin(index * 0.5) * 20}px)`,
+            }}
           >
             <CapsuleCard {...capsule} isDesktop />
           </motion.div>

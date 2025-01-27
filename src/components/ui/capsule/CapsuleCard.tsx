@@ -15,13 +15,13 @@ export const CapsuleCard = ({ title, link, icon: Icon, isDesktop = false }: Caps
     return (
       <motion.div
         whileHover={{ scale: 1.05 }}
-        className="group relative w-[280px] h-[100px]"
+        className="group relative w-[280px] h-[80px]"
       >
         <Link to={link} className="block h-full">
           <div className="absolute inset-0 flex items-center justify-between px-6 bg-white rounded-full border-2 border-vaya-gray-200 shadow-lg overflow-hidden">
             <div className="flex items-center gap-4">
               <div className="p-2 bg-vaya-accent-orange/20 rounded-full">
-                <Icon className="w-8 h-8 text-vaya-primary" />
+                <Icon className="w-6 h-6 text-vaya-primary" />
               </div>
               <h2 className="font-outfit text-lg font-semibold text-vaya-gray-900 truncate max-w-[160px]">
                 {title}
@@ -29,9 +29,16 @@ export const CapsuleCard = ({ title, link, icon: Icon, isDesktop = false }: Caps
             </div>
           </div>
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-r from-vaya-primary to-vaya-secondary rounded-full transition-opacity duration-300" />
-          <h2 className="absolute inset-0 opacity-0 group-hover:opacity-100 flex items-center px-6 text-white font-outfit text-lg font-semibold transition-opacity duration-300">
-            {title}
-          </h2>
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 flex items-center px-6 transition-opacity duration-300">
+            <div className="flex items-center gap-4">
+              <div className="p-2 bg-white/20 rounded-full">
+                <Icon className="w-6 h-6 text-white" />
+              </div>
+              <h2 className="font-outfit text-lg font-semibold text-white truncate max-w-[160px]">
+                {title}
+              </h2>
+            </div>
+          </div>
         </Link>
       </motion.div>
     );
