@@ -51,6 +51,47 @@ export type Database = {
           },
         ]
       }
+      brand_guidelines: {
+        Row: {
+          category: string
+          created_at: string | null
+          description: string | null
+          family_id: string | null
+          id: string
+          name: string
+          updated_at: string | null
+          value: string
+        }
+        Insert: {
+          category: string
+          created_at?: string | null
+          description?: string | null
+          family_id?: string | null
+          id?: string
+          name: string
+          updated_at?: string | null
+          value: string
+        }
+        Update: {
+          category?: string
+          created_at?: string | null
+          description?: string | null
+          family_id?: string | null
+          id?: string
+          name?: string
+          updated_at?: string | null
+          value?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "brand_guidelines_family_id_fkey"
+            columns: ["family_id"]
+            isOneToOne: false
+            referencedRelation: "families"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       families: {
         Row: {
           created_at: string | null
