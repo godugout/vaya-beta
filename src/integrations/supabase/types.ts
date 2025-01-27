@@ -9,6 +9,48 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      bookmarks: {
+        Row: {
+          created_at: string | null
+          created_by: string | null
+          description: string | null
+          id: string
+          memory_id: string | null
+          timestamp: number
+        }
+        Insert: {
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          memory_id?: string | null
+          timestamp: number
+        }
+        Update: {
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          memory_id?: string | null
+          timestamp?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookmarks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bookmarks_memory_id_fkey"
+            columns: ["memory_id"]
+            isOneToOne: false
+            referencedRelation: "memories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       families: {
         Row: {
           created_at: string | null
@@ -66,6 +108,51 @@ export type Database = {
           {
             foreignKeyName: "family_members_user_id_fkey"
             columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      memories: {
+        Row: {
+          content_url: string
+          created_at: string | null
+          family_id: string | null
+          id: string
+          tags: string[] | null
+          type: string
+          uploaded_by: string | null
+        }
+        Insert: {
+          content_url: string
+          created_at?: string | null
+          family_id?: string | null
+          id?: string
+          tags?: string[] | null
+          type: string
+          uploaded_by?: string | null
+        }
+        Update: {
+          content_url?: string
+          created_at?: string | null
+          family_id?: string | null
+          id?: string
+          tags?: string[] | null
+          type?: string
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "memories_family_id_fkey"
+            columns: ["family_id"]
+            isOneToOne: false
+            referencedRelation: "families"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "memories_uploaded_by_fkey"
+            columns: ["uploaded_by"]
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
