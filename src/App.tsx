@@ -10,6 +10,7 @@ import MemoryLane from "./pages/MemoryLane";
 import Account from "./pages/Account";
 import FamilyCapsules from "./pages/FamilyCapsules";
 import ShareStories from "./pages/ShareStories";
+import WildlifeCapsule from "./pages/capsules/WildlifeCapsule";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +29,7 @@ const App = () => (
             <Route path="/share-stories" element={<ShareStories />} />
             <Route path="/account" element={<Account />} />
             <Route path="/family-capsules" element={<FamilyCapsules />} />
+            <Route path="/capsule/wildlife" element={<WildlifeCapsule />} />
           </Routes>
         </div>
       </BrowserRouter>
