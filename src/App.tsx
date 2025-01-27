@@ -9,6 +9,7 @@ import Auth from "./pages/Auth";
 import MemoryLane from "./pages/MemoryLane";
 import Account from "./pages/Account";
 import FamilyCapsules from "./pages/FamilyCapsules";
+import ShareStories from "./pages/ShareStories";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/memory-lane" element={<MemoryLane />} />
+            <Route path="/share-stories" element={<ShareStories />} />
             <Route path="/account" element={<Account />} />
             <Route path="/family-capsules" element={<FamilyCapsules />} />
           </Routes>

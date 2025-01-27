@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
-import { Home, Clock, Box } from "lucide-react";
+import { Home, Clock, Box, Mic } from "lucide-react";
 import { User } from "@supabase/supabase-js";
 
 interface MobileBottomNavProps {
@@ -26,6 +26,13 @@ export const MobileBottomNav = ({ user, navigate }: MobileBottomNavProps) => {
           >
             <Clock className="h-6 w-6" />
             <span className="text-xs mt-1">Memory Lane</span>
+          </Link>
+          <Link
+            to="/share-stories"
+            className="flex flex-col items-center text-gray-300 hover:text-white"
+          >
+            <Mic className="h-6 w-6" />
+            <span className="text-xs mt-1">Share</span>
           </Link>
           <Link
             to="/family-capsules"

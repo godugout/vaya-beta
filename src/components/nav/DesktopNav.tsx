@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
-import { Clock, Box } from "lucide-react";
+import { Clock, Box, Mic } from "lucide-react";
 import { User } from "@supabase/supabase-js";
 import { UserMenu } from "./UserMenu";
 
@@ -33,6 +33,13 @@ export const DesktopNav = ({ user, handleSignOut, navigate }: DesktopNavProps) =
             Memory Lane
           </Link>
           <Link
+            to="/share-stories"
+            className="text-sm font-medium text-gray-300 transition-colors hover:text-white inline-flex items-center gap-2"
+          >
+            <Mic className="h-4 w-4" />
+            Share Stories
+          </Link>
+          <Link
             to="/family-capsules"
             className="text-sm font-medium text-gray-300 transition-colors hover:text-white inline-flex items-center gap-2"
           >
@@ -43,13 +50,6 @@ export const DesktopNav = ({ user, handleSignOut, navigate }: DesktopNavProps) =
         <div className="ml-auto flex items-center space-x-4">
           {user ? (
             <>
-              <Button
-                variant="ghost"
-                className="gap-2 text-gray-300 hover:text-white hover:bg-[#333333]"
-                onClick={() => navigate("/record")}
-              >
-                Create Memory
-              </Button>
               <UserMenu user={user} handleSignOut={handleSignOut} navigate={navigate} />
             </>
           ) : (
