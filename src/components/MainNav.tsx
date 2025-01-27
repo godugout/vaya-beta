@@ -46,7 +46,7 @@ export function MainNav() {
             className="h-8 w-8"
           />
           <span className="font-outfit font-bold text-xl text-white">
-            Vaya Alpha
+            Vaya<sup className="text-sm">α</sup>
           </span>
         </Link>
         <nav className="flex items-center space-x-8 ml-12">
