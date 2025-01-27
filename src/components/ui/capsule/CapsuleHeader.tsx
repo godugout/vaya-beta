@@ -7,7 +7,7 @@ export const CapsuleHeader = () => {
         <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold text-white font-outfit drop-shadow-lg mb-4">
           Family Capsules
           <br />
-          <span className="font-architects-daughter font-normal">Your Digital Time Machine</span>
+          <span className="font-['Courier_New'] font-normal">Your Digital Time Machine</span>
         </h1>
         <p className="max-w-2xl mx-auto text-base md:text-xl text-white font-inter drop-shadow-lg">
           Create and explore digital time capsules filled with your family's most precious memories.

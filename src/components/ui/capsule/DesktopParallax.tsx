@@ -50,11 +50,11 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
     springConfig
   );
   
-  // Updated translateY to start higher in the hero and move down with scroll
+  // Updated translateY with more scroll depth and smoother transition
   const translateY = useSpring(
     useTransform(scrollYProgress, 
-      [0, 0.15, 0.3], 
-      [-400, -200, 100]
+      [0, 0.2, 0.5], 
+      [-400, -100, 200]
     ),
     springConfig
   );
@@ -88,7 +88,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
   return (
     <div
       ref={ref}
-      className="h-[120vh] overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      className="h-[150vh] overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
     >
       <CapsuleHeader />
       <ParallaxHeader opacity={navOpacity} />
