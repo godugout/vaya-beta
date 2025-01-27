@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
 import AddMemoryModal from "./AddMemoryModal";
@@ -9,17 +10,25 @@ interface AddMemoryButtonProps {
 }
 
 const AddMemoryButton = ({ variant = "default", size = "default", className }: AddMemoryButtonProps) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
-    <AddMemoryModal>
+    <>
       <Button 
         variant={variant} 
         size={size} 
         className={`bg-vaya-primary hover:bg-vaya-primary/90 text-white ${className}`}
+        onClick={() => setIsModalOpen(true)}
       >
         <PlusCircle className="mr-2 h-4 w-4" />
         Add Memory
       </Button>
-    </AddMemoryModal>
+
+      <AddMemoryModal 
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
+      />
+    </>
   );
 };
 
