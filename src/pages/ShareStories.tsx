@@ -21,7 +21,6 @@ const ShareStories = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const [isSpanish, setIsSpanish] = useState(false);
-  const [brandColors, setBrandColors] = useState<Record<string, string>>({});
 
   useEffect(() => {
     const checkUser = async () => {
@@ -31,31 +30,18 @@ const ShareStories = () => {
       }
     };
     checkUser();
-    fetchBrandGuidelines();
   }, [navigate]);
 
-  const fetchBrandGuidelines = async () => {
-    const { data: guidelines, error } = await supabase
-      .from('brand_guidelines')
-      .select('name, value')
-      .eq('category', 'color');
-
-    if (error) {
-      console.error('Error fetching brand guidelines:', error);
-      return;
-    }
-
-    const colors = guidelines.reduce((acc: Record<string, string>, guideline) => {
-      acc[guideline.name] = guideline.value;
-      return acc;
-    }, {});
-
-    setBrandColors(colors);
+  // Hardcoded colors that override any family brand colors
+  const categoryColors = {
+    "Primary Orange": "#F97316",
+    "Ocean Blue": "#0EA5E9",
+    "Nature Green": "#84CC16"
   };
 
   const categories: StoryCategory[] = [
     {
-      title_en: "Family Traditions",
+      title_en: "Tradiciones Familiares",
       title_es: "Tradiciones Familiares",
       description_en: "Share cherished family traditions and customs that have been passed down through generations.",
       description_es: "Comparte tradiciones y costumbres familiares que han pasado de generación en generación.",
@@ -64,7 +50,7 @@ const ShareStories = () => {
       chatCategory: "traditions"
     },
     {
-      title_en: "Life Stories",
+      title_en: "Historias de Vida",
       title_es: "Historias de Vida",
       description_en: "Record personal journeys and important moments that shaped your family's story.",
       description_es: "Graba historias personales y momentos importantes que formaron la historia de tu familia.",
@@ -73,7 +59,7 @@ const ShareStories = () => {
       chatCategory: "life-lessons"
     },
     {
-      title_en: "Cultural Heritage",
+      title_en: "Herencia Cultural",
       title_es: "Herencia Cultural",
       description_en: "Share stories about your Costa Rican heritage and cultural experiences.",
       description_es: "Comparte historias sobre tu herencia costarricense y experiencias culturales.",
@@ -106,12 +92,7 @@ const ShareStories = () => {
             </div>
             <div className="col-span-4 space-y-6">
               {categories.map((category, index) => {
-                const colorMap = {
-                  "Primary Orange": "#F97316",
-                  "Ocean Blue": "#0EA5E9",
-                  "Nature Green": "#84CC16"
-                };
-                const bgColor = colorMap[category.colorKey as keyof typeof colorMap] || "#F97316";
+                const bgColor = categoryColors[category.colorKey as keyof typeof categoryColors];
                 
                 return (
                   <Card 

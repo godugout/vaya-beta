@@ -10,14 +10,13 @@ import {
   AudioWaveform,
   BookOpen
 } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
 
 const categories = [
   {
-    name: "Family Traditions",
+    name: "Tradiciones Familiares",
     name_es: "Tradiciones Familiares",
     icon: <MessageSquare className="h-4 w-4" />,
-    colorKey: "Primary Purple",
+    colorKey: "Primary Orange",
     prompts: [
       {
         en: "What special holiday traditions does your family celebrate?",
@@ -34,10 +33,10 @@ const categories = [
     ],
   },
   {
-    name: "Life Stories",
+    name: "Historias de Vida",
     name_es: "Historias de Vida",
     icon: <AudioWaveform className="h-4 w-4" />,
-    colorKey: "Bright Orange",
+    colorKey: "Ocean Blue",
     prompts: [
       {
         en: "What's the most important lesson your parents taught you?",
@@ -54,10 +53,10 @@ const categories = [
     ],
   },
   {
-    name: "Cultural Heritage",
+    name: "Herencia Cultural",
     name_es: "Herencia Cultural",
     icon: <BookOpen className="h-4 w-4" />,
-    colorKey: "Ocean Blue",
+    colorKey: "Nature Green",
     prompts: [
       {
         en: "What Costa Rican traditions do you maintain in your family?",
@@ -82,33 +81,16 @@ interface PromptCategoriesProps {
 
 const PromptCategories = ({ onPromptSelect, isSpanish = false }: PromptCategoriesProps) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [brandColors, setBrandColors] = useState<Record<string, string>>({});
 
-  useEffect(() => {
-    fetchBrandGuidelines();
-  }, []);
-
-  const fetchBrandGuidelines = async () => {
-    const { data: guidelines, error } = await supabase
-      .from('brand_guidelines')
-      .select('name, value')
-      .eq('category', 'color');
-
-    if (error) {
-      console.error('Error fetching brand guidelines:', error);
-      return;
-    }
-
-    const colors = guidelines.reduce((acc: Record<string, string>, guideline) => {
-      acc[guideline.name] = guideline.value;
-      return acc;
-    }, {});
-
-    setBrandColors(colors);
+  // Hardcoded colors that override any family brand colors
+  const brandColors = {
+    "Primary Orange": "#F97316",
+    "Ocean Blue": "#0EA5E9",
+    "Nature Green": "#84CC16"
   };
 
   const getButtonStyle = (colorKey: string) => {
-    const color = brandColors[colorKey] || '#9b87f5';
+    const color = brandColors[colorKey as keyof typeof brandColors];
     return {
       backgroundColor: `${color}15`,
       color: color,
@@ -124,7 +106,7 @@ const PromptCategories = ({ onPromptSelect, isSpanish = false }: PromptCategorie
             <PopoverTrigger asChild>
               <Button
                 variant="outline"
-                className={`flex items-center gap-2 transition-colors hover:bg-opacity-25 ${
+                className={`flex items-center gap-2 transition-colors hover:bg-opacity-25 font-outfit ${
                   selectedCategory === category.name
                     ? "ring-2 ring-offset-2"
                     : ""
@@ -138,19 +120,19 @@ const PromptCategories = ({ onPromptSelect, isSpanish = false }: PromptCategorie
             </PopoverTrigger>
             <PopoverContent 
               className="w-80 p-2 bg-white shadow-lg"
-              style={{ borderColor: `${brandColors[category.colorKey]}30` }}
+              style={{ borderColor: `${brandColors[category.colorKey as keyof typeof brandColors]}30` }}
               sideOffset={5}
             >
               <div className="space-y-1.5">
                 {category.prompts.map((prompt, index) => {
-                  const color = brandColors[category.colorKey] || '#9b87f5';
+                  const color = brandColors[category.colorKey as keyof typeof brandColors];
                   return (
                     <Button
                       key={index}
                       variant="ghost"
-                      className="w-full justify-start text-left whitespace-normal h-auto py-3 hover:bg-opacity-10"
+                      className="w-full justify-start text-left whitespace-normal h-auto py-3 hover:bg-opacity-10 font-inter"
                       style={{
-                        color: brandColors[category.colorKey],
+                        color: color,
                       }}
                       onClick={() => {
                         onPromptSelect(isSpanish ? prompt.es : prompt.en);
