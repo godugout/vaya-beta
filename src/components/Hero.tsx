@@ -1,4 +1,4 @@
-import { ArrowRight, Mic, Photo, Users } from "lucide-react";
+import { ArrowRight, Mic, Image, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -25,7 +25,7 @@ const heroConfigs = {
     subtitle: "Upload and organize your family photos. Each picture tells a story worth preserving.",
     primaryCta: {
       text: "Upload Photos",
-      icon: <Photo className="ml-2 h-4 w-4" />,
+      icon: <Image className="ml-2 h-4 w-4" />,
     },
   },
   "/families": {
