@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { MainNav } from "./components/MainNav";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
+import MemoryLane from "./pages/MemoryLane";
 
 const queryClient = new QueryClient();
 
@@ -20,6 +21,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/memory-lane" element={<MemoryLane />} />
           </Routes>
         </div>
       </BrowserRouter>
