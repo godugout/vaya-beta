@@ -90,7 +90,7 @@ const FamilyCapsules = () => {
   return (
     <div className="relative min-h-screen">
       <CapsuleLayout capsules={capsules} />
-      <div className="container mx-auto px-4 mt-[60vh] mb-20">
+      <div className="container mx-auto px-4 mt-20 mb-20">
         <CreateCapsuleForm />
       </div>
       <CapsuleTicker />

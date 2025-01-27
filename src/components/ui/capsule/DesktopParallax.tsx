@@ -79,13 +79,13 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
   return (
     <div
       ref={ref}
-      className="h-[80vh] py-20 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      className="h-[60vh] py-10 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
     >
       <CapsuleHeader />
       
       <motion.div
         style={{ opacity: navOpacity }}
-        className="fixed top-32 left-0 right-0 z-10 pointer-events-none"
+        className="fixed top-20 left-0 right-0 z-10 pointer-events-none"
       >
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-4xl font-bold text-vaya-gray-900 font-outfit mb-4">
