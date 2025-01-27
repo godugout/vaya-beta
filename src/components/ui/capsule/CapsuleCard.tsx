@@ -40,7 +40,7 @@ export const CapsuleCard = ({ title, link, icon: Icon, colorKey, isDesktop = fal
       <div className="group relative w-[480px] h-[140px]">
         <Link to={link} className="block h-full">
           <div 
-            className="absolute inset-0 flex items-center justify-between px-8 bg-white rounded-2xl border-2 shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl"
+            className="absolute inset-0 flex items-center justify-between px-8 bg-white rounded-[30px] border-2 shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl"
             style={{ 
               borderColor: `${color}30`,
               background: 'white',
@@ -89,7 +89,7 @@ export const CapsuleCard = ({ title, link, icon: Icon, colorKey, isDesktop = fal
   return (
     <Link
       to={link}
-      className="block bg-white rounded-2xl p-6 transition-all duration-300 shadow-md hover:shadow-lg"
+      className="block bg-white rounded-[30px] p-6 transition-all duration-300 shadow-md hover:shadow-lg"
       style={{ 
         borderWidth: 2,
         borderColor: `${color}30`,

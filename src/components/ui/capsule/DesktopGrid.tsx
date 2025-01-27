@@ -28,13 +28,9 @@ export const DesktopGrid = ({ capsules }: DesktopGridProps) => {
 
   return (
     <div 
-      className="w-screen overflow-hidden"
+      className="w-screen relative overflow-hidden -mx-[50vw] left-[50%] right-[50%]"
       style={{
         transform: "perspective(1000px) rotateX(2deg)",
-        marginLeft: "-2rem",
-        marginRight: "-2rem",
-        paddingLeft: 0,
-        paddingRight: 0,
       }}
     >
       {rows.map((row, rowIndex) => {
@@ -56,8 +52,6 @@ export const DesktopGrid = ({ capsules }: DesktopGridProps) => {
             }}
             style={{
               transform: `translateX(${isEven ? '-25%' : '25%'})`,
-              paddingLeft: 0,
-              paddingRight: 0,
             }}
           >
             <div className="flex gap-8 animate-none">
