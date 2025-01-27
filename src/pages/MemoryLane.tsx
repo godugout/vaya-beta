@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import Hero from "@/components/Hero";
 import MemoryFeed from "@/components/MemoryFeed";
-import NarraChat from "@/components/NarraChat";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 
 const MemoryLane = () => {
@@ -23,23 +22,17 @@ const MemoryLane = () => {
     <div className="min-h-screen bg-white">
       <Hero />
       <div className="container mx-auto px-4 py-12">
-        <div className="mb-12">
-          <NarraChat />
-        </div>
-        
-        <div className="mt-12">
-          <Card className="bg-white border-vaya-purple/10">
-            <CardHeader>
-              <CardTitle className="text-gray-900 font-outfit">Your Stories</CardTitle>
-              <CardDescription className="text-gray-500">
-                Listen to your recorded memories and stories
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <MemoryFeed />
-            </CardContent>
-          </Card>
-        </div>
+        <Card className="bg-white border-vaya-purple/10">
+          <CardHeader>
+            <CardTitle className="text-gray-900 font-outfit">Family Memories</CardTitle>
+            <CardDescription className="text-gray-500">
+              Explore stories, photos, and recordings from your family
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <MemoryFeed />
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

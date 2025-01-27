@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { StoryMemory } from "./types";
-import { Calendar, Play, Pause } from "lucide-react";
+import { Calendar, Play, Pause, Clock } from "lucide-react";
 import { format } from "date-fns";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -32,6 +32,12 @@ export const StoryMemoryCard = ({ memory }: StoryMemoryCardProps) => {
     setIsPlaying(!isPlaying);
   };
 
+  const formatDuration = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+  };
+
   return (
     <Card className="bg-white border-vaya-purple/10 shadow-sm hover:shadow-md transition-shadow duration-200">
       <CardContent className="p-4">
@@ -40,10 +46,21 @@ export const StoryMemoryCard = ({ memory }: StoryMemoryCardProps) => {
             <div className="flex items-center gap-2 text-gray-500 text-sm mb-2">
               <Calendar className="w-4 h-4" />
               {format(new Date(memory.created_at), "MMM d, yyyy")}
+              {memory.duration && (
+                <span className="flex items-center gap-1 ml-2">
+                  <Clock className="w-4 h-4" />
+                  {formatDuration(memory.duration)}
+                </span>
+              )}
             </div>
             <h3 className="text-gray-900 font-semibold mb-2">
               {memory.title || "Untitled Story"}
             </h3>
+            {memory.description && (
+              <p className="text-gray-600 text-sm mb-3 line-clamp-2">
+                {memory.description}
+              </p>
+            )}
             <Button
               variant="outline"
               size="sm"
