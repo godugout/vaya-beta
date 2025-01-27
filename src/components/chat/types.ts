@@ -7,9 +7,20 @@ export interface Message {
   }[];
 }
 
-export interface StoryPrompt {
+export interface PromptCategory {
   id: string;
-  prompt: string;
-  category: string;
-  cultural_context: string | null;
+  name_en: string;
+  name_es: string;
+  icon: string;
+  active?: boolean;
+}
+
+export interface LocalizedPrompt {
+  id: string;
+  category_id: string;
+  prompt_en: string;
+  prompt_es: string;
+  cultural_context_en: string | null;
+  cultural_context_es: string | null;
+  active?: boolean;
 }

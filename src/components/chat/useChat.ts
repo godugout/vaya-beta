@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Message, StoryPrompt } from "./types";
+import { Message, LocalizedPrompt } from "./types";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -12,7 +12,7 @@ export const useChat = () => {
   ]);
   
   const [input, setInput] = useState("");
-  const [prompts, setPrompts] = useState<StoryPrompt[]>([]);
+  const [prompts, setPrompts] = useState<LocalizedPrompt[]>([]);
   const [currentPromptIndex, setCurrentPromptIndex] = useState(0);
   const { toast } = useToast();
 
@@ -23,7 +23,7 @@ export const useChat = () => {
   const fetchPrompts = async () => {
     try {
       const { data, error } = await supabase
-        .from("story_prompts")
+        .from("localized_prompts")
         .select("*")
         .eq("active", true);
 
@@ -38,14 +38,17 @@ export const useChat = () => {
     }
   };
 
-  const getNextPrompt = () => {
+  const getNextPrompt = (isSpanish: boolean = false) => {
     if (prompts.length === 0) return null;
     const prompt = prompts[currentPromptIndex];
     setCurrentPromptIndex((prev) => (prev + 1) % prompts.length);
-    return prompt;
+    return {
+      content: isSpanish ? prompt.prompt_es : prompt.prompt_en,
+      context: isSpanish ? prompt.cultural_context_es : prompt.cultural_context_en,
+    };
   };
 
-  const handleSend = (messageContent?: { content: string; attachments?: { type: "audio" | "image"; url: string }[] }) => {
+  const handleSend = (messageContent?: { content: string; attachments?: { type: "audio" | "image"; url: string }[] }, isSpanish: boolean = false) => {
     const content = messageContent?.content || input;
     if (!content.trim()) return;
 
@@ -57,29 +60,31 @@ export const useChat = () => {
 
     setMessages((prev) => [...prev, newMessage]);
 
-    const nextPrompt = getNextPrompt();
+    const nextPrompt = getNextPrompt(isSpanish);
     
     setMessages((prev) => [
       ...prev,
       {
         role: "assistant",
         content: nextPrompt 
-          ? `${nextPrompt.prompt}${nextPrompt.cultural_context ? ` (${nextPrompt.cultural_context})` : ""}`
-          : "That's interesting! Would you like to record this story? I can help guide you through the process.",
+          ? `${nextPrompt.content}${nextPrompt.context ? ` (${nextPrompt.context})` : ""}`
+          : isSpanish 
+            ? "¡Qué interesante! ¿Te gustaría grabar esta historia? Puedo ayudarte con el proceso."
+            : "That's interesting! Would you like to record this story? I can help guide you through the process.",
       },
     ]);
     
     setInput("");
   };
 
-  const handleMorePrompts = () => {
-    const nextPrompt = getNextPrompt();
+  const handleMorePrompts = (isSpanish: boolean = false) => {
+    const nextPrompt = getNextPrompt(isSpanish);
     if (nextPrompt) {
       setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
-          content: `${nextPrompt.prompt}${nextPrompt.cultural_context ? ` (${nextPrompt.cultural_context})` : ""}`,
+          content: `${nextPrompt.content}${nextPrompt.context ? ` (${nextPrompt.context})` : ""}`,
         },
       ]);
     }

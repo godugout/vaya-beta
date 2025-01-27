@@ -5,8 +5,8 @@ import { Send, Mic, MoreHorizontal } from "lucide-react";
 interface ChatInputProps {
   input: string;
   setInput: (value: string) => void;
-  handleSend: () => void;
-  handleMorePrompts: () => void;
+  handleSend: (messageContent?: { content: string; attachments?: { type: "audio" | "image"; url: string }[] }, isSpanish?: boolean) => void;
+  handleMorePrompts: (isSpanish?: boolean) => void;
   setIsRecording: (value: boolean) => void;
   isSpanish: boolean;
 }
@@ -26,11 +26,11 @@ const ChatInput = ({
           placeholder={isSpanish ? "Comparte tu historia..." : "Share your story..."}
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          onKeyPress={(e) => e.key === "Enter" && handleSend()}
+          onKeyPress={(e) => e.key === "Enter" && handleSend(undefined, isSpanish)}
           className="flex-1 bg-white border-vaya-chat-border text-vaya-gray-800"
         />
         <Button
-          onClick={handleSend}
+          onClick={() => handleSend(undefined, isSpanish)}
           size="icon"
           className="bg-vaya-primary hover:bg-vaya-primary/90 text-white"
         >
@@ -45,7 +45,7 @@ const ChatInput = ({
         </Button>
       </div>
       <Button
-        onClick={handleMorePrompts}
+        onClick={() => handleMorePrompts(isSpanish)}
         variant="ghost"
         className="w-full text-vaya-gray-600 hover:text-vaya-gray-800 hover:bg-vaya-chat-hover text-sm"
       >

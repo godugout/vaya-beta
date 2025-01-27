@@ -114,6 +114,47 @@ export type Database = {
           },
         ]
       }
+      localized_prompts: {
+        Row: {
+          active: boolean | null
+          category_id: string | null
+          created_at: string | null
+          cultural_context_en: string | null
+          cultural_context_es: string | null
+          id: string
+          prompt_en: string
+          prompt_es: string
+        }
+        Insert: {
+          active?: boolean | null
+          category_id?: string | null
+          created_at?: string | null
+          cultural_context_en?: string | null
+          cultural_context_es?: string | null
+          id?: string
+          prompt_en: string
+          prompt_es: string
+        }
+        Update: {
+          active?: boolean | null
+          category_id?: string | null
+          created_at?: string | null
+          cultural_context_en?: string | null
+          cultural_context_es?: string | null
+          id?: string
+          prompt_en?: string
+          prompt_es?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "localized_prompts_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "prompt_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       memories: {
         Row: {
           content_url: string
@@ -231,6 +272,33 @@ export type Database = {
         }
         Relationships: []
       }
+      prompt_categories: {
+        Row: {
+          active: boolean | null
+          created_at: string | null
+          icon: string
+          id: string
+          name_en: string
+          name_es: string
+        }
+        Insert: {
+          active?: boolean | null
+          created_at?: string | null
+          icon: string
+          id?: string
+          name_en: string
+          name_es: string
+        }
+        Update: {
+          active?: boolean | null
+          created_at?: string | null
+          icon?: string
+          id?: string
+          name_en?: string
+          name_es?: string
+        }
+        Relationships: []
+      }
       stories: {
         Row: {
           audio_url: string
@@ -284,33 +352,6 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
-      }
-      story_prompts: {
-        Row: {
-          active: boolean | null
-          category: string
-          created_at: string | null
-          cultural_context: string | null
-          id: string
-          prompt: string
-        }
-        Insert: {
-          active?: boolean | null
-          category: string
-          created_at?: string | null
-          cultural_context?: string | null
-          id?: string
-          prompt: string
-        }
-        Update: {
-          active?: boolean | null
-          category?: string
-          created_at?: string | null
-          cultural_context?: string | null
-          id?: string
-          prompt?: string
-        }
-        Relationships: []
       }
     }
     Views: {
