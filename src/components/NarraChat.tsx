@@ -1,14 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { MessageCircle, Send } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import VoiceRecorder from "./VoiceRecorder";
 
 interface Message {
   role: "assistant" | "user";
   content: string;
+}
+
+interface StoryPrompt {
+  id: string;
+  prompt: string;
+  category: string;
+  cultural_context: string | null;
 }
 
 const NarraChat = () => {
@@ -20,19 +29,59 @@ const NarraChat = () => {
   ]);
   const [input, setInput] = useState("");
   const [isRecording, setIsRecording] = useState(false);
+  const [prompts, setPrompts] = useState<StoryPrompt[]>([]);
+  const [currentPromptIndex, setCurrentPromptIndex] = useState(0);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    fetchPrompts();
+  }, []);
+
+  const fetchPrompts = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("story_prompts")
+        .select("*")
+        .eq("active", true);
+
+      if (error) throw error;
+      setPrompts(data || []);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to load story prompts",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const getNextPrompt = () => {
+    if (prompts.length === 0) return null;
+    const prompt = prompts[currentPromptIndex];
+    setCurrentPromptIndex((prev) => (prev + 1) % prompts.length);
+    return prompt;
+  };
 
   const handleSend = () => {
     if (!input.trim()) return;
 
+    // Add user message
     setMessages((prev) => [...prev, { role: "user", content: input }]);
+
+    // Get next prompt
+    const nextPrompt = getNextPrompt();
+    
     // Add Narra's response
     setMessages((prev) => [
       ...prev,
       {
         role: "assistant",
-        content: "That sounds interesting! Would you like to record this story? I can help guide you through the process.",
+        content: nextPrompt 
+          ? `${nextPrompt.prompt}${nextPrompt.cultural_context ? ` (${nextPrompt.cultural_context})` : ""}`
+          : "That's interesting! Would you like to record this story? I can help guide you through the process.",
       },
     ]);
+    
     setInput("");
   };
 
