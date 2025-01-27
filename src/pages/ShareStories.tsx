@@ -6,6 +6,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AudioWaveform, BookOpen, MessageSquare } from "lucide-react";
 import StyleEditor from "@/components/StyleEditor";
+import Hero from "@/components/Hero";
 
 interface StoryCategory {
   title_en: string;
@@ -20,13 +21,27 @@ interface StoryCategory {
 const ShareStories = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
-  const [isSpanish, setIsSpanish] = useState(false);
+  const [isSpanish, setIsSpanish] = useState(true);
+  const [userLanguage, setUserLanguage] = useState<string>('es');
 
   useEffect(() => {
     const checkUser = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) {
         navigate("/auth");
+        return;
+      }
+
+      // Fetch user's language preference
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('preferred_language')
+        .eq('id', session.user.id)
+        .single();
+
+      if (profile) {
+        setUserLanguage(profile.preferred_language);
+        setIsSpanish(profile.preferred_language === 'es');
       }
     };
     checkUser();
@@ -41,7 +56,7 @@ const ShareStories = () => {
 
   const categories: StoryCategory[] = [
     {
-      title_en: "Tradiciones Familiares",
+      title_en: "Family Traditions",
       title_es: "Tradiciones Familiares",
       description_en: "Share cherished family traditions and customs that have been passed down through generations.",
       description_es: "Comparte tradiciones y costumbres familiares que han pasado de generación en generación.",
@@ -50,7 +65,7 @@ const ShareStories = () => {
       chatCategory: "traditions"
     },
     {
-      title_en: "Historias de Vida",
+      title_en: "Life Stories",
       title_es: "Historias de Vida",
       description_en: "Record personal journeys and important moments that shaped your family's story.",
       description_es: "Graba historias personales y momentos importantes que formaron la historia de tu familia.",
@@ -59,7 +74,7 @@ const ShareStories = () => {
       chatCategory: "life-lessons"
     },
     {
-      title_en: "Herencia Cultural",
+      title_en: "Cultural Heritage",
       title_es: "Herencia Cultural",
       description_en: "Share stories about your Costa Rican heritage and cultural experiences.",
       description_es: "Comparte historias sobre tu herencia costarricense y experiencias culturales.",
@@ -72,6 +87,7 @@ const ShareStories = () => {
   if (isMobile) {
     return (
       <div className="min-h-screen bg-gray-50">
+        <Hero />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="py-8">
             <NarraChat />
@@ -84,6 +100,7 @@ const ShareStories = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <Hero />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="py-8">
           <div className="grid grid-cols-12 gap-8">

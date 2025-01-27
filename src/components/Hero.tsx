@@ -2,6 +2,8 @@ import { ArrowRight, Mic } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 interface CtaConfig {
   text: string;
@@ -9,16 +11,20 @@ interface CtaConfig {
 }
 
 interface HeroConfig {
-  title: string;
-  subtitle: string;
+  title_en: string;
+  title_es: string;
+  subtitle_en: string;
+  subtitle_es: string;
   primaryCta: CtaConfig;
   secondaryCta?: CtaConfig;
 }
 
 const heroConfigs: Record<string, HeroConfig> = {
   "/": {
-    title: "Comparte Tus Historias",
-    subtitle: "Create digital time capsules to share your family's stories, traditions, and precious moments with loved ones. Keep your cultura alive for generations to come.",
+    title_en: "Share Your Stories",
+    title_es: "Comparte Tus Historias",
+    subtitle_en: "Create digital time capsules to share your family's stories, traditions, and precious moments with loved ones.",
+    subtitle_es: "Crea cápsulas digitales para compartir las historias, tradiciones y momentos preciosos de tu familia.",
     primaryCta: {
       text: "Start Your Family Collection",
       icon: <ArrowRight className="ml-2 h-4 w-4" />,
@@ -28,9 +34,11 @@ const heroConfigs: Record<string, HeroConfig> = {
       icon: <ArrowRight className="ml-2 h-4 w-4" />,
     }
   },
-  "/memory-lane": {
-    title: "Capture Momentos Especiales",
-    subtitle: "Record stories, share photos, or create video memories of your family's journey. Every story strengthens our cultural bonds.",
+  "/share-stories": {
+    title_en: "Capture Special Moments",
+    title_es: "Captura Momentos Especiales",
+    subtitle_en: "Record stories, share photos, or create video memories of your family's journey. Every story strengthens our cultural bonds.",
+    subtitle_es: "Graba historias, comparte fotos o crea recuerdos en video del viaje de tu familia. Cada historia fortalece nuestros lazos culturales.",
     primaryCta: {
       text: "Start Recording",
       icon: <Mic className="ml-2 h-4 w-4" />,
@@ -40,6 +48,27 @@ const heroConfigs: Record<string, HeroConfig> = {
 
 const Hero = () => {
   const location = useLocation();
+  const [isSpanish, setIsSpanish] = useState(true);
+
+  useEffect(() => {
+    const fetchUserLanguage = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('preferred_language')
+          .eq('id', session.user.id)
+          .single();
+
+        if (profile) {
+          setIsSpanish(profile.preferred_language === 'es');
+        }
+      }
+    };
+
+    fetchUserLanguage();
+  }, []);
+
   const config = heroConfigs[location.pathname as keyof typeof heroConfigs] || heroConfigs["/"];
 
   return (
@@ -72,10 +101,10 @@ const Hero = () => {
           className="mx-auto max-w-2xl text-center"
         >
           <h1 className="font-outfit font-bold text-4xl tracking-tight text-gray-900 sm:text-6xl mb-6 leading-tight">
-            {config.title}
+            {isSpanish ? config.title_es : config.title_en}
           </h1>
           <p className="font-inter text-lg leading-8 text-gray-600 mb-10">
-            {config.subtitle}
+            {isSpanish ? config.subtitle_es : config.subtitle_en}
           </p>
           <div className="flex items-center justify-center gap-x-6">
             <Button 
