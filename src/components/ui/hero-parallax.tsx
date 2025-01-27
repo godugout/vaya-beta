@@ -7,6 +7,7 @@ import {
   MotionValue,
 } from "framer-motion";
 import { Link } from "react-router-dom";
+import { LucideIcon } from "lucide-react";
 
 export const HeroParallax = ({
   products,
@@ -14,7 +15,7 @@ export const HeroParallax = ({
   products: {
     title: string;
     link: string;
-    thumbnail: string;
+    icon: LucideIcon;
   }[];
 }) => {
   const firstRow = products.slice(0, 5);
@@ -120,10 +121,12 @@ export const ProductCard = ({
   product: {
     title: string;
     link: string;
-    thumbnail: string;
+    icon: LucideIcon;
   };
   translate: MotionValue<number>;
 }) => {
+  const Icon = product.icon;
+  
   return (
     <motion.div
       style={{
@@ -139,11 +142,9 @@ export const ProductCard = ({
         to={product.link}
         className="block group-hover/product:shadow-2xl"
       >
-        <img
-          src={product.thumbnail}
-          className="object-cover object-left-top absolute h-full w-full inset-0 rounded-lg"
-          alt={product.title}
-        />
+        <div className="absolute inset-0 flex items-center justify-center bg-vaya-purple-light rounded-lg">
+          <Icon size={120} className="text-vaya-purple" />
+        </div>
       </Link>
       <div className="absolute inset-0 h-full w-full opacity-0 group-hover/product:opacity-80 bg-black pointer-events-none rounded-lg"></div>
       <h2 className="absolute bottom-4 left-4 opacity-0 group-hover/product:opacity-100 text-white font-outfit">

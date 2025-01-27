@@ -1,24 +1,96 @@
 import React from "react";
 import { HeroParallax } from "@/components/ui/hero-parallax";
+import { 
+  Family, 
+  Heart, 
+  Camera, 
+  BookOpen, 
+  Image, 
+  Video,
+  Album,
+  Calendar,
+  HeartPulse,
+  Book,
+  Film,
+  Photo
+} from "lucide-react";
 
 const capsules = [
   {
     title: "Summer Memories 2023",
     link: "/capsule/summer-2023",
-    thumbnail: "/lovable-uploads/33c609d9-9189-49d2-b9c1-106d8257557c.png",
+    icon: Photo,
   },
   {
     title: "Family Reunion",
     link: "/capsule/reunion",
-    thumbnail: "/lovable-uploads/4425ec86-56fe-44c4-9f47-75e59d3cb287.png",
+    icon: Family,
   },
   {
     title: "Grandma's Stories",
     link: "/capsule/grandma",
-    thumbnail: "/lovable-uploads/ef40fff0-4da4-4937-af3d-c2276b1d2588.png",
+    icon: BookOpen,
   },
-  // Add more capsules to fill the rows
-  // ... Repeat similar objects to have at least 15 items
+  {
+    title: "Holiday Collection",
+    link: "/capsule/holidays",
+    icon: Heart,
+  },
+  {
+    title: "Wedding Day",
+    link: "/capsule/wedding",
+    icon: HeartPulse,
+  },
+  {
+    title: "Baby's First Year",
+    link: "/capsule/baby",
+    icon: Calendar,
+  },
+  {
+    title: "Family Recipes",
+    link: "/capsule/recipes",
+    icon: Book,
+  },
+  {
+    title: "Vacation Adventures",
+    link: "/capsule/vacation",
+    icon: Camera,
+  },
+  {
+    title: "School Memories",
+    link: "/capsule/school",
+    icon: Album,
+  },
+  {
+    title: "Family Videos",
+    link: "/capsule/videos",
+    icon: Video,
+  },
+  {
+    title: "Heritage Album",
+    link: "/capsule/heritage",
+    icon: Image,
+  },
+  {
+    title: "Birthday Celebrations",
+    link: "/capsule/birthdays",
+    icon: Heart,
+  },
+  {
+    title: "Family Movies",
+    link: "/capsule/movies",
+    icon: Film,
+  },
+  {
+    title: "Legacy Stories",
+    link: "/capsule/legacy",
+    icon: BookOpen,
+  },
+  {
+    title: "Family Traditions",
+    link: "/capsule/traditions",
+    icon: Family,
+  }
 ];
 
 const FamilyCapsules = () => {
