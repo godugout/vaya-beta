@@ -1,5 +1,12 @@
 import { Message } from "./types";
-import { AudioWaveform, Image } from "lucide-react";
+import { AudioWaveform, Image, Globe } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 interface ChatMessageProps {
   message: Message;
@@ -8,9 +15,29 @@ interface ChatMessageProps {
 
 const ChatMessage = ({ message, isSpanish }: ChatMessageProps) => {
   const isAI = message.role === "assistant";
+  const [isMessageSpanish, setIsMessageSpanish] = useState(isSpanish);
 
   return (
-    <div className={`flex ${isAI ? "justify-start" : "justify-end"} items-end gap-2`}>
+    <div className={`flex ${isAI ? "justify-start" : "justify-end"} items-end gap-2 group`}>
+      {/* Translation toggle button - appears on hover */}
+      <div className={`opacity-0 group-hover:opacity-100 transition-opacity ${isAI ? "order-first" : "order-last"}`}>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8"
+              onClick={() => setIsMessageSpanish(!isMessageSpanish)}
+            >
+              <Globe className="h-4 w-4" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>{isMessageSpanish ? "View in English" : "Ver en Español"}</p>
+          </TooltipContent>
+        </Tooltip>
+      </div>
+
       <div
         className={`max-w-[80%] rounded-2xl p-4 ${
           isAI
@@ -29,14 +56,14 @@ const ChatMessage = ({ message, isSpanish }: ChatMessageProps) => {
               <>
                 <AudioWaveform className="h-4 w-4" />
                 <span className="text-sm">
-                  {isSpanish ? "Mensaje de audio" : "Audio message"}
+                  {isMessageSpanish ? "Mensaje de audio" : "Audio message"}
                 </span>
               </>
             ) : attachment.type === "image" ? (
               <>
                 <Image className="h-4 w-4" />
                 <span className="text-sm">
-                  {isSpanish ? "Imagen" : "Image"}
+                  {isMessageSpanish ? "Imagen" : "Image"}
                 </span>
               </>
             ) : null}
