@@ -25,18 +25,20 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
     offset: ["start start", "end start"],
   });
 
-  const springConfig = { stiffness: 300, damping: 30 };
+  const springConfig = { stiffness: 100, damping: 30, mass: 0.5 };
 
   const translateX = useSpring(
-    useTransform(scrollYProgress, [0, 0.5], [0, 200]),
+    useTransform(scrollYProgress, [0, 1], [0, 200]),
     springConfig
   );
   const translateXReverse = useSpring(
-    useTransform(scrollYProgress, [0, 0.5], [0, -200]),
+    useTransform(scrollYProgress, [0, 1], [0, -200]),
     springConfig
   );
+
+  // Adjust these values for a more dramatic slide down and flatten effect
   const rotateX = useSpring(
-    useTransform(scrollYProgress, [0, 1], [15, 0]),
+    useTransform(scrollYProgress, [0, 0.7], [30, 0]),
     springConfig
   );
   const opacity = useSpring(
@@ -44,11 +46,11 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
     springConfig
   );
   const rotateZ = useSpring(
-    useTransform(scrollYProgress, [0, 1], [20, 0]),
+    useTransform(scrollYProgress, [0, 0.7], [20, 0]),
     springConfig
   );
   const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 1], [-300, 0]),
+    useTransform(scrollYProgress, [0, 0.7], [-500, 0]),
     springConfig
   );
 
@@ -81,11 +83,40 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
   return (
     <div
       ref={ref}
-      className="h-[100vh] py-10 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      className="h-[150vh] overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
     >
       <CapsuleHeader />
       <ParallaxHeader opacity={navOpacity} />
       
+      <motion.div
+        style={{
+          rotateX,
+          rotateZ,
+          translateY,
+          opacity,
+        }}
+        className="relative mt-40 mb-20"
+      >
+        <div className="space-y-32">
+          <CapsuleRow 
+            capsules={firstRow} 
+            translateX={translateX} 
+            startIndex={rowIndices.first}
+          />
+          <CapsuleRow 
+            capsules={secondRow} 
+            translateX={translateXReverse} 
+            reverse 
+            startIndex={rowIndices.second}
+          />
+          <CapsuleRow 
+            capsules={thirdRow} 
+            translateX={translateX} 
+            startIndex={rowIndices.third}
+          />
+        </div>
+      </motion.div>
+
       <ParallaxNavigation 
         onScroll={handleScroll}
         rowIndices={rowIndices}
@@ -95,33 +126,6 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
           third: thirdRow.length - 1
         }}
       />
-
-      <motion.div
-        style={{
-          rotateX,
-          rotateZ,
-          translateY,
-          opacity,
-        }}
-        className="relative mt-20"
-      >
-        <CapsuleRow 
-          capsules={firstRow} 
-          translateX={translateX} 
-          startIndex={rowIndices.first}
-        />
-        <CapsuleRow 
-          capsules={secondRow} 
-          translateX={translateXReverse} 
-          reverse 
-          startIndex={rowIndices.second}
-        />
-        <CapsuleRow 
-          capsules={thirdRow} 
-          translateX={translateX} 
-          startIndex={rowIndices.third}
-        />
-      </motion.div>
     </div>
   );
 };
