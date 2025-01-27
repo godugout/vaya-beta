@@ -1,7 +1,7 @@
 import React from "react";
 import { CapsuleLayout } from "@/components/ui/capsule/CapsuleLayout";
 import CreateCapsuleForm from "@/components/capsule/CreateCapsuleForm";
-import { PlusCircle } from "lucide-react";
+import { PlusCircle, Leaf, Book, BookOpen, Image, Map, Music2, Camera, Users, Video, Heart, Library, Calendar, HeartHandshake, Film, ImageIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -13,7 +13,7 @@ const capsules = [
   {
     title: "Costa Rican Heritage",
     link: "/capsule/costa-rica",
-    icon: Palmtree,
+    icon: Leaf, // Replaced Palmtree with Leaf
   },
   {
     title: "Family Recipes & Traditions",
@@ -38,7 +38,7 @@ const capsules = [
   {
     title: "Festival Celebrations",
     link: "/capsule/festivals",
-    icon: Music,
+    icon: Music2, // Replaced Music with Music2
   },
   {
     title: "Wildlife Encounters",
@@ -73,7 +73,7 @@ const capsules = [
   {
     title: "Wedding Stories",
     link: "/capsule/weddings",
-    icon: HeartPulse,
+    icon: HeartHandshake, // Replaced HeartPulse with HeartHandshake
   },
   {
     title: "Travel Diaries",
@@ -83,7 +83,7 @@ const capsules = [
   {
     title: "Photo Albums",
     link: "/capsule/albums",
-    icon: ImageIcon,
+    icon: Image, // Replaced ImageIcon with Image since ImageIcon isn't available
   }
 ];
 
