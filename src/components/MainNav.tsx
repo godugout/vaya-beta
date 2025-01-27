@@ -11,7 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogOut, User as UserIcon, Clock, Settings } from "lucide-react";
+import { LogOut, User as UserIcon, Clock, Settings, Box } from "lucide-react";
 
 export function MainNav() {
   const navigate = useNavigate();
@@ -46,7 +46,7 @@ export function MainNav() {
             className="h-8 w-8"
           />
           <span className="font-outfit font-bold text-xl text-white">
-            Vaya<sup className="text-sm">α</sup>
+            Vaya<sup>α</sup>
           </span>
         </Link>
         <nav className="flex items-center space-x-8 ml-12">
@@ -56,6 +56,13 @@ export function MainNav() {
           >
             <Clock className="h-4 w-4" />
             Memory Lane
+          </Link>
+          <Link
+            to="/family-capsules"
+            className="text-sm font-medium text-gray-300 transition-colors hover:text-white inline-flex items-center gap-2"
+          >
+            <Box className="h-4 w-4" />
+            Family Capsules
           </Link>
         </nav>
         <div className="ml-auto flex items-center space-x-4">
