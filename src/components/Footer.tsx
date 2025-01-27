@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#222222] text-white">
-      <div className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
+    <footer className="bg-[#222222] text-white mt-auto">
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
-          <div className="space-y-8">
+          <div className="space-y-6">
             <Link to="/" className="flex items-center gap-2">
               <img 
                 src="/lovable-uploads/ef40fff0-4da4-4937-af3d-c2276b1d2588.png"
@@ -20,11 +20,11 @@ const Footer = () => {
               Preserving memories, connecting generations.
             </p>
           </div>
-          <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
+          <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2 xl:col-span-2 xl:mt-0">
             <div className="md:grid md:grid-cols-2 md:gap-8">
               <div>
                 <h3 className="text-sm font-semibold leading-6 text-white">Product</h3>
-                <ul role="list" className="mt-6 space-y-4">
+                <ul role="list" className="mt-4 space-y-3">
                   <li>
                     <Link to="/memory-lane" className="text-sm leading-6 text-gray-300 hover:text-white">
                       Memory Lane
@@ -37,9 +37,9 @@ const Footer = () => {
                   </li>
                 </ul>
               </div>
-              <div className="mt-10 md:mt-0">
+              <div className="mt-8 md:mt-0">
                 <h3 className="text-sm font-semibold leading-6 text-white">Company</h3>
-                <ul role="list" className="mt-6 space-y-4">
+                <ul role="list" className="mt-4 space-y-3">
                   <li>
                     <a href="#" className="text-sm leading-6 text-gray-300 hover:text-white">
                       About Allusion Ink
@@ -55,7 +55,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="mt-16 border-t border-white/10 pt-8 sm:mt-20 lg:mt-24">
+        <div className="mt-8 border-t border-white/10 pt-8">
           <p className="text-xs leading-5 text-gray-400">
             &copy; {new Date().getFullYear()} Allusion Ink. All rights reserved.
           </p>
