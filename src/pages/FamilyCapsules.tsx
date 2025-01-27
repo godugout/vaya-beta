@@ -9,37 +9,69 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-// Map capsule categories to prompt topics and their colors
 const capsules = [
   {
     title: "Costa Rican Heritage",
     link: "/capsule/costa-rica",
     icon: Leaf,
-    colorKey: "Nature Green", // Maps to Cultural Heritage category
+    colorKey: "Nature Green",
+    metadata: {
+      creatorInitials: "JD",
+      creatorAvatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=John",
+      itemCount: 12,
+      status: "active" as const,
+      date: "Updated today",
+    }
   },
   {
     title: "Family Recipes & Traditions",
     link: "/capsule/recipes",
     icon: Book,
-    colorKey: "Primary Orange", // Maps to Family Traditions category
+    colorKey: "Primary Orange",
+    metadata: {
+      creatorInitials: "MA",
+      creatorAvatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Maria",
+      itemCount: 8,
+      status: "upcoming" as const,
+      date: "Opens Dec 25",
+    }
   },
   {
     title: "Grandparents' Stories",
     link: "/capsule/grandparents",
     icon: BookOpen,
-    colorKey: "Ocean Blue", // Maps to Life Stories category
+    colorKey: "Ocean Blue",
+    metadata: {
+      creatorInitials: "RL",
+      creatorAvatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Robert",
+      itemCount: 15,
+      status: "locked" as const,
+      date: "Locked until Jan",
+    }
   },
   {
     title: "Beach Day Memories",
     link: "/capsule/beach",
     icon: Image,
     colorKey: "Nature Green",
+    metadata: {
+      creatorInitials: "ES",
+      itemCount: 24,
+      status: "revealed" as const,
+      date: "Opened Nov 1",
+    }
   },
   {
     title: "Our Journey Here",
     link: "/capsule/journey",
     icon: Map,
     colorKey: "Ocean Blue",
+    metadata: {
+      creatorInitials: "JD",
+      itemCount: 18,
+      status: "active" as const,
+      date: "Closes Dec 31",
+    }
   },
   {
     title: "Festival Celebrations",
