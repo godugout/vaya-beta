@@ -11,19 +11,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogOut, User as UserIcon } from "lucide-react";
+import { LogOut, User as UserIcon, Clock, FolderTree, Box } from "lucide-react";
 
 export function MainNav() {
   const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
     });
 
-    // Listen for auth changes
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
@@ -39,29 +37,32 @@ export function MainNav() {
   };
 
   return (
-    <div className="border-b">
-      <div className="flex h-16 items-center px-4">
+    <div className="border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+      <div className="flex h-16 items-center px-4 max-w-7xl mx-auto">
         <Link to="/" className="font-bold text-xl text-vaya-orange">
-          Vaya
+          Vaya Alpha
         </Link>
-        <nav className="flex items-center space-x-4 lg:space-x-6 mx-6">
+        <nav className="flex items-center space-x-8 ml-12">
           <Link
-            to="/stories"
-            className="text-sm font-medium transition-colors hover:text-vaya-orange"
+            to="/memory-lane"
+            className="text-sm font-medium transition-colors hover:text-vaya-orange inline-flex items-center gap-2"
           >
-            Stories
+            <Clock className="h-4 w-4" />
+            Memory Lane
           </Link>
           <Link
-            to="/photos"
-            className="text-sm font-medium transition-colors hover:text-vaya-orange"
+            to="/family-tree"
+            className="text-sm font-medium transition-colors hover:text-vaya-orange inline-flex items-center gap-2"
           >
-            Photos
+            <FolderTree className="h-4 w-4" />
+            Family Tree
           </Link>
           <Link
-            to="/families"
-            className="text-sm font-medium transition-colors hover:text-vaya-orange"
+            to="/capsules"
+            className="text-sm font-medium transition-colors hover:text-vaya-orange inline-flex items-center gap-2"
           >
-            Families
+            <Box className="h-4 w-4" />
+            Capsules
           </Link>
         </nav>
         <div className="ml-auto flex items-center space-x-4">
