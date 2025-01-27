@@ -20,13 +20,12 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
   const ref = React.useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    // Reducing the offset to make scrolling more sensitive
     offset: ["start start", "center start"],
   });
 
   const springConfig = { stiffness: 300, damping: 30, bounce: 100 };
 
-  // Adjusting transform ranges for faster effect completion
+  // Card animations
   const translateX = useSpring(
     useTransform(scrollYProgress, [0, 0.6], [0, 1000]),
     springConfig
@@ -40,20 +39,27 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
     springConfig
   );
   const opacity = useSpring(
-    useTransform(scrollYProgress, [0, 0.15], [0.2, 1]),
+    useTransform(scrollYProgress, [0, 0.15], [0.6, 1]),
     springConfig
   );
   const rotateZ = useSpring(
     useTransform(scrollYProgress, [0, 0.15], [20, 0]),
     springConfig
   );
+  
+  // Adjust initial position to be visible in hero
   const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.15], [-300, 400]),
+    useTransform(scrollYProgress, [0, 0.15], [0, 200]),
     springConfig
   );
 
-  const navOpacity = useSpring(
-    useTransform(scrollYProgress, [0.05, 0.15], [0, 1]),
+  // Title and copy animations - appear at end of scroll
+  const contentTranslateY = useSpring(
+    useTransform(scrollYProgress, [0.7, 0.9], [100, 0]),
+    springConfig
+  );
+  const contentOpacity = useSpring(
+    useTransform(scrollYProgress, [0.7, 0.9], [0, 1]),
     springConfig
   );
 
@@ -65,13 +71,17 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
   return (
     <div
       ref={ref}
-      className="h-[120vh] py-10 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      className="h-[120vh] py-32 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
     >
       <CapsuleHeader />
       
+      {/* Title and copy section - appears at end of scroll */}
       <motion.div
-        style={{ opacity: navOpacity }}
-        className="fixed top-96 left-0 right-0 z-10 pointer-events-none"
+        style={{ 
+          opacity: contentOpacity,
+          y: contentTranslateY
+        }}
+        className="fixed top-40 left-0 right-0 z-10 pointer-events-none"
       >
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-5xl font-bold text-vaya-gray-900 font-outfit mb-6">
@@ -92,7 +102,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
           opacity,
         }}
         id="capsule-grid"
-        className="mb-10 mt-96"
+        className="mt-20"
       >
         <motion.div className="flex flex-row-reverse space-x-reverse space-x-16 mb-12">
           {firstRow.map((capsule) => (
@@ -130,7 +140,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
       </motion.div>
 
       <motion.div
-        style={{ opacity: navOpacity }}
+        style={{ opacity: contentOpacity }}
         className="fixed bottom-24 left-0 right-0 z-10 flex justify-center gap-4"
       >
         <Button
