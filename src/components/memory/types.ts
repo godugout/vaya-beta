@@ -8,11 +8,14 @@ export type BaseMemory = {
 export type StoryMemory = BaseMemory & {
   type: "story";
   title?: string;
+  description?: string;
+  duration?: number;
 };
 
 export type PhotoMemory = BaseMemory & {
   type: "photo";
   photo_url?: string;
+  caption?: string;
 };
 
 export type Memory = StoryMemory | PhotoMemory;

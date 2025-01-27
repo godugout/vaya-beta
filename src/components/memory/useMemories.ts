@@ -59,17 +59,26 @@ export const useMemories = () => {
         if (memory.type === "story") {
           const { data: storyData } = await supabase
             .from("stories")
-            .select("title")
+            .select("title, description, duration")
             .eq("id", memory.id)
             .maybeSingle();
-          return { ...memory, title: storyData?.title } as StoryMemory;
+          return { 
+            ...memory, 
+            title: storyData?.title,
+            description: storyData?.description,
+            duration: storyData?.duration
+          } as StoryMemory;
         } else if (memory.type === "photo") {
           const { data: photoData } = await supabase
             .from("photos")
-            .select("photo_url")
+            .select("photo_url, caption")
             .eq("id", memory.id)
             .maybeSingle();
-          return { ...memory, photo_url: photoData?.photo_url } as PhotoMemory;
+          return { 
+            ...memory, 
+            photo_url: photoData?.photo_url,
+            caption: photoData?.caption
+          } as PhotoMemory;
         }
         return memory as Memory;
       }));
