@@ -24,15 +24,18 @@ export default {
       },
       colors: {
         vaya: {
-          // More subtle orange and purple variations
-          orange: "#E67E22",  // Softer orange
-          peach: "#FDF2E9",   // Lighter peach
-          purple: "#7E69AB",  // Muted purple
-          "purple-light": "#F1F0FB", // Very light purple
-          // New green variations
-          green: "#E8F5E9",   // Light sage green
-          "green-dark": "#558B2F", // Deep sage
-          // New gray scale
+          primary: "#F97316",    // Vibrant orange for CTAs
+          secondary: "#0EA5E9",  // Ocean blue for secondary actions
+          accent: {
+            green: "#F2FCE2",    // Soft green from landscapes
+            yellow: "#FEF7CD",   // Warm sunshine
+            orange: "#FEC6A1",   // Sunset glow
+          },
+          chat: {
+            bg: "#F8FAFC",     // Light background
+            border: "#E2E8F0", // Subtle border
+            hover: "#F1F5F9",  // Hover state
+          },
           gray: {
             50: "#F8FAFC",
             100: "#F1F5F9",
@@ -44,12 +47,6 @@ export default {
             700: "#334155",
             800: "#1E293B",
             900: "#0F172A",
-          },
-          // Chat box colors
-          chat: {
-            bg: "#F8FAFC",     // Light background
-            border: "#E2E8F0", // Subtle border
-            hover: "#F1F5F9",  // Hover state
           },
         },
         border: "hsl(var(--border))",

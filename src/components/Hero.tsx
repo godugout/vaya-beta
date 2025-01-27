@@ -44,20 +44,20 @@ const Hero = () => {
 
   return (
     <div className="relative overflow-hidden bg-white py-24">
-      {/* Vintage Wallpaper Pattern */}
+      {/* Nature-inspired Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0" style={{
           backgroundImage: `
-            radial-gradient(circle at 50% 50%, var(--vaya-peach) 1%, transparent 1.5%),
-            radial-gradient(circle at 50% 50%, var(--vaya-purple-light) 1%, transparent 1.5%)
+            radial-gradient(circle at 50% 50%, var(--vaya-accent-yellow) 1%, transparent 1.5%),
+            radial-gradient(circle at 50% 50%, var(--vaya-accent-green) 1%, transparent 1.5%)
           `,
           backgroundSize: '3rem 3rem',
           backgroundPosition: '0 0, 1.5rem 1.5rem',
         }} />
         <div className="absolute inset-0" style={{
           backgroundImage: `
-            radial-gradient(circle at 50% 50%, var(--vaya-blue-light) 1%, transparent 1.5%),
-            radial-gradient(circle at 50% 50%, var(--vaya-green) 1%, transparent 1.5%)
+            radial-gradient(circle at 50% 50%, var(--vaya-accent-orange) 1%, transparent 1.5%),
+            radial-gradient(circle at 50% 50%, var(--vaya-secondary) 1%, transparent 1.5%)
           `,
           backgroundSize: '4rem 4rem',
           backgroundPosition: '2rem 2rem, 0 0',
@@ -80,7 +80,7 @@ const Hero = () => {
           <div className="flex items-center justify-center gap-x-6">
             <Button 
               size="lg" 
-              className="bg-vaya-purple hover:bg-vaya-purple/90 text-white transition-all duration-300 font-outfit text-base"
+              className="bg-vaya-primary hover:bg-vaya-primary/90 text-white transition-all duration-300 font-outfit text-base"
             >
               {config.primaryCta.text}
               {config.primaryCta.icon}
@@ -89,7 +89,7 @@ const Hero = () => {
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="border-vaya-purple text-vaya-purple hover:bg-vaya-purple/10 font-outfit text-base"
+                className="border-vaya-primary text-vaya-primary hover:bg-vaya-primary/10 font-outfit text-base"
               >
                 {config.secondaryCta.text}
                 {config.secondaryCta.icon}
