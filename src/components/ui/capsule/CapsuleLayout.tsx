@@ -110,6 +110,24 @@ export const CapsuleLayout = ({ capsules }: CapsuleLayoutProps) => {
           </DialogContent>
         </Dialog>
       </div>
+
+      {/* Desktop Floating Button */}
+      <div className="hidden md:block fixed bottom-8 right-8">
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button 
+              className="bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg transition-all duration-300"
+              size="lg"
+            >
+              <PlusCircle className="mr-2" />
+              Create a Capsule
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[600px]">
+            <CreateCapsuleForm />
+          </DialogContent>
+        </Dialog>
+      </div>
     </div>
   );
 };
