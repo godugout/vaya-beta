@@ -12,10 +12,10 @@ interface CapsuleCardProps {
 export const CapsuleCard = ({ title, link, icon: Icon, isDesktop = false }: CapsuleCardProps) => {
   if (isDesktop) {
     return (
-      <div className="group/product h-96 w-[30rem] relative flex-shrink-0">
+      <div className="group/product h-80 w-[24rem] relative flex-shrink-0">
         <Link to={link} className="block group-hover/product:shadow-2xl">
           <div className="absolute inset-0 flex items-center justify-center bg-white rounded-lg border-2 border-vaya-gray-200 shadow-lg">
-            <Icon size={120} className="text-vaya-primary" />
+            <Icon size={100} className="text-vaya-primary" />
           </div>
         </Link>
         <div className="absolute inset-0 h-full w-full opacity-0 group-hover/product:opacity-90 bg-vaya-primary pointer-events-none rounded-lg transition-opacity duration-300"></div>

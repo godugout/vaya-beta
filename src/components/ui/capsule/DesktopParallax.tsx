@@ -46,11 +46,10 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
     springConfig
   );
   const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [-500, 100]), // Reduced initial and final positions
+    useTransform(scrollYProgress, [0, 0.2], [-500, 200]),
     springConfig
   );
 
-  // Navigation opacity - only shows when grid is locked
   const navOpacity = useSpring(
     useTransform(scrollYProgress, [0.1, 0.2], [0, 1]),
     springConfig
@@ -64,21 +63,21 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
   return (
     <div
       ref={ref}
-      className="h-[150vh] py-10 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]" // Reduced height and padding
+      className="h-[150vh] py-10 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
     >
       <CapsuleHeader />
       
-      {/* Headline and description that appears when grid is locked */}
       <motion.div
         style={{ opacity: navOpacity }}
-        className="fixed top-24 left-0 right-0 z-10 pointer-events-none" // Moved closer to top
+        className="fixed top-20 left-0 right-0 z-10 pointer-events-none"
       >
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-4xl font-bold text-vaya-gray-900 font-outfit mb-4">
-            Explore Family Capsules
+            Create Your Family Capsules
           </h2>
           <p className="text-lg text-vaya-gray-600 max-w-2xl">
-            Each capsule represents a unique collection of memories, stories, and moments from your family's journey. Click on any capsule to dive deeper into your family's history.
+            Each capsule is a unique collection of memories, stories, and moments from your family's journey. 
+            Choose a capsule type below to start preserving your precious memories for generations to come.
           </p>
         </div>
       </motion.div>
@@ -91,9 +90,9 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
           opacity,
         }}
         id="capsule-grid"
-        className="mb-10" // Reduced bottom margin
+        className="mb-10"
       >
-        <motion.div className="flex flex-row-reverse space-x-reverse space-x-20 mb-16"> {/* Reduced margin */}
+        <motion.div className="flex flex-row-reverse space-x-reverse space-x-16 mb-12">
           {firstRow.map((capsule) => (
             <motion.div
               style={{ x: translateX }}
@@ -104,7 +103,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
             </motion.div>
           ))}
         </motion.div>
-        <motion.div className="flex flex-row mb-16 space-x-20"> {/* Reduced margin */}
+        <motion.div className="flex flex-row mb-12 space-x-16">
           {secondRow.map((capsule) => (
             <motion.div
               style={{ x: translateXReverse }}
@@ -115,7 +114,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
             </motion.div>
           ))}
         </motion.div>
-        <motion.div className="flex flex-row-reverse space-x-reverse space-x-20">
+        <motion.div className="flex flex-row-reverse space-x-reverse space-x-16">
           {thirdRow.map((capsule) => (
             <motion.div
               style={{ x: translateX }}
@@ -128,10 +127,9 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
         </motion.div>
       </motion.div>
 
-      {/* Navigation controls that appear when grid is locked */}
       <motion.div
         style={{ opacity: navOpacity }}
-        className="fixed bottom-24 left-0 right-0 z-10 flex justify-center gap-4" // Adjusted position
+        className="fixed bottom-24 left-0 right-0 z-10 flex justify-center gap-4"
       >
         <Button
           variant="outline"
