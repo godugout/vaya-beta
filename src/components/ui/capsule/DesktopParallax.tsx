@@ -28,16 +28,16 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
   const springConfig = { stiffness: 60, damping: 15, mass: 0.5 };
 
   const translateX = useSpring(
-    useTransform(scrollYProgress, [0, 0.7], [0, 150]),
+    useTransform(scrollYProgress, [0, 0.5], [0, 150]),
     springConfig
   );
   const translateXReverse = useSpring(
-    useTransform(scrollYProgress, [0, 0.7], [0, -150]),
+    useTransform(scrollYProgress, [0, 0.5], [0, -150]),
     springConfig
   );
 
   const rotateX = useSpring(
-    useTransform(scrollYProgress, [0, 0.6], [25, 0]),
+    useTransform(scrollYProgress, [0, 0.4], [25, 0]),
     springConfig
   );
   const opacity = useSpring(
@@ -45,11 +45,11 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
     springConfig
   );
   const rotateZ = useSpring(
-    useTransform(scrollYProgress, [0, 0.6], [15, 0]),
+    useTransform(scrollYProgress, [0, 0.4], [15, 0]),
     springConfig
   );
   const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.7], [-300, 0]),
+    useTransform(scrollYProgress, [0, 0.5], [-300, 0]),
     springConfig
   );
 
@@ -82,7 +82,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
   return (
     <div
       ref={ref}
-      className="h-[140vh] overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      className="h-[150vh] overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
     >
       <CapsuleHeader />
       <ParallaxHeader opacity={navOpacity} />
