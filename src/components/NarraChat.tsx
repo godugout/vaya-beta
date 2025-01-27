@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { MessageCircle, Send } from "lucide-react";
+import { MessageCircle, Send, MoreHorizontal } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import VoiceRecorder from "./VoiceRecorder";
@@ -65,13 +65,10 @@ const NarraChat = () => {
   const handleSend = () => {
     if (!input.trim()) return;
 
-    // Add user message
     setMessages((prev) => [...prev, { role: "user", content: input }]);
 
-    // Get next prompt
     const nextPrompt = getNextPrompt();
     
-    // Add Narra's response
     setMessages((prev) => [
       ...prev,
       {
@@ -83,6 +80,19 @@ const NarraChat = () => {
     ]);
     
     setInput("");
+  };
+
+  const handleMorePrompts = () => {
+    const nextPrompt = getNextPrompt();
+    if (nextPrompt) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content: `${nextPrompt.prompt}${nextPrompt.cultural_context ? ` (${nextPrompt.cultural_context})` : ""}`,
+        },
+      ]);
+    }
   };
 
   const handleStartRecording = () => {
@@ -108,11 +118,11 @@ const NarraChat = () => {
                 }`}
               >
                 <div
-                  className={`max-w-[80%] rounded-lg p-3 ${
+                  className={`max-w-[80%] rounded-2xl p-4 ${
                     message.role === "assistant"
-                      ? "bg-[#3A3A3A] text-white"
-                      : "bg-[#8B5CF6] text-white"
-                  }`}
+                      ? "bg-vaya-green/90 text-gray-800"
+                      : "bg-vaya-orange/90 text-white"
+                  } animate-fadeIn shadow-lg`}
                 >
                   {message.content}
                 </div>
@@ -126,25 +136,35 @@ const NarraChat = () => {
             <VoiceRecorder />
           </div>
         ) : (
-          <div className="flex gap-2 mt-4">
-            <Input
-              placeholder="Type your message..."
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyPress={(e) => e.key === "Enter" && handleSend()}
-              className="bg-[#3A3A3A] border-[#4A4A4A] text-white"
-            />
+          <div className="flex flex-col gap-4 mt-4">
+            <div className="flex gap-2">
+              <Input
+                placeholder="Type your message..."
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyPress={(e) => e.key === "Enter" && handleSend()}
+                className="bg-[#3A3A3A] border-[#4A4A4A] text-white"
+              />
+              <Button
+                onClick={handleSend}
+                className="bg-vaya-orange hover:bg-vaya-orange/80"
+              >
+                <Send className="h-4 w-4" />
+              </Button>
+              <Button
+                onClick={handleStartRecording}
+                className="bg-vaya-orange hover:bg-vaya-orange/80"
+              >
+                Start Recording
+              </Button>
+            </div>
             <Button
-              onClick={handleSend}
-              className="bg-[#8B5CF6] hover:bg-[#7C3AED]"
+              onClick={handleMorePrompts}
+              variant="ghost"
+              className="self-center text-vaya-orange hover:text-vaya-orange/80 hover:bg-vaya-peach/10"
             >
-              <Send className="h-4 w-4" />
-            </Button>
-            <Button
-              onClick={handleStartRecording}
-              className="bg-[#8B5CF6] hover:bg-[#7C3AED]"
-            >
-              Start Recording
+              <MoreHorizontal className="h-5 w-5 mr-2" />
+              More prompts
             </Button>
           </div>
         )}
