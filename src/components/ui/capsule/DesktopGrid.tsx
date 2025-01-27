@@ -20,7 +20,7 @@ export const DesktopGrid = ({ capsules }: DesktopGridProps) => {
   );
 
   return (
-    <div className="w-full max-w-[90vw] 2xl:max-w-7xl mx-auto space-y-16 px-4 py-8">
+    <div className="w-full max-w-[90vw] 2xl:max-w-7xl mx-auto space-y-8 px-4 py-8">
       {rows.map((row, rowIndex) => (
         <motion.div
           key={rowIndex}
@@ -28,45 +28,35 @@ export const DesktopGrid = ({ capsules }: DesktopGridProps) => {
           animate="visible"
           className={`flex ${
             rowIndex % 2 === 0 ? "flex-row" : "flex-row-reverse"
-          } justify-center items-center space-x-8 md:space-x-12`}
-          style={{
-            perspective: "1000px",
-            transformStyle: "preserve-3d",
-          }}
+          } justify-center items-center gap-8`}
         >
           {row.map((capsule, index) => (
             <motion.div
               key={capsule.title}
-              className="flex-shrink-0"
               custom={{ index, isEven: rowIndex % 2 === 0 }}
               variants={{
                 hidden: ({ isEven }) => ({
                   x: isEven ? -100 : 100,
-                  y: 20,
-                  rotateY: isEven ? -15 : 15,
                   opacity: 0,
                 }),
-                visible: ({ index }) => ({
+                visible: {
                   x: 0,
-                  y: 0,
-                  rotateY: 0,
                   opacity: 1,
                   transition: {
                     duration: 0.5,
                     delay: index * 0.1,
                     ease: "easeOut",
                   },
-                }),
+                },
               }}
               whileHover={{
-                scale: 1.05,
-                rotateY: rowIndex % 2 === 0 ? 5 : -5,
+                scale: 1.02,
                 transition: { duration: 0.2 },
               }}
               animate={{
-                y: [0, -10, 0],
+                y: [0, -8, 0],
                 transition: {
-                  duration: 3,
+                  duration: 4,
                   repeat: Infinity,
                   repeatType: "reverse",
                   delay: index * 0.2,
