@@ -1,21 +1,11 @@
 import React from "react";
 import { CapsuleLayout } from "@/components/ui/capsule/CapsuleLayout";
+import CreateCapsuleForm from "@/components/capsule/CreateCapsuleForm";
+import CapsuleTicker from "@/components/capsule/CapsuleTicker";
 import { 
-  Users, 
-  Heart, 
-  Camera, 
-  BookOpen, 
-  Image, 
-  Video,
-  Library,
-  Calendar,
-  HeartPulse,
-  Book,
-  Film,
-  ImageIcon,
-  Palmtree,
-  Map,
-  Music
+  Users, Heart, Camera, BookOpen, Image, Video,
+  Library, Calendar, HeartPulse, Book, Film,
+  ImageIcon, Palmtree, Map, Music
 } from "lucide-react";
 
 const capsules = [
@@ -97,7 +87,15 @@ const capsules = [
 ];
 
 const FamilyCapsules = () => {
-  return <CapsuleLayout capsules={capsules} />;
+  return (
+    <div className="relative min-h-screen pb-12">
+      <CapsuleLayout capsules={capsules} />
+      <div className="container mx-auto px-4 my-8">
+        <CreateCapsuleForm />
+      </div>
+      <CapsuleTicker />
+    </div>
+  );
 };
 
 export default FamilyCapsules;

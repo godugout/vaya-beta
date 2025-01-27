@@ -51,6 +51,105 @@ export type Database = {
           },
         ]
       }
+      capsule_contents: {
+        Row: {
+          capsule_id: string | null
+          content_type: string
+          content_url: string
+          created_at: string | null
+          created_by: string | null
+          id: string
+          updated_at: string | null
+        }
+        Insert: {
+          capsule_id?: string | null
+          content_type: string
+          content_url: string
+          created_at?: string | null
+          created_by?: string | null
+          id?: string
+          updated_at?: string | null
+        }
+        Update: {
+          capsule_id?: string | null
+          content_type?: string
+          content_url?: string
+          created_at?: string | null
+          created_by?: string | null
+          id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "capsule_contents_capsule_id_fkey"
+            columns: ["capsule_id"]
+            isOneToOne: false
+            referencedRelation: "capsule_schedules"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "capsule_contents_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      capsule_schedules: {
+        Row: {
+          created_at: string | null
+          created_by: string | null
+          family_id: string | null
+          id: string
+          instructions: string | null
+          lock_deadline: string
+          reveal_date: string
+          status: string
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          created_by?: string | null
+          family_id?: string | null
+          id?: string
+          instructions?: string | null
+          lock_deadline: string
+          reveal_date: string
+          status?: string
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          created_by?: string | null
+          family_id?: string | null
+          id?: string
+          instructions?: string | null
+          lock_deadline?: string
+          reveal_date?: string
+          status?: string
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "capsule_schedules_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "capsule_schedules_family_id_fkey"
+            columns: ["family_id"]
+            isOneToOne: false
+            referencedRelation: "families"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       families: {
         Row: {
           created_at: string | null
