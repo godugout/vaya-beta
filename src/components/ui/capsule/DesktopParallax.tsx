@@ -84,9 +84,6 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
       ref={ref}
       className="h-[120vh] overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
     >
-      <CapsuleHeader />
-      <ParallaxHeader opacity={navOpacity} />
-      
       <motion.div
         style={{
           rotateX,
@@ -125,6 +122,9 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
           third: thirdRow.length - 1
         }}
       />
+      
+      <CapsuleHeader />
+      <ParallaxHeader opacity={navOpacity} />
     </div>
   );
 };

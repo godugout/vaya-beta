@@ -2,7 +2,7 @@ import React from "react";
 
 export const CapsuleHeader = () => {
   return (
-    <div className="relative mx-auto py-24 px-4 w-full left-0 -mt-20 bg-gradient-to-b from-vaya-primary/90 to-vaya-primary/70">
+    <div className="relative mx-auto py-24 px-4 w-full left-0 mt-20 bg-gradient-to-b from-vaya-primary/90 to-vaya-primary/70">
       <div className="max-w-7xl mx-auto text-center">
         <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold text-white font-outfit drop-shadow-lg">
           Family Capsules <br /> Your Digital Time Machine
