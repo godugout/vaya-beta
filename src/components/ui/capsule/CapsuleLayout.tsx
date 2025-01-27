@@ -2,6 +2,7 @@ import React from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { MobileCapsuleList } from "./MobileCapsuleList";
 import { DesktopGrid } from "./DesktopGrid";
+import { CapsuleHeader } from "./CapsuleHeader";
 import { LucideIcon } from "lucide-react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 
