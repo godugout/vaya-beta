@@ -16,14 +16,12 @@ export const CapsuleLayout = ({ capsules }: CapsuleLayoutProps) => {
   const isMobile = useIsMobile();
 
   return (
-    <div className="min-h-screen w-full bg-white">
-      <div className="absolute top-0 left-0 w-full">
-        {isMobile ? (
-          <MobileCapsuleList capsules={capsules} />
-        ) : (
-          <DesktopParallax capsules={capsules} />
-        )}
-      </div>
+    <div className="w-full bg-white">
+      {isMobile ? (
+        <MobileCapsuleList capsules={capsules} />
+      ) : (
+        <DesktopParallax capsules={capsules} />
+      )}
     </div>
   );
 };
