@@ -139,7 +139,7 @@ const FamilyCapsules = () => {
   return (
     <div className="relative min-h-screen">
       <CapsuleLayout capsules={capsules} />
-      <div className="fixed bottom-8 right-8">
+      <div className="fixed bottom-24 md:bottom-8 right-8"> {/* Adjusted position to avoid overlap with mobile nav */}
         <Dialog>
           <DialogTrigger asChild>
             <Button 
