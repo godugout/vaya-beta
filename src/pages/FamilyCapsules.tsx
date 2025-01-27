@@ -12,49 +12,62 @@ import {
   HeartPulse,
   Book,
   Film,
-  ImageIcon
+  ImageIcon,
+  Palmtree,
+  Map,
+  Music
 } from "lucide-react";
 
 const capsules = [
   {
-    title: "Summer Memories 2023",
-    link: "/capsule/summer-2023",
-    icon: ImageIcon,
+    title: "Costa Rican Heritage",
+    link: "/capsule/costa-rica",
+    icon: Palmtree,
   },
   {
-    title: "Family Reunion",
-    link: "/capsule/reunion",
-    icon: Users,
-  },
-  {
-    title: "Grandma's Stories",
-    link: "/capsule/grandma",
-    icon: BookOpen,
-  },
-  {
-    title: "Holiday Collection",
-    link: "/capsule/holidays",
-    icon: Heart,
-  },
-  {
-    title: "Wedding Day",
-    link: "/capsule/wedding",
-    icon: HeartPulse,
-  },
-  {
-    title: "Baby's First Year",
-    link: "/capsule/baby",
-    icon: Calendar,
-  },
-  {
-    title: "Family Recipes",
+    title: "Family Recipes & Traditions",
     link: "/capsule/recipes",
     icon: Book,
   },
   {
-    title: "Vacation Adventures",
-    link: "/capsule/vacation",
+    title: "Grandparents' Stories",
+    link: "/capsule/grandparents",
+    icon: BookOpen,
+  },
+  {
+    title: "Beach Day Memories",
+    link: "/capsule/beach",
+    icon: Image,
+  },
+  {
+    title: "Our Journey Here",
+    link: "/capsule/journey",
+    icon: Map,
+  },
+  {
+    title: "Festival Celebrations",
+    link: "/capsule/festivals",
+    icon: Music,
+  },
+  {
+    title: "Wildlife Encounters",
+    link: "/capsule/wildlife",
     icon: Camera,
+  },
+  {
+    title: "Family Reunions",
+    link: "/capsule/reunions",
+    icon: Users,
+  },
+  {
+    title: "Local Adventures",
+    link: "/capsule/adventures",
+    icon: Video,
+  },
+  {
+    title: "Holiday Traditions",
+    link: "/capsule/holidays",
+    icon: Heart,
   },
   {
     title: "School Memories",
@@ -62,34 +75,24 @@ const capsules = [
     icon: Library,
   },
   {
-    title: "Family Videos",
-    link: "/capsule/videos",
-    icon: Video,
+    title: "Year in Review 2023",
+    link: "/capsule/2023",
+    icon: Calendar,
   },
   {
-    title: "Heritage Album",
-    link: "/capsule/heritage",
-    icon: Image,
+    title: "Wedding Stories",
+    link: "/capsule/weddings",
+    icon: HeartPulse,
   },
   {
-    title: "Birthday Celebrations",
-    link: "/capsule/birthdays",
-    icon: Heart,
-  },
-  {
-    title: "Family Movies",
-    link: "/capsule/movies",
+    title: "Travel Diaries",
+    link: "/capsule/travel",
     icon: Film,
   },
   {
-    title: "Legacy Stories",
-    link: "/capsule/legacy",
-    icon: BookOpen,
-  },
-  {
-    title: "Family Traditions",
-    link: "/capsule/traditions",
-    icon: Users,
+    title: "Photo Albums",
+    link: "/capsule/albums",
+    icon: ImageIcon,
   }
 ];
 
