@@ -282,6 +282,33 @@ export type Database = {
           },
         ]
       }
+      story_prompts: {
+        Row: {
+          active: boolean | null
+          category: string
+          created_at: string | null
+          cultural_context: string | null
+          id: string
+          prompt: string
+        }
+        Insert: {
+          active?: boolean | null
+          category: string
+          created_at?: string | null
+          cultural_context?: string | null
+          id?: string
+          prompt: string
+        }
+        Update: {
+          active?: boolean | null
+          category?: string
+          created_at?: string | null
+          cultural_context?: string | null
+          id?: string
+          prompt?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
