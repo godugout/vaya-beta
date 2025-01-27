@@ -25,13 +25,7 @@ const MemoryLane = () => {
       <Hero />
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-3xl mx-auto">
-          <div className="flex justify-between items-center mb-8">
-            <h1 className="text-2xl font-outfit font-semibold text-gray-900">Family Memories</h1>
-            {/* Desktop Add Memory Button */}
-            <div className="hidden md:block">
-              <AddMemoryButton />
-            </div>
-          </div>
+          <h1 className="text-2xl font-outfit font-semibold text-gray-900 mb-8">Family Memories</h1>
           <MemoryFeedLayout />
 
           {/* Floating Add Memory Button (Desktop) */}
