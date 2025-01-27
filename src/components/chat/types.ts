@@ -1,0 +1,11 @@
+export interface Message {
+  role: "assistant" | "user";
+  content: string;
+}
+
+export interface StoryPrompt {
+  id: string;
+  prompt: string;
+  category: string;
+  cultural_context: string | null;
+}
