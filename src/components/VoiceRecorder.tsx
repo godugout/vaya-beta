@@ -85,7 +85,7 @@ const VoiceRecorder = () => {
         {!isRecording ? (
           <Button
             onClick={startRecording}
-            className="bg-vaya-secondary hover:bg-vaya-secondary/90 text-white"
+            className="bg-vaya-secondary hover:bg-vaya-secondary/90 text-white w-full"
           >
             <Mic className="mr-2 h-4 w-4" />
             Start Recording
@@ -94,6 +94,7 @@ const VoiceRecorder = () => {
           <Button
             onClick={stopRecording}
             variant="destructive"
+            className="w-full"
           >
             <Square className="mr-2 h-4 w-4" />
             Stop Recording
@@ -104,7 +105,7 @@ const VoiceRecorder = () => {
           <Button
             onClick={togglePlayback}
             variant="outline"
-            className="border-vaya-secondary text-vaya-secondary hover:bg-vaya-secondary hover:text-white"
+            className="w-full border-vaya-secondary text-vaya-secondary hover:bg-vaya-secondary hover:text-white"
           >
             {isPlaying ? (
               <Pause className="mr-2 h-4 w-4" />
