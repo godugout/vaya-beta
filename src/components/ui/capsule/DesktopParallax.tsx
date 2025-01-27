@@ -28,28 +28,28 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
   const springConfig = { stiffness: 60, damping: 15, mass: 0.5 };
 
   const translateX = useSpring(
-    useTransform(scrollYProgress, [0, 0.5], [0, 150]),
+    useTransform(scrollYProgress, [0, 0.3], [0, 150]),
     springConfig
   );
   const translateXReverse = useSpring(
-    useTransform(scrollYProgress, [0, 0.5], [0, -150]),
+    useTransform(scrollYProgress, [0, 0.3], [0, -150]),
     springConfig
   );
 
   const rotateX = useSpring(
-    useTransform(scrollYProgress, [0, 0.4], [25, 0]),
+    useTransform(scrollYProgress, [0, 0.3], [15, 0]),
     springConfig
   );
   const opacity = useSpring(
-    useTransform(scrollYProgress, [0, 0.4], [0.3, 1]),
+    useTransform(scrollYProgress, [0, 0.3], [0.3, 1]),
     springConfig
   );
   const rotateZ = useSpring(
-    useTransform(scrollYProgress, [0, 0.4], [15, 0]),
+    useTransform(scrollYProgress, [0, 0.3], [10, 0]),
     springConfig
   );
   const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.5], [-300, 0]),
+    useTransform(scrollYProgress, [0, 0.3], [-200, 0]),
     springConfig
   );
 
@@ -82,7 +82,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
   return (
     <div
       ref={ref}
-      className="h-[150vh] overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      className="h-[120vh] overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
     >
       <CapsuleHeader />
       <ParallaxHeader opacity={navOpacity} />
@@ -94,9 +94,9 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
           translateY,
           opacity,
         }}
-        className="relative -mt-20 mb-20"
+        className="relative mt-10 mb-20"
       >
-        <div className="space-y-40">
+        <div className="space-y-20">
           <CapsuleRow 
             capsules={firstRow} 
             translateX={translateX} 
