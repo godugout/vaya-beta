@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 const testimonials = [
   {
     title: "Grandmother's Stories",
-    quote: "Vaya helps me share my life stories with my grandchildren. Now they'll always have my voice, my memories, and my wisdom to guide them.",
+    quote: "I created a capsule to share my life stories with my grandchildren. Now they'll always have my voice, my memories, and my wisdom to guide them.",
     author: "Margaret, 78",
     icon: "👵"
   },

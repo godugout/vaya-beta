@@ -17,10 +17,10 @@ interface HeroConfig {
 
 const heroConfigs: Record<string, HeroConfig> = {
   "/": {
-    title: "Share Your Story",
-    subtitle: "Record and preserve your precious memories with Narra, your friendly AI storytelling assistant",
+    title: "Preserve Your Legacy",
+    subtitle: "Create digital time capsules to preserve and share your most precious memories with loved ones. Capture moments, stories, and experiences for future generations.",
     primaryCta: {
-      text: "Start Recording",
+      text: "Create Your First Capsule",
       icon: <ArrowRight className="ml-2 h-4 w-4" />,
     },
     secondaryCta: {
@@ -29,8 +29,8 @@ const heroConfigs: Record<string, HeroConfig> = {
     }
   },
   "/memory-lane": {
-    title: "Let's Create Some Memories",
-    subtitle: "Chat with Narra, your AI storytelling companion, and record stories that matter",
+    title: "Capture Memories Your Way",
+    subtitle: "Multiple ways to preserve your memories, all in one secure place. Record stories, upload photos, or create video memories that last generations.",
     primaryCta: {
       text: "Start Recording",
       icon: <Mic className="ml-2 h-4 w-4" />,
