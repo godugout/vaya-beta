@@ -12,9 +12,10 @@ interface CapsuleRowProps {
   translateX: any; // Framer motion value
   reverse?: boolean;
   startIndex: number;
+  scale?: any; // Framer motion value for scaling
 }
 
-export const CapsuleRow = ({ capsules, translateX, reverse = false, startIndex }: CapsuleRowProps) => {
+export const CapsuleRow = ({ capsules, translateX, reverse = false, startIndex, scale }: CapsuleRowProps) => {
   return (
     <div className="relative">
       <motion.div 
@@ -25,7 +26,10 @@ export const CapsuleRow = ({ capsules, translateX, reverse = false, startIndex }
       >
         {capsules.map((capsule, index) => (
           <motion.div
-            style={{ x: reverse ? translateX : translateX }}
+            style={{ 
+              x: reverse ? translateX : translateX,
+              scale: scale || 1
+            }}
             whileHover={{ y: -20 }}
             key={capsule.title}
             className={`transition-opacity duration-500 ${index < startIndex ? 'opacity-0' : 'opacity-100'}`}

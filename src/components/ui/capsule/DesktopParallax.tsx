@@ -27,6 +27,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
 
   const springConfig = { stiffness: 60, damping: 15, mass: 0.5 };
 
+  // First phase of animation (0-40% scroll)
   const translateX = useSpring(
     useTransform(scrollYProgress, [0, 0.4], [0, 150]),
     springConfig
@@ -36,20 +37,52 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
     springConfig
   );
 
+  // Extended animations for full visibility (40-100% scroll)
+  const finalTranslateY = useSpring(
+    useTransform(scrollYProgress, 
+      [0.4, 0.6, 0.8, 1], 
+      [-200, 0, 100, 200]
+    ),
+    springConfig
+  );
+
   const rotateX = useSpring(
-    useTransform(scrollYProgress, [0, 0.4], [15, 0]),
+    useTransform(scrollYProgress, 
+      [0, 0.4, 0.6], 
+      [15, 0, 0]
+    ),
     springConfig
   );
+
   const opacity = useSpring(
-    useTransform(scrollYProgress, [0, 0.4], [0.3, 1]),
+    useTransform(scrollYProgress, 
+      [0, 0.4, 0.6, 1], 
+      [0.3, 1, 1, 1]
+    ),
     springConfig
   );
+
   const rotateZ = useSpring(
-    useTransform(scrollYProgress, [0, 0.4], [10, 0]),
+    useTransform(scrollYProgress, 
+      [0, 0.4, 0.6], 
+      [10, 0, 0]
+    ),
     springConfig
   );
-  const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.4], [-200, 0]),
+
+  const scale = useSpring(
+    useTransform(scrollYProgress,
+      [0.4, 0.6, 0.8, 1],
+      [1, 0.95, 0.9, 0.85]
+    ),
+    springConfig
+  );
+
+  const spacing = useSpring(
+    useTransform(scrollYProgress,
+      [0.4, 0.6, 0.8, 1],
+      [20, 30, 40, 50]
+    ),
     springConfig
   );
 
@@ -92,29 +125,36 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
         style={{
           rotateX,
           rotateZ,
-          translateY,
+          translateY: finalTranslateY,
           opacity,
+          scale,
         }}
         className="relative -mt-16 mb-20"
       >
-        <div className="space-y-20">
+        <motion.div 
+          style={{ gap: spacing }}
+          className="space-y-20"
+        >
           <CapsuleRow 
             capsules={firstRow} 
             translateX={translateX} 
             startIndex={rowIndices.first}
+            scale={scale}
           />
           <CapsuleRow 
             capsules={secondRow} 
             translateX={translateXReverse} 
             reverse 
             startIndex={rowIndices.second}
+            scale={scale}
           />
           <CapsuleRow 
             capsules={thirdRow} 
             translateX={translateX} 
             startIndex={rowIndices.third}
+            scale={scale}
           />
-        </div>
+        </motion.div>
       </motion.div>
 
       <ParallaxNavigation 
