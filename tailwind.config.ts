@@ -24,12 +24,33 @@ export default {
       },
       colors: {
         vaya: {
-          orange: "#F97316",
-          peach: "#FDE1D3",
-          green: "#F2FCE2",
-          purple: "#9B87F5",
-          "purple-light": "#E5DEFF",
-          "blue-light": "#D3E4FD",
+          // More subtle orange and purple variations
+          orange: "#E67E22",  // Softer orange
+          peach: "#FDF2E9",   // Lighter peach
+          purple: "#7E69AB",  // Muted purple
+          "purple-light": "#F1F0FB", // Very light purple
+          // New green variations
+          green: "#E8F5E9",   // Light sage green
+          "green-dark": "#558B2F", // Deep sage
+          // New gray scale
+          gray: {
+            50: "#F8FAFC",
+            100: "#F1F5F9",
+            200: "#E2E8F0",
+            300: "#CBD5E1",
+            400: "#94A3B8",
+            500: "#64748B",
+            600: "#475569",
+            700: "#334155",
+            800: "#1E293B",
+            900: "#0F172A",
+          },
+          // Chat box colors
+          chat: {
+            bg: "#F8FAFC",     // Light background
+            border: "#E2E8F0", // Subtle border
+            hover: "#F1F5F9",  // Hover state
+          },
         },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
