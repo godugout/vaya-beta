@@ -39,13 +39,20 @@ export function MainNav() {
   return (
     <div className="border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
       <div className="flex h-16 items-center px-4 max-w-7xl mx-auto">
-        <Link to="/" className="font-bold text-xl text-vaya-orange">
-          Vaya Alpha
+        <Link to="/" className="flex items-center gap-2">
+          <img 
+            src="/lovable-uploads/33c609d9-9189-49d2-b9c1-106d8257557c.png" 
+            alt="Vaya Logo" 
+            className="h-8 w-8"
+          />
+          <span className="font-outfit font-bold text-xl text-vaya-green">
+            Vaya Alpha
+          </span>
         </Link>
         <nav className="flex items-center space-x-8 ml-12">
           <Link
             to="/memory-lane"
-            className="text-sm font-medium transition-colors hover:text-vaya-orange inline-flex items-center gap-2"
+            className="text-sm font-medium transition-colors hover:text-vaya-green inline-flex items-center gap-2"
           >
             <Clock className="h-4 w-4" />
             Memory Lane
@@ -56,7 +63,7 @@ export function MainNav() {
             <>
               <Button
                 variant="ghost"
-                className="gap-2"
+                className="gap-2 hover:text-vaya-green"
                 onClick={() => navigate("/record")}
               >
                 Create Memory
@@ -65,7 +72,7 @@ export function MainNav() {
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="ghost"
-                    className="relative h-8 w-8 rounded-full"
+                    className="relative h-8 w-8"
                   >
                     <Avatar className="h-8 w-8">
                       <AvatarImage
@@ -91,7 +98,12 @@ export function MainNav() {
               </DropdownMenu>
             </>
           ) : (
-            <Button onClick={() => navigate("/auth")}>Sign In</Button>
+            <Button 
+              onClick={() => navigate("/auth")}
+              className="bg-vaya-green hover:bg-vaya-green/90"
+            >
+              Sign In
+            </Button>
           )}
         </div>
       </div>

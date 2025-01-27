@@ -43,7 +43,7 @@ const Hero = () => {
   const config = heroConfigs[location.pathname as keyof typeof heroConfigs] || heroConfigs["/"];
 
   return (
-    <div className="relative overflow-hidden bg-gradient-to-b from-vaya-purple-light to-white py-24">
+    <div className="relative overflow-hidden bg-gradient-to-b from-vaya-green/10 to-white py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -60,7 +60,7 @@ const Hero = () => {
           <div className="flex items-center justify-center gap-x-6">
             <Button 
               size="lg" 
-              className="bg-vaya-purple hover:bg-vaya-purple/90 transition-all duration-300 font-outfit"
+              className="bg-vaya-green hover:bg-vaya-green/90 transition-all duration-300 font-outfit"
             >
               {config.primaryCta.text}
               {config.primaryCta.icon}
@@ -69,7 +69,7 @@ const Hero = () => {
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="border-vaya-purple text-vaya-purple hover:bg-vaya-purple/10 font-outfit"
+                className="border-vaya-green text-vaya-green hover:bg-vaya-green/10 font-outfit"
               >
                 {config.secondaryCta.text}
                 {config.secondaryCta.icon}
