@@ -88,9 +88,11 @@ const capsules = [
 
 const FamilyCapsules = () => {
   return (
-    <div className="relative min-h-screen pb-12">
-      <CapsuleLayout capsules={capsules} />
-      <div className="container mx-auto px-4 mt-8 mb-16">
+    <div className="relative min-h-screen">
+      <div className="z-10 relative">
+        <CapsuleLayout capsules={capsules} />
+      </div>
+      <div className="container mx-auto px-4 -mt-12 mb-16 relative z-20">
         <CreateCapsuleForm />
       </div>
       <div className="fixed bottom-0 left-0 right-0 z-50">

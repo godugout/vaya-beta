@@ -46,12 +46,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
     springConfig
   );
   const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [-700, 100]), // Adjusted final Y position
-    springConfig
-  );
-
-  const navOpacity = useSpring(
-    useTransform(scrollYProgress, [0.1, 0.2], [0, 1]),
+    useTransform(scrollYProgress, [0, 0.2], [-500, 0]),
     springConfig
   );
 
@@ -79,24 +74,10 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
   return (
     <div
       ref={ref}
-      className="h-[60vh] py-10 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      className="h-[40vh] py-4 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
     >
       <CapsuleHeader />
       
-      <motion.div
-        style={{ opacity: navOpacity }}
-        className="fixed top-20 left-0 right-0 z-10 pointer-events-none"
-      >
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-4xl font-bold text-vaya-gray-900 font-outfit mb-4">
-            Explore Family Capsules
-          </h2>
-          <p className="text-lg text-vaya-gray-600 max-w-2xl">
-            Each capsule represents a unique collection of memories, stories, and moments from your family's journey. Click on any capsule to dive deeper into your family's history.
-          </p>
-        </div>
-      </motion.div>
-
       <motion.div
         style={{
           rotateX,
@@ -104,10 +85,10 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
           translateY,
           opacity,
         }}
-        className="relative"
+        className="relative z-10"
       >
         {/* First Row */}
-        <div className="relative mb-12">
+        <div className="relative mb-8">
           <motion.div className="flex flex-row-reverse space-x-reverse space-x-20">
             {firstRow.map((capsule, index) => (
               <motion.div
@@ -143,7 +124,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
         </div>
 
         {/* Second Row */}
-        <div className="relative mb-12">
+        <div className="relative mb-8">
           <motion.div className="flex flex-row space-x-20">
             {secondRow.map((capsule, index) => (
               <motion.div
