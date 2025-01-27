@@ -3,7 +3,6 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { MobileCapsuleList } from "./MobileCapsuleList";
 import { DesktopGrid } from "./DesktopGrid";
 import { LucideIcon } from "lucide-react";
-import { CapsuleHeader } from "./CapsuleHeader";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 
 interface CapsuleLayoutProps {
@@ -24,11 +23,15 @@ export const CapsuleLayout = ({ capsules }: CapsuleLayoutProps) => {
 
   const springConfig = { stiffness: 100, damping: 30, bounce: 0 };
   const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 1], [0, -100]),
+    useTransform(scrollYProgress, [0, 1], [0, -200]),
     springConfig
   );
   const opacity = useSpring(
-    useTransform(scrollYProgress, [0, 0.3], [1, 0]),
+    useTransform(scrollYProgress, [0, 0.5], [1, 0]),
+    springConfig
+  );
+  const scale = useSpring(
+    useTransform(scrollYProgress, [0, 1], [1, 0.95]),
     springConfig
   );
 
@@ -41,6 +44,7 @@ export const CapsuleLayout = ({ capsules }: CapsuleLayoutProps) => {
         style={{
           translateY,
           opacity,
+          scale,
         }}
         className="sticky top-0 pt-24 pb-12"
       >
