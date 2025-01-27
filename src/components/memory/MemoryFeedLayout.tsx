@@ -2,49 +2,63 @@ import { StoryMemoryCard } from "./StoryMemoryCard";
 import { PhotoMemoryCard } from "./PhotoMemoryCard";
 import { useMemories } from "./useMemories";
 import { Memory } from "./types";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const MemoryFeedLayout = () => {
   const { data: memories, isLoading } = useMemories();
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center min-h-[200px]">
-        <div className="animate-pulse text-vaya-gray-400">Loading memories...</div>
+      <div className="space-y-6">
+        {[1, 2, 3].map((i) => (
+          <div key={i} className="bg-white rounded-lg shadow-sm p-4 space-y-4">
+            <div className="flex items-center space-x-4">
+              <Skeleton className="h-12 w-12 rounded-full" />
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-32" />
+                <Skeleton className="h-3 w-24" />
+              </div>
+            </div>
+            <Skeleton className="h-48 w-full rounded-lg" />
+          </div>
+        ))}
       </div>
     );
   }
 
   if (!memories?.length) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[200px] text-center p-8">
-        <div className="text-vaya-gray-500 mb-4">No memories yet</div>
-        <p className="text-vaya-gray-400 text-sm max-w-md">
-          Start capturing your wildlife encounters by adding photos or recording stories
-        </p>
+      <div className="text-center py-12 bg-white rounded-lg shadow-sm">
+        <div className="mx-auto w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+          <svg
+            className="w-12 h-12 text-gray-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+            />
+          </svg>
+        </div>
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No memories yet</h3>
+        <p className="text-gray-500 mb-6">Start capturing your family's precious moments</p>
       </div>
     );
   }
 
-  // Split memories into two columns
-  const splitMemories = memories.reduce<[Memory[], Memory[]]>(
-    (acc, memory, index) => {
-      acc[index % 2].push(memory);
-      return acc;
-    },
-    [[], []]
-  );
-
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {splitMemories.map((column, columnIndex) => (
-        <div key={columnIndex} className="space-y-6">
-          {column.map((memory) => (
-            memory.type === "story" ? (
-              <StoryMemoryCard key={memory.id} memory={memory} />
-            ) : (
-              <PhotoMemoryCard key={memory.id} memory={memory} />
-            )
-          ))}
+    <div className="space-y-6">
+      {memories.map((memory: Memory) => (
+        <div key={memory.id} className="animate-fadeIn">
+          {memory.type === "story" ? (
+            <StoryMemoryCard memory={memory} />
+          ) : (
+            <PhotoMemoryCard memory={memory} />
+          )}
         </div>
       ))}
     </div>
