@@ -13,7 +13,7 @@ interface DesktopNavProps {
 export const DesktopNav = ({ user, handleSignOut, navigate }: DesktopNavProps) => {
   return (
     <div className="border-b bg-[#222222] hidden md:block">
-      <div className="flex h-16 items-center px-4 max-w-7xl mx-auto">
+      <div className="flex h-20 items-center px-4 max-w-7xl mx-auto"> {/* Increased from h-16 to h-20 */}
         <Link to="/" className="flex items-center gap-2">
           <img 
             src="/lovable-uploads/ef40fff0-4da4-4937-af3d-c2276b1d2588.png" 

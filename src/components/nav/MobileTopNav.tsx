@@ -11,7 +11,7 @@ interface MobileTopNavProps {
 export const MobileTopNav = ({ user, handleSignOut, navigate }: MobileTopNavProps) => {
   return (
     <div className="md:hidden fixed top-0 left-0 right-0 border-b bg-[#222222] z-50">
-      <div className="flex h-16 items-center px-4">
+      <div className="flex h-20 items-center px-4"> {/* Increased from h-16 to h-20 */}
         <Link to="/" className="flex items-center gap-2">
           <img 
             src="/lovable-uploads/ef40fff0-4da4-4937-af3d-c2276b1d2588.png" 
