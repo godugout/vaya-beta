@@ -1,4 +1,4 @@
-import { ArrowRight, Mic } from "lucide-react";
+import { ArrowRight, Mic, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -26,12 +26,12 @@ const heroConfigs: Record<string, HeroConfig> = {
     subtitle_en: "Create digital time capsules to share your family's stories, traditions, and precious moments with loved ones.",
     subtitle_es: "Vaya transforma tus recuerdos en cápsulas digitales llenas de vida, tradiciones y amor. Crea, guarda y revive historias únicas con herramientas fáciles de usar y asistencia inteligente. Dale voz y color a tus memorias para que vivan por siempre.",
     primaryCta: {
-      text: "Start Your Family Collection",
-      icon: <ArrowRight className="ml-2 h-4 w-4" />,
+      text: "Start a Family Capsule",
+      icon: <ArrowRight className="ml-2 h-5 w-5" />,
     },
     secondaryCta: {
-      text: "Learn more",
-      icon: <ArrowRight className="ml-2 h-4 w-4" />,
+      text: "Share a Story",
+      icon: <ArrowRight className="ml-2 h-5 w-5" />,
     }
   },
   "/share-stories": {
@@ -40,8 +40,12 @@ const heroConfigs: Record<string, HeroConfig> = {
     subtitle_en: "Record stories, share photos, or create video memories of your family's journey. Every story strengthens our cultural bonds.",
     subtitle_es: "Graba historias, comparte fotos o crea recuerdos en video del viaje de tu familia. Cada historia fortalece nuestros lazos culturales.",
     primaryCta: {
-      text: "Start Recording",
-      icon: <Mic className="ml-2 h-4 w-4" />,
+      text: "Record a Story",
+      icon: <Mic className="ml-2 h-5 w-5" />,
+    },
+    secondaryCta: {
+      text: "Chat with Narra",
+      icon: <MessageCircle className="ml-2 h-5 w-5" />,
     }
   }
 };
@@ -109,7 +113,7 @@ const Hero = () => {
           <div className="flex items-center justify-center gap-x-6">
             <Button 
               size="lg" 
-              className="bg-vaya-primary hover:bg-vaya-primary/90 text-white transition-all duration-300 font-outfit text-base"
+              className="bg-vaya-primary hover:bg-vaya-primary/90 text-white transition-all duration-300 font-outfit"
             >
               {config.primaryCta.text}
               {config.primaryCta.icon}
@@ -118,7 +122,7 @@ const Hero = () => {
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="border-vaya-primary text-vaya-primary hover:bg-vaya-primary/10 font-outfit text-base"
+                className="border-vaya-primary text-vaya-primary hover:bg-vaya-primary/10 font-outfit"
               >
                 {config.secondaryCta.text}
                 {config.secondaryCta.icon}
