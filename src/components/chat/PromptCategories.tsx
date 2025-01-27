@@ -113,10 +113,7 @@ const PromptCategories = ({ onPromptSelect }: PromptCategoriesProps) => {
     return {
       backgroundColor: `${color}15`,
       color: color,
-      border: `1px solid ${color}30`,
-      '&:hover': {
-        backgroundColor: `${color}25`,
-      }
+      borderColor: `${color}30`
     };
   };
 
@@ -128,7 +125,7 @@ const PromptCategories = ({ onPromptSelect }: PromptCategoriesProps) => {
             <PopoverTrigger asChild>
               <Button
                 variant="outline"
-                className={`flex items-center gap-2 transition-colors ${
+                className={`flex items-center gap-2 transition-colors hover:bg-opacity-25 ${
                   selectedCategory === category.name
                     ? "ring-2 ring-offset-2"
                     : ""
@@ -146,24 +143,24 @@ const PromptCategories = ({ onPromptSelect }: PromptCategoriesProps) => {
               sideOffset={5}
             >
               <div className="space-y-1.5">
-                {category.prompts.map((prompt, index) => (
-                  <Button
-                    key={index}
-                    variant="ghost"
-                    className="w-full justify-start text-left whitespace-normal h-auto py-3"
-                    style={{
-                      '&:hover': {
-                        backgroundColor: `${brandColors[category.colorKey]}10`,
-                        color: brandColors[category.colorKey]
-                      }
-                    }}
-                    onClick={() => {
-                      onPromptSelect(prompt);
-                    }}
-                  >
-                    <span className="line-clamp-2">{prompt}</span>
-                  </Button>
-                ))}
+                {category.prompts.map((prompt, index) => {
+                  const color = brandColors[category.colorKey] || '#9b87f5';
+                  return (
+                    <Button
+                      key={index}
+                      variant="ghost"
+                      className={`w-full justify-start text-left whitespace-normal h-auto py-3 hover:bg-opacity-10`}
+                      style={{
+                        color: brandColors[category.colorKey],
+                      }}
+                      onClick={() => {
+                        onPromptSelect(prompt);
+                      }}
+                    >
+                      <span className="line-clamp-2">{prompt}</span>
+                    </Button>
+                  );
+                })}
               </div>
             </PopoverContent>
           </Popover>
