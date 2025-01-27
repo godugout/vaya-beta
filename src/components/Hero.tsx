@@ -3,7 +3,19 @@ import { Button } from "@/components/ui/button";
 import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 
-const heroConfigs = {
+interface CtaConfig {
+  text: string;
+  icon: JSX.Element;
+}
+
+interface HeroConfig {
+  title: string;
+  subtitle: string;
+  primaryCta: CtaConfig;
+  secondaryCta?: CtaConfig;
+}
+
+const heroConfigs: Record<string, HeroConfig> = {
   "/": {
     title: "Preserve Your Legacy",
     subtitle: "Create digital time capsules to preserve and share your most precious memories with loved ones. Capture moments, stories, and experiences for future generations.",
@@ -22,7 +34,7 @@ const heroConfigs = {
     primaryCta: {
       text: "Start Recording",
       icon: <Mic className="ml-2 h-4 w-4" />,
-    },
+    }
   },
   "/family-tree": {
     title: "Connect Your Family Story",
@@ -30,7 +42,7 @@ const heroConfigs = {
     primaryCta: {
       text: "Build Your Tree",
       icon: <Users className="ml-2 h-4 w-4" />,
-    },
+    }
   },
   "/capsules": {
     title: "Digital Time Capsules",
@@ -38,8 +50,8 @@ const heroConfigs = {
     primaryCta: {
       text: "Create Capsule",
       icon: <Image className="ml-2 h-4 w-4" />,
-    },
-  },
+    }
+  }
 };
 
 const Hero = () => {
@@ -47,7 +59,7 @@ const Hero = () => {
   const config = heroConfigs[location.pathname as keyof typeof heroConfigs] || heroConfigs["/"];
 
   return (
-    <div className="relative overflow-hidden bg-white py-24">
+    <div className="relative overflow-hidden bg-gradient-to-b from-white to-vaya-green py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
