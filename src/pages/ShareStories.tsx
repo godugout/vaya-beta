@@ -31,18 +31,18 @@ const ShareStories = () => {
               </div>
               <div className="col-span-4 space-y-6">
                 <div className="bg-white p-6 rounded-lg shadow">
-                  <h2 className="text-xl font-semibold mb-4">Sugerencias para Compartir</h2>
+                  <h2 className="text-xl font-semibold mb-4">Ideas para Compartir</h2>
                   <ul className="space-y-3 text-sm">
-                    <li>• Comparte una memoria de tu niñez</li>
-                    <li>• Cuenta sobre una tradición familiar</li>
-                    <li>• Describe un momento especial con tus abuelos</li>
-                    <li>• Narra una historia de tu cultura</li>
+                    <li>• Share a childhood memory</li>
+                    <li>• Tell us about a family tradition</li>
+                    <li>• Describe a special moment with your grandparents</li>
+                    <li>• Share a story from your culture</li>
                   </ul>
                 </div>
                 <div className="bg-white p-6 rounded-lg shadow">
-                  <h2 className="text-xl font-semibold mb-4">Tus Historias Recientes</h2>
+                  <h2 className="text-xl font-semibold mb-4">Mis Historias</h2>
                   <p className="text-gray-600 text-sm">
-                    Tus historias aparecerán aquí para fácil acceso
+                    Your recent stories will appear here for easy access
                   </p>
                 </div>
               </div>

@@ -8,6 +8,7 @@ interface ChatInputProps {
   handleSend: () => void;
   handleMorePrompts: () => void;
   setIsRecording: (value: boolean) => void;
+  isSpanish: boolean;
 }
 
 const ChatInput = ({
@@ -16,12 +17,13 @@ const ChatInput = ({
   handleSend,
   handleMorePrompts,
   setIsRecording,
+  isSpanish,
 }: ChatInputProps) => {
   return (
     <div className="space-y-2">
       <div className="flex gap-2">
         <Input
-          placeholder="Comparte tu historia..."
+          placeholder={isSpanish ? "Comparte tu historia..." : "Share your story..."}
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyPress={(e) => e.key === "Enter" && handleSend()}
@@ -48,7 +50,7 @@ const ChatInput = ({
         className="w-full text-vaya-gray-600 hover:text-vaya-gray-800 hover:bg-vaya-chat-hover text-sm"
       >
         <MoreHorizontal className="h-5 w-5 mr-2" />
-        Más ideas para compartir
+        {isSpanish ? "Más ideas para compartir" : "More ideas to share"}
       </Button>
     </div>
   );
