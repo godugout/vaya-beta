@@ -9,6 +9,7 @@ interface MobileCapsuleListProps {
     title: string;
     link: string;
     icon: LucideIcon;
+    colorKey: string;
   }[];
 }
 

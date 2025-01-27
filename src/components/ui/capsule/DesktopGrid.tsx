@@ -7,6 +7,7 @@ interface DesktopGridProps {
     title: string;
     link: string;
     icon: LucideIcon;
+    colorKey: string;
   }[];
 }
 
