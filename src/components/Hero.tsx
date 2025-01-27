@@ -24,13 +24,13 @@ const heroConfigs: Record<string, HeroConfig> = {
       icon: <ArrowRight className="ml-2 h-4 w-4" />,
     },
     secondaryCta: {
-      text: "Explore Memories",
+      text: "Learn more",
       icon: <ArrowRight className="ml-2 h-4 w-4" />,
     }
   },
   "/memory-lane": {
-    title: "Walk Down Memory Lane",
-    subtitle: "Revisit and relive your cherished memories through photos, videos, and stories.",
+    title: "Stories That Matter",
+    subtitle: "Discover how people are using Vaya to preserve their most precious memories",
     primaryCta: {
       text: "Start Recording",
       icon: <Mic className="ml-2 h-4 w-4" />,
@@ -59,7 +59,7 @@ const Hero = () => {
   const config = heroConfigs[location.pathname as keyof typeof heroConfigs] || heroConfigs["/"];
 
   return (
-    <div className="relative overflow-hidden bg-gradient-to-b from-white to-vaya-green py-24">
+    <div className="relative overflow-hidden bg-[#222222] py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -67,19 +67,19 @@ const Hero = () => {
           transition={{ duration: 0.6 }}
           className="mx-auto max-w-2xl text-center"
         >
-          <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
             {config.title}
           </h1>
-          <p className="mt-6 text-lg leading-8 text-gray-600">
+          <p className="mt-6 text-lg leading-8 text-gray-300">
             {config.subtitle}
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
-            <Button size="lg" className="bg-vaya-orange hover:bg-orange-600 transition-all duration-300">
+            <Button size="lg" className="bg-[#8B5CF6] hover:bg-[#7C3AED] transition-all duration-300">
               {config.primaryCta.text}
               {config.primaryCta.icon}
             </Button>
             {config.secondaryCta && (
-              <Button size="lg" variant="outline">
+              <Button size="lg" variant="outline" className="text-white border-white hover:bg-white/10">
                 {config.secondaryCta.text}
                 {config.secondaryCta.icon}
               </Button>
