@@ -21,11 +21,11 @@ export const DesktopGrid = ({ capsules }: DesktopGridProps) => {
   const springConfig = { stiffness: 300, damping: 30, bounce: 100 };
 
   const translateX = useSpring(
-    useTransform(scrollYProgress, [0, 1], [0, 1000]),
+    useTransform(scrollYProgress, [0, 1], [0, 1200]),
     springConfig
   );
   const translateXReverse = useSpring(
-    useTransform(scrollYProgress, [0, 1], [0, -1000]),
+    useTransform(scrollYProgress, [0, 1], [0, -1200]),
     springConfig
   );
 
@@ -38,12 +38,12 @@ export const DesktopGrid = ({ capsules }: DesktopGridProps) => {
   return (
     <motion.div 
       ref={ref}
-      className="w-full max-w-7xl mx-auto px-4 py-12 space-y-20"
+      className="w-full max-w-[90vw] 2xl:max-w-7xl mx-auto px-4 py-12 space-y-24"
     >
       {rows.map((row, rowIndex) => (
         <motion.div
           key={rowIndex}
-          className={`flex ${rowIndex % 2 === 0 ? 'flex-row-reverse space-x-reverse' : 'flex-row'} space-x-8`}
+          className={`flex ${rowIndex % 2 === 0 ? 'flex-row-reverse space-x-reverse' : 'flex-row'} space-x-12 md:space-x-16`}
         >
           {row.map((capsule, index) => (
             <motion.div
@@ -51,7 +51,7 @@ export const DesktopGrid = ({ capsules }: DesktopGridProps) => {
               style={{
                 x: rowIndex % 2 === 0 ? translateX : translateXReverse,
                 transformStyle: "preserve-3d",
-                transform: `translateZ(${Math.sin(index * 0.5) * 20}px)`,
+                transform: `translateZ(${Math.sin(index * 0.5) * 30}px)`,
               }}
               className="flex-shrink-0"
             >

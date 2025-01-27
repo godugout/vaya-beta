@@ -25,19 +25,19 @@ export const CapsuleLayout = ({ capsules }: CapsuleLayoutProps) => {
   const springConfig = { stiffness: 300, damping: 30, bounce: 100 };
 
   const rotateX = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [15, 0]),
+    useTransform(scrollYProgress, [0, 0.2], [10, 0]),
     springConfig
   );
   const opacity = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [0.2, 1]),
+    useTransform(scrollYProgress, [0, 0.2], [0.3, 1]),
     springConfig
   );
   const rotateZ = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [20, 0]),
+    useTransform(scrollYProgress, [0, 0.2], [5, 0]),
     springConfig
   );
   const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [-200, 0]),
+    useTransform(scrollYProgress, [0, 0.2], [-100, 0]),
     springConfig
   );
 
@@ -60,7 +60,7 @@ export const CapsuleLayout = ({ capsules }: CapsuleLayoutProps) => {
           className="container mx-auto py-8 sticky top-0"
         >
           <DesktopGrid capsules={capsules} />
-          <div className="max-w-3xl mx-auto text-center mt-12 px-4">
+          <div className="max-w-3xl mx-auto text-center mt-16 px-4">
             <h2 className="text-3xl font-bold text-vaya-gray-900 font-outfit mb-4">
               Explore Family Capsules
             </h2>
