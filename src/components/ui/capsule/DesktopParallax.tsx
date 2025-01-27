@@ -25,32 +25,32 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
     offset: ["start start", "end start"],
   });
 
-  const springConfig = { stiffness: 100, damping: 30, mass: 0.5 };
+  const springConfig = { stiffness: 70, damping: 20, mass: 0.5 };
 
   const translateX = useSpring(
-    useTransform(scrollYProgress, [0, 1], [0, 200]),
+    useTransform(scrollYProgress, [0, 0.8], [0, 150]),
     springConfig
   );
   const translateXReverse = useSpring(
-    useTransform(scrollYProgress, [0, 1], [0, -200]),
+    useTransform(scrollYProgress, [0, 0.8], [0, -150]),
     springConfig
   );
 
   // Adjust these values for a more dramatic slide down and flatten effect
   const rotateX = useSpring(
-    useTransform(scrollYProgress, [0, 0.7], [30, 0]),
+    useTransform(scrollYProgress, [0, 0.6], [25, 0]),
     springConfig
   );
   const opacity = useSpring(
-    useTransform(scrollYProgress, [0, 0.5], [0.2, 1]),
+    useTransform(scrollYProgress, [0, 0.3], [0.3, 1]),
     springConfig
   );
   const rotateZ = useSpring(
-    useTransform(scrollYProgress, [0, 0.7], [20, 0]),
+    useTransform(scrollYProgress, [0, 0.6], [15, 0]),
     springConfig
   );
   const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.7], [-500, 0]),
+    useTransform(scrollYProgress, [0, 0.8], [-300, 0]),
     springConfig
   );
 
@@ -95,9 +95,9 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
           translateY,
           opacity,
         }}
-        className="relative mt-40 mb-20"
+        className="relative -mt-20 mb-20"
       >
-        <div className="space-y-32">
+        <div className="space-y-40">
           <CapsuleRow 
             capsules={firstRow} 
             translateX={translateX} 
