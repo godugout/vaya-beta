@@ -21,11 +21,11 @@ export const DesktopGrid = ({ capsules }: DesktopGridProps) => {
   const springConfig = { stiffness: 300, damping: 30, bounce: 100 };
 
   const translateX = useSpring(
-    useTransform(scrollYProgress, [0, 1], [0, 500]),
+    useTransform(scrollYProgress, [0, 1], [0, 1000]),
     springConfig
   );
   const translateXReverse = useSpring(
-    useTransform(scrollYProgress, [0, 1], [0, -500]),
+    useTransform(scrollYProgress, [0, 1], [0, -1000]),
     springConfig
   );
 
@@ -38,10 +38,7 @@ export const DesktopGrid = ({ capsules }: DesktopGridProps) => {
   return (
     <motion.div 
       ref={ref}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="w-full max-w-7xl mx-auto px-4 py-12 space-y-12"
+      className="w-full max-w-7xl mx-auto px-4 py-12 space-y-20"
     >
       {rows.map((row, rowIndex) => (
         <motion.div
@@ -56,6 +53,7 @@ export const DesktopGrid = ({ capsules }: DesktopGridProps) => {
                 transformStyle: "preserve-3d",
                 transform: `translateZ(${Math.sin(index * 0.5) * 20}px)`,
               }}
+              className="flex-shrink-0"
             >
               <CapsuleCard {...capsule} isDesktop />
             </motion.div>

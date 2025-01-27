@@ -44,7 +44,7 @@ export const CapsuleLayout = ({ capsules }: CapsuleLayoutProps) => {
   return (
     <div 
       ref={ref}
-      className="min-h-screen bg-gradient-to-b from-white to-vaya-gray-50 [perspective:1000px]"
+      className="h-[300vh] bg-gradient-to-b from-white to-vaya-gray-50 [perspective:1000px] [transform-style:preserve-3d]"
     >
       <CapsuleHeader />
       {isMobile ? (
@@ -57,7 +57,7 @@ export const CapsuleLayout = ({ capsules }: CapsuleLayoutProps) => {
             translateY,
             opacity,
           }}
-          className="container mx-auto py-8"
+          className="container mx-auto py-8 sticky top-0"
         >
           <DesktopGrid capsules={capsules} />
           <div className="max-w-3xl mx-auto text-center mt-12 px-4">
