@@ -18,11 +18,18 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        outfit: ['Outfit', 'sans-serif'],
+        inter: ['Inter', 'sans-serif'],
+      },
       colors: {
         vaya: {
           orange: "#F97316",
           peach: "#FDE1D3",
           green: "#F2FCE2",
+          purple: "#9B87F5",
+          "purple-light": "#E5DEFF",
+          "blue-light": "#D3E4FD",
         },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
