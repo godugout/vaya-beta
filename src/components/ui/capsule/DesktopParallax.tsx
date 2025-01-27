@@ -46,7 +46,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
     springConfig
   );
   const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [-700, 300]), // Adjusted to leave space for headline
+    useTransform(scrollYProgress, [0, 0.2], [-700, 200]), // Adjusted to reduce final position
     springConfig
   );
 
@@ -64,7 +64,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
   return (
     <div
       ref={ref}
-      className="h-[300vh] py-40 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      className="h-[200vh] py-20 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
     >
       <CapsuleHeader />
       
@@ -91,6 +91,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
           opacity,
         }}
         id="capsule-grid"
+        className="mb-20"
       >
         <motion.div className="flex flex-row-reverse space-x-reverse space-x-20 mb-20">
           {firstRow.map((capsule) => (
@@ -130,7 +131,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
       {/* Navigation controls that appear when grid is locked */}
       <motion.div
         style={{ opacity: navOpacity }}
-        className="fixed bottom-8 left-0 right-0 z-10 flex justify-center gap-4"
+        className="fixed bottom-32 left-0 right-0 z-10 flex justify-center gap-4"
       >
         <Button
           variant="outline"
