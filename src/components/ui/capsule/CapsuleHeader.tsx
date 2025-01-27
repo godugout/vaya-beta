@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
+import { Camera } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -28,8 +28,7 @@ export const CapsuleHeader = () => {
               className="bg-white text-emerald-600 hover:bg-white/90"
               size="lg"
             >
-              <PlusCircle className="mr-2" />
-              Create a Capsule
+              Create a Capsule <Camera className="ml-2 h-5 w-5" />
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[600px]">

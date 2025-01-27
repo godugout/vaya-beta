@@ -3,7 +3,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { MobileCapsuleList } from "./MobileCapsuleList";
 import { DesktopGrid } from "./DesktopGrid";
 import { CapsuleHeader } from "./CapsuleHeader";
-import { LucideIcon, PlusCircle, Upload, Share2 } from "lucide-react";
+import { LucideIcon, Camera } from "lucide-react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import CreateCapsuleForm from "@/components/capsule/CreateCapsuleForm";
@@ -14,6 +14,13 @@ interface CapsuleLayoutProps {
     link: string;
     icon: LucideIcon;
     colorKey: string;
+    metadata?: {
+      creatorAvatar?: string;
+      creatorInitials: string;
+      itemCount: number;
+      status: "upcoming" | "active" | "locked" | "revealed";
+      date: string;
+    };
   }[];
 }
 
@@ -73,19 +80,19 @@ export const CapsuleLayout = ({ capsules }: CapsuleLayoutProps) => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 max-w-5xl mx-auto">
             <StepCard
               step={1}
-              icon={PlusCircle}
+              icon={Camera}
               title="Create a Capsule"
               description="Give your capsule a theme and set a date for when it should be opened. It could be for a special occasion, anniversary, or future milestone."
             />
             <StepCard
               step={2}
-              icon={Upload}
+              icon={Camera}
               title="Add Your Memories"
               description="Share stories through voice messages, photos, or written notes. Each contribution is kept secret until the reveal date."
             />
             <StepCard
               step={3}
-              icon={Share2}
+              icon={Camera}
               title="Invite Family & Friends"
               description="Let others contribute their memories. Everyone's additions remain a surprise until the capsule is opened together."
             />
@@ -101,8 +108,7 @@ export const CapsuleLayout = ({ capsules }: CapsuleLayoutProps) => {
               className="w-full bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg transition-all duration-300"
               size="lg"
             >
-              <PlusCircle className="mr-2" />
-              Create a Capsule
+              Create a Capsule <Camera className="ml-2 h-5 w-5" />
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[600px]">
@@ -119,8 +125,7 @@ export const CapsuleLayout = ({ capsules }: CapsuleLayoutProps) => {
               className="bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg transition-all duration-300"
               size="lg"
             >
-              <PlusCircle className="mr-2" />
-              Create a Capsule
+              Create a Capsule <Camera className="ml-2 h-5 w-5" />
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[600px]">

@@ -1,7 +1,7 @@
 import React from "react";
 import { CapsuleLayout } from "@/components/ui/capsule/CapsuleLayout";
 import CreateCapsuleForm from "@/components/capsule/CreateCapsuleForm";
-import { PlusCircle, Leaf, Book, BookOpen, Image, Map, Music2, Camera, Users, Heart, Library, Calendar, HeartHandshake, Film } from "lucide-react";
+import { Camera, Book, BookOpen, Image, Map, Music2, Users, Heart, Library, Calendar, HeartHandshake, Film } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -13,7 +13,7 @@ const capsules = [
   {
     title: "Costa Rican Heritage",
     link: "/capsule/costa-rica",
-    icon: Leaf,
+    icon: Camera,
     colorKey: "Nature Green",
     metadata: {
       creatorInitials: "JD",
@@ -139,15 +139,14 @@ const FamilyCapsules = () => {
   return (
     <div className="relative min-h-screen">
       <CapsuleLayout capsules={capsules} />
-      <div className="fixed bottom-24 md:bottom-8 right-8"> {/* Adjusted position to avoid overlap with mobile nav */}
+      <div className="fixed bottom-24 md:bottom-8 right-8">
         <Dialog>
           <DialogTrigger asChild>
             <Button 
               className="bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg"
               size="lg"
             >
-              <PlusCircle className="mr-2" />
-              Create a Capsule
+              Create a Capsule <Camera className="ml-2 h-5 w-5" />
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[600px]">
