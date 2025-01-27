@@ -34,6 +34,16 @@ const heroConfigs: Record<string, HeroConfig> = {
       icon: <ArrowRight className="ml-2 h-5 w-5" />,
     }
   },
+  "/memory-lane": {
+    title_en: "Your Family's Memory Lane",
+    title_es: "El Camino de los Recuerdos Familiares",
+    subtitle_en: "A beautiful collection of stories, photos, and precious moments that make your family unique.",
+    subtitle_es: "Una hermosa colección de historias, fotos y momentos preciosos que hacen única a tu familia.",
+    primaryCta: {
+      text: "Add Memory",
+      icon: <ArrowRight className="ml-2 h-5 w-5" />,
+    }
+  },
   "/share-stories": {
     title_en: "Capture Special Moments",
     title_es: "Captura Momentos Especiales",
