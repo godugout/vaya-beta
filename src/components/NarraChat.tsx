@@ -44,12 +44,15 @@ const NarraChat = () => {
       <div className="border-t border-vaya-chat-border bg-white p-4">
         <div className="max-w-2xl mx-auto">
           {isRecording ? (
-            <VoiceRecorder />
+            <VoiceRecorder
+              onMessageSent={handleSend}
+              setIsRecording={setIsRecording}
+            />
           ) : (
             <ChatInput
               input={input}
               setInput={setInput}
-              handleSend={handleSend}
+              handleSend={() => handleSend()}
               handleMorePrompts={handleMorePrompts}
               setIsRecording={setIsRecording}
               isSpanish={isSpanish}

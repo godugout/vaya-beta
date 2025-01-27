@@ -45,10 +45,17 @@ export const useChat = () => {
     return prompt;
   };
 
-  const handleSend = () => {
-    if (!input.trim()) return;
+  const handleSend = (messageContent?: { content: string; attachments?: { type: string; url: string }[] }) => {
+    const content = messageContent?.content || input;
+    if (!content.trim()) return;
 
-    setMessages((prev) => [...prev, { role: "user", content: input }]);
+    const newMessage: Message = {
+      role: "user",
+      content,
+      attachments: messageContent?.attachments,
+    };
+
+    setMessages((prev) => [...prev, newMessage]);
 
     const nextPrompt = getNextPrompt();
     
