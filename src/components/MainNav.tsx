@@ -1,17 +1,10 @@
-import { Link } from "react-router-dom";
-import { Button } from "./ui/button";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { User } from "@supabase/supabase-js";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { LogOut, User as UserIcon, Clock, Settings, Box, Home } from "lucide-react";
+import { DesktopNav } from "./nav/DesktopNav";
+import { MobileTopNav } from "./nav/MobileTopNav";
+import { MobileBottomNav } from "./nav/MobileBottomNav";
 
 export function MainNav() {
   const navigate = useNavigate();
@@ -38,169 +31,10 @@ export function MainNav() {
 
   return (
     <>
-      {/* Desktop Navigation */}
-      <div className="border-b bg-[#222222] hidden md:block">
-        <div className="flex h-16 items-center px-4 max-w-7xl mx-auto">
-          <Link to="/" className="flex items-center gap-2">
-            <img 
-              src="/lovable-uploads/ef40fff0-4da4-4937-af3d-c2276b1d2588.png" 
-              alt="Vaya Logo" 
-              className="h-8 w-8"
-            />
-            <span className="font-outfit font-bold text-xl text-white">
-              Vaya<sup>α</sup>
-            </span>
-          </Link>
-          <nav className="flex items-center space-x-8 ml-12">
-            <Link
-              to="/memory-lane"
-              className="text-sm font-medium text-gray-300 transition-colors hover:text-white inline-flex items-center gap-2"
-            >
-              <Clock className="h-4 w-4" />
-              Memory Lane
-            </Link>
-            <Link
-              to="/family-capsules"
-              className="text-sm font-medium text-gray-300 transition-colors hover:text-white inline-flex items-center gap-2"
-            >
-              <Box className="h-4 w-4" />
-              Family Capsules
-            </Link>
-          </nav>
-          <div className="ml-auto flex items-center space-x-4">
-            {user ? (
-              <>
-                <Button
-                  variant="ghost"
-                  className="gap-2 text-gray-300 hover:text-white hover:bg-[#333333]"
-                  onClick={() => navigate("/record")}
-                >
-                  Create Memory
-                </Button>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      className="relative h-8 w-8 hover:bg-[#333333]"
-                    >
-                      <Avatar className="h-8 w-8">
-                        <AvatarImage
-                          src={user.user_metadata.avatar_url}
-                          alt={user.user_metadata.full_name}
-                        />
-                        <AvatarFallback>
-                          <UserIcon className="h-4 w-4" />
-                        </AvatarFallback>
-                      </Avatar>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-56" align="end" forceMount>
-                    <DropdownMenuItem onClick={() => navigate("/account")}>
-                      <Settings className="mr-2 h-4 w-4" />
-                      <span>Account Settings</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={handleSignOut}>
-                      <LogOut className="mr-2 h-4 w-4" />
-                      <span>Log out</span>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </>
-            ) : (
-              <Button 
-                onClick={() => navigate("/auth")}
-                className="bg-vaya-green hover:bg-vaya-green/90 text-white"
-              >
-                Sign In
-              </Button>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Navigation */}
-      <div className="md:hidden fixed top-0 left-0 right-0 border-b bg-[#222222] z-50">
-        <div className="flex h-16 items-center px-4">
-          <Link to="/" className="flex items-center gap-2">
-            <img 
-              src="/lovable-uploads/ef40fff0-4da4-4937-af3d-c2276b1d2588.png" 
-              alt="Vaya Logo" 
-              className="h-8 w-8"
-            />
-            <span className="font-outfit font-bold text-xl text-white">
-              Vaya<sup>α</sup>
-            </span>
-          </Link>
-          <div className="ml-auto">
-            {user && (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    className="relative h-8 w-8 hover:bg-[#333333]"
-                  >
-                    <Avatar className="h-8 w-8">
-                      <AvatarImage
-                        src={user.user_metadata.avatar_url}
-                        alt={user.user_metadata.full_name}
-                      />
-                      <AvatarFallback>
-                        <UserIcon className="h-4 w-4" />
-                      </AvatarFallback>
-                    </Avatar>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56" align="end" forceMount>
-                  <DropdownMenuItem onClick={() => navigate("/account")}>
-                    <Settings className="mr-2 h-4 w-4" />
-                    <span>Account Settings</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={handleSignOut}>
-                    <LogOut className="mr-2 h-4 w-4" />
-                    <span>Log out</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Bottom Navigation */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-[#222222] border-t z-50">
-        <div className="flex justify-around items-center h-16 px-4">
-          <Link
-            to="/"
-            className="flex flex-col items-center text-gray-300 hover:text-white"
-          >
-            <Home className="h-6 w-6" />
-            <span className="text-xs mt-1">Home</span>
-          </Link>
-          <Link
-            to="/memory-lane"
-            className="flex flex-col items-center text-gray-300 hover:text-white"
-          >
-            <Clock className="h-6 w-6" />
-            <span className="text-xs mt-1">Memory Lane</span>
-          </Link>
-          <Link
-            to="/family-capsules"
-            className="flex flex-col items-center text-gray-300 hover:text-white"
-          >
-            <Box className="h-6 w-6" />
-            <span className="text-xs mt-1">Capsules</span>
-          </Link>
-          {!user && (
-            <Button 
-              onClick={() => navigate("/auth")}
-              className="bg-vaya-green hover:bg-vaya-green/90 text-white px-4 py-2 rounded-full text-sm"
-            >
-              Sign In
-            </Button>
-          )}
-        </div>
-      </div>
-
+      <DesktopNav user={user} handleSignOut={handleSignOut} navigate={navigate} />
+      <MobileTopNav user={user} handleSignOut={handleSignOut} navigate={navigate} />
+      <MobileBottomNav user={user} navigate={navigate} />
+      
       {/* Mobile Content Padding */}
       <div className="md:hidden h-16" />
       <div className="md:hidden h-16 mb-16" />
