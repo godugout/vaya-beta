@@ -9,11 +9,11 @@ interface PhotoMemoryCardProps {
 
 export const PhotoMemoryCard = ({ memory }: PhotoMemoryCardProps) => {
   return (
-    <Card className="bg-[#2A2A2A] border-[#3A3A3A] overflow-hidden">
+    <Card className="bg-white border-vaya-purple/10 shadow-sm hover:shadow-md transition-shadow duration-200">
       <CardContent className="p-4">
         <div className="flex items-start gap-4">
           {memory.photo_url && (
-            <div className="relative w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
+            <div className="relative w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 border border-vaya-purple/10">
               <img
                 src={memory.photo_url}
                 alt="Memory"
@@ -22,7 +22,7 @@ export const PhotoMemoryCard = ({ memory }: PhotoMemoryCardProps) => {
             </div>
           )}
           <div className="flex-grow">
-            <div className="flex items-center gap-2 text-gray-400 text-sm mb-2">
+            <div className="flex items-center gap-2 text-gray-500 text-sm mb-2">
               <Calendar className="w-4 h-4" />
               {format(new Date(memory.created_at), "MMM d, yyyy")}
             </div>

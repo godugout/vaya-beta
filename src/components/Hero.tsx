@@ -43,8 +43,28 @@ const Hero = () => {
   const config = heroConfigs[location.pathname as keyof typeof heroConfigs] || heroConfigs["/"];
 
   return (
-    <div className="relative overflow-hidden bg-gradient-to-b from-vaya-green/10 to-white py-24">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+    <div className="relative overflow-hidden bg-white py-24">
+      {/* Vintage Wallpaper Pattern */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `
+            radial-gradient(circle at 50% 50%, var(--vaya-peach) 1%, transparent 1.5%),
+            radial-gradient(circle at 50% 50%, var(--vaya-purple-light) 1%, transparent 1.5%)
+          `,
+          backgroundSize: '3rem 3rem',
+          backgroundPosition: '0 0, 1.5rem 1.5rem',
+        }} />
+        <div className="absolute inset-0" style={{
+          backgroundImage: `
+            radial-gradient(circle at 50% 50%, var(--vaya-blue-light) 1%, transparent 1.5%),
+            radial-gradient(circle at 50% 50%, var(--vaya-green) 1%, transparent 1.5%)
+          `,
+          backgroundSize: '4rem 4rem',
+          backgroundPosition: '2rem 2rem, 0 0',
+        }} />
+      </div>
+
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

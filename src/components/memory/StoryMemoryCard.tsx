@@ -33,27 +33,27 @@ export const StoryMemoryCard = ({ memory }: StoryMemoryCardProps) => {
   };
 
   return (
-    <Card className="bg-[#2A2A2A] border-[#3A3A3A] overflow-hidden">
+    <Card className="bg-white border-vaya-purple/10 shadow-sm hover:shadow-md transition-shadow duration-200">
       <CardContent className="p-4">
         <div className="flex items-start gap-4">
           <div className="flex-grow">
-            <div className="flex items-center gap-2 text-gray-400 text-sm mb-2">
+            <div className="flex items-center gap-2 text-gray-500 text-sm mb-2">
               <Calendar className="w-4 h-4" />
               {format(new Date(memory.created_at), "MMM d, yyyy")}
             </div>
-            <h3 className="text-white font-semibold mb-2">
+            <h3 className="text-gray-900 font-semibold mb-2">
               {memory.title || "Untitled Story"}
             </h3>
             <Button
               variant="outline"
               size="sm"
-              className="bg-[#3A3A3A] hover:bg-[#4A4A4A] border-none"
+              className="bg-vaya-purple-light hover:bg-vaya-purple-light/80 border-none text-vaya-purple"
               onClick={handlePlayPause}
             >
               {isPlaying ? (
-                <Pause className="w-4 h-4 text-[#8B5CF6]" />
+                <Pause className="w-4 h-4" />
               ) : (
-                <Play className="w-4 h-4 text-[#8B5CF6]" />
+                <Play className="w-4 h-4" />
               )}
               <span className="ml-2">
                 {isPlaying ? "Pause" : "Play"}

@@ -23,7 +23,7 @@ const MemoryLane = () => {
   }, [navigate]);
 
   return (
-    <div className="min-h-screen bg-[#222222]">
+    <div className="min-h-screen bg-white">
       <Hero />
       <div className="container mx-auto px-4 py-12">
         <div className="mb-12">
@@ -31,10 +31,10 @@ const MemoryLane = () => {
         </div>
         
         <div className="mt-12">
-          <Card className="bg-[#2A2A2A] border-[#3A3A3A]">
+          <Card className="bg-white border-vaya-purple/10">
             <CardHeader>
-              <CardTitle className="text-white">Your Stories</CardTitle>
-              <CardDescription className="text-gray-400">
+              <CardTitle className="text-gray-900 font-outfit">Your Stories</CardTitle>
+              <CardDescription className="text-gray-500">
                 Listen to your recorded memories and stories
               </CardDescription>
             </CardHeader>
