@@ -20,18 +20,18 @@ export const MobileBottomNav = ({ user, navigate }: MobileBottomNavProps) => {
           <span className="text-xs mt-1">Home</span>
         </Link>
         <Link
-          to="/memory-lane"
-          className="flex flex-col items-center text-gray-300 hover:text-white"
-        >
-          <Clock className="h-6 w-6" />
-          <span className="text-xs mt-1">Memory Lane</span>
-        </Link>
-        <Link
           to="/share-stories"
           className="flex flex-col items-center text-gray-300 hover:text-white"
         >
           <Mic className="h-6 w-6" />
           <span className="text-xs mt-1">Share</span>
+        </Link>
+        <Link
+          to="/memory-lane"
+          className="flex flex-col items-center text-gray-300 hover:text-white"
+        >
+          <Clock className="h-6 w-6" />
+          <span className="text-xs mt-1">Memory Lane</span>
         </Link>
         <Link
           to="/family-capsules"

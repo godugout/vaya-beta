@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
-import { Clock, Box, Mic } from "lucide-react";
+import { Clock, Box, Mic, Home } from "lucide-react";
 import { User } from "@supabase/supabase-js";
 import { UserMenu } from "./UserMenu";
 
@@ -13,7 +13,7 @@ interface DesktopNavProps {
 export const DesktopNav = ({ user, handleSignOut, navigate }: DesktopNavProps) => {
   return (
     <div className="border-b bg-[#222222] hidden md:block">
-      <div className="flex h-20 items-center px-4 max-w-7xl mx-auto"> {/* Increased from h-16 to h-20 */}
+      <div className="flex h-20 items-center px-4 max-w-7xl mx-auto">
         <Link to="/" className="flex items-center gap-2">
           <img 
             src="/lovable-uploads/ef40fff0-4da4-4937-af3d-c2276b1d2588.png" 
@@ -26,11 +26,11 @@ export const DesktopNav = ({ user, handleSignOut, navigate }: DesktopNavProps) =
         </Link>
         <nav className="flex items-center space-x-8 ml-12">
           <Link
-            to="/memory-lane"
+            to="/"
             className="text-sm font-medium text-gray-300 transition-colors hover:text-white inline-flex items-center gap-2"
           >
-            <Clock className="h-4 w-4" />
-            Memory Lane
+            <Home className="h-4 w-4" />
+            Home
           </Link>
           <Link
             to="/share-stories"
@@ -38,6 +38,13 @@ export const DesktopNav = ({ user, handleSignOut, navigate }: DesktopNavProps) =
           >
             <Mic className="h-4 w-4" />
             Share Stories
+          </Link>
+          <Link
+            to="/memory-lane"
+            className="text-sm font-medium text-gray-300 transition-colors hover:text-white inline-flex items-center gap-2"
+          >
+            <Clock className="h-4 w-4" />
+            Memory Lane
           </Link>
           <Link
             to="/family-capsules"
