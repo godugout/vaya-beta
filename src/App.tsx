@@ -31,17 +31,19 @@ const App: React.FC = () => {
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <div className="min-h-screen">
+            <div className="min-h-screen flex flex-col">
               <MainNav />
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/auth" element={<Auth />} />
-                <Route path="/memory-lane" element={<MemoryLane />} />
-                <Route path="/share-stories" element={<ShareStories />} />
-                <Route path="/account" element={<Account />} />
-                <Route path="/family-capsules" element={<FamilyCapsules />} />
-                <Route path="/capsule/wildlife" element={<WildlifeCapsule />} />
-              </Routes>
+              <main className="flex-1">
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/auth" element={<Auth />} />
+                  <Route path="/memory-lane" element={<MemoryLane />} />
+                  <Route path="/share-stories" element={<ShareStories />} />
+                  <Route path="/account" element={<Account />} />
+                  <Route path="/family-capsules" element={<FamilyCapsules />} />
+                  <Route path="/capsule/wildlife" element={<WildlifeCapsule />} />
+                </Routes>
+              </main>
             </div>
           </BrowserRouter>
         </TooltipProvider>

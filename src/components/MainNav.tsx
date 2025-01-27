@@ -31,13 +31,15 @@ export function MainNav() {
 
   return (
     <>
-      <DesktopNav user={user} handleSignOut={handleSignOut} navigate={navigate} />
-      <MobileTopNav user={user} handleSignOut={handleSignOut} navigate={navigate} />
+      <div className="fixed top-0 left-0 right-0 z-50">
+        <DesktopNav user={user} handleSignOut={handleSignOut} navigate={navigate} />
+        <MobileTopNav user={user} handleSignOut={handleSignOut} navigate={navigate} />
+      </div>
       <MobileBottomNav user={user} navigate={navigate} />
       
-      {/* Mobile Content Padding */}
-      <div className="md:hidden h-16" />
-      <div className="md:hidden h-16 mb-16" />
+      {/* Content Padding to account for fixed navs */}
+      <div className="h-16" /> {/* Top spacing */}
+      <div className="md:hidden h-16" /> {/* Bottom spacing for mobile */}
     </>
   );
 }

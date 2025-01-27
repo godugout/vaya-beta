@@ -49,13 +49,11 @@ export const DesktopNav = ({ user, handleSignOut, navigate }: DesktopNavProps) =
         </nav>
         <div className="ml-auto flex items-center space-x-4">
           {user ? (
-            <>
-              <UserMenu user={user} handleSignOut={handleSignOut} navigate={navigate} />
-            </>
+            <UserMenu user={user} handleSignOut={handleSignOut} navigate={navigate} />
           ) : (
             <Button 
               onClick={() => navigate("/auth")}
-              className="bg-vaya-green hover:bg-vaya-green/90 text-white"
+              className="bg-vaya-secondary hover:bg-vaya-secondary/90 text-white"
             >
               Sign In
             </Button>
