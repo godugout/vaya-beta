@@ -1,12 +1,13 @@
 import React from "react";
 import { CapsuleLayout } from "@/components/ui/capsule/CapsuleLayout";
 import CreateCapsuleForm from "@/components/capsule/CreateCapsuleForm";
-import CapsuleTicker from "@/components/capsule/CapsuleTicker";
-import { 
-  Users, Heart, Camera, BookOpen, Image, Video,
-  Library, Calendar, HeartPulse, Book, Film,
-  ImageIcon, Palmtree, Map, Music
-} from "lucide-react";
+import { PlusCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const capsules = [
   {
@@ -90,10 +91,22 @@ const FamilyCapsules = () => {
   return (
     <div className="relative min-h-screen">
       <CapsuleLayout capsules={capsules} />
-      <div className="container mx-auto px-4 mt-20 mb-20">
-        <CreateCapsuleForm />
+      <div className="fixed bottom-8 right-8">
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button 
+              className="bg-vaya-secondary hover:bg-vaya-secondary/90 text-white shadow-lg"
+              size="lg"
+            >
+              <PlusCircle className="mr-2" />
+              Create a Capsule
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[600px]">
+            <CreateCapsuleForm />
+          </DialogContent>
+        </Dialog>
       </div>
-      <CapsuleTicker />
     </div>
   );
 };

@@ -10,6 +10,7 @@ import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { DialogClose } from "@/components/ui/dialog";
 
 interface CreateCapsuleFormData {
   title: string;
@@ -55,7 +56,7 @@ const CreateCapsuleForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-white p-6 rounded-lg shadow-md">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div className="space-y-2">
         <h2 className="text-2xl font-bold text-gray-900">Create a New Time Capsule</h2>
         <p className="text-gray-500">Set up a digital time capsule for your family to cherish.</p>
@@ -140,13 +141,18 @@ const CreateCapsuleForm = () => {
           </div>
         </div>
 
-        <Button 
-          type="submit" 
-          className="w-full bg-vaya-secondary hover:bg-vaya-secondary/90"
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? "Creating..." : "Create Time Capsule"}
-        </Button>
+        <div className="flex justify-end space-x-2">
+          <DialogClose asChild>
+            <Button type="button" variant="outline">Cancel</Button>
+          </DialogClose>
+          <Button 
+            type="submit" 
+            className="bg-vaya-secondary hover:bg-vaya-secondary/90"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Creating..." : "Create Time Capsule"}
+          </Button>
+        </div>
       </div>
     </form>
   );
