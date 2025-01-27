@@ -11,8 +11,6 @@ type Memory = {
   type: string;
   content_url: string;
   created_at: string;
-  title?: string;
-  photo_url?: string;
 };
 
 const MemoryFeed = () => {
@@ -22,17 +20,35 @@ const MemoryFeed = () => {
   const { data: memories, isLoading } = useQuery({
     queryKey: ["memories"],
     queryFn: async () => {
+      // First get all memories
       const { data: memoriesData, error: memoriesError } = await supabase
         .from("memories")
-        .select(`
-          *,
-          stories(title),
-          photos(photo_url)
-        `)
+        .select("*")
         .order("created_at", { ascending: false });
 
       if (memoriesError) throw memoriesError;
-      return memoriesData || [];
+
+      // Then fetch associated story titles and photo URLs
+      const enrichedMemories = await Promise.all((memoriesData || []).map(async (memory) => {
+        if (memory.type === "story") {
+          const { data: storyData } = await supabase
+            .from("stories")
+            .select("title")
+            .eq("id", memory.id)
+            .single();
+          return { ...memory, title: storyData?.title };
+        } else if (memory.type === "photo") {
+          const { data: photoData } = await supabase
+            .from("photos")
+            .select("photo_url")
+            .eq("id", memory.id)
+            .single();
+          return { ...memory, photo_url: photoData?.photo_url };
+        }
+        return memory;
+      }));
+
+      return enrichedMemories;
     },
   });
 
