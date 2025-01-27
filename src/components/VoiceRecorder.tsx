@@ -1,8 +1,11 @@
-import React, { useState, useRef } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Mic, Square, Play, Pause, Send, Trash } from "lucide-react";
+import { Send, Trash } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useVoiceRecorder } from "@/hooks/useVoiceRecorder";
+import AudioPreview from "./audio/AudioPreview";
+import RecordingControls from "./audio/RecordingControls";
 
 interface VoiceRecorderProps {
   onMessageSent: (message: { content: string; attachments?: { type: string; url: string }[] }) => void;
@@ -10,74 +13,21 @@ interface VoiceRecorderProps {
 }
 
 const VoiceRecorder = ({ onMessageSent, setIsRecording }: VoiceRecorderProps) => {
-  const [isRecordingActive, setIsRecordingActive] = useState(false);
-  const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-  const audioChunksRef = useRef<Blob[]>([]);
-  const audioElementRef = useRef<HTMLAudioElement | null>(null);
   const { toast } = useToast();
-
-  const startRecording = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      mediaRecorderRef.current = new MediaRecorder(stream);
-      audioChunksRef.current = [];
-
-      mediaRecorderRef.current.ondataavailable = (event) => {
-        audioChunksRef.current.push(event.data);
-      };
-
-      mediaRecorderRef.current.onstop = () => {
-        const audioBlob = new Blob(audioChunksRef.current, { type: "audio/webm" });
-        setAudioBlob(audioBlob);
-        stream.getTracks().forEach((track) => track.stop());
-      };
-
-      mediaRecorderRef.current.start();
-      setIsRecordingActive(true);
-    } catch (error) {
-      console.error("Error accessing microphone:", error);
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "Could not access microphone. Please check your permissions.",
-      });
-    }
-  };
-
-  const stopRecording = () => {
-    if (mediaRecorderRef.current && isRecordingActive) {
-      mediaRecorderRef.current.stop();
-      setIsRecordingActive(false);
-    }
-  };
-
-  const togglePlayback = () => {
-    if (!audioBlob) return;
-
-    if (!audioElementRef.current) {
-      const audio = new Audio(URL.createObjectURL(audioBlob));
-      audioElementRef.current = audio;
-      audio.onended = () => setIsPlaying(false);
-    }
-
-    if (isPlaying) {
-      audioElementRef.current.pause();
-      setIsPlaying(false);
-    } else {
-      audioElementRef.current.play();
-      setIsPlaying(true);
-    }
-  };
+  const {
+    isRecordingActive,
+    audioBlob,
+    startRecording,
+    stopRecording,
+    setAudioBlob
+  } = useVoiceRecorder();
 
   const handleSend = async () => {
     if (!audioBlob) return;
 
     setIsProcessing(true);
     try {
-      // Upload audio file to Supabase Storage
       const fileName = `${crypto.randomUUID()}.webm`;
       const { data: uploadData, error: uploadError } = await supabase.storage
         .from('stories')
@@ -85,19 +35,15 @@ const VoiceRecorder = ({ onMessageSent, setIsRecording }: VoiceRecorderProps) =>
 
       if (uploadError) throw uploadError;
 
-      // Get public URL for the audio file
       const { data: { publicUrl } } = supabase.storage
         .from('stories')
         .getPublicUrl(fileName);
 
-      // Send message with audio attachment
-      // Note: We're temporarily setting the content to a placeholder since we're not using transcription
       onMessageSent({
         content: "Audio message",
         attachments: [{ type: 'audio', url: publicUrl }],
       });
 
-      // Reset recorder state
       setIsRecording(false);
       setAudioBlob(null);
       
@@ -127,36 +73,17 @@ const VoiceRecorder = ({ onMessageSent, setIsRecording }: VoiceRecorderProps) =>
     <div className="space-y-4">
       <div className="flex flex-col gap-4">
         {!audioBlob ? (
-          <Button
-            onClick={isRecordingActive ? stopRecording : startRecording}
-            className={`${
-              isRecordingActive
-                ? "bg-red-500 hover:bg-red-600 animate-pulse"
-                : "bg-vaya-secondary hover:bg-vaya-secondary/90"
-            } text-white w-full`}
-          >
-            {isRecordingActive ? (
-              <Square className="mr-2 h-4 w-4" />
-            ) : (
-              <Mic className="mr-2 h-4 w-4" />
-            )}
-            {isRecordingActive ? "Stop Recording" : "Start Recording"}
-          </Button>
+          <RecordingControls
+            isRecordingActive={isRecordingActive}
+            onStartRecording={startRecording}
+            onStopRecording={stopRecording}
+          />
         ) : (
           <div className="space-y-2">
-            <Button
-              onClick={togglePlayback}
-              variant="outline"
-              className="w-full border-vaya-secondary text-vaya-secondary hover:bg-vaya-secondary hover:text-white"
+            <AudioPreview 
+              audioBlob={audioBlob}
               disabled={isProcessing}
-            >
-              {isPlaying ? (
-                <Pause className="mr-2 h-4 w-4" />
-              ) : (
-                <Play className="mr-2 h-4 w-4" />
-              )}
-              {isPlaying ? "Pause" : "Play"} Recording
-            </Button>
+            />
             
             <div className="flex gap-2">
               <Button
