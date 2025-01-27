@@ -2,8 +2,8 @@ import React from "react";
 
 export const CapsuleHeader = () => {
   return (
-    <div className="relative w-full bg-gradient-to-b from-vaya-primary/90 to-vaya-primary/70 pb-6 sm:pb-8 md:pb-10">
-      <div className="relative z-10 max-w-7xl mx-auto text-center py-4 sm:py-6 md:py-8 px-4">
+    <div className="relative w-full bg-gradient-to-b from-vaya-primary/90 to-vaya-primary/70">
+      <div className="relative z-10 max-w-7xl mx-auto text-center py-16 px-4">
         <h1 className="font-outfit font-bold text-4xl tracking-tight text-white sm:text-6xl mb-4 leading-tight">
           Family Capsules
         </h1>

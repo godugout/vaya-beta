@@ -17,16 +17,18 @@ export const CapsuleLayout = ({ capsules }: CapsuleLayoutProps) => {
   const isMobile = useIsMobile();
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-vaya-gray-50">
-      <div className="pt-24 pb-12">
+    <div className="min-h-screen">
+      <div className="relative">
         <CapsuleHeader />
-        {isMobile ? (
-          <MobileCapsuleList capsules={capsules} />
-        ) : (
-          <div className="container mx-auto px-4">
-            <DesktopGrid capsules={capsules} />
-          </div>
-        )}
+        <div className="pt-16 pb-24">
+          {isMobile ? (
+            <MobileCapsuleList capsules={capsules} />
+          ) : (
+            <div className="container mx-auto px-4">
+              <DesktopGrid capsules={capsules} />
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="bg-white py-16">
