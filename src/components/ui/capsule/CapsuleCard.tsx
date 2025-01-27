@@ -15,15 +15,15 @@ export const CapsuleCard = ({ title, link, icon: Icon, isDesktop = false }: Caps
     return (
       <motion.div
         whileHover={{ scale: 1.05 }}
-        className="group relative w-[320px] h-[100px]"
+        className="group relative w-[360px] h-[120px]"
       >
         <Link to={link} className="block h-full">
           <div className="absolute inset-0 flex items-center justify-between px-8 bg-white rounded-full border-2 border-vaya-gray-200 shadow-lg overflow-hidden">
             <div className="flex items-center gap-6">
-              <div className="p-3 bg-vaya-accent-orange/20 rounded-full">
-                <Icon className="w-8 h-8 text-vaya-primary" />
+              <div className="p-4 bg-vaya-accent-orange/20 rounded-full">
+                <Icon className="w-10 h-10 text-vaya-primary" />
               </div>
-              <h2 className="font-outfit text-xl font-semibold text-vaya-gray-900 truncate max-w-[180px]">
+              <h2 className="font-outfit text-2xl font-semibold text-vaya-gray-900 truncate max-w-[200px]">
                 {title}
               </h2>
             </div>
@@ -31,10 +31,10 @@ export const CapsuleCard = ({ title, link, icon: Icon, isDesktop = false }: Caps
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-r from-vaya-primary to-vaya-secondary rounded-full transition-opacity duration-300" />
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 flex items-center px-8 transition-opacity duration-300">
             <div className="flex items-center gap-6">
-              <div className="p-3 bg-white/20 rounded-full">
-                <Icon className="w-8 h-8 text-white" />
+              <div className="p-4 bg-white/20 rounded-full">
+                <Icon className="w-10 h-10 text-white" />
               </div>
-              <h2 className="font-outfit text-xl font-semibold text-white truncate max-w-[180px]">
+              <h2 className="font-outfit text-2xl font-semibold text-white truncate max-w-[200px]">
                 {title}
               </h2>
             </div>
@@ -50,10 +50,10 @@ export const CapsuleCard = ({ title, link, icon: Icon, isDesktop = false }: Caps
       className="block bg-white rounded-full p-6 transition-all duration-300 hover:bg-vaya-accent-orange/20 border-2 border-vaya-gray-200 shadow-md"
     >
       <div className="flex items-center gap-6">
-        <div className="p-3 bg-vaya-accent-orange/20 rounded-full">
-          <Icon className="w-8 h-8 text-vaya-primary" />
+        <div className="p-4 bg-vaya-accent-orange/20 rounded-full">
+          <Icon className="w-10 h-10 text-vaya-primary" />
         </div>
-        <h3 className="text-xl font-semibold text-vaya-gray-900 font-outfit truncate">
+        <h3 className="text-2xl font-semibold text-vaya-gray-900 font-outfit truncate">
           {title}
         </h3>
       </div>
