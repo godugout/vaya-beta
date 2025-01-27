@@ -1,5 +1,5 @@
 import React from "react";
-import { HeroParallax } from "@/components/ui/hero-parallax";
+import { CapsuleLayout } from "@/components/ui/capsule/CapsuleLayout";
 import { 
   Users, 
   Heart, 
@@ -94,13 +94,7 @@ const capsules = [
 ];
 
 const FamilyCapsules = () => {
-  return (
-    <div className="min-h-screen w-full bg-[#222222]">
-      <div className="absolute top-0 left-0 w-full">
-        <HeroParallax products={capsules} />
-      </div>
-    </div>
-  );
+  return <CapsuleLayout capsules={capsules} />;
 };
 
 export default FamilyCapsules;
