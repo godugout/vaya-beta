@@ -1,30 +1,30 @@
 import React from "react";
 import { HeroParallax } from "@/components/ui/hero-parallax";
 import { 
-  Family, 
+  Users, 
   Heart, 
   Camera, 
   BookOpen, 
   Image, 
   Video,
-  Album,
+  Library,
   Calendar,
   HeartPulse,
   Book,
   Film,
-  Photo
+  ImageIcon
 } from "lucide-react";
 
 const capsules = [
   {
     title: "Summer Memories 2023",
     link: "/capsule/summer-2023",
-    icon: Photo,
+    icon: ImageIcon,
   },
   {
     title: "Family Reunion",
     link: "/capsule/reunion",
-    icon: Family,
+    icon: Users,
   },
   {
     title: "Grandma's Stories",
@@ -59,7 +59,7 @@ const capsules = [
   {
     title: "School Memories",
     link: "/capsule/school",
-    icon: Album,
+    icon: Library,
   },
   {
     title: "Family Videos",
@@ -89,7 +89,7 @@ const capsules = [
   {
     title: "Family Traditions",
     link: "/capsule/traditions",
-    icon: Family,
+    icon: Users,
   }
 ];
 
