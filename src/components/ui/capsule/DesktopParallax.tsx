@@ -46,7 +46,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
     springConfig
   );
   const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [-500, 0]),
+    useTransform(scrollYProgress, [0, 0.2], [-300, 200]), // Adjusted to move cards down 200px
     springConfig
   );
 
@@ -85,7 +85,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
           translateY,
           opacity,
         }}
-        className="relative z-10"
+        className="relative z-[9999]" // Increased z-index to ensure cards are at the topmost level
       >
         {/* First Row */}
         <div className="relative mb-8">
