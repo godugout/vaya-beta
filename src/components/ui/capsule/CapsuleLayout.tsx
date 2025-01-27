@@ -34,7 +34,7 @@ export const CapsuleLayout = ({ capsules }: CapsuleLayoutProps) => {
       <div className="bg-white py-16">
         <div className="max-w-3xl mx-auto text-center px-4">
           <h2 className="text-3xl font-bold text-vaya-gray-900 font-outfit mb-4">
-            Explore Family Capsules
+            Go Back to the Future
           </h2>
           <p className="text-lg text-vaya-gray-600">
             Each capsule represents a unique collection of memories, stories, and moments from your family's journey. 
