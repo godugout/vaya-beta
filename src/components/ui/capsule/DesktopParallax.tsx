@@ -50,7 +50,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
     springConfig
   );
   const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.3], [-300, 0]),
+    useTransform(scrollYProgress, [0, 0.3], [-200, 100]),
     springConfig
   );
 
@@ -95,7 +95,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
           translateY,
           opacity,
         }}
-        className="relative -mt-20 mb-20 w-full max-w-[95%] sm:max-w-[85%] lg:max-w-[80%] mx-auto transform scale-[0.6] sm:scale-[0.7] md:scale-[0.8] lg:scale-[0.9] xl:scale-100"
+        className="relative mt-10 md:mt-20 mb-20 w-full max-w-[95%] sm:max-w-[85%] lg:max-w-[80%] mx-auto transform scale-[0.6] sm:scale-[0.7] md:scale-[0.8] lg:scale-[0.9] xl:scale-100"
       >
         <div className="space-y-32 md:space-y-40">
           <CapsuleRow 
