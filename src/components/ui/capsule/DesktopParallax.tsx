@@ -25,20 +25,20 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
     offset: ["start start", "end start"],
   });
 
-  // Faster spring config for quicker animations
-  const springConfig = { stiffness: 80, damping: 12, mass: 0.4 };
+  const springConfig = { stiffness: 60, damping: 15, mass: 0.5 };
 
   const translateX = useSpring(
-    useTransform(scrollYProgress, [0, 0.3], [0, 150]),
+    useTransform(scrollYProgress, [0, 0.9], [0, 150]),
     springConfig
   );
   const translateXReverse = useSpring(
-    useTransform(scrollYProgress, [0, 0.3], [0, -150]),
+    useTransform(scrollYProgress, [0, 0.9], [0, -150]),
     springConfig
   );
 
+  // Extend the animation range to ensure complete flattening
   const rotateX = useSpring(
-    useTransform(scrollYProgress, [0, 0.25], [25, 0]),
+    useTransform(scrollYProgress, [0, 0.8], [25, 0]),
     springConfig
   );
   const opacity = useSpring(
@@ -46,16 +46,11 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
     springConfig
   );
   const rotateZ = useSpring(
-    useTransform(scrollYProgress, [0, 0.25], [15, 0]),
+    useTransform(scrollYProgress, [0, 0.8], [15, 0]),
     springConfig
   );
-  
-  // Updated translateY with more scroll depth and smoother transition
   const translateY = useSpring(
-    useTransform(scrollYProgress, 
-      [0, 0.2, 0.5], 
-      [-400, -100, 200]
-    ),
+    useTransform(scrollYProgress, [0, 0.9], [-300, 0]),
     springConfig
   );
 
@@ -88,7 +83,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
   return (
     <div
       ref={ref}
-      className="h-[100vh] overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      className="h-[200vh] overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
     >
       <CapsuleHeader />
       <ParallaxHeader opacity={navOpacity} />
@@ -100,9 +95,9 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
           translateY,
           opacity,
         }}
-        className="relative -mt-40 mb-20 w-full max-w-[95%] sm:max-w-[85%] lg:max-w-[80%] mx-auto transform scale-[0.6] sm:scale-[0.7] md:scale-[0.8] lg:scale-[0.9] xl:scale-100"
+        className="relative -mt-20 mb-20"
       >
-        <div className="space-y-32 md:space-y-40">
+        <div className="space-y-40">
           <CapsuleRow 
             capsules={firstRow} 
             translateX={translateX} 
