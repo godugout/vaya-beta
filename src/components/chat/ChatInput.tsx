@@ -18,36 +18,37 @@ const ChatInput = ({
   setIsRecording,
 }: ChatInputProps) => {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="space-y-2">
       <div className="flex gap-2">
         <Input
-          placeholder="Share your story..."
+          placeholder="Comparte tu historia..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyPress={(e) => e.key === "Enter" && handleSend()}
-          className="bg-white border-vaya-chat-border text-vaya-gray-800"
+          className="flex-1 bg-white border-vaya-chat-border text-vaya-gray-800"
         />
         <Button
           onClick={handleSend}
+          size="icon"
           className="bg-vaya-primary hover:bg-vaya-primary/90 text-white"
         >
           <Send className="h-4 w-4" />
         </Button>
         <Button
           onClick={() => setIsRecording(true)}
+          size="icon"
           className="bg-vaya-secondary hover:bg-vaya-secondary/90 text-white"
         >
-          <Mic className="h-4 w-4 mr-2" />
-          Record
+          <Mic className="h-4 w-4" />
         </Button>
       </div>
       <Button
         onClick={handleMorePrompts}
         variant="ghost"
-        className="self-center text-vaya-gray-600 hover:text-vaya-gray-800 hover:bg-vaya-chat-hover"
+        className="w-full text-vaya-gray-600 hover:text-vaya-gray-800 hover:bg-vaya-chat-hover text-sm"
       >
         <MoreHorizontal className="h-5 w-5 mr-2" />
-        More prompts
+        Más ideas para compartir
       </Button>
     </div>
   );

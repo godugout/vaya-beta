@@ -1,24 +1,39 @@
 import { Message } from "./types";
+import { AudioWaveform, Image } from "lucide-react";
 
 interface ChatMessageProps {
   message: Message;
 }
 
 const ChatMessage = ({ message }: ChatMessageProps) => {
+  const isAI = message.role === "assistant";
+
   return (
-    <div
-      className={`flex ${
-        message.role === "assistant" ? "justify-start" : "justify-end"
-      }`}
-    >
+    <div className={`flex ${isAI ? "justify-start" : "justify-end"} items-end gap-2`}>
       <div
         className={`max-w-[80%] rounded-2xl p-4 ${
-          message.role === "assistant"
-            ? "bg-vaya-chat-bg text-vaya-gray-800 border border-vaya-chat-border"
+          isAI
+            ? "bg-gray-100 text-vaya-gray-800"
             : "bg-vaya-primary text-white"
-        } animate-fadeIn shadow-sm`}
+        } shadow-sm animate-fadeIn`}
       >
-        {message.content}
+        <div className="text-sm md:text-base">{message.content}</div>
+        
+        {message.attachments?.map((attachment, index) => (
+          <div key={index} className="mt-2 flex items-center gap-2">
+            {attachment.type === "audio" ? (
+              <>
+                <AudioWaveform className="h-4 w-4" />
+                <span className="text-sm">Audio message</span>
+              </>
+            ) : attachment.type === "image" ? (
+              <>
+                <Image className="h-4 w-4" />
+                <span className="text-sm">Image</span>
+              </>
+            ) : null}
+          </div>
+        ))}
       </div>
     </div>
   );
