@@ -7,6 +7,7 @@ import { MainNav } from "./components/MainNav";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import MemoryLane from "./pages/MemoryLane";
+import Account from "./pages/Account";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/memory-lane" element={<MemoryLane />} />
+            <Route path="/account" element={<Account />} />
           </Routes>
         </div>
       </BrowserRouter>

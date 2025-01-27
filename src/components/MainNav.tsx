@@ -11,7 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogOut, User as UserIcon, Clock, FolderTree, Box } from "lucide-react";
+import { LogOut, User as UserIcon, Clock, FolderTree, Box, Settings } from "lucide-react";
 
 export function MainNav() {
   const navigate = useNavigate();
@@ -93,6 +93,10 @@ export function MainNav() {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56" align="end" forceMount>
+                  <DropdownMenuItem onClick={() => navigate("/account")}>
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Account Settings</span>
+                  </DropdownMenuItem>
                   <DropdownMenuItem onClick={handleSignOut}>
                     <LogOut className="mr-2 h-4 w-4" />
                     <span>Log out</span>
