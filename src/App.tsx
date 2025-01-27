@@ -33,7 +33,7 @@ const App: React.FC = () => {
           <BrowserRouter>
             <div className="min-h-screen flex flex-col">
               <MainNav />
-              <main className="flex-1">
+              <main className="flex-1 w-full max-w-[100vw] overflow-x-hidden">
                 <Routes>
                   <Route path="/" element={<Index />} />
                   <Route path="/auth" element={<Auth />} />

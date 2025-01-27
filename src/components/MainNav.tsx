@@ -38,8 +38,8 @@ export function MainNav() {
       <MobileBottomNav user={user} navigate={navigate} />
       
       {/* Content Padding to account for fixed navs */}
-      <div className="h-20" /> {/* Increased from h-16 to h-20 */}
-      <div className="md:hidden h-16" /> {/* Bottom spacing for mobile */}
+      <div className="h-16 md:h-20" /> {/* Adjusted height for both mobile and desktop */}
+      <div className="md:hidden h-16" /> {/* Bottom spacing only for mobile */}
     </>
   );
 }
