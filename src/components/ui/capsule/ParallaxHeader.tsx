@@ -9,7 +9,7 @@ export const ParallaxHeader = ({ opacity }: ParallaxHeaderProps) => {
   return (
     <motion.div
       style={{ opacity }}
-      className="absolute bottom-8 left-0 right-0 mx-auto px-4 w-full"
+      className="fixed bottom-12 left-0 right-0 mx-auto px-4 w-full bg-white/80 backdrop-blur-sm py-8"
     >
       <div className="max-w-7xl mx-auto">
         <h2 className="text-4xl font-bold text-vaya-gray-900 font-outfit mb-4">

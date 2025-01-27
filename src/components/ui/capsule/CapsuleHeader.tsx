@@ -2,15 +2,15 @@ import React from "react";
 
 export const CapsuleHeader = () => {
   return (
-    <div className="relative w-full bg-gradient-to-b from-vaya-primary/90 to-vaya-primary/70 pb-8 sm:pb-12 md:pb-16">
-      <div className="relative z-10 max-w-7xl mx-auto text-center py-6 sm:py-8 md:py-10 px-4">
+    <div className="relative w-full bg-gradient-to-b from-vaya-primary/90 to-vaya-primary/70 pb-6 sm:pb-8 md:pb-10">
+      <div className="relative z-10 max-w-7xl mx-auto text-center py-4 sm:py-6 md:py-8 px-4">
         <h1 className="font-outfit font-bold text-4xl tracking-tight text-white sm:text-6xl mb-4 leading-tight">
           Family Capsules
         </h1>
         <h2 className="font-outfit font-normal text-2xl sm:text-3xl text-white/90 mb-4 leading-relaxed">
           Your Digital Time Machine
         </h2>
-        <p className="font-inter text-lg leading-8 text-white/90 mb-4">
+        <p className="font-inter text-lg leading-8 text-white/90 mb-2">
           Create and explore digital time capsules filled with your family's most precious memories.
           Each capsule is a unique collection of stories, photos, and moments waiting to be discovered.
         </p>

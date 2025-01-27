@@ -41,7 +41,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
   const finalTranslateY = useSpring(
     useTransform(scrollYProgress, 
       [0.4, 0.6, 0.8, 1], 
-      [0, 120, 240, 360]  // Increased values for more vertical movement
+      [0, 180, 360, 480]  // Increased values for more vertical movement
     ),
     springConfig
   );
@@ -49,7 +49,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
   const rowSpacing = useSpring(
     useTransform(scrollYProgress,
       [0.4, 0.6, 0.8, 1],
-      [40, 60, 80, 100]  // Increased spacing between rows
+      [40, 80, 120, 160]  // Increased spacing between rows
     ),
     springConfig
   );
@@ -81,13 +81,21 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
   const scale = useSpring(
     useTransform(scrollYProgress,
       [0.4, 0.6, 0.8, 1],
-      [1, 0.95, 0.9, 0.85]  // More pronounced scale reduction
+      [1, 0.98, 0.96, 0.94]  // More subtle scale reduction
     ),
     springConfig
   );
 
   const navOpacity = useSpring(
     useTransform(scrollYProgress, [0.2, 0.3], [0, 1]),
+    springConfig
+  );
+
+  const headerOpacity = useSpring(
+    useTransform(scrollYProgress, 
+      [0.8, 0.9], 
+      [0, 1]
+    ),
     springConfig
   );
 
@@ -115,7 +123,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
   return (
     <div
       ref={ref}
-      className="h-[140vh] relative flex flex-col items-center justify-start overflow-hidden antialiased [perspective:1000px] [transform-style:preserve-3d]"
+      className="h-[150vh] relative flex flex-col items-center justify-start overflow-hidden antialiased [perspective:1000px] [transform-style:preserve-3d]"
     >
       <div className="w-full">
         <CapsuleHeader />
@@ -129,7 +137,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
           opacity,
           scale,
         }}
-        className="relative w-full -mt-24"
+        className="relative w-full -mt-32"
       >
         <motion.div 
           style={{ gap: rowSpacing }}
@@ -167,7 +175,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
         }}
       />
       
-      <ParallaxHeader opacity={navOpacity} />
+      <ParallaxHeader opacity={headerOpacity} />
     </div>
   );
 };
