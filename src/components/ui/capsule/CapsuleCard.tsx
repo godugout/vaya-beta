@@ -23,13 +23,13 @@ const brandColors = {
   "Primary Orange": "#F97316",
   "Ocean Blue": "#0EA5E9",
   "Nature Green": "#84CC16"
-};
+} as const;
 
 const statusConfig = {
-  upcoming: { color: "secondary", icon: Calendar },
-  active: { color: "default", icon: CheckSquare },
-  locked: { color: "destructive", icon: AlertOctagon },
-  revealed: { color: "secondary", icon: CheckSquare }
+  upcoming: { color: "secondary", Icon: Calendar },
+  active: { color: "default", Icon: CheckSquare },
+  locked: { color: "destructive", Icon: AlertOctagon },
+  revealed: { color: "secondary", Icon: CheckSquare }
 } as const;
 
 export const CapsuleCard = ({ title, link, icon: Icon, colorKey, isDesktop = false, metadata }: CapsuleCardProps) => {
@@ -71,7 +71,9 @@ export const CapsuleCard = ({ title, link, icon: Icon, colorKey, isDesktop = fal
                       </div>
                     </div>
                     <Badge variant={statusConfig[metadata.status].color as any}>
-                      <statusConfig[metadata.status].icon className="w-3 h-3 mr-1" />
+                      {React.createElement(statusConfig[metadata.status].Icon, {
+                        className: "w-3 h-3 mr-1"
+                      })}
                       {metadata.date}
                     </Badge>
                   </div>
