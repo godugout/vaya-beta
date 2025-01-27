@@ -22,9 +22,9 @@ interface HeroConfig {
 const heroConfigs: Record<string, HeroConfig> = {
   "/": {
     title_en: "Share Your Stories",
-    title_es: "Comparte Tus Historias",
+    title_es: "Descubre, comparte y atesora los momentos más significativos de tu familia",
     subtitle_en: "Create digital time capsules to share your family's stories, traditions, and precious moments with loved ones.",
-    subtitle_es: "Crea cápsulas digitales para compartir las historias, tradiciones y momentos preciosos de tu familia.",
+    subtitle_es: "Vaya transforma tus recuerdos en cápsulas digitales llenas de vida, tradiciones y amor. Crea, guarda y revive historias únicas con herramientas fáciles de usar y asistencia inteligente. Dale voz y color a tus memorias para que vivan por siempre.",
     primaryCta: {
       text: "Start Your Family Collection",
       icon: <ArrowRight className="ml-2 h-4 w-4" />,

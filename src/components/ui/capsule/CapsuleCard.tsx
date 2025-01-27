@@ -41,7 +41,7 @@ const statusConfig = {
 export const CapsuleCard = ({ title, link, icon: Icon, colorKey, isDesktop = false, metadata }: CapsuleCardProps) => {
   const color = brandColors[colorKey as keyof typeof brandColors];
   const lightColor = lightColors[colorKey as keyof typeof lightColors];
-  const isActive = metadata?.status === "active";
+  const hasDetails = !!metadata;
   
   if (isDesktop) {
     return (
@@ -51,7 +51,7 @@ export const CapsuleCard = ({ title, link, icon: Icon, colorKey, isDesktop = fal
             className="absolute inset-0 flex items-center justify-between px-8 bg-white rounded-[30px] border-2 shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl"
             style={{ 
               borderColor: `${color}30`,
-              background: isActive ? lightColor : 'white',
+              background: hasDetails ? lightColor : 'white',
               transform: 'perspective(1000px)',
             }}
           >
@@ -101,7 +101,7 @@ export const CapsuleCard = ({ title, link, icon: Icon, colorKey, isDesktop = fal
       style={{ 
         borderWidth: 2,
         borderColor: `${color}30`,
-        background: isActive ? lightColor : 'white',
+        background: hasDetails ? lightColor : 'white',
       }}
     >
       <div className="flex items-center gap-6">
