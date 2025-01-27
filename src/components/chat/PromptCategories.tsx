@@ -6,82 +6,81 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { 
-  Home, 
-  Baby, 
-  BookOpen, 
-  Calendar, 
-  Trophy 
+  MessageSquare,
+  AudioWaveform,
+  BookOpen
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-
-interface BrandGuideline {
-  id: string;
-  name: string;
-  value: string;
-  description: string;
-}
 
 const categories = [
   {
     name: "Family Traditions",
-    icon: <Home className="h-4 w-4" />,
+    name_es: "Tradiciones Familiares",
+    icon: <MessageSquare className="h-4 w-4" />,
     colorKey: "Primary Purple",
     prompts: [
-      "What special holiday traditions does your family celebrate?",
-      "Tell me about a family recipe that has been passed down through generations.",
-      "What unique customs or rituals make your family gatherings special?",
+      {
+        en: "What special holiday traditions does your family celebrate?",
+        es: "¿Qué tradiciones festivas especiales celebra tu familia?"
+      },
+      {
+        en: "Tell me about a family recipe that has been passed down through generations.",
+        es: "Cuéntame sobre una receta familiar que ha pasado de generación en generación."
+      },
+      {
+        en: "What unique customs make your family gatherings special?",
+        es: "¿Qué costumbres únicas hacen especiales las reuniones de tu familia?"
+      },
     ],
   },
   {
-    name: "Childhood Memories",
-    icon: <Baby className="h-4 w-4" />,
-    colorKey: "Ocean Blue",
-    prompts: [
-      "What was your favorite childhood game or toy?",
-      "Tell me about your most memorable family vacation as a child.",
-      "What was your favorite place to play when you were young?",
-      "Share a story about your best childhood friend.",
-    ],
-  },
-  {
-    name: "Life Lessons",
-    icon: <BookOpen className="h-4 w-4" />,
+    name: "Life Stories",
+    name_es: "Historias de Vida",
+    icon: <AudioWaveform className="h-4 w-4" />,
     colorKey: "Bright Orange",
     prompts: [
-      "What's the most important lesson your parents taught you?",
-      "Share a mistake that taught you something valuable.",
-      "What wisdom would you pass on to future generations?",
+      {
+        en: "What's the most important lesson your parents taught you?",
+        es: "¿Cuál es la lección más importante que te enseñaron tus padres?"
+      },
+      {
+        en: "Share a moment that changed your life's direction.",
+        es: "Comparte un momento que cambió el rumbo de tu vida."
+      },
+      {
+        en: "Tell me about a challenge you overcame that made you stronger.",
+        es: "Cuéntame sobre un desafío que superaste y te hizo más fuerte."
+      },
     ],
   },
   {
-    name: "Historical Events",
-    icon: <Calendar className="h-4 w-4" />,
-    colorKey: "Primary Purple",
-    prompts: [
-      "What historical event had the biggest impact on your family?",
-      "Tell me about how your family came to live where they do now.",
-      "Share a story about how world events shaped your family's journey.",
-      "What was happening in the world when you were growing up?",
-    ],
-  },
-  {
-    name: "Personal Achievements",
-    icon: <Trophy className="h-4 w-4" />,
+    name: "Cultural Heritage",
+    name_es: "Herencia Cultural",
+    icon: <BookOpen className="h-4 w-4" />,
     colorKey: "Ocean Blue",
     prompts: [
-      "What accomplishment are you most proud of?",
-      "Tell me about a challenge you overcame.",
-      "Share a moment when you surprised yourself with what you could do.",
-      "What dream did you achieve that seemed impossible at first?",
+      {
+        en: "What Costa Rican traditions do you maintain in your family?",
+        es: "¿Qué tradiciones costarricenses mantienes en tu familia?"
+      },
+      {
+        en: "Tell me about your favorite local celebration or festival.",
+        es: "Cuéntame sobre tu celebración o festival local favorito."
+      },
+      {
+        en: "Share a story about how your family came to live where they do now.",
+        es: "Comparte una historia sobre cómo tu familia llegó a vivir donde está ahora."
+      },
     ],
   },
 ];
 
 interface PromptCategoriesProps {
   onPromptSelect: (prompt: string) => void;
+  isSpanish?: boolean;
 }
 
-const PromptCategories = ({ onPromptSelect }: PromptCategoriesProps) => {
+const PromptCategories = ({ onPromptSelect, isSpanish = false }: PromptCategoriesProps) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [brandColors, setBrandColors] = useState<Record<string, string>>({});
 
@@ -134,7 +133,7 @@ const PromptCategories = ({ onPromptSelect }: PromptCategoriesProps) => {
                 onClick={() => setSelectedCategory(category.name)}
               >
                 {category.icon}
-                {category.name}
+                {isSpanish ? category.name_es : category.name}
               </Button>
             </PopoverTrigger>
             <PopoverContent 
@@ -149,15 +148,17 @@ const PromptCategories = ({ onPromptSelect }: PromptCategoriesProps) => {
                     <Button
                       key={index}
                       variant="ghost"
-                      className={`w-full justify-start text-left whitespace-normal h-auto py-3 hover:bg-opacity-10`}
+                      className="w-full justify-start text-left whitespace-normal h-auto py-3 hover:bg-opacity-10"
                       style={{
                         color: brandColors[category.colorKey],
                       }}
                       onClick={() => {
-                        onPromptSelect(prompt);
+                        onPromptSelect(isSpanish ? prompt.es : prompt.en);
                       }}
                     >
-                      <span className="line-clamp-2">{prompt}</span>
+                      <span className="line-clamp-2">
+                        {isSpanish ? prompt.es : prompt.en}
+                      </span>
                     </Button>
                   );
                 })}
