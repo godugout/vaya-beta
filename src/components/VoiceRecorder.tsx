@@ -56,7 +56,7 @@ const VoiceRecorder = () => {
   };
 
   return (
-    <div className="flex flex-col items-center space-y-4 p-6 bg-vaya-peach rounded-lg shadow-lg animate-fadeIn">
+    <div className="flex flex-col items-center space-y-4 p-6 bg-vaya-chat-bg rounded-lg shadow-lg animate-fadeIn">
       <div className="text-2xl font-semibold mb-4 text-gray-800">
         Capture Your Memory
       </div>
@@ -65,7 +65,7 @@ const VoiceRecorder = () => {
         {!isRecording ? (
           <Button
             onClick={startRecording}
-            className="bg-vaya-orange hover:bg-orange-600 text-white"
+            className="bg-vaya-secondary hover:bg-vaya-secondary/90 text-white"
           >
             <Mic className="mr-2 h-4 w-4" />
             Start Recording
@@ -84,7 +84,7 @@ const VoiceRecorder = () => {
           <Button
             onClick={togglePlayback}
             variant="outline"
-            className="border-vaya-orange text-vaya-orange hover:bg-vaya-orange hover:text-white"
+            className="border-vaya-secondary text-vaya-secondary hover:bg-vaya-secondary hover:text-white"
           >
             {isPlaying ? (
               <Pause className="mr-2 h-4 w-4" />

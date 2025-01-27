@@ -82,7 +82,7 @@ export const StoryMemoryCard = ({ memory }: StoryMemoryCardProps) => {
               <Button
                 variant="outline"
                 size="sm"
-                className="w-full justify-center bg-gray-50 hover:bg-gray-100 border-gray-200"
+                className="w-full justify-center bg-gray-50 hover:bg-gray-100 border-vaya-secondary text-vaya-secondary hover:bg-vaya-secondary hover:text-white"
                 onClick={handlePlayPause}
               >
                 {isPlaying ? (
@@ -94,15 +94,15 @@ export const StoryMemoryCard = ({ memory }: StoryMemoryCardProps) => {
               </Button>
 
               <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                <Button variant="ghost" size="sm" className="text-gray-500 hover:text-vaya-primary">
+                <Button variant="ghost" size="sm" className="text-gray-500 hover:text-vaya-secondary">
                   <Heart className="w-4 h-4 mr-2" />
                   Like
                 </Button>
-                <Button variant="ghost" size="sm" className="text-gray-500 hover:text-vaya-primary">
+                <Button variant="ghost" size="sm" className="text-gray-500 hover:text-vaya-secondary">
                   <MessageSquare className="w-4 h-4 mr-2" />
                   Comment
                 </Button>
-                <Button variant="ghost" size="sm" className="text-gray-500 hover:text-vaya-primary">
+                <Button variant="ghost" size="sm" className="text-gray-500 hover:text-vaya-secondary">
                   <Share2 className="w-4 h-4 mr-2" />
                   Share
                 </Button>
