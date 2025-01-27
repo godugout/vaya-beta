@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Camera } from "lucide-react";
 import AddMemoryModal from "./AddMemoryModal";
 
 interface AddMemoryButtonProps {
@@ -21,7 +21,7 @@ const AddMemoryButton = ({ variant = "default", size = "default", className }: A
         className={`bg-vaya-primary hover:bg-vaya-primary/90 text-white ${className}`}
         onClick={() => setIsModalOpen(true)}
       >
-        <Plus className="h-4 w-4 mr-2" />
+        <Camera className="h-4 w-4 mr-2" />
         Add Memory
       </Button>
 

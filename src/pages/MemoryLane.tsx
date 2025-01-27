@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import Hero from "@/components/Hero";
 import MemoryFeedLayout from "@/components/memory/MemoryFeedLayout";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Camera } from "lucide-react";
 import AddMemoryButton from "@/components/memory/AddMemoryButton";
 
 const MemoryLane = () => {
@@ -25,12 +25,8 @@ const MemoryLane = () => {
       <Hero />
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-3xl mx-auto">
-          <div className="flex justify-between items-center mb-8">
+          <div className="mb-8">
             <h1 className="text-2xl font-outfit font-semibold text-gray-900">Family Memories</h1>
-            {/* Desktop Add Memory Button */}
-            <div className="hidden md:block">
-              <AddMemoryButton />
-            </div>
           </div>
           <MemoryFeedLayout />
 
@@ -41,7 +37,8 @@ const MemoryLane = () => {
               className="rounded-full bg-vaya-primary hover:bg-vaya-primary/90 text-white shadow-lg"
               onClick={() => document.getElementById('add-memory-modal-trigger')?.click()}
             >
-              <Plus className="h-6 w-6" />
+              <Camera className="h-6 w-6" />
+              <span>Add Memory</span>
             </Button>
           </div>
 
