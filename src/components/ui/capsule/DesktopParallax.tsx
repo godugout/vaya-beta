@@ -20,33 +20,33 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
   const ref = React.useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start start", "0.5 start"], // Reduced from "end start" to "0.5 start"
+    offset: ["start start", "end start"],
   });
 
-  const springConfig = { stiffness: 300, damping: 30, bounce: 100 };
+  const springConfig = { stiffness: 300, damping: 30, bounce: 0 };
 
   const translateX = useSpring(
-    useTransform(scrollYProgress, [0, 0.5], [0, 500]), // Reduced translation distance
+    useTransform(scrollYProgress, [0, 1], [0, 200]),
     springConfig
   );
   const translateXReverse = useSpring(
-    useTransform(scrollYProgress, [0, 0.5], [0, -500]), // Reduced translation distance
+    useTransform(scrollYProgress, [0, 1], [0, -200]),
     springConfig
   );
   const rotateX = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [15, 0]),
+    useTransform(scrollYProgress, [0, 0.5], [15, 0]),
     springConfig
   );
   const opacity = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [0.2, 1]),
+    useTransform(scrollYProgress, [0, 0.5], [0.2, 1]),
     springConfig
   );
   const rotateZ = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [20, 0]),
+    useTransform(scrollYProgress, [0, 0.5], [20, 0]),
     springConfig
   );
   const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [-700, 50]), // Reduced final Y position
+    useTransform(scrollYProgress, [0, 1], [-500, 0]),
     springConfig
   );
 
@@ -79,7 +79,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
   return (
     <div
       ref={ref}
-      className="h-[40vh] py-10 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      className="h-[100vh] py-10 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
     >
       <CapsuleHeader />
       
