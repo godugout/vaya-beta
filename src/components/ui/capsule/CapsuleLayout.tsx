@@ -4,6 +4,9 @@ import { MobileCapsuleList } from "./MobileCapsuleList";
 import { DesktopGrid } from "./DesktopGrid";
 import { CapsuleHeader } from "./CapsuleHeader";
 import { LucideIcon, PlusCircle, Upload, Share2 } from "lucide-react";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import CreateCapsuleForm from "@/components/capsule/CreateCapsuleForm";
 
 interface CapsuleLayoutProps {
   capsules: {
@@ -43,9 +46,9 @@ export const CapsuleLayout = ({ capsules }: CapsuleLayoutProps) => {
   const isMobile = useIsMobile();
 
   return (
-    <div className="min-h-screen pb-32 md:pb-16"> {/* Added bottom padding to prevent content from being cut off */}
+    <div className="min-h-screen pb-32 md:pb-16">
       <div className="relative">
-        <CapsuleHeader /> {/* Restored the CapsuleHeader component */}
+        <CapsuleHeader />
         <div className="pt-8 md:pt-16 pb-16 md:pb-24">
           {isMobile ? (
             <MobileCapsuleList capsules={capsules} />
@@ -88,6 +91,42 @@ export const CapsuleLayout = ({ capsules }: CapsuleLayoutProps) => {
             />
           </div>
         </div>
+      </div>
+
+      {/* Mobile CTA Bar */}
+      <div className="md:hidden fixed bottom-16 left-0 right-0 p-4 bg-gradient-to-t from-white via-white to-transparent">
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button 
+              className="w-full bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg animate-pulse hover:animate-none transition-all duration-300"
+              size="lg"
+            >
+              <PlusCircle className="mr-2" />
+              Create a Capsule
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[600px]">
+            <CreateCapsuleForm />
+          </DialogContent>
+        </Dialog>
+      </div>
+
+      {/* Desktop Floating Button */}
+      <div className="hidden md:block fixed bottom-8 right-8">
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button 
+              className="bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg hover:shadow-emerald-200/50 transition-all duration-300"
+              size="lg"
+            >
+              <PlusCircle className="mr-2" />
+              Create a Capsule
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[600px]">
+            <CreateCapsuleForm />
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );

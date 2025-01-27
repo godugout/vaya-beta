@@ -1,6 +1,5 @@
 import React from "react";
 import { CapsuleCard } from "./CapsuleCard";
-import { CapsuleHeader } from "./CapsuleHeader";
 import { LucideIcon } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -15,10 +14,9 @@ interface MobileCapsuleListProps {
 
 export const MobileCapsuleList = ({ capsules }: MobileCapsuleListProps) => {
   return (
-    <div className="min-h-screen py-8 px-4">
-      <CapsuleHeader />
+    <div className="px-4">
       <motion.div 
-        className="grid grid-cols-1 gap-4 mt-8"
+        className="grid grid-cols-1 gap-4"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
