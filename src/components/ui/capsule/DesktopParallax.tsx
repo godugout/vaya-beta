@@ -46,7 +46,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
     springConfig
   );
   const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [-300, 200]), // Adjusted to move cards down 200px
+    useTransform(scrollYProgress, [0, 0.2], [-300, 0]),
     springConfig
   );
 
@@ -74,10 +74,8 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
   return (
     <div
       ref={ref}
-      className="h-[40vh] py-4 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      className="h-[300vh] py-40 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
     >
-      <CapsuleHeader />
-      
       <motion.div
         style={{
           rotateX,
@@ -85,10 +83,10 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
           translateY,
           opacity,
         }}
-        className="relative z-[9999]" // Increased z-index to ensure cards are at the topmost level
+        className="flex flex-col gap-16 sticky top-0 pt-32"
       >
         {/* First Row */}
-        <div className="relative mb-8">
+        <div className="relative">
           <motion.div className="flex flex-row-reverse space-x-reverse space-x-20">
             {firstRow.map((capsule, index) => (
               <motion.div
@@ -124,7 +122,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
         </div>
 
         {/* Second Row */}
-        <div className="relative mb-8">
+        <div className="relative">
           <motion.div className="flex flex-row space-x-20">
             {secondRow.map((capsule, index) => (
               <motion.div
