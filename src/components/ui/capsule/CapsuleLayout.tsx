@@ -16,7 +16,7 @@ export const CapsuleLayout = ({ capsules }: CapsuleLayoutProps) => {
   const isMobile = useIsMobile();
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-b from-vaya-gray-50 to-vaya-gray-100">
+    <div className="min-h-screen w-full bg-white">
       <div className="absolute top-0 left-0 w-full">
         {isMobile ? (
           <MobileCapsuleList capsules={capsules} />
