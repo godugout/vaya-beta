@@ -25,32 +25,32 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
     offset: ["start start", "end start"],
   });
 
-  const springConfig = { stiffness: 70, damping: 20, mass: 0.5 };
+  const springConfig = { stiffness: 60, damping: 15, mass: 0.5 };
 
   const translateX = useSpring(
-    useTransform(scrollYProgress, [0, 0.8], [0, 150]),
+    useTransform(scrollYProgress, [0, 0.9], [0, 150]),
     springConfig
   );
   const translateXReverse = useSpring(
-    useTransform(scrollYProgress, [0, 0.8], [0, -150]),
+    useTransform(scrollYProgress, [0, 0.9], [0, -150]),
     springConfig
   );
 
-  // Adjust these values for a more dramatic slide down and flatten effect
+  // Extend the animation range to ensure complete flattening
   const rotateX = useSpring(
-    useTransform(scrollYProgress, [0, 0.6], [25, 0]),
+    useTransform(scrollYProgress, [0, 0.8], [25, 0]),
     springConfig
   );
   const opacity = useSpring(
-    useTransform(scrollYProgress, [0, 0.3], [0.3, 1]),
+    useTransform(scrollYProgress, [0, 0.4], [0.3, 1]),
     springConfig
   );
   const rotateZ = useSpring(
-    useTransform(scrollYProgress, [0, 0.6], [15, 0]),
+    useTransform(scrollYProgress, [0, 0.8], [15, 0]),
     springConfig
   );
   const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.8], [-300, 0]),
+    useTransform(scrollYProgress, [0, 0.9], [-300, 0]),
     springConfig
   );
 
@@ -83,7 +83,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
   return (
     <div
       ref={ref}
-      className="h-[150vh] overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      className="h-[200vh] overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
     >
       <CapsuleHeader />
       <ParallaxHeader opacity={navOpacity} />
