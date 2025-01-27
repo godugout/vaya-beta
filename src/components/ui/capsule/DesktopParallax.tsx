@@ -84,7 +84,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
       ref={ref}
       className="h-[120vh] overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
     >
-      <div className="mt-8"> {/* Changed from -mt-20 to mt-8 for more padding */}
+      <div className="mt-8">
         <CapsuleHeader />
       </div>
       
@@ -95,7 +95,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
           translateY,
           opacity,
         }}
-        className="relative mt-10 mb-20"
+        className="relative -mt-16 mb-20"
       >
         <div className="space-y-20">
           <CapsuleRow 
