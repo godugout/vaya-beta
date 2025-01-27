@@ -12,7 +12,9 @@ const ShareStories = () => {
       <CardContent>
         <Tabs defaultValue="voice" className="w-full">
           <TabsList className="w-full">
-            <TabsTrigger value="voice" className="w-full">Voice Recording</TabsTrigger>
+            <TabsTrigger value="voice" className="w-full bg-vaya-secondary/10 data-[state=active]:bg-vaya-secondary data-[state=active]:text-white">
+              Voice Recording
+            </TabsTrigger>
             <TabsTrigger value="upload" className="w-full">Upload Memory</TabsTrigger>
           </TabsList>
           <TabsContent value="voice">
