@@ -1,5 +1,5 @@
 import React from "react";
-import { motion, useScroll, useTransform, useSpring, MotionValue } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { CapsuleCard } from "./CapsuleCard";
 import { CapsuleHeader } from "./CapsuleHeader";
 import { LucideIcon, ChevronLeft, ChevronRight } from "lucide-react";
@@ -46,29 +46,43 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
     springConfig
   );
   const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [-700, 300]), // Adjusted to leave space for headline
+    useTransform(scrollYProgress, [0, 0.2], [-700, 300]),
     springConfig
   );
 
-  // Navigation opacity - only shows when grid is locked
   const navOpacity = useSpring(
     useTransform(scrollYProgress, [0.1, 0.2], [0, 1]),
     springConfig
   );
 
-  const scrollToGrid = () => {
-    const element = document.getElementById('capsule-grid');
-    element?.scrollIntoView({ behavior: 'smooth' });
+  const [rowIndices, setRowIndices] = React.useState({
+    first: 0,
+    second: 0,
+    third: 0
+  });
+
+  const handleScroll = (row: 'first' | 'second' | 'third', direction: 'left' | 'right') => {
+    setRowIndices(prev => {
+      const maxIndex = row === 'first' ? firstRow.length - 1 : 
+                      row === 'second' ? secondRow.length - 1 : 
+                      thirdRow.length - 1;
+      
+      const currentIndex = prev[row];
+      const newIndex = direction === 'left' ? 
+        Math.max(0, currentIndex - 1) : 
+        Math.min(maxIndex, currentIndex + 1);
+      
+      return { ...prev, [row]: newIndex };
+    });
   };
 
   return (
     <div
       ref={ref}
-      className="h-[300vh] py-40 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      className="h-[200vh] py-40 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
     >
       <CapsuleHeader />
       
-      {/* Headline and description that appears when grid is locked */}
       <motion.div
         style={{ opacity: navOpacity }}
         className="fixed top-32 left-0 right-0 z-10 pointer-events-none"
@@ -90,66 +104,115 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
           translateY,
           opacity,
         }}
-        id="capsule-grid"
+        className="relative"
       >
-        <motion.div className="flex flex-row-reverse space-x-reverse space-x-20 mb-20">
-          {firstRow.map((capsule) => (
-            <motion.div
-              style={{ x: translateX }}
-              whileHover={{ y: -20 }}
-              key={capsule.title}
+        {/* First Row */}
+        <div className="relative">
+          <motion.div className="flex flex-row-reverse space-x-reverse space-x-20 mb-20">
+            {firstRow.map((capsule, index) => (
+              <motion.div
+                style={{ x: translateX }}
+                whileHover={{ y: -20 }}
+                key={capsule.title}
+                className={index < rowIndices.first ? 'opacity-0' : 'opacity-100'}
+              >
+                <CapsuleCard {...capsule} isDesktop />
+              </motion.div>
+            ))}
+          </motion.div>
+          <div className="absolute -right-20 top-1/2 -translate-y-1/2 flex gap-2">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => handleScroll('first', 'left')}
+              disabled={rowIndices.first === 0}
+              className="bg-white/90 backdrop-blur-sm"
             >
-              <CapsuleCard {...capsule} isDesktop />
-            </motion.div>
-          ))}
-        </motion.div>
-        <motion.div className="flex flex-row mb-20 space-x-20">
-          {secondRow.map((capsule) => (
-            <motion.div
-              style={{ x: translateXReverse }}
-              whileHover={{ y: -20 }}
-              key={capsule.title}
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => handleScroll('first', 'right')}
+              disabled={rowIndices.first === firstRow.length - 1}
+              className="bg-white/90 backdrop-blur-sm"
             >
-              <CapsuleCard {...capsule} isDesktop />
-            </motion.div>
-          ))}
-        </motion.div>
-        <motion.div className="flex flex-row-reverse space-x-reverse space-x-20">
-          {thirdRow.map((capsule) => (
-            <motion.div
-              style={{ x: translateX }}
-              whileHover={{ y: -20 }}
-              key={capsule.title}
-            >
-              <CapsuleCard {...capsule} isDesktop />
-            </motion.div>
-          ))}
-        </motion.div>
-      </motion.div>
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
 
-      {/* Navigation controls that appear when grid is locked */}
-      <motion.div
-        style={{ opacity: navOpacity }}
-        className="fixed bottom-8 left-0 right-0 z-10 flex justify-center gap-4"
-      >
-        <Button
-          variant="outline"
-          size="lg"
-          className="bg-white/90 backdrop-blur-sm"
-          onClick={() => scrollToGrid()}
-        >
-          <ChevronLeft className="mr-2 h-4 w-4" />
-          Previous
-        </Button>
-        <Button
-          variant="outline"
-          size="lg"
-          className="bg-white/90 backdrop-blur-sm"
-          onClick={() => scrollToGrid()}
-        >
-          Next
-          <ChevronRight className="ml-2 h-4 w-4" />
-        </Button>
+        {/* Second Row */}
+        <div className="relative">
+          <motion.div className="flex flex-row mb-20 space-x-20">
+            {secondRow.map((capsule, index) => (
+              <motion.div
+                style={{ x: translateXReverse }}
+                whileHover={{ y: -20 }}
+                key={capsule.title}
+                className={index < rowIndices.second ? 'opacity-0' : 'opacity-100'}
+              >
+                <CapsuleCard {...capsule} isDesktop />
+              </motion.div>
+            ))}
+          </motion.div>
+          <div className="absolute -left-20 top-1/2 -translate-y-1/2 flex gap-2">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => handleScroll('second', 'left')}
+              disabled={rowIndices.second === 0}
+              className="bg-white/90 backdrop-blur-sm"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => handleScroll('second', 'right')}
+              disabled={rowIndices.second === secondRow.length - 1}
+              className="bg-white/90 backdrop-blur-sm"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+
+        {/* Third Row */}
+        <div className="relative">
+          <motion.div className="flex flex-row-reverse space-x-reverse space-x-20">
+            {thirdRow.map((capsule, index) => (
+              <motion.div
+                style={{ x: translateX }}
+                whileHover={{ y: -20 }}
+                key={capsule.title}
+                className={index < rowIndices.third ? 'opacity-0' : 'opacity-100'}
+              >
+                <CapsuleCard {...capsule} isDesktop />
+              </motion.div>
+            ))}
+          </motion.div>
+          <div className="absolute -right-20 top-1/2 -translate-y-1/2 flex gap-2">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => handleScroll('third', 'left')}
+              disabled={rowIndices.third === 0}
+              className="bg-white/90 backdrop-blur-sm"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => handleScroll('third', 'right')}
+              disabled={rowIndices.third === thirdRow.length - 1}
+              className="bg-white/90 backdrop-blur-sm"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
       </motion.div>
     </div>
   );
