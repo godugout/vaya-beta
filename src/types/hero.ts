@@ -1,8 +1,5 @@
-import { LucideIcon } from "lucide-react";
-
 export interface CtaConfig {
   text: string;
-  icon: JSX.Element;
 }
 
 export interface HeroConfig {
