@@ -47,13 +47,6 @@ const ShareStories = () => {
     checkUser();
   }, [navigate]);
 
-  // Hardcoded colors that override any family brand colors
-  const categoryColors = {
-    "Primary Orange": "#F97316",
-    "Ocean Blue": "#0EA5E9",
-    "Nature Green": "#84CC16"
-  };
-
   const categories: StoryCategory[] = [
     {
       title_en: "Family Traditions",
@@ -84,55 +77,49 @@ const ShareStories = () => {
     },
   ];
 
-  if (isMobile) {
-    return (
-      <div className="min-h-screen bg-gray-50">
-        <Hero />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="py-8">
-            <NarraChat />
-          </div>
-        </div>
-        <StyleEditor />
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-gray-50">
       <Hero />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="py-8">
-          <div className="grid grid-cols-12 gap-8">
-            <div className="col-span-8 bg-white rounded-lg shadow">
-              <NarraChat />
+          {isMobile ? (
+            <NarraChat />
+          ) : (
+            <div className="grid grid-cols-12 gap-8">
+              <div className="col-span-8 bg-white rounded-lg shadow">
+                <NarraChat />
+              </div>
+              <div className="col-span-4 space-y-6">
+                {categories.map((category, index) => {
+                  const bgColor = category.colorKey === "Primary Orange" 
+                    ? "#F97316" 
+                    : category.colorKey === "Ocean Blue" 
+                    ? "#0EA5E9" 
+                    : "#84CC16";
+                  
+                  return (
+                    <Card 
+                      key={index} 
+                      style={{ backgroundColor: bgColor }}
+                      className="hover:shadow-lg transition-shadow duration-200"
+                    >
+                      <CardHeader>
+                        <div className="mb-4">{category.icon}</div>
+                        <CardTitle className="text-xl text-white font-outfit">
+                          {isSpanish ? category.title_es : category.title_en}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-white/90 font-inter">
+                          {isSpanish ? category.description_es : category.description_en}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
+              </div>
             </div>
-            <div className="col-span-4 space-y-6">
-              {categories.map((category, index) => {
-                const bgColor = categoryColors[category.colorKey as keyof typeof categoryColors];
-                
-                return (
-                  <Card 
-                    key={index} 
-                    style={{ backgroundColor: bgColor }}
-                    className="hover:shadow-lg transition-shadow duration-200"
-                  >
-                    <CardHeader>
-                      <div className="mb-4">{category.icon}</div>
-                      <CardTitle className="text-xl text-white font-outfit">
-                        {isSpanish ? category.title_es : category.title_en}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-white/90 font-inter">
-                        {isSpanish ? category.description_es : category.description_en}
-                      </p>
-                    </CardContent>
-                  </Card>
-                );
-              })}
-            </div>
-          </div>
+          )}
         </div>
       </div>
       <StyleEditor />
