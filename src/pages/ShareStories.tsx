@@ -60,7 +60,7 @@ const ShareStories = () => {
       description_en: "Share cherished family traditions and customs that have been passed down through generations.",
       description_es: "Comparte tradiciones y costumbres familiares que han pasado de generación en generación.",
       icon: <MessageSquare className="h-8 w-8 text-white" />,
-      colorKey: "Primary Purple",
+      colorKey: "Primary Orange",
       chatCategory: "traditions"
     },
     {
@@ -69,7 +69,7 @@ const ShareStories = () => {
       description_en: "Record personal journeys and important moments that shaped your family's story.",
       description_es: "Graba historias personales y momentos importantes que formaron la historia de tu familia.",
       icon: <AudioWaveform className="h-8 w-8 text-white" />,
-      colorKey: "Bright Orange",
+      colorKey: "Ocean Blue",
       chatCategory: "life-lessons"
     },
     {
@@ -78,7 +78,7 @@ const ShareStories = () => {
       description_en: "Share stories about your Costa Rican heritage and cultural experiences.",
       description_es: "Comparte historias sobre tu herencia costarricense y experiencias culturales.",
       icon: <BookOpen className="h-8 w-8 text-white" />,
-      colorKey: "Ocean Blue",
+      colorKey: "Nature Green",
       chatCategory: "heritage"
     },
   ];
@@ -105,25 +105,34 @@ const ShareStories = () => {
               <NarraChat />
             </div>
             <div className="col-span-4 space-y-6">
-              {categories.map((category, index) => (
-                <Card 
-                  key={index} 
-                  style={{ backgroundColor: brandColors[category.colorKey] || '#9b87f5' }}
-                  className="hover:shadow-lg transition-shadow duration-200"
-                >
-                  <CardHeader>
-                    <div className="mb-4">{category.icon}</div>
-                    <CardTitle className="text-xl text-white font-outfit">
-                      {isSpanish ? category.title_es : category.title_en}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-white/90">
-                      {isSpanish ? category.description_es : category.description_en}
-                    </p>
-                  </CardContent>
-                </Card>
-              ))}
+              {categories.map((category, index) => {
+                const colorMap = {
+                  "Primary Orange": "#F97316",
+                  "Ocean Blue": "#0EA5E9",
+                  "Nature Green": "#84CC16"
+                };
+                const bgColor = colorMap[category.colorKey as keyof typeof colorMap] || "#F97316";
+                
+                return (
+                  <Card 
+                    key={index} 
+                    style={{ backgroundColor: bgColor }}
+                    className="hover:shadow-lg transition-shadow duration-200"
+                  >
+                    <CardHeader>
+                      <div className="mb-4">{category.icon}</div>
+                      <CardTitle className="text-xl text-white font-outfit">
+                        {isSpanish ? category.title_es : category.title_en}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-white/90 font-inter">
+                        {isSpanish ? category.description_es : category.description_en}
+                      </p>
+                    </CardContent>
+                  </Card>
+                );
+              })}
             </div>
           </div>
         </div>

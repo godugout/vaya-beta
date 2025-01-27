@@ -48,16 +48,16 @@ const Hero = () => {
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0" style={{
           backgroundImage: `
-            radial-gradient(circle at 50% 50%, var(--vaya-accent-yellow) 1%, transparent 1.5%),
-            radial-gradient(circle at 50% 50%, var(--vaya-accent-green) 1%, transparent 1.5%)
+            radial-gradient(circle at 50% 50%, #FEF7CD 1%, transparent 1.5%),
+            radial-gradient(circle at 50% 50%, #F2FCE2 1%, transparent 1.5%)
           `,
           backgroundSize: '3rem 3rem',
           backgroundPosition: '0 0, 1.5rem 1.5rem',
         }} />
         <div className="absolute inset-0" style={{
           backgroundImage: `
-            radial-gradient(circle at 50% 50%, var(--vaya-accent-orange) 1%, transparent 1.5%),
-            radial-gradient(circle at 50% 50%, var(--vaya-secondary) 1%, transparent 1.5%)
+            radial-gradient(circle at 50% 50%, #FEC6A1 1%, transparent 1.5%),
+            radial-gradient(circle at 50% 50%, #0EA5E9 1%, transparent 1.5%)
           `,
           backgroundSize: '4rem 4rem',
           backgroundPosition: '2rem 2rem, 0 0',
@@ -71,7 +71,7 @@ const Hero = () => {
           transition={{ duration: 0.6 }}
           className="mx-auto max-w-2xl text-center"
         >
-          <h1 className="font-outfit font-bold text-4xl tracking-tight text-gray-900 sm:text-6xl mb-6">
+          <h1 className="font-outfit font-bold text-4xl tracking-tight text-gray-900 sm:text-6xl mb-6 leading-tight">
             {config.title}
           </h1>
           <p className="font-inter text-lg leading-8 text-gray-600 mb-10">
