@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Camera } from "lucide-react";
+import { Hourglass } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -28,7 +28,8 @@ export const CapsuleHeader = () => {
               className="bg-white text-emerald-600 hover:bg-white/90"
               size="lg"
             >
-              Create a Capsule <Camera className="ml-2 h-5 w-5" />
+              <span>Create a Capsule</span>
+              <Hourglass className="ml-2 h-5 w-5" />
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[600px]">
