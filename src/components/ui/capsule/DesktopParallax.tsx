@@ -46,7 +46,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
     springConfig
   );
   const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [-700, 200]), // Adjusted to reduce final position
+    useTransform(scrollYProgress, [0, 0.2], [-500, 100]), // Reduced initial and final positions
     springConfig
   );
 
@@ -64,14 +64,14 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
   return (
     <div
       ref={ref}
-      className="h-[200vh] py-20 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      className="h-[150vh] py-10 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]" // Reduced height and padding
     >
       <CapsuleHeader />
       
       {/* Headline and description that appears when grid is locked */}
       <motion.div
         style={{ opacity: navOpacity }}
-        className="fixed top-32 left-0 right-0 z-10 pointer-events-none"
+        className="fixed top-24 left-0 right-0 z-10 pointer-events-none" // Moved closer to top
       >
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-4xl font-bold text-vaya-gray-900 font-outfit mb-4">
@@ -91,9 +91,9 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
           opacity,
         }}
         id="capsule-grid"
-        className="mb-20"
+        className="mb-10" // Reduced bottom margin
       >
-        <motion.div className="flex flex-row-reverse space-x-reverse space-x-20 mb-20">
+        <motion.div className="flex flex-row-reverse space-x-reverse space-x-20 mb-16"> {/* Reduced margin */}
           {firstRow.map((capsule) => (
             <motion.div
               style={{ x: translateX }}
@@ -104,7 +104,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
             </motion.div>
           ))}
         </motion.div>
-        <motion.div className="flex flex-row mb-20 space-x-20">
+        <motion.div className="flex flex-row mb-16 space-x-20"> {/* Reduced margin */}
           {secondRow.map((capsule) => (
             <motion.div
               style={{ x: translateXReverse }}
@@ -131,7 +131,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
       {/* Navigation controls that appear when grid is locked */}
       <motion.div
         style={{ opacity: navOpacity }}
-        className="fixed bottom-32 left-0 right-0 z-10 flex justify-center gap-4"
+        className="fixed bottom-24 left-0 right-0 z-10 flex justify-center gap-4" // Adjusted position
       >
         <Button
           variant="outline"
