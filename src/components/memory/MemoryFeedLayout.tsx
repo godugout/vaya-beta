@@ -1,11 +1,34 @@
+import { useEffect, useRef, useCallback } from "react";
 import { StoryMemoryCard } from "./StoryMemoryCard";
 import { PhotoMemoryCard } from "./PhotoMemoryCard";
 import { useMemories } from "./useMemories";
 import { Memory } from "./types";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useInView } from "framer-motion";
 
 const MemoryFeedLayout = () => {
-  const { data: memories, isLoading } = useMemories();
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+  } = useMemories();
+
+  const loadMoreRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(loadMoreRef);
+
+  const loadMore = useCallback(() => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+
+  useEffect(() => {
+    if (isInView) {
+      loadMore();
+    }
+  }, [isInView, loadMore]);
 
   if (isLoading) {
     return (
@@ -26,7 +49,9 @@ const MemoryFeedLayout = () => {
     );
   }
 
-  if (!memories?.length) {
+  const memories = data?.pages.flatMap((page) => page.memories) ?? [];
+
+  if (!memories.length) {
     return (
       <div className="text-center py-12 bg-white rounded-lg shadow-sm">
         <div className="mx-auto w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4">
@@ -61,6 +86,16 @@ const MemoryFeedLayout = () => {
           )}
         </div>
       ))}
+      
+      {(hasNextPage || isFetchingNextPage) && (
+        <div ref={loadMoreRef} className="py-4">
+          {isFetchingNextPage && (
+            <div className="flex justify-center">
+              <div className="animate-pulse text-gray-400">Loading more memories...</div>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

@@ -1,6 +1,65 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Memory, StoryMemory, PhotoMemory } from "./types";
+
+const ITEMS_PER_PAGE = 5;
+
+export const useMemories = () => {
+  return useInfiniteQuery({
+    queryKey: ["memories"],
+    queryFn: async ({ pageParam = 0 }) => {
+      const start = pageParam * ITEMS_PER_PAGE;
+      const end = start + ITEMS_PER_PAGE - 1;
+
+      const { data: memoriesData, error: memoriesError } = await supabase
+        .from("memories")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .range(start, end);
+
+      if (memoriesError) throw memoriesError;
+
+      // For development, use sample data if no real data exists
+      const memories = memoriesData?.length ? memoriesData : sampleMemories.slice(start, end + 1);
+
+      // Then fetch associated story titles and photo URLs
+      const enrichedMemories = await Promise.all(memories.map(async (memory) => {
+        if (memory.type === "story") {
+          const { data: storyData } = await supabase
+            .from("stories")
+            .select("title, description, duration")
+            .eq("id", memory.id)
+            .maybeSingle();
+          return { 
+            ...memory, 
+            title: storyData?.title,
+            description: storyData?.description,
+            duration: storyData?.duration
+          } as StoryMemory;
+        } else if (memory.type === "photo") {
+          const { data: photoData } = await supabase
+            .from("photos")
+            .select("photo_url, caption")
+            .eq("id", memory.id)
+            .maybeSingle();
+          return { 
+            ...memory, 
+            photo_url: photoData?.photo_url,
+            caption: photoData?.caption
+          } as PhotoMemory;
+        }
+        return memory as Memory;
+      }));
+
+      return {
+        memories: enrichedMemories,
+        nextPage: enrichedMemories.length === ITEMS_PER_PAGE ? pageParam + 1 : undefined,
+      };
+    },
+    getNextPageParam: (lastPage) => lastPage.nextPage,
+    initialPageParam: 0,
+  });
+};
 
 // Sample data for development
 const sampleMemories: Memory[] = [
@@ -56,51 +115,3 @@ const sampleMemories: Memory[] = [
     caption: "Family sunset gathering at Manuel Antonio Beach - A perfect end to our reunion weekend",
   }
 ];
-
-export const useMemories = () => {
-  return useQuery({
-    queryKey: ["memories"],
-    queryFn: async () => {
-      const { data: memoriesData, error: memoriesError } = await supabase
-        .from("memories")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-      if (memoriesError) throw memoriesError;
-
-      // For development, combine real data with sample data if no real data exists
-      const memories = memoriesData?.length ? memoriesData : sampleMemories;
-
-      // Then fetch associated story titles and photo URLs
-      const enrichedMemories = await Promise.all(memories.map(async (memory) => {
-        if (memory.type === "story") {
-          const { data: storyData } = await supabase
-            .from("stories")
-            .select("title, description, duration")
-            .eq("id", memory.id)
-            .maybeSingle();
-          return { 
-            ...memory, 
-            title: storyData?.title,
-            description: storyData?.description,
-            duration: storyData?.duration
-          } as StoryMemory;
-        } else if (memory.type === "photo") {
-          const { data: photoData } = await supabase
-            .from("photos")
-            .select("photo_url, caption")
-            .eq("id", memory.id)
-            .maybeSingle();
-          return { 
-            ...memory, 
-            photo_url: photoData?.photo_url,
-            caption: photoData?.caption
-          } as PhotoMemory;
-        }
-        return memory as Memory;
-      }));
-
-      return enrichedMemories;
-    },
-  });
-};
