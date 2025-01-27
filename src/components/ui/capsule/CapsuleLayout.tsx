@@ -22,22 +22,13 @@ export const CapsuleLayout = ({ capsules }: CapsuleLayoutProps) => {
     offset: ["start start", "end start"],
   });
 
-  const springConfig = { stiffness: 200, damping: 40, bounce: 0 };
-
-  const rotateX = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [5, 0]),
+  const springConfig = { stiffness: 100, damping: 30, bounce: 0 };
+  const translateY = useSpring(
+    useTransform(scrollYProgress, [0, 1], [0, -100]),
     springConfig
   );
   const opacity = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [0.8, 1]),
-    springConfig
-  );
-  const rotateZ = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [2, 0]),
-    springConfig
-  );
-  const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [-20, 0]),
+    useTransform(scrollYProgress, [0, 0.3], [1, 0]),
     springConfig
   );
 
@@ -48,8 +39,6 @@ export const CapsuleLayout = ({ capsules }: CapsuleLayoutProps) => {
     >
       <motion.div
         style={{
-          rotateX,
-          rotateZ,
           translateY,
           opacity,
         }}
@@ -61,18 +50,22 @@ export const CapsuleLayout = ({ capsules }: CapsuleLayoutProps) => {
         ) : (
           <div className="container mx-auto">
             <DesktopGrid capsules={capsules} />
-            <div className="max-w-3xl mx-auto text-center mt-16 px-4">
-              <h2 className="text-3xl font-bold text-vaya-gray-900 font-outfit mb-4">
-                Explore Family Capsules
-              </h2>
-              <p className="text-lg text-vaya-gray-600">
-                Each capsule represents a unique collection of memories, stories, and moments from your family's journey. 
-                Click on any capsule to dive deeper into your family's history.
-              </p>
-            </div>
           </div>
         )}
       </motion.div>
+
+      {/* Static Explore Section */}
+      <div className="bg-white py-16">
+        <div className="max-w-3xl mx-auto text-center px-4">
+          <h2 className="text-3xl font-bold text-vaya-gray-900 font-outfit mb-4">
+            Explore Family Capsules
+          </h2>
+          <p className="text-lg text-vaya-gray-600">
+            Each capsule represents a unique collection of memories, stories, and moments from your family's journey. 
+            Click on any capsule to dive deeper into your family's history.
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
