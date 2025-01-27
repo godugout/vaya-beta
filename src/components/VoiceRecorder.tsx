@@ -77,52 +77,35 @@ const VoiceRecorder = ({ onMessageSent, setIsRecording }: VoiceRecorderProps) =>
 
     setIsProcessing(true);
     try {
-      // Convert blob to base64
-      const reader = new FileReader();
-      reader.readAsDataURL(audioBlob);
-      reader.onloadend = async () => {
-        const base64Audio = reader.result?.toString().split(',')[1];
-        
-        if (!base64Audio) {
-          throw new Error('Failed to convert audio to base64');
-        }
+      // Upload audio file to Supabase Storage
+      const fileName = `${crypto.randomUUID()}.webm`;
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from('stories')
+        .upload(fileName, audioBlob);
 
-        // Upload audio file to Supabase Storage
-        const fileName = `${crypto.randomUUID()}.webm`;
-        const { data: uploadData, error: uploadError } = await supabase.storage
-          .from('stories')
-          .upload(fileName, audioBlob);
+      if (uploadError) throw uploadError;
 
-        if (uploadError) throw uploadError;
+      // Get public URL for the audio file
+      const { data: { publicUrl } } = supabase.storage
+        .from('stories')
+        .getPublicUrl(fileName);
 
-        // Get transcription from Edge Function
-        const { data: transcriptionData, error: transcriptionError } = await supabase.functions
-          .invoke('transcribe-audio', {
-            body: { audio: base64Audio },
-          });
+      // Send message with audio attachment
+      // Note: We're temporarily setting the content to a placeholder since we're not using transcription
+      onMessageSent({
+        content: "Audio message",
+        attachments: [{ type: 'audio', url: publicUrl }],
+      });
 
-        if (transcriptionError) throw transcriptionError;
+      // Reset recorder state
+      setIsRecording(false);
+      setAudioBlob(null);
+      
+      toast({
+        title: "Success",
+        description: "Your voice message has been sent!",
+      });
 
-        // Get public URL for the audio file
-        const { data: { publicUrl } } = supabase.storage
-          .from('stories')
-          .getPublicUrl(fileName);
-
-        // Send message with audio attachment and transcription
-        onMessageSent({
-          content: transcriptionData.text,
-          attachments: [{ type: 'audio', url: publicUrl }],
-        });
-
-        // Reset recorder state
-        setIsRecording(false);
-        setAudioBlob(null);
-        
-        toast({
-          title: "Success",
-          description: "Your voice message has been sent!",
-        });
-      };
     } catch (error) {
       console.error('Error processing audio:', error);
       toast({
