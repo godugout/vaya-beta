@@ -89,10 +89,10 @@ const capsules = [
 const FamilyCapsules = () => {
   return (
     <div className="relative min-h-screen">
-      <div className="z-10 relative">
+      <div className="absolute inset-0 z-0">
         <CapsuleLayout capsules={capsules} />
       </div>
-      <div className="container mx-auto px-4 -mt-12 mb-16 relative z-20">
+      <div className="container mx-auto px-4 -mt-12 mb-16 relative z-10">
         <CreateCapsuleForm />
       </div>
       <div className="fixed bottom-0 left-0 right-0 z-50">
