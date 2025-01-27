@@ -88,8 +88,8 @@ const capsules = [
 
 const FamilyCapsules = () => {
   return (
-    <div className="relative min-h-screen">
-      <div className="absolute inset-0 z-0">
+    <div className="relative min-h-screen overflow-hidden">
+      <div className="absolute inset-0">
         <CapsuleLayout capsules={capsules} />
       </div>
       <div className="container mx-auto px-4 -mt-12 mb-16 relative z-10">
