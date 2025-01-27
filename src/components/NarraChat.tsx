@@ -11,7 +11,7 @@ const NarraChat = () => {
   const { messages, input, setInput, handleSend, handleMorePrompts } = useChat();
 
   return (
-    <div className="flex flex-col h-[calc(100vh-4rem)] bg-white">
+    <div className="flex flex-col h-[calc(100vh-4rem)] md:h-full bg-white">
       {/* Header */}
       <div className="flex items-center gap-2 p-4 border-b border-vaya-chat-border bg-white">
         <MessageCircle className="h-6 w-6 text-vaya-primary" />
