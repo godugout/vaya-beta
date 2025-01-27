@@ -29,29 +29,29 @@ export const DesktopNav = ({ user, handleSignOut, navigate }: DesktopNavProps) =
             to="/"
             className="text-sm font-medium text-gray-300 transition-colors hover:text-white inline-flex items-center gap-2"
           >
-            <Home className="h-4 w-4" />
             Home
+            <Home className="h-4 w-4" />
           </Link>
           <Link
             to="/share-stories"
             className="text-sm font-medium text-gray-300 transition-colors hover:text-white inline-flex items-center gap-2"
           >
-            <Mic className="h-4 w-4" />
             Share Stories
+            <Mic className="h-4 w-4" />
           </Link>
           <Link
             to="/memory-lane"
             className="text-sm font-medium text-gray-300 transition-colors hover:text-white inline-flex items-center gap-2"
           >
-            <Clock className="h-4 w-4" />
             Memory Lane
+            <Clock className="h-4 w-4" />
           </Link>
           <Link
             to="/family-capsules"
             className="text-sm font-medium text-gray-300 transition-colors hover:text-white inline-flex items-center gap-2"
           >
-            <Box className="h-4 w-4" />
             Family Capsules
+            <Box className="h-4 w-4" />
           </Link>
         </nav>
         <div className="ml-auto flex items-center space-x-4">
@@ -63,6 +63,7 @@ export const DesktopNav = ({ user, handleSignOut, navigate }: DesktopNavProps) =
               className="bg-vaya-secondary hover:bg-vaya-secondary/90 text-white"
             >
               Sign In
+              <Box className="ml-2 h-4 w-4" />
             </Button>
           )}
         </div>

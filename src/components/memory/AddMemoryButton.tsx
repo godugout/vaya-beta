@@ -21,8 +21,8 @@ const AddMemoryButton = ({ variant = "default", size = "default", className }: A
         className={`bg-vaya-primary hover:bg-vaya-primary/90 text-white ${className}`}
         onClick={() => setIsModalOpen(true)}
       >
-        <Camera className="h-4 w-4 mr-2" />
         Add Memory
+        <Camera className="ml-2 h-4 w-4" />
       </Button>
 
       <AddMemoryModal 
