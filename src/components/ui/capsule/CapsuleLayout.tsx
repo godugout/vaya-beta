@@ -4,7 +4,7 @@ import { MobileCapsuleList } from "./MobileCapsuleList";
 import { DesktopGrid } from "./DesktopGrid";
 import { LucideIcon } from "lucide-react";
 import { CapsuleHeader } from "./CapsuleHeader";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 
 interface CapsuleLayoutProps {
   capsules: {
@@ -16,17 +16,47 @@ interface CapsuleLayoutProps {
 
 export const CapsuleLayout = ({ capsules }: CapsuleLayoutProps) => {
   const isMobile = useIsMobile();
+  const ref = React.useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+
+  const springConfig = { stiffness: 300, damping: 30, bounce: 100 };
+
+  const rotateX = useSpring(
+    useTransform(scrollYProgress, [0, 0.2], [15, 0]),
+    springConfig
+  );
+  const opacity = useSpring(
+    useTransform(scrollYProgress, [0, 0.2], [0.2, 1]),
+    springConfig
+  );
+  const rotateZ = useSpring(
+    useTransform(scrollYProgress, [0, 0.2], [20, 0]),
+    springConfig
+  );
+  const translateY = useSpring(
+    useTransform(scrollYProgress, [0, 0.2], [-200, 0]),
+    springConfig
+  );
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-vaya-gray-50 perspective-1000">
+    <div 
+      ref={ref}
+      className="min-h-screen bg-gradient-to-b from-white to-vaya-gray-50 [perspective:1000px]"
+    >
       <CapsuleHeader />
       {isMobile ? (
         <MobileCapsuleList capsules={capsules} />
       ) : (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
+          style={{
+            rotateX,
+            rotateZ,
+            translateY,
+            opacity,
+          }}
           className="container mx-auto py-8"
         >
           <DesktopGrid capsules={capsules} />
