@@ -6,12 +6,24 @@ import { format } from "date-fns";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-type Memory = {
+type BaseMemory = {
   id: string;
   type: string;
   content_url: string;
   created_at: string;
 };
+
+type StoryMemory = BaseMemory & {
+  type: "story";
+  title?: string;
+};
+
+type PhotoMemory = BaseMemory & {
+  type: "photo";
+  photo_url?: string;
+};
+
+type Memory = StoryMemory | PhotoMemory;
 
 const MemoryFeed = () => {
   const [isPlaying, setIsPlaying] = useState<{ [key: string]: boolean }>({});
@@ -36,16 +48,16 @@ const MemoryFeed = () => {
             .select("title")
             .eq("id", memory.id)
             .single();
-          return { ...memory, title: storyData?.title };
+          return { ...memory, title: storyData?.title } as StoryMemory;
         } else if (memory.type === "photo") {
           const { data: photoData } = await supabase
             .from("photos")
             .select("photo_url")
             .eq("id", memory.id)
             .single();
-          return { ...memory, photo_url: photoData?.photo_url };
+          return { ...memory, photo_url: photoData?.photo_url } as PhotoMemory;
         }
-        return memory;
+        return memory as Memory;
       }));
 
       return enrichedMemories;
