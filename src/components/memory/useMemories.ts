@@ -6,7 +6,6 @@ export const useMemories = () => {
   return useQuery({
     queryKey: ["memories"],
     queryFn: async () => {
-      // First get all memories
       const { data: memoriesData, error: memoriesError } = await supabase
         .from("memories")
         .select("*")
@@ -21,14 +20,14 @@ export const useMemories = () => {
             .from("stories")
             .select("title")
             .eq("id", memory.id)
-            .single();
+            .maybeSingle();
           return { ...memory, title: storyData?.title } as StoryMemory;
         } else if (memory.type === "photo") {
           const { data: photoData } = await supabase
             .from("photos")
             .select("photo_url")
             .eq("id", memory.id)
-            .single();
+            .maybeSingle();
           return { ...memory, photo_url: photoData?.photo_url } as PhotoMemory;
         }
         return memory as Memory;
