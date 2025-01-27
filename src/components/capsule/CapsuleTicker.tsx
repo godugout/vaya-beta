@@ -45,7 +45,7 @@ const CapsuleTicker = () => {
   }, []);
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-black text-amber-500 font-mono text-sm py-2 border-t border-amber-500/30 overflow-hidden z-50">
+    <div className="bg-black text-amber-500 font-mono text-sm py-2 border-t border-amber-500/30 overflow-hidden">
       <div className="animate-[marquee_120s_linear_infinite] whitespace-nowrap">
         {events.map((event, index) => (
           <span key={index} className="mx-8">
