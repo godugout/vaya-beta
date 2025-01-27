@@ -78,10 +78,10 @@ const PromptCategories = ({ onPromptSelect }: PromptCategoriesProps) => {
           <Popover key={category.name}>
             <PopoverTrigger asChild>
               <Button
-                variant="outline"
-                className={`flex items-center gap-2 ${
+                variant="default"
+                className={`flex items-center gap-2 bg-vaya-secondary hover:bg-vaya-secondary/90 text-white ${
                   selectedCategory === category.name
-                    ? "bg-vaya-chat-hover border-vaya-primary"
+                    ? "ring-2 ring-vaya-secondary ring-offset-2"
                     : ""
                 }`}
                 onClick={() => setSelectedCategory(category.name)}
@@ -90,18 +90,21 @@ const PromptCategories = ({ onPromptSelect }: PromptCategoriesProps) => {
                 {category.name}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-80">
-              <div className="space-y-2">
+            <PopoverContent 
+              className="w-80 p-2 bg-white border-2 border-vaya-secondary/20 shadow-lg"
+              sideOffset={5}
+            >
+              <div className="space-y-1.5">
                 {category.prompts.map((prompt, index) => (
                   <Button
                     key={index}
                     variant="ghost"
-                    className="w-full justify-start text-left"
+                    className="w-full justify-start text-left whitespace-normal h-auto py-3 hover:bg-vaya-secondary/10 hover:text-vaya-secondary"
                     onClick={() => {
                       onPromptSelect(prompt);
                     }}
                   >
-                    {prompt}
+                    <span className="line-clamp-2">{prompt}</span>
                   </Button>
                 ))}
               </div>
