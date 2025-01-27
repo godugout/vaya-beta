@@ -11,7 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogOut, User as UserIcon, Clock, FolderTree, Box, Settings } from "lucide-react";
+import { LogOut, User as UserIcon, Clock, Settings } from "lucide-react";
 
 export function MainNav() {
   const navigate = useNavigate();
@@ -49,20 +49,6 @@ export function MainNav() {
           >
             <Clock className="h-4 w-4" />
             Memory Lane
-          </Link>
-          <Link
-            to="/family-tree"
-            className="text-sm font-medium transition-colors hover:text-vaya-orange inline-flex items-center gap-2"
-          >
-            <FolderTree className="h-4 w-4" />
-            Family Tree
-          </Link>
-          <Link
-            to="/capsules"
-            className="text-sm font-medium transition-colors hover:text-vaya-orange inline-flex items-center gap-2"
-          >
-            <Box className="h-4 w-4" />
-            Capsules
           </Link>
         </nav>
         <div className="ml-auto flex items-center space-x-4">

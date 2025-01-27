@@ -1,4 +1,4 @@
-import { ArrowRight, Mic, Image, Users } from "lucide-react";
+import { ArrowRight, Mic } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -20,7 +20,7 @@ const heroConfigs: Record<string, HeroConfig> = {
     title: "Preserve Your Legacy",
     subtitle: "Create digital time capsules to preserve and share your most precious memories with loved ones. Capture moments, stories, and experiences for future generations.",
     primaryCta: {
-      text: "Create Your First Capsule",
+      text: "Start Recording",
       icon: <ArrowRight className="ml-2 h-4 w-4" />,
     },
     secondaryCta: {
@@ -30,26 +30,10 @@ const heroConfigs: Record<string, HeroConfig> = {
   },
   "/memory-lane": {
     title: "Stories That Matter",
-    subtitle: "Discover how people are using Vaya to preserve their most precious memories",
+    subtitle: "Record and preserve your most precious memories with the help of Narra, your AI storytelling assistant",
     primaryCta: {
       text: "Start Recording",
       icon: <Mic className="ml-2 h-4 w-4" />,
-    }
-  },
-  "/family-tree": {
-    title: "Connect Your Family Story",
-    subtitle: "Build and maintain your family tree, connecting memories to the people who matter most.",
-    primaryCta: {
-      text: "Build Your Tree",
-      icon: <Users className="ml-2 h-4 w-4" />,
-    }
-  },
-  "/capsules": {
-    title: "Digital Time Capsules",
-    subtitle: "Create and customize digital time capsules with photos, videos, audio recordings, and written memories.",
-    primaryCta: {
-      text: "Create Capsule",
-      icon: <Image className="ml-2 h-4 w-4" />,
     }
   }
 };
