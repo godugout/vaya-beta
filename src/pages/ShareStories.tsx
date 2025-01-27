@@ -5,7 +5,6 @@ import NarraChat from "@/components/NarraChat";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AudioWaveform, BookOpen, MessageSquare } from "lucide-react";
-import StyleEditor from "@/components/StyleEditor";
 import Hero from "@/components/Hero";
 
 interface StoryCategory {
@@ -122,7 +121,6 @@ const ShareStories = () => {
           )}
         </div>
       </div>
-      <StyleEditor />
     </div>
   );
 };
