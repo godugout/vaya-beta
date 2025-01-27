@@ -46,7 +46,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
     springConfig
   );
   const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [-700, 300]),
+    useTransform(scrollYProgress, [0, 0.2], [-700, 100]), // Adjusted final Y position
     springConfig
   );
 
@@ -79,7 +79,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
   return (
     <div
       ref={ref}
-      className="h-[120vh] py-40 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      className="h-[80vh] py-20 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
     >
       <CapsuleHeader />
       
@@ -107,8 +107,8 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
         className="relative"
       >
         {/* First Row */}
-        <div className="relative">
-          <motion.div className="flex flex-row-reverse space-x-reverse space-x-20 mb-20">
+        <div className="relative mb-12">
+          <motion.div className="flex flex-row-reverse space-x-reverse space-x-20">
             {firstRow.map((capsule, index) => (
               <motion.div
                 style={{ x: translateX }}
@@ -143,8 +143,8 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
         </div>
 
         {/* Second Row */}
-        <div className="relative">
-          <motion.div className="flex flex-row mb-20 space-x-20">
+        <div className="relative mb-12">
+          <motion.div className="flex flex-row space-x-20">
             {secondRow.map((capsule, index) => (
               <motion.div
                 style={{ x: translateXReverse }}

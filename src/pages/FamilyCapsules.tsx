@@ -88,9 +88,9 @@ const capsules = [
 
 const FamilyCapsules = () => {
   return (
-    <div className="relative min-h-screen pb-12">
+    <div className="relative min-h-screen">
       <CapsuleLayout capsules={capsules} />
-      <div className="container mx-auto px-4 my-8">
+      <div className="container mx-auto px-4 mt-[60vh] mb-20">
         <CreateCapsuleForm />
       </div>
       <CapsuleTicker />
