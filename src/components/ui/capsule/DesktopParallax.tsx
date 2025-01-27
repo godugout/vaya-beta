@@ -20,38 +20,40 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
   const ref = React.useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start start", "end start"],
+    // Reducing the offset to make scrolling more sensitive
+    offset: ["start start", "center start"],
   });
 
   const springConfig = { stiffness: 300, damping: 30, bounce: 100 };
 
+  // Adjusting transform ranges for faster effect completion
   const translateX = useSpring(
-    useTransform(scrollYProgress, [0, 1], [0, 1000]),
+    useTransform(scrollYProgress, [0, 0.6], [0, 1000]),
     springConfig
   );
   const translateXReverse = useSpring(
-    useTransform(scrollYProgress, [0, 1], [0, -1000]),
+    useTransform(scrollYProgress, [0, 0.6], [0, -1000]),
     springConfig
   );
   const rotateX = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [15, 0]),
+    useTransform(scrollYProgress, [0, 0.15], [15, 0]),
     springConfig
   );
   const opacity = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [0.2, 1]),
+    useTransform(scrollYProgress, [0, 0.15], [0.2, 1]),
     springConfig
   );
   const rotateZ = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [20, 0]),
+    useTransform(scrollYProgress, [0, 0.15], [20, 0]),
     springConfig
   );
   const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [-300, 400]),
+    useTransform(scrollYProgress, [0, 0.15], [-300, 400]),
     springConfig
   );
 
   const navOpacity = useSpring(
-    useTransform(scrollYProgress, [0.1, 0.2], [0, 1]),
+    useTransform(scrollYProgress, [0.05, 0.15], [0, 1]),
     springConfig
   );
 
@@ -63,7 +65,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
   return (
     <div
       ref={ref}
-      className="h-[150vh] py-10 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      className="h-[120vh] py-10 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
     >
       <CapsuleHeader />
       
