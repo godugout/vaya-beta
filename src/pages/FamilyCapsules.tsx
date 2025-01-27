@@ -146,7 +146,8 @@ const FamilyCapsules = () => {
               className="bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg"
               size="lg"
             >
-              Create a Capsule <Camera className="ml-2 h-5 w-5" />
+              <span>Create Capsule</span>
+              <Camera className="ml-2 h-5 w-5" />
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[600px]">
