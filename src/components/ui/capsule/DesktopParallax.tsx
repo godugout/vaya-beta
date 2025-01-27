@@ -69,7 +69,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
       
       <motion.div
         style={{ opacity: navOpacity }}
-        className="fixed top-40 left-0 right-0 z-10 pointer-events-none"
+        className="fixed top-96 left-0 right-0 z-10 pointer-events-none"
       >
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-5xl font-bold text-vaya-gray-900 font-outfit mb-6">
@@ -90,7 +90,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
           opacity,
         }}
         id="capsule-grid"
-        className="mb-10 mt-40"
+        className="mb-10 mt-96"
       >
         <motion.div className="flex flex-row-reverse space-x-reverse space-x-16 mb-12">
           {firstRow.map((capsule) => (
