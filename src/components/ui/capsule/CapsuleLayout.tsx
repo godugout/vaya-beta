@@ -45,6 +45,7 @@ export const CapsuleLayout = ({ capsules }: CapsuleLayoutProps) => {
   return (
     <div className="min-h-screen pb-32 md:pb-16"> {/* Added bottom padding to prevent content from being cut off */}
       <div className="relative">
+        <CapsuleHeader /> {/* Restored the CapsuleHeader component */}
         <div className="pt-8 md:pt-16 pb-16 md:pb-24">
           {isMobile ? (
             <MobileCapsuleList capsules={capsules} />
