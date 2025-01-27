@@ -46,7 +46,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
     springConfig
   );
   const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [-500, 200]),
+    useTransform(scrollYProgress, [0, 0.2], [-300, 400]),
     springConfig
   );
 
@@ -69,13 +69,13 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
       
       <motion.div
         style={{ opacity: navOpacity }}
-        className="fixed top-20 left-0 right-0 z-10 pointer-events-none"
+        className="fixed top-40 left-0 right-0 z-10 pointer-events-none"
       >
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-4xl font-bold text-vaya-gray-900 font-outfit mb-4">
+          <h2 className="text-5xl font-bold text-vaya-gray-900 font-outfit mb-6">
             Create Your Family Capsules
           </h2>
-          <p className="text-lg text-vaya-gray-600 max-w-2xl">
+          <p className="text-xl text-vaya-gray-600 max-w-2xl leading-relaxed">
             Each capsule is a unique collection of memories, stories, and moments from your family's journey. 
             Choose a capsule type below to start preserving your precious memories for generations to come.
           </p>
@@ -90,7 +90,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
           opacity,
         }}
         id="capsule-grid"
-        className="mb-10"
+        className="mb-10 mt-40"
       >
         <motion.div className="flex flex-row-reverse space-x-reverse space-x-16 mb-12">
           {firstRow.map((capsule) => (
