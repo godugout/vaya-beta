@@ -5,12 +5,17 @@ import { Button } from "@/components/ui/button";
 import VoiceRecorder from "./VoiceRecorder";
 import ChatMessage from "./chat/ChatMessage";
 import ChatInput from "./chat/ChatInput";
+import PromptCategories from "./chat/PromptCategories";
 import { useChat } from "./chat/useChat";
 
 const NarraChat = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [isSpanish, setIsSpanish] = useState(false);
   const { messages, input, setInput, handleSend, handleMorePrompts } = useChat();
+
+  const handlePromptSelect = (prompt: string) => {
+    setInput(prompt);
+  };
 
   return (
     <div className="flex flex-col h-[calc(100vh-4rem)] md:h-full bg-white">
@@ -29,6 +34,11 @@ const NarraChat = () => {
           <Languages className="h-4 w-4 mr-2" />
           {isSpanish ? "English" : "Español"}
         </Button>
+      </div>
+
+      {/* Prompt Categories */}
+      <div className="p-4 border-b border-vaya-chat-border">
+        <PromptCategories onPromptSelect={handlePromptSelect} />
       </div>
 
       {/* Messages Area */}
