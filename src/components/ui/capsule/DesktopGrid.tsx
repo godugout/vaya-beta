@@ -20,7 +20,14 @@ export const DesktopGrid = ({ capsules }: DesktopGridProps) => {
   );
 
   return (
-    <div className="w-full overflow-hidden py-8">
+    <div 
+      className="w-screen overflow-hidden"
+      style={{
+        transform: "perspective(1000px) rotateX(2deg)",
+        marginLeft: "-1rem",
+        marginRight: "-1rem",
+      }}
+    >
       {rows.map((row, rowIndex) => {
         const isEven = rowIndex % 2 === 0;
         const duration = 20 + rowIndex * 5; // Varying speeds for each row
@@ -28,7 +35,7 @@ export const DesktopGrid = ({ capsules }: DesktopGridProps) => {
         return (
           <motion.div
             key={rowIndex}
-            className="flex py-4 mb-4"
+            className="flex py-4"
             initial={{ x: isEven ? "0%" : "-100%" }}
             animate={{ 
               x: isEven ? "-100%" : "0%",
@@ -37,6 +44,10 @@ export const DesktopGrid = ({ capsules }: DesktopGridProps) => {
               duration: duration,
               repeat: Infinity,
               ease: "linear",
+            }}
+            style={{
+              paddingLeft: "1rem",
+              paddingRight: "1rem",
             }}
           >
             {/* Double the row to create seamless loop */}
