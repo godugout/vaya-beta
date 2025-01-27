@@ -2,7 +2,7 @@ import React from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { MobileCapsuleList } from "./MobileCapsuleList";
 import { DesktopGrid } from "./DesktopGrid";
-import { CapsuleHeader } from "./CapsuleHeader";
+import CapsuleHeader from "./CapsuleHeader";
 import { LucideIcon, Camera } from "lucide-react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
