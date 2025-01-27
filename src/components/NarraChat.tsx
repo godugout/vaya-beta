@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { MessageCircle, Send, MoreHorizontal } from "lucide-react";
+import { MessageCircle, Send, MoreHorizontal, Mic } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import VoiceRecorder from "./VoiceRecorder";
@@ -95,21 +95,17 @@ const NarraChat = () => {
     }
   };
 
-  const handleStartRecording = () => {
-    setIsRecording(true);
-  };
-
   return (
-    <Card className="w-full max-w-2xl mx-auto bg-vaya-chat-bg border-vaya-chat-border shadow-lg">
+    <Card className="w-full max-w-2xl mx-auto bg-white border-vaya-chat-border shadow-lg">
       <CardHeader className="border-b border-vaya-chat-border">
         <CardTitle className="text-vaya-gray-800 flex items-center gap-2">
-          <MessageCircle className="h-6 w-6 text-vaya-purple" />
+          <MessageCircle className="h-6 w-6 text-vaya-primary" />
           Chat with Narra
         </CardTitle>
       </CardHeader>
       <CardContent>
         <ScrollArea className="h-[400px] pr-4">
-          <div className="space-y-4">
+          <div className="space-y-4 py-4">
             {messages.map((message, index) => (
               <div
                 key={index}
@@ -120,8 +116,8 @@ const NarraChat = () => {
                 <div
                   className={`max-w-[80%] rounded-2xl p-4 ${
                     message.role === "assistant"
-                      ? "bg-vaya-green text-vaya-gray-800"
-                      : "bg-vaya-orange/90 text-white"
+                      ? "bg-vaya-chat-bg text-vaya-gray-800 border border-vaya-chat-border"
+                      : "bg-vaya-primary text-white"
                   } animate-fadeIn shadow-sm`}
                 >
                   {message.content}
@@ -147,21 +143,22 @@ const NarraChat = () => {
               />
               <Button
                 onClick={handleSend}
-                className="bg-vaya-purple hover:bg-vaya-purple/90 text-white"
+                className="bg-vaya-primary hover:bg-vaya-primary/90 text-white"
               >
                 <Send className="h-4 w-4" />
               </Button>
               <Button
                 onClick={() => setIsRecording(true)}
-                className="bg-vaya-purple hover:bg-vaya-purple/90 text-white"
+                className="bg-vaya-secondary hover:bg-vaya-secondary/90 text-white"
               >
-                Start Recording
+                <Mic className="h-4 w-4 mr-2" />
+                Record
               </Button>
             </div>
             <Button
               onClick={handleMorePrompts}
               variant="ghost"
-              className="self-center text-vaya-purple hover:text-vaya-purple/80 hover:bg-vaya-purple-light"
+              className="self-center text-vaya-gray-600 hover:text-vaya-gray-800 hover:bg-vaya-chat-hover"
             >
               <MoreHorizontal className="h-5 w-5 mr-2" />
               More prompts
