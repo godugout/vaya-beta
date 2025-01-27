@@ -45,7 +45,7 @@ export const useChat = () => {
     return prompt;
   };
 
-  const handleSend = (messageContent?: { content: string; attachments?: { type: string; url: string }[] }) => {
+  const handleSend = (messageContent?: { content: string; attachments?: { type: "audio" | "image"; url: string }[] }) => {
     const content = messageContent?.content || input;
     if (!content.trim()) return;
 

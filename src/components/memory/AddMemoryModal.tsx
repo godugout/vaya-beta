@@ -1,32 +1,42 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { useState } from "react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import VoiceRecorder from "@/components/VoiceRecorder";
-import MemoryUpload from "@/components/MemoryUpload";
+import { Message } from "@/components/chat/types";
 
 interface AddMemoryModalProps {
-  children: React.ReactNode;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
-const AddMemoryModal = ({ children }: AddMemoryModalProps) => {
+const AddMemoryModal = ({ open, onOpenChange }: AddMemoryModalProps) => {
+  const [isRecording, setIsRecording] = useState(false);
+
+  const handleMessageSent = (message: { content: string; attachments?: { type: "audio" | "image"; url: string }[] }) => {
+    console.log("Memory recorded:", message);
+    // Handle the memory being recorded
+    onOpenChange(false);
+  };
+
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        {children}
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px]">
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-outfit">Add New Memory</DialogTitle>
+          <DialogTitle>Add New Memory</DialogTitle>
         </DialogHeader>
         <Tabs defaultValue="voice" className="w-full">
-          <TabsList className="w-full mb-6">
-            <TabsTrigger value="voice" className="w-full">Voice Recording</TabsTrigger>
-            <TabsTrigger value="upload" className="w-full">Upload Memory</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="voice">Voice</TabsTrigger>
+            <TabsTrigger value="text">Text</TabsTrigger>
           </TabsList>
           <TabsContent value="voice">
-            <VoiceRecorder />
+            <VoiceRecorder
+              onMessageSent={handleMessageSent}
+              setIsRecording={setIsRecording}
+            />
           </TabsContent>
-          <TabsContent value="upload">
-            <MemoryUpload />
+          <TabsContent value="text">
+            {/* Text input component will go here */}
           </TabsContent>
         </Tabs>
       </DialogContent>

@@ -241,6 +241,7 @@ export type Database = {
           family_id: string | null
           id: string
           title: string
+          transcription: string | null
           updated_at: string | null
         }
         Insert: {
@@ -252,6 +253,7 @@ export type Database = {
           family_id?: string | null
           id?: string
           title: string
+          transcription?: string | null
           updated_at?: string | null
         }
         Update: {
@@ -263,6 +265,7 @@ export type Database = {
           family_id?: string | null
           id?: string
           title?: string
+          transcription?: string | null
           updated_at?: string | null
         }
         Relationships: [
