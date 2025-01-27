@@ -17,10 +17,10 @@ interface HeroConfig {
 
 const heroConfigs: Record<string, HeroConfig> = {
   "/": {
-    title: "Preserve Your Legacy",
-    subtitle: "Create digital time capsules to preserve and share your most precious memories with loved ones. Capture moments, stories, and experiences for future generations.",
+    title: "Comparte Tus Historias",
+    subtitle: "Create digital time capsules to share your family's stories, traditions, and precious moments with loved ones. Keep your cultura alive for generations to come.",
     primaryCta: {
-      text: "Create Your First Capsule",
+      text: "Start Your Family Collection",
       icon: <ArrowRight className="ml-2 h-4 w-4" />,
     },
     secondaryCta: {
@@ -29,8 +29,8 @@ const heroConfigs: Record<string, HeroConfig> = {
     }
   },
   "/memory-lane": {
-    title: "Capture Memories Your Way",
-    subtitle: "Multiple ways to preserve your memories, all in one secure place. Record stories, upload photos, or create video memories that last generations.",
+    title: "Capture Momentos Especiales",
+    subtitle: "Record stories, share photos, or create video memories of your family's journey. Every story strengthens our cultural bonds.",
     primaryCta: {
       text: "Start Recording",
       icon: <Mic className="ml-2 h-4 w-4" />,

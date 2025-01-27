@@ -24,9 +24,10 @@ const NarraChat = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hi! I'm Narra, your storytelling companion. I'd love to help you record and preserve your memories. What would you like to talk about today?",
+      content: "¡Hola! I'm Narra, your storytelling companion. I'd love to help you capture and share your family's stories and traditions. What would you like to talk about today?",
     },
   ]);
+  
   const [input, setInput] = useState("");
   const [isRecording, setIsRecording] = useState(false);
   const [prompts, setPrompts] = useState<StoryPrompt[]>([]);
@@ -135,7 +136,7 @@ const NarraChat = () => {
           <div className="flex flex-col gap-4 mt-4">
             <div className="flex gap-2">
               <Input
-                placeholder="Type your message..."
+                placeholder="Share your story..."
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyPress={(e) => e.key === "Enter" && handleSend()}
