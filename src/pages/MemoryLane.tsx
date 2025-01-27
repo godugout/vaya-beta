@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import Hero from "@/components/Hero";
 import VoiceRecorder from "@/components/VoiceRecorder";
 import MemoryUpload from "@/components/MemoryUpload";
+import MemoryFeed from "@/components/MemoryFeed";
 import { Button } from "@/components/ui/button";
 import { Users, Mic, Upload } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
@@ -103,25 +104,39 @@ const MemoryLane = () => {
           </Card>
         </div>
         
-        <div className="mt-12 text-center">
-          <Card className="inline-block bg-[#2A2A2A] border-[#3A3A3A] p-6">
+        <div className="mt-12">
+          <Card className="bg-[#2A2A2A] border-[#3A3A3A] mb-8">
             <CardHeader>
-              <CardTitle className="text-white">Create Your Family Group</CardTitle>
+              <CardTitle className="text-white">Recent Memories</CardTitle>
               <CardDescription className="text-gray-400">
-                Start by creating a family group to share memories with your loved ones
+                Browse through your family's latest stories and photos
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Button 
-                onClick={handleCreateFamily}
-                size="lg" 
-                className="bg-[#8B5CF6] hover:bg-[#7C3AED] transition-all duration-300"
-              >
-                <Users className="mr-2 h-5 w-5" />
-                Create Family Group
-              </Button>
+              <MemoryFeed />
             </CardContent>
           </Card>
+
+          <div className="text-center">
+            <Card className="inline-block bg-[#2A2A2A] border-[#3A3A3A] p-6">
+              <CardHeader>
+                <CardTitle className="text-white">Create Your Family Group</CardTitle>
+                <CardDescription className="text-gray-400">
+                  Start by creating a family group to share memories with your loved ones
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button 
+                  onClick={handleCreateFamily}
+                  size="lg" 
+                  className="bg-[#8B5CF6] hover:bg-[#7C3AED] transition-all duration-300"
+                >
+                  <Users className="mr-2 h-5 w-5" />
+                  Create Family Group
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     </div>
