@@ -20,46 +20,44 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
   const ref = React.useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start start", "center start"],
+    offset: ["start start", "end start"],
   });
 
   const springConfig = { stiffness: 300, damping: 30, bounce: 100 };
 
-  // Card animations
+  // Card animations with adjusted ranges for better visibility in hero
   const translateX = useSpring(
-    useTransform(scrollYProgress, [0, 0.6], [0, 1000]),
+    useTransform(scrollYProgress, [0, 0.8], [0, 1000]),
     springConfig
   );
   const translateXReverse = useSpring(
-    useTransform(scrollYProgress, [0, 0.6], [0, -1000]),
+    useTransform(scrollYProgress, [0, 0.8], [0, -1000]),
     springConfig
   );
   const rotateX = useSpring(
-    useTransform(scrollYProgress, [0, 0.15], [15, 0]),
+    useTransform(scrollYProgress, [0, 0.2], [10, 0]),
     springConfig
   );
   const opacity = useSpring(
-    useTransform(scrollYProgress, [0, 0.15], [0.6, 1]),
+    useTransform(scrollYProgress, [0, 0.2], [0.8, 1]),
     springConfig
   );
   const rotateZ = useSpring(
-    useTransform(scrollYProgress, [0, 0.15], [20, 0]),
+    useTransform(scrollYProgress, [0, 0.2], [10, 0]),
     springConfig
   );
-  
-  // Adjust initial position to be visible in hero
   const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.15], [0, 200]),
+    useTransform(scrollYProgress, [0, 0.8], [-100, 200]),
     springConfig
   );
 
-  // Title and copy animations - appear at end of scroll
+  // Content animations with adjusted timing
   const contentTranslateY = useSpring(
-    useTransform(scrollYProgress, [0.7, 0.9], [100, 0]),
+    useTransform(scrollYProgress, [0.8, 1], [100, 0]),
     springConfig
   );
   const contentOpacity = useSpring(
-    useTransform(scrollYProgress, [0.7, 0.9], [0, 1]),
+    useTransform(scrollYProgress, [0.8, 1], [0, 1]),
     springConfig
   );
 
@@ -71,17 +69,17 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
   return (
     <div
       ref={ref}
-      className="h-[120vh] py-32 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      className="h-[150vh] py-20 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
     >
       <CapsuleHeader />
       
-      {/* Title and copy section - appears at end of scroll */}
+      {/* Content section that appears at end of scroll */}
       <motion.div
         style={{ 
           opacity: contentOpacity,
-          y: contentTranslateY
+          y: contentTranslateY,
         }}
-        className="fixed top-40 left-0 right-0 z-10 pointer-events-none"
+        className="fixed top-32 left-0 right-0 z-10 pointer-events-none"
       >
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-5xl font-bold text-vaya-gray-900 font-outfit mb-6">
@@ -94,6 +92,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
         </div>
       </motion.div>
 
+      {/* Card grid with adjusted positioning */}
       <motion.div
         style={{
           rotateX,
@@ -102,9 +101,9 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
           opacity,
         }}
         id="capsule-grid"
-        className="mt-20"
+        className="mt-10"
       >
-        <motion.div className="flex flex-row-reverse space-x-reverse space-x-16 mb-12">
+        <motion.div className="flex flex-row-reverse space-x-reverse space-x-16 mb-16">
           {firstRow.map((capsule) => (
             <motion.div
               style={{ x: translateX }}
@@ -115,7 +114,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
             </motion.div>
           ))}
         </motion.div>
-        <motion.div className="flex flex-row mb-12 space-x-16">
+        <motion.div className="flex flex-row mb-16 space-x-16">
           {secondRow.map((capsule) => (
             <motion.div
               style={{ x: translateXReverse }}
@@ -139,6 +138,7 @@ export const DesktopParallax = ({ capsules }: DesktopParallaxProps) => {
         </motion.div>
       </motion.div>
 
+      {/* Navigation buttons that appear with content */}
       <motion.div
         style={{ opacity: contentOpacity }}
         className="fixed bottom-24 left-0 right-0 z-10 flex justify-center gap-4"
