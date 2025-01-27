@@ -60,7 +60,7 @@ const Hero = () => {
           <div className="flex items-center justify-center gap-x-6">
             <Button 
               size="lg" 
-              className="bg-vaya-green hover:bg-vaya-green/90 transition-all duration-300 font-outfit"
+              className="bg-vaya-purple hover:bg-vaya-purple/90 text-white transition-all duration-300 font-outfit text-base"
             >
               {config.primaryCta.text}
               {config.primaryCta.icon}
@@ -69,7 +69,7 @@ const Hero = () => {
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="border-vaya-green text-vaya-green hover:bg-vaya-green/10 font-outfit"
+                className="border-vaya-purple text-vaya-purple hover:bg-vaya-purple/10 font-outfit text-base"
               >
                 {config.secondaryCta.text}
                 {config.secondaryCta.icon}
