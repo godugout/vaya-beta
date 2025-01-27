@@ -1,7 +1,7 @@
 import React from "react";
 import { CapsuleLayout } from "@/components/ui/capsule/CapsuleLayout";
 import CreateCapsuleForm from "@/components/capsule/CreateCapsuleForm";
-import { PlusCircle, Leaf, Book, BookOpen, Image, Map, Music2, Camera, Users, Video, Heart, Library, Calendar, HeartHandshake, Film, ImageIcon } from "lucide-react";
+import { PlusCircle, Leaf, Book, BookOpen, Image, Map, Music2, Camera, Users, Video, Heart, Library, Calendar, HeartHandshake, Film } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -95,7 +95,7 @@ const FamilyCapsules = () => {
         <Dialog>
           <DialogTrigger asChild>
             <Button 
-              className="bg-vaya-secondary hover:bg-vaya-secondary/90 text-white shadow-lg"
+              className="bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg"
               size="lg"
             >
               <PlusCircle className="mr-2" />

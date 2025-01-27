@@ -10,7 +10,7 @@ import CreateCapsuleForm from "@/components/capsule/CreateCapsuleForm";
 
 export const CapsuleHeader = () => {
   return (
-    <div className="relative w-full bg-gradient-to-b from-vaya-primary/90 to-vaya-primary/70">
+    <div className="relative w-full bg-gradient-to-b from-emerald-600/90 to-emerald-500/70">
       <div className="relative z-10 max-w-7xl mx-auto text-center py-16 px-4">
         <h1 className="font-outfit font-bold text-4xl tracking-tight text-white sm:text-6xl mb-4 leading-tight">
           Family Capsules
@@ -25,7 +25,7 @@ export const CapsuleHeader = () => {
         <Dialog>
           <DialogTrigger asChild>
             <Button 
-              className="bg-white text-vaya-primary hover:bg-white/90"
+              className="bg-white text-emerald-600 hover:bg-white/90"
               size="lg"
             >
               <PlusCircle className="mr-2" />
