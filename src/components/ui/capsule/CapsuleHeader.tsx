@@ -3,7 +3,7 @@ import React from "react";
 export const CapsuleHeader = () => {
   return (
     <div className="relative w-full bg-gradient-to-b from-vaya-primary/90 to-vaya-primary/70">
-      <div className="max-w-7xl mx-auto text-center py-20 px-4">
+      <div className="max-w-7xl mx-auto text-center py-16 px-4"> {/* Changed from py-20 to py-16 to balance the spacing */}
         <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold text-white font-outfit drop-shadow-lg">
           Family Capsules <br /> Your Digital Time Machine
         </h1>
