@@ -24,8 +24,10 @@ export const DesktopGrid = ({ capsules }: DesktopGridProps) => {
       className="w-screen overflow-hidden"
       style={{
         transform: "perspective(1000px) rotateX(2deg)",
-        marginLeft: "-1rem",
-        marginRight: "-1rem",
+        marginLeft: "-2rem",
+        marginRight: "-2rem",
+        paddingLeft: 0,
+        paddingRight: 0,
       }}
     >
       {rows.map((row, rowIndex) => {
@@ -46,8 +48,9 @@ export const DesktopGrid = ({ capsules }: DesktopGridProps) => {
               ease: "linear",
             }}
             style={{
-              paddingLeft: "1rem",
-              paddingRight: "1rem",
+              transform: `translateX(${isEven ? '-20%' : '20%'})`, // Offset to ensure cards bleed off edges
+              paddingLeft: 0,
+              paddingRight: 0,
             }}
           >
             {/* Double the row to create seamless loop */}
