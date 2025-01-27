@@ -4,7 +4,7 @@ import { useMemories } from "./memory/useMemories";
 import { Memory } from "./memory/types";
 
 const MemoryFeed = () => {
-  const { data: memories, isLoading } = useMemories();
+  const { data, isLoading } = useMemories();
 
   if (isLoading) {
     return (
@@ -14,9 +14,11 @@ const MemoryFeed = () => {
     );
   }
 
+  const memories = data?.pages.flatMap((page) => page.memories) ?? [];
+
   return (
     <div className="space-y-4 animate-fade-in">
-      {memories?.map((memory: Memory) => (
+      {memories.map((memory: Memory) => (
         memory.type === "story" ? (
           <StoryMemoryCard key={memory.id} memory={memory} />
         ) : (
