@@ -41,13 +41,12 @@ const ChatMessage = ({ message, isSpanish }: ChatMessageProps) => {
       <div
         className={`max-w-[80%] rounded-2xl p-4 ${
           isAI
-            ? "bg-gray-100 text-vaya-gray-800"
-            : "bg-vaya-primary text-white"
+            ? "bg-vaya-chat-bg text-vaya-gray-800"
+            : "bg-vaya-secondary text-white"
         } shadow-sm animate-fadeIn`}
       >
         <div className="text-sm md:text-base">
           {message.content}
-          {/* Note: In a production environment, you would implement actual translation here */}
         </div>
         
         {message.attachments?.map((attachment, index) => (
