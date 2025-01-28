@@ -20,12 +20,12 @@ const Hero = ({ culturalContent }: HeroProps) => {
   useEffect(() => {
     const fetchUserLanguage = async () => {
       try {
-        setIsLoading(true);
         const { data: { session } } = await supabase.auth.getSession();
         
         if (!session?.user) {
+          setIsSpanish(true); // Default to Spanish if not authenticated
           setIsLoading(false);
-          return; // Keep default language if not authenticated
+          return;
         }
 
         const { data: profile, error } = await supabase
@@ -41,15 +41,13 @@ const Hero = ({ culturalContent }: HeroProps) => {
             description: "Using default language settings",
             variant: "destructive",
           });
-          return;
-        }
-
-        if (profile) {
+          setIsSpanish(true); // Default to Spanish on error
+        } else if (profile) {
           setIsSpanish(profile.preferred_language === 'es');
         }
       } catch (error) {
         console.error('Error in fetchUserLanguage:', error);
-        // Keep default language on error
+        setIsSpanish(true); // Default to Spanish on error
       } finally {
         setIsLoading(false);
       }
@@ -79,9 +77,19 @@ const Hero = ({ culturalContent }: HeroProps) => {
     };
   }, []);
 
-  // If we're still loading, show nothing or a loading state
+  // Show a loading state instead of nothing
   if (isLoading) {
-    return null; // Or return a loading spinner if preferred
+    return (
+      <div className="relative overflow-hidden py-24 bg-white/90">
+        <HeroPattern />
+        <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="animate-pulse">
+            <div className="h-12 bg-gray-200 rounded w-3/4 mx-auto mb-4"></div>
+            <div className="h-4 bg-gray-200 rounded w-1/2 mx-auto"></div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   // If we're on the home page, render the HomeHero component
