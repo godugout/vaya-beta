@@ -5,7 +5,7 @@ import Hero from "@/components/Hero";
 import MemoryFeedLayout from "@/components/memory/MemoryFeedLayout";
 import AddMemoryButton from "@/components/memory/AddMemoryButton";
 import { Button } from "@/components/ui/button";
-import { MessageCircle, Filter, User, Tag, Calendar, Heart } from "lucide-react";
+import { MessageCircle, User, Tag, Calendar, Bookmark } from "lucide-react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 const MemoryLane = () => {
@@ -58,12 +58,12 @@ const MemoryLane = () => {
                   <span className="hidden lg:inline">Date</span>
                 </ToggleGroupItem>
                 <ToggleGroupItem 
-                  value="favorites" 
-                  aria-label="Show favorites"
+                  value="bookmarks" 
+                  aria-label="Show bookmarks"
                   className="data-[state=on]:bg-vaya-memories/10 data-[state=on]:text-vaya-memories"
                 >
-                  <Heart className="h-4 w-4 mr-2" />
-                  <span className="hidden lg:inline">Favorites</span>
+                  <Bookmark className="h-4 w-4 mr-2" />
+                  <span className="hidden lg:inline">Bookmarks</span>
                 </ToggleGroupItem>
               </ToggleGroup>
             </div>

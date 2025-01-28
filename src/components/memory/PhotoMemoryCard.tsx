@@ -1,5 +1,5 @@
 import { PhotoMemory } from "./types";
-import { Calendar, Heart, MessageSquare, Share2 } from "lucide-react";
+import { Calendar, Bookmark, MessageSquare, Share2 } from "lucide-react";
 import { format } from "date-fns";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -49,8 +49,8 @@ export const PhotoMemoryCard = ({ memory }: PhotoMemoryCardProps) => {
                     className="text-gray-500 hover:text-vaya-primary"
                     onClick={(e) => e.preventDefault()}
                   >
-                    <Heart className="w-4 h-4 mr-2" />
-                    Like
+                    <Bookmark className="w-4 h-4 mr-2" />
+                    Bookmark
                   </Button>
                   <Button 
                     variant="ghost" 
