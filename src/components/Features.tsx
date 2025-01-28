@@ -6,28 +6,28 @@ const features = [
     name: "Create Memory Capsules",
     description: "Build digital time capsules filled with photos, stories, and precious moments for future generations.",
     icon: Camera,
-    bgColor: "bg-vaya-accent-orange/20",
+    bgColor: "bg-gray-50",
     iconColor: "text-vaya-stories",
   },
   {
     name: "Family Collaboration",
     description: "Invite family members to contribute their own memories and stories to your shared collection.",
     icon: Users,
-    bgColor: "bg-vaya-accent-blue/20",
+    bgColor: "bg-gray-50",
     iconColor: "text-vaya-memories",
   },
   {
     name: "Memory Timeline",
     description: "Organize and view your memories chronologically in a beautiful, interactive timeline.",
     icon: Clock,
-    bgColor: "bg-vaya-accent-green/20",
+    bgColor: "bg-gray-50",
     iconColor: "text-vaya-capsules",
   },
   {
     name: "Legacy Preservation",
     description: "Ensure your family's stories and traditions are preserved and passed down through generations.",
     icon: Heart,
-    bgColor: "bg-vaya-accent-yellow/20",
+    bgColor: "bg-gray-50",
     iconColor: "text-vaya-stories",
   },
 ];
@@ -55,7 +55,7 @@ const Features = () => {
                 className="flex flex-col"
               >
                 <dt className="text-base font-semibold leading-7 text-gray-900">
-                  <div className={`mb-6 flex h-14 w-14 items-center justify-center rounded-xl ${feature.bgColor}`}>
+                  <div className={`mb-6 flex h-14 w-14 items-center justify-center rounded-xl ${feature.bgColor} shadow-sm`}>
                     <feature.icon className={`h-7 w-7 ${feature.iconColor}`} aria-hidden="true" />
                   </div>
                   {feature.name}
