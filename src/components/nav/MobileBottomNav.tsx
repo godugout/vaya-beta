@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
-import { Home, Clock, Box, Mic } from "lucide-react";
-import { User } from "@supabase/supabase-js";
+import { Home, Clock, Box, Mic, User } from "lucide-react";
+import { User as UserType } from "@supabase/supabase-js";
 
 interface MobileBottomNavProps {
-  user: User | null;
+  user: UserType | null;
   navigate: (path: string) => void;
 }
 
@@ -12,6 +12,15 @@ export const MobileBottomNav = ({ user, navigate }: MobileBottomNavProps) => {
   return (
     <div className="md:hidden fixed bottom-0 left-0 right-0 bg-[#222222] border-t z-50">
       <div className="flex justify-around items-center h-16 px-4">
+        {user && (
+          <Link
+            to="/profile"
+            className="flex flex-col items-center text-gray-300 hover:text-white"
+          >
+            <span className="text-xs mb-1">Profile</span>
+            <User className="h-6 w-6" />
+          </Link>
+        )}
         <Link
           to="/"
           className="flex flex-col items-center text-gray-300 hover:text-white"

@@ -91,11 +91,11 @@ export default function Profile() {
             id,
             type,
             created_at,
-            stories (
+            stories:stories (
               title,
               description
             ),
-            photos (
+            photos:photos (
               caption
             )
           )
@@ -103,13 +103,19 @@ export default function Profile() {
         .eq('created_by', user.id);
 
       if (bookmarkError) throw bookmarkError;
-      setBookmarks(bookmarkData.map(b => ({
-        id: b.memories.id,
-        type: b.memories.type,
-        title: b.memories.stories?.title || b.memories.photos?.caption,
-        description: b.memories.stories?.description,
-        created_at: b.memories.created_at
-      })));
+      
+      // Safely transform the data with proper type checking
+      const transformedBookmarks = bookmarkData
+        .filter(b => b.memories) // Filter out any null memories
+        .map(b => ({
+          id: b.memories.id,
+          type: b.memories.type,
+          title: b.memories.stories?.[0]?.title || b.memories.photos?.[0]?.caption || 'Untitled',
+          description: b.memories.stories?.[0]?.description,
+          created_at: b.memories.created_at
+        }));
+
+      setBookmarks(transformedBookmarks);
 
     } catch (error: any) {
       toast({
@@ -161,9 +167,9 @@ export default function Profile() {
             <Bookmark className="h-4 w-4 mr-2" />
             Bookmarks
           </TabsTrigger>
-          <TabsTrigger value="creations">
+          <TabsTrigger value="heritage">
             <FileText className="h-4 w-4 mr-2" />
-            Creations
+            Heritage Stories
           </TabsTrigger>
           <TabsTrigger value="activity">
             <Bell className="h-4 w-4 mr-2" />
@@ -217,10 +223,10 @@ export default function Profile() {
           </Card>
         </TabsContent>
 
-        <TabsContent value="creations">
+        <TabsContent value="heritage">
           <Card>
             <CardHeader>
-              <CardTitle>Your Creations</CardTitle>
+              <CardTitle>Your Heritage Stories</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground">Coming soon...</p>

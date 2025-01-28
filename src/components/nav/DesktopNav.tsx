@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
-import { Clock, Box, Mic, Home } from "lucide-react";
-import { User } from "@supabase/supabase-js";
+import { Clock, Box, Mic, Home, User } from "lucide-react";
+import { User as UserType } from "@supabase/supabase-js";
 import { UserMenu } from "./UserMenu";
 
 interface DesktopNavProps {
-  user: User | null;
+  user: UserType | null;
   handleSignOut: () => Promise<void>;
   navigate: (path: string) => void;
 }
@@ -25,6 +25,15 @@ export const DesktopNav = ({ user, handleSignOut, navigate }: DesktopNavProps) =
           </span>
         </Link>
         <nav className="flex items-center space-x-8 ml-12">
+          {user && (
+            <Link
+              to="/profile"
+              className="text-sm font-medium text-gray-300 transition-colors hover:text-white inline-flex items-center gap-2"
+            >
+              Profile
+              <User className="h-4 w-4" />
+            </Link>
+          )}
           <Link
             to="/"
             className="text-sm font-medium text-gray-300 transition-colors hover:text-white inline-flex items-center gap-2"
