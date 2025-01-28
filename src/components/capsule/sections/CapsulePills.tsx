@@ -29,7 +29,7 @@ export const CapsulePills = () => {
             step={1}
             icon={Camera}
             title="Capture & Create"
-            description="Add photos, voice messages, and written stories that tell your family's unique journey. Each piece becomes part of your legacy."
+            description="Add photos, voice messages, and stories to tell your family's journey. Each piece creates a lasting legacy."
             color="bg-gray-50"
             iconColor="text-blue-500"
             numberColor="text-blue-500"
@@ -59,7 +59,7 @@ export const CapsulePills = () => {
             step={4}
             icon={Sparkle}
             title="Experience the Magic"
-            description="When the day arrives, gather together and experience the joy of opening your capsule. Relive precious memories and celebrate your family's story."
+            description="Gather together to open your capsule and relive precious memories. Celebrate your family's story as one."
             color="bg-gray-50"
             iconColor="text-vaya-capsules"
             numberColor="text-vaya-capsules"
