@@ -55,7 +55,7 @@
     background-size: 400% 400%;
     border-radius: inherit;
     z-index: -1;
-    animation: shimmerBg 6s linear infinite;
+    animation: shimmerBg 8s ease infinite;
     opacity: 0;
     transition: opacity 0.5s ease;
     filter: blur(12px);
@@ -90,8 +90,11 @@
   }
 
   @keyframes shimmerBg {
-    0% { background-position: 0% 0%; }
-    100% { background-position: 400% 400%; }
+    0% { background-position: 0% 50% }
+    25% { background-position: 100% 100% }
+    50% { background-position: 50% 0% }
+    75% { background-position: 0% 100% }
+    100% { background-position: 0% 50% }
   }
 
   @keyframes sparkleFloat {
