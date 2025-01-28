@@ -25,8 +25,8 @@ type ExampleCapsule = {
 
 const exampleCapsules: ExampleCapsule[] = [
   {
-    title: "Beach Day Memories",
-    description: "Summer adventures at Crystal Cove",
+    title: "Summer Beach Day",
+    description: "Our annual family beach trip memories",
     icon: Camera,
     colorKey: "green",
     creator: {
@@ -41,10 +41,10 @@ const exampleCapsules: ExampleCapsule[] = [
     timeLeft: "Opened Nov 1"
   },
   {
-    title: "Our Journey Here",
-    description: "Immigration stories and heritage",
-    icon: MapPin,
-    colorKey: "blue",
+    title: "Family Recipes Collection",
+    description: "Grandma's secret recipes revealed",
+    icon: Book,
+    colorKey: "orange",
     creator: {
       initials: "JD",
       avatar: "/placeholder.svg"
@@ -57,10 +57,10 @@ const exampleCapsules: ExampleCapsule[] = [
     timeLeft: "Opens Dec 31"
   },
   {
-    title: "Costa Rican Heritage",
-    description: "Celebrating our roots",
+    title: "Wedding Memories",
+    description: "Sarah & John's special day",
     icon: Heart,
-    colorKey: "green",
+    colorKey: "blue",
     creator: {
       initials: "LE",
       avatar: "/placeholder.svg"
@@ -70,12 +70,29 @@ const exampleCapsules: ExampleCapsule[] = [
       contributors: 4
     },
     status: "upcoming",
-    timeLeft: "Unlocked today"
+    timeLeft: "Unlocks today"
   },
-  // Theme placeholder capsules
   {
-    title: "Local Adventures",
-    icon: Film,
+    title: "High School Graduation",
+    icon: GraduationCap,
+    colorKey: "green",
+    isPlaceholder: true
+  },
+  {
+    title: "Family Game Nights",
+    icon: Users,
+    colorKey: "orange",
+    isPlaceholder: true
+  },
+  {
+    title: "Music Festival Memories",
+    icon: Music,
+    colorKey: "blue",
+    isPlaceholder: true
+  },
+  {
+    title: "Camping Adventures",
+    icon: Camera,
     colorKey: "green",
     isPlaceholder: true
   },
@@ -86,14 +103,32 @@ const exampleCapsules: ExampleCapsule[] = [
     isPlaceholder: true
   },
   {
-    title: "Festival Celebrations",
-    icon: Music,
+    title: "Baby's First Year",
+    icon: Calendar,
+    colorKey: "blue",
+    isPlaceholder: true
+  },
+  {
+    title: "European Vacation",
+    icon: MapPin,
+    colorKey: "green",
+    isPlaceholder: true
+  },
+  {
+    title: "Pet Photo Album",
+    icon: ImageIcon,
     colorKey: "orange",
     isPlaceholder: true
   },
   {
-    title: "Wildlife Encounters",
-    icon: Camera,
+    title: "College Memories",
+    icon: Book,
+    colorKey: "blue",
+    isPlaceholder: true
+  },
+  {
+    title: "Birthday Celebrations",
+    icon: Heart,
     colorKey: "green",
     isPlaceholder: true
   },
@@ -104,81 +139,9 @@ const exampleCapsules: ExampleCapsule[] = [
     isPlaceholder: true
   },
   {
-    title: "Wedding Stories",
-    icon: Heart,
+    title: "Movie Night Collection",
+    icon: Film,
     colorKey: "blue",
-    isPlaceholder: true
-  },
-  {
-    title: "Travel Diaries",
-    icon: MapPin,
-    colorKey: "green",
-    isPlaceholder: true
-  },
-  {
-    title: "Photo Albums",
-    icon: ImageIcon,
-    colorKey: "blue",
-    isPlaceholder: true
-  },
-  {
-    title: "School Memories",
-    icon: GraduationCap,
-    colorKey: "blue",
-    isPlaceholder: true
-  },
-  {
-    title: "Year in Review 2023",
-    icon: Calendar,
-    colorKey: "orange",
-    isPlaceholder: true
-  },
-  {
-    title: "Family Recipes",
-    icon: Book,
-    colorKey: "orange",
-    isPlaceholder: true
-  },
-  {
-    title: "Grandparents' Stories",
-    icon: Book,
-    colorKey: "blue",
-    isPlaceholder: true
-  },
-  {
-    title: "Cultural Celebrations",
-    icon: Music,
-    colorKey: "green",
-    isPlaceholder: true
-  },
-  {
-    title: "Family Vacations",
-    icon: MapPin,
-    colorKey: "blue",
-    isPlaceholder: true
-  },
-  {
-    title: "Birthday Memories",
-    icon: Heart,
-    colorKey: "orange",
-    isPlaceholder: true
-  },
-  {
-    title: "Sports Achievements",
-    icon: Users,
-    colorKey: "green",
-    isPlaceholder: true
-  },
-  {
-    title: "Pet Stories",
-    icon: Camera,
-    colorKey: "blue",
-    isPlaceholder: true
-  },
-  {
-    title: "Holiday Gatherings",
-    icon: Users,
-    colorKey: "orange",
     isPlaceholder: true
   }
 ];
@@ -234,7 +197,6 @@ export const ExampleCapsules = () => {
                   `bg-vaya-accent-${capsule.colorKey} bg-opacity-30`
                 )}>
                   <div className="p-4">
-                    {/* Icon and Avatar Section */}
                     <div className="relative mb-3">
                       <div className={cn(
                         "inline-flex items-center justify-center w-10 h-10 rounded-xl",
@@ -251,7 +213,6 @@ export const ExampleCapsules = () => {
                       )}
                     </div>
 
-                    {/* Content Section */}
                     <div className="space-y-2">
                       <h3 className="text-sm font-medium text-gray-900 line-clamp-1">
                         {capsule.title}
@@ -264,7 +225,6 @@ export const ExampleCapsules = () => {
                             </p>
                           )}
 
-                          {/* Stats Section */}
                           {capsule.stats && (
                             <div className="flex items-center gap-3 text-xs text-gray-500">
                               <span className="flex items-center gap-1">
@@ -278,13 +238,12 @@ export const ExampleCapsules = () => {
                             </div>
                           )}
 
-                          {/* Status and Time Section */}
                           {capsule.status && capsule.timeLeft && (
                             <div className="flex items-center justify-between pt-1">
                               <Badge variant="secondary" className={statusColors[capsule.status]}>
                                 {capsule.status}
                               </Badge>
-                              <span className="flex items-center text-xs text-gray-500">
+                              <span className="text-xs text-gray-500">
                                 {capsule.timeLeft}
                               </span>
                             </div>
