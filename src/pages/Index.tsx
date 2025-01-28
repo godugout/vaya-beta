@@ -1,7 +1,6 @@
 import Hero from "@/components/Hero";
 import Features from "@/components/Features";
 import Testimonials from "@/components/Testimonials";
-import Footer from "@/components/Footer";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -41,7 +40,6 @@ const Index = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }
