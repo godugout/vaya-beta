@@ -33,8 +33,8 @@ const HomeHero = () => {
             <Button 
               id="hero-home-secondary-cta"
               size="lg" 
-              variant="outline"
-              className="w-full sm:w-auto font-outfit border-2 border-vaya-capsules text-vaya-capsules bg-vaya-accent-green hover:bg-vaya-accent-green/80 hover:text-vaya-capsules"
+              variant="stories"
+              className="w-full sm:w-auto font-outfit"
             >
               <span>Share a Story</span>
               <Mic className="ml-2 h-5 w-5" />
