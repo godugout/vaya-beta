@@ -3,6 +3,7 @@ import { CapsuleCard } from "./CapsuleCard";
 import { motion } from "framer-motion";
 import { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { format, formatDistanceToNow } from "date-fns";
 
 interface DesktopGridProps {
   capsules: {
@@ -28,7 +29,7 @@ export const DesktopGrid = ({ capsules }: DesktopGridProps) => {
 
   return (
     <div 
-      className="w-screen relative overflow-hidden -mx-[50vw] left-[50%] right-[50%]"
+      className="w-screen relative overflow-hidden -mx-[50vw] left-[50%] right-[50%] bg-gradient-to-b from-white to-gray-50/50 py-24"
       style={{
         transform: "perspective(1000px) rotateX(2deg)",
       }}
@@ -40,7 +41,7 @@ export const DesktopGrid = ({ capsules }: DesktopGridProps) => {
         return (
           <motion.div
             key={rowIndex}
-            className="flex py-8" // Increased from py-6
+            className="flex py-8"
             initial={{ x: isEven ? "0%" : "-100%" }}
             animate={{ 
               x: isEven ? "-100%" : "0%",
@@ -54,7 +55,7 @@ export const DesktopGrid = ({ capsules }: DesktopGridProps) => {
               transform: `translateX(${isEven ? '-25%' : '25%'})`,
             }}
           >
-            <div className="flex gap-10 animate-none"> {/* Increased from gap-8 */}
+            <div className="flex gap-10 animate-none">
               {[...row, ...row, ...row].map((capsule, index) => (
                 <motion.div
                   key={`${capsule.title}-${index}`}
@@ -62,10 +63,50 @@ export const DesktopGrid = ({ capsules }: DesktopGridProps) => {
                     scale: 1.02,
                     transition: { duration: 0.2 },
                   }}
-                  className="relative group"
+                  className={cn(
+                    "relative group rounded-full",
+                    capsule.metadata?.status === "active" && "bg-vaya-accent-green/20",
+                    capsule.metadata?.status === "upcoming" && "bg-vaya-accent-yellow/20",
+                    capsule.metadata?.status === "locked" && "bg-vaya-accent-blue/20",
+                    capsule.metadata?.status === "revealed" && "bg-vaya-accent-orange/20"
+                  )}
                 >
-                  <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-xl" />
-                  <CapsuleCard {...capsule} isDesktop metadata={capsule.metadata} />
+                  <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-full" />
+                  <div className="p-8 min-w-[400px]">
+                    <div className="flex items-start gap-4">
+                      <div className={cn(
+                        "p-3 rounded-full",
+                        `bg-vaya-${capsule.colorKey}`
+                      )}>
+                        <capsule.icon className="w-6 h-6 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-xl font-semibold mb-2 font-outfit">{capsule.title}</h3>
+                        <div className="space-y-2 text-sm text-gray-600">
+                          <div className="flex items-center justify-between">
+                            <span>{capsule.metadata?.itemCount} items</span>
+                            <span className="capitalize px-2 py-1 rounded-full text-xs font-medium bg-white shadow-sm">
+                              {capsule.metadata?.status}
+                            </span>
+                          </div>
+                          <div className="text-xs">
+                            {capsule.metadata?.status === "upcoming" && (
+                              <span>Opens {formatDistanceToNow(new Date(capsule.metadata.date))} from now</span>
+                            )}
+                            {capsule.metadata?.status === "active" && (
+                              <span>Closes {format(new Date(capsule.metadata.date), 'MMM d, yyyy')}</span>
+                            )}
+                            {capsule.metadata?.status === "locked" && (
+                              <span>Reveals {formatDistanceToNow(new Date(capsule.metadata.date))} from now</span>
+                            )}
+                            {capsule.metadata?.status === "revealed" && (
+                              <span>Revealed on {format(new Date(capsule.metadata.date), 'MMM d, yyyy')}</span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </motion.div>
               ))}
             </div>

@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect } from "react";
 import Hero from "@/components/Hero";
-import { CapsulePills } from "@/components/capsule/sections/CapsulePills";
 import { CapsuleScrollSection } from "@/components/capsule/sections/CapsuleScrollSection";
 import { Users, Gift, Heart, Camera, Music, Star, Image, Book } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
@@ -113,7 +112,6 @@ const FamilyCapsules = () => {
   return (
     <div className="relative min-h-screen">
       <Hero />
-      <CapsulePills />
       <CapsuleScrollSection capsules={capsules || []} />
     </div>
   );
