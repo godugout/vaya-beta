@@ -16,6 +16,11 @@ export const CapsuleRow = ({ capsules, rowIndex, duration = 20, isDetailed }: Ca
   const verticalOffset = rowIndex % 3 === 0 ? "0px" : 
                         rowIndex % 3 === 1 ? "-60px" : "-120px";
 
+  // Vary animation speed based on row position
+  const rowDuration = rowIndex % 3 === 0 ? duration : 
+                     rowIndex % 3 === 1 ? duration * 1.5 : 
+                     duration * 0.75;
+
   return (
     <motion.div
       className="flex py-4"
@@ -24,7 +29,7 @@ export const CapsuleRow = ({ capsules, rowIndex, duration = 20, isDetailed }: Ca
         x: isEven ? "-100%" : "0%",
       }}
       transition={{
-        duration: duration,
+        duration: rowDuration,
         repeat: Infinity,
         ease: "linear",
       }}
