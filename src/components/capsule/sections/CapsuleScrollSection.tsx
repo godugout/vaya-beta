@@ -60,7 +60,6 @@ export const CapsuleScrollSection = ({ capsules }: CapsuleScrollSectionProps) =>
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Secondary Title Bar */}
       <div 
         className={cn(
           "transition-all duration-300 ease-in-out",
@@ -127,12 +126,10 @@ export const CapsuleScrollSection = ({ capsules }: CapsuleScrollSectionProps) =>
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="container mx-auto px-4 py-8">
         {isMobile ? null : <DesktopGrid capsules={capsules} />}
       </div>
 
-      {/* Feature Steps Section */}
       <div className="bg-gradient-to-b from-white to-gray-50 py-24">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
