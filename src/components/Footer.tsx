@@ -7,11 +7,15 @@ const Footer = () => {
         <div className="xl:grid xl:grid-cols-4 xl:gap-8">
           <div className="space-y-8 xl:col-span-1">
             <Link to="/" className="flex items-center gap-2">
-              <img 
-                src="/lovable-uploads/ef40fff0-4da4-4937-af3d-c2276b1d2588.png"
-                alt="Vaya Logo" 
-                className="h-10 w-10"
-              />
+              <div className="relative transform transition-transform hover:translate-y-[-2px]">
+                <img 
+                  src="/lovable-uploads/ef40fff0-4da4-4937-af3d-c2276b1d2588.png"
+                  alt="Vaya Logo" 
+                  className="h-10 w-10 relative z-10 rounded-lg"
+                />
+                <div className="absolute -bottom-1 -right-1 h-10 w-10 bg-vaya-stories/20 rounded-lg"></div>
+                <div className="absolute -bottom-2 -right-2 h-10 w-10 bg-vaya-stories/10 rounded-lg"></div>
+              </div>
               <span className="font-outfit font-bold text-2xl">
                 Vaya<sup>α</sup>
               </span>
