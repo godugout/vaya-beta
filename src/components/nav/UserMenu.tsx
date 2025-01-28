@@ -7,7 +7,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "../ui/button";
-import { LogOut, User as UserIcon, Settings } from "lucide-react";
+import { LogOut, User as UserIcon, Settings, Users } from "lucide-react";
 
 interface UserMenuProps {
   user: User;
@@ -35,6 +35,14 @@ export const UserMenu = ({ user, handleSignOut, navigate }: UserMenuProps) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
+        <DropdownMenuItem onClick={() => navigate("/profile")}>
+          <UserIcon className="mr-2 h-4 w-4" />
+          <span>User Profile</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate("/families")}>
+          <Users className="mr-2 h-4 w-4" />
+          <span>My Families</span>
+        </DropdownMenuItem>
         <DropdownMenuItem onClick={() => navigate("/account")}>
           <Settings className="mr-2 h-4 w-4" />
           <span>Account Settings</span>
