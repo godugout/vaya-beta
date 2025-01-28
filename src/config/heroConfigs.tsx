@@ -34,6 +34,10 @@ export const heroConfigs: HeroConfigs = {
     primaryCta: {
       text: "Add Memory",
       icon: <Camera className="ml-2 h-5 w-5" />,
+    },
+    secondaryCta: {
+      text: "Ask Family Anything",
+      icon: <MessageSquare className="ml-2 h-5 w-5" />,
     }
   },
   "/share-stories": {

@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { HeroConfig } from "@/types/hero";
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 interface HeroContentProps {
   config: HeroConfig;
@@ -11,6 +11,7 @@ interface HeroContentProps {
 
 export const HeroContent = ({ config, isSpanish }: HeroContentProps) => {
   const location = useLocation();
+  const navigate = useNavigate();
   
   // Determine button variant based on current route
   const getButtonVariant = () => {
@@ -34,50 +35,28 @@ export const HeroContent = ({ config, isSpanish }: HeroContentProps) => {
         {isSpanish ? config.subtitle_es : config.subtitle_en}
       </p>
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6">
-        {location.pathname === "/" ? (
-          // Home page: Story button first, Capsule button second
-          <>
-            {config.secondaryCta && (
-              <Button 
-                size="lg" 
-                variant="stories"
-                className="w-full sm:w-auto font-outfit"
-              >
-                <span>{config.secondaryCta.text}</span>
-                {config.secondaryCta.icon}
-              </Button>
-            )}
-            <Button 
-              size="lg" 
-              variant={getButtonVariant()}
-              className="w-full sm:w-auto transition-all duration-300 font-outfit"
-            >
-              <span>{config.primaryCta.text}</span>
-              {config.primaryCta.icon}
-            </Button>
-          </>
-        ) : (
-          // Other pages: Primary button first, secondary (if exists) second
-          <>
-            <Button 
-              size="lg" 
-              variant={getButtonVariant()}
-              className="w-full sm:w-auto transition-all duration-300 font-outfit"
-            >
-              <span>{config.primaryCta.text}</span>
-              {config.primaryCta.icon}
-            </Button>
-            {config.secondaryCta && (
-              <Button 
-                size="lg" 
-                variant="outline"
-                className="w-full sm:w-auto font-outfit border-2 border-vaya-stories hover:bg-vaya-stories/10"
-              >
-                <span>{config.secondaryCta.text}</span>
-                {config.secondaryCta.icon}
-              </Button>
-            )}
-          </>
+        <Button 
+          size="lg" 
+          variant={getButtonVariant()}
+          className="w-full sm:w-auto transition-all duration-300 font-outfit"
+        >
+          <span>{config.primaryCta.text}</span>
+          {config.primaryCta.icon}
+        </Button>
+        {config.secondaryCta && (
+          <Button 
+            size="lg" 
+            variant="outline"
+            onClick={() => location.pathname.includes('memory-lane') && navigate('/narra')}
+            className={`w-full sm:w-auto font-outfit border-2 ${
+              location.pathname.includes('memory-lane') 
+                ? 'border-vaya-memories hover:bg-vaya-memories/10 text-vaya-memories'
+                : 'border-vaya-stories hover:bg-vaya-stories/10'
+            }`}
+          >
+            <span>{config.secondaryCta.text}</span>
+            {config.secondaryCta.icon}
+          </Button>
         )}
       </div>
     </motion.div>
