@@ -17,7 +17,8 @@ const FamilyCapsules = () => {
   // Transform example capsules into the format expected by the table
   const allExampleCapsules = [...detailedCapsules, ...simpleCapsules].map(capsule => ({
     ...capsule,
-    link: `/capsule/${Math.random().toString(36).substring(7)}`,
+    // Generate a proper UUID for each example capsule
+    link: `/capsule/${crypto.randomUUID()}`,
     metadata: capsule.metadata || {
       creatorInitials: "JD",
       itemCount: Math.floor(Math.random() * 20) + 1,
