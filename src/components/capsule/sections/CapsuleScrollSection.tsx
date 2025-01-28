@@ -3,9 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Camera, Plus, ChevronUp } from "lucide-react";
 import CreateCapsuleForm from "@/components/capsule/CreateCapsuleForm";
 import { DesktopGrid } from "@/components/ui/capsule/DesktopGrid";
-import { MobileCapsuleList } from "@/components/ui/capsule/MobileCapsuleList";
 import { useIsMobile } from "@/hooks/use-mobile";
-import type { Capsule } from "@/components/ui/capsule/types";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
@@ -13,7 +11,19 @@ import { StepCard } from "@/components/ui/capsule/StepCard";
 import { Camera as CameraIcon, BookOpen, Users, Sparkles } from "lucide-react";
 
 interface CapsuleScrollSectionProps {
-  capsules: Capsule[];
+  capsules: {
+    title: string;
+    link: string;
+    icon: any;
+    colorKey: string;
+    metadata?: {
+      creatorAvatar?: string;
+      creatorInitials: string;
+      itemCount: number;
+      status: "upcoming" | "active" | "locked" | "revealed";
+      date: string;
+    };
+  }[];
 }
 
 export const CapsuleScrollSection = ({ capsules }: CapsuleScrollSectionProps) => {
@@ -61,7 +71,6 @@ export const CapsuleScrollSection = ({ capsules }: CapsuleScrollSectionProps) =>
         )}
       >
         <div className="container mx-auto px-4 py-4 flex items-center">
-          {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
             <img 
               src="/lovable-uploads/ef40fff0-4da4-4937-af3d-c2276b1d2588.png" 
@@ -73,12 +82,10 @@ export const CapsuleScrollSection = ({ capsules }: CapsuleScrollSectionProps) =>
             </span>
           </Link>
 
-          {/* Centered Title */}
           <h2 className="text-xl font-semibold text-gray-900 flex-1 text-center">
             Family Capsules
           </h2>
 
-          {/* Actions */}
           <div className="flex items-center gap-4">
             <Button
               variant="ghost"
@@ -122,11 +129,7 @@ export const CapsuleScrollSection = ({ capsules }: CapsuleScrollSectionProps) =>
 
       {/* Main Content */}
       <div className="container mx-auto px-4 py-8">
-        {isMobile ? (
-          <MobileCapsuleList capsules={capsules} />
-        ) : (
-          <DesktopGrid capsules={capsules} />
-        )}
+        {isMobile ? null : <DesktopGrid capsules={capsules} />}
       </div>
 
       {/* Feature Steps Section */}

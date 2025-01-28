@@ -1,5 +1,4 @@
 import React from "react";
-import { CapsuleCard } from "./CapsuleCard";
 import { motion } from "framer-motion";
 import { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
