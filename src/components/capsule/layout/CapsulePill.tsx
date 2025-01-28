@@ -7,20 +7,22 @@ import { format, formatDistanceToNow } from "date-fns";
 // Emoji mapping for different capsule types
 const getEmojiForIcon = (icon: LucideIcon): string => {
   const emojiMap = {
-    Camera: "📸",
-    MessageCircle: "💭",
-    Heart: "❤️",
-    HelpCircle: "❓",
-    Users: "👥",
-    Music: "🎵",
-    Book: "📚",
-    Calendar: "📅",
-    MapPin: "📍",
-    Image: "🖼️",
-    GraduationCap: "🎓",
+    Camera: "👨‍👩‍👧‍👦",    // Family
+    MessageCircle: "🗣️",   // Conversation
+    Heart: "💝",          // Love/Family bond
+    HelpCircle: "🤗",     // Support
+    Users: "👥",          // Group/Friends
+    Music: "🎵",          // Music memories
+    Book: "📔",           // Family stories
+    Calendar: "🎊",       // Celebrations
+    MapPin: "🏡",         // Home/Location
+    Image: "🎞️",          // Family photos
+    Star: "🌟",           // Special moments
+    Gift: "🎁",           // Special occasions
+    GraduationCap: "👨‍🎓", // Achievements
   };
   
-  return emojiMap[icon.name as keyof typeof emojiMap] || "✨";
+  return emojiMap[icon.name as keyof typeof emojiMap] || "👨‍👩‍👧";
 };
 
 interface CapsulePillProps {
