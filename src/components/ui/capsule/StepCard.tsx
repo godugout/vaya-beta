@@ -9,7 +9,7 @@ interface StepCardProps {
   icon: LucideIcon;
   color: string;
   iconColor: string;
-  className?: string; // Added this line to accept className prop
+  className?: string;
 }
 
 export const StepCard = ({ 
@@ -25,6 +25,8 @@ export const StepCard = ({
     <motion.div 
       className={cn(
         "flex flex-col items-center text-center p-6 rounded-3xl transition-all duration-300 hover:shadow-lg",
+        "font-sans text-foreground tab-size-4",
+        "border border-border/50",
         className
       )}
       whileHover={{ scale: 1.02, y: -5 }}
