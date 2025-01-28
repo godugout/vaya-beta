@@ -120,26 +120,26 @@ export const CapsuleTable = ({ capsules, sortField, sortDirection, onSort }: Cap
         <TableHeader>
           <TableRow className="hover:bg-gray-50/50">
             <TableHead 
-              className="cursor-pointer text-center text-xl font-bold px-6"
+              className="cursor-pointer text-center px-6"
               onClick={() => onSort('title')}
             >
               Title {sortField === 'title' && (sortDirection === 'asc' ? '↑' : '↓')}
             </TableHead>
-            <TableHead className="text-center text-xl font-bold px-6">Note</TableHead>
-            <TableHead className="text-center text-xl font-bold px-6">Creator</TableHead>
+            <TableHead className="text-center px-6">Note</TableHead>
+            <TableHead className="text-center px-6">Creator</TableHead>
             <TableHead 
-              className="cursor-pointer text-center text-xl font-bold px-6"
+              className="cursor-pointer text-center px-6"
               onClick={() => onSort('status')}
             >
               Status {sortField === 'status' && (sortDirection === 'asc' ? '↑' : '↓')}
             </TableHead>
             <TableHead 
-              className="cursor-pointer text-center text-xl font-bold px-6"
+              className="cursor-pointer text-center px-6"
               onClick={() => onSort('date')}
             >
               Date {sortField === 'date' && (sortDirection === 'asc' ? '↑' : '↓')}
             </TableHead>
-            <TableHead className="text-center text-xl font-bold px-6">Actions</TableHead>
+            <TableHead className="text-center px-6">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -148,7 +148,7 @@ export const CapsuleTable = ({ capsules, sortField, sortDirection, onSort }: Cap
               key={capsule.title}
               className="hover:bg-gray-50/50"
             >
-              <TableCell className="font-medium text-left px-6">{capsule.title}</TableCell>
+              <TableCell className="text-left text-lg font-bold px-6">{capsule.title}</TableCell>
               <TableCell className="text-left px-6">{capsule.description}</TableCell>
               <TableCell className="text-center px-6">{capsule.metadata?.creatorInitials}</TableCell>
               <TableCell className="text-center px-6">
