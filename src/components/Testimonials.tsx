@@ -45,7 +45,7 @@ const Testimonials = () => {
               <div className="text-4xl mb-4">{testimonial.icon}</div>
               <h3 className="text-xl font-semibold text-white mb-4">{testimonial.title}</h3>
               <p className="text-base text-gray-300 mb-4 italic">"{testimonial.quote}"</p>
-              <p className="text-[#8B5CF6]">- {testimonial.author}</p>
+              <p className="text-[#D6BCFA]">- {testimonial.author}</p>
             </motion.div>
           ))}
         </div>
