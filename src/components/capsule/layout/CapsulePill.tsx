@@ -26,7 +26,6 @@ export const CapsulePill = ({
   metadata,
   isPlaceholder
 }: CapsulePillProps) => {
-  // Helper function to get background color based on colorKey
   const getBgColor = (key: string) => {
     const colors: { [key: string]: string } = {
       orange: "bg-vaya-accent-orange/40",
@@ -37,7 +36,6 @@ export const CapsulePill = ({
     return colors[key] || "bg-gray-50";
   };
 
-  // Helper function to get icon background color based on colorKey
   const getIconBgColor = (key: string, isPlaceholder: boolean = false) => {
     const opacity = isPlaceholder ? "10" : "20";
     const colors: { [key: string]: string } = {
@@ -49,7 +47,6 @@ export const CapsulePill = ({
     return colors[key] || `bg-gray-100 bg-opacity-${opacity}`;
   };
 
-  // Helper function to get icon color based on colorKey
   const getIconColor = (key: string) => {
     const colors: { [key: string]: string } = {
       orange: "text-vaya-stories",
@@ -78,9 +75,12 @@ export const CapsulePill = ({
         "shadow-[0_4px_12px_-2px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_-4px_rgba(0,0,0,0.12)]",
         "transition-all duration-300"
       )}>
-        <div className="p-8 h-full">
+        <div className={cn(
+          "flex items-center h-full",
+          isPlaceholder ? "py-6 px-8" : "p-8"
+        )}>
           {isPlaceholder ? (
-            <div className="flex items-center gap-6 h-full">
+            <div className="flex items-center gap-6 w-full">
               <div className={cn(
                 "inline-flex items-center justify-center w-12 h-12 rounded-2xl shrink-0",
                 getIconBgColor(colorKey, true),
@@ -88,12 +88,12 @@ export const CapsulePill = ({
               )}>
                 <Icon className={cn("w-6 h-6", getIconColor(colorKey))} />
               </div>
-              <div className="space-y-2">
+              <div className="flex flex-col justify-center text-left">
                 <h3 className="text-2xl font-semibold text-vaya-gray-900 font-outfit">
                   {title}
                 </h3>
                 {prompts && prompts.length > 0 && (
-                  <div className="flex items-center gap-2 text-sm text-vaya-gray-600">
+                  <div className="flex items-center gap-2 text-sm text-vaya-gray-600 mt-2">
                     <Lightbulb className="w-4 h-4" />
                     <span>{prompts[0]}</span>
                   </div>
@@ -101,7 +101,7 @@ export const CapsulePill = ({
               </div>
             </div>
           ) : (
-            <div className="flex justify-between items-start h-full">
+            <div className="flex items-center justify-between w-full">
               <div className="flex items-center gap-6">
                 <div className={cn(
                   "inline-flex items-center justify-center w-12 h-12 rounded-2xl shrink-0",
@@ -110,7 +110,7 @@ export const CapsulePill = ({
                 )}>
                   <Icon className={cn("w-6 h-6", getIconColor(colorKey))} />
                 </div>
-                <div className="space-y-3">
+                <div className="flex flex-col justify-center text-left">
                   <div>
                     <h3 className="text-2xl font-semibold text-vaya-gray-900 font-outfit mb-1">
                       {title}
@@ -122,7 +122,7 @@ export const CapsulePill = ({
                     )}
                   </div>
                   {metadata && (
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-2 mt-3">
                       <div className="flex items-center gap-4 text-sm text-vaya-gray-500">
                         <div className="flex items-center gap-1">
                           <Users className="w-4 h-4" />
