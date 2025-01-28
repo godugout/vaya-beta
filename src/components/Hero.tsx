@@ -15,16 +15,16 @@ interface HeroProps {
 const Hero = ({ culturalContent }: HeroProps) => {
   const location = useLocation();
   const [isSpanish, setIsSpanish] = useState(true);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchUserLanguage = async () => {
       try {
+        setIsLoading(true);
         const { data: { session } } = await supabase.auth.getSession();
         
         if (!session?.user) {
           setIsSpanish(true); // Default to Spanish if not authenticated
-          setIsLoading(false);
           return;
         }
 
