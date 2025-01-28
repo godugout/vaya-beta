@@ -201,6 +201,69 @@ export type Database = {
           },
         ]
       }
+      cultural_features_content: {
+        Row: {
+          created_at: string | null
+          culture_key: string
+          description: string
+          feature_key: string
+          id: string
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          culture_key: string
+          description: string
+          feature_key: string
+          id?: string
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          culture_key?: string
+          description?: string
+          feature_key?: string
+          id?: string
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      cultural_hero_content: {
+        Row: {
+          created_at: string | null
+          culture_key: string
+          id: string
+          primary_cta: string
+          secondary_cta: string
+          subtitle: string
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          culture_key: string
+          id?: string
+          primary_cta: string
+          secondary_cta: string
+          subtitle: string
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          culture_key?: string
+          id?: string
+          primary_cta?: string
+          secondary_cta?: string
+          subtitle?: string
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       families: {
         Row: {
           created_at: string | null
