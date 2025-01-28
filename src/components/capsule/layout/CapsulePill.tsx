@@ -2,6 +2,26 @@ import { LucideIcon } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { format, formatDistanceToNow } from "date-fns";
+
+// Emoji mapping for different capsule types
+const getEmojiForIcon = (icon: LucideIcon): string => {
+  const emojiMap = {
+    Camera: "📸",
+    MessageCircle: "💭",
+    Heart: "❤️",
+    HelpCircle: "❓",
+    Users: "👥",
+    Music: "🎵",
+    Book: "📚",
+    Calendar: "📅",
+    MapPin: "📍",
+    Image: "🖼️",
+    GraduationCap: "🎓",
+  };
+  
+  return emojiMap[icon.name as keyof typeof emojiMap] || "✨";
+};
 
 interface CapsulePillProps {
   title: string;
@@ -21,7 +41,7 @@ interface CapsulePillProps {
 
 export const CapsulePill = ({
   title,
-  icon: Icon,
+  icon,
   colorKey,
   description,
   prompts,
@@ -49,6 +69,16 @@ export const CapsulePill = ({
     "bg-white"
   );
 
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return format(date, "MMM d");
+  };
+
+  const getCountdown = (dateString: string) => {
+    const date = new Date(dateString);
+    return formatDistanceToNow(date, { addSuffix: true });
+  };
+
   return (
     <motion.div
       whileHover={{ scale: 1.03 }}
@@ -69,14 +99,11 @@ export const CapsulePill = ({
         )}
         
         {/* Content */}
-        <div className="flex items-center h-full relative z-10 pl-12">
+        <div className="flex items-center justify-between h-full relative z-10 px-12 py-8">
           {isPlaceholder ? (
             <div className="flex items-center gap-6 w-full">
-              <Icon className={cn(
-                "w-12 h-12",
-                `text-vaya-${colorKey}`
-              )} />
-              <div className="flex flex-col justify-start pt-2">
+              <span className="text-4xl">{getEmojiForIcon(icon)}</span>
+              <div className="flex flex-col justify-start">
                 <h3 className="text-2xl font-semibold text-vaya-gray-900 font-outfit text-left">
                   {title}
                 </h3>
@@ -88,12 +115,9 @@ export const CapsulePill = ({
               </div>
             </div>
           ) : (
-            <div className="flex items-start justify-between w-full">
-              <div className="flex items-center gap-6">
-                <Icon className={cn(
-                  "w-12 h-12",
-                  `text-vaya-${colorKey}`
-                )} />
+            <>
+              <div className="flex items-start">
+                <span className="text-4xl mr-6">{getEmojiForIcon(icon)}</span>
                 <div className="flex flex-col justify-start">
                   <h3 className="text-2xl font-semibold text-vaya-gray-900 font-outfit mb-1 text-left">
                     {title}
@@ -118,7 +142,17 @@ export const CapsulePill = ({
                   )}
                 </div>
               </div>
-            </div>
+              {metadata?.date && (
+                <div className="flex flex-col items-end justify-center ml-4">
+                  <div className="text-lg font-semibold text-vaya-gray-700">
+                    {formatDate(metadata.date)}
+                  </div>
+                  <div className="text-sm text-vaya-gray-500">
+                    {getCountdown(metadata.date)}
+                  </div>
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>
