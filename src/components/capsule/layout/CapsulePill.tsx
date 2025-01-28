@@ -1,6 +1,8 @@
 import { LucideIcon, Lightbulb, Users } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
+import { CanvasRevealEffect } from "@/components/ui/canvas-reveal-effect";
 
 interface CapsulePillProps {
   title: string;
@@ -28,6 +30,8 @@ export const CapsulePill = ({
   isPlaceholder,
   backgroundImage
 }: CapsulePillProps) => {
+  const [isHovered, setIsHovered] = useState(false);
+
   const getBgColor = (key: string) => {
     const colors: { [key: string]: string } = {
       orange: "bg-vaya-accent-orange/80",
@@ -36,6 +40,16 @@ export const CapsulePill = ({
       yellow: "bg-vaya-accent-yellow/80"
     };
     return colors[key] || "bg-gray-50";
+  };
+
+  const getParticleColors = (key: string): Array<[number, number, number]> => {
+    const colors: { [key: string]: Array<[number, number, number]> } = {
+      orange: [[255, 138, 76], [255, 167, 38]],
+      green: [[72, 187, 120], [104, 211, 145]],
+      blue: [[66, 153, 225], [99, 179, 237]],
+      yellow: [[236, 201, 75], [250, 240, 137]]
+    };
+    return colors[key] || [[255, 255, 255]];
   };
 
   const getIconBgColor = (key: string, isPlaceholder: boolean = false) => {
@@ -95,12 +109,22 @@ export const CapsulePill = ({
         "flex-shrink-0 transition-all duration-200",
         isPlaceholder ? "opacity-90 hover:opacity-100" : ""
       )}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       <div className={isPlaceholder ? placeholderPillClasses : detailedPillClasses}>
         {backgroundImage && (
           <div 
             className="absolute inset-0 bg-cover bg-center opacity-20 group-hover:opacity-30 transition-opacity duration-300"
             style={{ backgroundImage: `url(${backgroundImage})` }}
+          />
+        )}
+        {isHovered && (
+          <CanvasRevealEffect
+            colors={getParticleColors(colorKey)}
+            dotSize={2}
+            animationSpeed={3}
+            opacities={[0.1, 0.1, 0.1, 0.2, 0.2, 0.3, 0.3, 0.4]}
           />
         )}
         <div className="flex items-center justify-center h-full relative z-10">
