@@ -23,8 +23,16 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <section className="relative py-24">
-      <div className="absolute inset-0 bg-[#0EA5E9]/80 backdrop-blur-sm" />
+    <section 
+      className="relative py-24"
+      style={{
+        backgroundImage: `url("https://images.unsplash.com/photo-1522543558187-768b6df7c25c")`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
+      }}
+    >
+      <div className="absolute inset-0 bg-[#0EA5E9]/60 backdrop-blur-[2px]" />
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
