@@ -10,7 +10,7 @@ export const CapsulePills = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-3xl font-bold text-vaya-gray-900 font-outfit mb-6"
+          className="text-2xl font-bold text-vaya-gray-900 font-outfit mb-6"
         >
           Go Back to the Future
         </motion.h2>
@@ -20,8 +20,9 @@ export const CapsulePills = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-base md:text-lg text-vaya-gray-600 mb-16 max-w-2xl mx-auto font-inter"
         >
-          Each capsule represents a unique collection of memories, stories, and moments from your family's journey. 
-          Click on any capsule to dive deeper into your family's history.
+          Each capsule represents a unique collection of memories and stories
+          <br />
+          from your family's journey. Click on any capsule to dive deeper into your family's history.
         </motion.p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
