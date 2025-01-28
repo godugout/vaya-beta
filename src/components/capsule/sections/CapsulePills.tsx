@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Camera, BookOpen, Users, Star } from "lucide-react";
+import { Camera, BookOpen, Users, Sparkle } from "lucide-react";
 import { StepCard } from "@/components/ui/capsule/StepCard";
 
 export const CapsulePills = () => {
@@ -32,8 +32,8 @@ export const CapsulePills = () => {
             title="Capture & Collect"
             description="Add photos, voice messages, and written stories that capture the essence of your family's journey together"
             color="bg-gray-50"
-            iconColor="text-blue-500"
-            numberColor="text-blue-500"
+            iconColor="text-rose-500"
+            numberColor="text-rose-500"
             className="hover:scale-105 transition-transform duration-300"
           />
           <StepCard
@@ -42,8 +42,8 @@ export const CapsulePills = () => {
             title="Set Your Timeline"
             description="Choose a meaningful future date for the reveal - perhaps a milestone birthday, anniversary, or special family gathering"
             color="bg-gray-50"
-            iconColor="text-indigo-500"
-            numberColor="text-indigo-500"
+            iconColor="text-amber-500"
+            numberColor="text-amber-500"
             className="hover:scale-105 transition-transform duration-300"
           />
           <StepCard
@@ -52,18 +52,18 @@ export const CapsulePills = () => {
             title="Collaborate & Share"
             description="Invite family members to contribute their own special memories and messages to the capsule"
             color="bg-gray-50"
-            iconColor="text-purple-500"
-            numberColor="text-purple-500"
+            iconColor="text-emerald-500"
+            numberColor="text-emerald-500"
             className="hover:scale-105 transition-transform duration-300"
           />
           <StepCard
             step={4}
-            icon={Star}
+            icon={Sparkle}
             title="Experience the Magic"
             description="When the special day arrives, gather together to unlock your capsule and relive cherished memories in a heartwarming celebration"
             color="bg-gray-50"
-            iconColor="text-violet-500"
-            numberColor="text-violet-500"
+            iconColor="text-rose-500"
+            numberColor="text-emerald-500"
             className="reveal-card capsule-confetti"
           />
         </div>
