@@ -1,7 +1,7 @@
 import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { Camera, Users, Heart, Music, Book, Calendar, MapPin, Image as ImageIcon, GraduationCap, Film } from "lucide-react";
+import { Camera, Users, Heart, Music, Book, Calendar, MapPin, Image as ImageIcon, GraduationCap, Film, Video } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -25,8 +25,8 @@ type ExampleCapsule = {
 
 const exampleCapsules: ExampleCapsule[] = [
   {
-    title: "Summer Beach Day",
-    description: "Our annual family beach trip memories",
+    title: "Beach Day Memories",
+    description: "Summer family beach trip collection",
     icon: Camera,
     colorKey: "green",
     creator: {
@@ -41,10 +41,10 @@ const exampleCapsules: ExampleCapsule[] = [
     timeLeft: "Opened Nov 1"
   },
   {
-    title: "Family Recipes Collection",
-    description: "Grandma's secret recipes revealed",
-    icon: Book,
-    colorKey: "orange",
+    title: "Our Journey Here",
+    description: "Immigration stories and memories",
+    icon: MapPin,
+    colorKey: "blue",
     creator: {
       initials: "JD",
       avatar: "/placeholder.svg"
@@ -57,10 +57,10 @@ const exampleCapsules: ExampleCapsule[] = [
     timeLeft: "Opens Dec 31"
   },
   {
-    title: "Wedding Memories",
-    description: "Sarah & John's special day",
+    title: "Costa Rican Heritage",
+    description: "Cultural traditions and stories",
     icon: Heart,
-    colorKey: "blue",
+    colorKey: "green",
     creator: {
       initials: "LE",
       avatar: "/placeholder.svg"
@@ -73,26 +73,8 @@ const exampleCapsules: ExampleCapsule[] = [
     timeLeft: "Unlocks today"
   },
   {
-    title: "High School Graduation",
-    icon: GraduationCap,
-    colorKey: "green",
-    isPlaceholder: true
-  },
-  {
-    title: "Family Game Nights",
-    icon: Users,
-    colorKey: "orange",
-    isPlaceholder: true
-  },
-  {
-    title: "Music Festival Memories",
-    icon: Music,
-    colorKey: "blue",
-    isPlaceholder: true
-  },
-  {
-    title: "Camping Adventures",
-    icon: Camera,
+    title: "Local Adventures",
+    icon: Video,
     colorKey: "green",
     isPlaceholder: true
   },
@@ -103,45 +85,45 @@ const exampleCapsules: ExampleCapsule[] = [
     isPlaceholder: true
   },
   {
-    title: "Baby's First Year",
-    icon: Calendar,
-    colorKey: "blue",
-    isPlaceholder: true
-  },
-  {
-    title: "European Vacation",
-    icon: MapPin,
-    colorKey: "green",
-    isPlaceholder: true
-  },
-  {
-    title: "Pet Photo Album",
-    icon: ImageIcon,
+    title: "Festival Celebrations",
+    icon: Music,
     colorKey: "orange",
     isPlaceholder: true
   },
   {
-    title: "College Memories",
-    icon: Book,
-    colorKey: "blue",
-    isPlaceholder: true
-  },
-  {
-    title: "Birthday Celebrations",
-    icon: Heart,
+    title: "Wildlife Encounters",
+    icon: Camera,
     colorKey: "green",
     isPlaceholder: true
   },
   {
     title: "Family Reunions",
     icon: Users,
-    colorKey: "orange",
+    colorKey: "blue",
     isPlaceholder: true
   },
   {
-    title: "Movie Night Collection",
-    icon: Film,
+    title: "Travel Diaries",
+    icon: Book,
+    colorKey: "green",
+    isPlaceholder: true
+  },
+  {
+    title: "Photo Albums",
+    icon: ImageIcon,
     colorKey: "blue",
+    isPlaceholder: true
+  },
+  {
+    title: "School Memories",
+    icon: GraduationCap,
+    colorKey: "blue",
+    isPlaceholder: true
+  },
+  {
+    title: "Year in Review 2023",
+    icon: Calendar,
+    colorKey: "orange",
     isPlaceholder: true
   }
 ];
@@ -170,7 +152,7 @@ const item = {
 
 export const ExampleCapsules = () => {
   return (
-    <div className="py-12 bg-gray-50">
+    <div className="py-12 bg-gray-50/50">
       <div className="container mx-auto px-4">
         <h2 className="text-2xl font-outfit font-semibold text-gray-900 mb-8">
           Example Family Capsules
@@ -192,24 +174,26 @@ export const ExampleCapsules = () => {
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <Card className={cn(
-                  "relative overflow-hidden transition-all duration-300",
+                  "relative overflow-hidden transition-all duration-300 rounded-[32px] border-0",
                   capsule.isPlaceholder ? "opacity-80 hover:opacity-100" : "hover:shadow-lg",
                   `bg-vaya-accent-${capsule.colorKey} bg-opacity-30`
                 )}>
                   <div className="p-4">
-                    <div className="relative mb-3">
+                    <div className="relative mb-3 flex items-center gap-3">
                       <div className={cn(
-                        "inline-flex items-center justify-center w-10 h-10 rounded-xl",
+                        "inline-flex items-center justify-center w-10 h-10 rounded-2xl",
                         `bg-vaya-${capsule.colorKey} bg-opacity-20`
                       )}>
                         <Icon className={`w-5 h-5 text-vaya-${capsule.colorKey}`} />
                       </div>
                       {!capsule.isPlaceholder && capsule.creator && (
-                        <Avatar className="absolute -right-1 -top-1 w-6 h-6 border-2 border-white">
-                          <div className="w-full h-full flex items-center justify-center bg-gray-200 text-xs font-medium">
-                            {capsule.creator.initials}
-                          </div>
-                        </Avatar>
+                        <div className="flex-1 flex items-center justify-between">
+                          <Avatar className="w-6 h-6 border-2 border-white">
+                            <div className="w-full h-full flex items-center justify-center bg-gray-200 text-xs font-medium">
+                              {capsule.creator.initials}
+                            </div>
+                          </Avatar>
+                        </div>
                       )}
                     </div>
 
@@ -240,7 +224,10 @@ export const ExampleCapsules = () => {
 
                           {capsule.status && capsule.timeLeft && (
                             <div className="flex items-center justify-between pt-1">
-                              <Badge variant="secondary" className={statusColors[capsule.status]}>
+                              <Badge variant="secondary" className={cn(
+                                "rounded-full px-3 py-0.5 text-xs font-medium",
+                                statusColors[capsule.status]
+                              )}>
                                 {capsule.status}
                               </Badge>
                               <span className="text-xs text-gray-500">
