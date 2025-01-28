@@ -28,7 +28,7 @@ const features = [
     description: "Ensure your family's stories and traditions are preserved and passed down through generations.",
     icon: Heart,
     bgColor: "bg-white/80",
-    iconColor: "text-vaya-stories",
+    iconColor: "text-vaya-narra", // Changed to purple (vaya-narra) color
   },
 ];
 
