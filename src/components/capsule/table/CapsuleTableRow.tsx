@@ -4,6 +4,7 @@ import { Eye, Lock, Plus, Bookmark, BookmarkCheck, Share2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Capsule, CapsuleStatus } from "@/types/capsule";
+import { getEmojiForIcon } from "../layout/utils/emojiUtils";
 
 interface CapsuleTableRowProps {
   capsule: Capsule;
@@ -33,7 +34,12 @@ export const CapsuleTableRow = ({
 
   return (
     <TableRow className="hover:bg-gray-50/50">
-      <TableCell className="text-left text-lg font-bold pl-6 pr-4">{capsule.title}</TableCell>
+      <TableCell className="text-left text-lg font-bold pl-6 pr-4">
+        <span className="mr-2" role="img" aria-label="capsule emoji">
+          {getEmojiForIcon(capsule.icon || Plus, capsule.title, capsule.description)}
+        </span>
+        {capsule.title}
+      </TableCell>
       <TableCell className="text-left px-4">{capsule.description}</TableCell>
       <TableCell className="text-center px-4">{capsule.metadata?.creatorInitials}</TableCell>
       <TableCell className="text-center px-4">
@@ -76,7 +82,7 @@ export const CapsuleTableRow = ({
               {isAccessible ? (
                 <Plus className="h-4 w-4" />
               ) : (
-                <div className="w-4" /> // Placeholder for alignment
+                <div className="w-4" />
               )}
             </Link>
           </Button>
