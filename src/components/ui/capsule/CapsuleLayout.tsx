@@ -2,52 +2,13 @@ import React from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { MobileCapsuleList } from "./MobileCapsuleList";
 import { DesktopGrid } from "./DesktopGrid";
-import { CapsuleHeader } from "./CapsuleHeader";
-import { LucideIcon, Camera } from "lucide-react";
+import CapsuleHeader from "./CapsuleHeader";
+import { Camera } from "lucide-react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import CreateCapsuleForm from "@/components/capsule/CreateCapsuleForm";
-
-interface CapsuleLayoutProps {
-  capsules: {
-    title: string;
-    link: string;
-    icon: LucideIcon;
-    colorKey: string;
-    metadata?: {
-      creatorAvatar?: string;
-      creatorInitials: string;
-      itemCount: number;
-      status: "upcoming" | "active" | "locked" | "revealed";
-      date: string;
-    };
-  }[];
-}
-
-const StepCard = ({ 
-  step, 
-  title, 
-  description, 
-  icon: Icon 
-}: { 
-  step: number; 
-  title: string; 
-  description: string; 
-  icon: LucideIcon;
-}) => (
-  <div className="flex flex-col items-center text-center space-y-4 p-4">
-    <div className="relative">
-      <div className="w-16 h-16 md:w-20 md:h-20 bg-vaya-accent-orange rounded-full flex items-center justify-center">
-        <Icon className="w-8 h-8 md:w-10 md:h-10 text-vaya-primary" />
-      </div>
-      <div className="absolute -top-2 -right-2 w-6 h-6 md:w-8 md:h-8 bg-vaya-primary rounded-full flex items-center justify-center text-white font-bold text-sm md:text-base">
-        {step}
-      </div>
-    </div>
-    <h3 className="text-lg md:text-xl font-bold text-vaya-gray-900 font-outfit">{title}</h3>
-    <p className="text-sm md:text-base text-vaya-gray-600 max-w-[280px] md:max-w-sm">{description}</p>
-  </div>
-);
+import { CapsulePills } from "./CapsulePills";
+import type { CapsuleLayoutProps } from "./types";
 
 export const CapsuleLayout = ({ capsules }: CapsuleLayoutProps) => {
   const isMobile = useIsMobile();
@@ -67,45 +28,14 @@ export const CapsuleLayout = ({ capsules }: CapsuleLayoutProps) => {
         </div>
       </div>
 
-      <div className="bg-white py-12 md:py-16 px-4">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-vaya-gray-900 font-outfit mb-3 md:mb-4">
-            Go Back to the Future
-          </h2>
-          <p className="text-base md:text-lg text-vaya-gray-600 mb-12 md:mb-16 max-w-2xl mx-auto">
-            Each capsule represents a unique collection of memories, stories, and moments from your family's journey. 
-            Click on any capsule to dive deeper into your family's history.
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 max-w-5xl mx-auto">
-            <StepCard
-              step={1}
-              icon={Camera}
-              title="Create a Capsule"
-              description="Give your capsule a theme and set a date for when it should be opened. It could be for a special occasion, anniversary, or future milestone."
-            />
-            <StepCard
-              step={2}
-              icon={Camera}
-              title="Add Your Memories"
-              description="Share stories through voice messages, photos, or written notes. Each contribution is kept secret until the reveal date."
-            />
-            <StepCard
-              step={3}
-              icon={Camera}
-              title="Invite Family & Friends"
-              description="Let others contribute their memories. Everyone's additions remain a surprise until the capsule is opened together."
-            />
-          </div>
-        </div>
-      </div>
+      <CapsulePills />
 
       {/* Mobile CTA Bar */}
       <div className="md:hidden fixed bottom-16 left-0 right-0 p-4 bg-gradient-to-t from-white via-white to-transparent">
         <Dialog>
           <DialogTrigger asChild>
             <Button 
-              className="w-full bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg transition-all duration-300"
+              className="w-full bg-vaya-capsules hover:bg-vaya-capsules/90 text-white shadow-lg transition-all duration-300"
               size="lg"
             >
               Create a Capsule <Camera className="ml-2 h-5 w-5" />
@@ -122,7 +52,7 @@ export const CapsuleLayout = ({ capsules }: CapsuleLayoutProps) => {
         <Dialog>
           <DialogTrigger asChild>
             <Button 
-              className="bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg transition-all duration-300"
+              className="bg-vaya-capsules hover:bg-vaya-capsules/90 text-white shadow-lg transition-all duration-300"
               size="lg"
             >
               Create a Capsule <Camera className="ml-2 h-5 w-5" />

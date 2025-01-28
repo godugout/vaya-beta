@@ -1,8 +1,8 @@
-import { LucideIcon } from "lucide-react";
+import { ReactNode } from "react";
 
 export interface CtaConfig {
   text: string;
-  icon: JSX.Element;
+  icon?: ReactNode;
 }
 
 export interface HeroConfig {

@@ -25,7 +25,6 @@ const MemoryLane = () => {
       <Hero />
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {/* Main Feed Column - 2/3 width */}
           <div className="lg:col-span-2">
             <div className="mb-8">
               <h1 className="text-2xl font-outfit font-semibold text-gray-900">Family Memories</h1>
@@ -33,7 +32,6 @@ const MemoryLane = () => {
             <MemoryFeedLayout />
           </div>
 
-          {/* Right Sidebar - 1/3 width */}
           <div className="hidden lg:block space-y-6">
             <div className="bg-white rounded-lg shadow-sm p-6">
               <h2 className="text-lg font-outfit font-semibold text-gray-900 mb-4">
@@ -55,7 +53,7 @@ const MemoryLane = () => {
           onClick={() => document.getElementById('add-memory-modal-trigger')?.click()}
         >
           <span>Add Memory</span>
-          <Camera className="ml-2 h-6 w-6" />
+          <Camera className="ml-2 h-5 w-5" />
         </Button>
       </div>
 
