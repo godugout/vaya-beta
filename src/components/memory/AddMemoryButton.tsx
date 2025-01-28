@@ -7,9 +7,11 @@ import { supabase } from "@/integrations/supabase/client";
 
 interface AddMemoryButtonProps {
   capsuleId?: string;
+  className?: string;
+  size?: "default" | "sm" | "lg" | "icon";
 }
 
-const AddMemoryButton = ({ capsuleId }: AddMemoryButtonProps) => {
+const AddMemoryButton = ({ capsuleId, className, size = "default" }: AddMemoryButtonProps) => {
   const [isUploading, setIsUploading] = useState(false);
   const { toast } = useToast();
 
@@ -62,7 +64,7 @@ const AddMemoryButton = ({ capsuleId }: AddMemoryButtonProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="bg-vaya-secondary hover:bg-vaya-secondary/90">
+        <Button className={className} size={size}>
           Add to Capsule <Plus className="ml-2 h-5 w-5" />
         </Button>
       </DialogTrigger>
