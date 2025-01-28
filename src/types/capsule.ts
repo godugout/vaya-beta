@@ -9,8 +9,9 @@ export interface CapsuleMetadata {
 
 export interface Capsule {
   title: string;
-  link: string;
+  description?: string; // Added optional description
   icon: any;
   colorKey: string;
   metadata?: CapsuleMetadata;
+  isPlaceholder?: boolean; // Added optional isPlaceholder flag
 }
