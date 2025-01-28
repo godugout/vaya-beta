@@ -24,7 +24,7 @@ export const StepCard = ({
   return (
     <motion.div 
       className={cn(
-        "flex flex-col items-center text-center p-8 rounded-3xl transition-all duration-300",
+        "flex flex-col items-center text-center p-8 rounded-2xl transition-all duration-300",
         "font-sans text-foreground shadow-sm hover:shadow-md",
         "border border-border/50 bg-white",
         className
@@ -36,7 +36,7 @@ export const StepCard = ({
         <div className={`w-20 h-20 ${color} rounded-full flex items-center justify-center`}>
           <Icon className={`w-10 h-10 ${iconColor}`} />
         </div>
-        <div className="absolute -top-2 -right-2 w-8 h-8 bg-vaya-capsules rounded-full flex items-center justify-center text-white font-bold text-sm">
+        <div className="absolute -top-2 -right-2 w-8 h-8 bg-vaya-capsules rounded-full flex items-center justify-center text-white font-bold text-sm font-outfit">
           {step}
         </div>
       </div>

@@ -34,7 +34,7 @@ const Hero = () => {
     <div 
       className={`relative overflow-hidden py-24 ${
         location.pathname.includes('family-capsules') 
-          ? 'bg-vaya-capsules text-white' 
+          ? 'bg-vaya-capsules/10 text-vaya-gray-900' 
           : 'bg-white/90'
       }`} 
       data-component="Hero"
