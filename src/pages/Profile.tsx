@@ -25,9 +25,8 @@ interface BookmarkedMemory {
   memories: {
     id: string;
     type: string;
+    content_url: string;
     created_at: string;
-    title?: string;
-    description?: string;
   }
 }
 
@@ -93,9 +92,8 @@ export default function Profile() {
           memories (
             id,
             type,
-            created_at,
-            title:stories!inner(title),
-            description:stories!inner(description)
+            content_url,
+            created_at
           )
         `)
         .eq('created_by', user.id);
@@ -195,13 +193,8 @@ export default function Profile() {
                     <Bookmark className="h-4 w-4 mt-1 flex-shrink-0" />
                     <div>
                       <h3 className="font-medium">
-                        {bookmark.memories?.title || 'Untitled Memory'}
+                        Memory ({bookmark.memories.type})
                       </h3>
-                      {bookmark.memories?.description && (
-                        <p className="text-sm text-muted-foreground">
-                          {bookmark.memories.description}
-                        </p>
-                      )}
                       <p className="text-xs text-muted-foreground mt-1">
                         {new Date(bookmark.memories.created_at).toLocaleDateString()}
                       </p>
