@@ -16,14 +16,8 @@ import {
   HeartHandshake,
   Hourglass 
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import Hero from "@/components/Hero";
 import type { LucideIcon } from 'lucide-react';
+import Hero from "@/components/Hero";
 
 const capsules: {
   title: string;
@@ -42,7 +36,7 @@ const capsules: {
     title: "Costa Rican Heritage",
     link: "/capsule/costa-rica",
     icon: Camera,
-    colorKey: "Nature Green",
+    colorKey: "Ocean Blue",
     metadata: {
       creatorInitials: "JD",
       creatorAvatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=John",
@@ -55,7 +49,7 @@ const capsules: {
     title: "Family Recipes & Traditions",
     link: "/capsule/recipes",
     icon: Book,
-    colorKey: "Primary Orange",
+    colorKey: "Ocean Blue",
     metadata: {
       creatorInitials: "MA",
       creatorAvatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Maria",
@@ -81,7 +75,7 @@ const capsules: {
     title: "Beach Day Memories",
     link: "/capsule/beach",
     icon: Camera,
-    colorKey: "Nature Green",
+    colorKey: "Ocean Blue",
     metadata: {
       creatorInitials: "ES",
       itemCount: 24,
@@ -181,22 +175,6 @@ const FamilyCapsules = () => {
     <div className="relative min-h-screen">
       <Hero />
       <CapsuleLayout capsules={capsules} />
-      <div className="fixed bottom-24 md:bottom-8 right-8">
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button 
-              className="bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg"
-              size="lg"
-            >
-              <span>Create Capsule</span>
-              <Hourglass className="ml-2 h-5 w-5" />
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[600px]">
-            <CreateCapsuleForm />
-          </DialogContent>
-        </Dialog>
-      </div>
     </div>
   );
 };
