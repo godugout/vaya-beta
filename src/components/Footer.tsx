@@ -32,8 +32,8 @@ const Footer = () => {
         {/* Border separator */}
         <div className="border-t border-vaya-gray-200 pt-8">
           {/* Links and Language Selector in the same row */}
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
-            <div className="flex flex-wrap justify-center sm:justify-start gap-x-8 gap-y-4">
+          <div className="flex flex-wrap items-center justify-center sm:justify-between gap-x-8 gap-y-4">
+            <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
               <a href="#" className="text-lg sm:text-xl leading-7 text-vaya-gray-600 hover:text-vaya-capsules hover:underline transition-colors">
                 About Allusion Ink
               </a>
@@ -46,11 +46,6 @@ const Footer = () => {
               <a href="#" className="text-lg sm:text-xl leading-7 text-vaya-gray-600 hover:text-vaya-capsules hover:underline transition-colors">
                 Terms of Use
               </a>
-            </div>
-            
-            {/* Language Selector */}
-            <div className="flex items-center justify-center sm:justify-end gap-2">
-              <span className="text-vaya-gray-600">Language:</span>
               <LanguageSelector />
             </div>
           </div>
