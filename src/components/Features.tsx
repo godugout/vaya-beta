@@ -53,10 +53,10 @@ const Features = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="flex flex-col"
+                className="flex flex-col items-center text-center"
               >
                 <dt className="text-xl font-semibold leading-7 text-gray-900">
-                  <div className={`mb-6 flex h-16 w-16 items-center justify-center rounded-xl ${feature.bgColor} shadow-sm`}>
+                  <div className={`mb-6 flex h-16 w-16 items-center justify-center rounded-xl ${feature.bgColor} shadow-sm mx-auto`}>
                     <feature.icon className={`h-8 w-8 ${feature.iconColor}`} aria-hidden="true" />
                   </div>
                   {feature.name}
