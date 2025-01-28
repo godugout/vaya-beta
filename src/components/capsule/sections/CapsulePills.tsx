@@ -28,8 +28,8 @@ export const CapsulePills = () => {
           <StepCard
             step={1}
             icon={Camera}
-            title="Add Your Memories"
-            description="Upload photos, record voice messages, and write down stories that capture special moments with your family"
+            title="Capture & Create"
+            description="Add photos, voice messages, and written stories that tell your family's unique journey. Each piece becomes part of your legacy."
             color="bg-gray-50"
             iconColor="text-blue-500"
             numberColor="text-blue-500"
@@ -38,8 +38,8 @@ export const CapsulePills = () => {
           <StepCard
             step={2}
             icon={BookOpen}
-            title="Choose Your Date"
-            description="Pick a meaningful future date to reveal your capsule - maybe a birthday, anniversary, or special family gathering"
+            title="Set the Perfect Date"
+            description="Choose a meaningful future moment for your capsule's reveal - a wedding, graduation, or family reunion. Make it special!"
             color="bg-gray-50"
             iconColor="text-amber-500"
             numberColor="text-amber-500"
@@ -48,8 +48,8 @@ export const CapsulePills = () => {
           <StepCard
             step={3}
             icon={Users}
-            title="Invite Family"
-            description="Share the capsule with family members so they can add their own memories and messages to the collection"
+            title="Invite Loved Ones"
+            description="Share the capsule with family and friends. Let everyone contribute their memories, stories, and wishes for the future."
             color="bg-gray-50"
             iconColor="text-vaya-narra"
             numberColor="text-vaya-narra"
@@ -58,8 +58,8 @@ export const CapsulePills = () => {
           <StepCard
             step={4}
             icon={Sparkle}
-            title="Open Together"
-            description="When the special day arrives, gather your family to unlock the capsule and relive these precious memories together"
+            title="Experience the Magic"
+            description="When the day arrives, gather together and experience the joy of opening your capsule. Relive precious memories and celebrate your family's story."
             color="bg-gray-50"
             iconColor="text-vaya-capsules"
             numberColor="text-vaya-capsules"
