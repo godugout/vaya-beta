@@ -60,7 +60,7 @@ export const CapsulePills = () => {
             step={4}
             icon={Sparkle}
             title="Experience the Magic"
-            description="When the special day arrives, gather together to unlock your capsule and relive cherished memories in a heartwarming celebration"
+            description="When the special day arrives, gather to unlock your capsule and relive cherished memories together"
             color="bg-gray-50"
             iconColor="text-rose-500"
             numberColor="text-emerald-500"
