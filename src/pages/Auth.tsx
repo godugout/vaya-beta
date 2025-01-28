@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,12 +6,29 @@ import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 
 export default function Auth() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("demo@vaya.com");
+  const [password, setPassword] = useState("demo123");
   const [loading, setLoading] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  // Auto-login effect for development
+  useEffect(() => {
+    const autoLogin = async () => {
+      try {
+        const { error } = await supabase.auth.signInWithPassword({
+          email: "demo@vaya.com",
+          password: "demo123",
+        });
+        if (error) throw error;
+        navigate("/");
+      } catch (error: any) {
+        console.error("Auto-login failed:", error.message);
+      }
+    };
+    autoLogin();
+  }, [navigate]);
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
