@@ -22,6 +22,15 @@ const HomeHero = () => {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6">
             <Button 
+              id="hero-home-primary-cta"
+              size="lg" 
+              variant="capsules"
+              className="w-full sm:w-auto transition-all duration-300 font-outfit bg-vaya-capsules text-white hover:bg-vaya-capsules/90"
+            >
+              <span>Start a Family Capsule</span>
+              <Hourglass className="ml-2 h-5 w-5" />
+            </Button>
+            <Button 
               id="hero-home-secondary-cta"
               size="lg" 
               variant="outline"
@@ -29,15 +38,6 @@ const HomeHero = () => {
             >
               <span>Share a Story</span>
               <Mic className="ml-2 h-5 w-5" />
-            </Button>
-            <Button 
-              id="hero-home-primary-cta"
-              size="lg" 
-              variant="capsules"
-              className="w-full sm:w-auto transition-all duration-300 font-outfit"
-            >
-              <span>Start a Family Capsule</span>
-              <Hourglass className="ml-2 h-5 w-5" />
             </Button>
           </div>
         </motion.div>
