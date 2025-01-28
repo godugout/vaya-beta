@@ -56,6 +56,70 @@ export const CapsulePill = ({
         "flex-shrink-0 transition-all duration-200",
         isPlaceholder ? "opacity-90 hover:opacity-100" : ""
       )}
+      I apologize for modifying the wrong component. Let's update the CapsulePill component instead to improve the layout and styling of the capsule pills.
+
+<lov-code>
+Let's update the CapsulePill component to match your requirements:
+
+<lov-write file_path="src/components/capsule/layout/CapsulePill.tsx">
+import { LucideIcon } from "lucide-react";
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { useState } from "react";
+
+interface CapsulePillProps {
+  title: string;
+  icon: LucideIcon;
+  colorKey: string;
+  description?: string;
+  prompts?: string[];
+  metadata?: {
+    creatorInitials: string;
+    itemCount: number;
+    status: "upcoming" | "active" | "locked" | "revealed";
+    date: string;
+  };
+  isPlaceholder?: boolean;
+  backgroundImage?: string;
+}
+
+export const CapsulePill = ({
+  title,
+  icon: Icon,
+  colorKey,
+  description,
+  prompts,
+  metadata,
+  isPlaceholder,
+  backgroundImage
+}: CapsulePillProps) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const pillBaseClasses = cn(
+    "relative overflow-hidden rounded-[90px]",
+    "min-h-[120px] w-[500px]",
+    `border-[3px] border-vaya-${colorKey}`,
+    "shadow-[0_4px_12px_-2px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_-4px_rgba(0,0,0,0.12)]",
+    "transition-all duration-300 group"
+  );
+
+  const placeholderPillClasses = cn(
+    pillBaseClasses,
+    "bg-white"
+  );
+
+  const detailedPillClasses = cn(
+    pillBaseClasses,
+    "bg-white"
+  );
+
+  return (
+    <motion.div
+      whileHover={{ scale: 1.03 }}
+      className={cn(
+        "flex-shrink-0 transition-all duration-200",
+        isPlaceholder ? "opacity-90 hover:opacity-100" : ""
+      )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -83,34 +147,14 @@ export const CapsulePill = ({
           }}
         />
 
-        {/* Animated particles */}
-        {isHovered && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.1 }}
-            className={cn(
-              "absolute inset-0",
-              `bg-vaya-${colorKey}`,
-              "pointer-events-none"
-            )}
-            style={{
-              backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)',
-              backgroundSize: '16px 16px',
-              animation: 'particles 20s linear infinite',
-            }}
-          />
-        )}
-
         {/* Content */}
-        <div className="flex items-center justify-center h-full relative z-10">
+        <div className="flex items-center h-full relative z-10 pl-8">
           {isPlaceholder ? (
             <div className="flex items-center gap-6 w-full">
-              <div className={cn(
-                "inline-flex items-center justify-center w-16 h-16 rounded-2xl shrink-0",
-                `bg-vaya-${colorKey} bg-opacity-20`
-              )}>
-                <Icon className="w-10 h-10 text-gray-600" />
-              </div>
+              <Icon className={cn(
+                "w-12 h-12",
+                `text-vaya-${colorKey}`
+              )} />
               <div className="flex flex-col justify-start pt-2">
                 <h3 className="text-2xl font-semibold text-vaya-gray-900 font-outfit text-left">
                   {title}
@@ -124,13 +168,11 @@ export const CapsulePill = ({
             </div>
           ) : (
             <div className="flex items-start justify-between w-full">
-              <div className="flex items-start gap-6">
-                <div className={cn(
-                  "inline-flex items-center justify-center w-16 h-16 rounded-2xl shrink-0 mt-1",
-                  `bg-vaya-${colorKey} bg-opacity-20`
-                )}>
-                  <Icon className="w-10 h-10 text-gray-600" />
-                </div>
+              <div className="flex items-center gap-6">
+                <Icon className={cn(
+                  "w-12 h-12",
+                  `text-vaya-${colorKey}`
+                )} />
                 <div className="flex flex-col justify-start">
                   <h3 className="text-2xl font-semibold text-vaya-gray-900 font-outfit mb-1 text-left">
                     {title}
