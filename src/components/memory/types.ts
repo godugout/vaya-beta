@@ -3,6 +3,7 @@ export type BaseMemory = {
   type: string;
   content_url: string;
   created_at: string;
+  tags?: string[];
 };
 
 export type StoryMemory = BaseMemory & {
