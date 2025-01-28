@@ -37,10 +37,10 @@ const Features = () => {
     <div className="bg-white py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+          <h2 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
             Everything you need to preserve your legacy
           </h2>
-          <p className="mt-6 text-lg leading-8 text-gray-600">
+          <p className="mt-6 text-xl leading-8 text-gray-600 sm:text-2xl">
             Capture, organize, and share your family's most precious memories with tools designed for meaningful connection.
           </p>
         </div>
@@ -54,13 +54,13 @@ const Features = () => {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="flex flex-col"
               >
-                <dt className="text-base font-semibold leading-7 text-gray-900">
-                  <div className={`mb-6 flex h-14 w-14 items-center justify-center rounded-xl ${feature.bgColor} shadow-sm`}>
-                    <feature.icon className={`h-7 w-7 ${feature.iconColor}`} aria-hidden="true" />
+                <dt className="text-xl font-semibold leading-7 text-gray-900 sm:text-2xl">
+                  <div className={`mb-6 flex h-16 w-16 items-center justify-center rounded-xl ${feature.bgColor} shadow-sm`}>
+                    <feature.icon className={`h-8 w-8 ${feature.iconColor}`} aria-hidden="true" />
                   </div>
                   {feature.name}
                 </dt>
-                <dd className="mt-1 flex flex-auto flex-col text-base leading-7 text-gray-600">
+                <dd className="mt-1 flex flex-auto flex-col text-lg leading-7 text-gray-600 sm:text-xl">
                   <p className="flex-auto">{feature.description}</p>
                 </dd>
               </motion.div>

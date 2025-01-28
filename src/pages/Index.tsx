@@ -26,10 +26,10 @@ const Index = () => {
       <Testimonials />
       <div className="bg-[#F8FAFC] py-12 sm:py-24 px-4 sm:px-6">
         <div className="mx-auto max-w-7xl lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl mb-4 sm:mb-6">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-gray-900 mb-4 sm:mb-6">
             A safe home for your memories
           </h2>
-          <p className="text-base sm:text-lg leading-7 sm:leading-8 text-gray-600 mb-8 sm:mb-10 max-w-2xl mx-auto px-4">
+          <p className="text-lg sm:text-xl lg:text-2xl leading-7 sm:leading-8 text-gray-600 mb-8 sm:mb-10 max-w-2xl mx-auto px-4">
             We take privacy seriously. Your memories are securely stored and shared only with the family members you choose.
           </p>
           <div className="flex justify-center">

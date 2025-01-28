@@ -12,7 +12,7 @@ const Footer = () => {
               alt="Vaya Logo" 
               className="h-12 w-12 rounded-lg"
             />
-            <span className="font-outfit font-bold text-3xl">
+            <span className="font-outfit font-bold text-3xl sm:text-4xl">
               Vaya<sup>α</sup>
             </span>
           </Link>
@@ -25,22 +25,22 @@ const Footer = () => {
         <div className="border-t border-vaya-gray-200 pt-8">
           {/* Links above copyright */}
           <div className="flex justify-center flex-wrap gap-x-8 gap-y-4 mb-8">
-            <a href="#" className="text-base sm:text-lg leading-7 text-vaya-gray-600 hover:text-vaya-capsules hover:underline transition-colors">
+            <a href="#" className="text-lg sm:text-xl leading-7 text-vaya-gray-600 hover:text-vaya-capsules hover:underline transition-colors">
               About Allusion Ink
             </a>
-            <a href="#" className="text-base sm:text-lg leading-7 text-vaya-gray-600 hover:text-vaya-capsules hover:underline transition-colors">
+            <a href="#" className="text-lg sm:text-xl leading-7 text-vaya-gray-600 hover:text-vaya-capsules hover:underline transition-colors">
               Contact
             </a>
-            <a href="#" className="text-base sm:text-lg leading-7 text-vaya-gray-600 hover:text-vaya-capsules hover:underline transition-colors">
+            <a href="#" className="text-lg sm:text-xl leading-7 text-vaya-gray-600 hover:text-vaya-capsules hover:underline transition-colors">
               Privacy Policy
             </a>
-            <a href="#" className="text-base sm:text-lg leading-7 text-vaya-gray-600 hover:text-vaya-capsules hover:underline transition-colors">
+            <a href="#" className="text-lg sm:text-xl leading-7 text-vaya-gray-600 hover:text-vaya-capsules hover:underline transition-colors">
               Terms of Use
             </a>
           </div>
 
           {/* Copyright line */}
-          <p className="text-base text-center text-vaya-gray-500">
+          <p className="text-lg text-center text-vaya-gray-500">
             &copy; {new Date().getFullYear()} Allusion Ink. All rights reserved. Building memories that last generations.
           </p>
         </div>
