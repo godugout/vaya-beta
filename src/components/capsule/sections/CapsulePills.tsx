@@ -63,7 +63,7 @@ export const CapsulePills = () => {
             description="When the special day arrives, gather together to unlock your capsule and relive cherished memories in a heartwarming celebration"
             color="bg-gray-50"
             iconColor="text-rose-500"
-            numberColor="text-emerald-500"
+            numberColor="text-vaya-narra"
             className="reveal-card capsule-confetti"
           />
         </div>
