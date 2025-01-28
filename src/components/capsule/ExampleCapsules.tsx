@@ -3,13 +3,13 @@ import { motion } from "framer-motion";
 import { CapsuleRow } from "./layout/CapsuleRow";
 import { Capsule } from "@/types/capsule";
 
-const detailedCapsules: Capsule[] = [
+export const detailedCapsules: Capsule[] = [
   {
     title: "Beach Day Memories",
     description: "Summer family beach trip collection",
     icon: Camera,
     colorKey: "memories",
-    prompts: [],
+    prompts: ["Share your favorite beach moment"],
     metadata: {
       creatorInitials: "ES",
       itemCount: 24,
@@ -36,7 +36,7 @@ const detailedCapsules: Capsule[] = [
     description: "Cultural traditions and stories",
     icon: Heart,
     colorKey: "capsules",
-    prompts: [],
+    prompts: ["Share your heritage"],
     metadata: {
       creatorInitials: "LE",
       itemCount: 12,
@@ -46,13 +46,19 @@ const detailedCapsules: Capsule[] = [
   }
 ];
 
-const simpleCapsules: Capsule[] = [
+export const simpleCapsules: Capsule[] = [
   {
     title: "Share Ideas",
     icon: Lightbulb,
     colorKey: "memories",
     prompts: ["Got a bright idea?"],
-    isPlaceholder: true
+    isPlaceholder: true,
+    metadata: {
+      creatorInitials: "RJ",
+      itemCount: 5,
+      status: "active",
+      date: "2024-06-15"
+    }
   },
   {
     title: "Ask Questions",
@@ -60,21 +66,39 @@ const simpleCapsules: Capsule[] = [
     colorKey: "stories",
     backgroundImage: "/lovable-uploads/family-gathering.jpg",
     prompts: ["Join Us"],
-    isPlaceholder: true
+    isPlaceholder: true,
+    metadata: {
+      creatorInitials: "MK",
+      itemCount: 8,
+      status: "locked",
+      date: "2024-08-20"
+    }
   },
   {
     title: "Start Talking",
     icon: MessageCircle,
     colorKey: "capsules",
     prompts: ["Share your voice"],
-    isPlaceholder: true
+    isPlaceholder: true,
+    metadata: {
+      creatorInitials: "AP",
+      itemCount: 15,
+      status: "revealed",
+      date: "2024-07-01"
+    }
   },
   {
     title: "Got Questions?",
     icon: HelpCircle,
     colorKey: "memories",
     prompts: ["We're here to help"],
-    isPlaceholder: true
+    isPlaceholder: true,
+    metadata: {
+      creatorInitials: "DL",
+      itemCount: 3,
+      status: "upcoming",
+      date: "2024-09-10"
+    }
   },
   {
     title: "Share Stories",
@@ -82,14 +106,26 @@ const simpleCapsules: Capsule[] = [
     colorKey: "stories",
     backgroundImage: "/lovable-uploads/family-picnic.jpg",
     prompts: ["Connect Now"],
-    isPlaceholder: true
+    isPlaceholder: true,
+    metadata: {
+      creatorInitials: "BK",
+      itemCount: 20,
+      status: "active",
+      date: "2024-10-05"
+    }
   },
   {
     title: "New Ideas",
     icon: Lightbulb,
     colorKey: "capsules",
     prompts: ["Light the way"],
-    isPlaceholder: true
+    isPlaceholder: true,
+    metadata: {
+      creatorInitials: "CN",
+      itemCount: 7,
+      status: "locked",
+      date: "2024-11-15"
+    }
   }
 ];
 

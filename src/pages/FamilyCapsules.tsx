@@ -8,83 +8,23 @@ import { CapsulePills } from "@/components/capsule/sections/CapsulePills";
 import { Users, Gift, Heart, Camera, Music, Star, Image, Book } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
-
-const iconMap: { [key: string]: any } = {
-  "Family Reunion": Users,
-  "Holiday": Gift,
-  "Wedding": Heart,
-  "Summer": Camera,
-  "Concert": Music,
-  "Photos": Image,
-  "Graduation": Book,
-  "Birthday": Gift,
-  "Recipes": Heart,
-};
-
-const getIconForTitle = (title: string) => {
-  for (const [key, icon] of Object.entries(iconMap)) {
-    if (title.toLowerCase().includes(key.toLowerCase())) {
-      return icon;
-    }
-  }
-  return Star;
-};
-
-const getColorForIndex = (index: number) => {
-  const colors = ["orange", "green", "blue", "yellow"];
-  return colors[index % colors.length];
-};
-
-const fetchCapsules = async () => {
-  const { data: userFamilies, error: familiesError } = await supabase
-    .from('family_members')
-    .select('family_id')
-    .eq('user_id', (await supabase.auth.getUser()).data.user?.id);
-
-  if (familiesError) throw familiesError;
-
-  const familyIds = userFamilies.map(fm => fm.family_id);
-
-  const { data, error } = await supabase
-    .from('capsule_schedules')
-    .select(`
-      id,
-      title,
-      description,
-      memory_count,
-      status,
-      created_at,
-      thumbnail_url,
-      lock_deadline,
-      reveal_date
-    `)
-    .in('family_id', familyIds)
-    .order('created_at', { ascending: false });
-
-  if (error) throw error;
-
-  return data.map((capsule, index) => ({
-    title: capsule.title,
-    link: `/capsule/${capsule.id}`,
-    icon: getIconForTitle(capsule.title),
-    colorKey: getColorForIndex(index),
-    metadata: {
-      creatorInitials: "JD",
-      itemCount: capsule.memory_count || 0,
-      status: capsule.status as "upcoming" | "active" | "locked" | "revealed",
-      date: capsule.reveal_date,
-    }
-  }));
-};
+import { detailedCapsules, simpleCapsules } from "@/components/capsule/ExampleCapsules";
 
 const FamilyCapsules = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const { data: capsules, isLoading, error } = useQuery({
-    queryKey: ['capsules'],
-    queryFn: fetchCapsules,
-  });
+  // Transform example capsules into the format expected by the table
+  const allExampleCapsules = [...detailedCapsules, ...simpleCapsules].map(capsule => ({
+    ...capsule,
+    link: `/capsule/${Math.random().toString(36).substring(7)}`,
+    metadata: capsule.metadata || {
+      creatorInitials: "JD",
+      itemCount: Math.floor(Math.random() * 20) + 1,
+      status: ["upcoming", "active", "locked", "revealed"][Math.floor(Math.random() * 4)] as "upcoming" | "active" | "locked" | "revealed",
+      date: new Date(Date.now() + Math.random() * 10000000000).toISOString(),
+    }
+  }));
 
   useEffect(() => {
     const checkUser = async () => {
@@ -97,26 +37,12 @@ const FamilyCapsules = () => {
     checkUser();
   }, [navigate]);
 
-  useEffect(() => {
-    if (error) {
-      toast({
-        title: "Error loading capsules",
-        description: "Please try again later",
-        variant: "destructive",
-      });
-    }
-  }, [error, toast]);
-
-  if (isLoading) {
-    return <div className="min-h-screen flex items-center justify-center">Loading capsules...</div>;
-  }
-
   return (
     <div className="relative min-h-screen">
       <Hero />
-      <ExampleCapsules />
       <CapsulePills />
-      <CapsuleScrollSection capsules={capsules || []} />
+      <ExampleCapsules />
+      <CapsuleScrollSection capsules={allExampleCapsules} />
     </div>
   );
 };
