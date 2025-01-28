@@ -6,6 +6,8 @@ import { DesktopGrid } from "@/components/ui/capsule/DesktopGrid";
 import { MobileCapsuleList } from "@/components/ui/capsule/MobileCapsuleList";
 import { useIsMobile } from "@/hooks/use-mobile";
 import type { Capsule } from "@/components/ui/capsule/types";
+import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 
 interface CapsuleScrollSectionProps {
   capsules: Capsule[];
@@ -13,11 +15,45 @@ interface CapsuleScrollSectionProps {
 
 export const CapsuleScrollSection = ({ capsules }: CapsuleScrollSectionProps) => {
   const isMobile = useIsMobile();
+  const [isHeroVisible, setIsHeroVisible] = useState(true);
+
+  useEffect(() => {
+    // Create an observer for the hero section
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsHeroVisible(entry.isIntersecting);
+      },
+      {
+        threshold: 0,
+        rootMargin: "-64px 0px 0px 0px" // Adjust based on your nav height
+      }
+    );
+
+    // Observe the hero section
+    const heroElement = document.querySelector('[data-component-name="Hero"]');
+    if (heroElement) {
+      observer.observe(heroElement);
+    }
+
+    return () => {
+      if (heroElement) {
+        observer.unobserve(heroElement);
+      }
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-white">
       {/* Secondary Title Bar */}
-      <div className="sticky top-16 z-40 bg-white border-b border-gray-200 shadow-sm">
+      <div 
+        className={cn(
+          "transition-all duration-300 ease-in-out",
+          "fixed left-0 right-0 bg-white border-b border-gray-200 shadow-sm",
+          isHeroVisible 
+            ? "top-16 opacity-0 pointer-events-none" 
+            : "top-0 opacity-100 pointer-events-auto z-50"
+        )}
+      >
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <h2 className="text-xl font-semibold text-gray-900">Family Capsules</h2>
           <Dialog>
