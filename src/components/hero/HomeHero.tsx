@@ -20,21 +20,9 @@ const HomeHero = ({ isSpanish }: HomeHeroProps) => {
 
   return (
     <div 
-      className="relative min-h-[600px] flex items-center"
-      style={{
-        backgroundImage: `url("https://images.unsplash.com/photo-1522543558187-768b6df7c25c")`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundAttachment: 'fixed',
-      }}
+      className="relative min-h-[600px] flex items-center bg-gradient-to-b from-[#0F172A] to-[#1A1F2C]"
       data-component="HomeHero"
     >      
-      <div className="absolute inset-0" 
-        style={{
-          background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.85) 100%)',
-          backdropFilter: 'blur(2px)',
-        }}
-      />
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
