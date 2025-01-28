@@ -3,7 +3,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { useEffect } from "react";
 import Hero from "@/components/Hero";
 import { CapsuleScrollSection } from "@/components/capsule/sections/CapsuleScrollSection";
-import { BackToFutureSection } from "@/components/capsule/sections/BackToFutureSection";
 import { Camera, Gift, Heart, Music, Star } from "lucide-react";
 
 const sampleCapsules = [
@@ -87,7 +86,6 @@ const FamilyCapsules = () => {
     <div className="relative min-h-screen">
       <Hero />
       <CapsuleScrollSection capsules={sampleCapsules} />
-      <BackToFutureSection />
     </div>
   );
 };

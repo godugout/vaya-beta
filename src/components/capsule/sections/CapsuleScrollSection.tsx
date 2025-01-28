@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Camera, ChevronUp } from "lucide-react";
+import { Camera, Plus } from "lucide-react";
 import CreateCapsuleForm from "@/components/capsule/CreateCapsuleForm";
 import { DesktopGrid } from "@/components/ui/capsule/DesktopGrid";
 import { MobileCapsuleList } from "@/components/ui/capsule/MobileCapsuleList";
@@ -88,16 +88,32 @@ export const CapsuleScrollSection = ({ capsules }: CapsuleScrollSectionProps) =>
               <ChevronUp className="h-5 w-5" />
             </Button>
 
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button className="bg-vaya-capsules hover:bg-vaya-capsules/90 text-white">
-                  Create a Capsule <Camera className="ml-2 h-5 w-5" />
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[600px]">
-                <CreateCapsuleForm />
-              </DialogContent>
-            </Dialog>
+            <div className="flex items-center gap-2">
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button 
+                    variant="capsules"
+                    className="hidden sm:flex"
+                  >
+                    Add to Capsule <Plus className="ml-2 h-5 w-5" />
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[600px]">
+                  <CreateCapsuleForm />
+                </DialogContent>
+              </Dialog>
+
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button className="bg-vaya-capsules hover:bg-vaya-capsules/90 text-white">
+                    Create a Capsule <Camera className="ml-2 h-5 w-5" />
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[600px]">
+                  <CreateCapsuleForm />
+                </DialogContent>
+              </Dialog>
+            </div>
           </div>
         </div>
       </div>
@@ -111,7 +127,7 @@ export const CapsuleScrollSection = ({ capsules }: CapsuleScrollSectionProps) =>
         )}
       </div>
 
-      {/* Go Back to the Future Section - Adjusted spacing */}
+      {/* Go Back to the Future Section */}
       <div className="bg-gradient-to-b from-white to-gray-50 py-12">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-gray-900 mb-6">Go Back to the Future</h2>
