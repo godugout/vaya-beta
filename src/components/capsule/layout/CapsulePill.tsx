@@ -4,25 +4,45 @@ import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { format, formatDistanceToNow, isPast, isToday, addDays } from "date-fns";
 
-// Emoji mapping for different capsule types
-const getEmojiForIcon = (icon: LucideIcon): string => {
+// Enhanced emoji mapping for different capsule types and content
+const getEmojiForIcon = (icon: LucideIcon, title?: string, description?: string): string => {
+  // First check for specific content matches in title or description
+  const contentLower = `${title} ${description}`.toLowerCase();
+  
+  if (contentLower.includes('beach')) return '🏖️';
+  if (contentLower.includes('heritage') || contentLower.includes('cultural')) return '🏺';
+  if (contentLower.includes('story') || contentLower.includes('share')) return '📖';
+  if (contentLower.includes('family') || contentLower.includes('reunion')) return '👨‍👩‍👧‍👦';
+  if (contentLower.includes('dinner') || contentLower.includes('food')) return '🍽️';
+  if (contentLower.includes('holiday') || contentLower.includes('celebration')) return '🎊';
+  if (contentLower.includes('wedding')) return '💑';
+  if (contentLower.includes('graduation')) return '🎓';
+  if (contentLower.includes('birthday')) return '🎂';
+  if (contentLower.includes('music') || contentLower.includes('concert')) return '🎵';
+  if (contentLower.includes('travel') || contentLower.includes('vacation')) return '✈️';
+  if (contentLower.includes('garden') || contentLower.includes('nature')) return '🌺';
+  if (contentLower.includes('sport') || contentLower.includes('game')) return '⚽';
+  if (contentLower.includes('cooking') || contentLower.includes('recipe')) return '👩‍🍳';
+  if (contentLower.includes('art') || contentLower.includes('craft')) return '🎨';
+  
+  // Fallback to icon-based mapping
   const emojiMap = {
-    Camera: "👨‍👩‍👧‍👦",    // Family
-    MessageCircle: "🗣️",   // Conversation
-    Heart: "💝",          // Love/Family bond
-    HelpCircle: "🤗",     // Support
-    Users: "👥",          // Group/Friends
-    Music: "🎵",          // Music memories
-    Book: "📔",           // Family stories
-    Calendar: "🎊",       // Celebrations
-    MapPin: "🏡",         // Home/Location
-    Image: "🎞️",          // Family photos
-    Star: "🌟",           // Special moments
-    Gift: "🎁",           // Special occasions
-    GraduationCap: "👨‍🎓", // Achievements
+    Camera: '📸',
+    MessageCircle: '💭',
+    Heart: '💝',
+    HelpCircle: '💡',
+    Users: '👥',
+    Music: '🎼',
+    Book: '📚',
+    Calendar: '📅',
+    MapPin: '📍',
+    Image: '🖼️',
+    Star: '⭐',
+    Gift: '🎁',
+    GraduationCap: '🎓',
   };
   
-  return emojiMap[icon.name as keyof typeof emojiMap] || "👨‍👩‍👧";
+  return emojiMap[icon.name as keyof typeof emojiMap] || '💫';
 };
 
 interface CapsulePillProps {
@@ -63,6 +83,7 @@ export const CapsulePill = ({
   backgroundImage
 }: CapsulePillProps) => {
   const [isHovered, setIsHovered] = useState(false);
+  const emoji = getEmojiForIcon(icon, title, description);
 
   const pillBaseClasses = cn(
     "relative overflow-hidden rounded-[90px]",
@@ -109,7 +130,7 @@ export const CapsulePill = ({
         <div className="flex items-center justify-between h-full relative z-10 px-8 py-6">
           {isPlaceholder ? (
             <div className="flex items-center gap-4 w-full">
-              <span className="text-3xl">{getEmojiForIcon(icon)}</span>
+              <span className="text-3xl">{emoji}</span>
               <div className="flex flex-col justify-start">
                 <h3 className="text-xl font-semibold text-vaya-gray-900 font-outfit text-left">
                   {title}
@@ -124,7 +145,7 @@ export const CapsulePill = ({
           ) : (
             <>
               <div className="flex items-start">
-                <span className="text-3xl mr-4">{getEmojiForIcon(icon)}</span>
+                <span className="text-3xl mr-4">{emoji}</span>
                 <div className="flex flex-col justify-start">
                   <h3 className="text-xl font-semibold text-vaya-gray-900 font-outfit mb-1 text-left">
                     {title}
