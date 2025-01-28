@@ -69,7 +69,6 @@ const getStatusInfo = (status: string, date: string) => {
     }
   };
 
-  // Override for special cases
   if (isClosingSoon) {
     return {
       icon: Clock,
@@ -106,42 +105,44 @@ export const CapsuleCard = ({
       className={cn(
         "group relative bg-white/90 rounded-xl shadow-sm border border-gray-100/50 p-6 hover:shadow-md transition-all duration-300",
         "hover:transform hover:-translate-y-1",
-        isDesktop ? "w-[360px]" : "w-full" // Increased from 280px to 360px
+        isDesktop ? "w-[360px]" : "w-full"
       )}
     >
-      <div className="flex items-start space-x-5"> {/* Increased spacing */}
+      <div className="flex items-start space-x-5">
         <div className={cn(
-          "p-3.5 rounded-xl", // Increased padding
+          "p-3.5 rounded-xl",
           getBackgroundColor(colorKey),
           "transition-colors duration-300"
         )}>
           <Icon className={cn(
-            "w-8 h-8", // Increased from w-6 h-6
+            "w-8 h-8",
             getIconColor(colorKey)
           )} />
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="text-xl font-semibold text-vaya-gray-900 mb-2 font-outfit"> {/* Increased from text-lg */}
+          <h3 className="text-xl font-semibold text-vaya-gray-900 mb-2 font-outfit">
             {title}
           </h3>
           {metadata && (
-            <div className="flex flex-col space-y-3"> {/* Increased spacing */}
-              <div className="flex items-center space-x-2 text-base text-vaya-gray-500 font-inter"> {/* Increased from text-sm */}
+            <div className="flex flex-col space-y-3">
+              <div className="flex items-center space-x-2 text-base text-vaya-gray-500 font-inter">
                 <span>{metadata.itemCount} items</span>
                 <span>•</span>
                 <span>{format(new Date(metadata.date), 'MMM d, yyyy')}</span>
               </div>
               {StatusIcon && (
-                <div className={cn(
-                  "inline-flex items-center space-x-2 px-3 py-1.5 rounded-full text-sm font-medium border",
-                  statusInfo.bgColor,
-                  statusInfo.variant === "outline" ? "bg-white" : "",
-                  statusInfo.variant === "solid" ? "border-none" : "border-opacity-50"
-                )}>
-                  <StatusIcon className={cn("w-4 h-4", statusInfo.color)} />
-                  <span className={statusInfo.color}>
-                    {metadata.status.charAt(0).toUpperCase() + metadata.status.slice(1)}
-                  </span>
+                <div className="flex items-center">
+                  <div className={cn(
+                    "inline-flex items-center space-x-2 px-2.5 py-1 rounded-full text-sm font-medium border w-fit",
+                    statusInfo.bgColor,
+                    statusInfo.variant === "outline" ? "bg-white" : "",
+                    statusInfo.variant === "solid" ? "border-none" : "border-opacity-50"
+                  )}>
+                    <StatusIcon className={cn("w-4 h-4", statusInfo.color)} />
+                    <span className={cn(statusInfo.color, "whitespace-nowrap")}>
+                      {metadata.status.charAt(0).toUpperCase() + metadata.status.slice(1)}
+                    </span>
+                  </div>
                 </div>
               )}
             </div>
