@@ -20,7 +20,7 @@ export const DesktopNav = ({ user, handleSignOut, navigate }: DesktopNavProps) =
   return (
     <div className="border-b bg-[#222222] hidden md:block">
       <div className="flex h-20 items-center px-4 max-w-7xl mx-auto">
-        <Link to="/" className="flex items-center -space-x-2 group">
+        <Link to="/" className="flex items-center -space-x-1.75 group">
           <img 
             src="/lovable-uploads/ef40fff0-4da4-4937-af3d-c2276b1d2588.png" 
             alt="Vaya Logo" 
