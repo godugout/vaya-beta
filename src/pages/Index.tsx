@@ -22,7 +22,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-white flex flex-col">
       <div 
-        className="relative min-h-screen"
+        className="relative"
         style={{
           backgroundImage: 'url("https://images.unsplash.com/photo-1501854140801-50d01698950b")',
           backgroundSize: 'cover',
