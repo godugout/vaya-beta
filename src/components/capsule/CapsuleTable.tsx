@@ -120,10 +120,10 @@ export const CapsuleTable = ({ capsules, sortField, sortDirection, onSort }: Cap
         <TableHeader>
           <TableRow className="hover:bg-gray-50/50">
             <TableHead 
-              className="cursor-pointer"
+              className="cursor-pointer font-semibold text-lg"
               onClick={() => onSort('title')}
             >
-              Title {sortField === 'title' && (sortDirection === 'asc' ? '↑' : '↓')}
+              Capsules {sortField === 'title' && (sortDirection === 'asc' ? '↑' : '↓')}
             </TableHead>
             <TableHead>Creator</TableHead>
             <TableHead 
@@ -190,15 +190,15 @@ export const CapsuleTable = ({ capsules, sortField, sortDirection, onSort }: Cap
         <TableFooter>
           <TableRow>
             <TableCell colSpan={5}>
-              <div className="flex items-center justify-between py-2">
-                <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <MessageSquare className="h-4 w-4" />
-                  <span>Share memories with your family by creating a new time capsule</span>
+              <div className="flex items-center justify-between py-3">
+                <div className="flex items-center gap-3 text-base text-gray-600">
+                  <MessageSquare className="h-5 w-5" />
+                  <span className="font-medium">Share memories with your family by creating a new time capsule</span>
                 </div>
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button className="bg-vaya-capsules hover:bg-vaya-capsules/90">
-                      <Plus className="h-4 w-4 mr-2" />
+                    <Button className="bg-vaya-capsules hover:bg-vaya-capsules/90 text-base">
+                      <Plus className="h-5 w-5 mr-2" />
                       Create Capsule
                     </Button>
                   </DialogTrigger>
