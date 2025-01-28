@@ -1,45 +1,25 @@
-import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
-import { useEffect } from "react";
+import React from "react";
 import { CapsuleLayout } from "@/components/ui/capsule/CapsuleLayout";
-import { 
-  Camera, 
-  Book, 
-  BookOpen, 
-  Music2, 
-  Users, 
-  Film, 
-  Heart, 
-  Library, 
-  Calendar, 
-  HeartHandshake,
-} from "lucide-react";
-import type { LucideIcon } from 'lucide-react';
-import Hero from "@/components/Hero";
+import CreateCapsuleForm from "@/components/capsule/CreateCapsuleForm";
+import { Camera, Book, BookOpen, Image, Map, Music2, Users, Heart, Library, Calendar, HeartHandshake, Film } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
-const capsules: {
-  title: string;
-  link: string;
-  icon: LucideIcon;
-  colorKey: string;
-  metadata?: {
-    creatorAvatar?: string;
-    creatorInitials: string;
-    itemCount: number;
-    status: "active" | "upcoming" | "locked" | "revealed";
-    date: string;
-  };
-}[] = [
+const capsules = [
   {
     title: "Costa Rican Heritage",
     link: "/capsule/costa-rica",
     icon: Camera,
-    colorKey: "capsules",
+    colorKey: "Nature Green",
     metadata: {
       creatorInitials: "JD",
       creatorAvatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=John",
       itemCount: 12,
-      status: "active",
+      status: "active" as const,
       date: "Updated today",
     }
   },
@@ -47,12 +27,12 @@ const capsules: {
     title: "Family Recipes & Traditions",
     link: "/capsule/recipes",
     icon: Book,
-    colorKey: "Ocean Blue",
+    colorKey: "Primary Orange",
     metadata: {
       creatorInitials: "MA",
       creatorAvatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Maria",
       itemCount: 8,
-      status: "upcoming",
+      status: "upcoming" as const,
       date: "Opens Dec 25",
     }
   },
@@ -65,31 +45,31 @@ const capsules: {
       creatorInitials: "RL",
       creatorAvatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Robert",
       itemCount: 15,
-      status: "locked",
+      status: "locked" as const,
       date: "Locked until Jan",
     }
   },
   {
     title: "Beach Day Memories",
     link: "/capsule/beach",
-    icon: Camera,
-    colorKey: "Ocean Blue",
+    icon: Image,
+    colorKey: "Nature Green",
     metadata: {
       creatorInitials: "ES",
       itemCount: 24,
-      status: "revealed",
+      status: "revealed" as const,
       date: "Opened Nov 1",
     }
   },
   {
     title: "Our Journey Here",
     link: "/capsule/journey",
-    icon: Users,
+    icon: Map,
     colorKey: "Ocean Blue",
     metadata: {
       creatorInitials: "JD",
       itemCount: 18,
-      status: "active",
+      status: "active" as const,
       date: "Closes Dec 31",
     }
   },
@@ -150,29 +130,31 @@ const capsules: {
   {
     title: "Photo Albums",
     link: "/capsule/albums",
-    icon: Camera,
+    icon: Image,
     colorKey: "Ocean Blue",
   }
 ];
 
 const FamilyCapsules = () => {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const checkUser = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        navigate("/auth");
-        return;
-      }
-    };
-    checkUser();
-  }, [navigate]);
-
   return (
     <div className="relative min-h-screen">
-      <Hero />
       <CapsuleLayout capsules={capsules} />
+      <div className="fixed bottom-24 md:bottom-8 right-8">
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button 
+              className="bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg"
+              size="lg"
+            >
+              <span>Create Capsule</span>
+              <Camera className="ml-2 h-5 w-5" />
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[600px]">
+            <CreateCapsuleForm />
+          </DialogContent>
+        </Dialog>
+      </div>
     </div>
   );
 };

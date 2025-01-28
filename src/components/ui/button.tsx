@@ -8,13 +8,10 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-vaya-home text-white hover:bg-vaya-home/90", // Orange for home/default
-        stories: "bg-vaya-stories text-white hover:bg-vaya-stories/90", // Orange for stories
-        memories: "bg-vaya-memories text-white hover:bg-vaya-memories/90", // Blue for memory lane
-        capsules: "bg-vaya-capsules text-white hover:bg-vaya-capsules/90", // Green for family capsules
+        default: "bg-vaya-primary text-white hover:bg-vaya-primary/90",
         destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline: "border-2 border-input bg-background hover:bg-accent hover:text-accent-foreground",
-        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        secondary: "bg-vaya-secondary text-white hover:bg-vaya-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
       },

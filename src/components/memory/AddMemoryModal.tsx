@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import VoiceRecorder from "@/components/VoiceRecorder";
+import { Message } from "@/components/chat/types";
 
 interface AddMemoryModalProps {
   open: boolean;
@@ -13,6 +14,7 @@ const AddMemoryModal = ({ open, onOpenChange }: AddMemoryModalProps) => {
 
   const handleMessageSent = (message: { content: string; attachments?: { type: "audio" | "image"; url: string }[] }) => {
     console.log("Memory recorded:", message);
+    // Handle the memory being recorded
     onOpenChange(false);
   };
 

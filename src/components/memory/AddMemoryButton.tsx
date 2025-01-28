@@ -4,19 +4,21 @@ import { Camera } from "lucide-react";
 import AddMemoryModal from "./AddMemoryModal";
 
 interface AddMemoryButtonProps {
+  variant?: "default" | "outline" | "secondary";
+  size?: "default" | "sm" | "lg";
   className?: string;
-  size?: "default" | "sm" | "lg" | "icon";
 }
 
-const AddMemoryButton = ({ className = "", size = "default" }: AddMemoryButtonProps) => {
+const AddMemoryButton = ({ variant = "default", size = "default", className }: AddMemoryButtonProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <>
-      <Button
+      <Button 
+        variant={variant} 
+        size={size} 
         id="add-memory-modal-trigger"
         className={`bg-vaya-primary hover:bg-vaya-primary/90 text-white ${className}`}
-        size={size}
         onClick={() => setIsModalOpen(true)}
       >
         <span>Add Memory</span>
@@ -24,8 +26,8 @@ const AddMemoryButton = ({ className = "", size = "default" }: AddMemoryButtonPr
       </Button>
 
       <AddMemoryModal 
-        open={isModalOpen} 
-        onOpenChange={setIsModalOpen} 
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
       />
     </>
   );
