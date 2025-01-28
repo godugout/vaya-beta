@@ -1,54 +1,13 @@
 import Hero from "@/components/Hero";
 import Features from "@/components/Features";
 import FAQ from "@/components/FAQ";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { CulturalContent } from "@/types/cultural";
 
-const culturalBackgrounds = [
-  {
-    image: "https://images.unsplash.com/photo-1522543558187-768b6df7c25c",
-    culture: "japanese",
-    label: "Japanese family enjoying hanami"
-  },
-  {
-    image: "https://images.unsplash.com/photo-1583394293214-28ded15ee548",
-    culture: "vietnamese",
-    label: "Vietnamese family sharing a traditional meal"
-  },
-  {
-    image: "https://images.unsplash.com/photo-1545062156-d69c67b27679",
-    culture: "italian",
-    label: "Italian multigenerational family gathering"
-  },
-  {
-    image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c",
-    culture: "korean",
-    label: "Korean family celebrating Chuseok"
-  },
-  {
-    image: "https://images.unsplash.com/photo-1536663815808-535e2280d2c2",
-    culture: "portuguese",
-    label: "Portuguese family at a street festival"
-  },
-  {
-    image: "https://images.unsplash.com/photo-1516062423079-7ca13cdc7f5a",
-    culture: "chinese",
-    label: "Chinese family reunion dinner"
-  },
-  {
-    image: "https://images.unsplash.com/photo-1511994714008-b6d68a8b32a2",
-    culture: "african_american",
-    label: "African American family gathering"
-  }
-];
-
 const Index = () => {
   const navigate = useNavigate();
-  const [currentBgIndex, setCurrentBgIndex] = useState(0);
-  const [heroContent, setHeroContent] = useState<CulturalContent | null>(null);
-  const [featuresContent, setFeaturesContent] = useState<CulturalContent[]>([]);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -60,46 +19,12 @@ const Index = () => {
     checkAuth();
   }, [navigate]);
 
-  useEffect(() => {
-    const fetchCulturalContent = async () => {
-      const currentCulture = culturalBackgrounds[currentBgIndex].culture;
-      
-      // Fetch hero content
-      const { data: heroData } = await supabase
-        .from('cultural_hero_content')
-        .select('*')
-        .eq('culture_key', currentCulture)
-        .single();
-
-      // Fetch features content
-      const { data: featuresData } = await supabase
-        .from('cultural_features_content')
-        .select('*')
-        .eq('culture_key', currentCulture);
-
-      setHeroContent(heroData);
-      setFeaturesContent(featuresData || []);
-    };
-
-    fetchCulturalContent();
-  }, [currentBgIndex]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentBgIndex((prev) => (prev + 1) % culturalBackgrounds.length);
-    }, 7000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  const currentBackground = culturalBackgrounds[currentBgIndex];
-
   return (
     <div className="min-h-screen bg-white flex flex-col">
       <div 
-        className="relative transition-all duration-1000 ease-in-out"
+        className="relative"
         style={{
-          backgroundImage: `url("${currentBackground.image}")`,
+          backgroundImage: `url("https://images.unsplash.com/photo-1522543558187-768b6df7c25c")`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: 'fixed',
@@ -113,8 +38,8 @@ const Index = () => {
           }}
         />
         <div className="relative z-10">
-          <Hero culturalContent={heroContent} />
-          <Features culturalContent={featuresContent} />
+          <Hero />
+          <Features />
         </div>
       </div>
       <div className="bg-[#F8FAFC] py-24 px-4 sm:px-6">

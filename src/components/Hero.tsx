@@ -55,7 +55,7 @@ const Hero = ({ culturalContent }: HeroProps) => {
 
   // If we're on the home page, render the HomeHero component
   if (location.pathname === '/') {
-    return <HomeHero culturalContent={culturalContent} />;
+    return <HomeHero isSpanish={isSpanish} />;
   }
 
   const config = heroConfigs[location.pathname as keyof typeof heroConfigs] || heroConfigs["/"];

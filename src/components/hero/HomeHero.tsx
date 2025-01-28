@@ -2,13 +2,23 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Mic, Hourglass } from "lucide-react";
 import { HeroPattern } from "./HeroPattern";
-import { CulturalContent } from "@/types/cultural";
 
 interface HomeHeroProps {
-  culturalContent?: CulturalContent | null;
+  isSpanish: boolean;
 }
 
-const HomeHero = ({ culturalContent }: HomeHeroProps) => {
+const HomeHero = ({ isSpanish }: HomeHeroProps) => {
+  const content = {
+    title: isSpanish 
+      ? "Nuestra Historia, Nuestra Voz" 
+      : "Our Story, Our Voice",
+    subtitle: isSpanish 
+      ? "Preserva los momentos más preciosos de tu familia con cápsulas digitales que capturan historias, tradiciones y memorias para las generaciones futuras."
+      : "Preserve your family's most precious moments with digital capsules that capture stories, traditions, and memories for future generations.",
+    primaryCta: isSpanish ? "Comparte Tu Historia" : "Share Your Story",
+    secondaryCta: isSpanish ? "Crea Una Cápsula Familiar" : "Create a Family Capsule"
+  };
+
   return (
     <div 
       className="relative overflow-hidden flex items-center py-24" 
@@ -23,10 +33,10 @@ const HomeHero = ({ culturalContent }: HomeHeroProps) => {
           className="mx-auto max-w-2xl text-center px-4 sm:px-6"
         >
           <h1 className="font-outfit font-bold text-3xl sm:text-4xl md:text-6xl tracking-tight text-white mb-4 sm:mb-6 leading-tight">
-            {culturalContent?.title || "Nuestra Historia, Nuestra Voz"}
+            {content.title}
           </h1>
           <p className="font-inter text-base sm:text-lg leading-7 sm:leading-8 text-white/90 mb-8 sm:mb-10">
-            {culturalContent?.subtitle || "Preserva los momentos más preciosos de tu familia con cápsulas digitales que capturan historias, tradiciones y memorias para las generaciones futuras."}
+            {content.subtitle}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6">
             <Button 
@@ -35,7 +45,7 @@ const HomeHero = ({ culturalContent }: HomeHeroProps) => {
               variant="stories"
               className="w-full sm:w-auto font-outfit"
             >
-              <span>{culturalContent?.primary_cta || "Comparte Tu Historia"}</span>
+              <span>{content.primaryCta}</span>
               <Mic className="ml-2 h-5 w-5" />
             </Button>
             <Button 
@@ -44,7 +54,7 @@ const HomeHero = ({ culturalContent }: HomeHeroProps) => {
               variant="capsules"
               className="w-full sm:w-auto transition-all duration-300 font-outfit bg-vaya-capsules text-white hover:bg-vaya-capsules/90"
             >
-              <span>{culturalContent?.secondary_cta || "Crea Una Cápsula Familiar"}</span>
+              <span>{content.secondaryCta}</span>
               <Hourglass className="ml-2 h-5 w-5" />
             </Button>
           </div>
