@@ -17,7 +17,6 @@ const FamilyCapsules = () => {
   // Transform example capsules into the format expected by the table
   const allExampleCapsules = [...detailedCapsules, ...simpleCapsules].map(capsule => ({
     ...capsule,
-    // Generate a proper UUID for each example capsule
     link: `/capsule/${crypto.randomUUID()}`,
     metadata: capsule.metadata || {
       creatorInitials: "JD",
@@ -41,8 +40,8 @@ const FamilyCapsules = () => {
   return (
     <div className="relative min-h-screen">
       <Hero />
-      <CapsulePills />
       <ExampleCapsules />
+      <CapsulePills />
       <CapsuleScrollSection capsules={allExampleCapsules} />
     </div>
   );
