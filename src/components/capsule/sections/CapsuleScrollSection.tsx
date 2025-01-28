@@ -56,16 +56,16 @@ export const CapsuleScrollSection = ({ capsules }: CapsuleScrollSectionProps) =>
     <div className="container mx-auto px-4 py-8">
       <div className="grid gap-8 max-w-7xl mx-auto">
         <div className="bg-white rounded-lg border border-gray-100 shadow-sm">
-          <div className="p-4 border-b border-gray-100">
+          <div className="p-6 border-b border-gray-100 bg-vaya-accent-green rounded-t-lg">
             <div className="flex items-center justify-between gap-4">
-              <h3 className="text-lg font-semibold text-gray-900 min-w-[200px]">Your Family Capsules</h3>
+              <h3 className="text-xl font-semibold text-gray-900 min-w-[200px]">Your Family Capsules</h3>
               <div className="flex-1 max-w-md">
                 <Input
                   type="search"
                   placeholder="Search capsules..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full"
+                  className="w-full bg-white/80 backdrop-blur-sm"
                 />
               </div>
               <CapsuleFilters 
