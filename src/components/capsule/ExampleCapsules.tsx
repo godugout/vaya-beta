@@ -3,8 +3,27 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Clock, Users, Gift, Heart, Camera, Music, Star, Image as ImageIcon, Book, Circle, Square, Diamond, Triangle } from "lucide-react";
 import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
-const exampleCapsules = [
+type ExampleCapsule = {
+  title: string;
+  description?: string;
+  icon: any;
+  colorKey: string;
+  isPlaceholder?: boolean;
+  creator?: {
+    initials: string;
+    avatar: string;
+  };
+  stats?: {
+    memories: number;
+    contributors: number;
+  };
+  status?: "upcoming" | "active" | "locked" | "revealed";
+  timeLeft?: string;
+};
+
+const exampleCapsules: ExampleCapsule[] = [
   {
     title: "Family Reunion 2024",
     description: "Capturing memories from our annual family gathering",
@@ -67,7 +86,7 @@ const statusColors = {
   active: "bg-green-100 text-green-800",
   locked: "bg-orange-100 text-orange-800",
   revealed: "bg-purple-100 text-purple-700"
-};
+} as const;
 
 const container = {
   hidden: { opacity: 0 },
@@ -135,32 +154,38 @@ export const ExampleCapsules = () => {
                         <h3 className="text-lg font-semibold text-gray-900">
                           {capsule.title}
                         </h3>
-                        <p className="text-sm text-gray-600 line-clamp-2">
-                          {capsule.description}
-                        </p>
+                        {capsule.description && (
+                          <p className="text-sm text-gray-600 line-clamp-2">
+                            {capsule.description}
+                          </p>
+                        )}
 
                         {/* Stats Section */}
-                        <div className="flex items-center gap-4 text-sm text-gray-500">
-                          <span className="flex items-center gap-1">
-                            <ImageIcon className="w-4 h-4" />
-                            {capsule.stats.memories}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <Users className="w-4 h-4" />
-                            {capsule.stats.contributors}
-                          </span>
-                        </div>
+                        {capsule.stats && (
+                          <div className="flex items-center gap-4 text-sm text-gray-500">
+                            <span className="flex items-center gap-1">
+                              <ImageIcon className="w-4 h-4" />
+                              {capsule.stats.memories}
+                            </span>
+                            <span className="flex items-center gap-1">
+                              <Users className="w-4 h-4" />
+                              {capsule.stats.contributors}
+                            </span>
+                          </div>
+                        )}
 
                         {/* Status and Time Section */}
-                        <div className="flex items-center justify-between pt-2">
-                          <Badge variant="secondary" className={statusColors[capsule.status as keyof typeof statusColors]}>
-                            {capsule.status}
-                          </Badge>
-                          <span className="flex items-center text-sm text-gray-500">
-                            <Clock className="w-4 h-4 mr-1" />
-                            {capsule.timeLeft}
-                          </span>
-                        </div>
+                        {capsule.status && capsule.timeLeft && (
+                          <div className="flex items-center justify-between pt-2">
+                            <Badge variant="secondary" className={statusColors[capsule.status]}>
+                              {capsule.status}
+                            </Badge>
+                            <span className="flex items-center text-sm text-gray-500">
+                              <Clock className="w-4 h-4 mr-1" />
+                              {capsule.timeLeft}
+                            </span>
+                          </div>
+                        )}
                       </div>
                     ) : (
                       <div className="space-y-2">
