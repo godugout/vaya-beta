@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Camera } from "lucide-react";
+import { Camera, ChevronUp } from "lucide-react";
 import CreateCapsuleForm from "@/components/capsule/CreateCapsuleForm";
 import { DesktopGrid } from "@/components/ui/capsule/DesktopGrid";
 import { MobileCapsuleList } from "@/components/ui/capsule/MobileCapsuleList";
@@ -8,6 +8,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import type { Capsule } from "@/components/ui/capsule/types";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 interface CapsuleScrollSectionProps {
   capsules: Capsule[];
@@ -17,19 +18,22 @@ export const CapsuleScrollSection = ({ capsules }: CapsuleScrollSectionProps) =>
   const isMobile = useIsMobile();
   const [isHeroVisible, setIsHeroVisible] = useState(true);
 
+  const scrollToHero = () => {
+    const heroElement = document.querySelector('[data-component="Hero"]');
+    heroElement?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   useEffect(() => {
-    // Create an observer for the hero section
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsHeroVisible(entry.isIntersecting);
       },
       {
         threshold: 0,
-        rootMargin: "-64px 0px 0px 0px" // Adjust based on your nav height
+        rootMargin: "-64px 0px 0px 0px"
       }
     );
 
-    // Observe the hero section
     const heroElement = document.querySelector('[data-component="Hero"]');
     if (heroElement) {
       observer.observe(heroElement);
@@ -54,18 +58,47 @@ export const CapsuleScrollSection = ({ capsules }: CapsuleScrollSectionProps) =>
             : "top-0 opacity-100 pointer-events-auto z-50"
         )}
       >
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-gray-900">Family Capsules</h2>
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button className="bg-vaya-capsules hover:bg-vaya-capsules/90 text-white">
-                Create a Capsule <Camera className="ml-2 h-5 w-5" />
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[600px]">
-              <CreateCapsuleForm />
-            </DialogContent>
-          </Dialog>
+        <div className="container mx-auto px-4 py-4 flex items-center">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-2">
+            <img 
+              src="/lovable-uploads/ef40fff0-4da4-4937-af3d-c2276b1d2588.png" 
+              alt="Vaya Logo" 
+              className="h-8 w-8"
+            />
+            <span className="font-outfit font-bold text-xl text-gray-900">
+              Vaya<sup>α</sup>
+            </span>
+          </Link>
+
+          {/* Centered Title */}
+          <h2 className="text-xl font-semibold text-gray-900 flex-1 text-center">
+            Family Capsules
+          </h2>
+
+          {/* Actions */}
+          <div className="flex items-center gap-4">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={scrollToHero}
+              className="rounded-full hover:bg-gray-100"
+              title="Go back to top"
+            >
+              <ChevronUp className="h-5 w-5" />
+            </Button>
+
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button className="bg-vaya-capsules hover:bg-vaya-capsules/90 text-white">
+                  Create a Capsule <Camera className="ml-2 h-5 w-5" />
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[600px]">
+                <CreateCapsuleForm />
+              </DialogContent>
+            </Dialog>
+          </div>
         </div>
       </div>
 
