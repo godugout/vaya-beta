@@ -25,16 +25,16 @@ const Footer = () => {
         <div className="border-t border-vaya-gray-200 pt-8">
           {/* Links above copyright */}
           <div className="flex justify-center flex-wrap gap-x-8 gap-y-4 mb-8">
-            <a href="#" className="text-base sm:text-lg leading-7 text-vaya-gray-600 hover:text-vaya-gray-900">
+            <a href="#" className="text-base sm:text-lg leading-7 text-vaya-gray-600 hover:text-vaya-capsules hover:underline transition-colors">
               About Allusion Ink
             </a>
-            <a href="#" className="text-base sm:text-lg leading-7 text-vaya-gray-600 hover:text-vaya-gray-900">
+            <a href="#" className="text-base sm:text-lg leading-7 text-vaya-gray-600 hover:text-vaya-capsules hover:underline transition-colors">
               Contact
             </a>
-            <a href="#" className="text-base sm:text-lg leading-7 text-vaya-gray-600 hover:text-vaya-gray-900">
+            <a href="#" className="text-base sm:text-lg leading-7 text-vaya-gray-600 hover:text-vaya-capsules hover:underline transition-colors">
               Privacy Policy
             </a>
-            <a href="#" className="text-base sm:text-lg leading-7 text-vaya-gray-600 hover:text-vaya-gray-900">
+            <a href="#" className="text-base sm:text-lg leading-7 text-vaya-gray-600 hover:text-vaya-capsules hover:underline transition-colors">
               Terms of Use
             </a>
           </div>
