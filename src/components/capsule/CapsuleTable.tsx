@@ -123,8 +123,9 @@ export const CapsuleTable = ({ capsules, sortField, sortDirection, onSort }: Cap
               className="cursor-pointer font-semibold text-lg px-6"
               onClick={() => onSort('title')}
             >
-              Capsules {sortField === 'title' && (sortDirection === 'asc' ? '↑' : '↓')}
+              Title {sortField === 'title' && (sortDirection === 'asc' ? '↑' : '↓')}
             </TableHead>
+            <TableHead className="px-6">Note</TableHead>
             <TableHead className="px-6">Creator</TableHead>
             <TableHead 
               className="cursor-pointer px-6"
@@ -148,6 +149,7 @@ export const CapsuleTable = ({ capsules, sortField, sortDirection, onSort }: Cap
               className="hover:bg-gray-50/50"
             >
               <TableCell className="font-medium px-6">{capsule.title}</TableCell>
+              <TableCell className="px-6">{capsule.description}</TableCell>
               <TableCell className="px-6">{capsule.metadata?.creatorInitials}</TableCell>
               <TableCell className="px-6">
                 {capsule.metadata?.status && (
@@ -189,7 +191,7 @@ export const CapsuleTable = ({ capsules, sortField, sortDirection, onSort }: Cap
         </TableBody>
         <TableFooter>
           <TableRow>
-            <TableCell colSpan={5} className="px-6">
+            <TableCell colSpan={6} className="px-6">
               <div className="flex items-center justify-between py-3">
                 <div className="flex items-center gap-3 text-base text-gray-600">
                   <MessageSquare className="h-5 w-5" />
