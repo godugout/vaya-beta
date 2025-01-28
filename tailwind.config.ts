@@ -36,13 +36,6 @@ export default {
             orange: "#FEC6A1",  // Muted orange accents
             blue: "#E0F2FE",    // Soft blue backgrounds
           },
-
-          hover: {
-            stories: "#C2410C",  // Darker orange for stories hover
-            memories: "#0369A1", // Darker blue for memories hover
-            capsules: "#15803D", // Darker green for capsules hover
-            narra: "#7C5FF2",    // Darker purple for narra hover
-          },
           
           chat: {
             bg: "#F8FAFC",
