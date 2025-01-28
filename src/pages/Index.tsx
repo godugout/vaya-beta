@@ -1,10 +1,10 @@
 import Hero from "@/components/Hero";
 import Features from "@/components/Features";
 import FAQ from "@/components/FAQ";
+import Testimonials from "@/components/Testimonials";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { CulturalContent } from "@/types/cultural";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -42,6 +42,7 @@ const Index = () => {
           <Features />
         </div>
       </div>
+      <Testimonials />
       <div className="bg-[#F8FAFC] py-24 px-4 sm:px-6">
         <div className="mx-auto max-w-7xl lg:px-8 text-center">
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
@@ -62,6 +63,6 @@ const Index = () => {
       <FAQ />
     </div>
   );
-}
+};
 
 export default Index;
