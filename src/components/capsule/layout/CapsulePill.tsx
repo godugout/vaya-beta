@@ -37,8 +37,10 @@ export const CapsulePill = ({
       <div className={cn(
         "relative overflow-hidden rounded-[90px]",
         "min-h-[160px] w-[500px]",
-        `border-2 border-vaya-${colorKey} border-opacity-50 hover:border-opacity-100`,
-        `bg-gradient-to-br from-white to-vaya-accent-${colorKey}`,
+        `border-[3px] border-vaya-${colorKey}`,
+        isPlaceholder 
+          ? "bg-white hover:bg-gradient-to-br hover:from-white hover:to-vaya-accent-blue/20"
+          : `bg-gradient-to-br from-white to-vaya-accent-${colorKey}/30`,
         "shadow-[0_4px_12px_-2px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_-4px_rgba(0,0,0,0.12)]",
         "transition-all duration-300"
       )}>
@@ -48,11 +50,11 @@ export const CapsulePill = ({
               <div className="flex items-center gap-6">
                 <div className={cn(
                   "inline-flex items-center justify-center w-16 h-16 rounded-3xl",
-                  `bg-vaya-${colorKey} bg-opacity-20 group-hover:bg-opacity-30 transition-colors`
+                  `bg-vaya-${colorKey} bg-opacity-10 group-hover:bg-opacity-20 transition-colors`
                 )}>
                   <Icon className={`w-8 h-8 text-vaya-${colorKey}`} />
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-2 text-left">
                   <h3 className="text-xl font-semibold text-vaya-gray-900 font-outfit">
                     {title}
                   </h3>
@@ -74,7 +76,7 @@ export const CapsulePill = ({
                 )}>
                   <Icon className={`w-8 h-8 text-vaya-${colorKey}`} />
                 </div>
-                <div className="space-y-3">
+                <div className="space-y-3 text-left">
                   <div>
                     <h3 className="text-xl font-semibold text-vaya-gray-900 font-outfit mb-1">
                       {title}
