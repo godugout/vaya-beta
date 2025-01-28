@@ -58,22 +58,10 @@ export const CapsuleScrollSection = ({ capsules }: CapsuleScrollSectionProps) =>
             <div className="p-4 border-b border-gray-100">
               <div className="flex items-center justify-between">
                 <h3 className="text-lg font-semibold text-gray-900">Your Family Capsules</h3>
-                <div className="flex items-center gap-4">
-                  <CapsuleFilters 
-                    statusFilter={statusFilter}
-                    onFilterChange={setStatusFilter}
-                  />
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <Button className="bg-vaya-capsules hover:bg-vaya-capsules/90 text-white">
-                        Create a Capsule <Camera className="ml-2 h-5 w-5" />
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="sm:max-w-[600px]">
-                      <CreateCapsuleForm />
-                    </DialogContent>
-                  </Dialog>
-                </div>
+                <CapsuleFilters 
+                  statusFilter={statusFilter}
+                  onFilterChange={setStatusFilter}
+                />
               </div>
             </div>
             
