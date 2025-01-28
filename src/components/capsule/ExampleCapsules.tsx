@@ -1,7 +1,7 @@
 import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { Clock, Users, Gift, Heart, Camera, Music, Star, Image as ImageIcon, Book, Circle, Square, Diamond, Triangle } from "lucide-react";
+import { Camera, Users, Heart, Music, Book, Calendar, MapPin, Image as ImageIcon, GraduationCap, Film } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -25,44 +25,12 @@ type ExampleCapsule = {
 
 const exampleCapsules: ExampleCapsule[] = [
   {
-    title: "Family Reunion 2024",
-    description: "Capturing memories from our annual family gathering",
-    icon: Users,
-    colorKey: "orange",
-    creator: {
-      initials: "JD",
-      avatar: "/placeholder.svg"
-    },
-    stats: {
-      memories: 12,
-      contributors: 5
-    },
-    status: "upcoming",
-    timeLeft: "2 months"
-  },
-  {
-    title: "Holiday Traditions",
-    description: "Our favorite family recipes and holiday moments",
-    icon: Gift,
+    title: "Beach Day Memories",
+    description: "Summer adventures at Crystal Cove",
+    icon: Camera,
     colorKey: "green",
     creator: {
-      initials: "MC",
-      avatar: "/placeholder.svg"
-    },
-    stats: {
-      memories: 8,
-      contributors: 3
-    },
-    status: "active",
-    timeLeft: "15 days"
-  },
-  {
-    title: "Summer Adventures",
-    description: "Beach trips and outdoor activities with the family",
-    icon: Camera,
-    colorKey: "blue",
-    creator: {
-      initials: "AS",
+      initials: "ES",
       avatar: "/placeholder.svg"
     },
     stats: {
@@ -70,15 +38,149 @@ const exampleCapsules: ExampleCapsule[] = [
       contributors: 6
     },
     status: "active",
-    timeLeft: "1 month"
+    timeLeft: "Opened Nov 1"
+  },
+  {
+    title: "Our Journey Here",
+    description: "Immigration stories and heritage",
+    icon: MapPin,
+    colorKey: "blue",
+    creator: {
+      initials: "JD",
+      avatar: "/placeholder.svg"
+    },
+    stats: {
+      memories: 18,
+      contributors: 8
+    },
+    status: "locked",
+    timeLeft: "Opens Dec 31"
+  },
+  {
+    title: "Costa Rican Heritage",
+    description: "Celebrating our roots",
+    icon: Heart,
+    colorKey: "green",
+    creator: {
+      initials: "LE",
+      avatar: "/placeholder.svg"
+    },
+    stats: {
+      memories: 12,
+      contributors: 4
+    },
+    status: "upcoming",
+    timeLeft: "Unlocked today"
   },
   // Theme placeholder capsules
-  ...Array.from({ length: 18 }, (_, i) => ({
-    title: `Theme ${i + 1}`,
-    icon: [Circle, Square, Diamond, Triangle, Star, Heart][i % 6],
-    colorKey: ["orange", "green", "blue", "yellow"][i % 4],
+  {
+    title: "Local Adventures",
+    icon: Film,
+    colorKey: "green",
     isPlaceholder: true
-  }))
+  },
+  {
+    title: "Holiday Traditions",
+    icon: Heart,
+    colorKey: "orange",
+    isPlaceholder: true
+  },
+  {
+    title: "Festival Celebrations",
+    icon: Music,
+    colorKey: "orange",
+    isPlaceholder: true
+  },
+  {
+    title: "Wildlife Encounters",
+    icon: Camera,
+    colorKey: "green",
+    isPlaceholder: true
+  },
+  {
+    title: "Family Reunions",
+    icon: Users,
+    colorKey: "orange",
+    isPlaceholder: true
+  },
+  {
+    title: "Wedding Stories",
+    icon: Heart,
+    colorKey: "blue",
+    isPlaceholder: true
+  },
+  {
+    title: "Travel Diaries",
+    icon: MapPin,
+    colorKey: "green",
+    isPlaceholder: true
+  },
+  {
+    title: "Photo Albums",
+    icon: ImageIcon,
+    colorKey: "blue",
+    isPlaceholder: true
+  },
+  {
+    title: "School Memories",
+    icon: GraduationCap,
+    colorKey: "blue",
+    isPlaceholder: true
+  },
+  {
+    title: "Year in Review 2023",
+    icon: Calendar,
+    colorKey: "orange",
+    isPlaceholder: true
+  },
+  {
+    title: "Family Recipes",
+    icon: Book,
+    colorKey: "orange",
+    isPlaceholder: true
+  },
+  {
+    title: "Grandparents' Stories",
+    icon: Book,
+    colorKey: "blue",
+    isPlaceholder: true
+  },
+  {
+    title: "Cultural Celebrations",
+    icon: Music,
+    colorKey: "green",
+    isPlaceholder: true
+  },
+  {
+    title: "Family Vacations",
+    icon: MapPin,
+    colorKey: "blue",
+    isPlaceholder: true
+  },
+  {
+    title: "Birthday Memories",
+    icon: Heart,
+    colorKey: "orange",
+    isPlaceholder: true
+  },
+  {
+    title: "Sports Achievements",
+    icon: Users,
+    colorKey: "green",
+    isPlaceholder: true
+  },
+  {
+    title: "Pet Stories",
+    icon: Camera,
+    colorKey: "blue",
+    isPlaceholder: true
+  },
+  {
+    title: "Holiday Gatherings",
+    icon: Users,
+    colorKey: "orange",
+    isPlaceholder: true
+  }
 ];
 
 const statusColors = {
@@ -114,7 +216,7 @@ export const ExampleCapsules = () => {
           variants={container}
           initial="hidden"
           animate="show"
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"
         >
           {exampleCapsules.map((capsule, index) => {
             const Icon = capsule.icon;
@@ -128,19 +230,20 @@ export const ExampleCapsules = () => {
               >
                 <Card className={cn(
                   "relative overflow-hidden transition-all duration-300",
-                  capsule.isPlaceholder ? "opacity-60 hover:opacity-100" : "hover:shadow-lg"
+                  capsule.isPlaceholder ? "opacity-80 hover:opacity-100" : "hover:shadow-lg",
+                  `bg-vaya-accent-${capsule.colorKey} bg-opacity-30`
                 )}>
-                  <div className={`p-6 bg-vaya-${capsule.colorKey} bg-opacity-10`}>
+                  <div className="p-4">
                     {/* Icon and Avatar Section */}
-                    <div className="relative mb-4">
+                    <div className="relative mb-3">
                       <div className={cn(
-                        "inline-flex items-center justify-center w-16 h-16 rounded-full bg-white shadow-sm",
-                        capsule.isPlaceholder && "animate-pulse"
+                        "inline-flex items-center justify-center w-10 h-10 rounded-xl",
+                        `bg-vaya-${capsule.colorKey} bg-opacity-20`
                       )}>
-                        <Icon className={`w-8 h-8 text-vaya-${capsule.colorKey}`} />
+                        <Icon className={`w-5 h-5 text-vaya-${capsule.colorKey}`} />
                       </div>
                       {!capsule.isPlaceholder && capsule.creator && (
-                        <Avatar className="absolute -right-2 -top-2 w-8 h-8 border-2 border-white">
+                        <Avatar className="absolute -right-1 -top-1 w-6 h-6 border-2 border-white">
                           <div className="w-full h-full flex items-center justify-center bg-gray-200 text-xs font-medium">
                             {capsule.creator.initials}
                           </div>
@@ -149,54 +252,46 @@ export const ExampleCapsules = () => {
                     </div>
 
                     {/* Content Section */}
-                    {!capsule.isPlaceholder ? (
-                      <div className="space-y-3">
-                        <h3 className="text-lg font-semibold text-gray-900">
-                          {capsule.title}
-                        </h3>
-                        {capsule.description && (
-                          <p className="text-sm text-gray-600 line-clamp-2">
-                            {capsule.description}
-                          </p>
-                        )}
+                    <div className="space-y-2">
+                      <h3 className="text-sm font-medium text-gray-900 line-clamp-1">
+                        {capsule.title}
+                      </h3>
+                      {!capsule.isPlaceholder && (
+                        <>
+                          {capsule.description && (
+                            <p className="text-xs text-gray-600 line-clamp-2">
+                              {capsule.description}
+                            </p>
+                          )}
 
-                        {/* Stats Section */}
-                        {capsule.stats && (
-                          <div className="flex items-center gap-4 text-sm text-gray-500">
-                            <span className="flex items-center gap-1">
-                              <ImageIcon className="w-4 h-4" />
-                              {capsule.stats.memories}
-                            </span>
-                            <span className="flex items-center gap-1">
-                              <Users className="w-4 h-4" />
-                              {capsule.stats.contributors}
-                            </span>
-                          </div>
-                        )}
+                          {/* Stats Section */}
+                          {capsule.stats && (
+                            <div className="flex items-center gap-3 text-xs text-gray-500">
+                              <span className="flex items-center gap-1">
+                                <ImageIcon className="w-3 h-3" />
+                                {capsule.stats.memories}
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <Users className="w-3 h-3" />
+                                {capsule.stats.contributors}
+                              </span>
+                            </div>
+                          )}
 
-                        {/* Status and Time Section */}
-                        {capsule.status && capsule.timeLeft && (
-                          <div className="flex items-center justify-between pt-2">
-                            <Badge variant="secondary" className={statusColors[capsule.status]}>
-                              {capsule.status}
-                            </Badge>
-                            <span className="flex items-center text-sm text-gray-500">
-                              <Clock className="w-4 h-4 mr-1" />
-                              {capsule.timeLeft}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                    ) : (
-                      <div className="space-y-2">
-                        <h3 className="text-lg font-semibold text-gray-900 opacity-75">
-                          Theme Capsule
-                        </h3>
-                        <p className="text-sm text-gray-500">
-                          Click to create a new capsule
-                        </p>
-                      </div>
-                    )}
+                          {/* Status and Time Section */}
+                          {capsule.status && capsule.timeLeft && (
+                            <div className="flex items-center justify-between pt-1">
+                              <Badge variant="secondary" className={statusColors[capsule.status]}>
+                                {capsule.status}
+                              </Badge>
+                              <span className="flex items-center text-xs text-gray-500">
+                                {capsule.timeLeft}
+                              </span>
+                            </div>
+                          )}
+                        </>
+                      )}
+                    </div>
                   </div>
                 </Card>
               </motion.div>
