@@ -4,6 +4,7 @@ const Footer = () => {
   return (
     <footer className="bg-[#F1F1F1] text-vaya-gray-800 mt-auto">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        {/* Centered Logo and Description */}
         <div className="text-center mb-12">
           <Link 
             to="/" 
@@ -15,19 +16,21 @@ const Footer = () => {
               className="h-24 w-24 grayscale opacity-90 transition-all duration-300 group-hover:grayscale-0 group-hover:opacity-100 filter drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)]"
             />
             <span 
-              className="font-bold text-4xl sm:text-5xl text-vaya-gray-600 opacity-90 transition-all duration-300 group-hover:opacity-100 -ml-3"
+              className="font-outfit font-bold text-4xl sm:text-5xl text-vaya-gray-600 opacity-90 transition-all duration-300 group-hover:opacity-100 -ml-3"
               style={{
                 textShadow: '1px 1px 2px rgba(255,255,255,1), -1px -1px 2px rgba(0,0,0,0.1)',
               }}
             >
-              Vaya<sup className="opacity-75 transition-all duration-300 group-hover:text-vaya-home text-[2.5rem] sm:text-[3rem] font-normal -ml-0.5 -mt-8">ᵅ</sup>
+              Vaya<sup className="opacity-75 transition-all duration-300 group-hover:text-vaya-home text-2xl sm:text-3xl font-semibold -ml-0.5">ᵅ</sup>
             </span>
           </Link>
           <p className="mt-6 text-xl sm:text-2xl leading-8 text-vaya-gray-600 max-w-2xl mx-auto">
             Connecting generations through shared memories and stories. Your family's legacy, preserved digitally.
           </p>
         </div>
+        {/* Border separator */}
         <div className="border-t border-vaya-gray-200 pt-8">
+          {/* Links above copyright */}
           <div className="flex justify-center flex-wrap gap-x-8 gap-y-4 mb-8">
             <a href="#" className="text-lg sm:text-xl leading-7 text-vaya-gray-600 hover:text-vaya-capsules hover:underline transition-colors">
               About Allusion Ink
@@ -42,6 +45,8 @@ const Footer = () => {
               Terms of Use
             </a>
           </div>
+
+          {/* Copyright line */}
           <p className="text-lg text-center text-vaya-gray-500">
             &copy; {new Date().getFullYear()} Allusion Ink. All rights reserved. Building memories that last generations.
           </p>

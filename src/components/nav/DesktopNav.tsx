@@ -26,8 +26,8 @@ export const DesktopNav = ({ user, handleSignOut, navigate }: DesktopNavProps) =
             alt="Vaya Logo" 
             className="h-10 w-10"
           />
-          <span className="font-bold text-2xl text-white -ml-2">
-            Vaya<sup className="text-vaya-stories group-hover:text-vaya-stories transition-colors duration-200 text-2xl font-normal -ml-0.5 -mt-4">ᵅ</sup>
+          <span className="font-outfit font-bold text-2xl text-white -ml-2">
+            Vaya<sup className="text-vaya-stories group-hover:text-vaya-stories transition-colors duration-200 text-base font-semibold -ml-0.5">ᵅ</sup>
           </span>
         </Link>
         <nav className="flex items-center space-x-10 ml-12">
