@@ -21,7 +21,7 @@ const HomeHero = ({ isSpanish }: HomeHeroProps) => {
 
   return (
     <div 
-      className="relative overflow-hidden flex items-center py-24" 
+      className="relative overflow-hidden flex items-center py-24 bg-vaya-gray-900" 
       data-component="HomeHero"
     >
       <HeroPattern />
