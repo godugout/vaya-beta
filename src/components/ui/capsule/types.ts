@@ -4,7 +4,7 @@ export interface CapsuleMetadata {
   creatorAvatar?: string;
   creatorInitials: string;
   itemCount: number;
-  status: "upcoming" | "active" | "locked" | "revealed";
+  status: "active" | "upcoming" | "locked" | "revealed";
   date: string;
 }
 
