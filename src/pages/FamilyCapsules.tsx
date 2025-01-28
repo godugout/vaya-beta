@@ -2,10 +2,9 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect } from "react";
 import Hero from "@/components/Hero";
+import { CapsulePills } from "@/components/capsule/sections/CapsulePills";
 import { CapsuleScrollSection } from "@/components/capsule/sections/CapsuleScrollSection";
-import { Camera, Gift, Heart, Music, Star, Image, Book, Users } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { Capsule } from "@/components/ui/capsule/types";
 import { useToast } from "@/hooks/use-toast";
 
 const iconMap: { [key: string]: any } = {
@@ -113,6 +112,7 @@ const FamilyCapsules = () => {
   return (
     <div className="relative min-h-screen">
       <Hero />
+      <CapsulePills />
       <CapsuleScrollSection capsules={capsules || []} />
     </div>
   );
