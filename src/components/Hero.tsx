@@ -31,7 +31,14 @@ const Hero = () => {
   const config = heroConfigs[location.pathname as keyof typeof heroConfigs] || heroConfigs["/"];
 
   return (
-    <div className="relative overflow-hidden bg-white/90 py-24" data-component="Hero">
+    <div 
+      className={`relative overflow-hidden py-24 ${
+        location.pathname.includes('family-capsules') 
+          ? 'bg-vaya-capsules text-white' 
+          : 'bg-white/90'
+      }`} 
+      data-component="Hero"
+    >
       <HeroPattern />
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         <HeroContent config={config} isSpanish={isSpanish} />
