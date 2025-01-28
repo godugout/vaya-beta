@@ -4,6 +4,7 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
+  TooltipProvider,
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -21,21 +22,23 @@ const ChatMessage = ({ message, isSpanish }: ChatMessageProps) => {
     <div className={`flex ${isAI ? "justify-start" : "justify-end"} items-end gap-2 group`}>
       {/* Translation toggle button - appears on hover */}
       <div className={`opacity-0 group-hover:opacity-100 transition-opacity ${isAI ? "order-first" : "order-last"}`}>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-8 w-8"
-              onClick={() => setIsMessageSpanish(!isMessageSpanish)}
-            >
-              <Globe className="h-4 w-4" />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>{isMessageSpanish ? "View in English" : "Ver en Español"}</p>
-          </TooltipContent>
-        </Tooltip>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8"
+                onClick={() => setIsMessageSpanish(!isMessageSpanish)}
+              >
+                <Globe className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{isMessageSpanish ? "View in English" : "Ver en Español"}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
 
       <div
