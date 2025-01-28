@@ -27,6 +27,21 @@ export const HeroContent = ({ config, isSpanish }: HeroContentProps) => {
     return 'border-vaya-stories hover:bg-vaya-stories/10 text-vaya-stories'; // Default
   };
 
+  // Get unique button IDs based on route
+  const getPrimaryButtonId = () => {
+    if (location.pathname.includes('memory-lane')) return 'hero-memories-primary-cta';
+    if (location.pathname.includes('share-stories')) return 'hero-stories-primary-cta';
+    if (location.pathname.includes('family-capsules')) return 'hero-capsules-primary-cta';
+    return 'hero-home-primary-cta';
+  };
+
+  const getSecondaryButtonId = () => {
+    if (location.pathname.includes('memory-lane')) return 'hero-memories-secondary-cta';
+    if (location.pathname.includes('share-stories')) return 'hero-stories-secondary-cta';
+    if (location.pathname.includes('family-capsules')) return 'hero-capsules-secondary-cta';
+    return 'hero-home-secondary-cta';
+  };
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
@@ -42,6 +57,7 @@ export const HeroContent = ({ config, isSpanish }: HeroContentProps) => {
       </p>
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6">
         <Button 
+          id={getPrimaryButtonId()}
           size="lg" 
           variant={location.pathname.includes('memory-lane') ? 'memories' : 'stories'}
           className="w-full sm:w-auto transition-all duration-300 font-outfit"
@@ -51,6 +67,7 @@ export const HeroContent = ({ config, isSpanish }: HeroContentProps) => {
         </Button>
         {config.secondaryCta && (
           <Button 
+            id={getSecondaryButtonId()}
             size="lg" 
             variant="outline"
             onClick={() => location.pathname.includes('memory-lane') && navigate('/narra')}
