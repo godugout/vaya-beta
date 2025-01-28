@@ -46,13 +46,9 @@ export const HeroContent = ({ config, isSpanish }: HeroContentProps) => {
         {config.secondaryCta && (
           <Button 
             size="lg" 
-            variant="outline"
+            variant="stories"
             onClick={() => location.pathname.includes('memory-lane') && navigate('/narra')}
-            className={`w-full sm:w-auto font-outfit border-2 ${
-              location.pathname.includes('memory-lane') 
-                ? 'border-vaya-memories hover:bg-vaya-memories/10 text-vaya-memories'
-                : 'border-vaya-stories hover:bg-vaya-stories/10'
-            }`}
+            className="w-full sm:w-auto font-outfit"
           >
             <span>{config.secondaryCta.text}</span>
             {config.secondaryCta.icon}
