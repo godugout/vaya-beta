@@ -9,6 +9,7 @@ interface StepCardProps {
   icon: LucideIcon;
   color: string;
   iconColor: string;
+  numberColor?: string;
   className?: string;
 }
 
@@ -19,6 +20,7 @@ export const StepCard = ({
   icon: Icon, 
   color, 
   iconColor,
+  numberColor = "text-gray-700",
   className 
 }: StepCardProps) => {
   const isRevealCard = step === 4;
@@ -54,7 +56,10 @@ export const StepCard = ({
             </div>
           )}
         </div>
-        <div className="absolute -top-2 -right-2 w-8 h-8 bg-vaya-capsules rounded-full flex items-center justify-center text-white font-bold text-sm font-outfit">
+        <div className={cn(
+          "absolute -top-2 -right-2 w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center font-bold text-sm font-outfit",
+          numberColor
+        )}>
           {step}
         </div>
       </div>
