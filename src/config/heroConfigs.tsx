@@ -1,4 +1,4 @@
-import { Camera, Mic, MessageSquare, Hourglass } from "lucide-react";
+import { Camera, Heart, Mic, Hourglass } from "lucide-react";
 import { HeroConfigs } from "@/types/hero";
 
 export const heroConfigs: HeroConfigs = {
@@ -37,7 +37,7 @@ export const heroConfigs: HeroConfigs = {
     },
     secondaryCta: {
       text: "Ask Family Anything",
-      icon: <MessageSquare className="ml-2 h-5 w-5" />,
+      icon: <Heart className="ml-2 h-5 w-5 fill-red-500 text-red-500" />,
     }
   },
   "/share-stories": {
@@ -51,7 +51,7 @@ export const heroConfigs: HeroConfigs = {
     },
     secondaryCta: {
       text: "Chat with Narra",
-      icon: <MessageSquare className="ml-2 h-5 w-5" />,
+      icon: <Heart className="ml-2 h-5 w-5 fill-red-500 text-red-500" />,
     }
   }
 };
