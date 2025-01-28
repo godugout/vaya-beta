@@ -10,7 +10,7 @@ export const CapsulePills = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-2xl font-bold text-vaya-gray-900 font-outfit mb-6"
+          className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-gray-900 mb-4 sm:mb-6"
         >
           Go Back to the Future
         </motion.h2>
