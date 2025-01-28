@@ -5,9 +5,24 @@ import { HeroPattern } from "./HeroPattern";
 
 const HomeHero = () => {
   return (
-    <div className="relative overflow-hidden py-24 bg-white/90" data-component="HomeHero">
+    <div 
+      className="relative overflow-hidden py-24" 
+      data-component="HomeHero"
+    >
+      {/* Background image with overlay */}
+      <div 
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: 'url("https://images.unsplash.com/photo-1501854140801-50d01698950b")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        <div className="absolute inset-0 bg-white/80" /> {/* Overlay for text readability */}
+      </div>
+      
       <HeroPattern />
-      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
