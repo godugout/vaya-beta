@@ -1,6 +1,6 @@
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Eye, Lock, Plus, Bookmark, BookmarkCheck } from "lucide-react";
+import { Eye, Lock, Plus, Bookmark, BookmarkCheck, Share2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Capsule, CapsuleStatus } from "@/types/capsule";
@@ -97,6 +97,14 @@ export const CapsuleTableRow = ({
                 <Lock className="h-4 w-4 text-red-400" />
               )}
             </Link>
+          </Button>
+
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8"
+          >
+            <Share2 className="h-4 w-4" />
           </Button>
         </div>
       </TableCell>
