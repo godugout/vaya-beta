@@ -11,32 +11,32 @@ const defaultFeatures = [
     name: "Create Memory Capsules",
     description: "Build digital time capsules filled with photos, stories, and precious moments for future generations.",
     icon: Camera,
-    bgColor: "bg-white/80",
-    iconColor: "text-vaya-stories",
+    bgColor: "bg-white/40",
+    iconColor: "text-[#F97316]",
     feature_key: "create_capsules"
   },
   {
     name: "Family Collaboration",
     description: "Invite family members to contribute their own memories and stories to your shared collection.",
     icon: Users,
-    bgColor: "bg-white/80",
-    iconColor: "text-vaya-memories",
+    bgColor: "bg-white/40",
+    iconColor: "text-[#0EA5E9]",
     feature_key: "family_collab"
   },
   {
     name: "Memory Timeline",
     description: "Organize and view your memories chronologically in a beautiful, interactive timeline.",
     icon: Clock,
-    bgColor: "bg-white/80",
-    iconColor: "text-vaya-capsules",
+    bgColor: "bg-white/40",
+    iconColor: "text-[#22C55E]",
     feature_key: "timeline"
   },
   {
     name: "Legacy Preservation",
     description: "Ensure your family's stories and traditions are preserved and passed down through generations.",
     icon: Heart,
-    bgColor: "bg-white/80",
-    iconColor: "text-vaya-narra",
+    bgColor: "bg-white/40",
+    iconColor: "text-[#D946EF]",
     feature_key: "legacy"
   }
 ];
@@ -77,8 +77,12 @@ const Features = ({ culturalContent }: FeaturesProps) => {
                 className="flex flex-col items-center text-center"
               >
                 <dt className="text-xl font-semibold leading-7 text-white">
-                  <div className={`mb-6 flex h-16 w-16 items-center justify-center rounded-xl ${feature.bgColor} shadow-sm mx-auto backdrop-blur-sm`}>
-                    <feature.icon className={`h-8 w-8 ${feature.iconColor}`} aria-hidden="true" />
+                  <div className={`mb-6 flex h-16 w-16 items-center justify-center rounded-xl ${feature.bgColor} shadow-lg mx-auto backdrop-blur-md hover:backdrop-blur-lg transition-all duration-300 border border-white/20`}>
+                    <feature.icon 
+                      className={`h-8 w-8 ${feature.iconColor} drop-shadow-lg`} 
+                      strokeWidth={2.5}
+                      aria-hidden="true" 
+                    />
                   </div>
                   {feature.name}
                 </dt>
