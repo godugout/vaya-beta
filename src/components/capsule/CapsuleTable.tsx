@@ -1,12 +1,14 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableFooter } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Capsule, CapsuleStatus } from "@/types/capsule";
 import { cn } from "@/lib/utils";
-import { Bookmark, BookmarkCheck } from "lucide-react";
+import { Bookmark, BookmarkCheck, MessageSquare, Plus } from "lucide-react";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import CreateCapsuleForm from "./CreateCapsuleForm";
 
 interface CapsuleTableProps {
   capsules: Capsule[];
@@ -113,77 +115,102 @@ export const CapsuleTable = ({ capsules, sortField, sortDirection, onSort }: Cap
   };
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow className="hover:bg-gray-50/50">
-          <TableHead 
-            className="cursor-pointer"
-            onClick={() => onSort('title')}
-          >
-            Title {sortField === 'title' && (sortDirection === 'asc' ? '↑' : '↓')}
-          </TableHead>
-          <TableHead>Creator</TableHead>
-          <TableHead 
-            className="cursor-pointer"
-            onClick={() => onSort('status')}
-          >
-            Status {sortField === 'status' && (sortDirection === 'asc' ? '↑' : '↓')}
-          </TableHead>
-          <TableHead 
-            className="cursor-pointer"
-            onClick={() => onSort('date')}
-          >
-            Date {sortField === 'date' && (sortDirection === 'asc' ? '↑' : '↓')}
-          </TableHead>
-          <TableHead className="text-right">Actions</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {capsules.map((capsule) => (
-          <TableRow 
-            key={capsule.title}
-            className="hover:bg-gray-50/50"
-          >
-            <TableCell className="font-medium">{capsule.title}</TableCell>
-            <TableCell>{capsule.metadata?.creatorInitials}</TableCell>
-            <TableCell>
-              {capsule.metadata?.status && (
-                <span className={getStatusClass(capsule.metadata.status)}>
-                  {capsule.metadata.status}
-                </span>
-              )}
-            </TableCell>
-            <TableCell>
-              {new Date(capsule.metadata?.date || "").toLocaleDateString()}
-            </TableCell>
-            <TableCell className="text-right">
-              <div className="flex items-center justify-end gap-2">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => handleBookmark(capsule.link.split('/').pop() || '')}
-                  className={cn(
-                    "h-8 w-8",
-                    isLoading && "opacity-50 cursor-not-allowed"
-                  )}
-                  disabled={isLoading}
-                >
-                  {bookmarkedCapsules.includes(capsule.link.split('/').pop() || '') ? (
-                    <BookmarkCheck className="h-4 w-4" />
-                  ) : (
-                    <Bookmark className="h-4 w-4" />
-                  )}
-                </Button>
-                <Link to={capsule.link}>
-                  <Button variant="ghost" size="sm">
-                    View Details
+    <div className="relative">
+      <Table>
+        <TableHeader>
+          <TableRow className="hover:bg-gray-50/50">
+            <TableHead 
+              className="cursor-pointer"
+              onClick={() => onSort('title')}
+            >
+              Title {sortField === 'title' && (sortDirection === 'asc' ? '↑' : '↓')}
+            </TableHead>
+            <TableHead>Creator</TableHead>
+            <TableHead 
+              className="cursor-pointer"
+              onClick={() => onSort('status')}
+            >
+              Status {sortField === 'status' && (sortDirection === 'asc' ? '↑' : '↓')}
+            </TableHead>
+            <TableHead 
+              className="cursor-pointer"
+              onClick={() => onSort('date')}
+            >
+              Date {sortField === 'date' && (sortDirection === 'asc' ? '↑' : '↓')}
+            </TableHead>
+            <TableHead className="text-right">Actions</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {capsules.map((capsule) => (
+            <TableRow 
+              key={capsule.title}
+              className="hover:bg-gray-50/50"
+            >
+              <TableCell className="font-medium">{capsule.title}</TableCell>
+              <TableCell>{capsule.metadata?.creatorInitials}</TableCell>
+              <TableCell>
+                {capsule.metadata?.status && (
+                  <span className={getStatusClass(capsule.metadata.status)}>
+                    {capsule.metadata.status}
+                  </span>
+                )}
+              </TableCell>
+              <TableCell>
+                {new Date(capsule.metadata?.date || "").toLocaleDateString()}
+              </TableCell>
+              <TableCell className="text-right">
+                <div className="flex items-center justify-end gap-2">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => handleBookmark(capsule.link.split('/').pop() || '')}
+                    className={cn(
+                      "h-8 w-8",
+                      isLoading && "opacity-50 cursor-not-allowed"
+                    )}
+                    disabled={isLoading}
+                  >
+                    {bookmarkedCapsules.includes(capsule.link.split('/').pop() || '') ? (
+                      <BookmarkCheck className="h-4 w-4" />
+                    ) : (
+                      <Bookmark className="h-4 w-4" />
+                    )}
                   </Button>
-                </Link>
+                  <Link to={capsule.link}>
+                    <Button variant="ghost" size="sm">
+                      View Details
+                    </Button>
+                  </Link>
+                </div>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TableCell colSpan={5}>
+              <div className="flex items-center justify-between py-2">
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <MessageSquare className="h-4 w-4" />
+                  <span>Share memories with your family by creating a new time capsule</span>
+                </div>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button className="bg-vaya-capsules hover:bg-vaya-capsules/90">
+                      <Plus className="h-4 w-4 mr-2" />
+                      Create Capsule
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <CreateCapsuleForm />
+                  </DialogContent>
+                </Dialog>
               </div>
             </TableCell>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableFooter>
+      </Table>
+    </div>
   );
 };
