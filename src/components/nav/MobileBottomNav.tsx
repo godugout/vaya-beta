@@ -20,48 +20,56 @@ export const MobileBottomNav = ({ user, navigate }: MobileBottomNavProps) => {
       <div className="flex justify-around items-center h-20 px-4">
         <Link
           to="/"
-          className={`flex flex-col items-center transition-colors duration-200 ${
-            isActive('/') ? 'text-white' : 'text-gray-300'
-          } hover:text-white relative`}
+          className={`flex flex-col items-center transition-all duration-200 ${
+            isActive('/') ? 'text-vaya-capsules' : 'text-gray-300'
+          } hover:text-vaya-capsules relative group`}
         >
-          <span className="text-sm mb-1">Home</span>
-          <Home className="h-7 w-7" />
+          <span className="text-base mb-1 group-hover:text-vaya-capsules">Home</span>
+          <Home className={`h-7 w-7 transition-colors duration-200 ${
+            isActive('/') ? 'text-vaya-capsules' : 'group-hover:text-vaya-capsules'
+          }`} />
           {isActive('/') && (
             <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-12 h-0.5 bg-vaya-capsules" />
           )}
         </Link>
         <Link
           to="/share-stories"
-          className={`flex flex-col items-center transition-colors duration-200 ${
-            isActive('/share-stories') ? 'text-white' : 'text-gray-300'
-          } hover:text-white relative`}
+          className={`flex flex-col items-center transition-all duration-200 ${
+            isActive('/share-stories') ? 'text-vaya-capsules' : 'text-gray-300'
+          } hover:text-vaya-capsules relative group`}
         >
-          <span className="text-sm mb-1">Share</span>
-          <Mic className="h-7 w-7" />
+          <span className="text-base mb-1 group-hover:text-vaya-capsules">Share</span>
+          <Mic className={`h-7 w-7 transition-colors duration-200 ${
+            isActive('/share-stories') ? 'text-vaya-capsules' : 'group-hover:text-vaya-capsules'
+          }`} />
           {isActive('/share-stories') && (
             <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-12 h-0.5 bg-vaya-capsules" />
           )}
         </Link>
         <Link
           to="/memory-lane"
-          className={`flex flex-col items-center transition-colors duration-200 ${
-            isActive('/memory-lane') ? 'text-white' : 'text-gray-300'
-          } hover:text-white relative`}
+          className={`flex flex-col items-center transition-all duration-200 ${
+            isActive('/memory-lane') ? 'text-vaya-capsules' : 'text-gray-300'
+          } hover:text-vaya-capsules relative group`}
         >
-          <span className="text-sm mb-1">Memory Lane</span>
-          <Clock className="h-7 w-7" />
+          <span className="text-base mb-1 group-hover:text-vaya-capsules">Memory Lane</span>
+          <Clock className={`h-7 w-7 transition-colors duration-200 ${
+            isActive('/memory-lane') ? 'text-vaya-capsules' : 'group-hover:text-vaya-capsules'
+          }`} />
           {isActive('/memory-lane') && (
             <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-12 h-0.5 bg-vaya-capsules" />
           )}
         </Link>
         <Link
           to="/family-capsules"
-          className={`flex flex-col items-center transition-colors duration-200 ${
-            isActive('/family-capsules') ? 'text-white' : 'text-gray-300'
-          } hover:text-white relative`}
+          className={`flex flex-col items-center transition-all duration-200 ${
+            isActive('/family-capsules') ? 'text-vaya-capsules' : 'text-gray-300'
+          } hover:text-vaya-capsules relative group`}
         >
-          <span className="text-sm mb-1">Capsules</span>
-          <Box className="h-7 w-7" />
+          <span className="text-base mb-1 group-hover:text-vaya-capsules">Capsules</span>
+          <Box className={`h-7 w-7 transition-colors duration-200 ${
+            isActive('/family-capsules') ? 'text-vaya-capsules' : 'group-hover:text-vaya-capsules'
+          }`} />
           {isActive('/family-capsules') && (
             <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-12 h-0.5 bg-vaya-capsules" />
           )}
@@ -69,7 +77,7 @@ export const MobileBottomNav = ({ user, navigate }: MobileBottomNavProps) => {
         {!user && (
           <Button 
             onClick={() => navigate("/auth")}
-            className="bg-vaya-capsules hover:bg-vaya-capsules/90 text-white text-sm px-4 py-2 rounded-full"
+            className="bg-vaya-capsules hover:bg-vaya-capsules/90 text-white text-base px-4 py-2 rounded-full"
           >
             Sign In
             <Box className="ml-2 h-5 w-5" />
