@@ -163,6 +163,13 @@ export const CapsulePill = ({
     pillBaseClasses
   );
 
+  // Define orbiting profiles for the timer animation
+  const orbitingProfiles = [
+    { initials: "JD", angle: 0 },
+    { initials: "AS", angle: 120 },
+    { initials: "MK", angle: 240 },
+  ];
+
   return (
     <motion.div
       whileHover={{ scale: isPaused ? 1.03 : 1 }}
