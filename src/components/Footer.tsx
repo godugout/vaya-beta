@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="text-center mb-12">
           <Link 
             to="/" 
-            className="inline-flex items-center gap-2 justify-center relative group"
+            className="inline-flex items-center gap-1 justify-center relative group"
           >
             <img 
               src="/lovable-uploads/ef40fff0-4da4-4937-af3d-c2276b1d2588.png"
