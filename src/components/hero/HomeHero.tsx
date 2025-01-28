@@ -21,8 +21,20 @@ const HomeHero = ({ isSpanish }: HomeHeroProps) => {
   return (
     <div 
       className="relative min-h-[600px] flex items-center"
+      style={{
+        backgroundImage: `url("https://images.unsplash.com/photo-1522543558187-768b6df7c25c")`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
+      }}
       data-component="HomeHero"
     >      
+      <div className="absolute inset-0" 
+        style={{
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.85) 100%)',
+          backdropFilter: 'blur(2px)',
+        }}
+      />
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -30,10 +42,10 @@ const HomeHero = ({ isSpanish }: HomeHeroProps) => {
           transition={{ duration: 0.6 }}
           className="mx-auto max-w-2xl text-center px-4 sm:px-6"
         >
-          <h1 className="font-outfit font-bold text-3xl sm:text-4xl md:text-6xl tracking-tight text-gray-900 mb-4 sm:mb-6 leading-tight">
+          <h1 className="font-outfit font-bold text-3xl sm:text-4xl md:text-6xl tracking-tight text-white mb-4 sm:mb-6 leading-tight">
             {content.title}
           </h1>
-          <p className="font-inter text-base sm:text-lg leading-7 sm:leading-8 text-gray-600 mb-8 sm:mb-10">
+          <p className="font-inter text-base sm:text-lg leading-7 sm:leading-8 text-gray-100 mb-8 sm:mb-10">
             {content.subtitle}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6">

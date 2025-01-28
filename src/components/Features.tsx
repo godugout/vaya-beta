@@ -1,96 +1,78 @@
-import { Camera, Users, Clock, Heart } from "lucide-react";
 import { motion } from "framer-motion";
-import { CulturalContent } from "@/types/cultural";
+import { ArrowRight, Camera, Heart, Hourglass } from "lucide-react";
 
-interface FeaturesProps {
-  culturalContent?: CulturalContent[];
-}
-
-const defaultFeatures = [
-  {
-    name: "Create Memory Capsules",
-    description: "Build digital time capsules filled with photos, stories, and precious moments for future generations.",
-    icon: Camera,
-    bgColor: "bg-white/80",
-    iconColor: "text-vaya-stories",
-    feature_key: "create_capsules"
-  },
-  {
-    name: "Family Collaboration",
-    description: "Invite family members to contribute their own memories and stories to your shared collection.",
-    icon: Users,
-    bgColor: "bg-white/80",
-    iconColor: "text-vaya-memories",
-    feature_key: "family_collab"
-  },
-  {
-    name: "Memory Timeline",
-    description: "Organize and view your memories chronologically in a beautiful, interactive timeline.",
-    icon: Clock,
-    bgColor: "bg-white/80",
-    iconColor: "text-vaya-capsules",
-    feature_key: "timeline"
-  },
-  {
-    name: "Legacy Preservation",
-    description: "Ensure your family's stories and traditions are preserved and passed down through generations.",
-    icon: Heart,
-    bgColor: "bg-white/80",
-    iconColor: "text-vaya-narra",
-    feature_key: "legacy"
-  }
-];
-
-const Features = ({ culturalContent }: FeaturesProps) => {
-  const features = defaultFeatures.map(feature => {
-    const culturalFeature = culturalContent?.find(
-      content => content.feature_key === feature.feature_key
-    );
-    
-    return {
-      ...feature,
-      name: culturalFeature?.title || feature.name,
-      description: culturalFeature?.description || feature.description
-    };
-  });
-
+const Features = () => {
   return (
-    <div className="py-24 bg-vaya-gray-900">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl whitespace-nowrap sm:whitespace-normal">
-            <span className="inline-block">Everything you need</span>{" "}
-            <span className="inline-block">to preserve your legacy</span>
+    <section 
+      className="relative py-24"
+      style={{
+        backgroundImage: `url("https://images.unsplash.com/photo-1522543558187-768b6df7c25c")`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
+      }}
+    >
+      <div className="absolute inset-0" 
+        style={{
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.85) 100%)',
+          backdropFilter: 'blur(2px)',
+        }}
+      />
+      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            Preserve Your Legacy
           </h2>
-          <p className="mt-4 text-lg text-white/90 sm:text-xl">
-            Capture, organize, and share your family's most precious memories with tools designed for meaningful connection.
+          <p className="mt-4 text-lg text-gray-100 sm:text-xl">
+            Create meaningful connections across generations through shared stories and memories
           </p>
         </div>
-        <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
-          <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-4">
-            {features.map((feature, index) => (
-              <motion.div
-                key={feature.name}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="flex flex-col items-center text-center"
-              >
-                <dt className="text-xl font-semibold leading-7 text-white">
-                  <div className={`mb-6 flex h-16 w-16 items-center justify-center rounded-xl ${feature.bgColor} shadow-sm mx-auto backdrop-blur-sm`}>
-                    <feature.icon className={`h-8 w-8 ${feature.iconColor}`} aria-hidden="true" />
-                  </div>
-                  {feature.name}
-                </dt>
-                <dd className="mt-1 flex flex-auto flex-col text-base leading-7 text-white/80">
-                  <p className="flex-auto">{feature.description}</p>
-                </dd>
-              </motion.div>
-            ))}
-          </dl>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="bg-white/10 backdrop-blur-lg p-6 rounded-lg border border-white/20 hover:bg-white/15 transition-all duration-300"
+          >
+            <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-vaya-stories/20 text-vaya-stories mb-4">
+              <Camera className="h-6 w-6" />
+            </div>
+            <h3 className="text-xl font-semibold text-white mb-4">Capture Memories</h3>
+            <p className="text-gray-100 mb-4">Record stories, share photos, and preserve precious moments with your loved ones.</p>
+            <ArrowRight className="text-vaya-stories h-5 w-5" />
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="bg-white/10 backdrop-blur-lg p-6 rounded-lg border border-white/20 hover:bg-white/15 transition-all duration-300"
+          >
+            <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-vaya-memories/20 text-vaya-memories mb-4">
+              <Heart className="h-6 w-6" />
+            </div>
+            <h3 className="text-xl font-semibold text-white mb-4">Share Stories</h3>
+            <p className="text-gray-100 mb-4">Create lasting connections by sharing your family's unique stories and traditions.</p>
+            <ArrowRight className="text-vaya-memories h-5 w-5" />
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="bg-white/10 backdrop-blur-lg p-6 rounded-lg border border-white/20 hover:bg-white/15 transition-all duration-300"
+          >
+            <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-vaya-capsules/20 text-vaya-capsules mb-4">
+              <Hourglass className="h-6 w-6" />
+            </div>
+            <h3 className="text-xl font-semibold text-white mb-4">Time Capsules</h3>
+            <p className="text-gray-100 mb-4">Create digital time capsules to preserve memories for future generations.</p>
+            <ArrowRight className="text-vaya-capsules h-5 w-5" />
+          </motion.div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
