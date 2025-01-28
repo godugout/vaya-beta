@@ -16,18 +16,18 @@ export const HeroContent = ({ config, isSpanish }: HeroContentProps) => {
   // Get unique button styles based on route
   const getSecondaryButtonStyles = () => {
     if (location.pathname === '/') {
-      return 'border-vaya-capsules hover:bg-vaya-capsules/10 text-vaya-capsules';
+      return 'border-vaya-capsules text-vaya-capsules hover:bg-vaya-capsules/10 hover:text-vaya-capsules';
     }
     if (location.pathname.includes('memory-lane')) {
-      return 'border-vaya-memories hover:bg-vaya-memories/10 text-vaya-memories';
+      return 'border-vaya-memories text-vaya-memories hover:bg-vaya-memories/10 hover:text-vaya-memories';
     }
     if (location.pathname.includes('share-stories')) {
-      return 'border-vaya-stories hover:bg-vaya-stories/10 text-vaya-stories';
+      return 'border-vaya-stories text-vaya-stories hover:bg-vaya-stories/10 hover:text-vaya-stories';
     }
     if (location.pathname.includes('family-capsules')) {
-      return 'border-vaya-capsules hover:bg-vaya-capsules/10 text-vaya-capsules';
+      return 'border-vaya-capsules text-vaya-capsules hover:bg-vaya-capsules/10 hover:text-vaya-capsules';
     }
-    return 'border-vaya-stories hover:bg-vaya-stories/10 text-vaya-stories'; // Default
+    return 'border-vaya-stories text-vaya-stories hover:bg-vaya-stories/10 hover:text-vaya-stories'; // Default
   };
 
   // Get unique button IDs based on route
