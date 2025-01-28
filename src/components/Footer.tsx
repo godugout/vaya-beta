@@ -13,10 +13,10 @@ const Footer = () => {
             <img 
               src="/lovable-uploads/ef40fff0-4da4-4937-af3d-c2276b1d2588.png"
               alt="Vaya Logo" 
-              className="h-12 w-12 grayscale opacity-90 transition-all duration-300 group-hover:grayscale-0 group-hover:opacity-100 filter drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)]"
+              className="h-24 w-24 grayscale opacity-90 transition-all duration-300 group-hover:grayscale-0 group-hover:opacity-100 filter drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)]"
             />
             <span 
-              className="font-outfit font-bold text-3xl sm:text-4xl text-vaya-gray-600 opacity-90 transition-all duration-300 group-hover:opacity-100"
+              className="font-outfit font-bold text-4xl sm:text-5xl text-vaya-gray-600 opacity-90 transition-all duration-300 group-hover:opacity-100"
               style={{
                 textShadow: '1px 1px 2px rgba(255,255,255,1), -1px -1px 2px rgba(0,0,0,0.1)',
               }}
