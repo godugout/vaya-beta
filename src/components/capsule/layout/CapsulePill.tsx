@@ -2,7 +2,6 @@ import { LucideIcon, Lightbulb, Users } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import { CapsuleHoverEffect } from "@/components/ui/capsule-hover-effect";
 
 interface CapsulePillProps {
   title: string;
@@ -61,6 +60,7 @@ export const CapsulePill = ({
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className={isPlaceholder ? placeholderPillClasses : detailedPillClasses}>
+        {/* Background and hover effects */}
         {backgroundImage && (
           <div 
             className="absolute inset-0 bg-cover bg-center opacity-20 group-hover:opacity-30 transition-opacity duration-300"
@@ -68,8 +68,40 @@ export const CapsulePill = ({
           />
         )}
         
-        <CapsuleHoverEffect colorKey={colorKey} isHovered={isHovered} />
+        {/* Animated gradient background */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ 
+            opacity: isHovered ? 1 : 0,
+            background: `linear-gradient(120deg, transparent, rgba(var(--vaya-${colorKey}-rgb), 0.1), transparent)`,
+          }}
+          transition={{ duration: 0.3 }}
+          className="absolute inset-0"
+          style={{
+            backgroundSize: '200% 100%',
+            animation: isHovered ? 'shimmer 2s infinite' : 'none',
+          }}
+        />
 
+        {/* Animated particles */}
+        {isHovered && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.1 }}
+            className={cn(
+              "absolute inset-0",
+              `bg-vaya-${colorKey}`,
+              "pointer-events-none"
+            )}
+            style={{
+              backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)',
+              backgroundSize: '16px 16px',
+              animation: 'particles 20s linear infinite',
+            }}
+          />
+        )}
+
+        {/* Content */}
         <div className="flex items-center justify-center h-full relative z-10">
           {isPlaceholder ? (
             <div className="flex items-center gap-6 w-full">
@@ -121,12 +153,6 @@ export const CapsulePill = ({
                       )}>
                         {metadata.status}
                       </span>
-                      {prompts && prompts.length > 0 && (
-                        <div className="flex items-center gap-2 text-sm text-vaya-gray-600">
-                          <Lightbulb className="w-4 h-4" />
-                          <span>{prompts[0]}</span>
-                        </div>
-                      )}
                     </div>
                   )}
                 </div>
@@ -135,6 +161,17 @@ export const CapsulePill = ({
           )}
         </div>
       </div>
+
+      <style jsx global>{`
+        @keyframes shimmer {
+          0% { background-position: 200% 0; }
+          100% { background-position: -200% 0; }
+        }
+        @keyframes particles {
+          0% { transform: translateY(0); }
+          100% { transform: translateY(-100%); }
+        }
+      `}</style>
     </motion.div>
   );
 };
