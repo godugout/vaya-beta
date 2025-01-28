@@ -135,16 +135,6 @@ const statusColors = {
   revealed: "bg-purple-100 text-purple-700"
 } as const;
 
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-};
-
 const snakeAnimation = (index: number, rowIndex: number) => {
   const duration = 30;
   const direction = rowIndex % 2 === 0 ? 1 : -1;
@@ -197,8 +187,10 @@ export const ExampleCapsules = () => {
                     transition={{ type: "spring", stiffness: 300 }}
                   >
                     <Card className={cn(
-                      "relative overflow-hidden transition-all duration-300 rounded-[90px] border-0 min-h-[160px] w-[500px]",
-                      capsule.isPlaceholder ? "opacity-80 hover:opacity-100" : "hover:shadow-lg",
+                      "relative overflow-hidden transition-all duration-300",
+                      "rounded-[90px] border-0 min-h-[160px] w-[500px]",
+                      "hover:shadow-lg shadow-sm",
+                      capsule.isPlaceholder ? "opacity-80 hover:opacity-100" : "",
                       `bg-vaya-accent-${capsule.colorKey} bg-opacity-30`
                     )}>
                       <div className="p-8">
