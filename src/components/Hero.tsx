@@ -6,6 +6,7 @@ import { HeroPattern } from "./hero/HeroPattern";
 import { HeroContent } from "./hero/HeroContent";
 import HomeHero from "./hero/HomeHero";
 import { CulturalContent } from "@/types/cultural";
+import { toast } from "@/components/ui/use-toast";
 
 interface HeroProps {
   culturalContent?: CulturalContent | null;
@@ -17,17 +18,35 @@ const Hero = ({ culturalContent }: HeroProps) => {
 
   useEffect(() => {
     const fetchUserLanguage = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        const { data: profile } = await supabase
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        if (!session?.user) {
+          return; // Keep default language if not authenticated
+        }
+
+        const { data: profile, error } = await supabase
           .from('profiles')
           .select('preferred_language')
           .eq('id', session.user.id)
-          .single();
+          .maybeSingle();
+
+        if (error) {
+          console.error('Error fetching language preference:', error);
+          toast({
+            title: "Error fetching language preference",
+            description: "Using default language settings",
+            variant: "destructive",
+          });
+          return;
+        }
 
         if (profile) {
           setIsSpanish(profile.preferred_language === 'es');
         }
+      } catch (error) {
+        console.error('Error in fetchUserLanguage:', error);
+        // Keep default language on error
       }
     };
 
