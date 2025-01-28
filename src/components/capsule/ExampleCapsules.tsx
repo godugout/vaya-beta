@@ -18,15 +18,16 @@ const detailedCapsules: Capsule[] = [
     }
   },
   {
-    title: "Our Journey Here",
-    description: "Immigration stories and memories",
-    icon: MapPin,
+    title: "Share Your Story",
+    description: "Join the conversation",
+    icon: MessageCircle,
     colorKey: "stories",
-    prompts: [],
+    backgroundImage: "/lovable-uploads/33c609d9-9189-49d2-b9c1-106d8257557c.png",
+    prompts: ["Let's Connect"],
     metadata: {
       creatorInitials: "JD",
       itemCount: 18,
-      status: "locked",
+      status: "upcoming",
       date: "2024-12-31"
     }
   },
@@ -47,45 +48,47 @@ const detailedCapsules: Capsule[] = [
 
 const simpleCapsules: Capsule[] = [
   {
-    title: "Share Your Thoughts",
+    title: "Share Memories",
     icon: MessageCircle,
     colorKey: "memories",
-    prompts: ["What's your favorite hidden gem in the city?"],
+    prompts: ["What's your story?"],
     isPlaceholder: true
   },
   {
-    title: "Family Traditions",
+    title: "Ask Questions",
     icon: HelpCircle,
     colorKey: "stories",
-    prompts: ["Tell us about a unique family tradition"],
+    backgroundImage: "/lovable-uploads/4425ec86-56fe-44c4-9f47-75e59d3cb287.png",
+    prompts: ["Join Us"],
     isPlaceholder: true
   },
   {
-    title: "Musical Memories",
+    title: "Share Ideas",
     icon: Lightbulb,
     colorKey: "capsules",
-    prompts: ["Share a song that reminds you of family"],
+    prompts: ["Got thoughts?"],
     isPlaceholder: true
   },
   {
-    title: "Childhood Stories",
-    icon: HelpCircle,
+    title: "Family Stories",
+    icon: MessageCircle,
     colorKey: "memories",
-    prompts: ["What's your earliest family memory?"],
-    isPlaceholder: true
-  },
-  {
-    title: "Family Wisdom",
-    icon: Lightbulb,
-    colorKey: "stories",
-    prompts: ["What's the best advice from your elders?"],
+    prompts: ["Tell us more"],
     isPlaceholder: true
   },
   {
     title: "Cultural Exchange",
-    icon: MessageCircle,
+    icon: HelpCircle,
+    colorKey: "stories",
+    backgroundImage: "/lovable-uploads/ef40fff0-4da4-4937-af3d-c2276b1d2588.png",
+    prompts: ["Connect Now"],
+    isPlaceholder: true
+  },
+  {
+    title: "Share Wisdom",
+    icon: Lightbulb,
     colorKey: "capsules",
-    prompts: ["Share a tradition you'd like to pass on"],
+    prompts: ["Your voice matters"],
     isPlaceholder: true
   }
 ];

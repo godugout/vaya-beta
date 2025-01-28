@@ -305,6 +305,60 @@ export type Database = {
           },
         ]
       }
+      media_assets: {
+        Row: {
+          category: string
+          created_at: string | null
+          created_by: string | null
+          description: string | null
+          family_id: string | null
+          id: string
+          tags: string[] | null
+          title: string
+          type: string
+          url: string
+        }
+        Insert: {
+          category: string
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          family_id?: string | null
+          id?: string
+          tags?: string[] | null
+          title: string
+          type: string
+          url: string
+        }
+        Update: {
+          category?: string
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          family_id?: string | null
+          id?: string
+          tags?: string[] | null
+          title?: string
+          type?: string
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "media_assets_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "media_assets_family_id_fkey"
+            columns: ["family_id"]
+            isOneToOne: false
+            referencedRelation: "families"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       memories: {
         Row: {
           content_url: string

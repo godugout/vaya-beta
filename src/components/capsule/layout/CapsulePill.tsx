@@ -15,6 +15,7 @@ interface CapsulePillProps {
     date: string;
   };
   isPlaceholder?: boolean;
+  backgroundImage?: string;
 }
 
 export const CapsulePill = ({
@@ -24,7 +25,8 @@ export const CapsulePill = ({
   description,
   prompts,
   metadata,
-  isPlaceholder
+  isPlaceholder,
+  backgroundImage
 }: CapsulePillProps) => {
   const getBgColor = (key: string) => {
     const colors: { [key: string]: string } = {
@@ -75,8 +77,14 @@ export const CapsulePill = ({
         "shadow-[0_4px_12px_-2px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_-4px_rgba(0,0,0,0.12)]",
         "transition-all duration-300"
       )}>
+        {backgroundImage && (
+          <div 
+            className="absolute inset-0 bg-cover bg-center opacity-20 group-hover:opacity-30 transition-opacity duration-300"
+            style={{ backgroundImage: `url(${backgroundImage})` }}
+          />
+        )}
         <div className={cn(
-          "flex items-center h-full",
+          "flex items-center h-full relative z-10",
           isPlaceholder ? "py-4 px-8" : "p-8"
         )}>
           {isPlaceholder ? (

@@ -16,4 +16,5 @@ export interface Capsule {
   metadata?: CapsuleMetadata;
   isPlaceholder?: boolean;
   prompts?: string[];
+  backgroundImage?: string;
 }
