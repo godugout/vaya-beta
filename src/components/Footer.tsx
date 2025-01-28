@@ -3,102 +3,42 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <footer className="bg-[#F1F1F1] text-vaya-gray-800 mt-auto">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
-        <div className="xl:grid xl:grid-cols-4 xl:gap-8">
-          <div className="space-y-8 xl:col-span-1">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="flex flex-col md:flex-row justify-between items-start gap-8">
+          {/* Logo and Description */}
+          <div className="max-w-sm">
             <Link to="/" className="flex items-center gap-2">
-              <div className="relative transform transition-transform hover:translate-y-[-2px]">
-                <img 
-                  src="/lovable-uploads/ef40fff0-4da4-4937-af3d-c2276b1d2588.png"
-                  alt="Vaya Logo" 
-                  className="h-10 w-10 relative z-10 rounded-lg"
-                />
-                <div className="absolute -bottom-1 -right-1 h-10 w-10 bg-vaya-stories/20 rounded-lg"></div>
-                <div className="absolute -bottom-2 -right-2 h-10 w-10 bg-vaya-stories/10 rounded-lg"></div>
-              </div>
+              <img 
+                src="/lovable-uploads/ef40fff0-4da4-4937-af3d-c2276b1d2588.png"
+                alt="Vaya Logo" 
+                className="h-10 w-10 rounded-lg"
+              />
               <span className="font-outfit font-bold text-2xl">
                 Vaya<sup>α</sup>
               </span>
             </Link>
-            <p className="text-base sm:text-lg leading-7 text-vaya-gray-600">
+            <p className="mt-4 text-base sm:text-lg leading-7 text-vaya-gray-600">
               Connecting generations through shared memories and stories. Your family's legacy, preserved digitally.
             </p>
           </div>
-          <div className="mt-12 grid grid-cols-2 gap-8 xl:col-span-3 xl:mt-0">
-            <div className="md:grid md:grid-cols-2 md:gap-8">
-              <div>
-                <h3 className="text-lg font-semibold leading-6 text-vaya-gray-900">Product</h3>
-                <ul role="list" className="mt-6 space-y-4">
-                  <li>
-                    <Link to="/memory-lane" className="text-base sm:text-lg leading-7 text-vaya-gray-600 hover:text-vaya-memories">
-                      Memory Lane
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/share-stories" className="text-base sm:text-lg leading-7 text-vaya-gray-600 hover:text-vaya-stories">
-                      Share Stories
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/family-capsules" className="text-base sm:text-lg leading-7 text-vaya-gray-600 hover:text-vaya-capsules">
-                      Family Capsules
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/families" className="text-base sm:text-lg leading-7 text-vaya-gray-600 hover:text-vaya-gray-900">
-                      Family Groups
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-              <div className="mt-10 md:mt-0">
-                <h3 className="text-lg font-semibold leading-6 text-vaya-gray-900">Support</h3>
-                <ul role="list" className="mt-6 space-y-4">
-                  <li>
-                    <a href="#" className="text-base sm:text-lg leading-7 text-vaya-gray-600 hover:text-vaya-gray-900">
-                      Help Center
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="text-base sm:text-lg leading-7 text-vaya-gray-600 hover:text-vaya-gray-900">
-                      Documentation
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="text-base sm:text-lg leading-7 text-vaya-gray-600 hover:text-vaya-gray-900">
-                      FAQs
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold leading-6 text-vaya-gray-900">Company</h3>
-              <ul role="list" className="mt-6 space-y-4">
-                <li>
-                  <a href="#" className="text-base sm:text-lg leading-7 text-vaya-gray-600 hover:text-vaya-gray-900">
-                    About Allusion Ink
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-base sm:text-lg leading-7 text-vaya-gray-600 hover:text-vaya-gray-900">
-                    Contact
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-base sm:text-lg leading-7 text-vaya-gray-600 hover:text-vaya-gray-900">
-                    Privacy Policy
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-base sm:text-lg leading-7 text-vaya-gray-600 hover:text-vaya-gray-900">
-                    Terms of Use
-                  </a>
-                </li>
-              </ul>
-            </div>
+
+          {/* Company Links */}
+          <div className="flex flex-wrap gap-x-8 gap-y-4">
+            <a href="#" className="text-base sm:text-lg leading-7 text-vaya-gray-600 hover:text-vaya-gray-900">
+              About Allusion Ink
+            </a>
+            <a href="#" className="text-base sm:text-lg leading-7 text-vaya-gray-600 hover:text-vaya-gray-900">
+              Contact
+            </a>
+            <a href="#" className="text-base sm:text-lg leading-7 text-vaya-gray-600 hover:text-vaya-gray-900">
+              Privacy Policy
+            </a>
+            <a href="#" className="text-base sm:text-lg leading-7 text-vaya-gray-600 hover:text-vaya-gray-900">
+              Terms of Use
+            </a>
           </div>
         </div>
+
         <div className="mt-12 border-t border-vaya-gray-200 pt-8">
           <p className="text-base text-vaya-gray-500">
             &copy; {new Date().getFullYear()} Allusion Ink. All rights reserved. Building memories that last generations.
