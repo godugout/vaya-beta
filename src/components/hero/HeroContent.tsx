@@ -34,23 +34,50 @@ export const HeroContent = ({ config, isSpanish }: HeroContentProps) => {
         {isSpanish ? config.subtitle_es : config.subtitle_en}
       </p>
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6">
-        <Button 
-          size="lg" 
-          variant={getButtonVariant()}
-          className="w-full sm:w-auto transition-all duration-300 font-outfit"
-        >
-          <span>{config.primaryCta.text}</span>
-          {config.primaryCta.icon}
-        </Button>
-        {config.secondaryCta && (
-          <Button 
-            size="lg" 
-            variant="stories" // Changed to orange for Record a Story
-            className="w-full sm:w-auto font-outfit"
-          >
-            <span>{config.secondaryCta.text}</span>
-            {config.secondaryCta.icon}
-          </Button>
+        {location.pathname === "/" ? (
+          // Home page: Story button first, Capsule button second
+          <>
+            {config.secondaryCta && (
+              <Button 
+                size="lg" 
+                variant="stories"
+                className="w-full sm:w-auto font-outfit"
+              >
+                <span>{config.secondaryCta.text}</span>
+                {config.secondaryCta.icon}
+              </Button>
+            )}
+            <Button 
+              size="lg" 
+              variant={getButtonVariant()}
+              className="w-full sm:w-auto transition-all duration-300 font-outfit"
+            >
+              <span>{config.primaryCta.text}</span>
+              {config.primaryCta.icon}
+            </Button>
+          </>
+        ) : (
+          // Other pages: Primary button first, secondary (if exists) second
+          <>
+            <Button 
+              size="lg" 
+              variant={getButtonVariant()}
+              className="w-full sm:w-auto transition-all duration-300 font-outfit"
+            >
+              <span>{config.primaryCta.text}</span>
+              {config.primaryCta.icon}
+            </Button>
+            {config.secondaryCta && (
+              <Button 
+                size="lg" 
+                variant="outline"
+                className="w-full sm:w-auto font-outfit border-2 border-vaya-stories hover:bg-vaya-stories/10"
+              >
+                <span>{config.secondaryCta.text}</span>
+                {config.secondaryCta.icon}
+              </Button>
+            )}
+          </>
         )}
       </div>
     </motion.div>
