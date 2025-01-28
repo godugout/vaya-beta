@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import Hero from "@/components/Hero";
 import MemoryFeedLayout from "@/components/memory/MemoryFeedLayout";
-import { Button } from "@/components/ui/button";
-import { Camera } from "lucide-react";
 import AddMemoryButton from "@/components/memory/AddMemoryButton";
 
 const MemoryLane = () => {
@@ -43,18 +41,6 @@ const MemoryLane = () => {
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Floating Add Memory Button (Desktop) */}
-      <div className="hidden md:block fixed bottom-8 right-8">
-        <Button
-          size="lg"
-          className="rounded-full bg-vaya-primary hover:bg-vaya-primary/90 text-white shadow-lg"
-          onClick={() => document.getElementById('add-memory-modal-trigger')?.click()}
-        >
-          <span>Add Memory</span>
-          <Camera className="ml-2 h-5 w-5" />
-        </Button>
       </div>
 
       {/* Mobile CTA Bar */}
