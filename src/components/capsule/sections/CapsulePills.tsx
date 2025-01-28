@@ -12,7 +12,7 @@ export const CapsulePills = () => {
           transition={{ duration: 0.6 }}
           className="text-3xl font-bold text-vaya-gray-900 font-outfit mb-6"
         >
-          Go Back to the Future
+          Create Your Family Time Capsule
         </motion.h2>
         <motion.p 
           initial={{ opacity: 0, y: 20 }}
@@ -20,17 +20,16 @@ export const CapsulePills = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-base md:text-lg text-vaya-gray-600 mb-16 max-w-2xl mx-auto font-inter"
         >
-          Each capsule represents a unique collection of memories, stories, and moments 
-          from your family's journey. Click on any capsule to dive deeper into your family's 
-          history.
+          Preserve your family's precious memories and stories in a digital time capsule. 
+          Set a future date to unlock and relive these cherished moments together.
         </motion.p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
           <StepCard
             step={1}
             icon={Camera}
-            title="Capture & Collect"
-            description="Add photos, voice messages, and written stories that capture the essence of your family's journey together"
+            title="Add Your Memories"
+            description="Upload photos, record voice messages, and write down stories that capture special moments with your family"
             color="bg-gray-50"
             iconColor="text-blue-500"
             numberColor="text-blue-500"
@@ -39,8 +38,8 @@ export const CapsulePills = () => {
           <StepCard
             step={2}
             icon={BookOpen}
-            title="Set Your Timeline"
-            description="Choose a meaningful future date for the reveal - perhaps a milestone birthday, anniversary, or special family gathering"
+            title="Choose Your Date"
+            description="Pick a meaningful future date to reveal your capsule - maybe a birthday, anniversary, or special family gathering"
             color="bg-gray-50"
             iconColor="text-amber-500"
             numberColor="text-amber-500"
@@ -49,8 +48,8 @@ export const CapsulePills = () => {
           <StepCard
             step={3}
             icon={Users}
-            title="Collaborate & Share"
-            description="Invite family members to contribute their own special memories and messages to the capsule"
+            title="Invite Family"
+            description="Share the capsule with family members so they can add their own memories and messages to the collection"
             color="bg-gray-50"
             iconColor="text-vaya-narra"
             numberColor="text-vaya-narra"
@@ -59,8 +58,8 @@ export const CapsulePills = () => {
           <StepCard
             step={4}
             icon={Sparkle}
-            title="Experience the Magic"
-            description="When the special day arrives, gather together to unlock your capsule and relive cherished memories in a heartwarming celebration"
+            title="Open Together"
+            description="When the special day arrives, gather your family to unlock the capsule and relive these precious memories together"
             color="bg-gray-50"
             iconColor="text-vaya-capsules"
             numberColor="text-vaya-capsules"
