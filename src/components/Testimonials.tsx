@@ -32,7 +32,12 @@ const Testimonials = () => {
         backgroundAttachment: 'fixed',
       }}
     >
-      <div className="absolute inset-0 bg-[#0EA5E9]/60 backdrop-blur-[2px]" />
+      <div className="absolute inset-0" 
+        style={{
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.6) 100%)',
+          backdropFilter: 'blur(1px)',
+        }}
+      />
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
