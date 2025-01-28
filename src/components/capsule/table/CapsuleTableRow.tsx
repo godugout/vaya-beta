@@ -65,18 +65,21 @@ export const CapsuleTableRow = ({
             )}
           </Button>
           
-          {isAccessible && (
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-8 w-8"
-              asChild
-            >
-              <Link to={`/capsule/${capsule.link.split('/').pop()}/add`}>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8"
+            asChild
+            disabled={!isAccessible}
+          >
+            <Link to={`/capsule/${capsule.link.split('/').pop()}${isAccessible ? '/add' : ''}`}>
+              {isAccessible ? (
                 <Plus className="h-4 w-4" />
-              </Link>
-            </Button>
-          )}
+              ) : (
+                <div className="w-4" /> // Placeholder for alignment
+              )}
+            </Link>
+          </Button>
 
           <Button
             variant="ghost"
@@ -86,7 +89,6 @@ export const CapsuleTableRow = ({
               !isAccessible && "text-gray-400"
             )}
             asChild
-            disabled={!isAccessible}
           >
             <Link to={capsule.link}>
               {isAccessible ? (
