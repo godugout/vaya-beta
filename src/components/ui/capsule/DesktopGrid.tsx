@@ -1,7 +1,8 @@
 import React from "react";
 import { CapsuleCard } from "./CapsuleCard";
-import { LucideIcon } from "lucide-react";
 import { motion } from "framer-motion";
+import { LucideIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface DesktopGridProps {
   capsules: {
@@ -20,7 +21,6 @@ interface DesktopGridProps {
 }
 
 export const DesktopGrid = ({ capsules }: DesktopGridProps) => {
-  // Split capsules into 3 rows and duplicate them for seamless looping
   const itemsPerRow = Math.ceil(capsules.length / 3);
   const rows = Array.from({ length: 3 }, (_, i) =>
     capsules.slice(i * itemsPerRow, (i + 1) * itemsPerRow)
@@ -35,12 +35,12 @@ export const DesktopGrid = ({ capsules }: DesktopGridProps) => {
     >
       {rows.map((row, rowIndex) => {
         const isEven = rowIndex % 2 === 0;
-        const duration = 30 + rowIndex * 5; // Varying speeds for each row
+        const duration = 30 + rowIndex * 5;
 
         return (
           <motion.div
             key={rowIndex}
-            className="flex py-6"
+            className="flex py-8" // Increased from py-6
             initial={{ x: isEven ? "0%" : "-100%" }}
             animate={{ 
               x: isEven ? "-100%" : "0%",
@@ -54,8 +54,7 @@ export const DesktopGrid = ({ capsules }: DesktopGridProps) => {
               transform: `translateX(${isEven ? '-25%' : '25%'})`,
             }}
           >
-            <div className="flex gap-8 animate-none">
-              {/* Duplicate the row twice for seamless looping */}
+            <div className="flex gap-10 animate-none"> {/* Increased from gap-8 */}
               {[...row, ...row, ...row].map((capsule, index) => (
                 <motion.div
                   key={`${capsule.title}-${index}`}
