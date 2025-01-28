@@ -26,6 +26,40 @@ export const CapsulePill = ({
   metadata,
   isPlaceholder
 }: CapsulePillProps) => {
+  // Helper function to get background color based on colorKey
+  const getBgColor = (key: string) => {
+    const colors: { [key: string]: string } = {
+      orange: "bg-vaya-accent-orange/40",
+      green: "bg-vaya-accent-green/40",
+      blue: "bg-vaya-accent-blue/40",
+      yellow: "bg-vaya-accent-yellow/40"
+    };
+    return colors[key] || "bg-gray-50";
+  };
+
+  // Helper function to get icon background color based on colorKey
+  const getIconBgColor = (key: string, isPlaceholder: boolean = false) => {
+    const opacity = isPlaceholder ? "10" : "20";
+    const colors: { [key: string]: string } = {
+      orange: `bg-vaya-stories bg-opacity-${opacity}`,
+      green: `bg-vaya-capsules bg-opacity-${opacity}`,
+      blue: `bg-vaya-memories bg-opacity-${opacity}`,
+      yellow: `bg-vaya-stories bg-opacity-${opacity}`
+    };
+    return colors[key] || `bg-gray-100 bg-opacity-${opacity}`;
+  };
+
+  // Helper function to get icon color based on colorKey
+  const getIconColor = (key: string) => {
+    const colors: { [key: string]: string } = {
+      orange: "text-vaya-stories",
+      green: "text-vaya-capsules",
+      blue: "text-vaya-memories",
+      yellow: "text-vaya-stories"
+    };
+    return colors[key] || "text-gray-600";
+  };
+
   return (
     <motion.div
       whileHover={{ scale: 1.03 }}
@@ -40,7 +74,7 @@ export const CapsulePill = ({
         `border-[3px] border-vaya-${colorKey}`,
         isPlaceholder 
           ? "bg-white hover:bg-gradient-to-br hover:from-white hover:to-vaya-accent-blue/20"
-          : `bg-gradient-to-br from-white to-vaya-accent-${colorKey}/30`,
+          : getBgColor(colorKey),
         "shadow-[0_4px_12px_-2px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_-4px_rgba(0,0,0,0.12)]",
         "transition-all duration-300"
       )}>
@@ -49,9 +83,10 @@ export const CapsulePill = ({
             <div className="flex items-start gap-6 h-full">
               <div className={cn(
                 "inline-flex items-center justify-center w-12 h-12 rounded-2xl shrink-0",
-                `bg-vaya-${colorKey} bg-opacity-10 group-hover:bg-opacity-20 transition-colors`
+                getIconBgColor(colorKey, true),
+                "group-hover:bg-opacity-20 transition-colors"
               )}>
-                <Icon className={`w-6 h-6 text-vaya-${colorKey}`} />
+                <Icon className={cn("w-6 h-6", getIconColor(colorKey))} />
               </div>
               <div className="space-y-2 text-left">
                 <h3 className="text-2xl font-semibold text-vaya-gray-900 font-outfit">
@@ -70,9 +105,10 @@ export const CapsulePill = ({
               <div className="flex items-start gap-6">
                 <div className={cn(
                   "inline-flex items-center justify-center w-12 h-12 rounded-2xl shrink-0",
-                  `bg-vaya-${colorKey} bg-opacity-20 group-hover:bg-opacity-30 transition-colors`
+                  getIconBgColor(colorKey),
+                  "group-hover:bg-opacity-30 transition-colors"
                 )}>
-                  <Icon className={`w-6 h-6 text-vaya-${colorKey}`} />
+                  <Icon className={cn("w-6 h-6", getIconColor(colorKey))} />
                 </div>
                 <div className="space-y-3 text-left">
                   <div>
