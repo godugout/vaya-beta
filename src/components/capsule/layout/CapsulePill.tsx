@@ -2,7 +2,7 @@ import { LucideIcon } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import { format, formatDistanceToNow } from "date-fns";
+import { format, formatDistanceToNow, isPast, isToday, addDays } from "date-fns";
 
 // Emoji mapping for different capsule types
 const getEmojiForIcon = (icon: LucideIcon): string => {
@@ -41,6 +41,17 @@ interface CapsulePillProps {
   backgroundImage?: string;
 }
 
+const getStatusColor = (status: string, date: string): string => {
+  const statusDate = new Date(date);
+  const isClosingSoon = !isPast(statusDate) && isToday(statusDate);
+  const isOpeningSoon = !isPast(statusDate) && isToday(addDays(statusDate, -1));
+
+  if (isClosingSoon) return "stroke-vaya-stories"; // Orange
+  if (isOpeningSoon) return "stroke-vaya-capsules"; // Green
+  if (status === "locked") return "stroke-red-500"; // Red
+  return "stroke-vaya-memories"; // Blue (default for active)
+};
+
 export const CapsulePill = ({
   title,
   icon,
@@ -71,16 +82,6 @@ export const CapsulePill = ({
     "bg-white"
   );
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return format(date, "MMM d");
-  };
-
-  const getCountdown = (dateString: string) => {
-    const date = new Date(dateString);
-    return formatDistanceToNow(date, { addSuffix: true });
-  };
-
   return (
     <motion.div
       whileHover={{ scale: 1.03 }}
@@ -92,7 +93,6 @@ export const CapsulePill = ({
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className={isPlaceholder ? placeholderPillClasses : detailedPillClasses}>
-        {/* Background and hover effects */}
         {backgroundImage && (
           <div 
             className="absolute inset-0 bg-cover bg-center opacity-20 group-hover:opacity-30 transition-opacity duration-300"
@@ -100,7 +100,6 @@ export const CapsulePill = ({
           />
         )}
         
-        {/* Content */}
         <div className="flex items-center justify-between h-full relative z-10 px-12 py-8">
           {isPlaceholder ? (
             <div className="flex items-center gap-6 w-full">
@@ -145,12 +144,46 @@ export const CapsulePill = ({
                 </div>
               </div>
               {metadata?.date && (
-                <div className="flex flex-col items-end justify-center ml-4">
-                  <div className="text-lg font-semibold text-vaya-gray-700">
-                    {formatDate(metadata.date)}
-                  </div>
-                  <div className="text-sm text-vaya-gray-500">
-                    {getCountdown(metadata.date)}
+                <div className="relative w-16 h-16">
+                  {/* Circle background */}
+                  <div className="absolute inset-0 rounded-full bg-gray-50 border-2 border-gray-100" />
+                  
+                  {/* Animated progress circle */}
+                  <svg
+                    className="absolute inset-0 w-full h-full -rotate-90 animate-[spin_3s_linear_infinite]"
+                    viewBox="0 0 100 100"
+                  >
+                    <circle
+                      className={cn(
+                        "transition-all duration-300",
+                        getStatusColor(metadata.status, metadata.date)
+                      )}
+                      cx="50"
+                      cy="50"
+                      r="48"
+                      fill="none"
+                      strokeWidth="2"
+                      strokeDasharray="301.59"
+                      strokeDashoffset="75"
+                      strokeLinecap="round"
+                    >
+                      <animate
+                        attributeName="stroke-dashoffset"
+                        values="301.59;75;301.59"
+                        dur="3s"
+                        repeatCount="indefinite"
+                      />
+                    </circle>
+                  </svg>
+                  
+                  {/* Date display */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center">
+                    <span className="text-xl font-bold text-vaya-gray-800">
+                      {format(new Date(metadata.date), 'd')}
+                    </span>
+                    <span className="text-xs font-medium text-vaya-gray-600">
+                      {format(new Date(metadata.date), 'MMM')}
+                    </span>
                   </div>
                 </div>
               )}
