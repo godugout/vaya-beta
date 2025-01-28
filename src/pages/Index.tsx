@@ -30,13 +30,12 @@ const Index = () => {
           backgroundAttachment: 'fixed',
         }}
       >
-        <div className="absolute inset-0 bg-white/75" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/75 via-black/50 to-black/80" />
         <div className="relative z-10">
           <Hero />
           <Features />
         </div>
       </div>
-      <Testimonials />
       <div className="bg-[#F8FAFC] py-24 px-4 sm:px-6">
         <div className="mx-auto max-w-7xl lg:px-8 text-center">
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">

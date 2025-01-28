@@ -37,11 +37,11 @@ const Features = () => {
     <div className="py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl whitespace-nowrap sm:whitespace-normal">
+          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl whitespace-nowrap sm:whitespace-normal">
             <span className="inline-block">Everything you need</span>{" "}
             <span className="inline-block">to preserve your legacy</span>
           </h2>
-          <p className="mt-4 text-lg text-gray-800 sm:text-xl">
+          <p className="mt-4 text-lg text-white/90 sm:text-xl">
             Capture, organize, and share your family's most precious memories with tools designed for meaningful connection.
           </p>
         </div>
@@ -55,13 +55,13 @@ const Features = () => {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="flex flex-col items-center text-center"
               >
-                <dt className="text-xl font-semibold leading-7 text-gray-900">
+                <dt className="text-xl font-semibold leading-7 text-white">
                   <div className={`mb-6 flex h-16 w-16 items-center justify-center rounded-xl ${feature.bgColor} shadow-sm mx-auto backdrop-blur-sm`}>
                     <feature.icon className={`h-8 w-8 ${feature.iconColor}`} aria-hidden="true" />
                   </div>
                   {feature.name}
                 </dt>
-                <dd className="mt-1 flex flex-auto flex-col text-base leading-7 text-gray-800">
+                <dd className="mt-1 flex flex-auto flex-col text-base leading-7 text-white/80">
                   <p className="flex-auto">{feature.description}</p>
                 </dd>
               </motion.div>
