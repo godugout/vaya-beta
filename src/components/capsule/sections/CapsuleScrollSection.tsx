@@ -92,8 +92,8 @@ export const CapsuleScrollSection = ({ capsules }: CapsuleScrollSectionProps) =>
               <Dialog>
                 <DialogTrigger asChild>
                   <Button 
-                    variant="capsules"
-                    className="hidden sm:flex"
+                    variant="outline"
+                    className="hidden sm:flex border-2 border-vaya-capsules hover:bg-vaya-capsules/10 text-vaya-capsules"
                   >
                     Add to Capsule <Plus className="ml-2 h-5 w-5" />
                   </Button>
