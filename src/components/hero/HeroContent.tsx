@@ -47,7 +47,7 @@ export const HeroContent = ({ config, isSpanish }: HeroContentProps) => {
 
   // Get primary button variant based on route
   const getPrimaryButtonVariant = () => {
-    if (location.pathname === '/') return 'stories';
+    if (location.pathname === '/') return 'capsules';
     if (location.pathname.includes('memory-lane')) return 'memories';
     if (location.pathname.includes('share-stories')) return 'stories';
     if (location.pathname.includes('family-capsules')) return 'capsules';
@@ -68,15 +68,6 @@ export const HeroContent = ({ config, isSpanish }: HeroContentProps) => {
         {isSpanish ? config.subtitle_es : config.subtitle_en}
       </p>
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6">
-        <Button 
-          id={getPrimaryButtonId()}
-          size="lg" 
-          variant={getPrimaryButtonVariant()}
-          className="w-full sm:w-auto transition-all duration-300 font-outfit"
-        >
-          <span>{config.primaryCta.text}</span>
-          {config.primaryCta.icon}
-        </Button>
         {config.secondaryCta && (
           <Button 
             id={getSecondaryButtonId()}
@@ -89,6 +80,15 @@ export const HeroContent = ({ config, isSpanish }: HeroContentProps) => {
             {config.secondaryCta.icon}
           </Button>
         )}
+        <Button 
+          id={getPrimaryButtonId()}
+          size="lg" 
+          variant={getPrimaryButtonVariant()}
+          className="w-full sm:w-auto transition-all duration-300 font-outfit"
+        >
+          <span>{config.primaryCta.text}</span>
+          {config.primaryCta.icon}
+        </Button>
       </div>
     </motion.div>
   );
