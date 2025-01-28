@@ -4,6 +4,8 @@ import { supabase } from "@/integrations/supabase/client";
 import Hero from "@/components/Hero";
 import MemoryFeedLayout from "@/components/memory/MemoryFeedLayout";
 import AddMemoryButton from "@/components/memory/AddMemoryButton";
+import { Button } from "@/components/ui/button";
+import { MessageCircle } from "lucide-react";
 
 const MemoryLane = () => {
   const navigate = useNavigate();
@@ -24,8 +26,22 @@ const MemoryLane = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           <div className="lg:col-span-2">
-            <div className="mb-8">
+            <div className="mb-8 flex items-center justify-between">
               <h1 className="text-2xl font-outfit font-semibold text-gray-900">Family Memories</h1>
+              <div className="flex gap-4">
+                <Button
+                  variant="outline"
+                  className="hidden md:flex border-2 border-vaya-memories hover:bg-vaya-memories/10 text-vaya-memories"
+                  onClick={() => navigate("/narra")}
+                >
+                  Ask Family Anything
+                  <MessageCircle className="ml-2 h-5 w-5" />
+                </Button>
+                <AddMemoryButton 
+                  className="hidden md:flex"
+                  size="default"
+                />
+              </div>
             </div>
             <MemoryFeedLayout />
           </div>
@@ -45,10 +61,20 @@ const MemoryLane = () => {
 
       {/* Mobile CTA Bar */}
       <div className="md:hidden fixed bottom-16 left-0 right-0 p-4 bg-white border-t border-gray-200 z-40">
-        <AddMemoryButton 
-          className="w-full justify-center"
-          size="lg"
-        />
+        <div className="flex gap-2">
+          <Button
+            variant="outline"
+            className="flex-1 border-2 border-vaya-memories hover:bg-vaya-memories/10 text-vaya-memories"
+            onClick={() => navigate("/narra")}
+          >
+            Ask Family
+            <MessageCircle className="ml-2 h-5 w-5" />
+          </Button>
+          <AddMemoryButton 
+            className="flex-1"
+            size="default"
+          />
+        </div>
       </div>
     </div>
   );
