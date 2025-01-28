@@ -21,11 +21,14 @@ interface Family {
 }
 
 interface BookmarkedMemory {
-  id: string;
-  type: string;
-  title?: string;
-  description?: string;
-  created_at: string;
+  memory_id: string;
+  memories: {
+    id: string;
+    type: string;
+    created_at: string;
+    title?: string;
+    description?: string;
+  }
 }
 
 export default function Profile() {
@@ -91,31 +94,14 @@ export default function Profile() {
             id,
             type,
             created_at,
-            stories:stories (
-              title,
-              description
-            ),
-            photos:photos (
-              caption
-            )
+            title:stories!inner(title),
+            description:stories!inner(description)
           )
         `)
         .eq('created_by', user.id);
 
       if (bookmarkError) throw bookmarkError;
-      
-      // Safely transform the data with proper type checking
-      const transformedBookmarks = bookmarkData
-        .filter(b => b.memories) // Filter out any null memories
-        .map(b => ({
-          id: b.memories.id,
-          type: b.memories.type,
-          title: b.memories.stories?.[0]?.title || b.memories.photos?.[0]?.caption || 'Untitled',
-          description: b.memories.stories?.[0]?.description,
-          created_at: b.memories.created_at
-        }));
-
-      setBookmarks(transformedBookmarks);
+      setBookmarks(bookmarkData || []);
 
     } catch (error: any) {
       toast({
@@ -205,15 +191,19 @@ export default function Profile() {
             <CardContent>
               <div className="space-y-4">
                 {bookmarks.map(bookmark => (
-                  <div key={bookmark.id} className="flex items-start gap-4">
+                  <div key={bookmark.memory_id} className="flex items-start gap-4">
                     <Bookmark className="h-4 w-4 mt-1 flex-shrink-0" />
                     <div>
-                      <h3 className="font-medium">{bookmark.title || 'Untitled'}</h3>
-                      {bookmark.description && (
-                        <p className="text-sm text-muted-foreground">{bookmark.description}</p>
+                      <h3 className="font-medium">
+                        {bookmark.memories?.title || 'Untitled Memory'}
+                      </h3>
+                      {bookmark.memories?.description && (
+                        <p className="text-sm text-muted-foreground">
+                          {bookmark.memories.description}
+                        </p>
                       )}
                       <p className="text-xs text-muted-foreground mt-1">
-                        {new Date(bookmark.created_at).toLocaleDateString()}
+                        {new Date(bookmark.memories.created_at).toLocaleDateString()}
                       </p>
                     </div>
                   </div>
