@@ -24,20 +24,20 @@ const HomeHero = () => {
             <Button 
               id="hero-home-primary-cta"
               size="lg" 
-              variant="capsules"
-              className="w-full sm:w-auto transition-all duration-300 font-outfit bg-vaya-capsules text-white hover:bg-vaya-capsules/90"
-            >
-              <span>Start a Family Capsule</span>
-              <Hourglass className="ml-2 h-5 w-5" />
-            </Button>
-            <Button 
-              id="hero-home-secondary-cta"
-              size="lg" 
               variant="stories"
               className="w-full sm:w-auto font-outfit"
             >
               <span>Share a Story</span>
               <Mic className="ml-2 h-5 w-5" />
+            </Button>
+            <Button 
+              id="hero-home-secondary-cta"
+              size="lg" 
+              variant="capsules"
+              className="w-full sm:w-auto transition-all duration-300 font-outfit bg-vaya-capsules text-white hover:bg-vaya-capsules/90"
+            >
+              <span>Start a Family Capsule</span>
+              <Hourglass className="ml-2 h-5 w-5" />
             </Button>
           </div>
         </motion.div>

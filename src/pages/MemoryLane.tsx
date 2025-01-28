@@ -28,7 +28,7 @@ const MemoryLane = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           <div className="lg:col-span-2">
             <div className="mb-8 flex items-center justify-between">
-              <h1 className="text-2xl font-outfit font-semibold text-gray-900">Family Memories</h1>
+              <h1 className="text-2xl font-outfit font-semibold text-gray-900">Our Memories</h1>
               <ToggleGroup 
                 type="multiple" 
                 className="hidden md:flex bg-white border rounded-lg p-1 shadow-sm"
