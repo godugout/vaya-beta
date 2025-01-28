@@ -1,4 +1,4 @@
-import { Camera, Users, Heart, Music, Book, Calendar, MapPin, Image as ImageIcon, GraduationCap, MessageCircle, HelpCircle, QuestionMarkCircle } from "lucide-react";
+import { Camera, Users, Heart, Music, Book, Calendar, MapPin, Image as ImageIcon, GraduationCap, MessageCircle, HelpCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { CapsuleRow } from "./layout/CapsuleRow";
 import { Capsule } from "@/types/capsule";
@@ -46,7 +46,7 @@ export const detailedCapsules: Capsule[] = [
 export const simpleCapsules: Capsule[] = [
   {
     title: "Share Ideas",
-    icon: QuestionMarkCircle,
+    icon: HelpCircle,
     colorKey: "memories",
     prompts: ["What's your most creative idea?"],
     isPlaceholder: true,
@@ -86,7 +86,7 @@ export const simpleCapsules: Capsule[] = [
   },
   {
     title: "Got Questions?",
-    icon: QuestionMarkCircle,
+    icon: HelpCircle,
     colorKey: "memories",
     prompts: ["What's on your mind?"],
     isPlaceholder: true,
