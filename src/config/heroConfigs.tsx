@@ -1,4 +1,4 @@
-import { Volume2, Heart, Hourglass, MessageSquare, Camera, Mic } from "lucide-react";
+import { Camera, Heart, Mic, Hourglass, MessageSquare } from "lucide-react";
 import { HeroConfigs } from "@/types/hero";
 
 export const heroConfigs: HeroConfigs = {
@@ -13,7 +13,7 @@ export const heroConfigs: HeroConfigs = {
     },
     secondaryCta: {
       text: "Share a Story",
-      icon: <Volume2 className="ml-2 h-6 w-6 fill-vaya-stories text-vaya-stories" />,
+      icon: <Mic className="ml-2 h-5 w-5" />,
     }
   },
   "/family-capsules": {

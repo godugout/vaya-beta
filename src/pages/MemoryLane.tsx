@@ -24,9 +24,8 @@ const MemoryLane = () => {
     <div className="min-h-screen bg-gray-50 pb-16 md:pb-0">
       <Hero />
       <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-[1400px] mx-auto">
-          {/* Main Feed Column - Takes up 8/12 on large screens */}
-          <div className="lg:col-span-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          <div className="lg:col-span-2">
             <div className="mb-8 flex items-center justify-between">
               <h1 className="text-2xl font-outfit font-semibold text-gray-900">Family Memories</h1>
               <div className="flex gap-4">
@@ -47,9 +46,8 @@ const MemoryLane = () => {
             <MemoryFeedLayout />
           </div>
 
-          {/* Sidebar Column - Takes up 4/12 on large screens */}
-          <div className="hidden lg:block lg:col-span-4 space-y-6">
-            <div className="bg-white rounded-lg shadow-sm p-6 sticky top-24">
+          <div className="hidden lg:block space-y-6">
+            <div className="bg-white rounded-lg shadow-sm p-6">
               <h2 className="text-lg font-outfit font-semibold text-gray-900 mb-4">
                 Coming Soon
               </h2>

@@ -5,7 +5,6 @@ import { useMemories } from "./useMemories";
 import { Memory } from "./types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useInView } from "framer-motion";
-import { Link } from "react-router-dom";
 
 const MemoryFeedLayout = () => {
   const {
@@ -33,7 +32,7 @@ const MemoryFeedLayout = () => {
 
   if (isLoading) {
     return (
-      <div className="grid gap-6">
+      <div className="space-y-6">
         {[1, 2, 3].map((i) => (
           <div key={i} className="bg-white rounded-lg shadow-sm p-4 space-y-4">
             <div className="flex items-center space-x-4">
@@ -77,21 +76,15 @@ const MemoryFeedLayout = () => {
   }
 
   return (
-    <div className="grid gap-6">
+    <div className="space-y-6">
       {memories.map((memory: Memory) => (
-        <Link 
-          key={memory.id} 
-          to={`/memory/${memory.id}`}
-          className="block transition-transform hover:-translate-y-1 duration-200"
-        >
-          <div className="animate-fadeIn">
-            {memory.type === "story" ? (
-              <StoryMemoryCard memory={memory} />
-            ) : (
-              <PhotoMemoryCard memory={memory} />
-            )}
-          </div>
-        </Link>
+        <div key={memory.id} className="animate-fadeIn">
+          {memory.type === "story" ? (
+            <StoryMemoryCard memory={memory} />
+          ) : (
+            <PhotoMemoryCard memory={memory} />
+          )}
+        </div>
       ))}
       
       {(hasNextPage || isFetchingNextPage) && (
