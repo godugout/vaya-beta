@@ -1,12 +1,10 @@
 import { useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import { heroConfigs } from "@/config/heroConfigs";
 import { HeroPattern } from "./hero/HeroPattern";
 import { HeroContent } from "./hero/HeroContent";
 import HomeHero from "./hero/HomeHero";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { CulturalContent } from "@/types/cultural";
-import { toast } from "@/components/ui/use-toast";
 
 interface HeroProps {
   culturalContent?: CulturalContent | null;
@@ -14,65 +12,7 @@ interface HeroProps {
 
 const Hero = ({ culturalContent }: HeroProps) => {
   const location = useLocation();
-  const [isSpanish, setIsSpanish] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    const fetchUserLanguage = async () => {
-      try {
-        const { data: { session } } = await supabase.auth.getSession();
-        
-        if (!session?.user) {
-          setIsSpanish(true); // Default to Spanish if not authenticated
-          return;
-        }
-
-        const { data: profile, error } = await supabase
-          .from('profiles')
-          .select('preferred_language')
-          .eq('id', session.user.id)
-          .maybeSingle();
-
-        if (error) {
-          console.error('Error fetching language preference:', error);
-          toast({
-            title: "Error fetching language preference",
-            description: "Using default language settings",
-            variant: "destructive",
-          });
-          setIsSpanish(true); // Default to Spanish on error
-        } else if (profile) {
-          setIsSpanish(profile.preferred_language === 'es');
-        }
-      } catch (error) {
-        console.error('Error in fetchUserLanguage:', error);
-        setIsSpanish(true); // Default to Spanish on error
-      }
-    };
-
-    fetchUserLanguage();
-  }, []);
-
-  // Subscribe to auth state changes
-  useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (event === 'SIGNED_IN' || event === 'USER_UPDATED') {
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('preferred_language')
-          .eq('id', session?.user.id)
-          .maybeSingle();
-        
-        if (profile) {
-          setIsSpanish(profile.preferred_language === 'es');
-        }
-      }
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, []);
+  const { isSpanish } = useLanguage();
 
   // If we're on the home page, render the HomeHero component
   if (location.pathname === '/') {

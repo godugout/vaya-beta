@@ -3,6 +3,7 @@ import { MainNav } from "./components/MainNav";
 import Footer from "./components/Footer";
 import { Toaster } from "./components/ui/toaster";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { LanguageProvider } from "./contexts/LanguageContext";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
@@ -27,26 +28,28 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Router>
-        <div className="flex min-h-screen flex-col">
-          <MainNav />
-          <main className="flex-1">
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/auth" element={<Auth />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/account" element={<Account />} />
-              <Route path="/memory-lane" element={<MemoryLane />} />
-              <Route path="/share-stories" element={<ShareStories />} />
-              <Route path="/family-capsules" element={<FamilyCapsules />} />
-              <Route path="/families" element={<Families />} />
-              <Route path="/create-family" element={<CreateFamily />} />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
-        <Toaster />
-      </Router>
+      <LanguageProvider>
+        <Router>
+          <div className="flex min-h-screen flex-col">
+            <MainNav />
+            <main className="flex-1">
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/auth" element={<Auth />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/account" element={<Account />} />
+                <Route path="/memory-lane" element={<MemoryLane />} />
+                <Route path="/share-stories" element={<ShareStories />} />
+                <Route path="/family-capsules" element={<FamilyCapsules />} />
+                <Route path="/families" element={<Families />} />
+                <Route path="/create-family" element={<CreateFamily />} />
+              </Routes>
+            </main>
+            <Footer />
+          </div>
+          <Toaster />
+        </Router>
+      </LanguageProvider>
     </QueryClientProvider>
   );
 }
