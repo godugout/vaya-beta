@@ -9,6 +9,8 @@ import type { Capsule } from "@/components/ui/capsule/types";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
+import { StepCard } from "@/components/ui/capsule/StepCard";
+import { Camera as CameraIcon, BookOpen, Users, Sparkles } from "lucide-react";
 
 interface CapsuleScrollSectionProps {
   capsules: Capsule[];
@@ -127,49 +129,57 @@ export const CapsuleScrollSection = ({ capsules }: CapsuleScrollSectionProps) =>
         )}
       </div>
 
-      {/* Go Back to the Future Section */}
-      <div className="bg-gradient-to-b from-white to-gray-50 py-12">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Go Back to the Future</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto mb-12">
-            Each capsule represents a unique collection of memories, stories, and moments 
-            from your family's journey. Click on any capsule to dive deeper into your family's 
-            history.
-          </p>
+      {/* Feature Steps Section */}
+      <div className="bg-gradient-to-b from-white to-gray-50 py-24">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6 font-outfit">Create Your Family Time Capsule</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto font-inter">
+              Preserve your family's precious moments and stories in a digital time capsule. 
+              Open it together on a special date to relive the memories.
+            </p>
+          </div>
           
-          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-vaya-accent-orange rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-semibold text-vaya-capsules">1</span>
-              </div>
-              <h3 className="text-lg font-semibold mb-2">Create a Capsule</h3>
-              <p className="text-gray-600">
-                Give your capsule a theme and set a date for when it should be opened. It 
-                could be for a special occasion, anniversary, or future milestone.
-              </p>
-            </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+            <StepCard
+              step={1}
+              icon={CameraIcon}
+              title="Capture & Create"
+              description="Add photos, voice messages, and written stories that tell your family's unique journey. Each piece becomes part of your legacy."
+              color="bg-vaya-accent-orange/20"
+              iconColor="text-vaya-capsules"
+              className="hover:scale-105 transition-transform duration-300"
+            />
             
-            <div className="text-center">
-              <div className="w-16 h-16 bg-vaya-accent-orange rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-semibold text-vaya-capsules">2</span>
-              </div>
-              <h3 className="text-lg font-semibold mb-2">Add Your Memories</h3>
-              <p className="text-gray-600">
-                Share stories through voice messages, photos, or written notes. Each 
-                contribution is kept secret until the reveal date.
-              </p>
-            </div>
+            <StepCard
+              step={2}
+              icon={BookOpen}
+              title="Set the Perfect Date"
+              description="Choose a meaningful future moment for your capsule's reveal - a wedding, graduation, or family reunion. Make it special!"
+              color="bg-vaya-accent-yellow/20"
+              iconColor="text-vaya-capsules"
+              className="hover:scale-105 transition-transform duration-300"
+            />
             
-            <div className="text-center">
-              <div className="w-16 h-16 bg-vaya-accent-orange rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-semibold text-vaya-capsules">3</span>
-              </div>
-              <h3 className="text-lg font-semibold mb-2">Invite Family & Friends</h3>
-              <p className="text-gray-600">
-                Let others contribute their memories. Everyone's additions remain a 
-                surprise until the capsule is opened together.
-              </p>
-            </div>
+            <StepCard
+              step={3}
+              icon={Users}
+              title="Invite Loved Ones"
+              description="Share the capsule with family and friends. Let everyone contribute their memories, stories, and wishes for the future."
+              color="bg-vaya-accent-green/20"
+              iconColor="text-vaya-capsules"
+              className="hover:scale-105 transition-transform duration-300"
+            />
+
+            <StepCard
+              step={4}
+              icon={Sparkles}
+              title="Experience the Magic"
+              description="When the day arrives, gather together and experience the joy of opening your capsule. Relive precious memories and celebrate your family's story."
+              color="bg-vaya-accent-blue/20"
+              iconColor="text-vaya-capsules"
+              className="reveal-card hover:scale-105 transition-transform duration-300"
+            />
           </div>
         </div>
       </div>

@@ -21,20 +21,38 @@ export const StepCard = ({
   iconColor,
   className 
 }: StepCardProps) => {
+  const isRevealCard = step === 4;
+
   return (
     <motion.div 
       className={cn(
         "flex flex-col items-center text-center p-8 rounded-2xl transition-all duration-300",
         "font-sans text-foreground shadow-sm hover:shadow-md",
         "border border-border/50 bg-white",
+        isRevealCard && "reveal-card",
         className
       )}
       whileHover={{ scale: 1.02, y: -5 }}
       transition={{ duration: 0.2 }}
     >
       <div className="relative mb-6">
-        <div className={`w-20 h-20 ${color} rounded-full flex items-center justify-center`}>
-          <Icon className={`w-10 h-10 ${iconColor}`} />
+        <div 
+          className={cn(
+            "w-20 h-20 rounded-full flex items-center justify-center",
+            color,
+            isRevealCard && "animate-glow"
+          )}
+        >
+          <Icon className={cn(
+            "w-10 h-10",
+            iconColor,
+            isRevealCard && "animate-sparkle"
+          )} />
+          {isRevealCard && (
+            <div className="absolute inset-0 animate-capsule-rotate">
+              <div className="capsule-confetti" />
+            </div>
+          )}
         </div>
         <div className="absolute -top-2 -right-2 w-8 h-8 bg-vaya-capsules rounded-full flex items-center justify-center text-white font-bold text-sm font-outfit">
           {step}
