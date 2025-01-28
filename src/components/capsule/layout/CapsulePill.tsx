@@ -80,7 +80,7 @@ export const CapsulePill = ({
       )}>
         <div className="p-8 h-full">
           {isPlaceholder ? (
-            <div className="flex items-start gap-6 h-full">
+            <div className="flex items-center gap-6 h-full">
               <div className={cn(
                 "inline-flex items-center justify-center w-12 h-12 rounded-2xl shrink-0",
                 getIconBgColor(colorKey, true),
@@ -88,7 +88,7 @@ export const CapsulePill = ({
               )}>
                 <Icon className={cn("w-6 h-6", getIconColor(colorKey))} />
               </div>
-              <div className="space-y-2 text-left">
+              <div className="space-y-2">
                 <h3 className="text-2xl font-semibold text-vaya-gray-900 font-outfit">
                   {title}
                 </h3>
@@ -102,7 +102,7 @@ export const CapsulePill = ({
             </div>
           ) : (
             <div className="flex justify-between items-start h-full">
-              <div className="flex items-start gap-6">
+              <div className="flex items-center gap-6">
                 <div className={cn(
                   "inline-flex items-center justify-center w-12 h-12 rounded-2xl shrink-0",
                   getIconBgColor(colorKey),
@@ -110,7 +110,7 @@ export const CapsulePill = ({
                 )}>
                   <Icon className={cn("w-6 h-6", getIconColor(colorKey))} />
                 </div>
-                <div className="space-y-3 text-left">
+                <div className="space-y-3">
                   <div>
                     <h3 className="text-2xl font-semibold text-vaya-gray-900 font-outfit mb-1">
                       {title}
