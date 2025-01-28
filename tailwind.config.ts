@@ -28,6 +28,7 @@ export default {
           stories: "#F97316",   // Orange for stories section
           memories: "#0EA5E9",  // Blue for memory lane
           capsules: "#22C55E",  // Green for family capsules
+          narra: "#9b87f5",     // Purple for Narra's theme
           
           accent: {
             green: "#F2FCE2",   // Soft green backgrounds

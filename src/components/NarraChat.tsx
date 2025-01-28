@@ -22,7 +22,7 @@ const NarraChat = () => {
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-vaya-chat-border bg-white">
         <div className="flex items-center gap-2">
-          <MessageCircle className="h-6 w-6 text-vaya-secondary" />
+          <MessageCircle className="h-6 w-6 text-vaya-narra" />
           <h1 className="text-lg font-semibold text-vaya-gray-800">Chat with Narra</h1>
         </div>
         <Button

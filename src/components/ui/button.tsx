@@ -12,6 +12,7 @@ const buttonVariants = cva(
         stories: "bg-vaya-stories text-white hover:bg-vaya-stories/90", // Orange for stories
         memories: "bg-vaya-memories text-white hover:bg-vaya-memories/90", // Blue for memory lane
         capsules: "bg-vaya-capsules text-white hover:bg-vaya-capsules/90", // Green for family capsules
+        narra: "bg-vaya-narra text-white hover:bg-vaya-narra/90", // Purple for Narra
         destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline: "border-2 border-input bg-background hover:bg-accent hover:text-accent-foreground",
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
