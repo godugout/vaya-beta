@@ -27,7 +27,7 @@ export const DesktopNav = ({ user, handleSignOut, navigate }: DesktopNavProps) =
             className="h-10 w-10"
           />
           <span className="font-outfit font-bold text-2xl text-white">
-            Vaya<sup>α</sup>
+            Vaya<sup className="text-vaya-stories">α</sup>
           </span>
         </Link>
         <nav className="flex items-center space-x-10 ml-12">

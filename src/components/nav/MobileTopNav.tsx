@@ -19,7 +19,7 @@ export const MobileTopNav = ({ user, handleSignOut, navigate }: MobileTopNavProp
             className="h-10 w-10"
           />
           <span className="font-outfit font-bold text-2xl text-white">
-            Vaya<sup>α</sup>
+            Vaya<sup className="text-vaya-stories">α</sup>
           </span>
         </Link>
         <div className="ml-auto">
