@@ -68,23 +68,8 @@ export const CapsulePill = ({
           />
         )}
         
-        {/* Animated gradient background */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ 
-            opacity: isHovered ? 1 : 0,
-            background: `linear-gradient(120deg, transparent, rgba(var(--vaya-${colorKey}-rgb), 0.1), transparent)`,
-          }}
-          transition={{ duration: 0.3 }}
-          className="absolute inset-0"
-          style={{
-            backgroundSize: '200% 100%',
-            animation: isHovered ? 'shimmer 2s infinite' : 'none',
-          }}
-        />
-
         {/* Content */}
-        <div className="flex items-center h-full relative z-10 pl-8">
+        <div className="flex items-center h-full relative z-10 pl-12">
           {isPlaceholder ? (
             <div className="flex items-center gap-6 w-full">
               <Icon className={cn(
