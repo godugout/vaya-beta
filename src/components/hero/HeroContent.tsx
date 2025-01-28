@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { HeroConfig } from "@/types/hero";
+import { useLocation } from 'react-router-dom';
 
 interface HeroContentProps {
   config: HeroConfig;
@@ -9,6 +10,16 @@ interface HeroContentProps {
 }
 
 export const HeroContent = ({ config, isSpanish }: HeroContentProps) => {
+  const location = useLocation();
+  
+  // Determine button variant based on current route
+  const getButtonVariant = () => {
+    if (location.pathname.includes('memory-lane')) return 'memories';
+    if (location.pathname.includes('share-stories')) return 'stories';
+    if (location.pathname.includes('family-capsules')) return 'capsules';
+    return 'default'; // Home/default orange
+  };
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
@@ -25,7 +36,8 @@ export const HeroContent = ({ config, isSpanish }: HeroContentProps) => {
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6">
         <Button 
           size="lg" 
-          className="w-full sm:w-auto bg-vaya-primary hover:bg-vaya-primary/90 text-white transition-all duration-300 font-outfit"
+          variant={getButtonVariant()}
+          className="w-full sm:w-auto transition-all duration-300 font-outfit"
         >
           <span>{config.primaryCta.text}</span>
           {config.primaryCta.icon}
@@ -34,7 +46,7 @@ export const HeroContent = ({ config, isSpanish }: HeroContentProps) => {
           <Button 
             size="lg" 
             variant="outline" 
-            className="w-full sm:w-auto border-vaya-primary text-vaya-primary hover:bg-vaya-primary/10 font-outfit"
+            className={`w-full sm:w-auto border-vaya-${getButtonVariant()} text-vaya-${getButtonVariant()} hover:bg-vaya-${getButtonVariant()}/10 font-outfit`}
           >
             <span>{config.secondaryCta.text}</span>
             {config.secondaryCta.icon}
