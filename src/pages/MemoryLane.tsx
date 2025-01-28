@@ -5,7 +5,8 @@ import Hero from "@/components/Hero";
 import MemoryFeedLayout from "@/components/memory/MemoryFeedLayout";
 import AddMemoryButton from "@/components/memory/AddMemoryButton";
 import { Button } from "@/components/ui/button";
-import { MessageCircle } from "lucide-react";
+import { MessageCircle, Filter, User, Tag, Calendar, Heart } from "lucide-react";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 const MemoryLane = () => {
   const navigate = useNavigate();
@@ -26,8 +27,45 @@ const MemoryLane = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           <div className="lg:col-span-2">
-            <div className="mb-8">
+            <div className="mb-8 flex items-center justify-between">
               <h1 className="text-2xl font-outfit font-semibold text-gray-900">Family Memories</h1>
+              <ToggleGroup 
+                type="multiple" 
+                className="hidden md:flex bg-white border rounded-lg p-1 shadow-sm"
+              >
+                <ToggleGroupItem 
+                  value="people" 
+                  aria-label="Filter by people"
+                  className="data-[state=on]:bg-vaya-memories/10 data-[state=on]:text-vaya-memories"
+                >
+                  <User className="h-4 w-4 mr-2" />
+                  <span className="hidden lg:inline">People</span>
+                </ToggleGroupItem>
+                <ToggleGroupItem 
+                  value="topics" 
+                  aria-label="Filter by topics"
+                  className="data-[state=on]:bg-vaya-memories/10 data-[state=on]:text-vaya-memories"
+                >
+                  <Tag className="h-4 w-4 mr-2" />
+                  <span className="hidden lg:inline">Topics</span>
+                </ToggleGroupItem>
+                <ToggleGroupItem 
+                  value="date" 
+                  aria-label="Filter by date"
+                  className="data-[state=on]:bg-vaya-memories/10 data-[state=on]:text-vaya-memories"
+                >
+                  <Calendar className="h-4 w-4 mr-2" />
+                  <span className="hidden lg:inline">Date</span>
+                </ToggleGroupItem>
+                <ToggleGroupItem 
+                  value="favorites" 
+                  aria-label="Show favorites"
+                  className="data-[state=on]:bg-vaya-memories/10 data-[state=on]:text-vaya-memories"
+                >
+                  <Heart className="h-4 w-4 mr-2" />
+                  <span className="hidden lg:inline">Favorites</span>
+                </ToggleGroupItem>
+              </ToggleGroup>
             </div>
             <MemoryFeedLayout />
           </div>
