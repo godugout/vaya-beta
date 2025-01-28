@@ -4,6 +4,13 @@ import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { format, formatDistanceToNow, isPast, isToday, addDays } from "date-fns";
 
+// Define orbiting profiles for the timer animation
+const orbitingProfiles = [
+  { initials: "JD", angle: 0 },
+  { initials: "AS", angle: 120 },
+  { initials: "MK", angle: 240 },
+];
+
 // Enhanced emoji mapping for different capsule types and content
 const getEmojiForIcon = (icon: LucideIcon, title?: string, description?: string): string => {
   // First check for specific content matches in title or description
@@ -162,13 +169,6 @@ export const CapsulePill = ({
   const detailedPillClasses = cn(
     pillBaseClasses
   );
-
-  // Define orbiting profiles for the timer animation
-  const orbitingProfiles = [
-    { initials: "JD", angle: 0 },
-    { initials: "AS", angle: 120 },
-    { initials: "MK", angle: 240 },
-  ];
 
   return (
     <motion.div
