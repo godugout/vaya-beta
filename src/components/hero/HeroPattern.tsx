@@ -2,7 +2,7 @@ import React from 'react';
 
 export const HeroPattern = () => {
   return (
-    <div className="absolute inset-0 opacity-10">
+    <div className="absolute inset-0 opacity-25">
       <div className="absolute inset-0" style={{
         backgroundImage: `
           radial-gradient(circle at 50% 50%, #FEF7CD 1%, transparent 1.5%),
@@ -18,6 +18,9 @@ export const HeroPattern = () => {
         `,
         backgroundSize: '4rem 4rem',
         backgroundPosition: '2rem 2rem, 0 0',
+      }} />
+      <div className="absolute inset-0" style={{
+        background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(249, 115, 22, 0.15) 100%)',
       }} />
     </div>
   );
