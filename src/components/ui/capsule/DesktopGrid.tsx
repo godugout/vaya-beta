@@ -21,6 +21,8 @@ interface DesktopGridProps {
 }
 
 export const DesktopGrid = ({ capsules }: DesktopGridProps) => {
+  console.log("DesktopGrid rendering with capsules:", capsules);
+  
   const itemsPerRow = Math.ceil(capsules.length / 3);
   const rows = Array.from({ length: 3 }, (_, i) =>
     capsules.slice(i * itemsPerRow, (i + 1) * itemsPerRow)

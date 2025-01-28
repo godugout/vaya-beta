@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Camera, Plus, ChevronUp } from "lucide-react";
+import { Camera, Plus, ChevronUp, Users, Gift, Heart, Star, Music } from "lucide-react";
 import CreateCapsuleForm from "@/components/capsule/CreateCapsuleForm";
 import { DesktopGrid } from "@/components/ui/capsule/DesktopGrid";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -8,7 +8,47 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 import { StepCard } from "@/components/ui/capsule/StepCard";
-import { Camera as CameraIcon, BookOpen, Users, Sparkles } from "lucide-react";
+import { Camera as CameraIcon, BookOpen, Sparkles } from "lucide-react";
+
+// Hardcoded data for testing
+const mockCapsules = [
+  {
+    title: "Family Reunion 2024",
+    link: "/capsules/reunion-2024",
+    icon: Users,
+    colorKey: "orange",
+    metadata: {
+      creatorInitials: "JD",
+      itemCount: 12,
+      status: "upcoming" as const,
+      date: "2024-07-15",
+    }
+  },
+  {
+    title: "Holiday Memories",
+    link: "/capsules/holidays",
+    icon: Gift,
+    colorKey: "green",
+    metadata: {
+      creatorInitials: "MC",
+      itemCount: 8,
+      status: "active" as const,
+      date: "2023-12-25",
+    }
+  },
+  {
+    title: "Wedding Anniversary",
+    link: "/capsules/anniversary",
+    icon: Heart,
+    colorKey: "orange",
+    metadata: {
+      creatorInitials: "AS",
+      itemCount: 15,
+      status: "locked" as const,
+      date: "2024-02-14",
+    }
+  }
+];
 
 interface CapsuleScrollSectionProps {
   capsules: {
@@ -127,7 +167,44 @@ export const CapsuleScrollSection = ({ capsules }: CapsuleScrollSectionProps) =>
       </div>
 
       <div className="container mx-auto px-4 py-8">
-        {isMobile ? null : <DesktopGrid capsules={capsules} />}
+        {isMobile ? null : <DesktopGrid capsules={mockCapsules} />}
+      </div>
+
+      {/* Fallback List View */}
+      <div className="container mx-auto px-4 py-8">
+        <div className="grid gap-4">
+          {mockCapsules.map((capsule) => (
+            <div 
+              key={capsule.title}
+              className={cn(
+                "p-6 rounded-2xl border transition-all duration-300",
+                capsule.metadata?.status === "active" && "bg-vaya-accent-green/20",
+                capsule.metadata?.status === "upcoming" && "bg-vaya-accent-yellow/20",
+                capsule.metadata?.status === "locked" && "bg-vaya-accent-blue/20",
+                capsule.metadata?.status === "revealed" && "bg-vaya-accent-orange/20"
+              )}
+            >
+              <div className="flex items-center gap-4">
+                <div className={cn(
+                  "p-3 rounded-full",
+                  `bg-vaya-${capsule.colorKey}`
+                )}>
+                  <capsule.icon className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold mb-1">{capsule.title}</h3>
+                  <div className="flex items-center gap-4 text-sm text-gray-600">
+                    <span>{capsule.metadata?.itemCount} items</span>
+                    <span className="capitalize px-2 py-1 rounded-full text-xs font-medium bg-white shadow-sm">
+                      {capsule.metadata?.status}
+                    </span>
+                    <span>{new Date(capsule.metadata?.date || "").toLocaleDateString()}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="bg-gradient-to-b from-white to-gray-50 py-24">
