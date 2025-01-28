@@ -9,6 +9,10 @@ import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 import { StepCard } from "@/components/ui/capsule/StepCard";
 import { Camera as CameraIcon, BookOpen, Sparkles } from "lucide-react";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+
+// Update type to include "revealed" status
+type CapsuleStatus = "upcoming" | "active" | "locked" | "revealed";
 
 // Hardcoded data for testing
 const mockCapsules = [
@@ -60,7 +64,7 @@ interface CapsuleScrollSectionProps {
       creatorAvatar?: string;
       creatorInitials: string;
       itemCount: number;
-      status: "upcoming" | "active" | "locked" | "revealed";
+      status: CapsuleStatus;
       date: string;
     };
   }[];
@@ -185,11 +189,18 @@ export const CapsuleScrollSection = ({ capsules }: CapsuleScrollSectionProps) =>
               )}
             >
               <div className="flex items-center gap-4">
-                <div className={cn(
-                  "p-3 rounded-full",
-                  `bg-vaya-${capsule.colorKey}`
-                )}>
-                  <capsule.icon className="w-6 h-6 text-white" />
+                <div className="relative">
+                  <div className={cn(
+                    "p-3 rounded-full",
+                    `bg-vaya-${capsule.colorKey}`
+                  )}>
+                    <capsule.icon className="w-6 h-6 text-white" />
+                  </div>
+                  <Avatar className="absolute -top-1 -right-1 w-5 h-5 border-2 border-white">
+                    <AvatarFallback className="text-xs">
+                      {capsule.metadata?.creatorInitials}
+                    </AvatarFallback>
+                  </Avatar>
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold mb-1">{capsule.title}</h3>
