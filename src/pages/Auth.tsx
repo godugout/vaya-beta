@@ -88,9 +88,16 @@ export default function Auth({ open, onOpenChange }: AuthDialogProps) {
           }}
         />
         <div className="w-full space-y-6">
-          <div className="text-center">
-            <h2 className="text-2xl font-bold tracking-tight text-vaya-home">
-              {isSignUp ? "Create your account" : "Welcome back"}
+          <div className="text-center space-y-2">
+            <div className="flex items-center justify-center">
+              <img 
+                src="/placeholder.svg" 
+                alt="Vaya Logo" 
+                className="h-12 w-12"
+              />
+            </div>
+            <h2 className="text-2xl font-bold tracking-tight text-vaya-capsules">
+              Vaya
             </h2>
             <p className="mt-2 text-sm text-gray-600">
               {isSignUp ? "Start preserving memories" : "Sign in to your account"}
@@ -105,7 +112,7 @@ export default function Auth({ open, onOpenChange }: AuthDialogProps) {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="bg-white/50 backdrop-blur-sm border-vaya-home/20 focus-visible:ring-vaya-capsules"
+                className="bg-white/50 backdrop-blur-sm border-vaya-capsules/20 focus-visible:ring-vaya-capsules"
               />
               <Input
                 type="password"
@@ -113,13 +120,13 @@ export default function Auth({ open, onOpenChange }: AuthDialogProps) {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="bg-white/50 backdrop-blur-sm border-vaya-home/20 focus-visible:ring-vaya-capsules"
+                className="bg-white/50 backdrop-blur-sm border-vaya-capsules/20 focus-visible:ring-vaya-capsules"
               />
             </div>
 
             <Button
               type="submit"
-              className="w-full bg-vaya-home hover:bg-vaya-home/90"
+              className="w-full bg-vaya-capsules hover:bg-vaya-capsules/90"
               disabled={loading}
             >
               {loading
