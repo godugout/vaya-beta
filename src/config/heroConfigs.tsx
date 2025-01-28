@@ -1,4 +1,4 @@
-import { Camera, Heart, Mic, Hourglass } from "lucide-react";
+import { Camera, Heart, Mic, Hourglass, MessageSquare } from "lucide-react";
 import { HeroConfigs } from "@/types/hero";
 
 export const heroConfigs: HeroConfigs = {
@@ -51,7 +51,7 @@ export const heroConfigs: HeroConfigs = {
     },
     secondaryCta: {
       text: "Chat with Narra",
-      icon: <Heart className="ml-2 h-5 w-5 fill-red-500 text-red-500" />,
+      icon: <MessageSquare className="ml-2 h-5 w-5" />,
     }
   }
 };
