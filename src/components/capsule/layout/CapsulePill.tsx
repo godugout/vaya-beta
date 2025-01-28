@@ -30,16 +30,16 @@ export const CapsulePill = ({
 }: CapsulePillProps) => {
   const getBgColor = (key: string) => {
     const colors: { [key: string]: string } = {
-      orange: "bg-vaya-accent-orange/60",
-      green: "bg-vaya-accent-green/60",
-      blue: "bg-vaya-accent-blue/60",
-      yellow: "bg-vaya-accent-yellow/60"
+      orange: "bg-vaya-accent-orange/80",
+      green: "bg-vaya-accent-green/80",
+      blue: "bg-vaya-accent-blue/80",
+      yellow: "bg-vaya-accent-yellow/80"
     };
     return colors[key] || "bg-gray-50";
   };
 
   const getIconBgColor = (key: string, isPlaceholder: boolean = false) => {
-    const opacity = isPlaceholder ? "10" : "20";
+    const opacity = isPlaceholder ? "20" : "30";
     const colors: { [key: string]: string } = {
       orange: `bg-vaya-stories bg-opacity-${opacity}`,
       green: `bg-vaya-capsules bg-opacity-${opacity}`,
@@ -70,10 +70,10 @@ export const CapsulePill = ({
   const placeholderPillClasses = cn(
     pillBaseClasses,
     "bg-white before:absolute before:inset-0 before:bg-gradient-to-r",
-    `before:from-vaya-${colorKey}/5 before:via-vaya-${colorKey}/10 before:to-vaya-${colorKey}/5`,
+    `before:from-vaya-${colorKey}/20 before:via-vaya-${colorKey}/30 before:to-vaya-${colorKey}/20`,
     "before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300",
     "after:absolute after:inset-0 after:bg-gradient-to-br",
-    `after:from-vaya-${colorKey}/0 after:to-vaya-${colorKey}/10`,
+    `after:from-vaya-${colorKey}/10 after:to-vaya-${colorKey}/30`,
     "after:opacity-0 group-hover:after:opacity-100 after:transition-opacity after:duration-500"
   );
 
@@ -81,8 +81,11 @@ export const CapsulePill = ({
     pillBaseClasses,
     getBgColor(colorKey),
     "before:absolute before:inset-0 before:bg-gradient-to-r",
-    `before:from-vaya-${colorKey}/10 before:via-vaya-${colorKey}/20 before:to-vaya-${colorKey}/10`,
-    "before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300"
+    `before:from-vaya-${colorKey}/20 before:via-vaya-${colorKey}/40 before:to-vaya-${colorKey}/20`,
+    "before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300",
+    "after:absolute after:inset-0 after:bg-gradient-to-br",
+    `after:from-vaya-${colorKey}/10 after:to-vaya-${colorKey}/30`,
+    "after:opacity-0 group-hover:after:opacity-100 after:transition-opacity after:duration-500"
   );
 
   return (
@@ -103,18 +106,18 @@ export const CapsulePill = ({
         <div className="flex items-center justify-center h-full relative z-10">
           <div className={cn(
             "flex items-center w-full h-full",
-            isPlaceholder ? "py-4 px-6" : "p-6"
+            isPlaceholder ? "py-3 px-6" : "p-6"
           )}>
             {isPlaceholder ? (
               <div className="flex items-center gap-6 w-full">
                 <div className={cn(
-                  "inline-flex items-center justify-center w-14 h-14 rounded-2xl shrink-0",
+                  "inline-flex items-center justify-center w-16 h-16 rounded-2xl shrink-0",
                   getIconBgColor(colorKey, true),
-                  "group-hover:bg-opacity-20 transition-colors"
+                  "group-hover:bg-opacity-30 transition-colors"
                 )}>
-                  <Icon className={cn("w-8 h-8", getIconColor(colorKey))} />
+                  <Icon className={cn("w-10 h-10", getIconColor(colorKey))} />
                 </div>
-                <div className="flex flex-col justify-start pt-1">
+                <div className="flex flex-col justify-start pt-2">
                   <h3 className="text-2xl font-semibold text-vaya-gray-900 font-outfit text-left">
                     {title}
                   </h3>
@@ -130,11 +133,11 @@ export const CapsulePill = ({
               <div className="flex items-start justify-between w-full">
                 <div className="flex items-start gap-6">
                   <div className={cn(
-                    "inline-flex items-center justify-center w-14 h-14 rounded-2xl shrink-0 mt-1",
+                    "inline-flex items-center justify-center w-16 h-16 rounded-2xl shrink-0 mt-1",
                     getIconBgColor(colorKey),
-                    "group-hover:bg-opacity-30 transition-colors"
+                    "group-hover:bg-opacity-40 transition-colors"
                   )}>
-                    <Icon className={cn("w-8 h-8", getIconColor(colorKey))} />
+                    <Icon className={cn("w-10 h-10", getIconColor(colorKey))} />
                   </div>
                   <div className="flex flex-col justify-start">
                     <h3 className="text-2xl font-semibold text-vaya-gray-900 font-outfit mb-1 text-left">
@@ -153,7 +156,7 @@ export const CapsulePill = ({
                         </div>
                         <span className={cn(
                           "capitalize px-3 py-1 rounded-full text-xs font-medium",
-                          `bg-vaya-${colorKey} bg-opacity-10 text-vaya-${colorKey}`
+                          `bg-vaya-${colorKey} bg-opacity-20 text-vaya-${colorKey}`
                         )}>
                           {metadata.status}
                         </span>
