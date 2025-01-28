@@ -83,7 +83,7 @@ export const CapsulePill = ({
             style={{ backgroundImage: `url(${backgroundImage})` }}
           />
         )}
-        <div className="flex items-center justify-center h-full relative z-10">
+        <div className="flex items-center h-full relative z-10">
           <div className={cn(
             "flex items-center w-full h-full",
             isPlaceholder ? "py-3 px-6" : "p-6"
@@ -97,12 +97,12 @@ export const CapsulePill = ({
                 )}>
                   <Icon className={cn("w-6 h-6", getIconColor(colorKey))} />
                 </div>
-                <div className="flex flex-col justify-center text-left">
+                <div className="flex flex-col justify-center">
                   <h3 className="text-2xl font-semibold text-vaya-gray-900 font-outfit">
                     {title}
                   </h3>
                   {prompts && prompts.length > 0 && (
-                    <div className="flex items-center gap-2 text-sm text-vaya-gray-600 mt-1">
+                    <div className="flex items-center gap-2 text-sm text-vaya-gray-600">
                       <Lightbulb className="w-4 h-4" />
                       <span>{prompts[0]}</span>
                     </div>
@@ -119,37 +119,33 @@ export const CapsulePill = ({
                   )}>
                     <Icon className={cn("w-6 h-6", getIconColor(colorKey))} />
                   </div>
-                  <div className="flex flex-col justify-center text-left">
-                    <div>
-                      <h3 className="text-2xl font-semibold text-vaya-gray-900 font-outfit mb-1">
-                        {title}
-                      </h3>
-                      {description && (
-                        <p className="text-sm text-vaya-gray-600 line-clamp-2 font-inter">
-                          {description}
-                        </p>
-                      )}
-                    </div>
+                  <div className="flex flex-col justify-center">
+                    <h3 className="text-2xl font-semibold text-vaya-gray-900 font-outfit">
+                      {title}
+                    </h3>
+                    {description && (
+                      <p className="text-sm text-vaya-gray-600 line-clamp-2 font-inter">
+                        {description}
+                      </p>
+                    )}
                     {metadata && (
-                      <div className="flex items-center justify-between mt-2">
-                        <div className="flex items-center gap-4">
-                          <div className="flex items-center gap-1 text-sm text-vaya-gray-500">
-                            <Users className="w-4 h-4" />
-                            <span>{metadata.itemCount} items</span>
-                          </div>
-                          <span className={cn(
-                            "capitalize px-3 py-1 rounded-full text-xs font-medium",
-                            `bg-vaya-${colorKey} bg-opacity-10 text-vaya-${colorKey}`
-                          )}>
-                            {metadata.status}
-                          </span>
-                          {prompts && prompts.length > 0 && (
-                            <div className="flex items-center gap-2 text-sm text-vaya-gray-600">
-                              <Lightbulb className="w-4 h-4" />
-                              <span>{prompts[0]}</span>
-                            </div>
-                          )}
+                      <div className="flex items-center gap-4 mt-2">
+                        <div className="flex items-center gap-1 text-sm text-vaya-gray-500">
+                          <Users className="w-4 h-4" />
+                          <span>{metadata.itemCount} items</span>
                         </div>
+                        <span className={cn(
+                          "capitalize px-3 py-1 rounded-full text-xs font-medium",
+                          `bg-vaya-${colorKey} bg-opacity-10 text-vaya-${colorKey}`
+                        )}>
+                          {metadata.status}
+                        </span>
+                        {prompts && prompts.length > 0 && (
+                          <div className="flex items-center gap-2 text-sm text-vaya-gray-600">
+                            <Lightbulb className="w-4 h-4" />
+                            <span>{prompts[0]}</span>
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>
