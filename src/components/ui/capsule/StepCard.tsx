@@ -38,13 +38,7 @@ export const StepCard = ({
       transition={{ duration: 0.2 }}
     >
       <div className="relative mb-6 flex items-center justify-center">
-        <div 
-          className={cn(
-            "w-20 h-20 rounded-full flex items-center justify-center",
-            color,
-            isRevealCard && "animate-glow"
-          )}
-        >
+        <div className="flex items-center justify-center h-20">
           {isRevealCard ? (
             <div className="relative w-10 h-10 flex items-center justify-center">
               <Icon className="absolute top-0 left-0 w-8 h-8 text-blue-500 animate-sparkle" />
@@ -53,7 +47,7 @@ export const StepCard = ({
             </div>
           ) : (
             <Icon className={cn(
-              "w-10 h-10",
+              "w-12 h-12",
               iconColor
             )} />
           )}
@@ -65,7 +59,7 @@ export const StepCard = ({
           {step}
         </div>
       </div>
-      <div className="flex flex-col items-center justify-center flex-1">
+      <div className="flex flex-col items-center justify-center flex-1 pt-4">
         <h3 className="text-xl font-bold text-vaya-gray-900 font-outfit mb-3">{title}</h3>
         <p className="text-sm text-vaya-gray-600 font-inter">{description}</p>
       </div>
