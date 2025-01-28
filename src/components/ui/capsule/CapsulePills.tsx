@@ -1,11 +1,18 @@
 import React from "react";
 import { motion } from "framer-motion";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import { StepCard } from "./StepCard";
 import { Camera, BookOpen, Users } from "lucide-react";
 
 export const CapsulePills = () => {
   return (
-    <div className="bg-white py-12 md:py-16 px-4">
+    <div className="bg-white/90 py-12 md:py-16 px-4">
       <div className="max-w-3xl mx-auto text-center">
         <h2 className="text-2xl md:text-3xl font-bold text-vaya-gray-900 font-outfit mb-3 md:mb-4">
           Create Your Family Time Capsule
@@ -15,37 +22,48 @@ export const CapsulePills = () => {
           Open it together on a special date to relive the memories.
         </p>
 
-        <motion.div 
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, staggerChildren: 0.1 }}
+        <Carousel
+          opts={{
+            align: "start",
+            loop: true,
+          }}
+          className="w-full max-w-5xl mx-auto px-4"
         >
-          <StepCard
-            step={1}
-            icon={Camera}
-            title="Capture Moments"
-            description="Add photos, voice messages, and written stories to your capsule"
-            color="bg-vaya-accent-orange"
-            iconColor="text-vaya-capsules"
-          />
-          <StepCard
-            step={2}
-            icon={BookOpen}
-            title="Set the Date"
-            description="Choose when your capsule will be opened - a birthday, anniversary, or special occasion"
-            color="bg-vaya-accent-yellow"
-            iconColor="text-vaya-capsules"
-          />
-          <StepCard
-            step={3}
-            icon={Users}
-            title="Share Together"
-            description="Invite family members to contribute their own memories to the capsule"
-            color="bg-vaya-accent-green"
-            iconColor="text-vaya-capsules"
-          />
-        </motion.div>
+          <CarouselContent className="-ml-2 md:-ml-4">
+            <CarouselItem className="pl-2 md:pl-4 md:basis-1/3">
+              <StepCard
+                step={1}
+                icon={Camera}
+                title="Capture Moments"
+                description="Add photos, voice messages, and written stories to your capsule"
+                color="bg-vaya-accent-orange"
+                iconColor="text-vaya-capsules"
+              />
+            </CarouselItem>
+            <CarouselItem className="pl-2 md:pl-4 md:basis-1/3">
+              <StepCard
+                step={2}
+                icon={BookOpen}
+                title="Set the Date"
+                description="Choose when your capsule will be opened - a birthday, anniversary, or special occasion"
+                color="bg-vaya-accent-yellow"
+                iconColor="text-vaya-capsules"
+              />
+            </CarouselItem>
+            <CarouselItem className="pl-2 md:pl-4 md:basis-1/3">
+              <StepCard
+                step={3}
+                icon={Users}
+                title="Share Together"
+                description="Invite family members to contribute their own memories to the capsule"
+                color="bg-vaya-accent-green"
+                iconColor="text-vaya-capsules"
+              />
+            </CarouselItem>
+          </CarouselContent>
+          <CarouselPrevious className="hidden md:flex" />
+          <CarouselNext className="hidden md:flex" />
+        </Carousel>
       </div>
     </div>
   );
