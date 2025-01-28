@@ -1,5 +1,6 @@
 import { LucideIcon } from "lucide-react";
 import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 interface StepCardProps {
   step: number;
@@ -8,12 +9,24 @@ interface StepCardProps {
   icon: LucideIcon;
   color: string;
   iconColor: string;
+  className?: string; // Added this line to accept className prop
 }
 
-export const StepCard = ({ step, title, description, icon: Icon, color, iconColor }: StepCardProps) => {
+export const StepCard = ({ 
+  step, 
+  title, 
+  description, 
+  icon: Icon, 
+  color, 
+  iconColor,
+  className 
+}: StepCardProps) => {
   return (
     <motion.div 
-      className="flex flex-col items-center text-center p-6 rounded-3xl transition-all duration-300 hover:shadow-lg"
+      className={cn(
+        "flex flex-col items-center text-center p-6 rounded-3xl transition-all duration-300 hover:shadow-lg",
+        className
+      )}
       whileHover={{ scale: 1.02, y: -5 }}
       transition={{ duration: 0.2 }}
     >
