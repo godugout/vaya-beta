@@ -52,8 +52,8 @@ export const CapsulePills = () => {
             title="Collaborate & Share"
             description="Invite family members to contribute their own special memories and messages to the capsule"
             color="bg-gray-50"
-            iconColor="text-emerald-500"
-            numberColor="text-emerald-500"
+            iconColor="text-vaya-narra"
+            numberColor="text-vaya-narra"
             className="hover:scale-105 transition-transform duration-300"
           />
           <StepCard
@@ -62,8 +62,8 @@ export const CapsulePills = () => {
             title="Experience the Magic"
             description="When the special day arrives, gather together to unlock your capsule and relive cherished memories in a heartwarming celebration"
             color="bg-gray-50"
-            iconColor="text-rose-500"
-            numberColor="text-vaya-narra"
+            iconColor="text-vaya-capsules"
+            numberColor="text-vaya-capsules"
             className="reveal-card capsule-confetti"
           />
         </div>
