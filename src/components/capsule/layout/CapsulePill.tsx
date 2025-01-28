@@ -45,21 +45,48 @@ const getEmojiForIcon = (icon: LucideIcon, title?: string, description?: string)
   return emojiMap[icon.name as keyof typeof emojiMap] || '💫';
 };
 
-interface CapsulePillProps {
-  title: string;
-  icon: LucideIcon;
-  colorKey: string;
-  description?: string;
-  prompts?: string[];
-  metadata?: {
-    creatorInitials: string;
-    itemCount: number;
-    status: "upcoming" | "active" | "locked" | "revealed";
-    date: string;
+const getColorVariation = (colorKey: string, isDetailed: boolean = false) => {
+  // Enhanced color variations for pill outlines and backgrounds
+  const colors = {
+    memories: {
+      outline: "border-[#0EA5E9]",
+      bg: "bg-[#E0F2FE]"
+    },
+    stories: {
+      outline: "border-[#F97316]",
+      bg: "bg-[#FDE1D3]"
+    },
+    capsules: {
+      outline: "border-[#22C55E]",
+      bg: "bg-[#F2FCE2]"
+    },
+    narra: {
+      outline: "border-[#9b87f5]",
+      bg: "bg-[#E5DEFF]"
+    },
+    purple: {
+      outline: "border-[#7E69AB]",
+      bg: "bg-[#F3EEFF]"
+    },
+    magenta: {
+      outline: "border-[#D946EF]",
+      bg: "bg-[#FFDEE2]"
+    }
   };
-  isPlaceholder?: boolean;
-  backgroundImage?: string;
-}
+
+  // Rotate through colors if the default ones aren't available
+  const allColors = Object.keys(colors);
+  const colorIndex = allColors.indexOf(colorKey) >= 0 ? 
+    allColors.indexOf(colorKey) : 
+    Math.floor(Math.random() * allColors.length);
+  
+  const selectedColor = colors[allColors[colorIndex] as keyof typeof colors];
+  
+  return {
+    outline: selectedColor.outline,
+    bg: isDetailed ? selectedColor.bg : "bg-white"
+  };
+};
 
 const getStatusColor = (status: string, date: string): string => {
   const statusDate = new Date(date);
@@ -84,6 +111,23 @@ const getStatusColor = (status: string, date: string): string => {
   return colors.upcoming;
 };
 
+interface CapsulePillProps {
+  title: string;
+  icon: LucideIcon;
+  colorKey: string;
+  description?: string;
+  prompts?: string[];
+  metadata?: {
+    creatorInitials: string;
+    itemCount: number;
+    status: "upcoming" | "active" | "locked" | "revealed";
+    date: string;
+  };
+  isPlaceholder?: boolean;
+  backgroundImage?: string;
+  isDetailed?: boolean;
+}
+
 export const CapsulePill = ({
   title,
   icon,
@@ -92,27 +136,29 @@ export const CapsulePill = ({
   prompts,
   metadata,
   isPlaceholder,
-  backgroundImage
-}: CapsulePillProps) => {
+  backgroundImage,
+  isDetailed
+}: CapsulePillProps & { isDetailed?: boolean }) => {
   const [isHovered, setIsHovered] = useState(false);
   const emoji = getEmojiForIcon(icon, title, description);
+  const colors = getColorVariation(colorKey, isDetailed);
 
   const pillBaseClasses = cn(
     "relative overflow-hidden rounded-[90px]",
-    "min-h-[100px] w-[400px]", // Reduced from 120px height and 500px width
-    `border-[3px] border-vaya-${colorKey}`,
+    "min-h-[100px] w-[400px]",
+    colors.outline,
+    colors.bg,
     "shadow-[0_4px_12px_-2px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_-4px_rgba(0,0,0,0.12)]",
     "transition-all duration-300 group"
   );
 
   const placeholderPillClasses = cn(
     pillBaseClasses,
-    "bg-white"
+    !isDetailed && "bg-white"
   );
 
   const detailedPillClasses = cn(
-    pillBaseClasses,
-    "bg-white"
+    pillBaseClasses
   );
 
   const orbitingProfiles = [

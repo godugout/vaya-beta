@@ -42,6 +42,7 @@ export const CapsuleRow = ({ capsules, rowIndex, duration = 20, isDetailed }: Ca
           <CapsulePill
             key={`${capsule.title}-${index}`}
             {...capsule}
+            isDetailed={isDetailed}
           />
         ))}
       </div>
