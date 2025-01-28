@@ -17,7 +17,7 @@ export const HeroContent = ({ config, isSpanish }: HeroContentProps) => {
     if (location.pathname.includes('memory-lane')) return 'memories';
     if (location.pathname.includes('share-stories')) return 'stories';
     if (location.pathname.includes('family-capsules')) return 'capsules';
-    return 'default'; // Home/default orange
+    return 'capsules'; // Changed default to green for home
   };
 
   return (
@@ -45,8 +45,8 @@ export const HeroContent = ({ config, isSpanish }: HeroContentProps) => {
         {config.secondaryCta && (
           <Button 
             size="lg" 
-            variant="outline" 
-            className={`w-full sm:w-auto border-vaya-${getButtonVariant()} text-vaya-${getButtonVariant()} hover:bg-vaya-${getButtonVariant()}/10 font-outfit`}
+            variant="stories" // Changed to orange for stories
+            className="w-full sm:w-auto font-outfit"
           >
             <span>{config.secondaryCta.text}</span>
             {config.secondaryCta.icon}
