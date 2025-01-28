@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Camera } from "lucide-react";
+import { Input } from "@/components/ui/input";
 import CreateCapsuleForm from "@/components/capsule/CreateCapsuleForm";
 import { CapsuleTable } from "@/components/capsule/CapsuleTable";
 import { CapsuleFilters } from "@/components/capsule/CapsuleFilters";
@@ -16,6 +17,7 @@ export const CapsuleScrollSection = ({ capsules }: CapsuleScrollSectionProps) =>
   const [sortField, setSortField] = useState<'date' | 'title' | 'status'>('date');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
   const [statusFilter, setStatusFilter] = useState<CapsuleStatus[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handleSort = (field: 'date' | 'title' | 'status') => {
     if (sortField === field) {
@@ -28,8 +30,9 @@ export const CapsuleScrollSection = ({ capsules }: CapsuleScrollSectionProps) =>
 
   const sortedAndFilteredCapsules = [...capsules]
     .filter(capsule => 
-      statusFilter.length === 0 || 
-      (capsule.metadata?.status && statusFilter.includes(capsule.metadata.status))
+      (statusFilter.length === 0 || 
+      (capsule.metadata?.status && statusFilter.includes(capsule.metadata.status))) &&
+      capsule.title.toLowerCase().includes(searchQuery.toLowerCase())
     )
     .sort((a, b) => {
       if (sortField === 'date') {
@@ -56,8 +59,17 @@ export const CapsuleScrollSection = ({ capsules }: CapsuleScrollSectionProps) =>
         <div className="grid gap-8 max-w-7xl mx-auto">
           <div className="bg-white rounded-lg border border-gray-100 shadow-sm">
             <div className="p-4 border-b border-gray-100">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-gray-900">Your Family Capsules</h3>
+              <div className="flex items-center justify-between gap-4">
+                <h3 className="text-lg font-semibold text-gray-900 min-w-[200px]">Your Family Capsules</h3>
+                <div className="flex-1 max-w-md">
+                  <Input
+                    type="search"
+                    placeholder="Search capsules..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full"
+                  />
+                </div>
                 <CapsuleFilters 
                   statusFilter={statusFilter}
                   onFilterChange={setStatusFilter}
