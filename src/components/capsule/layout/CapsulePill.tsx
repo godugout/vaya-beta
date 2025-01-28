@@ -82,6 +82,12 @@ export const CapsulePill = ({
     "bg-white"
   );
 
+  const orbitingProfiles = [
+    { initials: "JD", angle: 0 },
+    { initials: "AS", angle: 120 },
+    { initials: "MK", angle: 240 },
+  ];
+
   return (
     <motion.div
       whileHover={{ scale: 1.03 }}
@@ -144,7 +150,7 @@ export const CapsulePill = ({
                 </div>
               </div>
               {metadata?.date && (
-                <div className="relative w-12 h-12">
+                <div className="relative w-16 h-16">
                   {/* Circle background */}
                   <div className="absolute inset-0 rounded-full bg-gray-50 border-2 border-gray-100" />
                   
@@ -175,6 +181,27 @@ export const CapsulePill = ({
                       />
                     </circle>
                   </svg>
+                  
+                  {/* Orbiting profile pictures */}
+                  {orbitingProfiles.map((profile, index) => (
+                    <div
+                      key={profile.initials}
+                      className="absolute w-6 h-6 -translate-x-1/2 -translate-y-1/2"
+                      style={{
+                        left: '50%',
+                        top: '50%',
+                        transform: `rotate(${profile.angle}deg) translateY(-32px) rotate(-${profile.angle}deg)`,
+                      }}
+                    >
+                      <div className={cn(
+                        "w-6 h-6 rounded-full bg-white border-2 flex items-center justify-center",
+                        `border-vaya-${colorKey}`,
+                        "text-xs font-medium animate-pulse"
+                      )}>
+                        {profile.initials}
+                      </div>
+                    </div>
+                  ))}
                   
                   {/* Date display */}
                   <div className="absolute inset-0 flex flex-col items-center justify-center">

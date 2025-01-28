@@ -11,6 +11,16 @@ interface CapsuleRowProps {
 
 export const CapsuleRow = ({ capsules, rowIndex, duration = 20, isDetailed }: CapsuleRowProps) => {
   const isEven = rowIndex % 2 === 0;
+  
+  // Calculate vertical offset based on row index
+  const getVerticalOffset = () => {
+    switch(rowIndex % 3) {
+      case 0: return "0px";
+      case 1: return "-40px";
+      case 2: return "-80px";
+      default: return "0px";
+    }
+  };
 
   return (
     <motion.div
@@ -26,6 +36,7 @@ export const CapsuleRow = ({ capsules, rowIndex, duration = 20, isDetailed }: Ca
       }}
       style={{
         transform: `translateX(${isEven ? '-25%' : '25%'})`,
+        marginTop: getVerticalOffset(),
       }}
     >
       <div className="flex gap-10 animate-none">
