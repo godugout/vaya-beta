@@ -21,8 +21,21 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      <Hero />
-      <Features />
+      <div 
+        className="relative min-h-screen"
+        style={{
+          backgroundImage: 'url("https://images.unsplash.com/photo-1501854140801-50d01698950b")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed',
+        }}
+      >
+        <div className="absolute inset-0 bg-white/75" />
+        <div className="relative z-10">
+          <Hero />
+          <Features />
+        </div>
+      </div>
       <Testimonials />
       <div className="bg-[#F8FAFC] py-24 px-4 sm:px-6">
         <div className="mx-auto max-w-7xl lg:px-8 text-center">

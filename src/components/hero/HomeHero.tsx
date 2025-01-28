@@ -6,23 +6,11 @@ import { HeroPattern } from "./HeroPattern";
 const HomeHero = () => {
   return (
     <div 
-      className="relative overflow-hidden min-h-screen flex items-center" 
+      className="relative overflow-hidden flex items-center py-24" 
       data-component="HomeHero"
     >
-      {/* Background image with overlay */}
-      <div 
-        className="absolute inset-0 z-0"
-        style={{
-          backgroundImage: 'url("https://images.unsplash.com/photo-1501854140801-50d01698950b")',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
-        <div className="absolute inset-0 bg-white/75" /> {/* Slightly reduced overlay opacity */}
-      </div>
-      
       <HeroPattern />
-      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8 py-24">
+      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
