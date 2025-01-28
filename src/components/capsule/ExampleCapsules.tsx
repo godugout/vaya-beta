@@ -1,4 +1,4 @@
-import { Camera, Users, Heart, Music, Book, Calendar, MapPin, Image as ImageIcon, GraduationCap } from "lucide-react";
+import { Camera, Users, Heart, Music, Book, Calendar, MapPin, Image as ImageIcon, GraduationCap, MessageCircle, HelpCircle, Lightbulb } from "lucide-react";
 import { motion } from "framer-motion";
 import { CapsuleRow } from "./layout/CapsuleRow";
 import { Capsule } from "@/types/capsule";
@@ -9,7 +9,7 @@ const detailedCapsules: Capsule[] = [
     description: "Summer family beach trip collection",
     icon: Camera,
     colorKey: "memories",
-    prompts: ["Share your favorite beach activity with the family"],
+    prompts: [],
     metadata: {
       creatorInitials: "ES",
       itemCount: 24,
@@ -22,7 +22,7 @@ const detailedCapsules: Capsule[] = [
     description: "Immigration stories and memories",
     icon: MapPin,
     colorKey: "stories",
-    prompts: ["Tell us about your first day in the new country"],
+    prompts: [],
     metadata: {
       creatorInitials: "JD",
       itemCount: 18,
@@ -35,7 +35,7 @@ const detailedCapsules: Capsule[] = [
     description: "Cultural traditions and stories",
     icon: Heart,
     colorKey: "capsules",
-    prompts: ["Share a family recipe passed down generations"],
+    prompts: [],
     metadata: {
       creatorInitials: "LE",
       itemCount: 12,
@@ -47,45 +47,45 @@ const detailedCapsules: Capsule[] = [
 
 const simpleCapsules: Capsule[] = [
   {
-    title: "Local Adventures",
-    icon: Camera,
+    title: "Share Your Thoughts",
+    icon: MessageCircle,
     colorKey: "memories",
     prompts: ["What's your favorite hidden gem in the city?"],
     isPlaceholder: true
   },
   {
-    title: "Holiday Traditions",
-    icon: Heart,
+    title: "Family Traditions",
+    icon: HelpCircle,
     colorKey: "stories",
     prompts: ["Tell us about a unique family tradition"],
     isPlaceholder: true
   },
   {
-    title: "Festival Celebrations",
-    icon: Music,
+    title: "Musical Memories",
+    icon: Lightbulb,
     colorKey: "capsules",
-    prompts: ["Share a memorable festival moment"],
+    prompts: ["Share a song that reminds you of family"],
     isPlaceholder: true
   },
   {
-    title: "Wildlife Encounters",
-    icon: Camera,
+    title: "Childhood Stories",
+    icon: HelpCircle,
     colorKey: "memories",
-    prompts: ["What's the most amazing animal you've seen?"],
+    prompts: ["What's your earliest family memory?"],
     isPlaceholder: true
   },
   {
-    title: "Family Reunions",
-    icon: Users,
+    title: "Family Wisdom",
+    icon: Lightbulb,
     colorKey: "stories",
-    prompts: ["Your favorite reunion memory?"],
+    prompts: ["What's the best advice from your elders?"],
     isPlaceholder: true
   },
   {
-    title: "Travel Diaries",
-    icon: Book,
+    title: "Cultural Exchange",
+    icon: MessageCircle,
     colorKey: "capsules",
-    prompts: ["Share an unexpected travel story"],
+    prompts: ["Share a tradition you'd like to pass on"],
     isPlaceholder: true
   }
 ];
