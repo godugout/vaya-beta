@@ -6,7 +6,7 @@ import { HeroPattern } from "./HeroPattern";
 const HomeHero = () => {
   return (
     <div 
-      className="relative overflow-hidden py-24" 
+      className="relative overflow-hidden min-h-screen flex items-center" 
       data-component="HomeHero"
     >
       {/* Background image with overlay */}
@@ -18,11 +18,11 @@ const HomeHero = () => {
           backgroundPosition: 'center',
         }}
       >
-        <div className="absolute inset-0 bg-white/80" /> {/* Overlay for text readability */}
+        <div className="absolute inset-0 bg-white/75" /> {/* Slightly reduced overlay opacity */}
       </div>
       
       <HeroPattern />
-      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8 py-24">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
