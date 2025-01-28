@@ -1,13 +1,19 @@
 import { Camera, Users, Clock, Heart } from "lucide-react";
 import { motion } from "framer-motion";
+import { CulturalContent } from "@/types/cultural";
 
-const features = [
+interface FeaturesProps {
+  culturalContent?: CulturalContent[];
+}
+
+const defaultFeatures = [
   {
     name: "Create Memory Capsules",
     description: "Build digital time capsules filled with photos, stories, and precious moments for future generations.",
     icon: Camera,
     bgColor: "bg-white/80",
     iconColor: "text-vaya-stories",
+    feature_key: "create_capsules"
   },
   {
     name: "Family Collaboration",
@@ -15,6 +21,7 @@ const features = [
     icon: Users,
     bgColor: "bg-white/80",
     iconColor: "text-vaya-memories",
+    feature_key: "family_collab"
   },
   {
     name: "Memory Timeline",
@@ -22,17 +29,31 @@ const features = [
     icon: Clock,
     bgColor: "bg-white/80",
     iconColor: "text-vaya-capsules",
+    feature_key: "timeline"
   },
   {
     name: "Legacy Preservation",
     description: "Ensure your family's stories and traditions are preserved and passed down through generations.",
     icon: Heart,
     bgColor: "bg-white/80",
-    iconColor: "text-vaya-narra", // Changed to purple (vaya-narra) color
-  },
+    iconColor: "text-vaya-narra",
+    feature_key: "legacy"
+  }
 ];
 
-const Features = () => {
+const Features = ({ culturalContent }: FeaturesProps) => {
+  const features = defaultFeatures.map(feature => {
+    const culturalFeature = culturalContent?.find(
+      content => content.feature_key === feature.feature_key
+    );
+    
+    return {
+      ...feature,
+      name: culturalFeature?.title || feature.name,
+      description: culturalFeature?.description || feature.description
+    };
+  });
+
   return (
     <div className="py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">

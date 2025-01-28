@@ -5,8 +5,13 @@ import { heroConfigs } from "@/config/heroConfigs";
 import { HeroPattern } from "./hero/HeroPattern";
 import { HeroContent } from "./hero/HeroContent";
 import HomeHero from "./hero/HomeHero";
+import { CulturalContent } from "@/types/cultural";
 
-const Hero = () => {
+interface HeroProps {
+  culturalContent?: CulturalContent | null;
+}
+
+const Hero = ({ culturalContent }: HeroProps) => {
   const location = useLocation();
   const [isSpanish, setIsSpanish] = useState(true);
 
@@ -31,7 +36,7 @@ const Hero = () => {
 
   // If we're on the home page, render the HomeHero component
   if (location.pathname === '/') {
-    return <HomeHero />;
+    return <HomeHero culturalContent={culturalContent} />;
   }
 
   const config = heroConfigs[location.pathname as keyof typeof heroConfigs] || heroConfigs["/"];
