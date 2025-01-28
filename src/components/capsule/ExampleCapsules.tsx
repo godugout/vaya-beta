@@ -48,10 +48,10 @@ const detailedCapsules: Capsule[] = [
 
 const simpleCapsules: Capsule[] = [
   {
-    title: "Share Memories",
-    icon: MessageCircle,
+    title: "Share Ideas",
+    icon: Lightbulb,
     colorKey: "memories",
-    prompts: ["What's your story?"],
+    prompts: ["Got a bright idea?"],
     isPlaceholder: true
   },
   {
@@ -63,32 +63,32 @@ const simpleCapsules: Capsule[] = [
     isPlaceholder: true
   },
   {
-    title: "Share Ideas",
-    icon: Lightbulb,
-    colorKey: "capsules",
-    prompts: ["Got thoughts?"],
-    isPlaceholder: true
-  },
-  {
-    title: "Family Stories",
+    title: "Start Talking",
     icon: MessageCircle,
-    colorKey: "memories",
-    prompts: ["Tell us more"],
+    colorKey: "capsules",
+    prompts: ["Share your voice"],
     isPlaceholder: true
   },
   {
-    title: "Cultural Exchange",
+    title: "Got Questions?",
     icon: HelpCircle,
+    colorKey: "memories",
+    prompts: ["We're here to help"],
+    isPlaceholder: true
+  },
+  {
+    title: "Share Stories",
+    icon: MessageCircle,
     colorKey: "stories",
     backgroundImage: "/lovable-uploads/ef40fff0-4da4-4937-af3d-c2276b1d2588.png",
     prompts: ["Connect Now"],
     isPlaceholder: true
   },
   {
-    title: "Share Wisdom",
+    title: "New Ideas",
     icon: Lightbulb,
     colorKey: "capsules",
-    prompts: ["Your voice matters"],
+    prompts: ["Light the way"],
     isPlaceholder: true
   }
 ];
