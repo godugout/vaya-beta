@@ -22,7 +22,7 @@ const detailedCapsules: Capsule[] = [
     description: "Join the conversation",
     icon: MessageCircle,
     colorKey: "stories",
-    backgroundImage: "/lovable-uploads/33c609d9-9189-49d2-b9c1-106d8257557c.png",
+    backgroundImage: "/lovable-uploads/family-dinner.jpg",
     prompts: ["Let's Connect"],
     metadata: {
       creatorInitials: "JD",
@@ -58,7 +58,7 @@ const simpleCapsules: Capsule[] = [
     title: "Ask Questions",
     icon: HelpCircle,
     colorKey: "stories",
-    backgroundImage: "/lovable-uploads/4425ec86-56fe-44c4-9f47-75e59d3cb287.png",
+    backgroundImage: "/lovable-uploads/family-gathering.jpg",
     prompts: ["Join Us"],
     isPlaceholder: true
   },
@@ -80,7 +80,7 @@ const simpleCapsules: Capsule[] = [
     title: "Share Stories",
     icon: MessageCircle,
     colorKey: "stories",
-    backgroundImage: "/lovable-uploads/ef40fff0-4da4-4937-af3d-c2276b1d2588.png",
+    backgroundImage: "/lovable-uploads/family-picnic.jpg",
     prompts: ["Connect Now"],
     isPlaceholder: true
   },
@@ -102,14 +102,6 @@ export const ExampleCapsules = () => {
       }}
     >
       <div className="container mx-auto px-4">
-        <motion.h2 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-2xl font-outfit font-semibold text-gray-900 mb-8"
-        >
-          Example Family Capsules
-        </motion.h2>
         <div className="space-y-4">
           <CapsuleRow
             capsules={detailedCapsules}

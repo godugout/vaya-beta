@@ -3,6 +3,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { useEffect } from "react";
 import Hero from "@/components/Hero";
 import { CapsuleScrollSection } from "@/components/capsule/sections/CapsuleScrollSection";
+import { ExampleCapsules } from "@/components/capsule/ExampleCapsules";
+import { CapsulePills } from "@/components/capsule/sections/CapsulePills";
 import { Users, Gift, Heart, Camera, Music, Star, Image, Book } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
@@ -112,6 +114,8 @@ const FamilyCapsules = () => {
   return (
     <div className="relative min-h-screen">
       <Hero />
+      <ExampleCapsules />
+      <CapsulePills />
       <CapsuleScrollSection capsules={capsules || []} />
     </div>
   );
