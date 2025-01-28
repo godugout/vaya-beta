@@ -9,6 +9,7 @@ const exampleCapsules: Capsule[] = [
     description: "Summer family beach trip collection",
     icon: Camera,
     colorKey: "green",
+    prompts: ["Share your favorite beach activity with the family"],
     metadata: {
       creatorInitials: "ES",
       itemCount: 24,
@@ -21,6 +22,7 @@ const exampleCapsules: Capsule[] = [
     description: "Immigration stories and memories",
     icon: MapPin,
     colorKey: "blue",
+    prompts: ["Tell us about your first day in the new country"],
     metadata: {
       creatorInitials: "JD",
       itemCount: 18,
@@ -33,6 +35,7 @@ const exampleCapsules: Capsule[] = [
     description: "Cultural traditions and stories",
     icon: Heart,
     colorKey: "green",
+    prompts: ["Share a family recipe passed down generations"],
     metadata: {
       creatorInitials: "LE",
       itemCount: 12,
@@ -40,59 +43,67 @@ const exampleCapsules: Capsule[] = [
       date: "2024-03-15"
     }
   },
-  // Placeholder capsules
   {
     title: "Local Adventures",
     icon: Camera,
     colorKey: "green",
+    prompts: ["What's your favorite hidden gem in the city?"],
     isPlaceholder: true
   },
   {
     title: "Holiday Traditions",
     icon: Heart,
     colorKey: "orange",
+    prompts: ["Tell us about a unique family tradition"],
     isPlaceholder: true
   },
   {
     title: "Festival Celebrations",
     icon: Music,
     colorKey: "orange",
+    prompts: ["Share a memorable festival moment"],
     isPlaceholder: true
   },
   {
     title: "Wildlife Encounters",
     icon: Camera,
     colorKey: "green",
+    prompts: ["What's the most amazing animal you've seen?"],
     isPlaceholder: true
   },
   {
     title: "Family Reunions",
     icon: Users,
     colorKey: "blue",
+    prompts: ["Your favorite reunion memory?"],
     isPlaceholder: true
   },
   {
     title: "Travel Diaries",
     icon: Book,
     colorKey: "green",
+    prompts: ["Share an unexpected travel story"],
     isPlaceholder: true
   },
   {
     title: "Photo Albums",
     icon: ImageIcon,
     colorKey: "blue",
+    prompts: ["What's the story behind your favorite photo?"],
     isPlaceholder: true
   },
   {
     title: "School Memories",
     icon: GraduationCap,
     colorKey: "blue",
+    prompts: ["Your most memorable school day?"],
     isPlaceholder: true
   },
   {
     title: "Year in Review 2023",
     icon: Calendar,
     colorKey: "orange",
+    prompts: ["What was your biggest achievement?"],
     isPlaceholder: true
   }
 ];
@@ -125,7 +136,7 @@ export const ExampleCapsules = () => {
               key={index}
               capsules={row}
               rowIndex={index}
-              duration={20 + index * 5}
+              duration={15 + index * 5}
             />
           ))}
         </div>
