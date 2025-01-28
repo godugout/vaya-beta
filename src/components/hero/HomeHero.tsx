@@ -26,8 +26,8 @@ const HomeHero = ({ isSpanish }: HomeHeroProps) => {
       }}
       data-component="HomeHero"
     >
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/50" />
+      {/* Dark overlay for text readability */}
+      <div className="absolute inset-0 bg-black bg-opacity-50" />
       
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div 
