@@ -58,6 +58,16 @@ export const CapsuleTable = ({ capsules, sortField, sortDirection, onSort }: Cap
   };
 
   const handleBookmark = async (capsuleId: string) => {
+    // Skip if the capsuleId isn't a valid UUID
+    if (!capsuleId.match(/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i)) {
+      toast({
+        title: "Invalid capsule ID",
+        description: "This capsule cannot be bookmarked in demo mode",
+        variant: "destructive",
+      });
+      return;
+    }
+
     try {
       if (bookmarkedCapsules.includes(capsuleId)) {
         const { error } = await supabase
