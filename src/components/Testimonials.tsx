@@ -11,7 +11,7 @@ const testimonials = [
     title: "Teacher's Legacy",
     quote: "Each year I create a capsule for my class. When they graduate, I share it back - a beautiful time capsule of their journey.",
     author: "Sarah, High School Teacher",
-    icon: "👩‍🏫"
+    icon: "🍎"
   },
   {
     title: "Family Celebrations",
