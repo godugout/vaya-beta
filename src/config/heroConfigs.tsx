@@ -1,4 +1,4 @@
-import { Volume2, Heart, Hourglass, MessageSquare } from "lucide-react";
+import { Volume2, Heart, Hourglass, MessageSquare, Camera, Mic } from "lucide-react";
 import { HeroConfigs } from "@/types/hero";
 
 export const heroConfigs: HeroConfigs = {
