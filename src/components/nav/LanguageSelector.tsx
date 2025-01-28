@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { Check, Flag } from "lucide-react";
+import { Check } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,17 +29,35 @@ const languages = [
 export const LanguageSelector = ({ selectedLanguage, onLanguageChange }: LanguageSelectorProps) => {
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
+  const [currentLanguage, setCurrentLanguage] = useState(selectedLanguage);
+
+  useEffect(() => {
+    setCurrentLanguage(selectedLanguage);
+  }, [selectedLanguage]);
 
   const handleLanguageChange = async (languageCode: string) => {
     try {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user) {
+        toast({
+          title: "Authentication required",
+          description: "Please sign in to change language preferences",
+          variant: "destructive",
+        });
+        return;
+      }
+
       const { error } = await supabase
         .from('profiles')
         .update({ preferred_language: languageCode })
-        .eq('id', (await supabase.auth.getUser()).data.user?.id);
+        .eq('id', user.id);
 
       if (error) throw error;
 
+      setCurrentLanguage(languageCode);
       onLanguageChange(languageCode);
+      
       toast({
         title: "Language Updated",
         description: "Your language preference has been saved.",
@@ -55,7 +73,7 @@ export const LanguageSelector = ({ selectedLanguage, onLanguageChange }: Languag
     setIsOpen(false);
   };
 
-  const currentLanguage = languages.find(lang => lang.code === selectedLanguage) || languages[0];
+  const currentLang = languages.find(lang => lang.code === currentLanguage) || languages[0];
 
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
@@ -65,7 +83,7 @@ export const LanguageSelector = ({ selectedLanguage, onLanguageChange }: Languag
           size="icon"
           className="w-8 h-8 hover:bg-[#333333] relative"
         >
-          <span className="text-lg">{currentLanguage.flag}</span>
+          <span className="text-lg">{currentLang.flag}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
@@ -79,7 +97,7 @@ export const LanguageSelector = ({ selectedLanguage, onLanguageChange }: Languag
               <span>{language.flag}</span>
               <span>{language.name}</span>
             </div>
-            {selectedLanguage === language.code && (
+            {currentLanguage === language.code && (
               <Check className="h-4 w-4 ml-2" />
             )}
           </DropdownMenuItem>
