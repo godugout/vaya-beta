@@ -17,7 +17,7 @@ const testimonials = [
     title: "Family Celebrations",
     quote: "We capture every family reunion, holiday, and milestone. It's amazing to look back and see how our family has grown.",
     author: "The Rodriguez Family",
-    icon: "🎓"
+    icon: "🎉"
   }
 ];
 
