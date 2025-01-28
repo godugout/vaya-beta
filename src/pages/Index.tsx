@@ -1,12 +1,26 @@
 import Hero from "@/components/Hero";
 import Features from "@/components/Features";
 import FAQ from "@/components/FAQ";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 
+const culturalBackgrounds = [
+  // Mountain landscape - could represent Canada/Mexico
+  "https://images.unsplash.com/photo-1501854140801-50d01698950b",
+  // Serene water scene - could represent Philippines
+  "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+  // Vibrant nature - could represent India
+  "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07",
+  // Forest with sunlight - could represent Mexico/Canada
+  "https://images.unsplash.com/photo-1523712999610-f77fbcfc3843",
+  // Mountain vista - could represent any region
+  "https://images.unsplash.com/photo-1426604966848-d7adac402bff"
+];
+
 const Index = () => {
   const navigate = useNavigate();
+  const [currentBgIndex, setCurrentBgIndex] = useState(0);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -18,18 +32,33 @@ const Index = () => {
     checkAuth();
   }, [navigate]);
 
+  useEffect(() => {
+    // Rotate background images every 7 seconds
+    const interval = setInterval(() => {
+      setCurrentBgIndex((prev) => (prev + 1) % culturalBackgrounds.length);
+    }, 7000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="min-h-screen bg-white flex flex-col">
       <div 
-        className="relative"
+        className="relative transition-all duration-1000 ease-in-out"
         style={{
-          backgroundImage: 'url("https://images.unsplash.com/photo-1501854140801-50d01698950b")',
+          backgroundImage: `url("${culturalBackgrounds[currentBgIndex]}")`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: 'fixed',
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-white/75 via-black/20 to-black/60" />
+        <div 
+          className="absolute inset-0" 
+          style={{
+            background: 'linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.6) 100%)',
+            backdropFilter: 'blur(1px)',
+          }}
+        />
         <div className="relative z-10">
           <Hero />
           <Features />
