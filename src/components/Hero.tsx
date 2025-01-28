@@ -26,7 +26,7 @@ const Hero = ({ culturalContent }: HeroProps) => {
       className={`relative overflow-hidden py-24 ${
         location.pathname.includes('family-capsules') 
           ? 'bg-vaya-capsules/10 text-vaya-gray-900' 
-          : 'bg-white'
+          : 'bg-transparent'
       }`} 
       data-component="Hero"
     >

@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Mic, Hourglass } from "lucide-react";
-import { HeroPattern } from "./HeroPattern";
 
 interface HomeHeroProps {
   isSpanish: boolean;
@@ -21,10 +20,15 @@ const HomeHero = ({ isSpanish }: HomeHeroProps) => {
 
   return (
     <div 
-      className="relative overflow-hidden flex items-center py-24 bg-vaya-gray-900" 
+      className="relative min-h-[600px] flex items-center bg-cover bg-center"
+      style={{
+        backgroundImage: 'url("/lovable-uploads/529cd171-c95e-44a5-8238-91e1c3159b0c.png")'
+      }}
       data-component="HomeHero"
     >
-      <HeroPattern />
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/50" />
+      
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
