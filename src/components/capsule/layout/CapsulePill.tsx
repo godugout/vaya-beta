@@ -1,4 +1,4 @@
-import { LucideIcon } from "lucide-react";
+import { LucideIcon, Plus } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
@@ -154,7 +154,7 @@ export const CapsulePill = ({
 
   const placeholderPillClasses = cn(
     pillBaseClasses,
-    !isDetailed && "bg-white"
+    !isDetailed && "bg-white hover:bg-opacity-95"
   );
 
   const detailedPillClasses = cn(
@@ -178,6 +178,17 @@ export const CapsulePill = ({
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className={isPlaceholder ? placeholderPillClasses : detailedPillClasses}>
+        {/* Background gradient on hover for white pills */}
+        {!isDetailed && (
+          <div 
+            className={cn(
+              "absolute inset-0 bg-gradient-to-r transition-opacity duration-300",
+              `from-vaya-${colorKey}/5 via-vaya-${colorKey}/10 to-vaya-${colorKey}/5`,
+              isHovered ? "opacity-100" : "opacity-0"
+            )}
+          />
+        )}
+        
         {backgroundImage && (
           <div 
             className="absolute inset-0 bg-cover bg-center opacity-20 group-hover:opacity-30 transition-opacity duration-300"
@@ -198,6 +209,25 @@ export const CapsulePill = ({
                     <span>{prompts[0]}</span>
                   </div>
                 )}
+              </div>
+              {/* Add CTA button for white pills */}
+              <div className="ml-auto">
+                <motion.button
+                  className={cn(
+                    "w-16 h-16 rounded-full flex items-center justify-center",
+                    `bg-vaya-${colorKey} text-white`,
+                    "transition-all duration-300 transform",
+                    isHovered ? "scale-110" : "scale-100 opacity-0"
+                  )}
+                  initial={false}
+                  animate={{ 
+                    opacity: isHovered ? 1 : 0,
+                    scale: isHovered ? 1.1 : 1
+                  }}
+                  whileHover={{ scale: 1.15 }}
+                >
+                  <Plus className="w-8 h-8" />
+                </motion.button>
               </div>
             </div>
           ) : (
