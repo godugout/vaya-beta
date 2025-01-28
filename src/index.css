@@ -39,6 +39,16 @@
   .reveal-card:hover::before {
     opacity: 1;
   }
+
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  @keyframes particles {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-100%); }
+  }
 }
 
 @layer base {

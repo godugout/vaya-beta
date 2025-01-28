@@ -1,4 +1,4 @@
-import { LucideIcon, Lightbulb, Users } from "lucide-react";
+import { LucideIcon } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
@@ -117,7 +117,6 @@ export const CapsulePill = ({
                 </h3>
                 {prompts && prompts.length > 0 && (
                   <div className="flex items-center gap-2 text-sm text-vaya-gray-600 mt-1">
-                    <Lightbulb className="w-4 h-4" />
                     <span>{prompts[0]}</span>
                   </div>
                 )}
@@ -144,7 +143,6 @@ export const CapsulePill = ({
                   {metadata && (
                     <div className="flex items-center gap-4 mt-2">
                       <div className="flex items-center gap-1 text-sm text-vaya-gray-500">
-                        <Users className="w-4 h-4" />
                         <span>{metadata.itemCount} items</span>
                       </div>
                       <span className={cn(
@@ -161,17 +159,6 @@ export const CapsulePill = ({
           )}
         </div>
       </div>
-
-      <style jsx global>{`
-        @keyframes shimmer {
-          0% { background-position: 200% 0; }
-          100% { background-position: -200% 0; }
-        }
-        @keyframes particles {
-          0% { transform: translateY(0); }
-          100% { transform: translateY(-100%); }
-        }
-      `}</style>
     </motion.div>
   );
 };
