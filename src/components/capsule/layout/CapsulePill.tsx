@@ -66,7 +66,7 @@ export const CapsulePill = ({
 
   const pillBaseClasses = cn(
     "relative overflow-hidden rounded-[90px]",
-    "min-h-[120px] w-[500px]",
+    "min-h-[100px] w-[400px]", // Reduced from 120px height and 500px width
     `border-[3px] border-vaya-${colorKey}`,
     "shadow-[0_4px_12px_-2px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_-4px_rgba(0,0,0,0.12)]",
     "transition-all duration-300 group"
@@ -100,16 +100,16 @@ export const CapsulePill = ({
           />
         )}
         
-        <div className="flex items-center justify-between h-full relative z-10 px-12 py-8">
+        <div className="flex items-center justify-between h-full relative z-10 px-8 py-6">
           {isPlaceholder ? (
-            <div className="flex items-center gap-6 w-full">
-              <span className="text-4xl">{getEmojiForIcon(icon)}</span>
+            <div className="flex items-center gap-4 w-full">
+              <span className="text-3xl">{getEmojiForIcon(icon)}</span>
               <div className="flex flex-col justify-start">
-                <h3 className="text-2xl font-semibold text-vaya-gray-900 font-outfit text-left">
+                <h3 className="text-xl font-semibold text-vaya-gray-900 font-outfit text-left">
                   {title}
                 </h3>
                 {prompts && prompts.length > 0 && (
-                  <div className="flex items-center gap-2 text-sm text-vaya-gray-600 mt-1">
+                  <div className="flex items-center gap-2 text-xs text-vaya-gray-600 mt-1">
                     <span>{prompts[0]}</span>
                   </div>
                 )}
@@ -118,23 +118,23 @@ export const CapsulePill = ({
           ) : (
             <>
               <div className="flex items-start">
-                <span className="text-4xl mr-6">{getEmojiForIcon(icon)}</span>
+                <span className="text-3xl mr-4">{getEmojiForIcon(icon)}</span>
                 <div className="flex flex-col justify-start">
-                  <h3 className="text-2xl font-semibold text-vaya-gray-900 font-outfit mb-1 text-left">
+                  <h3 className="text-xl font-semibold text-vaya-gray-900 font-outfit mb-1 text-left">
                     {title}
                   </h3>
                   {description && (
-                    <p className="text-sm text-vaya-gray-600 line-clamp-2 font-inter text-left">
+                    <p className="text-xs text-vaya-gray-600 line-clamp-2 font-inter text-left">
                       {description}
                     </p>
                   )}
                   {metadata && (
                     <div className="flex items-center gap-4 mt-2">
-                      <div className="flex items-center gap-1 text-sm text-vaya-gray-500">
+                      <div className="flex items-center gap-1 text-xs text-vaya-gray-500">
                         <span>{metadata.itemCount} items</span>
                       </div>
                       <span className={cn(
-                        "capitalize px-3 py-1 rounded-full text-xs font-medium",
+                        "capitalize px-2 py-0.5 rounded-full text-xs font-medium",
                         `bg-vaya-${colorKey} bg-opacity-20 text-vaya-${colorKey}`
                       )}>
                         {metadata.status}
@@ -144,7 +144,7 @@ export const CapsulePill = ({
                 </div>
               </div>
               {metadata?.date && (
-                <div className="relative w-16 h-16">
+                <div className="relative w-12 h-12">
                   {/* Circle background */}
                   <div className="absolute inset-0 rounded-full bg-gray-50 border-2 border-gray-100" />
                   
@@ -178,7 +178,7 @@ export const CapsulePill = ({
                   
                   {/* Date display */}
                   <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <span className="text-xl font-bold text-vaya-gray-800">
+                    <span className="text-lg font-bold text-vaya-gray-800">
                       {format(new Date(metadata.date), 'd')}
                     </span>
                     <span className="text-xs font-medium text-vaya-gray-600">
