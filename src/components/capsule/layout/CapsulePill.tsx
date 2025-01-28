@@ -59,24 +59,33 @@ export const CapsulePill = ({
     return colors[key] || "text-gray-600";
   };
 
+  const pillBaseClasses = cn(
+    "relative overflow-hidden rounded-[90px]",
+    "min-h-[120px] w-[500px]",
+    `border-[3px] border-vaya-${colorKey}`,
+    "shadow-[0_4px_12px_-2px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_-4px_rgba(0,0,0,0.12)]",
+    "transition-all duration-300"
+  );
+
+  const placeholderPillClasses = cn(
+    pillBaseClasses,
+    "bg-white hover:bg-gradient-to-br hover:from-white hover:to-vaya-accent-blue/20"
+  );
+
+  const detailedPillClasses = cn(
+    pillBaseClasses,
+    getBgColor(colorKey)
+  );
+
   return (
     <motion.div
       whileHover={{ scale: 1.03 }}
       className={cn(
-        "group flex-shrink-0 transition-all duration-200",
+        "flex-shrink-0 transition-all duration-200",
         isPlaceholder ? "opacity-90 hover:opacity-100" : ""
       )}
     >
-      <div className={cn(
-        "relative overflow-hidden rounded-[90px]",
-        "min-h-[120px] w-[500px]",
-        `border-[3px] border-vaya-${colorKey}`,
-        isPlaceholder 
-          ? "bg-white hover:bg-gradient-to-br hover:from-white hover:to-vaya-accent-blue/20"
-          : getBgColor(colorKey),
-        "shadow-[0_4px_12px_-2px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_-4px_rgba(0,0,0,0.12)]",
-        "transition-all duration-300"
-      )}>
+      <div className={isPlaceholder ? placeholderPillClasses : detailedPillClasses}>
         {backgroundImage && (
           <div 
             className="absolute inset-0 bg-cover bg-center opacity-20 group-hover:opacity-30 transition-opacity duration-300"
@@ -97,8 +106,8 @@ export const CapsulePill = ({
                 )}>
                   <Icon className={cn("w-6 h-6", getIconColor(colorKey))} />
                 </div>
-                <div className="flex flex-col justify-center">
-                  <h3 className="text-2xl font-semibold text-vaya-gray-900 font-outfit">
+                <div className="flex flex-col justify-start">
+                  <h3 className="text-2xl font-semibold text-vaya-gray-900 font-outfit text-left">
                     {title}
                   </h3>
                   {prompts && prompts.length > 0 && (
@@ -110,8 +119,8 @@ export const CapsulePill = ({
                 </div>
               </div>
             ) : (
-              <div className="flex items-center justify-between w-full">
-                <div className="flex items-center gap-6">
+              <div className="flex items-start justify-between w-full">
+                <div className="flex items-start gap-6">
                   <div className={cn(
                     "inline-flex items-center justify-center w-12 h-12 rounded-2xl shrink-0",
                     getIconBgColor(colorKey),
@@ -119,12 +128,12 @@ export const CapsulePill = ({
                   )}>
                     <Icon className={cn("w-6 h-6", getIconColor(colorKey))} />
                   </div>
-                  <div className="flex flex-col justify-center">
-                    <h3 className="text-2xl font-semibold text-vaya-gray-900 font-outfit mb-1">
+                  <div className="flex flex-col justify-start">
+                    <h3 className="text-2xl font-semibold text-vaya-gray-900 font-outfit mb-1 text-left">
                       {title}
                     </h3>
                     {description && (
-                      <p className="text-sm text-vaya-gray-600 line-clamp-2 font-inter">
+                      <p className="text-sm text-vaya-gray-600 line-clamp-2 font-inter text-left">
                         {description}
                       </p>
                     )}
