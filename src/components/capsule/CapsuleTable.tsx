@@ -120,25 +120,25 @@ export const CapsuleTable = ({ capsules, sortField, sortDirection, onSort }: Cap
         <TableHeader>
           <TableRow className="hover:bg-gray-50/50">
             <TableHead 
-              className="cursor-pointer font-semibold text-lg"
+              className="cursor-pointer font-semibold text-lg px-6"
               onClick={() => onSort('title')}
             >
               Capsules {sortField === 'title' && (sortDirection === 'asc' ? '↑' : '↓')}
             </TableHead>
-            <TableHead>Creator</TableHead>
+            <TableHead className="px-6">Creator</TableHead>
             <TableHead 
-              className="cursor-pointer"
+              className="cursor-pointer px-6"
               onClick={() => onSort('status')}
             >
               Status {sortField === 'status' && (sortDirection === 'asc' ? '↑' : '↓')}
             </TableHead>
             <TableHead 
-              className="cursor-pointer"
+              className="cursor-pointer px-6"
               onClick={() => onSort('date')}
             >
               Date {sortField === 'date' && (sortDirection === 'asc' ? '↑' : '↓')}
             </TableHead>
-            <TableHead className="text-right">Actions</TableHead>
+            <TableHead className="text-right px-6">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -147,19 +147,19 @@ export const CapsuleTable = ({ capsules, sortField, sortDirection, onSort }: Cap
               key={capsule.title}
               className="hover:bg-gray-50/50"
             >
-              <TableCell className="font-medium">{capsule.title}</TableCell>
-              <TableCell>{capsule.metadata?.creatorInitials}</TableCell>
-              <TableCell>
+              <TableCell className="font-medium px-6">{capsule.title}</TableCell>
+              <TableCell className="px-6">{capsule.metadata?.creatorInitials}</TableCell>
+              <TableCell className="px-6">
                 {capsule.metadata?.status && (
                   <span className={getStatusClass(capsule.metadata.status)}>
                     {capsule.metadata.status}
                   </span>
                 )}
               </TableCell>
-              <TableCell>
+              <TableCell className="px-6">
                 {new Date(capsule.metadata?.date || "").toLocaleDateString()}
               </TableCell>
-              <TableCell className="text-right">
+              <TableCell className="text-right px-6">
                 <div className="flex items-center justify-end gap-2">
                   <Button
                     variant="ghost"
@@ -189,7 +189,7 @@ export const CapsuleTable = ({ capsules, sortField, sortDirection, onSort }: Cap
         </TableBody>
         <TableFooter>
           <TableRow>
-            <TableCell colSpan={5}>
+            <TableCell colSpan={5} className="px-6">
               <div className="flex items-center justify-between py-3">
                 <div className="flex items-center gap-3 text-base text-gray-600">
                   <MessageSquare className="h-5 w-5" />
