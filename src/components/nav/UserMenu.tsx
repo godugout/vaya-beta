@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "../ui/button";
 import { LogOut, User as UserIcon, Settings, Users } from "lucide-react";
-import { useState } from "react";
 import { LanguageSelector } from "./LanguageSelector";
 
 interface UserMenuProps {
@@ -19,16 +18,9 @@ interface UserMenuProps {
 }
 
 export const UserMenu = ({ user, handleSignOut, navigate }: UserMenuProps) => {
-  const [selectedLanguage, setSelectedLanguage] = useState<string>(
-    user.user_metadata.preferred_language || 'es'
-  );
-
   return (
     <div className="flex items-center gap-2">
-      <LanguageSelector 
-        selectedLanguage={selectedLanguage} 
-        onLanguageChange={setSelectedLanguage}
-      />
+      <LanguageSelector />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button

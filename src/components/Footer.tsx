@@ -51,7 +51,7 @@ const Footer = () => {
             {/* Language Selector */}
             <div className="flex items-center gap-2">
               <span className="text-vaya-gray-600">Language:</span>
-              <LanguageSelector selectedLanguage="en" onLanguageChange={() => {}} />
+              <LanguageSelector />
             </div>
           </div>
 
