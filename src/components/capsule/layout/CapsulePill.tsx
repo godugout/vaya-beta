@@ -64,17 +64,25 @@ export const CapsulePill = ({
     "min-h-[120px] w-[500px]",
     `border-[3px] border-vaya-${colorKey}`,
     "shadow-[0_4px_12px_-2px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_-4px_rgba(0,0,0,0.12)]",
-    "transition-all duration-300"
+    "transition-all duration-300 group"
   );
 
   const placeholderPillClasses = cn(
     pillBaseClasses,
-    "bg-white hover:bg-gradient-to-br hover:from-white hover:to-vaya-accent-blue/20"
+    "bg-white before:absolute before:inset-0 before:bg-gradient-to-r",
+    `before:from-vaya-${colorKey}/5 before:via-vaya-${colorKey}/10 before:to-vaya-${colorKey}/5`,
+    "before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300",
+    "after:absolute after:inset-0 after:bg-gradient-to-br",
+    `after:from-vaya-${colorKey}/0 after:to-vaya-${colorKey}/10`,
+    "after:opacity-0 group-hover:after:opacity-100 after:transition-opacity after:duration-500"
   );
 
   const detailedPillClasses = cn(
     pillBaseClasses,
-    getBgColor(colorKey)
+    getBgColor(colorKey),
+    "before:absolute before:inset-0 before:bg-gradient-to-r",
+    `before:from-vaya-${colorKey}/10 before:via-vaya-${colorKey}/20 before:to-vaya-${colorKey}/10`,
+    "before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300"
   );
 
   return (
