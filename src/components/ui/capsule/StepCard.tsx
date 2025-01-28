@@ -47,8 +47,8 @@ export const StepCard = ({
         >
           {isRevealCard ? (
             <div className="relative w-10 h-10">
-              <Icon className="absolute top-0 left-0 w-6 h-6 text-rose-500 animate-sparkle" />
-              <Icon className="absolute top-2 right-0 w-6 h-6 text-amber-500 animate-sparkle" style={{ animationDelay: "0.2s" }} />
+              <Icon className="absolute top-0 left-0 w-8 h-8 text-blue-500 animate-sparkle" />
+              <Icon className="absolute top-2 right-0 w-5 h-5 text-amber-500 animate-sparkle" style={{ animationDelay: "0.2s" }} />
               <Icon className="absolute bottom-0 left-2 w-6 h-6 text-emerald-500 animate-sparkle" style={{ animationDelay: "0.4s" }} />
             </div>
           ) : (
