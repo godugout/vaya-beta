@@ -64,7 +64,7 @@ export const CapsulePills = () => {
             color="bg-gray-50"
             iconColor="text-vaya-capsules"
             numberColor="text-vaya-capsules"
-            className="hover:scale-105 transition-transform duration-300"
+            className="magical-card magical-sparkle hover:scale-105 transition-all duration-300"
           />
         </div>
       </div>
