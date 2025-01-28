@@ -13,12 +13,18 @@ export const HeroContent = ({ config, isSpanish }: HeroContentProps) => {
   const location = useLocation();
   const navigate = useNavigate();
   
-  // Determine button variant based on current route
-  const getButtonVariant = () => {
-    if (location.pathname.includes('memory-lane')) return 'memories';
-    if (location.pathname.includes('share-stories')) return 'stories';
-    if (location.pathname.includes('family-capsules')) return 'capsules';
-    return 'capsules'; // Default remains green
+  // Get unique button styles based on route
+  const getSecondaryButtonStyles = () => {
+    if (location.pathname.includes('memory-lane')) {
+      return 'border-vaya-memories hover:bg-vaya-memories/10 text-vaya-memories';
+    }
+    if (location.pathname.includes('share-stories')) {
+      return 'border-vaya-stories hover:bg-vaya-stories/10 text-vaya-stories';
+    }
+    if (location.pathname.includes('family-capsules')) {
+      return 'border-vaya-capsules hover:bg-vaya-capsules/10 text-vaya-capsules';
+    }
+    return 'border-vaya-stories hover:bg-vaya-stories/10 text-vaya-stories'; // Default
   };
 
   return (
@@ -37,7 +43,7 @@ export const HeroContent = ({ config, isSpanish }: HeroContentProps) => {
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6">
         <Button 
           size="lg" 
-          variant={getButtonVariant()}
+          variant={location.pathname.includes('memory-lane') ? 'memories' : 'stories'}
           className="w-full sm:w-auto transition-all duration-300 font-outfit"
         >
           <span>{config.primaryCta.text}</span>
@@ -46,9 +52,9 @@ export const HeroContent = ({ config, isSpanish }: HeroContentProps) => {
         {config.secondaryCta && (
           <Button 
             size="lg" 
-            variant="stories"
+            variant="outline"
             onClick={() => location.pathname.includes('memory-lane') && navigate('/narra')}
-            className="w-full sm:w-auto font-outfit"
+            className={`w-full sm:w-auto font-outfit border-2 ${getSecondaryButtonStyles()}`}
           >
             <span>{config.secondaryCta.text}</span>
             {config.secondaryCta.icon}
