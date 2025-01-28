@@ -20,7 +20,7 @@ const Footer = () => {
                 textShadow: '1px 1px 2px rgba(255,255,255,1), -1px -1px 2px rgba(0,0,0,0.1)',
               }}
             >
-              Vaya<sup className="opacity-75 transition-all duration-300 group-hover:text-vaya-home text-3xl sm:text-4xl font-normal -ml-0.5">ᵅ</sup>
+              Vaya<sup className="opacity-75 transition-all duration-300 group-hover:text-vaya-home text-[2.5rem] sm:text-[3rem] font-normal -ml-0.5">ᵅ</sup>
             </span>
           </Link>
           <p className="mt-6 text-xl sm:text-2xl leading-8 text-vaya-gray-600 max-w-2xl mx-auto">
