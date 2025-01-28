@@ -9,11 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-
-interface LanguageSelectorProps {
-  selectedLanguage: string;
-  onLanguageChange: (language: string) => void;
-}
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const languages = [
   { code: 'en', name: 'English', flag: '🇺🇸' },
@@ -26,14 +22,11 @@ const languages = [
   { code: 'zh', name: '中文', flag: '🇨🇳' },
 ];
 
-export const LanguageSelector = ({ selectedLanguage, onLanguageChange }: LanguageSelectorProps) => {
+export const LanguageSelector = () => {
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
-  const [currentLanguage, setCurrentLanguage] = useState(selectedLanguage);
-
-  useEffect(() => {
-    setCurrentLanguage(selectedLanguage);
-  }, [selectedLanguage]);
+  const { isSpanish, setLanguagePreference } = useLanguage();
+  const currentLanguage = isSpanish ? 'es' : 'en';
 
   const handleLanguageChange = async (languageCode: string) => {
     try {
@@ -48,15 +41,7 @@ export const LanguageSelector = ({ selectedLanguage, onLanguageChange }: Languag
         return;
       }
 
-      const { error } = await supabase
-        .from('profiles')
-        .update({ preferred_language: languageCode })
-        .eq('id', user.id);
-
-      if (error) throw error;
-
-      setCurrentLanguage(languageCode);
-      onLanguageChange(languageCode);
+      await setLanguagePreference(languageCode);
       
       toast({
         title: "Language Updated",
@@ -86,7 +71,7 @@ export const LanguageSelector = ({ selectedLanguage, onLanguageChange }: Languag
           <span className="text-lg">{currentLang.flag}</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-48">
+      <DropdownMenuContent align="end" className="w-48 bg-white/95 backdrop-blur-sm">
         {languages.map((language) => (
           <DropdownMenuItem
             key={language.code}

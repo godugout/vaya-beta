@@ -23,8 +23,9 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <section className="bg-[#1A1F2C] py-24">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+    <section className="relative py-24">
+      <div className="absolute inset-0 bg-[#1A1F2C]/80" />
+      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
             Stories That Matter
@@ -40,7 +41,7 @@ const Testimonials = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
-              className="bg-[#2A2A2A] p-6 rounded-lg"
+              className="bg-[#2A2A2A]/90 backdrop-blur-sm p-6 rounded-lg"
             >
               <div className="text-4xl mb-4">{testimonial.icon}</div>
               <h3 className="text-xl font-semibold text-white mb-4">{testimonial.title}</h3>

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { LanguageSelector } from "./nav/LanguageSelector";
 
 const Footer = () => {
   return (
@@ -30,30 +31,38 @@ const Footer = () => {
         </div>
         {/* Border separator */}
         <div className="border-t border-vaya-gray-200 pt-8">
-          {/* Links above copyright */}
-          <div className="flex justify-center flex-wrap gap-x-8 gap-y-4 mb-8">
-            <a href="#" className="text-lg sm:text-xl leading-7 text-vaya-gray-600 hover:text-vaya-capsules hover:underline transition-colors">
-              About Allusion Ink
-            </a>
-            <a href="#" className="text-lg sm:text-xl leading-7 text-vaya-gray-600 hover:text-vaya-capsules hover:underline transition-colors">
-              Contact
-            </a>
-            <a href="#" className="text-lg sm:text-xl leading-7 text-vaya-gray-600 hover:text-vaya-capsules hover:underline transition-colors">
-              Privacy Policy
-            </a>
-            <a href="#" className="text-lg sm:text-xl leading-7 text-vaya-gray-600 hover:text-vaya-capsules hover:underline transition-colors">
-              Terms of Use
-            </a>
+          {/* Links and Language Selector */}
+          <div className="flex flex-col items-center gap-6">
+            <div className="flex justify-center flex-wrap gap-x-8 gap-y-4">
+              <a href="#" className="text-lg sm:text-xl leading-7 text-vaya-gray-600 hover:text-vaya-capsules hover:underline transition-colors">
+                About Allusion Ink
+              </a>
+              <a href="#" className="text-lg sm:text-xl leading-7 text-vaya-gray-600 hover:text-vaya-capsules hover:underline transition-colors">
+                Contact
+              </a>
+              <a href="#" className="text-lg sm:text-xl leading-7 text-vaya-gray-600 hover:text-vaya-capsules hover:underline transition-colors">
+                Privacy Policy
+              </a>
+              <a href="#" className="text-lg sm:text-xl leading-7 text-vaya-gray-600 hover:text-vaya-capsules hover:underline transition-colors">
+                Terms of Use
+              </a>
+            </div>
+            
+            {/* Language Selector */}
+            <div className="flex items-center gap-2">
+              <span className="text-vaya-gray-600">Language:</span>
+              <LanguageSelector selectedLanguage="en" onLanguageChange={() => {}} />
+            </div>
           </div>
 
           {/* Copyright line */}
-          <p className="text-lg text-center text-vaya-gray-500">
+          <p className="text-lg text-center text-vaya-gray-500 mt-8">
             &copy; {new Date().getFullYear()} Allusion Ink. All rights reserved. Building memories that last generations.
           </p>
         </div>
       </div>
     </footer>
   );
-}
+};
 
 export default Footer;
