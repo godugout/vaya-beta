@@ -1,60 +1,43 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Mic, Hourglass } from "lucide-react";
-import { WavyBackground } from "@/components/ui/wavy-background";
 
 const HomeHero = () => {
   return (
     <div className="relative overflow-hidden" data-component="HomeHero">
-      <WavyBackground 
-        className="py-24"
-        colors={[
-          "#F97316", // vaya-home
-          "#0EA5E9", // vaya-memories
-          "#22C55E", // vaya-capsules
-          "#9b87f5", // vaya-narra
-        ]}
-        waveWidth={100}
-        backgroundFill="#ffffff"
-        blur={5}
-        speed="slow"
-        waveOpacity={0.3}
-        containerClassName="min-h-fit"
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="mx-auto max-w-2xl text-center px-4 sm:px-6"
       >
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mx-auto max-w-2xl text-center px-4 sm:px-6"
-        >
-          <h1 className="font-outfit font-bold text-3xl sm:text-4xl md:text-6xl tracking-tight text-gray-900 mb-4 sm:mb-6 leading-tight">
-            Share Your Stories
-          </h1>
-          <p className="font-inter text-base sm:text-lg leading-7 sm:leading-8 text-gray-600 mb-8 sm:mb-10">
-            Create digital time capsules to share your family's stories, traditions, and precious moments with loved ones.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6">
-            <Button 
-              id="hero-home-primary-cta"
-              size="lg" 
-              variant="stories"
-              className="w-full sm:w-auto font-outfit"
-            >
-              <span>Share a Story</span>
-              <Mic className="ml-2 h-5 w-5" />
-            </Button>
-            <Button 
-              id="hero-home-secondary-cta"
-              size="lg" 
-              variant="capsules"
-              className="w-full sm:w-auto transition-all duration-300 font-outfit bg-vaya-capsules text-white hover:bg-vaya-capsules/90"
-            >
-              <span>Start a Family Capsule</span>
-              <Hourglass className="ml-2 h-5 w-5" />
-            </Button>
-          </div>
-        </motion.div>
-      </WavyBackground>
+        <h1 className="font-outfit font-bold text-3xl sm:text-4xl md:text-6xl tracking-tight text-gray-900 mb-4 sm:mb-6 leading-tight">
+          Share Your Stories
+        </h1>
+        <p className="font-inter text-base sm:text-lg leading-7 sm:leading-8 text-gray-600 mb-8 sm:mb-10">
+          Create digital time capsules to share your family's stories, traditions, and precious moments with loved ones.
+        </p>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6">
+          <Button 
+            id="hero-home-primary-cta"
+            size="lg" 
+            variant="stories"
+            className="w-full sm:w-auto font-outfit"
+          >
+            <span>Share a Story</span>
+            <Mic className="ml-2 h-5 w-5" />
+          </Button>
+          <Button 
+            id="hero-home-secondary-cta"
+            size="lg" 
+            variant="capsules"
+            className="w-full sm:w-auto transition-all duration-300 font-outfit bg-vaya-capsules text-white hover:bg-vaya-capsules/90"
+          >
+            <span>Start a Family Capsule</span>
+            <Hourglass className="ml-2 h-5 w-5" />
+          </Button>
+        </div>
+      </motion.div>
     </div>
   );
 };
