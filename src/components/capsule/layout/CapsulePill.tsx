@@ -31,15 +31,16 @@ export const CapsulePill = ({
       whileHover={{ scale: 1.03 }}
       className={cn(
         "group flex-shrink-0 transition-all duration-200",
-        "hover:shadow-xl shadow-md",
         isPlaceholder ? "opacity-90 hover:opacity-100" : ""
       )}
     >
       <div className={cn(
-        "relative overflow-hidden rounded-[90px] border-2",
-        `border-vaya-${colorKey} bg-gradient-to-br from-white to-vaya-accent-${colorKey}`,
-        "hover:border-opacity-100 border-opacity-50",
-        "min-h-[160px] w-[500px]"
+        "relative overflow-hidden rounded-[90px]",
+        "min-h-[160px] w-[500px]",
+        `border-2 border-vaya-${colorKey} border-opacity-50 hover:border-opacity-100`,
+        `bg-gradient-to-br from-white to-vaya-accent-${colorKey}`,
+        "shadow-[0_4px_12px_-2px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_-4px_rgba(0,0,0,0.12)]",
+        "transition-all duration-300"
       )}>
         <div className="p-8 h-full">
           {isPlaceholder ? (
