@@ -13,32 +13,32 @@ import { detailedCapsules, simpleCapsules } from "@/components/capsule/ExampleCa
 // Font showcase component
 const FontShowcase = () => {
   return (
-    <div className="bg-white py-8 px-4">
-      <div className="max-w-7xl mx-auto">
-        <h3 className="text-lg text-vaya-gray-600 mb-6 text-center">Font Variations for Vaya Logo</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+    <div className="bg-gradient-to-b from-white to-gray-50 py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h3 className="text-xl font-semibold text-gray-900 mb-8 text-center">Font Variations for Vaya Logo</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Original Outfit Font */}
-          <div className="p-4 rounded-lg hover:bg-vaya-accent-blue transition-colors">
-            <span className="font-outfit font-bold text-4xl">
+          <div className="p-6 rounded-xl hover:bg-white hover:shadow-lg transition-all duration-200 cursor-pointer">
+            <span className="font-outfit font-bold text-5xl block mb-2">
               Vaya<sup className="text-vaya-stories">α</sup>
             </span>
-            <p className="text-sm text-vaya-gray-500 mt-2">Outfit (Current)</p>
+            <p className="text-sm text-gray-600">Outfit (Current)</p>
           </div>
           
           {/* Playfair Display */}
-          <div className="p-4 rounded-lg hover:bg-vaya-accent-blue transition-colors">
-            <span className="font-playfair font-bold text-4xl">
+          <div className="p-6 rounded-xl hover:bg-white hover:shadow-lg transition-all duration-200 cursor-pointer">
+            <span className="font-playfair font-bold text-5xl block mb-2">
               Vaya<sup className="text-vaya-stories">α</sup>
             </span>
-            <p className="text-sm text-vaya-gray-500 mt-2">Playfair Display</p>
+            <p className="text-sm text-gray-600">Playfair Display</p>
           </div>
           
           {/* Montserrat */}
-          <div className="p-4 rounded-lg hover:bg-vaya-accent-blue transition-colors">
-            <span className="font-montserrat font-bold text-4xl">
+          <div className="p-6 rounded-xl hover:bg-white hover:shadow-lg transition-all duration-200 cursor-pointer">
+            <span className="font-montserrat font-bold text-5xl block mb-2">
               Vaya<sup className="text-vaya-stories">α</sup>
             </span>
-            <p className="text-sm text-vaya-gray-500 mt-2">Montserrat</p>
+            <p className="text-sm text-gray-600">Montserrat</p>
           </div>
         </div>
       </div>
