@@ -31,20 +31,20 @@ export const CapsuleTableRow = ({
 
   return (
     <TableRow className="hover:bg-gray-50/50">
-      <TableCell className="text-left text-lg font-bold px-6">{capsule.title}</TableCell>
-      <TableCell className="text-left px-6">{capsule.description}</TableCell>
-      <TableCell className="text-center px-6">{capsule.metadata?.creatorInitials}</TableCell>
-      <TableCell className="text-center px-6">
+      <TableCell className="text-left text-lg font-bold pl-6 pr-4">{capsule.title}</TableCell>
+      <TableCell className="text-left px-4">{capsule.description}</TableCell>
+      <TableCell className="text-center px-4">{capsule.metadata?.creatorInitials}</TableCell>
+      <TableCell className="text-center px-4">
         {capsule.metadata?.status && (
           <span className={getStatusClass(capsule.metadata.status)}>
             {capsule.metadata.status}
           </span>
         )}
       </TableCell>
-      <TableCell className="text-center px-6">
+      <TableCell className="text-center px-4">
         {new Date(capsule.metadata?.date || "").toLocaleDateString()}
       </TableCell>
-      <TableCell className="text-right px-6">
+      <TableCell className="text-right pl-4 pr-6">
         <div className="flex items-center justify-end gap-2">
           <Button
             variant="ghost"
