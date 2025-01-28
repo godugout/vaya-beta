@@ -29,7 +29,7 @@ const Testimonials = () => {
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
             Stories That Matter
           </h2>
-          <p className="mt-4 text-lg text-gray-300">
+          <p className="mt-4 text-lg text-gray-300 sm:text-xl">
             Discover how people are using Vaya to preserve their most precious memories
           </p>
         </div>
@@ -44,7 +44,7 @@ const Testimonials = () => {
             >
               <div className="text-4xl mb-4">{testimonial.icon}</div>
               <h3 className="text-xl font-semibold text-white mb-4">{testimonial.title}</h3>
-              <p className="text-gray-300 mb-4 italic">"{testimonial.quote}"</p>
+              <p className="text-base text-gray-300 mb-4 italic">"{testimonial.quote}"</p>
               <p className="text-[#8B5CF6]">- {testimonial.author}</p>
             </motion.div>
           ))}

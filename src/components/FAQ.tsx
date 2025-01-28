@@ -50,13 +50,13 @@ const FAQ = () => {
   ];
 
   return (
-    <section className="bg-white py-12 sm:py-24">
+    <section className="bg-white py-24">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold tracking-tight text-vaya-gray-900 sm:text-4xl">
             Frequently Asked Questions
           </h2>
-          <p className="mt-4 text-xl text-vaya-gray-600 sm:text-2xl">
+          <p className="mt-4 text-lg text-vaya-gray-600 sm:text-xl">
             Everything you need to know about preserving your family's legacy with Vaya
           </p>
         </div>
@@ -64,13 +64,13 @@ const FAQ = () => {
         <Accordion type="single" collapsible className="w-full">
           {faqs.map((faq, index) => (
             <AccordionItem key={index} value={`item-${index}`}>
-              <AccordionTrigger className="text-left text-xl font-medium sm:text-2xl">
+              <AccordionTrigger className="text-left text-lg font-medium">
                 <span className="flex gap-4">
                   <span className="text-vaya-gray-500">{index + 1}.</span>
                   {faq.question}
                 </span>
               </AccordionTrigger>
-              <AccordionContent className="text-lg text-vaya-gray-600 text-left pl-8 sm:text-xl">
+              <AccordionContent className="text-base text-vaya-gray-600 text-left pl-8">
                 {faq.answer}
               </AccordionContent>
             </AccordionItem>
