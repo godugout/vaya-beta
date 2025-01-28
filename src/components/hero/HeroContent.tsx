@@ -15,7 +15,7 @@ export const HeroContent = ({ config, isSpanish }: HeroContentProps) => {
   // Determine button variant based on current route
   const getButtonVariant = () => {
     if (location.pathname.includes('memory-lane')) return 'memories';
-    if (location.pathname.includes('share-stories')) return 'narra'; // Changed to purple for Narra
+    if (location.pathname.includes('share-stories')) return 'stories'; // Changed back to orange for Record a Story
     if (location.pathname.includes('family-capsules')) return 'capsules';
     return 'capsules'; // Default remains green
   };
@@ -45,7 +45,7 @@ export const HeroContent = ({ config, isSpanish }: HeroContentProps) => {
         {config.secondaryCta && (
           <Button 
             size="lg" 
-            variant="stories" // Keep orange for stories
+            variant="narra" // Changed to purple for Narra Chat
             className="w-full sm:w-auto font-outfit"
           >
             <span>{config.secondaryCta.text}</span>
