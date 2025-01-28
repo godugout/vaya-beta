@@ -24,7 +24,6 @@ const Index = () => {
       <Hero />
       <Features />
       <Testimonials />
-      <FAQ />
       <div className="bg-[#F8FAFC] py-12 sm:py-24 px-4 sm:px-6">
         <div className="mx-auto max-w-7xl lg:px-8 text-center">
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl mb-4 sm:mb-6">
@@ -42,6 +41,7 @@ const Index = () => {
           </div>
         </div>
       </div>
+      <FAQ />
     </div>
   );
 }
