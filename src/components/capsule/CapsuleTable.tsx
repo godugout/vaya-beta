@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Capsule, CapsuleStatus } from "@/types/capsule";
 import { cn } from "@/lib/utils";
 import { Bookmark, BookmarkCheck } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
@@ -17,7 +17,34 @@ interface CapsuleTableProps {
 
 export const CapsuleTable = ({ capsules, sortField, sortDirection, onSort }: CapsuleTableProps) => {
   const [bookmarkedCapsules, setBookmarkedCapsules] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
+
+  useEffect(() => {
+    const fetchBookmarks = async () => {
+      try {
+        const { data: bookmarks, error } = await supabase
+          .from('bookmarks')
+          .select('memory_id')
+          .eq('created_by', (await supabase.auth.getUser()).data.user?.id);
+
+        if (error) throw error;
+
+        setBookmarkedCapsules(bookmarks.map(b => b.memory_id));
+      } catch (error) {
+        console.error('Error fetching bookmarks:', error);
+        toast({
+          title: "Error loading bookmarks",
+          description: "There was an error loading your bookmarks",
+          variant: "destructive",
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchBookmarks();
+  }, [toast]);
 
   const getStatusClass = (status: CapsuleStatus) => {
     const baseClasses = "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium";
@@ -36,7 +63,8 @@ export const CapsuleTable = ({ capsules, sortField, sortDirection, onSort }: Cap
         const { error } = await supabase
           .from('bookmarks')
           .delete()
-          .eq('memory_id', capsuleId);
+          .eq('memory_id', capsuleId)
+          .eq('created_by', (await supabase.auth.getUser()).data.user?.id);
 
         if (error) throw error;
 
@@ -51,6 +79,7 @@ export const CapsuleTable = ({ capsules, sortField, sortDirection, onSort }: Cap
           .insert([
             { 
               memory_id: capsuleId,
+              created_by: (await supabase.auth.getUser()).data.user?.id,
               timestamp: Math.floor(Date.now() / 1000)
             }
           ]);
@@ -64,6 +93,7 @@ export const CapsuleTable = ({ capsules, sortField, sortDirection, onSort }: Cap
         });
       }
     } catch (error) {
+      console.error('Error updating bookmark:', error);
       toast({
         title: "Error",
         description: "There was an error updating your bookmark",
@@ -122,7 +152,11 @@ export const CapsuleTable = ({ capsules, sortField, sortDirection, onSort }: Cap
                   variant="ghost"
                   size="icon"
                   onClick={() => handleBookmark(capsule.link.split('/').pop() || '')}
-                  className="h-8 w-8"
+                  className={cn(
+                    "h-8 w-8",
+                    isLoading && "opacity-50 cursor-not-allowed"
+                  )}
+                  disabled={isLoading}
                 >
                   {bookmarkedCapsules.includes(capsule.link.split('/').pop() || '') ? (
                     <BookmarkCheck className="h-4 w-4" />
