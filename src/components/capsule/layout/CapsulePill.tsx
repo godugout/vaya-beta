@@ -66,10 +66,22 @@ const getStatusColor = (status: string, date: string): string => {
   const isClosingSoon = !isPast(statusDate) && isToday(statusDate);
   const isOpeningSoon = !isPast(statusDate) && isToday(addDays(statusDate, -1));
 
-  if (isClosingSoon) return "stroke-vaya-stories"; // Orange
-  if (isOpeningSoon) return "stroke-vaya-capsules"; // Green
-  if (status === "locked") return "stroke-red-500"; // Red
-  return "stroke-vaya-memories"; // Blue (default for active)
+  // Enhanced color palette for circle tracers
+  const colors = {
+    upcoming: "stroke-[#9b87f5]", // Primary Purple
+    active: "stroke-[#F97316]",   // Bright Orange
+    locked: "stroke-[#D946EF]",   // Magenta Pink
+    revealed: "stroke-[#0EA5E9]", // Ocean Blue
+    closing: "stroke-[#8B5CF6]",  // Vivid Purple
+    opening: "stroke-[#1EAEDB]",  // Bright Blue
+  };
+
+  if (isClosingSoon) return colors.closing;
+  if (isOpeningSoon) return colors.opening;
+  if (status === "locked") return colors.locked;
+  if (status === "active") return colors.active;
+  if (status === "revealed") return colors.revealed;
+  return colors.upcoming;
 };
 
 export const CapsulePill = ({
