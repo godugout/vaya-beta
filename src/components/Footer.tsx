@@ -6,14 +6,32 @@ const Footer = () => {
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         {/* Centered Logo and Description */}
         <div className="text-center mb-12">
-          <Link to="/" className="inline-flex items-center gap-2 justify-center">
-            <img 
-              src="/lovable-uploads/ef40fff0-4da4-4937-af3d-c2276b1d2588.png"
-              alt="Vaya Logo" 
-              className="h-12 w-12 rounded-lg"
-            />
-            <span className="font-outfit font-bold text-3xl sm:text-4xl">
-              Vaya<sup>α</sup>
+          <Link 
+            to="/" 
+            className="inline-flex items-center gap-2 justify-center relative group"
+          >
+            <div className="relative">
+              <img 
+                src="/lovable-uploads/ef40fff0-4da4-4937-af3d-c2276b1d2588.png"
+                alt="Vaya Logo" 
+                className="h-12 w-12 rounded-lg grayscale opacity-90 transition-all duration-300 group-hover:grayscale-0 group-hover:opacity-100"
+                style={{
+                  boxShadow: 'inset 2px 2px 4px rgba(255,255,255,0.5), inset -2px -2px 4px rgba(0,0,0,0.1)',
+                }}
+              />
+              <div 
+                className="absolute inset-0 rounded-lg"
+                style={{
+                  boxShadow: '2px 2px 4px rgba(0,0,0,0.1), -1px -1px 3px rgba(255,255,255,0.7)',
+                }}
+              />
+            </div>
+            <span className="font-outfit font-bold text-3xl sm:text-4xl text-vaya-gray-600 opacity-90 transition-all duration-300 group-hover:opacity-100"
+              style={{
+                textShadow: '1px 1px 2px rgba(255,255,255,1), -1px -1px 2px rgba(0,0,0,0.1)',
+              }}
+            >
+              Vaya<sup className="opacity-75">α</sup>
             </span>
           </Link>
           <p className="mt-6 text-xl sm:text-2xl leading-8 text-vaya-gray-600 max-w-2xl mx-auto">
