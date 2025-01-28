@@ -21,10 +21,7 @@ const Hero = ({ culturalContent }: HeroProps) => {
   const config = heroConfigs[location.pathname as keyof typeof heroConfigs] || heroConfigs["/"];
 
   return (
-    <div 
-      className="relative py-24" 
-      data-component="Hero"
-    >
+    <div className="relative" data-component="Hero">
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         <HeroContent config={config} isSpanish={isSpanish} />
       </div>
