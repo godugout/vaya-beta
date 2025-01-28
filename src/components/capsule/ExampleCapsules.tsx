@@ -136,7 +136,7 @@ const statusColors = {
 } as const;
 
 const snakeAnimation = (index: number, rowIndex: number) => {
-  const duration = 30;
+  const duration = 20; // Faster animation
   const direction = rowIndex % 2 === 0 ? 1 : -1;
   const xOffset = direction === 1 ? -100 : 100;
   
@@ -148,7 +148,7 @@ const snakeAnimation = (index: number, rowIndex: number) => {
         repeatType: "loop" as const,
         duration: duration,
         ease: "linear",
-        delay: index * 0.2
+        delay: index * 0.1
       }
     }
   };
@@ -184,75 +184,87 @@ export const ExampleCapsules = () => {
                     className="group flex-shrink-0"
                     animate={snakeAnimation(index, rowIndex)}
                     whileHover={{ scale: 1.02 }}
-                    transition={{ type: "spring", stiffness: 300 }}
+                    transition={{ type: "spring", stiffness: 400 }}
                   >
                     <Card className={cn(
-                      "relative overflow-hidden transition-all duration-300",
-                      "rounded-[90px] border-0 min-h-[160px] w-[500px]",
-                      "hover:shadow-lg shadow-sm",
+                      "relative overflow-hidden transition-all duration-200",
+                      "rounded-[90px] border-2 min-h-[160px] w-[500px]",
+                      "hover:shadow-xl shadow-md",
                       capsule.isPlaceholder ? "opacity-80 hover:opacity-100" : "",
-                      `bg-vaya-accent-${capsule.colorKey} bg-opacity-30`
+                      `border-vaya-${capsule.colorKey} bg-vaya-accent-${capsule.colorKey} bg-opacity-30`,
+                      "hover:border-opacity-100 border-opacity-50"
                     )}>
-                      <div className="p-8">
-                        <div className="relative mb-4 flex items-center gap-4">
-                          <div className={cn(
-                            "inline-flex items-center justify-center w-14 h-14 rounded-3xl",
-                            `bg-vaya-${capsule.colorKey} bg-opacity-20`
-                          )}>
-                            <Icon className={`w-7 h-7 text-vaya-${capsule.colorKey}`} />
-                          </div>
-                          {!capsule.isPlaceholder && capsule.creator && (
-                            <div className="flex-1 flex items-center justify-end">
-                              <Avatar className="w-8 h-8 border-2 border-white">
-                                <div className="w-full h-full flex items-center justify-center bg-gray-200 text-sm font-medium">
-                                  {capsule.creator.initials}
-                                </div>
-                              </Avatar>
+                      <div className="p-8 h-full">
+                        {capsule.isPlaceholder ? (
+                          // Vertically centered layout for placeholder capsules
+                          <div className="flex items-center gap-4 h-full">
+                            <div className={cn(
+                              "inline-flex items-center justify-center w-14 h-14 rounded-3xl",
+                              `bg-vaya-${capsule.colorKey} bg-opacity-20`
+                            )}>
+                              <Icon className={`w-7 h-7 text-vaya-${capsule.colorKey}`} />
                             </div>
-                          )}
-                        </div>
-
-                        <div className="space-y-3">
-                          <h3 className="text-lg font-semibold text-gray-900 line-clamp-1 font-outfit">
-                            {capsule.title}
-                          </h3>
-                          {!capsule.isPlaceholder && (
-                            <>
-                              {capsule.description && (
-                                <p className="text-sm text-gray-600 line-clamp-2 font-inter">
-                                  {capsule.description}
-                                </p>
-                              )}
-
-                              {capsule.stats && (
-                                <div className="flex items-center gap-4 text-sm text-gray-500 font-inter">
-                                  <span className="flex items-center gap-1.5">
-                                    <ImageIcon className="w-4 h-4" />
-                                    {capsule.stats.memories}
-                                  </span>
-                                  <span className="flex items-center gap-1.5">
-                                    <Users className="w-4 h-4" />
-                                    {capsule.stats.contributors}
-                                  </span>
-                                </div>
-                              )}
-
-                              {capsule.status && capsule.timeLeft && (
-                                <div className="flex items-center justify-between pt-2">
-                                  <Badge variant="secondary" className={cn(
-                                    "rounded-full px-4 py-1 text-sm font-medium",
-                                    statusColors[capsule.status]
-                                  )}>
-                                    {capsule.status}
-                                  </Badge>
-                                  <span className="text-sm text-gray-500 font-inter">
-                                    {capsule.timeLeft}
-                                  </span>
-                                </div>
-                              )}
-                            </>
-                          )}
-                        </div>
+                            <h3 className="text-lg font-semibold text-gray-900 font-outfit">
+                              {capsule.title}
+                            </h3>
+                          </div>
+                        ) : (
+                          // Horizontal layout for capsules with details
+                          <div className="flex justify-between items-start h-full">
+                            <div className="flex items-start gap-4">
+                              <div className={cn(
+                                "inline-flex items-center justify-center w-14 h-14 rounded-3xl",
+                                `bg-vaya-${capsule.colorKey} bg-opacity-20`
+                              )}>
+                                <Icon className={`w-7 h-7 text-vaya-${capsule.colorKey}`} />
+                              </div>
+                              <div className="space-y-2">
+                                <h3 className="text-lg font-semibold text-gray-900 font-outfit">
+                                  {capsule.title}
+                                </h3>
+                                {capsule.description && (
+                                  <p className="text-sm text-gray-600 line-clamp-2 font-inter">
+                                    {capsule.description}
+                                  </p>
+                                )}
+                                {capsule.stats && (
+                                  <div className="flex items-center gap-4 text-sm text-gray-500 font-inter">
+                                    <span className="flex items-center gap-1.5">
+                                      <ImageIcon className="w-4 h-4" />
+                                      {capsule.stats.memories}
+                                    </span>
+                                    <span className="flex items-center gap-1.5">
+                                      <Users className="w-4 h-4" />
+                                      {capsule.stats.contributors}
+                                    </span>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                            {capsule.creator && (
+                              <div className="flex flex-col items-end gap-2">
+                                <Avatar className="w-8 h-8 border-2 border-white">
+                                  <div className="w-full h-full flex items-center justify-center bg-gray-200 text-sm font-medium">
+                                    {capsule.creator.initials}
+                                  </div>
+                                </Avatar>
+                                {capsule.status && capsule.timeLeft && (
+                                  <div className="flex flex-col items-end gap-1">
+                                    <Badge variant="secondary" className={cn(
+                                      "rounded-full px-4 py-1 text-sm font-medium",
+                                      statusColors[capsule.status]
+                                    )}>
+                                      {capsule.status}
+                                    </Badge>
+                                    <span className="text-sm text-gray-500 font-inter">
+                                      {capsule.timeLeft}
+                                    </span>
+                                  </div>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        )}
                       </div>
                     </Card>
                   </motion.div>
