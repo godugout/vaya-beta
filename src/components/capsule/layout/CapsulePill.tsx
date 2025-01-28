@@ -214,7 +214,7 @@ export const CapsulePill = ({
               <div className="ml-auto">
                 <motion.button
                   className={cn(
-                    "w-16 h-16 rounded-full flex items-center justify-center",
+                    "w-12 h-12 rounded-full flex items-center justify-center", // Reduced from w-16 h-16
                     `bg-vaya-${colorKey} text-white`,
                     "transition-all duration-300 transform",
                     isHovered ? "scale-110" : "scale-100 opacity-0"
@@ -226,7 +226,7 @@ export const CapsulePill = ({
                   }}
                   whileHover={{ scale: 1.15 }}
                 >
-                  <Plus className="w-8 h-8" />
+                  <Plus className="w-6 h-6" /> {/* Reduced from w-8 h-8 */}
                 </motion.button>
               </div>
             </div>
