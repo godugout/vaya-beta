@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { heroConfigs } from "@/config/heroConfigs";
 import { HeroPattern } from "./hero/HeroPattern";
 import { HeroContent } from "./hero/HeroContent";
+import HomeHero from "./hero/HomeHero";
 
 const Hero = () => {
   const location = useLocation();
@@ -27,6 +28,11 @@ const Hero = () => {
 
     fetchUserLanguage();
   }, []);
+
+  // If we're on the home page, render the HomeHero component
+  if (location.pathname === '/') {
+    return <HomeHero />;
+  }
 
   const config = heroConfigs[location.pathname as keyof typeof heroConfigs] || heroConfigs["/"];
 
