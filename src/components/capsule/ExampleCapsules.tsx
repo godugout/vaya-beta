@@ -161,7 +161,7 @@ export const ExampleCapsules = () => {
           variants={container}
           initial="hidden"
           animate="show"
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
         >
           {exampleCapsules.map((capsule, index) => {
             const Icon = capsule.icon;
@@ -174,22 +174,22 @@ export const ExampleCapsules = () => {
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <Card className={cn(
-                  "relative overflow-hidden transition-all duration-300 rounded-[32px] border-0",
+                  "relative overflow-hidden transition-all duration-300 rounded-[48px] border-0 min-h-[160px]",
                   capsule.isPlaceholder ? "opacity-80 hover:opacity-100" : "hover:shadow-lg",
                   `bg-vaya-accent-${capsule.colorKey} bg-opacity-30`
                 )}>
-                  <div className="p-4">
-                    <div className="relative mb-3 flex items-center gap-3">
+                  <div className="p-8">
+                    <div className="relative mb-4 flex items-center gap-4">
                       <div className={cn(
-                        "inline-flex items-center justify-center w-10 h-10 rounded-2xl",
+                        "inline-flex items-center justify-center w-14 h-14 rounded-3xl",
                         `bg-vaya-${capsule.colorKey} bg-opacity-20`
                       )}>
-                        <Icon className={`w-5 h-5 text-vaya-${capsule.colorKey}`} />
+                        <Icon className={`w-7 h-7 text-vaya-${capsule.colorKey}`} />
                       </div>
                       {!capsule.isPlaceholder && capsule.creator && (
-                        <div className="flex-1 flex items-center justify-between">
-                          <Avatar className="w-6 h-6 border-2 border-white">
-                            <div className="w-full h-full flex items-center justify-center bg-gray-200 text-xs font-medium">
+                        <div className="flex-1 flex items-center justify-end">
+                          <Avatar className="w-8 h-8 border-2 border-white">
+                            <div className="w-full h-full flex items-center justify-center bg-gray-200 text-sm font-medium">
                               {capsule.creator.initials}
                             </div>
                           </Avatar>
@@ -197,40 +197,40 @@ export const ExampleCapsules = () => {
                       )}
                     </div>
 
-                    <div className="space-y-2">
-                      <h3 className="text-sm font-medium text-gray-900 line-clamp-1">
+                    <div className="space-y-3">
+                      <h3 className="text-lg font-semibold text-gray-900 line-clamp-1 font-outfit">
                         {capsule.title}
                       </h3>
                       {!capsule.isPlaceholder && (
                         <>
                           {capsule.description && (
-                            <p className="text-xs text-gray-600 line-clamp-2">
+                            <p className="text-sm text-gray-600 line-clamp-2 font-inter">
                               {capsule.description}
                             </p>
                           )}
 
                           {capsule.stats && (
-                            <div className="flex items-center gap-3 text-xs text-gray-500">
-                              <span className="flex items-center gap-1">
-                                <ImageIcon className="w-3 h-3" />
+                            <div className="flex items-center gap-4 text-sm text-gray-500 font-inter">
+                              <span className="flex items-center gap-1.5">
+                                <ImageIcon className="w-4 h-4" />
                                 {capsule.stats.memories}
                               </span>
-                              <span className="flex items-center gap-1">
-                                <Users className="w-3 h-3" />
+                              <span className="flex items-center gap-1.5">
+                                <Users className="w-4 h-4" />
                                 {capsule.stats.contributors}
                               </span>
                             </div>
                           )}
 
                           {capsule.status && capsule.timeLeft && (
-                            <div className="flex items-center justify-between pt-1">
+                            <div className="flex items-center justify-between pt-2">
                               <Badge variant="secondary" className={cn(
-                                "rounded-full px-3 py-0.5 text-xs font-medium",
+                                "rounded-full px-4 py-1 text-sm font-medium",
                                 statusColors[capsule.status]
                               )}>
                                 {capsule.status}
                               </Badge>
-                              <span className="text-xs text-gray-500">
+                              <span className="text-sm text-gray-500 font-inter">
                                 {capsule.timeLeft}
                               </span>
                             </div>
