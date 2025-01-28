@@ -8,12 +8,12 @@ export const heroConfigs: HeroConfigs = {
     subtitle_en: "Create digital time capsules to share your family's stories, traditions, and precious moments with loved ones.",
     subtitle_es: "Vaya transforma tus recuerdos en cápsulas digitales llenas de vida, tradiciones y amor. Crea, guarda y revive historias únicas con herramientas fáciles de usar y asistencia inteligente. Dale voz y color a tus memorias para que vivan por siempre.",
     primaryCta: {
-      text: "Start a Family Capsule",
-      icon: <Hourglass className="ml-2 h-5 w-5" />,
-    },
-    secondaryCta: {
       text: "Share a Story",
       icon: <Mic className="ml-2 h-5 w-5" />,
+    },
+    secondaryCta: {
+      text: "Start a Family Capsule",
+      icon: <Hourglass className="ml-2 h-5 w-5" />,
     }
   },
   "/family-capsules": {

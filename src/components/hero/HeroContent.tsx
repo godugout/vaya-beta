@@ -15,6 +15,9 @@ export const HeroContent = ({ config, isSpanish }: HeroContentProps) => {
   
   // Get unique button styles based on route
   const getSecondaryButtonStyles = () => {
+    if (location.pathname === '/') {
+      return 'border-vaya-capsules hover:bg-vaya-capsules/10 text-vaya-capsules';
+    }
     if (location.pathname.includes('memory-lane')) {
       return 'border-vaya-memories hover:bg-vaya-memories/10 text-vaya-memories';
     }
@@ -42,6 +45,15 @@ export const HeroContent = ({ config, isSpanish }: HeroContentProps) => {
     return 'hero-home-secondary-cta';
   };
 
+  // Get primary button variant based on route
+  const getPrimaryButtonVariant = () => {
+    if (location.pathname === '/') return 'stories';
+    if (location.pathname.includes('memory-lane')) return 'memories';
+    if (location.pathname.includes('share-stories')) return 'stories';
+    if (location.pathname.includes('family-capsules')) return 'capsules';
+    return 'stories'; // Default
+  };
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
@@ -59,7 +71,7 @@ export const HeroContent = ({ config, isSpanish }: HeroContentProps) => {
         <Button 
           id={getPrimaryButtonId()}
           size="lg" 
-          variant={location.pathname.includes('memory-lane') ? 'memories' : 'stories'}
+          variant={getPrimaryButtonVariant()}
           className="w-full sm:w-auto transition-all duration-300 font-outfit"
         >
           <span>{config.primaryCta.text}</span>
