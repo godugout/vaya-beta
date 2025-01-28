@@ -7,6 +7,7 @@ import CreateCapsuleForm from "@/components/capsule/CreateCapsuleForm";
 import { CapsuleTable } from "@/components/capsule/CapsuleTable";
 import { CapsuleFilters } from "@/components/capsule/CapsuleFilters";
 import { CapsulePills } from "@/components/capsule/sections/CapsulePills";
+import { ExampleCapsules } from "@/components/capsule/ExampleCapsules";
 import { Capsule, CapsuleStatus } from "@/types/capsule";
 
 interface CapsuleScrollSectionProps {
@@ -88,6 +89,7 @@ export const CapsuleScrollSection = ({ capsules }: CapsuleScrollSectionProps) =>
       </div>
       
       <CapsulePills />
+      <ExampleCapsules />
     </>
   );
 };
