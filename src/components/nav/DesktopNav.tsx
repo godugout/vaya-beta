@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Clock, Box, Mic, Home } from "lucide-react";
 import { User as UserType } from "@supabase/supabase-js";
@@ -11,6 +11,12 @@ interface DesktopNavProps {
 }
 
 export const DesktopNav = ({ user, handleSignOut, navigate }: DesktopNavProps) => {
+  const location = useLocation();
+
+  const isActive = (path: string) => {
+    return location.pathname === path;
+  };
+
   return (
     <div className="border-b bg-[#222222] hidden md:block">
       <div className="flex h-20 items-center px-4 max-w-7xl mx-auto">
@@ -18,40 +24,56 @@ export const DesktopNav = ({ user, handleSignOut, navigate }: DesktopNavProps) =
           <img 
             src="/lovable-uploads/ef40fff0-4da4-4937-af3d-c2276b1d2588.png" 
             alt="Vaya Logo" 
-            className="h-8 w-8"
+            className="h-10 w-10"
           />
-          <span className="font-outfit font-bold text-xl text-white">
+          <span className="font-outfit font-bold text-2xl text-white">
             Vaya<sup>α</sup>
           </span>
         </Link>
-        <nav className="flex items-center space-x-8 ml-12">
+        <nav className="flex items-center space-x-10 ml-12">
           <Link
             to="/"
-            className="text-sm font-medium text-gray-300 transition-colors hover:text-white inline-flex items-center gap-2"
+            className={`text-base font-medium transition-all duration-200 hover:text-white inline-flex items-center gap-2 relative
+              ${isActive('/') ? 'text-white' : 'text-gray-300'}
+              after:content-[''] after:absolute after:w-full after:h-0.5 after:bg-vaya-capsules after:bottom-[-4px] after:left-0
+              after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300
+              ${isActive('/') ? 'after:scale-x-100' : ''}`}
           >
             Home
-            <Home className="h-4 w-4" />
+            <Home className="h-5 w-5" />
           </Link>
           <Link
             to="/share-stories"
-            className="text-sm font-medium text-gray-300 transition-colors hover:text-white inline-flex items-center gap-2"
+            className={`text-base font-medium transition-all duration-200 hover:text-white inline-flex items-center gap-2 relative
+              ${isActive('/share-stories') ? 'text-white' : 'text-gray-300'}
+              after:content-[''] after:absolute after:w-full after:h-0.5 after:bg-vaya-capsules after:bottom-[-4px] after:left-0
+              after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300
+              ${isActive('/share-stories') ? 'after:scale-x-100' : ''}`}
           >
             Share Stories
-            <Mic className="h-4 w-4" />
+            <Mic className="h-5 w-5" />
           </Link>
           <Link
             to="/memory-lane"
-            className="text-sm font-medium text-gray-300 transition-colors hover:text-white inline-flex items-center gap-2"
+            className={`text-base font-medium transition-all duration-200 hover:text-white inline-flex items-center gap-2 relative
+              ${isActive('/memory-lane') ? 'text-white' : 'text-gray-300'}
+              after:content-[''] after:absolute after:w-full after:h-0.5 after:bg-vaya-capsules after:bottom-[-4px] after:left-0
+              after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300
+              ${isActive('/memory-lane') ? 'after:scale-x-100' : ''}`}
           >
             Memory Lane
-            <Clock className="h-4 w-4" />
+            <Clock className="h-5 w-5" />
           </Link>
           <Link
             to="/family-capsules"
-            className="text-sm font-medium text-gray-300 transition-colors hover:text-white inline-flex items-center gap-2"
+            className={`text-base font-medium transition-all duration-200 hover:text-white inline-flex items-center gap-2 relative
+              ${isActive('/family-capsules') ? 'text-white' : 'text-gray-300'}
+              after:content-[''] after:absolute after:w-full after:h-0.5 after:bg-vaya-capsules after:bottom-[-4px] after:left-0
+              after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300
+              ${isActive('/family-capsules') ? 'after:scale-x-100' : ''}`}
           >
             Family Capsules
-            <Box className="h-4 w-4" />
+            <Box className="h-5 w-5" />
           </Link>
         </nav>
         <div className="ml-auto flex items-center space-x-4">
@@ -60,10 +82,10 @@ export const DesktopNav = ({ user, handleSignOut, navigate }: DesktopNavProps) =
           ) : (
             <Button 
               onClick={() => navigate("/auth")}
-              className="bg-vaya-secondary hover:bg-vaya-secondary/90 text-white"
+              className="bg-vaya-capsules hover:bg-vaya-capsules/90 text-white text-base px-6 py-2"
             >
               Sign In
-              <Box className="ml-2 h-4 w-4" />
+              <Box className="ml-2 h-5 w-5" />
             </Button>
           )}
         </div>
