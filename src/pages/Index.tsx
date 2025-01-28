@@ -6,16 +6,20 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 
 const culturalBackgrounds = [
-  // Mountain landscape - could represent Canada/Mexico
-  "https://images.unsplash.com/photo-1501854140801-50d01698950b",
-  // Serene water scene - could represent Philippines
-  "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
-  // Vibrant nature - could represent India
-  "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07",
-  // Forest with sunlight - could represent Mexico/Canada
-  "https://images.unsplash.com/photo-1523712999610-f77fbcfc3843",
-  // Mountain vista - could represent any region
-  "https://images.unsplash.com/photo-1426604966848-d7adac402bff"
+  // Japanese-inspired landscape - serene mountain view with cherry blossoms
+  "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e",
+  // Vietnamese/Asian rice terraces and mountains
+  "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4",
+  // Italian/Mediterranean coastal scene
+  "https://images.unsplash.com/photo-1499678329028-101435549a4e",
+  // Korean temple architecture in nature setting
+  "https://images.unsplash.com/photo-1578637387939-43c525550085",
+  // Portuguese/Italian villa and countryside
+  "https://images.unsplash.com/photo-1518098268026-4e89f1a2cd8e",
+  // Chinese traditional architecture and nature
+  "https://images.unsplash.com/photo-1508804185872-d7badad00f7d",
+  // African American family gathering/community scene
+  "https://images.unsplash.com/photo-1529156069898-49953e39b3ac"
 ];
 
 const Index = () => {
@@ -55,7 +59,7 @@ const Index = () => {
         <div 
           className="absolute inset-0" 
           style={{
-            background: 'linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.6) 100%)',
+            background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.5) 100%)',
             backdropFilter: 'blur(1px)',
           }}
         />
