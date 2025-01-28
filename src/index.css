@@ -40,28 +40,17 @@
     opacity: 1;
   }
 
-  @keyframes shimmer {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
-  }
-
-  @keyframes particles {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-100%); }
-  }
-
   .magical-card::before {
     content: '';
     position: absolute;
     inset: 0;
     background: linear-gradient(
       135deg,
-      rgba(34, 197, 94, 0.1) 0%,
-      rgba(249, 115, 22, 0.1) 25%,
-      rgba(14, 165, 233, 0.1) 50%,
-      rgba(155, 135, 245, 0.1) 75%,
-      rgba(34, 197, 94, 0.1) 100%,
-      rgba(249, 115, 22, 0.1) 125%
+      rgba(34, 197, 94, 0.2) 0%,
+      rgba(249, 115, 22, 0.2) 25%,
+      rgba(14, 165, 233, 0.3) 50%,
+      rgba(155, 135, 245, 0.25) 75%,
+      rgba(217, 70, 239, 0.2) 100%
     );
     background-size: 400% 400%;
     border-radius: inherit;
@@ -86,11 +75,11 @@
     position: absolute;
     inset: 0;
     background-image: 
-      radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.8) 0.5px, rgba(255, 255, 255, 0.3) 1.5px, transparent 2px),
-      radial-gradient(circle at 40% 70%, rgba(255, 255, 255, 0.8) 0.5px, rgba(255, 255, 255, 0.3) 1.5px, transparent 2px),
-      radial-gradient(circle at 70% 40%, rgba(255, 255, 255, 0.8) 0.5px, rgba(255, 255, 255, 0.3) 1.5px, transparent 2px);
+      radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.9) 0.5px, rgba(255, 255, 255, 0.4) 1.5px, transparent 2px),
+      radial-gradient(circle at 40% 70%, rgba(255, 255, 255, 0.9) 0.5px, rgba(255, 255, 255, 0.4) 1.5px, transparent 2px),
+      radial-gradient(circle at 70% 40%, rgba(255, 255, 255, 0.9) 0.5px, rgba(255, 255, 255, 0.4) 1.5px, transparent 2px);
     background-size: 100% 100%;
-    filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.5));
+    filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.6));
     animation: sparkleFloat 4s ease-in-out infinite;
     opacity: 0;
     transition: opacity 0.3s ease;
