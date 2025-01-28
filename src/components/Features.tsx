@@ -3,7 +3,7 @@ import { Camera, Heart, Hourglass, Users } from "lucide-react";
 
 const Features = () => {
   return (
-    <section className="relative py-24 bg-gradient-to-b from-[#1A1F2C] via-[#1E293B] to-[#0F172A]">
+    <section className="relative py-24 bg-gradient-to-b from-[#1A1F2C]/80 via-[#1E293B]/85 to-[#0F172A]/90 backdrop-blur-sm">
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">

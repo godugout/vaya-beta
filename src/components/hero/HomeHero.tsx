@@ -20,7 +20,7 @@ const HomeHero = ({ isSpanish }: HomeHeroProps) => {
 
   return (
     <div 
-      className="relative min-h-[600px] flex items-center bg-gradient-to-b from-[#0F172A] to-[#1A1F2C]"
+      className="relative min-h-[600px] flex items-center bg-gradient-to-b from-[#0F172A]/75 to-[#1A1F2C]/80 backdrop-blur-sm"
       data-component="HomeHero"
     >      
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">

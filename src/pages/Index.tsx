@@ -10,11 +10,22 @@ export default function Index() {
 
   return (
     <div className="relative">
-      <HomeHero isSpanish={false} />
-      <Features />
-      <Testimonials />
-      <FAQ />
-      <Auth open={showAuth} onOpenChange={setShowAuth} />
+      <div 
+        className="fixed inset-0 z-0"
+        style={{
+          backgroundImage: `url("https://images.unsplash.com/photo-1522543558187-768b6df7c25c")`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed',
+        }}
+      />
+      <div className="relative z-10">
+        <HomeHero isSpanish={false} />
+        <Features />
+        <Testimonials />
+        <FAQ />
+        <Auth open={showAuth} onOpenChange={setShowAuth} />
+      </div>
     </div>
   );
 }
