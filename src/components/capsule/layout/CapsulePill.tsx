@@ -69,7 +69,7 @@ export const CapsulePill = ({
     >
       <div className={cn(
         "relative overflow-hidden rounded-[90px]",
-        "min-h-[140px] w-[500px]", // Reduced min-height from 160px to 140px
+        "min-h-[120px] w-[500px]",
         `border-[3px] border-vaya-${colorKey}`,
         isPlaceholder 
           ? "bg-white hover:bg-gradient-to-br hover:from-white hover:to-vaya-accent-blue/20"
@@ -85,7 +85,7 @@ export const CapsulePill = ({
         )}
         <div className={cn(
           "flex items-center h-full relative z-10",
-          isPlaceholder ? "py-3 px-8" : "p-6" // Reduced padding for both placeholder and regular capsules
+          isPlaceholder ? "py-3 px-6" : "p-6"
         )}>
           {isPlaceholder ? (
             <div className="flex items-center gap-6 w-full">
@@ -130,9 +130,9 @@ export const CapsulePill = ({
                     )}
                   </div>
                   {metadata && (
-                    <div className="flex flex-col gap-2 mt-2">
-                      <div className="flex items-center gap-4 text-sm text-vaya-gray-500">
-                        <div className="flex items-center gap-1">
+                    <div className="flex items-center justify-between mt-2">
+                      <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-1 text-sm text-vaya-gray-500">
                           <Users className="w-4 h-4" />
                           <span>{metadata.itemCount} items</span>
                         </div>
@@ -142,13 +142,13 @@ export const CapsulePill = ({
                         )}>
                           {metadata.status}
                         </span>
+                        {prompts && prompts.length > 0 && (
+                          <div className="flex items-center gap-2 text-sm text-vaya-gray-600">
+                            <Lightbulb className="w-4 h-4" />
+                            <span>{prompts[0]}</span>
+                          </div>
+                        )}
                       </div>
-                      {prompts && prompts.length > 0 && (
-                        <div className="flex items-center gap-2 text-sm text-vaya-gray-600">
-                          <Lightbulb className="w-4 h-4" />
-                          <span>{prompts[0]}</span>
-                        </div>
-                      )}
                     </div>
                   )}
                 </div>
