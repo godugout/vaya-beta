@@ -79,7 +79,7 @@ export default function Auth({ open, onOpenChange }: AuthDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md bg-white/95 backdrop-blur-sm">
+      <DialogContent className="sm:max-w-md bg-white/95 backdrop-blur-sm border-vaya-capsules/20">
         <div 
           className="absolute inset-0 -z-10 rounded-lg bg-cover bg-center"
           style={{
@@ -89,7 +89,7 @@ export default function Auth({ open, onOpenChange }: AuthDialogProps) {
         />
         <div className="w-full space-y-6">
           <div className="text-center">
-            <h2 className="text-2xl font-bold tracking-tight text-vaya-narra">
+            <h2 className="text-2xl font-bold tracking-tight text-vaya-home">
               {isSignUp ? "Create your account" : "Welcome back"}
             </h2>
             <p className="mt-2 text-sm text-gray-600">
@@ -105,7 +105,7 @@ export default function Auth({ open, onOpenChange }: AuthDialogProps) {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="bg-white/50 backdrop-blur-sm border-vaya-narra/20 focus-visible:ring-vaya-narra"
+                className="bg-white/50 backdrop-blur-sm border-vaya-home/20 focus-visible:ring-vaya-capsules"
               />
               <Input
                 type="password"
@@ -113,13 +113,13 @@ export default function Auth({ open, onOpenChange }: AuthDialogProps) {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="bg-white/50 backdrop-blur-sm border-vaya-narra/20 focus-visible:ring-vaya-narra"
+                className="bg-white/50 backdrop-blur-sm border-vaya-home/20 focus-visible:ring-vaya-capsules"
               />
             </div>
 
             <Button
               type="submit"
-              className="w-full bg-vaya-narra hover:bg-vaya-narra/90"
+              className="w-full bg-vaya-home hover:bg-vaya-home/90"
               disabled={loading}
             >
               {loading
@@ -134,7 +134,7 @@ export default function Auth({ open, onOpenChange }: AuthDialogProps) {
             <Button
               variant="link"
               onClick={() => setIsSignUp(!isSignUp)}
-              className="text-vaya-narra"
+              className="text-vaya-capsules hover:text-vaya-capsules/90"
             >
               {isSignUp
                 ? "Already have an account? Sign in"
