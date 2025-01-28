@@ -37,8 +37,9 @@ const Features = () => {
     <div className="bg-white py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            Everything you need to preserve your legacy
+          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl whitespace-nowrap sm:whitespace-normal">
+            <span className="inline-block">Everything you need</span>{" "}
+            <span className="inline-block">to preserve your legacy</span>
           </h2>
           <p className="mt-4 text-lg text-gray-600 sm:text-xl">
             Capture, organize, and share your family's most precious memories with tools designed for meaningful connection.
