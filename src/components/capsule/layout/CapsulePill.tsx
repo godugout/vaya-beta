@@ -17,10 +17,10 @@ export const CapsulePill = ({
   
   const getColorConfig = (key: string) => {
     const colors = {
-      memories: [[14, 165, 233]], // sky-500
-      stories: [[249, 115, 22]], // orange-500
-      capsules: [[34, 197, 94]], // green-500
-      narra: [[155, 135, 245]], // purple-400
+      memories: [[14, 165, 233], [56, 189, 248]], // sky-500 and sky-400
+      stories: [[249, 115, 22], [251, 146, 60]], // orange-500 and orange-400
+      capsules: [[34, 197, 94], [74, 222, 128]], // green-500 and green-400
+      narra: [[155, 135, 245], [167, 139, 250]], // purple-400 and purple-300
     };
     return colors[key as keyof typeof colors] || colors.memories;
   };
