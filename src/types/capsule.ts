@@ -10,7 +10,7 @@ export interface CapsuleMetadata {
 export interface Capsule {
   title: string;
   link: string;
-  icon: any; // TODO: Make this more specific with LucideIcon type
+  icon: any;
   colorKey: string;
   metadata?: CapsuleMetadata;
 }
