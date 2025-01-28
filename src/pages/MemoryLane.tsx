@@ -26,22 +26,8 @@ const MemoryLane = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           <div className="lg:col-span-2">
-            <div className="mb-8 flex items-center justify-between">
+            <div className="mb-8">
               <h1 className="text-2xl font-outfit font-semibold text-gray-900">Family Memories</h1>
-              <div className="flex gap-4">
-                <Button
-                  variant="outline"
-                  className="hidden md:flex border-2 border-vaya-memories hover:bg-vaya-memories/10 text-vaya-memories"
-                  onClick={() => navigate("/narra")}
-                >
-                  Ask Family Anything
-                  <MessageCircle className="ml-2 h-5 w-5" />
-                </Button>
-                <AddMemoryButton 
-                  className="hidden md:flex"
-                  size="default"
-                />
-              </div>
             </div>
             <MemoryFeedLayout />
           </div>
