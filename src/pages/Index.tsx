@@ -1,6 +1,5 @@
 import Hero from "@/components/Hero";
 import Features from "@/components/Features";
-import Testimonials from "@/components/Testimonials";
 import FAQ from "@/components/FAQ";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -30,7 +29,7 @@ const Index = () => {
           backgroundAttachment: 'fixed',
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-white/75 via-black/50 to-black/80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/75 via-black/20 to-black/60" />
         <div className="relative z-10">
           <Hero />
           <Features />
