@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Star } from "lucide-react";
+import { Camera, Users, BookOpen, Star } from "lucide-react";
 import { StepCard } from "@/components/ui/capsule/StepCard";
 
 export const CapsulePills = () => {
@@ -24,6 +24,36 @@ export const CapsulePills = () => {
           from your family's journey. Click on any capsule to dive deeper into your family's 
           history.
         </motion.p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+          <StepCard
+            step={1}
+            icon={Camera}
+            title="Capture & Collect"
+            description="Add photos, voice messages, and written stories that capture the essence of your family's journey together"
+            color="bg-vaya-accent-orange/20"
+            iconColor="text-vaya-capsules"
+            className="hover:scale-105 transition-transform duration-300"
+          />
+          <StepCard
+            step={2}
+            icon={BookOpen}
+            title="Set Your Timeline"
+            description="Choose a meaningful future date for the reveal - perhaps a milestone birthday, anniversary, or special family gathering"
+            color="bg-vaya-accent-yellow/20"
+            iconColor="text-vaya-capsules"
+            className="hover:scale-105 transition-transform duration-300"
+          />
+          <StepCard
+            step={3}
+            icon={Users}
+            title="Collaborate & Share"
+            description="Invite family members to contribute their own special memories and messages to the capsule"
+            color="bg-vaya-accent-green/20"
+            iconColor="text-vaya-capsules"
+            className="hover:scale-105 transition-transform duration-300"
+          />
+        </div>
 
         <div className="max-w-md mx-auto">
           <StepCard
