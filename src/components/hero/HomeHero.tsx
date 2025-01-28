@@ -19,7 +19,7 @@ const HomeHero = () => {
         blur={5}
         speed="slow"
         waveOpacity={0.3}
-        containerClassName="min-h-[600px]"
+        containerClassName="min-h-fit"
       >
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
