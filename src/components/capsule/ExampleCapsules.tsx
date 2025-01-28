@@ -1,4 +1,4 @@
-import { Camera, Users, Heart, Music, Book, Calendar, MapPin, Image as ImageIcon, GraduationCap, MessageCircle, HelpCircle, Lightbulb } from "lucide-react";
+import { Camera, Users, Heart, Music, Book, Calendar, MapPin, Image as ImageIcon, GraduationCap, MessageCircle, HelpCircle, QuestionMarkCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { CapsuleRow } from "./layout/CapsuleRow";
 import { Capsule } from "@/types/capsule";
@@ -9,7 +9,6 @@ export const detailedCapsules: Capsule[] = [
     description: "Summer family beach trip collection",
     icon: Camera,
     colorKey: "memories",
-    prompts: ["Share your favorite beach moment"],
     metadata: {
       creatorInitials: "ES",
       itemCount: 24,
@@ -23,7 +22,6 @@ export const detailedCapsules: Capsule[] = [
     icon: MessageCircle,
     colorKey: "stories",
     backgroundImage: "/lovable-uploads/family-dinner.jpg",
-    prompts: ["Let's Connect"],
     metadata: {
       creatorInitials: "JD",
       itemCount: 18,
@@ -36,7 +34,6 @@ export const detailedCapsules: Capsule[] = [
     description: "Cultural traditions and stories",
     icon: Heart,
     colorKey: "capsules",
-    prompts: ["Share your heritage"],
     metadata: {
       creatorInitials: "LE",
       itemCount: 12,
@@ -49,9 +46,9 @@ export const detailedCapsules: Capsule[] = [
 export const simpleCapsules: Capsule[] = [
   {
     title: "Share Ideas",
-    icon: Lightbulb,
+    icon: QuestionMarkCircle,
     colorKey: "memories",
-    prompts: ["Got a bright idea?"],
+    prompts: ["What's your most creative idea?"],
     isPlaceholder: true,
     metadata: {
       creatorInitials: "RJ",
@@ -65,7 +62,7 @@ export const simpleCapsules: Capsule[] = [
     icon: HelpCircle,
     colorKey: "stories",
     backgroundImage: "/lovable-uploads/family-gathering.jpg",
-    prompts: ["Join Us"],
+    prompts: ["What would you like to know?"],
     isPlaceholder: true,
     metadata: {
       creatorInitials: "MK",
@@ -89,9 +86,9 @@ export const simpleCapsules: Capsule[] = [
   },
   {
     title: "Got Questions?",
-    icon: HelpCircle,
+    icon: QuestionMarkCircle,
     colorKey: "memories",
-    prompts: ["We're here to help"],
+    prompts: ["What's on your mind?"],
     isPlaceholder: true,
     metadata: {
       creatorInitials: "DL",
@@ -116,9 +113,9 @@ export const simpleCapsules: Capsule[] = [
   },
   {
     title: "New Ideas",
-    icon: Lightbulb,
+    icon: HelpCircle,
     colorKey: "capsules",
-    prompts: ["Light the way"],
+    prompts: ["What inspires you?"],
     isPlaceholder: true,
     metadata: {
       creatorInitials: "CN",
