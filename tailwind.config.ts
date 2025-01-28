@@ -24,17 +24,22 @@ export default {
       },
       colors: {
         vaya: {
-          primary: "#F97316",    // Vibrant orange for CTAs
-          secondary: "#0EA5E9",  // Ocean blue for secondary actions
+          home: "#F97316",      // Orange for home/landing
+          stories: "#F97316",   // Orange for stories section
+          memories: "#0EA5E9",  // Blue for memory lane
+          capsules: "#22C55E",  // Green for family capsules
+          
           accent: {
-            green: "#F2FCE2",    // Soft green from landscapes
-            yellow: "#FEF7CD",   // Warm sunshine
-            orange: "#FEC6A1",   // Sunset glow
+            green: "#F2FCE2",   // Soft green backgrounds
+            yellow: "#FEF7CD",  // Warm accents
+            orange: "#FEC6A1",  // Muted orange accents
+            blue: "#E0F2FE",    // Soft blue backgrounds
           },
+          
           chat: {
-            bg: "#F8FAFC",     // Light background
-            border: "#E2E8F0", // Subtle border
-            hover: "#F1F5F9",  // Hover state
+            bg: "#F8FAFC",
+            border: "#E2E8F0",
+            hover: "#F1F5F9",
           },
           gray: {
             50: "#F8FAFC",

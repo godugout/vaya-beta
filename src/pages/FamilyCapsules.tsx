@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect } from "react";
 import { CapsuleLayout } from "@/components/ui/capsule/CapsuleLayout";
-import CreateCapsuleForm from "@/components/capsule/CreateCapsuleForm";
 import { 
   Camera, 
   Book, 
@@ -14,7 +13,6 @@ import {
   Library, 
   Calendar, 
   HeartHandshake,
-  Hourglass 
 } from "lucide-react";
 import type { LucideIcon } from 'lucide-react';
 import Hero from "@/components/Hero";
@@ -36,7 +34,7 @@ const capsules: {
     title: "Costa Rican Heritage",
     link: "/capsule/costa-rica",
     icon: Camera,
-    colorKey: "Ocean Blue",
+    colorKey: "capsules",
     metadata: {
       creatorInitials: "JD",
       creatorAvatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=John",
