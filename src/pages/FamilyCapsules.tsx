@@ -6,6 +6,7 @@ import { CapsuleScrollSection } from "@/components/capsule/sections/CapsuleScrol
 import { Camera, Gift, Heart, Music, Star, Image, Book, Users } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { Capsule } from "@/components/ui/capsule/types";
+import { useToast } from "@/hooks/use-toast";
 
 const iconMap: { [key: string]: any } = {
   "Family Reunion": Users,
@@ -34,21 +35,41 @@ const getColorForIndex = (index: number) => {
 };
 
 const fetchCapsules = async () => {
+  const { data: userFamilies, error: familiesError } = await supabase
+    .from('family_members')
+    .select('family_id')
+    .eq('user_id', (await supabase.auth.getUser()).data.user?.id);
+
+  if (familiesError) throw familiesError;
+
+  const familyIds = userFamilies.map(fm => fm.family_id);
+
   const { data, error } = await supabase
     .from('capsule_schedules')
-    .select('*')
+    .select(`
+      id,
+      title,
+      description,
+      memory_count,
+      status,
+      created_at,
+      thumbnail_url,
+      lock_deadline,
+      reveal_date
+    `)
+    .in('family_id', familyIds)
     .order('created_at', { ascending: false });
 
   if (error) throw error;
 
   return data.map((capsule, index) => ({
     title: capsule.title,
-    link: `/capsules/${capsule.id}`,
+    link: `/capsule/${capsule.id}`,
     icon: getIconForTitle(capsule.title),
     colorKey: getColorForIndex(index),
     metadata: {
-      creatorInitials: "JD", // We could fetch this from profiles if needed
-      itemCount: 0, // We could count capsule_contents if needed
+      creatorInitials: "JD",
+      itemCount: capsule.memory_count || 0,
       status: capsule.status as "upcoming" | "active" | "locked" | "revealed",
       date: capsule.reveal_date,
     }
@@ -57,6 +78,7 @@ const fetchCapsules = async () => {
 
 const FamilyCapsules = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const { data: capsules, isLoading, error } = useQuery({
     queryKey: ['capsules'],
@@ -74,12 +96,18 @@ const FamilyCapsules = () => {
     checkUser();
   }, [navigate]);
 
+  useEffect(() => {
+    if (error) {
+      toast({
+        title: "Error loading capsules",
+        description: "Please try again later",
+        variant: "destructive",
+      });
+    }
+  }, [error, toast]);
+
   if (isLoading) {
     return <div className="min-h-screen flex items-center justify-center">Loading capsules...</div>;
-  }
-
-  if (error) {
-    return <div className="min-h-screen flex items-center justify-center">Error loading capsules</div>;
   }
 
   return (

@@ -10,15 +10,17 @@ import { Button } from "@/components/ui/button";
 import { Eye, Info } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import AddMemoryButton from "@/components/memory/AddMemoryButton";
+import { Link } from "react-router-dom";
 
 interface CapsuleDetailsDialogProps {
   capsule: {
     id: string;
     title: string;
-    description: string;
+    description?: string;
     memoryCount: number;
     createdAt: string;
     thumbnail?: string;
+    status: "upcoming" | "active" | "locked" | "revealed";
   };
   children?: React.ReactNode;
 }
@@ -56,14 +58,19 @@ const CapsuleDetailsDialog = ({ capsule, children }: CapsuleDetailsDialogProps) 
               <p className="text-gray-600">{capsule.description}</p>
               <div className="flex items-center justify-between text-sm text-gray-500">
                 <span>{capsule.memoryCount} memories</span>
+                <span className="capitalize px-2 py-1 rounded-full bg-gray-100">
+                  {capsule.status}
+                </span>
               </div>
             </div>
             <div className="flex justify-end gap-3 pt-4">
-              <Button variant="outline">
-                <Eye className="h-4 w-4 mr-2" />
-                View Capsule
-              </Button>
-              <AddMemoryButton />
+              <Link to={`/capsule/${capsule.id}`}>
+                <Button variant="outline">
+                  <Eye className="h-4 w-4 mr-2" />
+                  View Capsule
+                </Button>
+              </Link>
+              <AddMemoryButton capsuleId={capsule.id} />
             </div>
           </div>
         </ScrollArea>

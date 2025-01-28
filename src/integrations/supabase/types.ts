@@ -100,36 +100,45 @@ export type Database = {
         Row: {
           created_at: string | null
           created_by: string | null
+          description: string | null
           family_id: string | null
           id: string
           instructions: string | null
           lock_deadline: string
+          memory_count: number | null
           reveal_date: string
           status: string
+          thumbnail_url: string | null
           title: string
           updated_at: string | null
         }
         Insert: {
           created_at?: string | null
           created_by?: string | null
+          description?: string | null
           family_id?: string | null
           id?: string
           instructions?: string | null
           lock_deadline: string
+          memory_count?: number | null
           reveal_date: string
           status?: string
+          thumbnail_url?: string | null
           title: string
           updated_at?: string | null
         }
         Update: {
           created_at?: string | null
           created_by?: string | null
+          description?: string | null
           family_id?: string | null
           id?: string
           instructions?: string | null
           lock_deadline?: string
+          memory_count?: number | null
           reveal_date?: string
           status?: string
+          thumbnail_url?: string | null
           title?: string
           updated_at?: string | null
         }
@@ -260,6 +269,7 @@ export type Database = {
           created_at: string | null
           family_id: string | null
           id: string
+          status: string | null
           tags: string[] | null
           type: string
           uploaded_by: string | null
@@ -269,6 +279,7 @@ export type Database = {
           created_at?: string | null
           family_id?: string | null
           id?: string
+          status?: string | null
           tags?: string[] | null
           type: string
           uploaded_by?: string | null
@@ -278,6 +289,7 @@ export type Database = {
           created_at?: string | null
           family_id?: string | null
           id?: string
+          status?: string | null
           tags?: string[] | null
           type?: string
           uploaded_by?: string | null
