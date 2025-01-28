@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Camera, Plus } from "lucide-react";
+import { Camera, Plus, ChevronUp } from "lucide-react";
 import CreateCapsuleForm from "@/components/capsule/CreateCapsuleForm";
 import { DesktopGrid } from "@/components/ui/capsule/DesktopGrid";
 import { MobileCapsuleList } from "@/components/ui/capsule/MobileCapsuleList";
