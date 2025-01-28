@@ -77,7 +77,7 @@ export const CapsulePill = ({
       )}>
         <div className={cn(
           "flex items-center h-full",
-          isPlaceholder ? "py-6 px-8" : "p-8"
+          isPlaceholder ? "py-4 px-8" : "p-8"
         )}>
           {isPlaceholder ? (
             <div className="flex items-center gap-6 w-full">
