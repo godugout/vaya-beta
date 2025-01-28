@@ -126,6 +126,7 @@ interface CapsulePillProps {
   isPlaceholder?: boolean;
   backgroundImage?: string;
   isDetailed?: boolean;
+  isPaused?: boolean;
 }
 
 export const CapsulePill = ({
@@ -137,8 +138,9 @@ export const CapsulePill = ({
   metadata,
   isPlaceholder,
   backgroundImage,
-  isDetailed
-}: CapsulePillProps & { isDetailed?: boolean }) => {
+  isDetailed,
+  isPaused
+}: CapsulePillProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const emoji = getEmojiForIcon(icon, title, description);
   const colors = getColorVariation(colorKey, isDetailed);
@@ -161,15 +163,9 @@ export const CapsulePill = ({
     pillBaseClasses
   );
 
-  const orbitingProfiles = [
-    { initials: "JD", angle: 0 },
-    { initials: "AS", angle: 120 },
-    { initials: "MK", angle: 240 },
-  ];
-
   return (
     <motion.div
-      whileHover={{ scale: 1.03 }}
+      whileHover={{ scale: isPaused ? 1.03 : 1 }}
       className={cn(
         "flex-shrink-0 transition-all duration-200",
         isPlaceholder ? "opacity-90 hover:opacity-100" : ""
@@ -211,10 +207,22 @@ export const CapsulePill = ({
                 )}
               </div>
               {/* Add CTA button for white pills */}
-              <div className="ml-auto">
+              <div className="ml-auto relative">
+                {/* Pulsing placeholder button */}
+                <div 
+                  className={cn(
+                    "absolute inset-0 w-12 h-12 rounded-full",
+                    "flex items-center justify-center",
+                    "bg-gray-100 animate-pulse",
+                    isHovered ? "opacity-0" : "opacity-50"
+                  )}
+                >
+                  <Plus className="w-6 h-6 text-gray-400" />
+                </div>
+                {/* Colored button on hover */}
                 <motion.button
                   className={cn(
-                    "w-12 h-12 rounded-full flex items-center justify-center", // Reduced from w-16 h-16
+                    "w-12 h-12 rounded-full flex items-center justify-center",
                     `bg-vaya-${colorKey} text-white`,
                     "transition-all duration-300 transform",
                     isHovered ? "scale-110" : "scale-100 opacity-0"
@@ -226,7 +234,7 @@ export const CapsulePill = ({
                   }}
                   whileHover={{ scale: 1.15 }}
                 >
-                  <Plus className="w-6 h-6" /> {/* Reduced from w-8 h-8 */}
+                  <Plus className="w-6 h-6" />
                 </motion.button>
               </div>
             </div>
