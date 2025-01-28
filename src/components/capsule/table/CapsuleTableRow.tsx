@@ -1,6 +1,6 @@
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Bookmark, BookmarkCheck } from "lucide-react";
+import { Eye, Lock, Plus, Bookmark, BookmarkCheck } from "lucide-react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Capsule, CapsuleStatus } from "@/types/capsule";
@@ -28,6 +28,8 @@ export const CapsuleTableRow = ({
     };
     return cn(baseClasses, statusClasses[status]);
   };
+
+  const isAccessible = capsule.metadata?.status === 'active' || capsule.metadata?.status === 'upcoming';
 
   return (
     <TableRow className="hover:bg-gray-50/50">
@@ -62,11 +64,38 @@ export const CapsuleTableRow = ({
               <Bookmark className="h-4 w-4" />
             )}
           </Button>
-          <Link to={capsule.link}>
-            <Button variant="ghost" size="sm">
-              View Details
+          
+          {isAccessible && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8"
+              asChild
+            >
+              <Link to={`/capsule/${capsule.link.split('/').pop()}/add`}>
+                <Plus className="h-4 w-4" />
+              </Link>
             </Button>
-          </Link>
+          )}
+
+          <Button
+            variant="ghost"
+            size="icon"
+            className={cn(
+              "h-8 w-8",
+              !isAccessible && "text-gray-400"
+            )}
+            asChild
+            disabled={!isAccessible}
+          >
+            <Link to={capsule.link}>
+              {isAccessible ? (
+                <Eye className="h-4 w-4" />
+              ) : (
+                <Lock className="h-4 w-4 text-red-400" />
+              )}
+            </Link>
+          </Button>
         </div>
       </TableCell>
     </TableRow>
