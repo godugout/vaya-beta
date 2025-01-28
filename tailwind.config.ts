@@ -126,6 +126,10 @@ export default {
         confetti: {
           '0%': { transform: 'translateY(0) rotate(0deg)', opacity: '1' },
           '100%': { transform: 'translateY(-100px) rotate(720deg)', opacity: '0' }
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' }
         }
       },
       animation: {
@@ -136,7 +140,8 @@ export default {
         glow: 'glow 2s ease-in-out infinite',
         sparkle: 'sparkle 3s ease-in-out infinite',
         'capsule-rotate': 'capsule-rotate 10s linear infinite',
-        confetti: 'confetti 1.5s ease-out forwards'
+        confetti: 'confetti 1.5s ease-out forwards',
+        float: 'float 3s ease-in-out infinite'
       },
     },
   },
