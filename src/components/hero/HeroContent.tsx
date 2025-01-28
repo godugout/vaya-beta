@@ -27,7 +27,8 @@ export const HeroContent = ({ config, isSpanish }: HeroContentProps) => {
           size="lg" 
           className="w-full sm:w-auto bg-vaya-primary hover:bg-vaya-primary/90 text-white transition-all duration-300 font-outfit"
         >
-          {config.primaryCta.text}
+          <span>{config.primaryCta.text}</span>
+          {config.primaryCta.icon}
         </Button>
         {config.secondaryCta && (
           <Button 
@@ -35,7 +36,8 @@ export const HeroContent = ({ config, isSpanish }: HeroContentProps) => {
             variant="outline" 
             className="w-full sm:w-auto border-vaya-primary text-vaya-primary hover:bg-vaya-primary/10 font-outfit"
           >
-            {config.secondaryCta.text}
+            <span>{config.secondaryCta.text}</span>
+            {config.secondaryCta.icon}
           </Button>
         )}
       </div>

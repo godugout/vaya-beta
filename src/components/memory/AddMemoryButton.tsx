@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Camera } from "lucide-react";
 import AddMemoryModal from "./AddMemoryModal";
 
 interface AddMemoryButtonProps {
@@ -18,7 +19,8 @@ const AddMemoryButton = ({ className = "", size = "default" }: AddMemoryButtonPr
         size={size}
         onClick={() => setIsModalOpen(true)}
       >
-        Add Memory
+        <span>Add Memory</span>
+        <Camera className="ml-2 h-4 w-4" />
       </Button>
 
       <AddMemoryModal 

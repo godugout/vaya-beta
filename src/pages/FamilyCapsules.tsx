@@ -1,13 +1,14 @@
 import React from "react";
 import { CapsuleLayout } from "@/components/ui/capsule/CapsuleLayout";
 import CreateCapsuleForm from "@/components/capsule/CreateCapsuleForm";
-import { Camera, Book, BookOpen, Image, Map, Music2, Users, Heart, Library, Calendar, HeartHandshake, Film } from "lucide-react";
+import { Hourglass } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import Hero from "@/components/Hero";
 
 const capsules = [
   {
@@ -138,6 +139,7 @@ const capsules = [
 const FamilyCapsules = () => {
   return (
     <div className="relative min-h-screen">
+      <Hero />
       <CapsuleLayout capsules={capsules} />
       <div className="fixed bottom-24 md:bottom-8 right-8">
         <Dialog>
@@ -147,7 +149,7 @@ const FamilyCapsules = () => {
               size="lg"
             >
               <span>Create Capsule</span>
-              <Camera className="ml-2 h-5 w-5" />
+              <Hourglass className="ml-2 h-5 w-5" />
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[600px]">

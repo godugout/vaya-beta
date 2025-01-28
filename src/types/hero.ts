@@ -1,5 +1,8 @@
+import { ReactNode } from "react";
+
 export interface CtaConfig {
   text: string;
+  icon?: ReactNode;
 }
 
 export interface HeroConfig {

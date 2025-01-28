@@ -1,3 +1,4 @@
+import { Camera, Mic, MessageSquare, Hourglass } from "lucide-react";
 import { HeroConfigs } from "@/types/hero";
 
 export const heroConfigs: HeroConfigs = {
@@ -8,9 +9,11 @@ export const heroConfigs: HeroConfigs = {
     subtitle_es: "Vaya transforma tus recuerdos en cápsulas digitales llenas de vida, tradiciones y amor. Crea, guarda y revive historias únicas con herramientas fáciles de usar y asistencia inteligente. Dale voz y color a tus memorias para que vivan por siempre.",
     primaryCta: {
       text: "Start a Family Capsule",
+      icon: <Hourglass className="ml-2 h-5 w-5" />,
     },
     secondaryCta: {
       text: "Share a Story",
+      icon: <Mic className="ml-2 h-5 w-5" />,
     }
   },
   "/memory-lane": {
@@ -20,6 +23,7 @@ export const heroConfigs: HeroConfigs = {
     subtitle_es: "Una hermosa colección de historias, fotos y momentos preciosos que hacen única a tu familia.",
     primaryCta: {
       text: "Add Memory",
+      icon: <Camera className="ml-2 h-5 w-5" />,
     }
   },
   "/share-stories": {
@@ -29,9 +33,11 @@ export const heroConfigs: HeroConfigs = {
     subtitle_es: "Graba historias, comparte fotos o crea recuerdos en video del viaje de tu familia. Cada historia fortalece nuestros lazos culturales.",
     primaryCta: {
       text: "Record a Story",
+      icon: <Mic className="ml-2 h-5 w-5" />,
     },
     secondaryCta: {
       text: "Chat with Narra",
+      icon: <MessageSquare className="ml-2 h-5 w-5" />,
     }
   }
 };
