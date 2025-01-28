@@ -16,7 +16,7 @@ export const HeroContent = ({ config, isSpanish }: HeroContentProps) => {
   // Get unique button styles based on route
   const getSecondaryButtonStyles = () => {
     if (location.pathname === '/') {
-      return 'border-vaya-capsules text-vaya-capsules hover:bg-vaya-capsules/10 hover:text-vaya-capsules';
+      return 'border-vaya-capsules text-vaya-capsules bg-vaya-accent-green hover:bg-vaya-accent-green/90 hover:text-vaya-capsules';
     }
     if (location.pathname.includes('memory-lane')) {
       return 'border-vaya-memories text-vaya-memories hover:bg-vaya-memories/10 hover:text-vaya-memories';
@@ -68,26 +68,23 @@ export const HeroContent = ({ config, isSpanish }: HeroContentProps) => {
         {isSpanish ? config.subtitle_es : config.subtitle_en}
       </p>
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6">
-        {config.secondaryCta && (
-          <Button 
-            id={getSecondaryButtonId()}
-            size="lg" 
-            variant="outline"
-            onClick={() => location.pathname.includes('memory-lane') && navigate('/narra')}
-            className={`w-full sm:w-auto font-outfit border-2 ${getSecondaryButtonStyles()}`}
-          >
-            <span>{config.secondaryCta.text}</span>
-            {config.secondaryCta.icon}
-          </Button>
-        )}
+        <Button 
+          id={getSecondaryButtonId()}
+          size="lg" 
+          variant="outline"
+          className={`w-full sm:w-auto font-outfit border-2 ${getSecondaryButtonStyles()}`}
+        >
+          <span>{config.primaryCta.text}</span>
+          {config.primaryCta.icon}
+        </Button>
         <Button 
           id={getPrimaryButtonId()}
           size="lg" 
           variant={getPrimaryButtonVariant()}
           className="w-full sm:w-auto transition-all duration-300 font-outfit"
         >
-          <span>{config.primaryCta.text}</span>
-          {config.primaryCta.icon}
+          <span>{config.secondaryCta.text}</span>
+          {config.secondaryCta.icon}
         </Button>
       </div>
     </motion.div>
