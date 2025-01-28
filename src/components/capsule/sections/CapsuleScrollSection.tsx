@@ -1,17 +1,22 @@
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Camera, Plus, ChevronUp, Users, Gift, Heart, Star, Music } from "lucide-react";
+import { Camera, Plus, ChevronUp, Users, Gift, Heart, Star, Music, Filter } from "lucide-react";
 import CreateCapsuleForm from "@/components/capsule/CreateCapsuleForm";
-import { DesktopGrid } from "@/components/ui/capsule/DesktopGrid";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 import { StepCard } from "@/components/ui/capsule/StepCard";
 import { Camera as CameraIcon, BookOpen, Sparkles } from "lucide-react";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
-// Update type to include "revealed" status
 type CapsuleStatus = "upcoming" | "active" | "locked" | "revealed";
 
 // Hardcoded data for testing
@@ -71,8 +76,10 @@ interface CapsuleScrollSectionProps {
 }
 
 export const CapsuleScrollSection = ({ capsules }: CapsuleScrollSectionProps) => {
-  const isMobile = useIsMobile();
   const [isHeroVisible, setIsHeroVisible] = useState(true);
+  const [sortField, setSortField] = useState<'date' | 'title' | 'status'>('date');
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
+  const [statusFilter, setStatusFilter] = useState<CapsuleStatus[]>([]);
 
   const scrollToHero = () => {
     const heroElement = document.querySelector('[data-component="Hero"]');
@@ -101,6 +108,39 @@ export const CapsuleScrollSection = ({ capsules }: CapsuleScrollSectionProps) =>
       }
     };
   }, []);
+
+  const sortedAndFilteredCapsules = [...mockCapsules]
+    .filter(capsule => 
+      statusFilter.length === 0 || 
+      (capsule.metadata?.status && statusFilter.includes(capsule.metadata.status))
+    )
+    .sort((a, b) => {
+      if (sortField === 'date') {
+        const dateA = new Date(a.metadata?.date || '').getTime();
+        const dateB = new Date(b.metadata?.date || '').getTime();
+        return sortDirection === 'asc' ? dateA - dateB : dateB - dateA;
+      }
+      if (sortField === 'title') {
+        return sortDirection === 'asc' 
+          ? a.title.localeCompare(b.title)
+          : b.title.localeCompare(a.title);
+      }
+      if (sortField === 'status') {
+        return sortDirection === 'asc'
+          ? (a.metadata?.status || '').localeCompare(b.metadata?.status || '')
+          : (b.metadata?.status || '').localeCompare(a.metadata?.status || '');
+      }
+      return 0;
+    });
+
+  const handleSort = (field: 'date' | 'title' | 'status') => {
+    if (sortField === field) {
+      setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortField(field);
+      setSortDirection('asc');
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -171,103 +211,147 @@ export const CapsuleScrollSection = ({ capsules }: CapsuleScrollSectionProps) =>
       </div>
 
       <div className="container mx-auto px-4 py-8">
-        {isMobile ? null : <DesktopGrid capsules={mockCapsules} />}
-      </div>
+        <div className="grid gap-8 max-w-7xl mx-auto">
+          <div className="bg-gradient-to-b from-white to-gray-50 py-24">
+            <div className="container mx-auto px-4">
+              <div className="text-center mb-16">
+                <h2 className="text-3xl font-bold text-gray-900 mb-6 font-outfit">
+                  Create Your Family Time Capsule
+                </h2>
+                <p className="text-gray-600 max-w-2xl mx-auto font-inter">
+                  Preserve your family's precious moments and stories in a digital time capsule. 
+                  Open it together on a special date to relive the memories.
+                </p>
+              </div>
+              
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+                <StepCard
+                  step={1}
+                  icon={CameraIcon}
+                  title="Capture & Create"
+                  description="Add photos, voice messages, and written stories that tell your family's unique journey."
+                  color="bg-vaya-accent-orange/20"
+                  iconColor="text-vaya-capsules"
+                  className="hover:scale-105 transition-transform duration-300"
+                />
+                
+                <StepCard
+                  step={2}
+                  icon={BookOpen}
+                  title="Set the Perfect Date"
+                  description="Choose a meaningful future moment for your capsule's reveal."
+                  color="bg-vaya-accent-yellow/20"
+                  iconColor="text-vaya-capsules"
+                  className="hover:scale-105 transition-transform duration-300"
+                />
+                
+                <StepCard
+                  step={3}
+                  icon={Users}
+                  title="Invite Loved Ones"
+                  description="Share the capsule with family and friends to contribute memories."
+                  color="bg-vaya-accent-green/20"
+                  iconColor="text-vaya-capsules"
+                  className="hover:scale-105 transition-transform duration-300"
+                />
 
-      {/* Fallback List View */}
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid gap-4">
-          {mockCapsules.map((capsule) => (
-            <div 
-              key={capsule.title}
-              className={cn(
-                "p-6 rounded-2xl border transition-all duration-300",
-                capsule.metadata?.status === "active" && "bg-vaya-accent-green/20",
-                capsule.metadata?.status === "upcoming" && "bg-vaya-accent-yellow/20",
-                capsule.metadata?.status === "locked" && "bg-vaya-accent-blue/20",
-                capsule.metadata?.status === "revealed" && "bg-vaya-accent-orange/20"
-              )}
-            >
-              <div className="flex items-center gap-4">
-                <div className="relative">
-                  <div className={cn(
-                    "p-3 rounded-full",
-                    `bg-vaya-${capsule.colorKey}`
-                  )}>
-                    <capsule.icon className="w-6 h-6 text-white" />
-                  </div>
-                  <Avatar className="absolute -top-1 -right-1 w-5 h-5 border-2 border-white">
-                    <AvatarFallback className="text-xs">
-                      {capsule.metadata?.creatorInitials}
-                    </AvatarFallback>
-                  </Avatar>
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold mb-1">{capsule.title}</h3>
-                  <div className="flex items-center gap-4 text-sm text-gray-600">
-                    <span>{capsule.metadata?.itemCount} items</span>
-                    <span className="capitalize px-2 py-1 rounded-full text-xs font-medium bg-white shadow-sm">
-                      {capsule.metadata?.status}
-                    </span>
-                    <span>{new Date(capsule.metadata?.date || "").toLocaleDateString()}</span>
-                  </div>
-                </div>
+                <StepCard
+                  step={4}
+                  icon={Sparkles}
+                  title="Experience the Magic"
+                  description="When the day arrives, gather together and relive precious memories."
+                  color="bg-vaya-accent-blue/20"
+                  iconColor="text-vaya-capsules"
+                  className="reveal-card hover:scale-105 transition-transform duration-300"
+                />
               </div>
             </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="bg-gradient-to-b from-white to-gray-50 py-24">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6 font-outfit">Create Your Family Time Capsule</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto font-inter">
-              Preserve your family's precious moments and stories in a digital time capsule. 
-              Open it together on a special date to relive the memories.
-            </p>
           </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-            <StepCard
-              step={1}
-              icon={CameraIcon}
-              title="Capture & Create"
-              description="Add photos, voice messages, and written stories that tell your family's unique journey. Each piece becomes part of your legacy."
-              color="bg-vaya-accent-orange/20"
-              iconColor="text-vaya-capsules"
-              className="hover:scale-105 transition-transform duration-300"
-            />
-            
-            <StepCard
-              step={2}
-              icon={BookOpen}
-              title="Set the Perfect Date"
-              description="Choose a meaningful future moment for your capsule's reveal - a wedding, graduation, or family reunion. Make it special!"
-              color="bg-vaya-accent-yellow/20"
-              iconColor="text-vaya-capsules"
-              className="hover:scale-105 transition-transform duration-300"
-            />
-            
-            <StepCard
-              step={3}
-              icon={Users}
-              title="Invite Loved Ones"
-              description="Share the capsule with family and friends. Let everyone contribute their memories, stories, and wishes for the future."
-              color="bg-vaya-accent-green/20"
-              iconColor="text-vaya-capsules"
-              className="hover:scale-105 transition-transform duration-300"
-            />
 
-            <StepCard
-              step={4}
-              icon={Sparkles}
-              title="Experience the Magic"
-              description="When the day arrives, gather together and experience the joy of opening your capsule. Relive precious memories and celebrate your family's story."
-              color="bg-vaya-accent-blue/20"
-              iconColor="text-vaya-capsules"
-              className="reveal-card hover:scale-105 transition-transform duration-300"
-            />
+          <div className="bg-white rounded-lg border border-gray-100 shadow-sm">
+            <div className="p-4 border-b border-gray-100">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-gray-900">Your Family Capsules</h3>
+                <ToggleGroup 
+                  type="multiple" 
+                  value={statusFilter}
+                  onValueChange={(value) => setStatusFilter(value as CapsuleStatus[])}
+                  className="bg-white border rounded-lg p-1"
+                >
+                  <ToggleGroupItem value="upcoming" aria-label="Show upcoming capsules">
+                    Upcoming
+                  </ToggleGroupItem>
+                  <ToggleGroupItem value="active" aria-label="Show active capsules">
+                    Active
+                  </ToggleGroupItem>
+                  <ToggleGroupItem value="locked" aria-label="Show locked capsules">
+                    Locked
+                  </ToggleGroupItem>
+                  <ToggleGroupItem value="revealed" aria-label="Show revealed capsules">
+                    Revealed
+                  </ToggleGroupItem>
+                </ToggleGroup>
+              </div>
+            </div>
+            
+            <Table>
+              <TableHeader>
+                <TableRow className="hover:bg-gray-50/50">
+                  <TableHead 
+                    className="cursor-pointer"
+                    onClick={() => handleSort('title')}
+                  >
+                    Title {sortField === 'title' && (sortDirection === 'asc' ? '↑' : '↓')}
+                  </TableHead>
+                  <TableHead>Creator</TableHead>
+                  <TableHead 
+                    className="cursor-pointer"
+                    onClick={() => handleSort('status')}
+                  >
+                    Status {sortField === 'status' && (sortDirection === 'asc' ? '↑' : '↓')}
+                  </TableHead>
+                  <TableHead 
+                    className="cursor-pointer"
+                    onClick={() => handleSort('date')}
+                  >
+                    Date {sortField === 'date' && (sortDirection === 'asc' ? '↑' : '↓')}
+                  </TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {sortedAndFilteredCapsules.map((capsule) => (
+                  <TableRow 
+                    key={capsule.title}
+                    className="hover:bg-gray-50/50"
+                  >
+                    <TableCell className="font-medium">{capsule.title}</TableCell>
+                    <TableCell>{capsule.metadata?.creatorInitials}</TableCell>
+                    <TableCell>
+                      <span className={cn(
+                        "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium",
+                        capsule.metadata?.status === "upcoming" && "bg-blue-100 text-blue-800",
+                        capsule.metadata?.status === "active" && "bg-green-100 text-green-800",
+                        capsule.metadata?.status === "locked" && "bg-yellow-100 text-yellow-800",
+                        capsule.metadata?.status === "revealed" && "bg-purple-100 text-purple-800"
+                      )}>
+                        {capsule.metadata?.status}
+                      </span>
+                    </TableCell>
+                    <TableCell>
+                      {new Date(capsule.metadata?.date || "").toLocaleDateString()}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <Link to={capsule.link}>
+                        <Button variant="ghost" size="sm">
+                          View Details
+                        </Button>
+                      </Link>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
           </div>
         </div>
       </div>
