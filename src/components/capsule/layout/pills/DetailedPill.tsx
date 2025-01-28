@@ -3,6 +3,7 @@ import { BasePill } from "./BasePill";
 import { PillTimer } from "./PillTimer";
 import { getEmojiForIcon } from "../utils/emojiUtils";
 import { CapsuleMetadata } from "@/types/capsule";
+import { cn } from "@/lib/utils";
 
 interface DetailedPillProps {
   title: string;
