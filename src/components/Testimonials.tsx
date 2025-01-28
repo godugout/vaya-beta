@@ -34,8 +34,8 @@ const Testimonials = () => {
     >
       <div className="absolute inset-0" 
         style={{
-          background: 'linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.6) 100%)',
-          backdropFilter: 'blur(1px)',
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.85) 100%)',
+          backdropFilter: 'blur(2px)',
         }}
       />
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
@@ -54,7 +54,7 @@ const Testimonials = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
-              className="bg-white/10 backdrop-blur-md p-6 rounded-lg border border-white/20"
+              className="bg-white/10 backdrop-blur-lg p-6 rounded-lg border border-white/20 hover:bg-white/15 transition-all duration-300"
             >
               <div className="text-4xl mb-4">{testimonial.icon}</div>
               <h3 className="text-xl font-semibold text-white mb-4">{testimonial.title}</h3>
