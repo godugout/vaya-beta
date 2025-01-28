@@ -107,27 +107,22 @@ export const ExampleCapsules = () => {
         >
           Example Family Capsules
         </motion.h2>
-        <div className="space-y-8">
+        <div className="space-y-4">
           <CapsuleRow
             capsules={detailedCapsules}
             rowIndex={0}
             duration={20}
             isDetailed
           />
-          <div className="pt-4">
-            <h3 className="text-lg font-outfit font-medium text-gray-700 mb-6">
-              Potential Ideas
-            </h3>
-            <div className="space-y-8">
-              {[0, 1].map((index) => (
-                <CapsuleRow
-                  key={index}
-                  capsules={simpleCapsules.slice(index * 3, (index + 1) * 3)}
-                  rowIndex={index + 1}
-                  duration={15 + index * 5}
-                />
-              ))}
-            </div>
+          <div className="space-y-4">
+            {[0, 1].map((index) => (
+              <CapsuleRow
+                key={index}
+                capsules={simpleCapsules.slice(index * 3, (index + 1) * 3)}
+                rowIndex={index + 1}
+                duration={15 + index * 5}
+              />
+            ))}
           </div>
         </div>
       </div>

@@ -46,39 +46,37 @@ export const CapsulePill = ({
       )}>
         <div className="p-8 h-full">
           {isPlaceholder ? (
-            <div className="flex items-center justify-between h-full">
-              <div className="flex items-center gap-6">
-                <div className={cn(
-                  "inline-flex items-center justify-center w-16 h-16 rounded-3xl",
-                  `bg-vaya-${colorKey} bg-opacity-10 group-hover:bg-opacity-20 transition-colors`
-                )}>
-                  <Icon className={`w-8 h-8 text-vaya-${colorKey}`} />
-                </div>
-                <div className="space-y-2 text-left">
-                  <h3 className="text-xl font-semibold text-vaya-gray-900 font-outfit">
-                    {title}
-                  </h3>
-                  {prompts && prompts.length > 0 && (
-                    <div className="flex items-center gap-2 text-sm text-vaya-gray-600">
-                      <Lightbulb className="w-4 h-4" />
-                      <span>{prompts[0]}</span>
-                    </div>
-                  )}
-                </div>
+            <div className="flex items-start gap-6 h-full">
+              <div className={cn(
+                "inline-flex items-center justify-center w-12 h-12 rounded-2xl shrink-0",
+                `bg-vaya-${colorKey} bg-opacity-10 group-hover:bg-opacity-20 transition-colors`
+              )}>
+                <Icon className={`w-6 h-6 text-vaya-${colorKey}`} />
+              </div>
+              <div className="space-y-2 text-left">
+                <h3 className="text-2xl font-semibold text-vaya-gray-900 font-outfit">
+                  {title}
+                </h3>
+                {prompts && prompts.length > 0 && (
+                  <div className="flex items-center gap-2 text-sm text-vaya-gray-600">
+                    <Lightbulb className="w-4 h-4" />
+                    <span>{prompts[0]}</span>
+                  </div>
+                )}
               </div>
             </div>
           ) : (
             <div className="flex justify-between items-start h-full">
               <div className="flex items-start gap-6">
                 <div className={cn(
-                  "inline-flex items-center justify-center w-16 h-16 rounded-3xl",
+                  "inline-flex items-center justify-center w-12 h-12 rounded-2xl shrink-0",
                   `bg-vaya-${colorKey} bg-opacity-20 group-hover:bg-opacity-30 transition-colors`
                 )}>
-                  <Icon className={`w-8 h-8 text-vaya-${colorKey}`} />
+                  <Icon className={`w-6 h-6 text-vaya-${colorKey}`} />
                 </div>
                 <div className="space-y-3 text-left">
                   <div>
-                    <h3 className="text-xl font-semibold text-vaya-gray-900 font-outfit mb-1">
+                    <h3 className="text-2xl font-semibold text-vaya-gray-900 font-outfit mb-1">
                       {title}
                     </h3>
                     {description && (
