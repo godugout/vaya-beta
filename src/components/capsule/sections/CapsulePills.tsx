@@ -5,7 +5,7 @@ import { StepCard } from "@/components/ui/capsule/StepCard";
 export const CapsulePills = () => {
   return (
     <div className="bg-white font-sans text-foreground py-24">
-      <div className="max-w-6xl mx-auto text-center px-4">
+      <div className="max-w-7xl mx-auto text-center px-4">
         <motion.h2 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -25,7 +25,7 @@ export const CapsulePills = () => {
           history.
         </motion.p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
           <StepCard
             step={1}
             icon={Camera}
@@ -53,9 +53,6 @@ export const CapsulePills = () => {
             iconColor="text-vaya-capsules"
             className="hover:scale-105 transition-transform duration-300"
           />
-        </div>
-
-        <div className="max-w-md mx-auto">
           <StepCard
             step={4}
             icon={Star}
