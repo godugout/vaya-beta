@@ -4,26 +4,27 @@ const Footer = () => {
   return (
     <footer className="bg-[#F1F1F1] text-vaya-gray-800 mt-auto">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-start gap-8">
-          {/* Logo and Description */}
-          <div className="max-w-sm">
-            <Link to="/" className="flex items-center gap-2">
-              <img 
-                src="/lovable-uploads/ef40fff0-4da4-4937-af3d-c2276b1d2588.png"
-                alt="Vaya Logo" 
-                className="h-10 w-10 rounded-lg"
-              />
-              <span className="font-outfit font-bold text-2xl">
-                Vaya<sup>α</sup>
-              </span>
-            </Link>
-            <p className="mt-4 text-base sm:text-lg leading-7 text-vaya-gray-600">
-              Connecting generations through shared memories and stories. Your family's legacy, preserved digitally.
-            </p>
-          </div>
+        {/* Centered Logo and Description */}
+        <div className="text-center mb-12">
+          <Link to="/" className="inline-flex items-center gap-2 justify-center">
+            <img 
+              src="/lovable-uploads/ef40fff0-4da4-4937-af3d-c2276b1d2588.png"
+              alt="Vaya Logo" 
+              className="h-12 w-12 rounded-lg"
+            />
+            <span className="font-outfit font-bold text-3xl">
+              Vaya<sup>α</sup>
+            </span>
+          </Link>
+          <p className="mt-6 text-xl sm:text-2xl leading-8 text-vaya-gray-600 max-w-2xl mx-auto">
+            Connecting generations through shared memories and stories. Your family's legacy, preserved digitally.
+          </p>
+        </div>
 
-          {/* Company Links */}
-          <div className="flex flex-wrap gap-x-8 gap-y-4">
+        {/* Border separator */}
+        <div className="border-t border-vaya-gray-200 pt-8">
+          {/* Links above copyright */}
+          <div className="flex justify-center flex-wrap gap-x-8 gap-y-4 mb-8">
             <a href="#" className="text-base sm:text-lg leading-7 text-vaya-gray-600 hover:text-vaya-gray-900">
               About Allusion Ink
             </a>
@@ -37,10 +38,9 @@ const Footer = () => {
               Terms of Use
             </a>
           </div>
-        </div>
 
-        <div className="mt-12 border-t border-vaya-gray-200 pt-8">
-          <p className="text-base text-vaya-gray-500">
+          {/* Copyright line */}
+          <p className="text-base text-center text-vaya-gray-500">
             &copy; {new Date().getFullYear()} Allusion Ink. All rights reserved. Building memories that last generations.
           </p>
         </div>
