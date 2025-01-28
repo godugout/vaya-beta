@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import MemoryLane from "./pages/MemoryLane";
 import Account from "./pages/Account";
+import Profile from "./pages/Profile";
 import FamilyCapsules from "./pages/FamilyCapsules";
 import ShareStories from "./pages/ShareStories";
 import WildlifeCapsule from "./pages/capsules/WildlifeCapsule";
@@ -42,6 +43,7 @@ const App: React.FC = () => {
                   <Route path="/memory/:id" element={<MemoryPost />} />
                   <Route path="/share-stories" element={<ShareStories />} />
                   <Route path="/account" element={<Account />} />
+                  <Route path="/profile" element={<Profile />} />
                   <Route path="/family-capsules" element={<FamilyCapsules />} />
                   <Route path="/capsule/wildlife" element={<WildlifeCapsule />} />
                 </Routes>
