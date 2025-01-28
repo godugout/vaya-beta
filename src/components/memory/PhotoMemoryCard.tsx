@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Link } from "react-router-dom";
 
 interface PhotoMemoryCardProps {
   memory: PhotoMemory;
@@ -11,53 +12,70 @@ interface PhotoMemoryCardProps {
 
 export const PhotoMemoryCard = ({ memory }: PhotoMemoryCardProps) => {
   return (
-    <Card className="bg-white border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200">
-      <CardContent className="p-6">
-        <div className="flex items-start gap-4">
-          <Avatar className="h-12 w-12">
-            <AvatarImage src="/placeholder.svg" />
-            <AvatarFallback>FM</AvatarFallback>
-          </Avatar>
-          
-          <div className="flex-grow">
-            <div className="flex items-center gap-2 text-gray-500 text-sm mb-4">
-              <Calendar className="w-4 h-4" />
-              {format(new Date(memory.created_at), "MMM d, yyyy")}
-            </div>
-
-            <div className="space-y-4">
-              <div className="relative aspect-video rounded-lg overflow-hidden bg-gray-100">
-                <img
-                  src={memory.photo_url || memory.content_url}
-                  alt="Memory"
-                  className="object-cover w-full h-full"
-                />
+    <Link to={`/memory/${memory.id}`}>
+      <Card className="bg-white border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200">
+        <CardContent className="p-6">
+          <div className="flex items-start gap-4">
+            <Avatar className="h-12 w-12">
+              <AvatarImage src="/placeholder.svg" />
+              <AvatarFallback>FM</AvatarFallback>
+            </Avatar>
+            
+            <div className="flex-grow">
+              <div className="flex items-center gap-2 text-gray-500 text-sm mb-4">
+                <Calendar className="w-4 h-4" />
+                {format(new Date(memory.created_at), "MMM d, yyyy")}
               </div>
 
-              {memory.caption && (
-                <p className="text-gray-600 text-sm">
-                  {memory.caption}
-                </p>
-              )}
+              <div className="space-y-4">
+                <div className="relative aspect-video rounded-lg overflow-hidden bg-gray-100">
+                  <img
+                    src={memory.photo_url || memory.content_url}
+                    alt="Memory"
+                    className="object-cover w-full h-full"
+                  />
+                </div>
 
-              <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                <Button variant="ghost" size="sm" className="text-gray-500 hover:text-vaya-primary">
-                  <Heart className="w-4 h-4 mr-2" />
-                  Like
-                </Button>
-                <Button variant="ghost" size="sm" className="text-gray-500 hover:text-vaya-primary">
-                  <MessageSquare className="w-4 h-4 mr-2" />
-                  Comment
-                </Button>
-                <Button variant="ghost" size="sm" className="text-gray-500 hover:text-vaya-primary">
-                  <Share2 className="w-4 h-4 mr-2" />
-                  Share
-                </Button>
+                {memory.caption && (
+                  <p className="text-gray-600 text-sm">
+                    {memory.caption}
+                  </p>
+                )}
+
+                <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="text-gray-500 hover:text-vaya-primary"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    <Heart className="w-4 h-4 mr-2" />
+                    Like
+                  </Button>
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="text-gray-500 hover:text-vaya-primary"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    <MessageSquare className="w-4 h-4 mr-2" />
+                    Comment
+                  </Button>
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="text-gray-500 hover:text-vaya-primary"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    <Share2 className="w-4 h-4 mr-2" />
+                    Share
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </Link>
   );
 };

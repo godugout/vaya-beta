@@ -12,6 +12,7 @@ import Account from "./pages/Account";
 import FamilyCapsules from "./pages/FamilyCapsules";
 import ShareStories from "./pages/ShareStories";
 import WildlifeCapsule from "./pages/capsules/WildlifeCapsule";
+import MemoryPost from "./pages/MemoryPost";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -38,6 +39,7 @@ const App: React.FC = () => {
                   <Route path="/" element={<Index />} />
                   <Route path="/auth" element={<Auth />} />
                   <Route path="/memory-lane" element={<MemoryLane />} />
+                  <Route path="/memory/:id" element={<MemoryPost />} />
                   <Route path="/share-stories" element={<ShareStories />} />
                   <Route path="/account" element={<Account />} />
                   <Route path="/family-capsules" element={<FamilyCapsules />} />
