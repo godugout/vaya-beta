@@ -20,7 +20,7 @@ interface DesktopGridProps {
 }
 
 export const DesktopGrid = ({ capsules }: DesktopGridProps) => {
-  // Split capsules into 3 rows
+  // Split capsules into 3 rows and duplicate them for seamless looping
   const itemsPerRow = Math.ceil(capsules.length / 3);
   const rows = Array.from({ length: 3 }, (_, i) =>
     capsules.slice(i * itemsPerRow, (i + 1) * itemsPerRow)
@@ -55,14 +55,17 @@ export const DesktopGrid = ({ capsules }: DesktopGridProps) => {
             }}
           >
             <div className="flex gap-8 animate-none">
-              {[...row, ...row].map((capsule, index) => (
+              {/* Duplicate the row twice for seamless looping */}
+              {[...row, ...row, ...row].map((capsule, index) => (
                 <motion.div
                   key={`${capsule.title}-${index}`}
                   whileHover={{
                     scale: 1.02,
                     transition: { duration: 0.2 },
                   }}
+                  className="relative group"
                 >
+                  <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-xl" />
                   <CapsuleCard {...capsule} isDesktop metadata={capsule.metadata} />
                 </motion.div>
               ))}

@@ -36,6 +36,16 @@ const getIconColor = (colorKey: string) => {
   return colors[colorKey as keyof typeof colors] || colors.orange;
 };
 
+const getStatusColor = (status: string) => {
+  const colors = {
+    upcoming: "bg-blue-100 text-blue-700",
+    active: "bg-green-100 text-green-700",
+    locked: "bg-yellow-100 text-yellow-700",
+    revealed: "bg-gray-100 text-gray-700",
+  };
+  return colors[status as keyof typeof colors] || colors.upcoming;
+};
+
 export const CapsuleCard = ({
   title,
   icon: Icon,
@@ -67,11 +77,17 @@ export const CapsuleCard = ({
             {title}
           </h3>
           {metadata && (
-            <div className="flex items-center space-x-2 text-sm text-vaya-gray-500 font-inter">
-              <div className="flex items-center space-x-1">
+            <div className="flex flex-col space-y-2">
+              <div className="flex items-center space-x-2 text-sm text-vaya-gray-500 font-inter">
                 <span>{metadata.itemCount} items</span>
                 <span>•</span>
                 <span>{metadata.date}</span>
+              </div>
+              <div className={cn(
+                "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium",
+                getStatusColor(metadata.status)
+              )}>
+                {metadata.status.charAt(0).toUpperCase() + metadata.status.slice(1)}
               </div>
             </div>
           )}
