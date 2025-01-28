@@ -16,6 +16,16 @@ export const heroConfigs: HeroConfigs = {
       icon: <Mic className="ml-2 h-5 w-5" />,
     }
   },
+  "/family-capsules": {
+    title_en: "Family Time Capsules",
+    title_es: "Cápsulas del Tiempo Familiar",
+    subtitle_en: "Create and curate meaningful collections of memories, stories, and traditions to share with future generations.",
+    subtitle_es: "Crea y organiza colecciones significativas de recuerdos, historias y tradiciones para compartir con las generaciones futuras.",
+    primaryCta: {
+      text: "Create New Capsule",
+      icon: <Hourglass className="ml-2 h-5 w-5" />,
+    }
+  },
   "/memory-lane": {
     title_en: "Your Family's Memory Lane",
     title_es: "El Camino de los Recuerdos Familiares",
