@@ -1,7 +1,21 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { useEffect } from "react";
 import { CapsuleLayout } from "@/components/ui/capsule/CapsuleLayout";
 import CreateCapsuleForm from "@/components/capsule/CreateCapsuleForm";
-import { Hourglass } from "lucide-react";
+import { 
+  Camera, 
+  Book, 
+  BookOpen, 
+  Music2, 
+  Users, 
+  Film, 
+  Heart, 
+  Library, 
+  Calendar, 
+  HeartHandshake,
+  Hourglass 
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -9,8 +23,21 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import Hero from "@/components/Hero";
+import type { LucideIcon } from 'lucide-react';
 
-const capsules = [
+const capsules: {
+  title: string;
+  link: string;
+  icon: LucideIcon;
+  colorKey: string;
+  metadata?: {
+    creatorAvatar?: string;
+    creatorInitials: string;
+    itemCount: number;
+    status: "active" | "upcoming" | "locked" | "revealed";
+    date: string;
+  };
+}[] = [
   {
     title: "Costa Rican Heritage",
     link: "/capsule/costa-rica",
@@ -20,7 +47,7 @@ const capsules = [
       creatorInitials: "JD",
       creatorAvatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=John",
       itemCount: 12,
-      status: "active" as const,
+      status: "active",
       date: "Updated today",
     }
   },
@@ -33,7 +60,7 @@ const capsules = [
       creatorInitials: "MA",
       creatorAvatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Maria",
       itemCount: 8,
-      status: "upcoming" as const,
+      status: "upcoming",
       date: "Opens Dec 25",
     }
   },
@@ -46,31 +73,31 @@ const capsules = [
       creatorInitials: "RL",
       creatorAvatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Robert",
       itemCount: 15,
-      status: "locked" as const,
+      status: "locked",
       date: "Locked until Jan",
     }
   },
   {
     title: "Beach Day Memories",
     link: "/capsule/beach",
-    icon: Image,
+    icon: Camera,
     colorKey: "Nature Green",
     metadata: {
       creatorInitials: "ES",
       itemCount: 24,
-      status: "revealed" as const,
+      status: "revealed",
       date: "Opened Nov 1",
     }
   },
   {
     title: "Our Journey Here",
     link: "/capsule/journey",
-    icon: Map,
+    icon: Users,
     colorKey: "Ocean Blue",
     metadata: {
       creatorInitials: "JD",
       itemCount: 18,
-      status: "active" as const,
+      status: "active",
       date: "Closes Dec 31",
     }
   },
@@ -131,12 +158,25 @@ const capsules = [
   {
     title: "Photo Albums",
     link: "/capsule/albums",
-    icon: Image,
+    icon: Camera,
     colorKey: "Ocean Blue",
   }
 ];
 
 const FamilyCapsules = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkUser = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        navigate("/auth");
+        return;
+      }
+    };
+    checkUser();
+  }, [navigate]);
+
   return (
     <div className="relative min-h-screen">
       <Hero />
