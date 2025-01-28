@@ -167,9 +167,9 @@ export default function Profile() {
             <Bookmark className="h-4 w-4 mr-2" />
             Bookmarks
           </TabsTrigger>
-          <TabsTrigger value="heritage">
+          <TabsTrigger value="artifacts">
             <FileText className="h-4 w-4 mr-2" />
-            Heritage Stories
+            Artifacts
           </TabsTrigger>
           <TabsTrigger value="activity">
             <Bell className="h-4 w-4 mr-2" />
@@ -223,10 +223,10 @@ export default function Profile() {
           </Card>
         </TabsContent>
 
-        <TabsContent value="heritage">
+        <TabsContent value="artifacts">
           <Card>
             <CardHeader>
-              <CardTitle>Your Heritage Stories</CardTitle>
+              <CardTitle>Your Artifacts</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground">Coming soon...</p>
