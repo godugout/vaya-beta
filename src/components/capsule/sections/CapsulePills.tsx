@@ -32,8 +32,8 @@ export const CapsulePills = () => {
             title="Capture & Collect"
             description="Add photos, voice messages, and written stories that capture the essence of your family's journey together"
             color="bg-gray-50"
-            iconColor="text-rose-500"
-            numberColor="text-rose-500"
+            iconColor="text-blue-500"
+            numberColor="text-blue-500"
             className="hover:scale-105 transition-transform duration-300"
           />
           <StepCard
