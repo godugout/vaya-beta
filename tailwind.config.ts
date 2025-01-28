@@ -21,6 +21,7 @@ export default {
       fontFamily: {
         outfit: ['Outfit', 'sans-serif'],
         inter: ['Inter', 'sans-serif'],
+        playfair: ['Playfair Display', 'serif'],
       },
       colors: {
         vaya: {
