@@ -6,6 +6,7 @@ interface CapsuleCardProps {
   link: string;
   icon: LucideIcon;
   colorKey: string;
+  isDesktop?: boolean;
   metadata?: {
     creatorAvatar?: string;
     creatorInitials: string;
@@ -20,9 +21,13 @@ export const CapsuleCard = ({
   icon: Icon,
   colorKey,
   metadata,
+  isDesktop,
 }: CapsuleCardProps) => {
   return (
-    <div className="group relative bg-white rounded-lg shadow-sm border border-vaya-gray-200 p-4 hover:shadow-md transition-all duration-300">
+    <div className={cn(
+      "group relative bg-white rounded-lg shadow-sm border border-vaya-gray-200 p-4 hover:shadow-md transition-all duration-300",
+      isDesktop && "w-[280px]"
+    )}>
       <div className="flex items-start space-x-4">
         <div className={cn(
           "p-2 rounded-lg",
