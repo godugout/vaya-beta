@@ -5,7 +5,6 @@ import { Camera } from "lucide-react";
 import CreateCapsuleForm from "@/components/capsule/CreateCapsuleForm";
 import { CapsuleTable } from "@/components/capsule/CapsuleTable";
 import { CapsuleFilters } from "@/components/capsule/CapsuleFilters";
-import { BackToFutureSection } from "@/components/capsule/sections/BackToFutureSection";
 import { CapsulePills } from "@/components/capsule/sections/CapsulePills";
 import { Capsule, CapsuleStatus } from "@/types/capsule";
 
@@ -89,7 +88,6 @@ export const CapsuleScrollSection = ({ capsules }: CapsuleScrollSectionProps) =>
       </div>
       
       <CapsulePills />
-      <BackToFutureSection />
     </>
   );
 };
