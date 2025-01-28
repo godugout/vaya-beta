@@ -14,12 +14,6 @@ import { useLanguage } from "@/contexts/LanguageContext";
 const languages = [
   { code: 'en', name: 'English', flag: '🇺🇸' },
   { code: 'es', name: 'Español', flag: '🇪🇸' },
-  { code: 'pt', name: 'Português', flag: '🇵🇹' },
-  { code: 'it', name: 'Italiano', flag: '🇮🇹' },
-  { code: 'ja', name: '日本語', flag: '🇯🇵' },
-  { code: 'ko', name: '한국어', flag: '🇰🇷' },
-  { code: 'vi', name: 'Tiếng Việt', flag: '🇻🇳' },
-  { code: 'zh', name: '中文', flag: '🇨🇳' },
 ];
 
 export const LanguageSelector = () => {
@@ -33,14 +27,22 @@ export const LanguageSelector = () => {
       const { data: { user } } = await supabase.auth.getUser();
       
       if (!user) {
+        // For testing purposes, allow language change without authentication
+        setLanguagePreference(languageCode);
         toast({
-          title: "Authentication required",
-          description: "Please sign in to change language preferences",
-          variant: "destructive",
+          title: "Language Updated",
+          description: "Language preference updated (test mode)",
         });
         return;
       }
 
+      const { error } = await supabase
+        .from('profiles')
+        .update({ preferred_language: languageCode })
+        .eq('id', user.id);
+
+      if (error) throw error;
+      
       await setLanguagePreference(languageCode);
       
       toast({

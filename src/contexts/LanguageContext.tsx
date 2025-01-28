@@ -10,7 +10,7 @@ type LanguageContextType = {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [isSpanish, setIsSpanish] = useState(true);
+  const [isSpanish, setIsSpanish] = useState(false); // Default to English for testing
 
   useEffect(() => {
     const fetchUserLanguage = async () => {
@@ -18,7 +18,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
         const { data: { session } } = await supabase.auth.getSession();
         
         if (!session?.user) {
-          setIsSpanish(true);
+          setIsSpanish(false); // Default to English for testing
           return;
         }
 
@@ -65,13 +65,11 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   const setLanguagePreference = async (language: string) => {
     try {
+      setIsSpanish(language === 'es');
+      
       const { data: { session } } = await supabase.auth.getSession();
       if (!session?.user) {
-        toast({
-          title: "Authentication required",
-          description: "Please sign in to change language preferences",
-          variant: "destructive",
-        });
+        // Allow language changes without authentication for testing
         return;
       }
 
@@ -82,11 +80,6 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
       if (error) throw error;
 
-      setIsSpanish(language === 'es');
-      toast({
-        title: "Language Updated",
-        description: "Your language preference has been saved.",
-      });
     } catch (error) {
       console.error('Error updating language:', error);
       toast({
