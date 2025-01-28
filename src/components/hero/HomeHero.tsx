@@ -1,13 +1,26 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Mic, Hourglass } from "lucide-react";
-import { HeroPattern } from "./HeroPattern";
+import { WavyBackground } from "@/components/ui/wavy-background";
 
 const HomeHero = () => {
   return (
-    <div className="relative overflow-hidden py-24 bg-white/90" data-component="HomeHero">
-      <HeroPattern />
-      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
+    <div className="relative overflow-hidden" data-component="HomeHero">
+      <WavyBackground 
+        className="py-24"
+        colors={[
+          "#F97316", // vaya-home
+          "#0EA5E9", // vaya-memories
+          "#22C55E", // vaya-capsules
+          "#9b87f5", // vaya-narra
+        ]}
+        waveWidth={100}
+        backgroundFill="#ffffff"
+        blur={5}
+        speed="slow"
+        waveOpacity={0.3}
+        containerClassName="min-h-[600px]"
+      >
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -41,7 +54,7 @@ const HomeHero = () => {
             </Button>
           </div>
         </motion.div>
-      </div>
+      </WavyBackground>
     </div>
   );
 };
