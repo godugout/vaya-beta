@@ -30,10 +30,10 @@ export const CapsulePill = ({
 }: CapsulePillProps) => {
   const getBgColor = (key: string) => {
     const colors: { [key: string]: string } = {
-      orange: "bg-vaya-accent-orange/40",
-      green: "bg-vaya-accent-green/40",
-      blue: "bg-vaya-accent-blue/40",
-      yellow: "bg-vaya-accent-yellow/40"
+      orange: "bg-vaya-accent-orange/60",
+      green: "bg-vaya-accent-green/60",
+      blue: "bg-vaya-accent-blue/60",
+      yellow: "bg-vaya-accent-yellow/60"
     };
     return colors[key] || "bg-gray-50";
   };
@@ -95,18 +95,18 @@ export const CapsulePill = ({
         <div className="flex items-center justify-center h-full relative z-10">
           <div className={cn(
             "flex items-center w-full h-full",
-            isPlaceholder ? "py-3 px-6" : "p-6"
+            isPlaceholder ? "py-4 px-6" : "p-6"
           )}>
             {isPlaceholder ? (
               <div className="flex items-center gap-6 w-full">
                 <div className={cn(
-                  "inline-flex items-center justify-center w-12 h-12 rounded-2xl shrink-0",
+                  "inline-flex items-center justify-center w-14 h-14 rounded-2xl shrink-0",
                   getIconBgColor(colorKey, true),
                   "group-hover:bg-opacity-20 transition-colors"
                 )}>
-                  <Icon className={cn("w-6 h-6", getIconColor(colorKey))} />
+                  <Icon className={cn("w-8 h-8", getIconColor(colorKey))} />
                 </div>
-                <div className="flex flex-col justify-start">
+                <div className="flex flex-col justify-start pt-1">
                   <h3 className="text-2xl font-semibold text-vaya-gray-900 font-outfit text-left">
                     {title}
                   </h3>
@@ -122,11 +122,11 @@ export const CapsulePill = ({
               <div className="flex items-start justify-between w-full">
                 <div className="flex items-start gap-6">
                   <div className={cn(
-                    "inline-flex items-center justify-center w-12 h-12 rounded-2xl shrink-0",
+                    "inline-flex items-center justify-center w-14 h-14 rounded-2xl shrink-0 mt-1",
                     getIconBgColor(colorKey),
                     "group-hover:bg-opacity-30 transition-colors"
                   )}>
-                    <Icon className={cn("w-6 h-6", getIconColor(colorKey))} />
+                    <Icon className={cn("w-8 h-8", getIconColor(colorKey))} />
                   </div>
                   <div className="flex flex-col justify-start">
                     <h3 className="text-2xl font-semibold text-vaya-gray-900 font-outfit mb-1 text-left">
