@@ -10,7 +10,7 @@ interface HeroProps {
   culturalContent?: CulturalContent | null;
 }
 
-const Hero = ({ culturalContent }: HeroProps) => {
+export default function Hero({ culturalContent }: HeroProps) {
   const location = useLocation();
   const { isSpanish } = useLanguage();
 
@@ -36,6 +36,4 @@ const Hero = ({ culturalContent }: HeroProps) => {
       </div>
     </div>
   );
-};
-
-export default Hero;
+}

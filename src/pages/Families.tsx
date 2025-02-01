@@ -3,14 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Plus, Users, Settings } from "lucide-react";
+import { Plus, Users } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { EditFamilyDialog } from "@/components/family/EditFamilyDialog";
 
 interface Family {
   id: string;
   name: string;
   description: string | null;
-  created_at: string;
   members: {
     id: string;
     user_id: string;
@@ -79,9 +79,7 @@ export default function Families() {
               <CardTitle className="text-xl font-semibold">
                 {family.name}
               </CardTitle>
-              <Button variant="ghost" size="icon">
-                <Settings className="h-4 w-4" />
-              </Button>
+              <EditFamilyDialog family={family} onFamilyUpdated={getFamilies} />
             </CardHeader>
             <CardContent>
               {family.description && (

@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useToast } from "@/components/ui/use-toast";
+import { EditFamilyDialog } from "@/components/family/EditFamilyDialog";
 import { User } from "@supabase/supabase-js";
 import { Loader2, User as UserIcon, Users, Bookmark, FileText, Bell } from "lucide-react";
 
@@ -64,7 +65,7 @@ export default function Profile() {
       if (profileError) throw profileError;
       setProfile(profileData);
 
-      // Fetch family memberships
+      // Fetch family memberships with family details
       const { data: familyData, error: familyError } = await supabase
         .from('family_members')
         .select(`
@@ -72,7 +73,8 @@ export default function Profile() {
           role,
           families (
             id,
-            name
+            name,
+            description
           )
         `)
         .eq('user_id', user.id);
@@ -81,6 +83,7 @@ export default function Profile() {
       setFamilies(familyData.map(f => ({
         id: f.families.id,
         name: f.families.name,
+        description: f.families.description,
         role: f.role
       })));
 
@@ -173,7 +176,16 @@ export default function Profile() {
                     <div>
                       <h3 className="font-medium">{family.name}</h3>
                       <p className="text-sm text-muted-foreground capitalize">{family.role}</p>
+                      {family.description && (
+                        <p className="text-sm text-muted-foreground mt-1">{family.description}</p>
+                      )}
                     </div>
+                    {family.role === 'admin' && (
+                      <EditFamilyDialog 
+                        family={family} 
+                        onFamilyUpdated={getProfile}
+                      />
+                    )}
                   </div>
                 ))}
               </div>
