@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Hero } from "@/components/Hero";
-import { Features } from "@/components/Features";
-import { Testimonials } from "@/components/Testimonials";
-import { FAQ } from "@/components/FAQ";
+import Hero from "@/components/Hero";
+import Features from "@/components/Features";
+import Testimonials from "@/components/Testimonials";
+import FAQ from "@/components/FAQ";
 import { CreateFamilyWizard } from "@/components/family/CreateFamilyWizard";
 import { Button } from "@/components/ui/button";
 import { Users } from "lucide-react";
