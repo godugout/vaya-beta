@@ -2,22 +2,45 @@ import Hero from "@/components/Hero";
 import Features from "@/components/Features";
 import FAQ from "@/components/FAQ";
 import Testimonials from "@/components/Testimonials";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { WelcomeModal } from "@/components/onboarding/WelcomeModal";
+import { FeatureTour } from "@/components/onboarding/FeatureTour";
 
 const Index = () => {
   const navigate = useNavigate();
+  const [showWelcome, setShowWelcome] = useState(false);
+  const [showTour, setShowTour] = useState(false);
 
   useEffect(() => {
     const checkAuth = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) {
         navigate("/auth");
+      } else {
+        // Check if this is the user's first visit
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('id')
+          .eq('id', session.user.id)
+          .single();
+          
+        if (profile) {
+          setShowWelcome(true);
+        }
       }
     };
     checkAuth();
   }, [navigate]);
+
+  const handleWelcomeClose = (open: boolean) => {
+    setShowWelcome(open);
+    if (!open) {
+      // Start the feature tour when welcome modal is closed
+      setShowTour(true);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -61,6 +84,9 @@ const Index = () => {
         </div>
       </div>
       <FAQ />
+      
+      <WelcomeModal open={showWelcome} onOpenChange={handleWelcomeClose} />
+      <FeatureTour open={showTour} onOpenChange={setShowTour} />
     </div>
   );
 };
