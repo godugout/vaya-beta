@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import Hero from "@/components/Hero";
 import Features from "@/components/Features";
@@ -11,7 +12,7 @@ export default function Index() {
   const [showCreateFamily, setShowCreateFamily] = useState(false);
 
   return (
-    <div className="relative">
+    <div className="relative bg-white">
       <Hero />
       <div className="fixed bottom-8 right-8 z-50">
         <Button 
