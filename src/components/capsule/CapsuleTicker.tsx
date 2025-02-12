@@ -14,7 +14,7 @@ const CapsuleTicker = () => {
   useEffect(() => {
     const fetchCapsuleEvents = async () => {
       const { data: schedules, error } = await supabase
-        .from('capsule_schedules')
+        .from('vaya_capsule_schedules')
         .select('title, lock_deadline, reveal_date')
         .or('status.eq.upcoming,status.eq.locked')
         .order('lock_deadline', { ascending: true });

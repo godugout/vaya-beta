@@ -23,7 +23,7 @@ export const useChat = () => {
   const fetchPrompts = async () => {
     try {
       const { data, error } = await supabase
-        .from("localized_prompts")
+        .from("vaya_localized_prompts")
         .select("*")
         .eq("active", true);
 

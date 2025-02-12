@@ -39,7 +39,7 @@ export function CreateFamilyWizard({ open, onOpenChange }: { open: boolean; onOp
     try {
       // Insert the family
       const { data: familyData, error: familyError } = await supabase
-        .from('families')
+        .from('vaya_families')
         .insert([
           { name: formData.name, description: formData.description }
         ])
@@ -50,7 +50,7 @@ export function CreateFamilyWizard({ open, onOpenChange }: { open: boolean; onOp
 
       // Add the creator as an admin
       const { error: memberError } = await supabase
-        .from('family_members')
+        .from('vaya_family_members')
         .insert([
           { 
             family_id: familyData.id,

@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -69,11 +68,11 @@ export default function Profile() {
 
       // Fetch family memberships with family details
       const { data: familyData, error: familyError } = await supabase
-        .from('family_members')
+        .from('vaya_family_members')
         .select(`
           family_id,
           role,
-          families (
+          families:vaya_families (
             id,
             name,
             description
@@ -91,10 +90,10 @@ export default function Profile() {
 
       // Fetch bookmarks with memory details
       const { data: bookmarkData, error: bookmarkError } = await supabase
-        .from('bookmarks')
+        .from('vaya_bookmarks')
         .select(`
           memory_id,
-          memories (
+          memories:vaya_memories (
             id,
             type,
             content_url,

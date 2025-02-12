@@ -31,7 +31,7 @@ export function EditFamilyDialog({ family, onFamilyUpdated }: EditFamilyDialogPr
     setLoading(true);
     try {
       const { error } = await supabase
-        .from('families')
+        .from('vaya_families')
         .update({
           name: formData.name,
           description: formData.description,

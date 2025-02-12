@@ -1867,6 +1867,247 @@ export type Database = {
           },
         ]
       }
+      vaya_bookmarks: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          memory_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          memory_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          memory_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vaya_bookmarks_memory_id_fkey"
+            columns: ["memory_id"]
+            isOneToOne: false
+            referencedRelation: "vaya_memories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      vaya_capsule_schedules: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          lock_deadline: string
+          reveal_date: string
+          status: string | null
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          lock_deadline: string
+          reveal_date: string
+          status?: string | null
+          title: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          lock_deadline?: string
+          reveal_date?: string
+          status?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
+      vaya_families: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      vaya_family_members: {
+        Row: {
+          created_at: string
+          family_id: string | null
+          id: string
+          role: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          family_id?: string | null
+          id?: string
+          role?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          family_id?: string | null
+          id?: string
+          role?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vaya_family_members_family_id_fkey"
+            columns: ["family_id"]
+            isOneToOne: false
+            referencedRelation: "vaya_families"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      vaya_localized_prompts: {
+        Row: {
+          active: boolean | null
+          category_id: string
+          created_at: string
+          cultural_context_en: string | null
+          cultural_context_es: string | null
+          id: string
+          prompt_en: string
+          prompt_es: string
+        }
+        Insert: {
+          active?: boolean | null
+          category_id: string
+          created_at?: string
+          cultural_context_en?: string | null
+          cultural_context_es?: string | null
+          id?: string
+          prompt_en: string
+          prompt_es: string
+        }
+        Update: {
+          active?: boolean | null
+          category_id?: string
+          created_at?: string
+          cultural_context_en?: string | null
+          cultural_context_es?: string | null
+          id?: string
+          prompt_en?: string
+          prompt_es?: string
+        }
+        Relationships: []
+      }
+      vaya_memories: {
+        Row: {
+          content_url: string
+          created_at: string
+          created_by: string | null
+          family_id: string | null
+          id: string
+          type: string
+        }
+        Insert: {
+          content_url: string
+          created_at?: string
+          created_by?: string | null
+          family_id?: string | null
+          id?: string
+          type: string
+        }
+        Update: {
+          content_url?: string
+          created_at?: string
+          created_by?: string | null
+          family_id?: string | null
+          id?: string
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vaya_memories_family_id_fkey"
+            columns: ["family_id"]
+            isOneToOne: false
+            referencedRelation: "vaya_families"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      vaya_photos: {
+        Row: {
+          caption: string | null
+          id: string
+          photo_url: string
+        }
+        Insert: {
+          caption?: string | null
+          id: string
+          photo_url: string
+        }
+        Update: {
+          caption?: string | null
+          id?: string
+          photo_url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vaya_photos_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "vaya_memories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      vaya_stories: {
+        Row: {
+          description: string | null
+          duration: number | null
+          id: string
+          title: string
+        }
+        Insert: {
+          description?: string | null
+          duration?: number | null
+          id: string
+          title: string
+        }
+        Update: {
+          description?: string | null
+          duration?: number | null
+          id?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vaya_stories_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "vaya_memories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       zine_comments: {
         Row: {
           author_id: string | null
