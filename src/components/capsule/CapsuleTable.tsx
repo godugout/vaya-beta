@@ -1,10 +1,12 @@
+
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Eye, Lock, Plus, Bookmark, BookmarkCheck, Share2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Capsule, CapsuleStatus } from "@/types/capsule";
-import { getEmojiForIcon } from "../layout/utils/emojiUtils";
+import { getEmojiForIcon } from "@/components/capsule/layout/utils/emojiUtils";
+import { supabase } from "@/integrations/supabase/client";
 
 interface CapsuleTableRowProps {
   capsule: Capsule;
@@ -12,6 +14,31 @@ interface CapsuleTableRowProps {
   isLoading: boolean;
   onBookmark: (capsuleId: string) => void;
 }
+
+export const CapsuleTable = ({ capsules, sortField, sortDirection, onSort }: {
+  capsules: Capsule[];
+  sortField: 'date' | 'title' | 'status';
+  sortDirection: 'asc' | 'desc';
+  onSort: (field: 'date' | 'title' | 'status') => void;
+}) => {
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full">
+        <tbody>
+          {capsules.map((capsule) => (
+            <CapsuleTableRow 
+              key={capsule.id} 
+              capsule={capsule} 
+              isBookmarked={false} 
+              isLoading={false}
+              onBookmark={() => {}}
+            />
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
 export const CapsuleTableRow = ({ 
   capsule, 

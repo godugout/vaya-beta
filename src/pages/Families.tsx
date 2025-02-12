@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -37,12 +38,14 @@ export default function Families() {
       const { data: familiesData, error: familiesError } = await supabase
         .from('vaya_families')
         .select(`
-          *,
+          id,
+          name,
+          description,
           members:vaya_family_members(
             id,
             user_id,
             role,
-            profiles(
+            profiles:profiles!user_id(
               full_name,
               avatar_url
             )

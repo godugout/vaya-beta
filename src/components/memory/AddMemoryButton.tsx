@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
@@ -35,15 +36,15 @@ const AddMemoryButton = ({ capsuleId, className, size = "default" }: AddMemoryBu
         .from('memories')
         .getPublicUrl(filePath);
 
-      const { error: contentError } = await supabase
-        .from('capsule_contents')
+      const { error: memoryError } = await supabase
+        .from('vaya_memories')
         .insert({
-          capsule_id: capsuleId,
-          content_type: file.type.startsWith('image/') ? 'image' : 'file',
+          type: file.type.startsWith('image/') ? 'photo' : 'file',
           content_url: publicUrl,
+          family_id: capsuleId
         });
 
-      if (contentError) throw contentError;
+      if (memoryError) throw memoryError;
 
       toast({
         title: "Success!",
