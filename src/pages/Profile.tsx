@@ -62,7 +62,7 @@ export default function Profile() {
         .from('profiles')
         .select('*')
         .eq('id', user.id)
-        .maybeSingle();
+        .single();
 
       if (profileError) throw profileError;
       setProfile(profileData);
