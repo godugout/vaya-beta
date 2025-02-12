@@ -21,43 +21,43 @@ const HomeHero = ({ isSpanish }: HomeHeroProps) => {
   };
 
   return (
-    <div className="relative min-h-[90vh] w-full flex items-center justify-center">
+    <div className="relative min-h-[80vh] w-full flex items-center justify-center">
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-vaya-stories/60 to-vaya-memories/60" />
-        <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-black/40 to-black/30" />
+        <div className="absolute inset-0 bg-black/10 backdrop-blur-[1px]" />
         <HeroPattern />
       </div>
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8 py-24">
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-4 lg:px-6 py-16">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="mx-auto max-w-2xl text-center"
         >
-          <h1 className="font-outfit font-bold text-4xl md:text-6xl lg:text-7xl tracking-tight text-white mb-6 leading-tight drop-shadow-md">
+          <h1 className="font-outfit font-bold text-4xl md:text-5xl lg:text-6xl tracking-tight text-white mb-4 leading-tight drop-shadow-lg">
             {content.title}
           </h1>
-          <p className="font-inter text-lg md:text-xl leading-relaxed text-white/95 mb-10 max-w-xl mx-auto drop-shadow">
+          <p className="font-inter text-base md:text-lg leading-relaxed text-white/95 mb-8 max-w-xl mx-auto drop-shadow-md">
             {content.subtitle}
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
             <Button 
               id="hero-home-primary-cta"
               size="lg" 
               variant="stories"
-              className="w-full sm:w-auto font-outfit text-lg px-8 py-6 h-auto bg-vaya-stories/90 hover:bg-vaya-stories transition-colors duration-200"
+              className="w-full sm:w-auto font-outfit text-base px-6 py-5 h-auto bg-vaya-stories hover:bg-vaya-stories/90 transition-colors duration-200 shadow-lg hover:shadow-xl"
             >
               <span>{content.primaryCta}</span>
-              <Mic className="ml-2 h-5 w-5" />
+              <Mic className="ml-2 h-4 w-4" />
             </Button>
             <Button 
               id="hero-home-secondary-cta"
               size="lg" 
               variant="capsules"
-              className="w-full sm:w-auto font-outfit text-lg px-8 py-6 h-auto bg-vaya-capsules/90 hover:bg-vaya-capsules text-white transition-colors duration-200"
+              className="w-full sm:w-auto font-outfit text-base px-6 py-5 h-auto bg-vaya-capsules hover:bg-vaya-capsules/90 text-white transition-colors duration-200 shadow-lg hover:shadow-xl"
             >
               <span>{content.secondaryCta}</span>
-              <Hourglass className="ml-2 h-5 w-5" />
+              <Hourglass className="ml-2 h-4 w-4" />
             </Button>
           </div>
         </motion.div>
