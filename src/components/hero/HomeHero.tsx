@@ -21,8 +21,10 @@ const HomeHero = ({ isSpanish }: HomeHeroProps) => {
   };
 
   return (
-    <div className="relative min-h-[80vh] flex items-center justify-center bg-gradient-to-br from-vaya-stories to-vaya-memories overflow-hidden">
-      <div className="absolute inset-0 opacity-20">
+    <div className="relative min-h-[90vh] w-full flex items-center justify-center">
+      <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-vaya-stories/80 to-vaya-memories/80" />
+        <div className="absolute inset-0 bg-black/30" />
         <HeroPattern />
       </div>
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8 py-24">

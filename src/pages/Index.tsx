@@ -12,7 +12,7 @@ export default function Index() {
   const [showCreateFamily, setShowCreateFamily] = useState(false);
 
   return (
-    <div className="relative bg-white">
+    <div className="relative min-h-screen bg-gradient-to-br from-vaya-stories/10 to-vaya-memories/10">
       <Hero />
       <div className="fixed bottom-8 right-8 z-50">
         <Button 
@@ -24,9 +24,11 @@ export default function Index() {
           Create Family
         </Button>
       </div>
-      <Features />
-      <Testimonials />
-      <FAQ />
+      <div className="relative z-10">
+        <Features />
+        <Testimonials />
+        <FAQ />
+      </div>
       <CreateFamilyWizard 
         open={showCreateFamily} 
         onOpenChange={setShowCreateFamily}
