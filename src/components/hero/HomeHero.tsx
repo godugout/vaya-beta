@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Mic, Hourglass } from "lucide-react";
@@ -21,10 +22,12 @@ const HomeHero = ({ isSpanish }: HomeHeroProps) => {
 
   return (
     <div 
-      className="relative overflow-hidden flex items-center py-24" 
+      className="relative overflow-hidden flex items-center min-h-[70vh] bg-gradient-to-br from-vaya-stories to-vaya-memories" 
       data-component="HomeHero"
     >
-      <HeroPattern />
+      <div className="absolute inset-0 z-0">
+        <HeroPattern />
+      </div>
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
