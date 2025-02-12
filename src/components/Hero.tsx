@@ -1,3 +1,4 @@
+
 import { useLocation } from "react-router-dom";
 import { heroConfigs } from "@/config/heroConfigs";
 import { HeroPattern } from "./hero/HeroPattern";
@@ -25,13 +26,14 @@ export default function Hero({ culturalContent }: HeroProps) {
     <div 
       className={`relative overflow-hidden py-24 ${
         location.pathname.includes('family-capsules') 
-          ? 'bg-vaya-capsules/10 text-vaya-gray-900' 
-          : 'bg-white/90'
+          ? 'bg-vaya-capsules/5 text-vaya-gray-900' 
+          : 'bg-white/95'
       }`} 
       data-component="Hero"
     >
+      <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent" />
       <HeroPattern />
-      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
         <HeroContent config={config} isSpanish={isSpanish} />
       </div>
     </div>

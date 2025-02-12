@@ -23,8 +23,8 @@ const HomeHero = ({ isSpanish }: HomeHeroProps) => {
   return (
     <div className="relative min-h-[90vh] w-full flex items-center justify-center">
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-vaya-stories/80 to-vaya-memories/80" />
-        <div className="absolute inset-0 bg-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-br from-vaya-stories/60 to-vaya-memories/60" />
+        <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px]" />
         <HeroPattern />
       </div>
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8 py-24">
@@ -34,10 +34,10 @@ const HomeHero = ({ isSpanish }: HomeHeroProps) => {
           transition={{ duration: 0.6 }}
           className="mx-auto max-w-2xl text-center"
         >
-          <h1 className="font-outfit font-bold text-4xl md:text-6xl lg:text-7xl tracking-tight text-white mb-6 leading-tight">
+          <h1 className="font-outfit font-bold text-4xl md:text-6xl lg:text-7xl tracking-tight text-white mb-6 leading-tight drop-shadow-md">
             {content.title}
           </h1>
-          <p className="font-inter text-lg md:text-xl leading-relaxed text-white/90 mb-10 max-w-xl mx-auto">
+          <p className="font-inter text-lg md:text-xl leading-relaxed text-white/95 mb-10 max-w-xl mx-auto drop-shadow">
             {content.subtitle}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
@@ -45,7 +45,7 @@ const HomeHero = ({ isSpanish }: HomeHeroProps) => {
               id="hero-home-primary-cta"
               size="lg" 
               variant="stories"
-              className="w-full sm:w-auto font-outfit text-lg px-8 py-6 h-auto"
+              className="w-full sm:w-auto font-outfit text-lg px-8 py-6 h-auto bg-vaya-stories/90 hover:bg-vaya-stories transition-colors duration-200"
             >
               <span>{content.primaryCta}</span>
               <Mic className="ml-2 h-5 w-5" />
@@ -54,7 +54,7 @@ const HomeHero = ({ isSpanish }: HomeHeroProps) => {
               id="hero-home-secondary-cta"
               size="lg" 
               variant="capsules"
-              className="w-full sm:w-auto font-outfit text-lg px-8 py-6 h-auto bg-vaya-capsules text-white hover:bg-vaya-capsules/90"
+              className="w-full sm:w-auto font-outfit text-lg px-8 py-6 h-auto bg-vaya-capsules/90 hover:bg-vaya-capsules text-white transition-colors duration-200"
             >
               <span>{content.secondaryCta}</span>
               <Hourglass className="ml-2 h-5 w-5" />
