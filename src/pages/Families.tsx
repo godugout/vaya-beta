@@ -35,10 +35,10 @@ export default function Families() {
   const getFamilies = async () => {
     try {
       const { data: familiesData, error: familiesError } = await supabase
-        .from('families')
+        .from('vaya_families')
         .select(`
           *,
-          members:family_members(
+          members:vaya_family_members(
             id,
             user_id,
             role,

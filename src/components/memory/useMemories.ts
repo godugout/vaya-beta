@@ -12,21 +12,19 @@ export const useMemories = () => {
       const end = start + ITEMS_PER_PAGE - 1;
 
       const { data: memoriesData, error: memoriesError } = await supabase
-        .from("memories")
+        .from("vaya_memories")
         .select("*")
         .order("created_at", { ascending: false })
         .range(start, end);
 
       if (memoriesError) throw memoriesError;
 
-      // For development, use sample data if no real data exists
       const memories = memoriesData?.length ? memoriesData : sampleMemories.slice(start, end + 1);
 
-      // Then fetch associated story titles and photo URLs
       const enrichedMemories = await Promise.all(memories.map(async (memory) => {
         if (memory.type === "story") {
           const { data: storyData } = await supabase
-            .from("stories")
+            .from("vaya_stories")
             .select("title, description, duration")
             .eq("id", memory.id)
             .maybeSingle();
@@ -38,7 +36,7 @@ export const useMemories = () => {
           } as StoryMemory;
         } else if (memory.type === "photo") {
           const { data: photoData } = await supabase
-            .from("photos")
+            .from("vaya_photos")
             .select("photo_url, caption")
             .eq("id", memory.id)
             .maybeSingle();

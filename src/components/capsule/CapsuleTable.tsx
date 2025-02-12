@@ -1,127 +1,141 @@
-import { Table, TableBody } from "@/components/ui/table";
-import { useState, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
-import { Capsule } from "@/types/capsule";
-import { CapsuleTableHeader } from "./table/CapsuleTableHeader";
-import { CapsuleTableRow } from "./table/CapsuleTableRow";
-import { CapsuleTableFooter } from "./table/CapsuleTableFooter";
+import { TableCell, TableRow } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { Eye, Lock, Plus, Bookmark, BookmarkCheck, Share2 } from "lucide-react";
+import { Link } from "react-router-dom";
+import { cn } from "@/lib/utils";
+import { Capsule, CapsuleStatus } from "@/types/capsule";
+import { getEmojiForIcon } from "../layout/utils/emojiUtils";
 
-interface CapsuleTableProps {
-  capsules: Capsule[];
-  sortField: 'date' | 'title' | 'status';
-  sortDirection: 'asc' | 'desc';
-  onSort: (field: 'date' | 'title' | 'status') => void;
+interface CapsuleTableRowProps {
+  capsule: Capsule;
+  isBookmarked: boolean;
+  isLoading: boolean;
+  onBookmark: (capsuleId: string) => void;
 }
 
-export const CapsuleTable = ({ 
-  capsules, 
-  sortField, 
-  sortDirection, 
-  onSort 
-}: CapsuleTableProps) => {
-  const [bookmarkedCapsules, setBookmarkedCapsules] = useState<string[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const { toast } = useToast();
-
-  useEffect(() => {
-    const fetchBookmarks = async () => {
-      try {
-        const { data: bookmarks, error } = await supabase
-          .from('bookmarks')
-          .select('memory_id')
-          .eq('created_by', (await supabase.auth.getUser()).data.user?.id);
-
-        if (error) throw error;
-        setBookmarkedCapsules(bookmarks.map(b => b.memory_id));
-      } catch (error) {
-        console.error('Error fetching bookmarks:', error);
-        toast({
-          title: "Error loading bookmarks",
-          description: "There was an error loading your bookmarks",
-          variant: "destructive",
-        });
-      } finally {
-        setIsLoading(false);
-      }
+export const CapsuleTableRow = ({ 
+  capsule, 
+  isBookmarked, 
+  isLoading, 
+  onBookmark 
+}: CapsuleTableRowProps) => {
+  const getStatusClass = (status: CapsuleStatus) => {
+    const baseClasses = "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium";
+    const statusClasses = {
+      upcoming: "bg-blue-100 text-blue-800",
+      active: "bg-green-100 text-green-800",
+      locked: "bg-yellow-100 text-yellow-800",
+      revealed: "bg-purple-100 text-purple-800"
     };
+    return cn(baseClasses, statusClasses[status]);
+  };
 
-    fetchBookmarks();
-  }, [toast]);
-
-  const handleBookmark = async (capsuleId: string) => {
-    if (!capsuleId.match(/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i)) {
-      toast({
-        title: "Invalid capsule ID",
-        description: "This capsule cannot be bookmarked in demo mode",
-        variant: "destructive",
-      });
-      return;
-    }
-
+  const handleBookmarkClick = async () => {
     try {
-      if (bookmarkedCapsules.includes(capsuleId)) {
-        const { error } = await supabase
-          .from('bookmarks')
+      if (isBookmarked) {
+        await supabase
+          .from('vaya_bookmarks')
           .delete()
-          .eq('memory_id', capsuleId)
+          .eq('memory_id', capsule.link.split('/').pop())
           .eq('created_by', (await supabase.auth.getUser()).data.user?.id);
-
-        if (error) throw error;
-
-        setBookmarkedCapsules(prev => prev.filter(id => id !== capsuleId));
-        toast({
-          title: "Bookmark removed",
-          description: "The capsule has been removed from your bookmarks",
-        });
       } else {
-        const { error } = await supabase
-          .from('bookmarks')
-          .insert([{ 
-            memory_id: capsuleId,
+        await supabase
+          .from('vaya_bookmarks')
+          .insert([{
+            memory_id: capsule.link.split('/').pop(),
             created_by: (await supabase.auth.getUser()).data.user?.id,
-            timestamp: Math.floor(Date.now() / 1000)
           }]);
-
-        if (error) throw error;
-
-        setBookmarkedCapsules(prev => [...prev, capsuleId]);
-        toast({
-          title: "Bookmark added",
-          description: "The capsule has been added to your bookmarks",
-        });
       }
+      onBookmark(capsule.link.split('/').pop() || '');
     } catch (error) {
-      console.error('Error updating bookmark:', error);
-      toast({
-        title: "Error",
-        description: "There was an error updating your bookmark",
-        variant: "destructive",
-      });
+      console.error('Error toggling bookmark:', error);
     }
   };
 
+  const isAccessible = capsule.metadata?.status === 'active' || capsule.metadata?.status === 'upcoming';
+
   return (
-    <div className="relative">
-      <Table>
-        <CapsuleTableHeader 
-          sortField={sortField}
-          sortDirection={sortDirection}
-          onSort={onSort}
-        />
-        <TableBody>
-          {capsules.map((capsule) => (
-            <CapsuleTableRow
-              key={capsule.title}
-              capsule={capsule}
-              isBookmarked={bookmarkedCapsules.includes(capsule.link.split('/').pop() || '')}
-              isLoading={isLoading}
-              onBookmark={handleBookmark}
-            />
-          ))}
-        </TableBody>
-        <CapsuleTableFooter />
-      </Table>
-    </div>
+    <TableRow className="hover:bg-gray-50/50">
+      <TableCell className="text-left text-lg font-bold pl-6 pr-4">
+        <span className="mr-2" role="img" aria-label="capsule emoji">
+          {getEmojiForIcon(capsule.icon || Plus, capsule.title, capsule.description)}
+        </span>
+        {capsule.title}
+      </TableCell>
+      <TableCell className="text-left px-4">{capsule.description}</TableCell>
+      <TableCell className="text-center px-4">{capsule.metadata?.creatorInitials}</TableCell>
+      <TableCell className="text-center px-4">
+        {capsule.metadata?.status && (
+          <span className={getStatusClass(capsule.metadata.status)}>
+            {capsule.metadata.status}
+          </span>
+        )}
+      </TableCell>
+      <TableCell className="text-center px-4">
+        {new Date(capsule.metadata?.date || "").toLocaleDateString()}
+      </TableCell>
+      <TableCell className="text-right pl-4 pr-6">
+        <div className="flex items-center justify-end gap-2">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => onBookmark(capsule.link.split('/').pop() || '')}
+            className={cn(
+              "h-8 w-8",
+              isLoading && "opacity-50 cursor-not-allowed"
+            )}
+            disabled={isLoading}
+          >
+            {isBookmarked ? (
+              <BookmarkCheck className="h-4 w-4" />
+            ) : (
+              <Bookmark className="h-4 w-4" />
+            )}
+          </Button>
+          
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8"
+            asChild
+            disabled={!isAccessible}
+          >
+            <Link to={`/capsule/${capsule.link.split('/').pop()}${isAccessible ? '/add' : ''}`}>
+              {isAccessible ? (
+                <Plus className="h-4 w-4" />
+              ) : (
+                <div className="w-4" />
+              )}
+            </Link>
+          </Button>
+
+          <Button
+            variant="ghost"
+            size="icon"
+            className={cn(
+              "h-8 w-8",
+              !isAccessible && "text-gray-400"
+            )}
+            asChild
+          >
+            <Link to={capsule.link}>
+              {isAccessible ? (
+                <Eye className="h-4 w-4" />
+              ) : (
+                <Lock className="h-4 w-4 text-red-400" />
+              )}
+            </Link>
+          </Button>
+
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8"
+          >
+            <Share2 className="h-4 w-4" />
+          </Button>
+        </div>
+      </TableCell>
+    </TableRow>
   );
 };

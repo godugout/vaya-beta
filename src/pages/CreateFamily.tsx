@@ -21,7 +21,7 @@ export default function CreateFamily() {
     try {
       // Insert the family
       const { data: familyData, error: familyError } = await supabase
-        .from('families')
+        .from('vaya_families')
         .insert([
           { name, description }
         ])
@@ -32,7 +32,7 @@ export default function CreateFamily() {
 
       // Add the creator as an admin
       const { error: memberError } = await supabase
-        .from('family_members')
+        .from('vaya_family_members')
         .insert([
           { 
             family_id: familyData.id,

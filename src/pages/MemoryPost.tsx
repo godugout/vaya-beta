@@ -15,10 +15,10 @@ const MemoryPost = () => {
     queryKey: ["memory", id],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("memories")
+        .from("vaya_memories")
         .select(`
           *,
-          uploaded_by (
+          uploaded_by:profiles (
             full_name,
             avatar_url
           )
@@ -66,7 +66,6 @@ const MemoryPost = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Primary Navigation */}
       <div className="border-b bg-white">
         <div className="container mx-auto px-4">
           <div className="h-16 flex items-center justify-between">
@@ -105,8 +104,6 @@ const MemoryPost = () => {
           </div>
         </div>
       </div>
-
-      {/* Main Content */}
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-3xl mx-auto">
           {memory.type === "story" ? (
