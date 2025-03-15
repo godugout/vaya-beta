@@ -11,9 +11,9 @@ import TranscriptionDisplay from "@/components/audio/TranscriptionDisplay";
 import { useVoiceRecorder } from "@/hooks/useVoiceRecorder";
 import { useAudioTranscription } from "@/components/voice-recording/hooks/useAudioTranscription";
 import { useAudioPlayback } from "@/components/voice-recording/hooks/useAudioPlayback";
+import { useMemorySaving } from "@/components/voice-recording/hooks/useMemorySaving";
 import AudioControls from "@/components/voice-recording/AudioControls";
 import RecordingStatus from "@/components/voice-recording/RecordingStatus";
-import { supabase } from "@/integrations/supabase/client";
 
 interface VoiceRecordingExperienceProps {
   onMemorySaved?: (data: { 
@@ -44,65 +44,22 @@ const VoiceRecordingExperience = ({ onMemorySaved }: VoiceRecordingExperiencePro
     setIsPlaying 
   } = useAudioPlayback(audioBlob);
   
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [audioUrl, setAudioUrl] = useState<string | null>(null);
-  const [hasSaved, setHasSaved] = useState(false);
+  const {
+    isProcessing,
+    hasSaved,
+    saveMemory,
+    resetSavedState
+  } = useMemorySaving({ onMemorySaved });
 
   const handleReset = () => {
     setAudioBlob(null);
     setIsPlaying(false);
-    setAudioUrl(null);
-    setHasSaved(false);
+    resetSavedState();
   };
 
   const handleSave = async () => {
-    if (!audioBlob) return;
-    
-    setIsProcessing(true);
-    try {
-      // Upload audio to Supabase Storage
-      const { data: uploadData, error: uploadError } = await supabase.storage
-        .from('memories')
-        .upload(`memory-${Date.now()}.webm`, audioBlob);
-
-      if (uploadError) throw uploadError;
-
-      // Get public URL
-      const { data: { publicUrl } } = supabase.storage
-        .from('memories')
-        .getPublicUrl(uploadData.path);
-      
-      setAudioUrl(publicUrl);
-
-      // Provide haptic feedback on success
-      if (navigator.vibrate) {
-        navigator.vibrate([100, 50, 100]);
-      }
-
-      setHasSaved(true);
-      
-      toast({
-        title: "Memory saved",
-        description: "Your memory has been saved successfully",
-      });
-
-      // Call the callback with data
-      if (onMemorySaved) {
-        onMemorySaved({
-          audioUrl: publicUrl,
-          transcription: transcription || undefined
-        });
-      }
-
-    } catch (error) {
-      console.error('Error saving memory:', error);
-      toast({
-        variant: "destructive",
-        title: "Failed to save",
-        description: "There was an error saving your memory. Please try again.",
-      });
-    } finally {
-      setIsProcessing(false);
+    if (audioBlob) {
+      await saveMemory(audioBlob, transcription);
     }
   };
 

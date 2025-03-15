@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import MemoryFeedLayout from "@/components/memory/MemoryFeedLayout";
 import AddMemoryButton from "@/components/memory/AddMemoryButton";
-import VoiceRecordingExperience from "@/components/VoiceRecordingExperience";
+import VoiceRecordingExperience from "@/components/voice-recording/VoiceRecordingExperience";
 import { useState } from "react";
 
 const WildlifeCapsule = () => {
