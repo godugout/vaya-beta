@@ -23,6 +23,7 @@ export default {
       fontFamily: {
         sans: ["Borna", ...fontFamily.sans],
         heading: ["TT Hoves Pro", ...fontFamily.sans],
+        handwritten: ["Architects Daughter", "cursive"],
         mono: ["monospace", ...fontFamily.mono],
       },
       colors: {

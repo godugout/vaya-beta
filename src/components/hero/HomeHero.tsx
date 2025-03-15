@@ -37,7 +37,7 @@ const HomeHero = ({ isSpanish }: HomeHeroProps) => {
           <h1 className="font-heading font-bold text-4xl md:text-5xl lg:text-6xl tracking-tight text-greystone-green mb-6 leading-tight">
             {content.title}
           </h1>
-          <p className="text-base md:text-lg leading-relaxed text-greystone-green-60 mb-10 max-w-xl mx-auto">
+          <p className="font-handwritten text-xl md:text-2xl leading-relaxed text-greystone-green-60 mb-10 max-w-xl mx-auto">
             {content.subtitle}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

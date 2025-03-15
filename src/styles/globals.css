@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Georgia&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Georgia&family=Architects+Daughter&display=swap');
 
 /* Import custom fonts */
 @font-face {
@@ -80,6 +80,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .font-story {
   font-family: 'Georgia', serif;
+}
+
+.font-handwritten {
+  font-family: 'Architects Daughter', cursive;
 }
 
 /* Background Patterns */

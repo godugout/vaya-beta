@@ -1,8 +1,6 @@
-import React from 'react';
+
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
 import { HeroConfig } from "@/types/hero";
-import { useLocation, useNavigate } from 'react-router-dom';
 
 interface HeroContentProps {
   config: HeroConfig;
@@ -10,86 +8,31 @@ interface HeroContentProps {
 }
 
 export const HeroContent = ({ config, isSpanish }: HeroContentProps) => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  
-  // Get unique button styles based on route
-  const getSecondaryButtonStyles = () => {
-    if (location.pathname === '/') {
-      return 'border-vaya-capsules text-vaya-capsules hover:bg-vaya-capsules/10 hover:text-vaya-capsules';
-    }
-    if (location.pathname.includes('memory-lane')) {
-      return 'border-vaya-memories text-vaya-memories hover:bg-vaya-memories/10 hover:text-vaya-memories';
-    }
-    if (location.pathname.includes('share-stories')) {
-      return 'border-vaya-stories text-vaya-stories hover:bg-vaya-stories/10 hover:text-vaya-stories';
-    }
-    if (location.pathname.includes('family-capsules')) {
-      return 'border-vaya-capsules text-vaya-capsules hover:bg-vaya-capsules/10 hover:text-vaya-capsules';
-    }
-    return 'border-vaya-stories text-vaya-stories hover:bg-vaya-stories/10 hover:text-vaya-stories'; // Default
-  };
-
-  // Get unique button IDs based on route
-  const getPrimaryButtonId = () => {
-    if (location.pathname.includes('memory-lane')) return 'hero-memories-primary-cta';
-    if (location.pathname.includes('share-stories')) return 'hero-stories-primary-cta';
-    if (location.pathname.includes('family-capsules')) return 'hero-capsules-primary-cta';
-    return 'hero-home-primary-cta';
-  };
-
-  const getSecondaryButtonId = () => {
-    if (location.pathname.includes('memory-lane')) return 'hero-memories-secondary-cta';
-    if (location.pathname.includes('share-stories')) return 'hero-stories-secondary-cta';
-    if (location.pathname.includes('family-capsules')) return 'hero-capsules-secondary-cta';
-    return 'hero-home-secondary-cta';
-  };
-
-  // Get primary button variant based on route
-  const getPrimaryButtonVariant = () => {
-    if (location.pathname === '/') return 'stories';
-    if (location.pathname.includes('memory-lane')) return 'memories';
-    if (location.pathname.includes('share-stories')) return 'stories';
-    if (location.pathname.includes('family-capsules')) return 'capsules';
-    return 'stories'; // Default
-  };
+  const title = isSpanish ? config.title_es : config.title_en;
+  const subtitle = isSpanish ? config.subtitle_es : config.subtitle_en;
 
   return (
-    <motion.div 
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      className="mx-auto max-w-2xl text-center px-4 sm:px-6"
-    >
-      <h1 className="font-outfit font-bold text-3xl sm:text-4xl md:text-6xl tracking-tight text-gray-900 mb-4 sm:mb-6 leading-tight">
-        {isSpanish ? config.title_es : config.title_en}
+    <div className="mx-auto max-w-2xl lg:mx-0">
+      <h1 className="font-heading mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+        {title}
       </h1>
-      <p className="font-inter text-base sm:text-lg leading-7 sm:leading-8 text-gray-600 mb-8 sm:mb-10">
-        {isSpanish ? config.subtitle_es : config.subtitle_en}
+      <p className="font-handwritten mt-6 text-xl leading-8 text-gray-600">
+        {subtitle}
       </p>
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6">
-        <Button 
-          id={getPrimaryButtonId()}
-          size="lg" 
-          variant={getPrimaryButtonVariant()}
-          className="w-full sm:w-auto transition-all duration-300 font-outfit"
-        >
-          <span>{config.primaryCta.text}</span>
-          {config.primaryCta.icon}
-        </Button>
+      <div className="mt-10 flex items-center gap-x-4">
+        {config.primaryCta && (
+          <Button variant="default" className="font-heading whitespace-nowrap">
+            <span>{config.primaryCta.text}</span>
+            {config.primaryCta.icon}
+          </Button>
+        )}
         {config.secondaryCta && (
-          <Button 
-            id={getSecondaryButtonId()}
-            size="lg" 
-            variant="outline"
-            onClick={() => location.pathname.includes('memory-lane') && navigate('/narra')}
-            className={`w-full sm:w-auto font-outfit border-2 ${getSecondaryButtonStyles()}`}
-          >
+          <Button variant="outline" className="font-heading whitespace-nowrap">
             <span>{config.secondaryCta.text}</span>
             {config.secondaryCta.icon}
           </Button>
         )}
       </div>
-    </motion.div>
+    </div>
   );
 };

@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 
 const testimonials = [
@@ -43,7 +44,7 @@ const Testimonials = () => {
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
             Stories That Matter
           </h2>
-          <p className="mt-4 text-lg text-gray-100 sm:text-xl">
+          <p className="mt-4 font-handwritten text-xl text-gray-100 sm:text-2xl">
             Discover how people are using Vaya to preserve their most precious memories
           </p>
         </div>
@@ -58,7 +59,7 @@ const Testimonials = () => {
             >
               <div className="text-4xl mb-4">{testimonial.icon}</div>
               <h3 className="text-xl font-semibold text-white mb-4">{testimonial.title}</h3>
-              <p className="text-base text-gray-100 mb-4 italic">"{testimonial.quote}"</p>
+              <p className="font-handwritten text-lg text-gray-100 mb-4">"{testimonial.quote}"</p>
               <p className="text-blue-100">- {testimonial.author}</p>
             </motion.div>
           ))}
