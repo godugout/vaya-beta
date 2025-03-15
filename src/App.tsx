@@ -1,3 +1,4 @@
+
 import { Routes, Route } from 'react-router-dom';
 import Index from './pages/Index';
 import Auth from './pages/Auth';
@@ -12,6 +13,7 @@ import CreateFamily from './pages/CreateFamily';
 import ComponentsDemo from './pages/ComponentsDemo';
 import ComponentsShowcase from './pages/ComponentsShowcase';
 import WeddingModeShowcase from './components/wedding-mode/WeddingModeShowcase';
+import DesignSystem from './pages/DesignSystem';
 import { Toaster } from './components/ui/toaster';
 
 function App() {
@@ -31,6 +33,7 @@ function App() {
         <Route path="/components-demo" element={<ComponentsDemo />} />
         <Route path="/components" element={<ComponentsShowcase />} />
         <Route path="/wedding-mode" element={<WeddingModeShowcase />} />
+        <Route path="/design-system/*" element={<DesignSystem />} />
       </Routes>
       <Toaster />
     </>
