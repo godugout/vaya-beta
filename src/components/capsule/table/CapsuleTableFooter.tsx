@@ -1,3 +1,4 @@
+
 import { TableCell, TableFooter, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { MessageSquare, Plus } from "lucide-react";
@@ -16,7 +17,7 @@ export const CapsuleTableFooter = () => {
             </div>
             <Dialog>
               <DialogTrigger asChild>
-                <Button className="bg-vaya-capsules hover:bg-vaya-capsules/90 text-base">
+                <Button variant="capsules" className="text-base">
                   <Plus className="h-5 w-5 mr-2" />
                   Create Capsule
                 </Button>

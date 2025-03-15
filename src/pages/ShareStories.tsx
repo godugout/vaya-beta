@@ -1,9 +1,11 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useIsMobile } from "@/hooks/use-mobile";
-import Hero from "@/components/Hero";
 import VoiceRecordingExperience from "@/components/voice-recording/VoiceRecordingExperience";
+import { Button } from "@/components/ui/button";
+import { Mic, Upload, Hourglass, MessageSquare } from "lucide-react";
 
 const ShareStories = () => {
   const navigate = useNavigate();
@@ -17,16 +19,27 @@ const ShareStories = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Hero />
-      
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-900">
-            Voice Recording
-          </h2>
-          <p className="mt-4 text-xl text-gray-600">
-            Preserve your memories with our voice recording experience
-          </p>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">
+              Share Your Stories
+            </h1>
+            <p className="mt-2 text-lg text-gray-600">
+              Preserve your memories with our voice recording experience
+            </p>
+          </div>
+          
+          <div className="mt-4 md:mt-0 flex gap-3">
+            <Button variant="stories" size="sm" className="flex items-center gap-2">
+              <Mic className="h-4 w-4" />
+              <span>Record Memory</span>
+            </Button>
+            <Button variant="outline" size="sm" className="flex items-center gap-2">
+              <MessageSquare className="h-4 w-4" />
+              <span>Ask Narra</span>
+            </Button>
+          </div>
         </div>
         
         <div className="max-w-md mx-auto bg-white p-6 border border-gray-200 rounded-xl shadow-sm">
