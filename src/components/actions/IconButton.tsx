@@ -1,6 +1,6 @@
 
 import { forwardRef } from "react";
-import { motion } from "framer-motion";
+import { motion, HTMLMotionProps } from "framer-motion";
 import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -17,7 +17,7 @@ type IconButtonSize = "sm" | "md" | "lg" | "xl";
 type IconButtonShape = "circle" | "square" | "rounded";
 
 export interface IconButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, keyof HTMLMotionProps<"button">> {
   variant?: IconButtonVariant;
   size?: IconButtonSize;
   shape?: IconButtonShape;
@@ -72,7 +72,9 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
     };
 
     // Animation props for Framer Motion
-    const motionProps = { whileTap: { scale: 0.95 } };
+    const motionProps: HTMLMotionProps<"button"> = { 
+      whileTap: { scale: 0.95 } 
+    };
 
     return (
       <motion.button
