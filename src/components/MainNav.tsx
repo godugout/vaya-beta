@@ -1,7 +1,7 @@
 
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { useEffect, useState } from "react";
 import { User } from "@supabase/supabase-js";
 import { DesktopNav } from "./nav/DesktopNav";
 import { MobileTopNav } from "./nav/MobileTopNav";
