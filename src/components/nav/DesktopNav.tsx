@@ -1,95 +1,102 @@
 
 import { Link, useLocation } from "react-router-dom";
-import { Button } from "../ui/button";
-import { Clock, Box, Mic, Home } from "lucide-react";
-import { User as UserType } from "@supabase/supabase-js";
+import { User } from "@supabase/supabase-js";
 import { UserMenu } from "./UserMenu";
+import { cn } from "@/lib/utils";
+import { Home, Mic, Archive, Users } from "lucide-react";
 
 interface DesktopNavProps {
-  user: UserType | null;
+  user: User | null;
   handleSignOut: () => Promise<void>;
   navigate: (path: string) => void;
 }
 
 export const DesktopNav = ({ user, handleSignOut, navigate }: DesktopNavProps) => {
   const location = useLocation();
-
-  const isActive = (path: string) => {
-    return location.pathname === path;
-  };
+  
+  const navItems = [
+    {
+      name: "Home",
+      path: "/",
+      icon: Home,
+    },
+    {
+      name: "Share Stories",
+      path: "/share-stories",
+      icon: Mic,
+    },
+    {
+      name: "Family Capsules",
+      path: "/family-capsules",
+      icon: Archive,
+    },
+    {
+      name: "Families",
+      path: "/families",
+      icon: Users,
+    }
+  ];
 
   return (
-    <div className="border-b bg-[#222222] hidden md:block">
-      <div className="flex h-20 items-center px-4 max-w-7xl mx-auto">
-        <Link to="/" className="flex items-center -space-x-1.75 group">
-          <img 
-            src="/lovable-uploads/ef40fff0-4da4-4937-af3d-c2276b1d2588.png" 
-            alt="Vaya Logo" 
-            className="h-10 w-10"
-          />
-          <span className="font-outfit font-bold text-2xl text-white">
-            Vaya<sup className="opacity-75 transition-all duration-300 group-hover:text-vaya-stories text-lg font-semibold -ml-0.5">ᵅ</sup>
-          </span>
+    <div className="hidden md:flex h-20 bg-white dark:bg-[#1E293B] border-b border-gray-200 dark:border-gray-800 px-6 items-center justify-between">
+      <div className="flex items-center">
+        <Link to="/" className="flex items-center mr-8">
+          <div className="h-10 w-10 text-ui-orange">
+            {/* Nature wave logo */}
+            <svg viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 15 Q 25 5, 40 15 T 70 15" stroke="currentColor" strokeWidth="3" fill="none" />
+              <path d="M10 25 Q 25 15, 40 25 T 70 25" stroke="currentColor" strokeWidth="3" fill="none" />
+              <path d="M10 35 Q 25 25, 40 35 T 70 35" stroke="currentColor" strokeWidth="3" fill="none" />
+            </svg>
+          </div>
+          <span className="font-heading font-bold text-2xl text-ui-orange ml-2">Vaya</span>
         </Link>
-        <nav className="flex items-center space-x-10 ml-12">
-          <Link
-            to="/"
-            className={`text-base font-medium transition-all duration-200 hover:text-white inline-flex items-center gap-2 relative
-              ${isActive('/') ? 'text-white' : 'text-gray-300'}
-              after:content-[''] after:absolute after:w-full after:h-0.5 after:bg-vaya-capsules after:bottom-[-4px] after:left-0
-              after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300
-              ${isActive('/') ? 'after:scale-x-100' : ''}`}
-          >
-            Home
-            <Home className="h-5 w-5" />
-          </Link>
-          <Link
-            to="/share-stories"
-            className={`text-base font-medium transition-all duration-200 hover:text-white inline-flex items-center gap-2 relative
-              ${isActive('/share-stories') ? 'text-white' : 'text-gray-300'}
-              after:content-[''] after:absolute after:w-full after:h-0.5 after:bg-vaya-capsules after:bottom-[-4px] after:left-0
-              after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300
-              ${isActive('/share-stories') ? 'after:scale-x-100' : ''}`}
-          >
-            Share Stories
-            <Mic className="h-5 w-5" />
-          </Link>
-          <Link
-            to="/memory-lane"
-            className={`text-base font-medium transition-all duration-200 hover:text-white inline-flex items-center gap-2 relative
-              ${isActive('/memory-lane') ? 'text-white' : 'text-gray-300'}
-              after:content-[''] after:absolute after:w-full after:h-0.5 after:bg-vaya-capsules after:bottom-[-4px] after:left-0
-              after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300
-              ${isActive('/memory-lane') ? 'after:scale-x-100' : ''}`}
-          >
-            Memory Lane
-            <Clock className="h-5 w-5" />
-          </Link>
-          <Link
-            to="/family-capsules"
-            className={`text-base font-medium transition-all duration-200 hover:text-white inline-flex items-center gap-2 relative
-              ${isActive('/family-capsules') ? 'text-white' : 'text-gray-300'}
-              after:content-[''] after:absolute after:w-full after:h-0.5 after:bg-vaya-capsules after:bottom-[-4px] after:left-0
-              after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300
-              ${isActive('/family-capsules') ? 'after:scale-x-100' : ''}`}
-          >
-            Family Capsules
-            <Box className="h-5 w-5" />
-          </Link>
+        
+        <nav className="flex space-x-1">
+          {navItems.map((item) => {
+            const isActive = location.pathname === item.path;
+            
+            return (
+              <Link
+                key={item.name}
+                to={item.path}
+                className={cn(
+                  "flex items-center px-4 py-2 rounded-md font-medium text-sm transition-colors relative",
+                  isActive 
+                    ? "text-ui-orange" 
+                    : "text-gray-600 dark:text-gray-300 hover:text-ui-orange dark:hover:text-ui-orange"
+                )}
+              >
+                <item.icon className="h-4 w-4 mr-2" />
+                {item.name}
+                {isActive && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-ui-orange rounded-full" />
+                )}
+              </Link>
+            );
+          })}
         </nav>
-        <div className="ml-auto flex items-center space-x-4">
-          {user ? (
-            <UserMenu user={user} handleSignOut={handleSignOut} navigate={navigate} />
-          ) : (
-            <Button 
-              onClick={() => navigate("/families")}
-              className="bg-vaya-capsules hover:bg-vaya-capsules/90 text-white text-base px-6 py-2"
+      </div>
+      
+      <div className="flex items-center gap-4">
+        {user ? (
+          <UserMenu user={user} handleSignOut={handleSignOut} navigate={navigate} />
+        ) : (
+          <div className="flex items-center space-x-2">
+            <button 
+              onClick={() => navigate('/auth')}
+              className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-ui-orange dark:hover:text-ui-orange"
             >
-              Family Groups
-              <Box className="ml-2 h-5 w-5" />
-            </Button>
-          )}
-        </div>
+              Sign In
+            </button>
+            <button
+              onClick={() => navigate('/auth?register=true')}
+              className="px-4 py-2 rounded-md bg-ui-orange text-white text-sm font-medium hover:bg-ui-orange/90"
+            >
+              Sign Up
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

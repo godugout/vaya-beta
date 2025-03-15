@@ -1,10 +1,6 @@
 
 import type { Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
-import { colors } from "./src/styles/theme/colors";
-import { typography } from "./src/styles/theme/typography";
-import { animation } from "./src/styles/theme/animation";
-import { spacing, borderRadius, shadows, zIndex } from "./src/styles/theme/spacing";
 
 export default {
   darkMode: ["class"],
@@ -24,41 +20,104 @@ export default {
       },
     },
     extend: {
-      fontFamily: {
-        sans: ["Borna", ...fontFamily.sans],
-        heading: ["TT Hoves Pro", ...fontFamily.sans],
-        handwritten: ["Architects Daughter", "cursive"],
-        mono: ["monospace", ...fontFamily.mono],
-      },
       colors: {
-        vaya: colors.features,
-        greystone: colors.greystone,
-        lovable: colors.lovable,
-        dark: colors.dark,
+        // Colors from forest stream illustration
+        sky: "rgb(var(--color-sky) / <alpha-value>)",
+        forest: "rgb(var(--color-forest) / <alpha-value>)",
+        water: "rgb(var(--color-water) / <alpha-value>)",
+        mountain: "rgb(var(--color-mountain) / <alpha-value>)",
+        leaf: "rgb(var(--color-leaf) / <alpha-value>)",
+        autumn: "rgb(var(--color-autumn) / <alpha-value>)",
+        sand: "rgb(var(--color-sand) / <alpha-value>)",
         
-        border: colors.shadcn.border,
-        input: colors.shadcn.input,
-        ring: colors.shadcn.ring,
-        background: colors.shadcn.background,
-        foreground: colors.shadcn.foreground,
-        primary: colors.shadcn.primary,
-        secondary: colors.shadcn.secondary,
-        destructive: colors.shadcn.destructive,
-        muted: colors.shadcn.muted,
-        accent: colors.shadcn.accent,
-        popover: colors.shadcn.popover,
-        card: colors.shadcn.card,
+        // UI colors from frog character designs
+        "ui-orange": "rgb(var(--color-ui-orange) / <alpha-value>)",
+        "ui-green": "rgb(var(--color-ui-green) / <alpha-value>)",
+        "ui-purple": "rgb(var(--color-ui-purple) / <alpha-value>)",
+        "ui-teal": "rgb(var(--color-ui-teal) / <alpha-value>)",
+        "ui-red": "rgb(var(--color-ui-red) / <alpha-value>)",
+        
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
       },
-      borderRadius,
-      keyframes: animation.keyframes,
-      animation: animation.animation,
+      fontFamily: {
+        sans: ["var(--font-body)", ...fontFamily.sans],
+        heading: ["var(--font-heading)", ...fontFamily.sans],
+        accent: ["var(--font-accent)", ...fontFamily.sans],
+      },
+      borderRadius: {
+        lg: "var(--radius-lg)",
+        md: "var(--radius-md)",
+        sm: "var(--radius-sm)",
+      },
       backgroundImage: {
-        'wave-pattern': "url('/lovable-uploads/d42f87cc-df9d-4966-9975-10468e31ca27.png')",
-        'nature-stream': "url('/lovable-uploads/744cdabd-c1ae-4fac-ad45-4625d3484965.png')",
-        'nature-waterfall': "url('/lovable-uploads/509780e9-4a42-4d4f-b919-4d32e3656255.png')",
+        "forest-stream": "url('/lovable-uploads/d7f2208b-7bec-4c9e-9cb2-17cd8fca4ac2.png')",
+      },
+      animation: {
+        "wave-pattern": "wavePattern 50s linear infinite",
+        float: "float 6s ease-in-out infinite",
+        pulse: "pulse 2s ease-in-out infinite",
+        wave: "wave 2.5s linear infinite",
+      },
+      keyframes: {
+        wavePattern: {
+          "0%": { backgroundPosition: "0% 0%" },
+          "100%": { backgroundPosition: "100% 100%" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
+        pulse: {
+          "0%, 100%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.05)" },
+        },
+        wave: {
+          "0%": { transform: "rotate(0deg)" },
+          "10%": { transform: "rotate(14deg)" },
+          "20%": { transform: "rotate(-8deg)" },
+          "30%": { transform: "rotate(14deg)" },
+          "40%": { transform: "rotate(-4deg)" },
+          "50%": { transform: "rotate(10deg)" },
+          "60%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(0deg)" },
+        },
+      },
+      zIndex: {
+        "nav": "100",
       },
     },
   },
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;
-

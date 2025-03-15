@@ -3,179 +3,101 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import our organized styles */
-@import './styles/main.css';
+/* Import our custom styles */
+@import './styles/globals.css';
+@import './styles/components.css';
+@import './styles/animations.css';
 
 @layer components {
-  .capsule-confetti::before,
-  .capsule-confetti::after {
+  /* Nature-themed card styling */
+  .nature-card {
+    @apply bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300;
+  }
+  
+  /* Fluid animations for water effect */
+  .water-ripple {
+    @apply relative overflow-hidden;
+  }
+  
+  .water-ripple::after {
+    @apply absolute inset-0 bg-sky-400/20 dark:bg-sky-600/20 opacity-0 pointer-events-none;
     content: '';
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    animation: confetti 1.5s ease-out infinite;
+    animation: ripple 8s ease-in-out infinite;
   }
-
-  .capsule-confetti::before {
-    background: #22C55E;
-    left: 20%;
-    animation-delay: 0.2s;
+  
+  /* Forest-inspired elements */
+  .leaf-card {
+    @apply bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/40 dark:to-emerald-900/30 rounded-xl p-6 shadow-sm;
   }
-
-  .capsule-confetti::after {
-    background: #F97316;
-    right: 20%;
-    animation-delay: 0.5s;
+  
+  /* Audio visualization inspired by water ripples */
+  .audio-wave {
+    @apply flex items-end justify-center h-12 gap-1;
   }
-
-  .reveal-card::before {
+  
+  .audio-wave-bar {
+    @apply bg-ui-teal dark:bg-ui-teal/70 rounded-full w-1;
+    animation: audio-wave-anim 1.2s ease-in-out infinite;
+  }
+  
+  @keyframes audio-wave-anim {
+    0%, 100% {
+      transform: scaleY(0.3);
+    }
+    50% {
+      transform: scaleY(1);
+    }
+  }
+  
+  /* Frog character inspired elements */
+  .character-card {
+    @apply rounded-2xl overflow-hidden relative;
+  }
+  
+  .character-card::before {
+    @apply absolute inset-0 bg-gradient-to-br from-transparent to-black/40 opacity-0 transition-opacity duration-300;
     content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(45deg, rgba(34, 197, 94, 0.1), rgba(249, 115, 22, 0.1));
-    border-radius: inherit;
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.3s ease;
   }
-
-  .reveal-card:hover::before {
-    opacity: 1;
+  
+  .character-card:hover::before {
+    @apply opacity-100;
   }
-
-  .magical-card::before {
+  
+  /* Story elements with natural feel */
+  .story-container {
+    @apply relative p-6 rounded-xl bg-sand dark:bg-gray-800;
+  }
+  
+  .story-container::before {
+    @apply absolute inset-0 bg-leaf bg-opacity-5 rounded-xl pointer-events-none;
     content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      135deg,
-      rgba(34, 197, 94, 0.3) 0%,
-      rgba(249, 115, 22, 0.3) 25%,
-      rgba(14, 165, 233, 0.4) 50%,
-      rgba(155, 135, 245, 0.35) 75%,
-      rgba(217, 70, 239, 0.3) 100%
-    );
-    background-size: 400% 400%;
-    border-radius: inherit;
-    z-index: -1;
-    animation: shimmerBg 8s ease infinite;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    filter: blur(12px);
   }
-
-  .magical-card:hover::before {
-    opacity: 1;
+  
+  /* Mobile app styled components */
+  .mobile-app-card {
+    @apply bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-4 border border-gray-100 dark:border-gray-700;
   }
-
-  .magical-sparkle {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .magical-sparkle::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: 
-      radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.9) 0.5px, rgba(255, 255, 255, 0.4) 1.5px, transparent 2px),
-      radial-gradient(circle at 40% 70%, rgba(255, 255, 255, 0.9) 0.5px, rgba(255, 255, 255, 0.4) 1.5px, transparent 2px),
-      radial-gradient(circle at 70% 40%, rgba(255, 255, 255, 0.9) 0.5px, rgba(255, 255, 255, 0.4) 1.5px, transparent 2px);
-    background-size: 100% 100%;
-    filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.6));
-    animation: sparkleFloat 4s ease-in-out infinite;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .magical-sparkle:hover::after {
-    opacity: 1;
-  }
-
-  @keyframes shimmerBg {
-    0% { background-position: 0% 50% }
-    25% { background-position: 100% 100% }
-    50% { background-position: 50% 0% }
-    75% { background-position: 0% 100% }
-    100% { background-position: 0% 50% }
-  }
-
-  @keyframes sparkleFloat {
-    0%, 100% { transform: translateY(0) scale(1); }
-    50% { transform: translateY(-2px) scale(1.02); }
+  
+  .mobile-record-button {
+    @apply w-16 h-16 rounded-full bg-ui-orange flex items-center justify-center text-white shadow-lg;
+    box-shadow: 0 0 0 10px rgba(243, 124, 33, 0.1);
   }
 }
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
- 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
- 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
- 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
- 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
- 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
- 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
- 
-    --radius: 0.5rem;
-  }
- 
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
- 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
- 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
- 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
- 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
- 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
- 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
- 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
- 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-  }
-}
- 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
+    --color-sky: 120 209 234;
+    --color-forest: 45 125 84;
+    --color-water: 58 160 188;
+    --color-mountain: 34 94 115;
+    --color-leaf: 136 177 89;
+    --color-autumn: 243 124 33;
+    --color-sand: 249 227 196;
+    
+    --color-ui-orange: 241 143 11;
+    --color-ui-green: 136 177 89;
+    --color-ui-purple: 139 92 246;
+    --color-ui-teal: 69 183 201;
+    --color-ui-red: 239 68 68;
   }
 }

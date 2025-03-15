@@ -21,25 +21,26 @@ export default function Hero({ culturalContent }: HeroProps) {
   }
 
   const config = heroConfigs[location.pathname as keyof typeof heroConfigs] || heroConfigs["/"];
+  
+  // Select background color based on the page
+  const getBgClass = () => {
+    if (location.pathname.includes('family-capsules')) 
+      return 'bg-ui-orange/10 dark:bg-[#2A1E17]';
+    if (location.pathname.includes('memory-lane')) 
+      return 'bg-ui-teal/10 dark:bg-[#172A2A]';
+    if (location.pathname.includes('share-stories')) 
+      return 'bg-ui-purple/10 dark:bg-[#211C2F]';
+    return 'bg-ui-green/10 dark:bg-[#1C2F21]';
+  };
 
   return (
     <div 
-      className={`relative overflow-hidden py-24 ${
-        location.pathname.includes('family-capsules') 
-          ? 'bg-vaya-capsules/10 dark:bg-dark-background-elevated text-vaya-gray-900 dark:text-dark-text-primary' 
-          : 'bg-white/90 dark:bg-dark-background-surface/90'
-      }`} 
+      className={`relative overflow-hidden py-24 ${getBgClass()}`} 
       data-component="Hero"
     >
-      {/* Background pattern */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-40 z-patterns"></div>
-      
-      {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white/40 dark:from-dark-background-surface/40 to-transparent z-patterns"></div>
-      
       <HeroPattern />
       
-      <div className="relative z-content mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
         <HeroContent config={config} isSpanish={isSpanish} />
       </div>
     </div>

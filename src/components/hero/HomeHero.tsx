@@ -1,73 +1,81 @@
 
-import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { Mic, Archive } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Mic, Archive, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface HomeHeroProps {
   isSpanish: boolean;
 }
 
 const HomeHero = ({ isSpanish }: HomeHeroProps) => {
-  const content = {
-    title: isSpanish 
-      ? "Nuestra Historia, Nuestra Voz" 
-      : "Our Story, Our Voice",
-    subtitle: isSpanish 
-      ? "Preserva los momentos más preciosos de tu familia con cápsulas digitales que capturan historias, tradiciones y memorias para las generaciones futuras."
-      : "Preserve your family's most precious moments with digital capsules that capture stories, traditions, and memories for future generations.",
-    primaryCta: isSpanish ? "Comparte Tu Historia" : "Share Your Story",
-    secondaryCta: isSpanish ? "Crea Una Cápsula Familiar" : "Create a Family Capsule"
-  };
-
   return (
-    <div className="relative min-h-[90vh] w-full flex items-center justify-center overflow-hidden">
-      {/* Nature stream background - blurred */}
-      <div className="absolute inset-0 nature-bg-blur nature-stream-bg z-patterns">
-        <div className="absolute inset-0 bg-white/60 dark:bg-dark-background/60"></div>
-      </div>
+    <div className="relative min-h-[90vh] overflow-hidden bg-forest-stream">
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/40 z-0"></div>
       
-      {/* Dot pattern overlay */}
-      <div className="absolute inset-0 dot-pattern opacity-50 z-patterns"></div>
-      
-      {/* Content container */}
-      <div className="relative z-content w-full max-w-6xl mx-auto px-4 lg:px-6 py-16">
-        <motion.div 
+      <div className="container relative z-10 flex flex-col items-center justify-center h-full pt-20 pb-32">
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mx-auto max-w-2xl text-center backdrop-card p-8 md:p-12 dark:bg-dark-background/30"
+          className="text-center max-w-4xl mx-auto"
         >
-          <h1 className="font-heading font-bold text-4xl md:text-5xl lg:text-6xl tracking-tight text-greystone-green dark:text-white mb-6 leading-tight z-text">
-            {content.title}
+          <h1 className="font-heading text-4xl md:text-6xl font-bold text-white mb-6 leading-tight drop-shadow-md">
+            {isSpanish 
+              ? "Preserva la Voz de tu Familia" 
+              : "Preserve Your Family's Voice"}
+            <br />
+            <span className="text-ui-orange">
+              {isSpanish ? "Comparte tu Historia" : "Share Your Story"}
+            </span>
           </h1>
-          <p className="font-handwritten text-xl md:text-2xl leading-relaxed text-greystone-green-60 dark:text-dark-text-secondary mb-10 max-w-xl mx-auto z-text">
-            {content.subtitle}
+          
+          <p className="text-white/90 text-lg md:text-xl mb-10 max-w-2xl mx-auto drop-shadow">
+            {isSpanish
+              ? "Vaya te ayuda a capturar, organizar y compartir recuerdos familiares significativos que perduran por generaciones a través de la narración de voz."
+              : "Vaya helps you capture, organize, and share meaningful family memories that persist for generations through voice-first storytelling."}
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 z-content">
-            <Button 
-              id="hero-home-primary-cta"
-              size="lg" 
-              variant="stories"
-              className="w-full sm:w-auto font-heading text-base px-8 py-5 h-auto transition-colors duration-200 shadow-md hover:shadow-lg"
-            >
-              <span>{content.primaryCta}</span>
-              <Mic className="ml-2 h-5 w-5" />
-            </Button>
-            <Button 
-              id="hero-home-secondary-cta"
-              size="lg" 
-              variant="outline"
-              className="w-full sm:w-auto font-heading text-base px-8 py-5 h-auto border-2 transition-colors duration-200"
-            >
-              <span>{content.secondaryCta}</span>
-              <Archive className="ml-2 h-5 w-5" />
-            </Button>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link to="/share-stories">
+              <Button 
+                size="lg" 
+                className="bg-ui-orange hover:bg-ui-orange/90 text-white group w-full sm:w-auto"
+              >
+                <Mic className="mr-2 h-5 w-5 group-hover:animate-pulse" />
+                {isSpanish ? "Empieza a Grabar" : "Start Recording"}
+              </Button>
+            </Link>
+            
+            <Link to="/family-capsules">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="border-2 border-white text-white hover:bg-white/10 w-full sm:w-auto"
+              >
+                <Archive className="mr-2 h-5 w-5" />
+                {isSpanish ? "Crea Cápsulas" : "Create Capsules"}
+              </Button>
+            </Link>
           </div>
         </motion.div>
-
-        {/* Decorative elements */}
-        <div className="hidden lg:block absolute bottom-[10%] left-[10%] w-32 h-32 rounded-full bg-greystone-sandstone opacity-20 blur-2xl z-patterns"></div>
-        <div className="hidden lg:block absolute top-[20%] right-[10%] w-24 h-24 rounded-full bg-greystone-sandstone-dark opacity-15 blur-xl z-patterns"></div>
+        
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
+        >
+          <a 
+            href="#features" 
+            className="inline-flex items-center gap-2 text-white hover:text-ui-orange transition-colors"
+          >
+            <span className="font-medium">
+              {isSpanish ? "Descubre Más" : "Discover More"}
+            </span>
+            <ArrowRight className="h-4 w-4 animate-pulse" />
+          </a>
+        </motion.div>
       </div>
     </div>
   );

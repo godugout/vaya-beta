@@ -1,105 +1,107 @@
 
+import { useState } from "react";
 import { User } from "@supabase/supabase-js";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
+import { 
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuTrigger,
+  DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
-import { Button } from "../ui/button";
-import { LogOut, User as UserIcon, Settings, Users, Sun, Moon } from "lucide-react";
-import { LanguageSelector } from "./LanguageSelector";
+import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { 
+  User as UserIcon, 
+  Settings, 
+  LogOut, 
+  Moon, 
+  Sun, 
+  Phone,
+  Palette
+} from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface UserMenuProps {
-  user: User;
+  user: User | null;
   handleSignOut: () => Promise<void>;
   navigate: (path: string) => void;
 }
 
 export const UserMenu = ({ user, handleSignOut, navigate }: UserMenuProps) => {
   const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  // Only show theme toggle after component mounts to avoid hydration mismatch
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const [open, setOpen] = useState(false);
   
+  if (!user) return null;
+  
+  const userInitials = user.email 
+    ? user.email.substring(0, 2).toUpperCase() 
+    : "VA";
+  
+  const userEmail = user.email || "user@example.com";
+
   return (
-    <div className="flex items-center gap-2">
-      <LanguageSelector />
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button
-            variant="ghost"
-            className="relative h-8 w-8 rounded-full overflow-hidden hover:bg-[#333333]/10 dark:hover:bg-white/10 z-content"
-          >
-            <Avatar className="h-8 w-8">
-              <AvatarImage
-                src={user.user_metadata.avatar_url}
-                alt={user.user_metadata.full_name}
-              />
-              <AvatarFallback>
-                <UserIcon className="h-4 w-4" />
-              </AvatarFallback>
-            </Avatar>
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56 z-floating" align="end" forceMount>
-          <div className="flex items-center justify-start gap-2 p-2">
-            <div className="flex flex-col space-y-1 leading-none">
-              <p className="font-medium">{user.user_metadata.full_name || 'User'}</p>
-              <p className="w-[200px] truncate text-sm text-muted-foreground">
-                {user.email}
-              </p>
-            </div>
+    <DropdownMenu open={open} onOpenChange={setOpen}>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+          <Avatar className="h-10 w-10 border-2 border-ui-teal">
+            <AvatarImage src={user.user_metadata?.avatar_url} />
+            <AvatarFallback className="bg-ui-green text-white">
+              {userInitials}
+            </AvatarFallback>
+          </Avatar>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-56">
+        <DropdownMenuLabel>
+          <div className="flex flex-col space-y-1">
+            <p className="text-sm font-medium">{user.user_metadata?.full_name || userEmail}</p>
+            <p className="text-xs text-muted-foreground">{userEmail}</p>
           </div>
-          
-          <DropdownMenuSeparator />
-          
-          <DropdownMenuItem onClick={() => navigate("/profile")}>
-            <UserIcon className="mr-2 h-4 w-4" />
-            <span>User Profile</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => navigate("/families")}>
-            <Users className="mr-2 h-4 w-4" />
-            <span>My Families</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => navigate("/account")}>
-            <Settings className="mr-2 h-4 w-4" />
-            <span>Account Settings</span>
-          </DropdownMenuItem>
-          
-          <DropdownMenuSeparator />
-          
-          {mounted && (
-            <DropdownMenuItem onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
-              {theme === "dark" ? (
-                <>
-                  <Sun className="mr-2 h-4 w-4" />
-                  <span>Light Mode</span>
-                </>
-              ) : (
-                <>
-                  <Moon className="mr-2 h-4 w-4" />
-                  <span>Dark Mode</span>
-                </>
-              )}
-            </DropdownMenuItem>
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={() => navigate('/profile')}>
+          <UserIcon className="mr-2 h-4 w-4" />
+          <span>Profile</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate('/account')}>
+          <Settings className="mr-2 h-4 w-4" />
+          <span>Account</span>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
+          {theme === 'dark' ? (
+            <>
+              <Sun className="mr-2 h-4 w-4" />
+              <span>Light Mode</span>
+            </>
+          ) : (
+            <>
+              <Moon className="mr-2 h-4 w-4" />
+              <span>Dark Mode</span>
+            </>
           )}
-          
-          <DropdownMenuSeparator />
-          
-          <DropdownMenuItem onClick={handleSignOut}>
-            <LogOut className="mr-2 h-4 w-4" />
-            <span>Log out</span>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </div>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate('/theme')}>
+          <Palette className="mr-2 h-4 w-4" />
+          <span>Theme Settings</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => window.open('tel:+1234567890')}>
+          <Phone className="mr-2 h-4 w-4" />
+          <span>Contact Support</span>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem 
+          onClick={async () => {
+            setOpen(false);
+            await handleSignOut();
+          }}
+          className="text-red-500 dark:text-red-400 focus:text-red-500 dark:focus:text-red-400"
+        >
+          <LogOut className="mr-2 h-4 w-4" />
+          <span>Sign Out</span>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };

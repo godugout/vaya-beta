@@ -14,8 +14,10 @@ import ShareStories from "./pages/ShareStories";
 import FamilyCapsules from "./pages/FamilyCapsules";
 import Families from "./pages/Families";
 import CreateFamily from "./pages/CreateFamily";
-import "./App.css";
-import "./styles/globals.css"; // Import our custom global styles
+import "./index.css";
+import "./styles/globals.css";
+import "./styles/components.css";
+import "./styles/animations.css";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -30,16 +32,15 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
         <LanguageProvider>
           <Router>
-            <div className="flex min-h-screen flex-col bg-[#f8f9fa] dark:bg-dark-background-DEFAULT">
-              {/* Fixed background patterns */}
-              <div className="fixed inset-0 bg-grid-pattern opacity-40 z-patterns"></div>
-              <div className="fixed inset-0 bg-wave-pattern opacity-10 z-patterns"></div>
+            <div className="flex min-h-screen flex-col bg-white dark:bg-gray-900">
+              {/* Nature-inspired background image */}
+              <div className="fixed inset-0 bg-forest-stream opacity-5 dark:opacity-10 pointer-events-none"></div>
               
               <MainNav />
-              <main className="flex-1 relative z-content">
+              <main className="flex-1 relative z-10">
                 <Routes>
                   <Route path="/" element={<Index />} />
                   <Route path="/profile" element={<Profile />} />
