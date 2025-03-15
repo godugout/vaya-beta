@@ -16,6 +16,7 @@ import Families from "./pages/Families";
 import CreateFamily from "./pages/CreateFamily";
 import Auth from "./pages/Auth";
 import SetupAdmin from "./pages/SetupAdmin";
+import ComponentsShowcase from "./pages/ComponentsShowcase";
 import * as React from "react";
 import "./index.css";
 
@@ -69,6 +70,7 @@ function App() {
                     <Route path="/create-family" element={<CreateFamily />} />
                     <Route path="/auth" element={<Auth />} />
                     <Route path="/setup-admin" element={<SetupAdmin />} />
+                    <Route path="/components" element={<ComponentsShowcase />} />
                   </Routes>
                 </main>
                 <Footer />

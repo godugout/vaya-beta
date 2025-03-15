@@ -1,52 +1,68 @@
 
-// Vaya specific branded colors
 export const vayaColors = {
+  // Core brand colors
+  primary: '#000000',
+  secondary: '#6C5CE7',
+  accent: {
+    purple: '#9b87f5',
+    green: '#10B981',
+    orange: '#FF7675',
+    turquoise: '#0EA5E9',
+    coral: '#FFA05A',
+  },
+  
+  // UI semantic colors
+  ui: {
+    success: '#10B981',
+    warning: '#F59E0B',
+    error: '#DC2626',
+    info: '#0EA5E9',
+  },
+  
   // Text colors
   text: {
-    primary: "#2D3436", // Deep indigo
-    secondary: "#636E72", // Warm gray
-    muted: "#A0AEC0", // Muted text
+    primary: '#000000',
+    secondary: '#4B5563',
+    tertiary: '#9CA3AF',
+    inverse: '#FFFFFF',
   },
+  
   // Background colors
   background: {
-    light: "#F8F5FF", // Light lavender
-    paper: "#FFFFFF", // White
-    subtle: "#F7FAFC", // Very light gray
+    white: '#FFFFFF',
+    light: '#F9FAFB',
+    subtle: '#F3F4F6',
+    dark: '#111827',
   },
-  // Brand colors
-  brand: {
-    primary: "#6C5CE7", // Rich purple
-    secondary: "#FF7675", // Vibrant coral/orange
-    tertiary: "#00CEC9", // Turquoise
-  },
-  // Accent colors
-  accent: {
-    green: "#55EFC4",
-    blue: "#74B9FF", 
-    purple: "#A29BFE",
-    yellow: "#FFEAA7",
-    orange: "#FF9F43",
-    turquoise: "#00CEC9",
-    coral: "#FF7675",
-  },
-  // Feature colors
-  stories: "#FF7675", // Coral for stories
-  memories: "#00CEC9", // Turquoise for memory lane
-  capsules: "#6C5CE7", // Purple for family capsules
-  home: "#FF9F43", // Warm orange for home
-  narra: "#4169E1", // Royal blue for Narra AI assistant
   
-  // UI state colors
+  // Border colors
+  border: {
+    light: '#E5E7EB',
+    medium: '#D1D5DB',
+    dark: '#9CA3AF',
+  },
+  
+  // Feature-specific colors
+  stories: '#6C5CE7',
+  memories: '#FF7675',
+  capsules: '#38BDF8',
+  chat: {
+    bg: '#F8F9FA',
+    user: '#E5EDFF',
+    assistant: '#FFFFFF',
+  },
+  
+  // Gray palette
   gray: {
-    50: "#F7FAFC",
-    100: "#EDF2F7",
-    200: "#E2E8F0",
-    300: "#CBD5E0",
-    400: "#A0AEC0",
-    500: "#718096",
-    600: "#4A5568",
-    700: "#2D3748",
-    800: "#1A202C",
-    900: "#171923",
-  }
+    50: '#F9FAFB',
+    100: '#F3F4F6',
+    200: '#E5E7EB',
+    300: '#D1D5DB',
+    400: '#9CA3AF',
+    500: '#6B7280',
+    600: '#4B5563',
+    700: '#374151',
+    800: '#1F2937',
+    900: '#111827',
+  },
 };

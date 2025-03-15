@@ -1,0 +1,70 @@
+
+/* Component backgrounds */
+.bg-vaya-gradient-primary {
+  background: linear-gradient(135deg, #6C5CE7 0%, #8F84EB 100%);
+}
+
+.bg-vaya-gradient-secondary {
+  background: linear-gradient(135deg, #FF7675 0%, #FFA05A 100%);
+}
+
+.bg-vaya-gradient-tertiary {
+  background: linear-gradient(135deg, #0EA5E9 0%, #38BDF8 100%);
+}
+
+.bg-vaya-pattern-dots {
+  background-image: radial-gradient(circle, #00000010 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.bg-vaya-pattern-lines {
+  background-image: linear-gradient(90deg, #00000010 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Interactive backgrounds */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.bg-pulsate {
+  animation: bg-pulse 2s infinite;
+}
+
+@keyframes bg-pulse {
+  0% {
+    background-color: rgba(108, 92, 231, 0.1);
+  }
+  50% {
+    background-color: rgba(108, 92, 231, 0.2);
+  }
+  100% {
+    background-color: rgba(108, 92, 231, 0.1);
+  }
+}
+
+/* Story-specific backgrounds */
+.bg-memory-paper {
+  background-color: #fffaf0;
+  background-image: 
+    linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px),
+    linear-gradient(#eee .1em, transparent .1em);
+  background-size: 100% 1.2em;
+}
+
+.bg-old-photo {
+  background-color: #f5f5f5;
+  background-image: radial-gradient(#00000005 1px, transparent 0);
+  background-size: 8px 8px;
+}
+
+/* Family tree backgrounds */
+.bg-tree-pattern {
+  background-color: #ffffff;
+  background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23f0f0f0' fill-opacity='1' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E");
+}
