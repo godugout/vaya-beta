@@ -19,8 +19,6 @@ export default function Index() {
     <div className="page-container">
       {/* Main Hero Section */}
       <section className="hero-section pt-24 pb-16 px-4 md:px-6 lg:px-8">
-        <HeroPattern />
-        
         <div className="hero-content">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -72,9 +70,8 @@ export default function Index() {
         </div>
       </section>
       
-      {/* Example Capsules Section with parallax effect */}
-      <div className="relative -mt-20 mb-20">
-        <div className="absolute inset-0 bg-pattern-grid opacity-20"></div>
+      {/* Example Capsules Section */}
+      <div className="relative mb-20">
         <ExampleCapsules />
       </div>
       
@@ -103,4 +100,4 @@ export default function Index() {
       {showCreateFamily && <CreateFamilyWizard onOpenChange={setShowCreateFamily} open={showCreateFamily} />}
     </div>
   );
-}
+};

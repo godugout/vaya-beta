@@ -64,8 +64,3 @@
 .hero-content {
   @apply max-w-4xl mx-auto text-center relative z-10;
 }
-
-/* Consistent background patterns */
-.bg-pattern-base {
-  @apply absolute inset-0 opacity-20 z-0;
-}

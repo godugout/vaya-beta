@@ -1,7 +1,6 @@
 
 import { useLocation } from "react-router-dom";
 import { heroConfigs } from "@/config/heroConfigs";
-import { HeroPattern } from "./hero/HeroPattern";
 import { HeroContent } from "./hero/HeroContent";
 import HomeHero from "./hero/HomeHero";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -22,14 +21,11 @@ export default function Hero({ culturalContent }: HeroProps) {
 
   const config = heroConfigs[location.pathname as keyof typeof heroConfigs] || heroConfigs["/"];
   
-  // Hero section uses global CSS variables based on the route
   return (
     <div 
       className="hero-section py-24"
       data-component="Hero"
     >
-      <HeroPattern />
-      
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
         <HeroContent config={config} isSpanish={isSpanish} />
       </div>

@@ -1,23 +1,2 @@
-
-/* Background patterns and effects */
-.bg-pattern-dots {
-  background-image: radial-gradient(circle at 10px 10px, rgba(255, 255, 255, 0.1) 2px, transparent 0);
-  background-size: 20px 20px;
-}
-
-.bg-pattern-grid {
-  background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 20px 20px;
-}
-
-/* Pattern background */
-.bg-pattern-lines {
-  background-image: repeating-linear-gradient(
-    45deg,
-    var(--page-accent-color, rgba(255, 118, 117, 0.15)),
-    var(--page-accent-color, rgba(255, 118, 117, 0.15)) 10px,
-    var(--page-accent-color, rgba(108, 92, 231, 0.15)) 10px,
-    var(--page-accent-color, rgba(108, 92, 231, 0.15)) 20px
-  );
-}
+/* Background patterns and effects - simplified */
+/* Pattern classes removed as requested */
