@@ -1,20 +1,24 @@
 
 import { FamilyTheme } from "./types";
+import { useTheme } from "next-themes";
 
 interface ThemePreviewProps {
   theme: FamilyTheme;
 }
 
 export const ThemePreview = ({ theme }: ThemePreviewProps) => {
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
+
   return (
     <div className="space-y-4 mt-6">
-      <p className="text-sm text-vaya-text-secondary">Theme Preview:</p>
+      <p className="text-sm text-vaya-text-secondary dark:text-vaya-gray-400">Theme Preview:</p>
       
       <div 
         className="p-4 rounded-xl border"
         style={{ 
-          backgroundColor: theme.secondaryColor + "20", // Using hex opacity
-          borderColor: theme.primaryColor + "40" 
+          backgroundColor: `${theme.secondaryColor}${isDark ? "30" : "20"}`, // Slightly higher opacity for dark mode
+          borderColor: `${theme.primaryColor}${isDark ? "60" : "40"}` 
         }}
       >
         <h3 
@@ -23,7 +27,10 @@ export const ThemePreview = ({ theme }: ThemePreviewProps) => {
         >
           Family Capsule Title
         </h3>
-        <p className="text-sm mb-3" style={{ color: theme.textColor + "CC" }}>
+        <p 
+          className="text-sm mb-3" 
+          style={{ color: `${theme.textColor}${isDark ? "E6" : "CC"}` }} // More opacity in dark mode
+        >
           This is how your family's custom content would appear.
         </p>
         <button

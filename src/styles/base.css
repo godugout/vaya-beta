@@ -21,6 +21,31 @@ h1, h2, h3, h4, h5, h6 {
   --secondary-foreground: 210 40% 98%;
   --card: 222 47% 11%;
   --card-foreground: 210 40% 98%;
-  --accent: 199 84% 55%; /* Changed from purple to blue */
+  --accent: 250 84% 64%; /* Changed to match theme purple */
   --accent-foreground: 210 40% 98%;
+  
+  /* Custom dark theme colors */
+  --theme-bg: #1A1F2C;
+  --theme-card: #222837;
+  --theme-border: #2D3748;
+  --theme-text: #F8F9FA;
+  --theme-text-secondary: #A0AEC0;
+}
+
+body.dark {
+  background-color: var(--theme-bg);
+  color: var(--theme-text);
+}
+
+.dark .theme-card {
+  background-color: var(--theme-card);
+  border-color: var(--theme-border);
+}
+
+.dark .theme-text {
+  color: var(--theme-text);
+}
+
+.dark .theme-text-secondary {
+  color: var(--theme-text-secondary);
 }

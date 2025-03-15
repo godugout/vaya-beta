@@ -6,6 +6,7 @@ import { ThemePreview } from "./theme/ThemePreview";
 import { ThemeHeader } from "./theme/ThemeHeader";
 import { ThemeColorInputs } from "./theme/ThemeColorInputs";
 import { ThemeSaveButton } from "./theme/ThemeSaveButton";
+import { useTheme } from "next-themes";
 
 export default function FamilyThemeCustomizer({
   familyId,
@@ -13,10 +14,13 @@ export default function FamilyThemeCustomizer({
   onThemeChange
 }: FamilyThemeCustomizerProps) {
   const { toast } = useToast();
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
+  
   const [theme, setTheme] = useState<FamilyTheme>(initialTheme || {
-    primaryColor: "#6C5CE7",
-    secondaryColor: "#A29BFE",
-    textColor: "#2D3436"
+    primaryColor: isDark ? "#8B5CF6" : "#6C5CE7",
+    secondaryColor: isDark ? "#C4B5FD" : "#A29BFE",
+    textColor: isDark ? "#F8F9FA" : "#2D3436"
   });
 
   const handleColorChange = (colorType: 'primaryColor' | 'secondaryColor' | 'textColor', value: string) => {
@@ -45,7 +49,7 @@ export default function FamilyThemeCustomizer({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 dark:bg-[#1A1F2C] dark:text-white dark:rounded-lg dark:p-4 transition-colors duration-300">
       <ThemeHeader 
         currentTheme={theme} 
         onPresetSelected={handlePresetSelected} 
