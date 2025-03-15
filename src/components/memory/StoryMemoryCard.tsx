@@ -1,15 +1,18 @@
+
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Play, Pause } from "lucide-react";
 import { useState, useRef } from "react";
 import { Memory } from "./types";
 import { Link } from "react-router-dom";
+import { Badge } from "@/components/ui/badge";
 
 interface StoryMemoryCardProps {
   memory: Memory;
+  isPlaceholder?: boolean;
 }
 
-export const StoryMemoryCard = ({ memory }: StoryMemoryCardProps) => {
+export const StoryMemoryCard = ({ memory, isPlaceholder = true }: StoryMemoryCardProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -29,7 +32,15 @@ export const StoryMemoryCard = ({ memory }: StoryMemoryCardProps) => {
 
   return (
     <Link to={`/memory/${memory.id}`}>
-      <Card className="bg-white hover:shadow-md transition-shadow duration-200">
+      <Card className={`bg-white hover:shadow-md transition-shadow duration-200 relative ${isPlaceholder ? 'opacity-70' : ''}`}>
+        {isPlaceholder && (
+          <Badge 
+            variant="outline" 
+            className="absolute top-2 right-2 bg-gray-200 text-gray-700 text-xs border-gray-300"
+          >
+            Demo
+          </Badge>
+        )}
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <div className="space-y-1">
             <h3 className="text-sm font-medium">Audio Memory</h3>

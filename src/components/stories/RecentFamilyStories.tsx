@@ -57,10 +57,15 @@ const RecentFamilyStories = () => {
             <h2 className="text-2xl font-semibold text-gray-800">
               Recent Family Stories
             </h2>
-            <Button variant="outline" className="flex items-center gap-2">
-              <span>View All</span>
-              <ChevronRight className="h-4 w-4" />
-            </Button>
+            <div className="flex items-center gap-2">
+              <div className="text-sm text-gray-500 italic mr-2">
+                Demo Content
+              </div>
+              <Button variant="outline" className="flex items-center gap-2">
+                <span>View All</span>
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
         </FadeIn>
         
@@ -76,6 +81,7 @@ const RecentFamilyStories = () => {
               imageUrl={story.imageUrl}
               date={story.date}
               author={story.author}
+              isPlaceholder={true}
             />
           ))}
         </StaggeredContainer>

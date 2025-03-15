@@ -1,3 +1,4 @@
+
 import { PhotoMemory } from "./types";
 import { Calendar, Bookmark, MessageSquare, Share2 } from "lucide-react";
 import { format } from "date-fns";
@@ -5,15 +6,25 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Link } from "react-router-dom";
+import { Badge } from "@/components/ui/badge";
 
 interface PhotoMemoryCardProps {
   memory: PhotoMemory;
+  isPlaceholder?: boolean;
 }
 
-export const PhotoMemoryCard = ({ memory }: PhotoMemoryCardProps) => {
+export const PhotoMemoryCard = ({ memory, isPlaceholder = true }: PhotoMemoryCardProps) => {
   return (
     <Link to={`/memory/${memory.id}`}>
-      <Card className="bg-white border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200">
+      <Card className={`bg-white border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200 relative ${isPlaceholder ? 'opacity-70' : ''}`}>
+        {isPlaceholder && (
+          <Badge 
+            variant="outline" 
+            className="absolute top-2 right-2 z-10 bg-gray-200 text-gray-700 text-xs border-gray-300"
+          >
+            Demo
+          </Badge>
+        )}
         <CardContent className="p-6">
           <div className="flex items-start gap-4">
             <Avatar className="h-12 w-12">

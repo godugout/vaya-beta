@@ -1,0 +1,28 @@
+
+/* Placeholder content styling */
+.placeholder-badge {
+  background-color: var(--gray-200);
+  color: var(--gray-700);
+  font-size: 0.75rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: 9999px;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 10;
+}
+
+.placeholder-content {
+  opacity: 0.7;
+  position: relative;
+}
+
+.placeholder-alert {
+  background-color: var(--gray-100);
+  border: 1px solid var(--gray-200);
+  border-radius: 0.375rem;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  color: var(--gray-600);
+}

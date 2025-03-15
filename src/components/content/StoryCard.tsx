@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Play, Pause, Image, FileText, AudioLines } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import { Badge } from "@/components/ui/badge";
 
 export type StoryType = "audio" | "photo" | "transcript";
 
@@ -21,6 +22,7 @@ export interface StoryCardProps {
     avatar?: string;
   };
   className?: string;
+  isPlaceholder?: boolean;
 }
 
 export const StoryCard = ({
@@ -33,6 +35,7 @@ export const StoryCard = ({
   date,
   author,
   className,
+  isPlaceholder = true, // Default to true since current implementation uses sample data
 }: StoryCardProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -79,7 +82,18 @@ export const StoryCard = ({
       transition={{ duration: 0.3 }}
       className={cn("h-full", className)}
     >
-      <Card className="h-full flex flex-col hover:shadow-md transition-shadow duration-200 rounded-xl overflow-hidden">
+      <Card className={cn(
+        "h-full flex flex-col hover:shadow-md transition-shadow duration-200 rounded-xl overflow-hidden",
+        isPlaceholder && "opacity-70"
+      )}>
+        {isPlaceholder && (
+          <div className="absolute top-2 right-2 z-10">
+            <Badge variant="outline" className="bg-gray-200 text-gray-700 text-xs border-gray-300">
+              Demo
+            </Badge>
+          </div>
+        )}
+        
         {type === "photo" && imageUrl && (
           <div className="relative aspect-video overflow-hidden">
             <img

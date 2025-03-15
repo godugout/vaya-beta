@@ -1,10 +1,11 @@
 
 import React from 'react';
-import { Clock, ArrowRight } from 'lucide-react';
+import { Clock, ArrowRight, InfoCircle } from 'lucide-react';
 import { AnimatedContainer } from '@/components/animation/AnimatedContainer';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { cn } from '@/lib/utils';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 export interface StoryContribution {
   id: string;
@@ -12,6 +13,7 @@ export interface StoryContribution {
   contributorAvatar?: string;
   content: string;
   timestamp: Date;
+  isPlaceholder?: boolean;
 }
 
 interface StoryContributionsProps {
@@ -25,14 +27,34 @@ export const StoryContributions: React.FC<StoryContributionsProps> = ({
   contributions,
   themeStyles
 }) => {
+  const allPlaceholder = contributions.every(c => c.isPlaceholder !== false);
+
   return (
     <div className="space-y-4">
+      {allPlaceholder && (
+        <Alert variant="default" className="bg-gray-100 border-gray-200 mb-4">
+          <AlertDescription className="flex items-center text-sm text-gray-600">
+            <InfoCircle className="h-4 w-4 mr-2" />
+            Demo content shown below. Real contributions will appear here when shared.
+          </AlertDescription>
+        </Alert>
+      )}
+      
       {contributions.map((contribution) => (
         <AnimatedContainer 
           key={contribution.id} 
           variant="fade" 
-          className="border rounded-lg p-4"
+          className={cn(
+            "border rounded-lg p-4 relative",
+            contribution.isPlaceholder && "opacity-70"
+          )}
         >
+          {contribution.isPlaceholder && (
+            <div className="absolute top-2 right-2 bg-gray-200 text-gray-700 text-xs px-2 py-0.5 rounded-full">
+              Demo
+            </div>
+          )}
+          
           <div className="flex items-start gap-3">
             <Avatar>
               <AvatarImage src={contribution.contributorAvatar} />
