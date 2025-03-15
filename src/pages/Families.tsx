@@ -4,10 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Plus, Users, Home, Heart, Camera, BookOpen } from "lucide-react";
+import { Plus, Users, Home, Heart, Camera, BookOpen, TreeDeciduous } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { EditFamilyDialog } from "@/components/family/EditFamilyDialog";
 import { motion } from "framer-motion";
+import FamilyTreeBuilder from "@/components/family/tree/FamilyTreeBuilder";
 
 interface Family {
   id: string;
@@ -30,6 +31,7 @@ export default function Families() {
   const [families, setFamilies] = useState<Family[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeView, setActiveView] = useState<'grid' | 'tree' | 'timeline'>('grid');
+  const [selectedFamilyId, setSelectedFamilyId] = useState<string | null>(null);
 
   useEffect(() => {
     getFamilies();
@@ -81,6 +83,11 @@ export default function Families() {
         }));
         
         setFamilies(safeData);
+        
+        // Set the first family as selected if available
+        if (safeData.length > 0 && !selectedFamilyId) {
+          setSelectedFamilyId(safeData[0].id);
+        }
       } else {
         setFamilies([]);
       }
@@ -111,18 +118,18 @@ export default function Families() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white to-gray-100">
-      <div className="container max-w-5xl py-8">
+    <div className="min-h-screen bg-gradient-to-br from-white to-gray-100 dark:from-gray-900 dark:to-black">
+      <div className="container max-w-6xl py-8">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-gray-900">Your Families</h1>
-            <p className="mt-2 text-lg text-gray-600">Connect with your loved ones and share your legacy</p>
+            <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">Your Families</h1>
+            <p className="mt-2 text-lg text-gray-600 dark:text-gray-400">Connect with your loved ones and share your legacy</p>
           </div>
           
           <Button 
             onClick={() => navigate("/create-family")}
             size="sm"
-            className="mt-4 md:mt-0 bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700"
+            className="mt-4 md:mt-0 bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
           >
             <Plus className="h-4 w-4 mr-2" />
             Create Family
@@ -130,12 +137,12 @@ export default function Families() {
         </div>
 
         <div className="mb-8 flex justify-center">
-          <div className="inline-flex bg-gray-100 p-1 rounded-lg">
+          <div className="inline-flex bg-gray-100 dark:bg-gray-800 p-1 rounded-lg">
             <Button 
               variant={activeView === 'grid' ? 'default' : 'ghost'} 
               size="sm"
               onClick={() => setActiveView('grid')}
-              className="rounded-md"
+              className={`rounded-md ${activeView === 'grid' ? 'bg-black text-white dark:bg-white dark:text-black' : ''}`}
             >
               <Home className="h-4 w-4 mr-2" />
               Homes
@@ -144,16 +151,16 @@ export default function Families() {
               variant={activeView === 'tree' ? 'default' : 'ghost'} 
               size="sm"
               onClick={() => setActiveView('tree')}
-              className="rounded-md"
+              className={`rounded-md ${activeView === 'tree' ? 'bg-black text-white dark:bg-white dark:text-black' : ''}`}
             >
-              <Users className="h-4 w-4 mr-2" />
+              <TreeDeciduous className="h-4 w-4 mr-2" />
               Tree
             </Button>
             <Button 
               variant={activeView === 'timeline' ? 'default' : 'ghost'} 
               size="sm"
               onClick={() => setActiveView('timeline')}
-              className="rounded-md"
+              className={`rounded-md ${activeView === 'timeline' ? 'bg-black text-white dark:bg-white dark:text-black' : ''}`}
             >
               <BookOpen className="h-4 w-4 mr-2" />
               Timeline
@@ -170,11 +177,11 @@ export default function Families() {
           >
             {families.map((family) => (
               <motion.div key={family.id} variants={item}>
-                <Card className="h-full overflow-hidden hover:shadow-md transition-shadow duration-300 border-transparent hover:border-blue-100">
-                  <div className="h-24 bg-gradient-to-r from-blue-500 to-purple-500"></div>
+                <Card className="h-full overflow-hidden hover:shadow-md transition-shadow duration-300 border-transparent hover:border-gray-200 dark:hover:border-gray-700">
+                  <div className="h-24 bg-gradient-to-r from-black to-gray-800 dark:from-white dark:to-gray-300"></div>
                   <CardHeader className="relative pb-2">
-                    <div className="absolute -top-12 left-6 h-16 w-16 rounded-full bg-white flex items-center justify-center shadow-md">
-                      <Users className="h-8 w-8 text-blue-500" />
+                    <div className="absolute -top-12 left-6 h-16 w-16 rounded-full bg-white dark:bg-black flex items-center justify-center shadow-md">
+                      <Users className="h-8 w-8 text-black dark:text-white" />
                     </div>
                     <div className="ml-20">
                       <CardTitle className="text-xl font-semibold">
@@ -184,7 +191,7 @@ export default function Families() {
                   </CardHeader>
                   <CardContent>
                     {family.description && (
-                      <p className="text-sm text-gray-600 mb-4">
+                      <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
                         {family.description}
                       </p>
                     )}
@@ -194,23 +201,36 @@ export default function Families() {
                           {family.members.slice(0, 3).map((member, index) => (
                             <div 
                               key={member.id} 
-                              className="h-8 w-8 rounded-full bg-gray-200 border-2 border-white flex items-center justify-center text-xs font-medium"
+                              className="h-8 w-8 rounded-full bg-gray-200 dark:bg-gray-700 border-2 border-white dark:border-black flex items-center justify-center text-xs font-medium"
                               style={{ zIndex: 10 - index }}
                             >
                               {member.profiles.full_name.charAt(0)}
                             </div>
                           ))}
                           {family.members.length > 3 && (
-                            <div className="h-8 w-8 rounded-full bg-gray-100 border-2 border-white flex items-center justify-center text-xs text-gray-600 font-medium" style={{ zIndex: 1 }}>
+                            <div className="h-8 w-8 rounded-full bg-gray-100 dark:bg-gray-800 border-2 border-white dark:border-black flex items-center justify-center text-xs text-gray-600 dark:text-gray-400 font-medium" style={{ zIndex: 1 }}>
                               +{family.members.length - 3}
                             </div>
                           )}
                         </div>
-                        <span className="text-sm text-gray-600">
+                        <span className="text-sm text-gray-600 dark:text-gray-400">
                           {family.members.length} members
                         </span>
                       </div>
-                      <EditFamilyDialog family={family} onFamilyUpdated={getFamilies} />
+                      <div className="flex items-center space-x-2">
+                        <Button 
+                          variant="ghost" 
+                          size="icon"
+                          onClick={() => {
+                            setSelectedFamilyId(family.id);
+                            setActiveView('tree');
+                          }}
+                          className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white"
+                        >
+                          <TreeDeciduous className="h-4 w-4" />
+                        </Button>
+                        <EditFamilyDialog family={family} onFamilyUpdated={getFamilies} />
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
@@ -226,17 +246,17 @@ export default function Families() {
               >
                 <Card>
                   <CardContent className="flex flex-col items-center justify-center py-12">
-                    <div className="h-24 w-24 rounded-full bg-blue-50 flex items-center justify-center mb-6">
-                      <Heart className="h-12 w-12 text-blue-500" />
+                    <div className="h-24 w-24 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mb-6">
+                      <Heart className="h-12 w-12 text-black dark:text-white" />
                     </div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Create Your First Family</h3>
-                    <p className="text-gray-600 text-center mb-6 max-w-md">
+                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Create Your First Family</h3>
+                    <p className="text-gray-600 dark:text-gray-400 text-center mb-6 max-w-md">
                       Start your family journey by creating your first family group. Invite members and begin preserving your legacy together.
                     </p>
                     <Button 
                       onClick={() => navigate("/create-family")}
                       size="lg"
-                      className="bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700"
+                      className="bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
                     >
                       <Plus className="h-5 w-5 mr-2" />
                       Create New Family
@@ -249,21 +269,47 @@ export default function Families() {
         )}
         
         {activeView === 'tree' && (
-          <div className="bg-white p-8 rounded-lg shadow-sm border border-gray-100">
-            <div className="text-center">
-              <Camera className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Family Tree View</h3>
-              <p className="text-gray-500 mb-6">Coming soon! Visualize your family connections in an interactive tree.</p>
-            </div>
+          <div className="rounded-lg">
+            {selectedFamilyId ? (
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-xl font-semibold">
+                    {families.find(f => f.id === selectedFamilyId)?.name} Family Tree
+                  </h2>
+                  <div className="flex space-x-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setActiveView('grid')}
+                    >
+                      Back to Families
+                    </Button>
+                  </div>
+                </div>
+                <FamilyTreeBuilder 
+                  familyId={selectedFamilyId}
+                  initialMembers={families.find(f => f.id === selectedFamilyId)?.members}
+                />
+              </div>
+            ) : (
+              <div className="bg-white dark:bg-gray-900 p-8 rounded-lg shadow-sm border border-gray-100 dark:border-gray-800 text-center">
+                <TreeDeciduous className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Select a Family</h3>
+                <p className="text-gray-500 dark:text-gray-400 mb-6">Please select a family to view and edit its family tree.</p>
+                <Button onClick={() => setActiveView('grid')}>
+                  View Families
+                </Button>
+              </div>
+            )}
           </div>
         )}
         
         {activeView === 'timeline' && (
-          <div className="bg-white p-8 rounded-lg shadow-sm border border-gray-100">
+          <div className="bg-white dark:bg-gray-900 p-8 rounded-lg shadow-sm border border-gray-100 dark:border-gray-800">
             <div className="text-center">
               <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Family Timeline</h3>
-              <p className="text-gray-500 mb-6">Coming soon! See your family's journey through time with an interactive timeline.</p>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Family Timeline</h3>
+              <p className="text-gray-500 dark:text-gray-400 mb-6">Coming soon! See your family's journey through time with an interactive timeline.</p>
             </div>
           </div>
         )}

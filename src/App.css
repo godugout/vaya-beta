@@ -65,6 +65,30 @@
   letter-spacing: -0.02em;
 }
 
+/* React Flow custom styles */
+.react-flow__node-familyMember {
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  border: 1px solid black;
+  background: white;
+}
+
+.dark .react-flow__node-familyMember {
+  border: 1px solid white;
+  background: black;
+  box-shadow: 0 2px 5px rgba(255,255,255,0.1);
+}
+
+.react-flow__handle {
+  background: black !important;
+  border: 2px solid white;
+}
+
+.dark .react-flow__handle {
+  background: white !important;
+  border: 2px solid black;
+}
+
 @media (max-width: 768px) {
   .agencs-title {
     font-size: 3rem;

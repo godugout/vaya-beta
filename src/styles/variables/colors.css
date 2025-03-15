@@ -33,4 +33,28 @@
   /* Card colors */
   --card-background: var(--color-white);
   --card-shadow: rgba(0, 0, 0, 0.05);
+  
+  /* Family Tree colors */
+  --tree-node-border: var(--color-black);
+  --tree-node-background: var(--color-white);
+  --tree-edge-color: var(--color-black);
+  --tree-selected-color: #0066CC;
+}
+
+/* Dark theme variables */
+.dark {
+  --color-ui-primary: var(--color-white);
+  --color-ui-secondary: var(--color-gray-200);
+  --color-ui-accent: var(--color-gray-100);
+  
+  --color-text-dark: var(--color-white);
+  --color-text-medium: var(--color-gray-200);
+  --color-text-light: var(--color-black);
+  
+  --card-background: var(--color-gray-900);
+  --card-shadow: rgba(255, 255, 255, 0.05);
+  
+  --tree-node-border: var(--color-white);
+  --tree-node-background: var(--color-black);
+  --tree-edge-color: var(--color-white);
 }
