@@ -92,12 +92,12 @@ export const MobileBottomNav = ({ user, navigate }: MobileBottomNavProps) => {
           </Link>
         ) : (
           <Button 
-            onClick={() => navigate("/auth")}
+            onClick={() => navigate("/families")}
             variant="secondary"
             size="sm"
             className="rounded-full text-xs px-4 py-2"
           >
-            Sign In
+            Families
           </Button>
         )}
       </div>

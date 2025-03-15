@@ -1,3 +1,4 @@
+
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Clock, Box, Mic, Home } from "lucide-react";
@@ -81,10 +82,10 @@ export const DesktopNav = ({ user, handleSignOut, navigate }: DesktopNavProps) =
             <UserMenu user={user} handleSignOut={handleSignOut} navigate={navigate} />
           ) : (
             <Button 
-              onClick={() => navigate("/auth")}
+              onClick={() => navigate("/families")}
               className="bg-vaya-capsules hover:bg-vaya-capsules/90 text-white text-base px-6 py-2"
             >
-              Sign In
+              Family Groups
               <Box className="ml-2 h-5 w-5" />
             </Button>
           )}

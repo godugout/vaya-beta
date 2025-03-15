@@ -6,7 +6,6 @@ import { Toaster } from "./components/ui/toaster";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import Index from "./pages/Index";
-import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
 import Account from "./pages/Account";
 import MemoryLane from "./pages/MemoryLane";
@@ -37,7 +36,6 @@ function App() {
             <main className="flex-1">
               <Routes>
                 <Route path="/" element={<Index />} />
-                <Route path="/auth" element={<Auth />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/account" element={<Account />} />
                 <Route path="/memory-lane" element={<MemoryLane />} />
