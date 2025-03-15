@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -9,7 +10,6 @@ import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 import { DialogClose } from "@/components/ui/dialog";
 
 interface CreateCapsuleFormData {
@@ -27,30 +27,23 @@ const CreateCapsuleForm = () => {
   const onSubmit = async (data: CreateCapsuleFormData) => {
     setIsSubmitting(true);
     try {
-      const { data: capsule, error } = await supabase
-        .from('capsule_schedules')
-        .insert({
-          title: data.title,
-          instructions: data.instructions,
-          lock_deadline: data.lockDeadline.toISOString(),
-          reveal_date: data.revealDate.toISOString(),
-        })
-        .select()
-        .single();
-
-      if (error) throw error;
-
-      toast({
-        title: "Success!",
-        description: "Your time capsule has been created.",
-      });
+      // Mock submission for now
+      console.log("Would create capsule with data:", data);
+      
+      // Simulate success after short delay
+      setTimeout(() => {
+        toast({
+          title: "Success!",
+          description: "Your time capsule has been created.",
+        });
+        setIsSubmitting(false);
+      }, 1000);
     } catch (error) {
       toast({
         title: "Error",
         description: "Failed to create time capsule. Please try again.",
         variant: "destructive",
       });
-    } finally {
       setIsSubmitting(false);
     }
   };

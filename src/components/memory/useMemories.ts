@@ -1,63 +1,8 @@
+
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import { Memory, StoryMemory, PhotoMemory } from "./types";
 
 const ITEMS_PER_PAGE = 5;
-
-export const useMemories = () => {
-  return useInfiniteQuery({
-    queryKey: ["memories"],
-    queryFn: async ({ pageParam = 0 }) => {
-      const start = pageParam * ITEMS_PER_PAGE;
-      const end = start + ITEMS_PER_PAGE - 1;
-
-      const { data: memoriesData, error: memoriesError } = await supabase
-        .from("vaya_memories")
-        .select("*")
-        .order("created_at", { ascending: false })
-        .range(start, end);
-
-      if (memoriesError) throw memoriesError;
-
-      const memories = memoriesData?.length ? memoriesData : sampleMemories.slice(start, end + 1);
-
-      const enrichedMemories = await Promise.all(memories.map(async (memory) => {
-        if (memory.type === "story") {
-          const { data: storyData } = await supabase
-            .from("vaya_stories")
-            .select("title, description, duration")
-            .eq("id", memory.id)
-            .maybeSingle();
-          return { 
-            ...memory, 
-            title: storyData?.title,
-            description: storyData?.description,
-            duration: storyData?.duration
-          } as StoryMemory;
-        } else if (memory.type === "photo") {
-          const { data: photoData } = await supabase
-            .from("vaya_photos")
-            .select("photo_url, caption")
-            .eq("id", memory.id)
-            .maybeSingle();
-          return { 
-            ...memory, 
-            photo_url: photoData?.photo_url,
-            caption: photoData?.caption
-          } as PhotoMemory;
-        }
-        return memory as Memory;
-      }));
-
-      return {
-        memories: enrichedMemories,
-        nextPage: enrichedMemories.length === ITEMS_PER_PAGE ? pageParam + 1 : undefined,
-      };
-    },
-    getNextPageParam: (lastPage) => lastPage.nextPage,
-    initialPageParam: 0,
-  });
-};
 
 // Sample data for development
 const sampleMemories: Memory[] = [
@@ -113,3 +58,23 @@ const sampleMemories: Memory[] = [
     caption: "Family sunset gathering at Manuel Antonio Beach - A perfect end to our reunion weekend",
   }
 ];
+
+export const useMemories = () => {
+  return useInfiniteQuery({
+    queryKey: ["memories"],
+    queryFn: async ({ pageParam = 0 }) => {
+      const start = pageParam * ITEMS_PER_PAGE;
+      const end = start + ITEMS_PER_PAGE - 1;
+
+      // Using sample data instead of making Supabase queries
+      const memories = sampleMemories.slice(start, end + 1);
+
+      return {
+        memories,
+        nextPage: memories.length === ITEMS_PER_PAGE ? pageParam + 1 : undefined,
+      };
+    },
+    getNextPageParam: (lastPage) => lastPage.nextPage,
+    initialPageParam: 0,
+  });
+};

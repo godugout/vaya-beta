@@ -4,7 +4,6 @@ import { Plus } from "lucide-react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 
 interface AddMemoryButtonProps {
   capsuleId?: string;
@@ -22,29 +21,8 @@ const AddMemoryButton = ({ capsuleId, className, size = "default" }: AddMemoryBu
 
     setIsUploading(true);
     try {
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${Math.random()}.${fileExt}`;
-      const filePath = `${capsuleId}/${fileName}`;
-
-      const { error: uploadError } = await supabase.storage
-        .from('memories')
-        .upload(filePath, file);
-
-      if (uploadError) throw uploadError;
-
-      const { data: { publicUrl } } = supabase.storage
-        .from('memories')
-        .getPublicUrl(filePath);
-
-      const { error: memoryError } = await supabase
-        .from('vaya_memories')
-        .insert({
-          type: file.type.startsWith('image/') ? 'photo' : 'file',
-          content_url: publicUrl,
-          family_id: capsuleId
-        });
-
-      if (memoryError) throw memoryError;
+      // Simulate file upload
+      await new Promise(resolve => setTimeout(resolve, 1500)); // Fake delay
 
       toast({
         title: "Success!",

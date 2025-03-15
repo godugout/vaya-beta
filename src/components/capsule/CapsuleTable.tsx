@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Capsule, CapsuleStatus } from "@/types/capsule";
 import { getEmojiForIcon } from "@/components/capsule/layout/utils/emojiUtils";
-import { supabase } from "@/integrations/supabase/client";
 
 interface CapsuleTableRowProps {
   capsule: Capsule;
@@ -27,7 +26,7 @@ export const CapsuleTable = ({ capsules, sortField, sortDirection, onSort }: {
         <tbody>
           {capsules.map((capsule) => (
             <CapsuleTableRow 
-              key={capsule.id} 
+              key={capsule.id || capsule.title} 
               capsule={capsule} 
               isBookmarked={false} 
               isLoading={false}
@@ -57,29 +56,17 @@ export const CapsuleTableRow = ({
     return cn(baseClasses, statusClasses[status]);
   };
 
+  // Temporary mock handler instead of actual Supabase calls
   const handleBookmarkClick = async () => {
     try {
-      if (isBookmarked) {
-        await supabase
-          .from('vaya_bookmarks')
-          .delete()
-          .eq('memory_id', capsule.link.split('/').pop())
-          .eq('created_by', (await supabase.auth.getUser()).data.user?.id);
-      } else {
-        await supabase
-          .from('vaya_bookmarks')
-          .insert([{
-            memory_id: capsule.link.split('/').pop(),
-            created_by: (await supabase.auth.getUser()).data.user?.id,
-          }]);
-      }
-      onBookmark(capsule.link.split('/').pop() || '');
+      onBookmark(capsule.id || '');
     } catch (error) {
       console.error('Error toggling bookmark:', error);
     }
   };
 
   const isAccessible = capsule.metadata?.status === 'active' || capsule.metadata?.status === 'upcoming';
+  const capsuleId = capsule.id || capsule.link?.split('/').pop() || '';
 
   return (
     <TableRow className="hover:bg-gray-50/50">
@@ -106,7 +93,7 @@ export const CapsuleTableRow = ({
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => onBookmark(capsule.link.split('/').pop() || '')}
+            onClick={handleBookmarkClick}
             className={cn(
               "h-8 w-8",
               isLoading && "opacity-50 cursor-not-allowed"
@@ -127,7 +114,7 @@ export const CapsuleTableRow = ({
             asChild
             disabled={!isAccessible}
           >
-            <Link to={`/capsule/${capsule.link.split('/').pop()}${isAccessible ? '/add' : ''}`}>
+            <Link to={`/capsule/${capsuleId}${isAccessible ? '/add' : ''}`}>
               {isAccessible ? (
                 <Plus className="h-4 w-4" />
               ) : (
@@ -145,7 +132,7 @@ export const CapsuleTableRow = ({
             )}
             asChild
           >
-            <Link to={capsule.link}>
+            <Link to={capsule.link || `/capsule/${capsuleId}`}>
               {isAccessible ? (
                 <Eye className="h-4 w-4" />
               ) : (

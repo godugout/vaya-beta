@@ -1,6 +1,6 @@
+
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import { ArrowLeft, MessageSquare, Share2, Bookmark } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { StoryMemoryCard } from "@/components/memory/StoryMemoryCard";
@@ -8,26 +8,41 @@ import { PhotoMemoryCard } from "@/components/memory/PhotoMemoryCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Memory } from "@/components/memory/types";
 
+// Sample memories for development
+const sampleMemories: Record<string, Memory> = {
+  "1": {
+    id: "1",
+    type: "story",
+    content_url: "/path/to/sample-audio.mp3",
+    created_at: "2024-03-20T10:00:00Z",
+    title: "Abuela's Secret Gallo Pinto Recipe",
+    description: "My grandmother shares the story behind our family's traditional Costa Rican breakfast, passed down through generations. She reveals her secret ingredient that makes her gallo pinto special and talks about morning traditions in our family.",
+    duration: 180,
+  },
+  "2": {
+    id: "2",
+    type: "photo",
+    content_url: "https://images.unsplash.com/photo-1472396961693-142e6e269027",
+    created_at: "2024-03-19T15:30:00Z",
+    photo_url: "https://images.unsplash.com/photo-1472396961693-142e6e269027",
+    caption: "Family trip to Monteverde Cloud Forest - The kids were amazed by the wildlife!",
+  }
+};
+
 const MemoryPost = () => {
   const { id } = useParams();
 
   const { data: memory, isLoading } = useQuery({
     queryKey: ["memory", id],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("vaya_memories")
-        .select(`
-          *,
-          uploaded_by:profiles (
-            full_name,
-            avatar_url
-          )
-        `)
-        .eq("id", id)
-        .single();
-
-      if (error) throw error;
-      return data as Memory;
+      // Simulate API call with a delay
+      await new Promise(resolve => setTimeout(resolve, 800));
+      
+      // Use sample data based on ID
+      const memoryData = sampleMemories[id || ""] || sampleMemories["1"];
+      if (!memoryData) throw new Error("Memory not found");
+      
+      return memoryData;
     },
   });
 

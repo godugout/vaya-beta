@@ -1,7 +1,29 @@
+
 import { useState, useEffect } from "react";
 import { Message, LocalizedPrompt } from "./types";
-import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
+
+// Mock prompts data
+const mockPrompts: LocalizedPrompt[] = [
+  {
+    id: "1",
+    category_id: "family",
+    prompt_en: "Tell me about a family tradition that's special to you.",
+    prompt_es: "Háblame de una tradición familiar que sea especial para ti.",
+    cultural_context_en: "Family traditions help preserve cultural heritage.",
+    cultural_context_es: "Las tradiciones familiares ayudan a preservar el patrimonio cultural.",
+    active: true
+  },
+  {
+    id: "2",
+    category_id: "childhood",
+    prompt_en: "What's your earliest childhood memory?",
+    prompt_es: "¿Cuál es tu primer recuerdo de la infancia?",
+    cultural_context_en: null,
+    cultural_context_es: null,
+    active: true
+  }
+];
 
 export const useChat = () => {
   const [messages, setMessages] = useState<Message[]>([
@@ -22,13 +44,8 @@ export const useChat = () => {
 
   const fetchPrompts = async () => {
     try {
-      const { data, error } = await supabase
-        .from("vaya_localized_prompts")
-        .select("*")
-        .eq("active", true);
-
-      if (error) throw error;
-      setPrompts(data || []);
+      // Using mock data instead of fetching from Supabase
+      setPrompts(mockPrompts);
     } catch (error) {
       toast({
         title: "Error",

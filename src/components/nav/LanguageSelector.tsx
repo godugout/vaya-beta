@@ -1,5 +1,5 @@
+
 import { useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import { Check } from "lucide-react";
 import {
   DropdownMenu,
@@ -24,30 +24,12 @@ export const LanguageSelector = () => {
 
   const handleLanguageChange = async (languageCode: string) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      
-      if (!user) {
-        // For testing purposes, allow language change without authentication
-        setLanguagePreference(languageCode);
-        toast({
-          title: "Language Updated",
-          description: "Language preference updated (test mode)",
-        });
-        return;
-      }
-
-      const { error } = await supabase
-        .from('profiles')
-        .update({ preferred_language: languageCode })
-        .eq('id', user.id);
-
-      if (error) throw error;
-      
+      // Call the language change function without actually updating the database
       await setLanguagePreference(languageCode);
       
       toast({
         title: "Language Updated",
-        description: "Your language preference has been saved.",
+        description: "Your language preference has been saved (test mode).",
       });
     } catch (error) {
       console.error('Error updating language:', error);
