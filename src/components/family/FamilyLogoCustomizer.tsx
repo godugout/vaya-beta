@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import { Archive, Camera, Flower, Home, Leaf, Mountain, Tree, Upload, Users } from "lucide-react";
+import { Archive, Camera, Flower, Home, Leaf, Mountain, Trees, Upload, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface FamilyLogoIconOption {
@@ -12,7 +12,7 @@ interface FamilyLogoIconOption {
 }
 
 export const FamilyIconOptions: FamilyLogoIconOption[] = [
-  { icon: <Tree />, name: "Tree", background: "bg-vaya-accent-green/10" },
+  { icon: <Trees />, name: "Tree", background: "bg-vaya-accent-green/10" },
   { icon: <Leaf />, name: "Leaf", background: "bg-vaya-accent-green/10" },
   { icon: <Flower />, name: "Flower", background: "bg-vaya-stories/10" },
   { icon: <Mountain />, name: "Mountain", background: "bg-vaya-accent-blue/10" },
