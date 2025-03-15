@@ -13,6 +13,7 @@ import { useAudioTranscription } from "@/components/voice-recording/hooks/useAud
 import { useAudioPlayback } from "@/components/voice-recording/hooks/useAudioPlayback";
 import AudioControls from "@/components/voice-recording/AudioControls";
 import RecordingStatus from "@/components/voice-recording/RecordingStatus";
+import { supabase } from "@/integrations/supabase/client";
 
 interface VoiceRecordingExperienceProps {
   onMemorySaved?: (data: { 
@@ -37,7 +38,11 @@ const VoiceRecordingExperience = ({ onMemorySaved }: VoiceRecordingExperiencePro
     transcribeAudio
   } = useAudioTranscription();
   
-  const { isPlaying, togglePlayback } = useAudioPlayback(audioBlob);
+  const { 
+    isPlaying, 
+    togglePlayback, 
+    setIsPlaying 
+  } = useAudioPlayback(audioBlob);
   
   const [isProcessing, setIsProcessing] = useState(false);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
