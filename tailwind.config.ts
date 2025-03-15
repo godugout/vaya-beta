@@ -53,6 +53,8 @@ export default {
       animation: animation.animation,
       backgroundImage: {
         'wave-pattern': "url('/lovable-uploads/d42f87cc-df9d-4966-9975-10468e31ca27.png')",
+        'nature-stream': "url('/lovable-uploads/744cdabd-c1ae-4fac-ad45-4625d3484965.png')",
+        'nature-waterfall': "url('/lovable-uploads/509780e9-4a42-4d4f-b919-4d32e3656255.png')",
       },
     },
   },

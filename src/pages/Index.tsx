@@ -16,7 +16,10 @@ export default function Index() {
     <div className="relative min-h-screen">
       {/* Hero Section */}
       <section className="relative min-h-[90vh] overflow-hidden bg-white">
-        <div className="absolute inset-0 bg-wave-pattern opacity-[0.03] animate-wavePattern"></div>
+        {/* Nature background - blurred */}
+        <div className="absolute inset-0 nature-bg-blur nature-stream-bg">
+          <div className="absolute inset-0 bg-white/50"></div>
+        </div>
         
         <div className="container mx-auto px-4 py-24 flex flex-col items-center justify-center h-full relative z-10">
           <motion.div
@@ -61,7 +64,7 @@ export default function Index() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="mt-16 w-full max-w-xl mx-auto"
+            className="mt-16 w-full max-w-xl mx-auto bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-lg"
           >
             <VoiceRecordingDemo />
           </motion.div>

@@ -21,9 +21,9 @@ const HomeHero = ({ isSpanish }: HomeHeroProps) => {
 
   return (
     <div className="relative min-h-[90vh] w-full flex items-center justify-center overflow-hidden">
-      <div className="absolute inset-0 z-0 bg-white">
-        {/* Greystone wave pattern background */}
-        <div className="absolute inset-0 bg-wave-pattern animate-wavePattern opacity-[0.03]"></div>
+      {/* Nature stream background - blurred */}
+      <div className="absolute inset-0 nature-bg-blur nature-stream-bg">
+        <div className="absolute inset-0 bg-white/60"></div>
       </div>
       
       {/* Content container */}

@@ -14,6 +14,18 @@
   opacity: 0.1;
 }
 
+.bg-nature-stream {
+  background-image: url('/lovable-uploads/744cdabd-c1ae-4fac-ad45-4625d3484965.png');
+  background-size: cover;
+  background-position: center;
+}
+
+.bg-nature-waterfall {
+  background-image: url('/lovable-uploads/509780e9-4a42-4d4f-b919-4d32e3656255.png');
+  background-size: cover;
+  background-position: center;
+}
+
 .greystone-pattern-bg {
   position: relative;
   overflow: hidden;
@@ -30,4 +42,31 @@
   background-size: 500px;
   opacity: 0.05;
   z-index: 0;
+}
+
+.nature-bg-blur {
+  position: relative;
+  overflow: hidden;
+}
+
+.nature-bg-blur::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+  filter: blur(8px);
+  transform: scale(1.05);
+  z-index: -1;
+}
+
+.nature-stream-bg::before {
+  background-image: url('/lovable-uploads/744cdabd-c1ae-4fac-ad45-4625d3484965.png');
+}
+
+.nature-waterfall-bg::before {
+  background-image: url('/lovable-uploads/509780e9-4a42-4d4f-b919-4d32e3656255.png');
 }

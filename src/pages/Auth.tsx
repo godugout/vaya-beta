@@ -53,8 +53,13 @@ export default function Auth() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-white to-vaya-green">
-      <div className="w-full max-w-md space-y-8 rounded-xl bg-white p-8 shadow-lg">
+    <div className="flex min-h-screen flex-col items-center justify-center relative overflow-hidden">
+      {/* Nature waterfall background - blurred */}
+      <div className="absolute inset-0 nature-bg-blur nature-waterfall-bg">
+        <div className="absolute inset-0 bg-white/30 backdrop-blur-[2px]"></div>
+      </div>
+      
+      <div className="w-full max-w-md space-y-8 rounded-xl bg-white/90 backdrop-blur-md p-8 shadow-lg z-10">
         <div className="text-center">
           <h2 className="text-3xl font-bold tracking-tight text-gray-900">
             {isSignUp ? "Create your account" : "Welcome back"}
