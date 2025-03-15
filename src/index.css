@@ -10,15 +10,19 @@
 @import './styles/utilities/index.css';
 @import './styles/theme/dark.css';
 
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap');
+
 @layer base {
   :root {
     --page-padding-top: 6rem;
     --section-padding-y: 4rem;
     --section-padding-x: 1rem;
+    --font-family-main: 'Inter Tight', sans-serif;
   }
 
   body {
     @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-white;
+    font-family: var(--font-family-main);
   }
   
   /* Route-specific styling */
@@ -58,9 +62,19 @@
 
 /* Consistent Hero sections */
 .hero-section {
-  @apply relative overflow-hidden;
+  @apply relative overflow-hidden min-h-[80vh] flex flex-col justify-center items-center;
 }
 
 .hero-content {
   @apply max-w-4xl mx-auto text-center relative z-10;
+}
+
+/* Simplified animation classes */
+.fadeIn {
+  animation: fadeIn 2s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
