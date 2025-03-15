@@ -99,7 +99,7 @@ export function MainNav() {
   return (
     <>
       {/* Fixed positioning for header */}
-      <header className="fixed top-0 left-0 right-0 z-nav bg-white dark:bg-gray-900 border-b border:gray-200 dark:border-gray-800 shadow-sm">
+      <header className="fixed top-0 left-0 right-0 z-[100] bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 shadow-sm">
         <DesktopNav 
           user={user} 
           handleSignOut={handleSignOut} 

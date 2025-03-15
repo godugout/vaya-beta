@@ -9,12 +9,15 @@ import { Testimonials } from "@/components/home/Testimonials";
 import { FAQ } from "@/components/home/FAQ";
 import { VoiceRecordingDemo } from "@/components/home/VoiceRecordingDemo";
 import { Link } from "react-router-dom";
+import { MainNav } from "@/components/MainNav";
 
 export default function Index() {
   const [showCreateFamily, setShowCreateFamily] = useState(false);
 
   return (
     <div className="page-container">
+      <MainNav />
+      
       {/* Main Hero Section - Agencs Simplified Style */}
       <section className="min-h-[90vh] flex items-center justify-center bg-white">
         <div className="container mx-auto px-4 text-center staggered-fade-in">
@@ -87,7 +90,7 @@ export default function Index() {
       </div>
       
       {/* Floating Action Button */}
-      <div className="fixed bottom-8 right-8 z-floating">
+      <div className="fixed bottom-8 right-8 z-[50]">
         <Button 
           size="lg"
           onClick={() => setShowCreateFamily(true)}

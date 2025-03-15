@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { CapsuleScrollSection } from "@/components/capsule/sections/CapsuleScrollSection";
 import { CapsulePills } from "@/components/capsule/sections/CapsulePills";
 import { detailedCapsules, simpleCapsules, ExampleCapsules } from "@/components/capsule/ExampleCapsules";
+import { MainNav } from "@/components/MainNav";
 
 const FamilyCapsules = () => {
   const navigate = useNavigate();
@@ -21,6 +22,8 @@ const FamilyCapsules = () => {
 
   return (
     <div className="relative min-h-screen bg-white dark:bg-gray-900">
+      <MainNav />
+      
       {/* Family Capsules Section with title */}
       <div className="py-20 bg-white">
         <div className="container mx-auto">
