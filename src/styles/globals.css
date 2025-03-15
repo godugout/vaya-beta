@@ -7,32 +7,32 @@
   --font-body: 'Poppins', sans-serif;
   --font-accent: 'Montserrat', sans-serif;
   
-  /* Color palette from nature illustration */
-  --color-sky: #78D1EA;
-  --color-forest: #2D7D54;
-  --color-water: #3AA0BC;
-  --color-mountain: #225E73;
-  --color-leaf: #88B159;
-  --color-autumn: #F37C21;
-  --color-sand: #F9E3C4;
+  /* Color palette from nature illustration - with improved contrast */
+  --color-sky: #5BAED4;
+  --color-forest: #1D6A44;
+  --color-water: #1D8CA6;
+  --color-mountain: #156378;
+  --color-leaf: #6A9A3B;
+  --color-autumn: #E06600;
+  --color-sand: #F0D6A8;
   
-  /* UI Colors from frog designs */
-  --color-ui-orange: #F18F0B;
-  --color-ui-green: #88B159;
-  --color-ui-purple: #8B5CF6;
-  --color-ui-teal: #45B7C9;
-  --color-ui-red: #EF4444;
+  /* UI Colors from frog designs - with improved contrast */
+  --color-ui-orange: #D97A00;
+  --color-ui-green: #6A9A3B;
+  --color-ui-purple: #7C3AED;
+  --color-ui-teal: #2A9DAF;
+  --color-ui-red: #DC2626;
   
-  /* Text colors */
-  --color-text-dark: #333333;
-  --color-text-medium: #555555;
+  /* Text colors with better contrast */
+  --color-text-dark: #1A1A1A;
+  --color-text-medium: #444444;
   --color-text-light: #FFFFFF;
   
   /* Gradients */
-  --gradient-sunrise: linear-gradient(to right, #F9E3C4, #F37C21);
-  --gradient-forest: linear-gradient(to right, #2D7D54, #88B159);
-  --gradient-water: linear-gradient(to right, #3AA0BC, #78D1EA);
-  --gradient-purple: linear-gradient(to right, #8B5CF6, #A78BFA);
+  --gradient-sunrise: linear-gradient(to right, #F0D6A8, #E06600);
+  --gradient-forest: linear-gradient(to right, #1D6A44, #6A9A3B);
+  --gradient-water: linear-gradient(to right, #1D8CA6, #5BAED4);
+  --gradient-purple: linear-gradient(to right, #7C3AED, #A78BFA);
   
   /* Card colors */
   --card-background: #FFFFFF;
@@ -57,7 +57,7 @@
   --radius-full: 9999px;
 }
 
-/* Dark mode overrides */
+/* Dark mode overrides with better contrast */
 .dark {
   --color-sky: #2B5A69;
   --color-forest: #1D402C;
@@ -93,15 +93,26 @@ html, body {
   width: 100%;
   font-family: var(--font-body);
   color: var(--color-text-dark);
-  background-color: var(--color-sand);
+  background-color: #FFFFFF; /* Set explicit background color */
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   scroll-behavior: smooth;
 }
 
+/* Ensure dark mode has proper background */
+.dark body {
+  background-color: #121212;
+  color: var(--color-text-dark);
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   font-weight: 700;
+  color: var(--color-text-dark); /* Ensure headings have proper color */
+}
+
+.dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+  color: #FFFFFF; /* Ensure headings are white in dark mode */
 }
 
 a {
@@ -168,4 +179,26 @@ img {
 
 .space-y-4 > * + * {
   margin-top: var(--space-4);
+}
+
+/* Improved text contrast helpers */
+.text-with-shadow {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.text-with-bg {
+  position: relative;
+  display: inline-block;
+}
+
+.text-with-bg::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+  z-index: -1;
+  border-radius: 0.25rem;
 }

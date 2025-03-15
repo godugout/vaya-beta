@@ -11,7 +11,8 @@ interface HomeHeroProps {
 const HomeHero = ({ isSpanish }: HomeHeroProps) => {
   return (
     <div className="relative min-h-[90vh] overflow-hidden bg-forest-stream">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/40 z-0"></div>
+      {/* Overlay with increased contrast for better text visibility */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/60 z-0"></div>
       
       <div className="container relative z-10 flex flex-col items-center justify-center h-full pt-20 pb-32">
         <motion.div
@@ -25,12 +26,12 @@ const HomeHero = ({ isSpanish }: HomeHeroProps) => {
               ? "Preserva la Voz de tu Familia" 
               : "Preserve Your Family's Voice"}
             <br />
-            <span className="text-ui-orange">
+            <span className="text-ui-orange-light">
               {isSpanish ? "Comparte tu Historia" : "Share Your Story"}
             </span>
           </h1>
           
-          <p className="text-white/90 text-lg md:text-xl mb-10 max-w-2xl mx-auto drop-shadow">
+          <p className="text-white text-lg md:text-xl mb-10 max-w-2xl mx-auto drop-shadow-md">
             {isSpanish
               ? "Vaya te ayuda a capturar, organizar y compartir recuerdos familiares significativos que perduran por generaciones a través de la narración de voz."
               : "Vaya helps you capture, organize, and share meaningful family memories that persist for generations through voice-first storytelling."}
@@ -40,7 +41,7 @@ const HomeHero = ({ isSpanish }: HomeHeroProps) => {
             <Link to="/share-stories">
               <Button 
                 size="lg" 
-                className="bg-ui-orange hover:bg-ui-orange/90 text-white group w-full sm:w-auto"
+                className="bg-ui-orange hover:bg-ui-orange-dark text-white font-medium group w-full sm:w-auto"
               >
                 <Mic className="mr-2 h-5 w-5 group-hover:animate-pulse" />
                 {isSpanish ? "Empieza a Grabar" : "Start Recording"}
@@ -51,7 +52,7 @@ const HomeHero = ({ isSpanish }: HomeHeroProps) => {
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="border-2 border-white text-white hover:bg-white/10 w-full sm:w-auto"
+                className="border-2 border-white text-white hover:bg-white/20 w-full sm:w-auto"
               >
                 <Archive className="mr-2 h-5 w-5" />
                 {isSpanish ? "Crea Cápsulas" : "Create Capsules"}
@@ -68,7 +69,7 @@ const HomeHero = ({ isSpanish }: HomeHeroProps) => {
         >
           <a 
             href="#features" 
-            className="inline-flex items-center gap-2 text-white hover:text-ui-orange transition-colors"
+            className="inline-flex items-center gap-2 text-white hover:text-ui-orange-light transition-colors"
           >
             <span className="font-medium">
               {isSpanish ? "Descubre Más" : "Discover More"}

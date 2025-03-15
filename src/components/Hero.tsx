@@ -22,15 +22,15 @@ export default function Hero({ culturalContent }: HeroProps) {
 
   const config = heroConfigs[location.pathname as keyof typeof heroConfigs] || heroConfigs["/"];
   
-  // Select background color based on the page
+  // Select background color based on the page with improved contrast
   const getBgClass = () => {
     if (location.pathname.includes('family-capsules')) 
-      return 'bg-ui-orange/10 dark:bg-[#2A1E17]';
+      return 'bg-ui-orange/15 dark:bg-[#2A1E17]';
     if (location.pathname.includes('memory-lane')) 
-      return 'bg-ui-teal/10 dark:bg-[#172A2A]';
+      return 'bg-ui-teal/15 dark:bg-[#172A2A]';
     if (location.pathname.includes('share-stories')) 
-      return 'bg-ui-purple/10 dark:bg-[#211C2F]';
-    return 'bg-ui-green/10 dark:bg-[#1C2F21]';
+      return 'bg-ui-purple/15 dark:bg-[#211C2F]';
+    return 'bg-ui-green/15 dark:bg-[#1C2F21]';
   };
 
   return (

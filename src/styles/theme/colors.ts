@@ -1,59 +1,59 @@
 
 export const colors = {
-  // Nature-inspired colors from the forest stream illustration
+  // Nature-inspired colors with improved contrast
   primary: {
     teal: {
-      DEFAULT: "#38A3BD",
+      DEFAULT: "#1D8CA6", // Darkened for better contrast
       light: "#5BBFD7",
-      dark: "#2A7F93",
+      dark: "#156378", // Darkened further for more contrast
     },
     green: {
-      DEFAULT: "#4D9E50",
+      DEFAULT: "#3D8440", // Darkened for better contrast
       light: "#78C87B",
-      dark: "#3B7A3D",
+      dark: "#2B5D2D", // Darkened further for more contrast
     },
     orange: {
-      DEFAULT: "#F37C21",
+      DEFAULT: "#E06600", // Darkened for better contrast
       light: "#FFA05A",
-      dark: "#C55F15",
+      dark: "#A24800", // Darkened further for more contrast
     },
   },
   
-  // UI colors inspired by the frog character designs
+  // UI colors with improved contrast
   ui: {
     orange: {
-      DEFAULT: "#F18F0B",
+      DEFAULT: "#D97A00", // Darkened for better contrast
       light: "#FFB651",
-      dark: "#D67500",
+      dark: "#B35F00", // Darkened further for more contrast
     },
     green: {
-      DEFAULT: "#88B159",
+      DEFAULT: "#6A9A3B", // Darkened for better contrast
       light: "#A9CC7F",
-      dark: "#6A8B45",
+      dark: "#4E7229", // Darkened further for more contrast
     },
     purple: {
-      DEFAULT: "#8B5CF6",
+      DEFAULT: "#7C3AED", // Already good contrast
       light: "#A78BFA",
-      dark: "#7C3AED",
+      dark: "#5B21CA", // Darkened further for more contrast
     },
     teal: {
-      DEFAULT: "#45B7C9",
+      DEFAULT: "#2A9DAF", // Darkened for better contrast
       light: "#7DD3DF",
-      dark: "#318F9F",
+      dark: "#1A7A8A", // Darkened further for more contrast
     },
     red: {
-      DEFAULT: "#EF4444",
+      DEFAULT: "#DC2626", // Already good contrast
       light: "#F87171",
-      dark: "#DC2626",
+      dark: "#B91C1C", // Darkened further for more contrast
     },
   },
   
-  // Background colors
+  // Background colors with better text overlay potential
   background: {
-    sky: "#78D1EA",
-    forest: "#2D7D54",
-    water: "#3AA0BC",
-    sand: "#F9E3C4",
+    sky: "#5BAED4", // Adjusted for better contrast
+    forest: "#1D6A44", // Darkened for better contrast 
+    water: "#1D8CA6", // Darkened for better contrast
+    sand: "#F0D6A8", // Slightly darkened for better contrast with white text
     light: "#F8F9FA",
     dark: "#121212",
   },
@@ -61,16 +61,16 @@ export const colors = {
   // Gradient combinations
   gradients: {
     sunrise: "linear-gradient(to right, #F9E3C4, #F37C21)",
-    forest: "linear-gradient(to right, #2D7D54, #88B159)",
-    water: "linear-gradient(to right, #38A3BD, #78D1EA)",
-    purple: "linear-gradient(to right, #8B5CF6, #A78BFA)",
+    forest: "linear-gradient(to right, #1D6A44, #6A9A3B)",
+    water: "linear-gradient(to right, #1D8CA6, #5BAED4)",
+    purple: "linear-gradient(to right, #7C3AED, #A78BFA)",
   },
   
-  // Text colors
+  // Text colors with enhanced contrast
   text: {
-    dark: "#333333",
-    medium: "#555555",
+    dark: "#1A1A1A", // Darkened for better contrast
+    medium: "#444444", // Darkened for better contrast
     light: "#FFFFFF",
-    accent: "#F37C21",
+    accent: "#E06600", // Darkened for better contrast
   },
 };
