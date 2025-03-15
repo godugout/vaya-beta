@@ -1,3 +1,4 @@
+
 import { Camera, Users, Heart, Music, Book, Calendar, MapPin, Image as ImageIcon, GraduationCap, MessageCircle, HelpCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { CapsuleRow } from "./layout/CapsuleRow";
@@ -5,6 +6,7 @@ import { Capsule } from "@/types/capsule";
 
 export const detailedCapsules: Capsule[] = [
   {
+    id: "capsule-1",
     title: "Beach Day Memories",
     description: "Summer family beach trip collection",
     icon: Camera,
@@ -17,6 +19,7 @@ export const detailedCapsules: Capsule[] = [
     }
   },
   {
+    id: "capsule-2",
     title: "Share Your Story",
     description: "Join the conversation",
     icon: MessageCircle,
@@ -30,6 +33,7 @@ export const detailedCapsules: Capsule[] = [
     }
   },
   {
+    id: "capsule-3",
     title: "Costa Rican Heritage",
     description: "Cultural traditions and stories",
     icon: Heart,
@@ -45,6 +49,7 @@ export const detailedCapsules: Capsule[] = [
 
 export const simpleCapsules: Capsule[] = [
   {
+    id: "simple-1",
     title: "Share Ideas",
     icon: HelpCircle,
     colorKey: "memories",
@@ -58,6 +63,7 @@ export const simpleCapsules: Capsule[] = [
     }
   },
   {
+    id: "simple-2",
     title: "Ask Questions",
     icon: HelpCircle,
     colorKey: "stories",
@@ -72,6 +78,7 @@ export const simpleCapsules: Capsule[] = [
     }
   },
   {
+    id: "simple-3",
     title: "Start Talking",
     icon: MessageCircle,
     colorKey: "capsules",
@@ -85,6 +92,7 @@ export const simpleCapsules: Capsule[] = [
     }
   },
   {
+    id: "simple-4",
     title: "Got Questions?",
     icon: HelpCircle,
     colorKey: "memories",
@@ -98,6 +106,7 @@ export const simpleCapsules: Capsule[] = [
     }
   },
   {
+    id: "simple-5",
     title: "Share Stories",
     icon: MessageCircle,
     colorKey: "stories",
@@ -112,6 +121,7 @@ export const simpleCapsules: Capsule[] = [
     }
   },
   {
+    id: "simple-6",
     title: "New Ideas",
     icon: HelpCircle,
     colorKey: "capsules",

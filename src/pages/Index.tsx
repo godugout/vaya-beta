@@ -29,10 +29,8 @@ export default function Index() {
         <Testimonials />
         <FAQ />
       </div>
-      <CreateFamilyWizard 
-        open={showCreateFamily} 
-        onOpenChange={setShowCreateFamily}
-      />
+      {/* Removed props that don't exist on CreateFamilyWizard */}
+      {showCreateFamily && <CreateFamilyWizard />}
     </div>
   );
 }

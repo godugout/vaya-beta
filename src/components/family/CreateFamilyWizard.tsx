@@ -1,7 +1,12 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 // Type definitions
 type WizardStep = "name" | "description" | "members" | "confirmation";
@@ -80,6 +85,7 @@ export function CreateFamilyWizard() {
     }
   };
 
+  // Component UI render
   return (
     <div className="space-y-8">
       <div className="space-y-2">
@@ -89,11 +95,11 @@ export function CreateFamilyWizard() {
             <p className="text-muted-foreground">
               What would you like to call your family group?
             </p>
-            <input
+            <Input
               type="text"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full p-2 border rounded"
+              className="w-full"
               placeholder="Enter family name"
             />
           </div>
@@ -144,30 +150,28 @@ export function CreateFamilyWizard() {
       </div>
 
       <div className="flex justify-between">
-        <button
+        <Button
+          variant="outline"
           onClick={handlePreviousStep}
           disabled={step === "name" || loading}
-          className="px-4 py-2 border rounded disabled:opacity-50"
         >
           Back
-        </button>
+        </Button>
         
         {step !== "confirmation" ? (
-          <button
+          <Button
             onClick={handleNextStep}
             disabled={step === "name" && !formData.name.trim() || loading}
-            className="px-4 py-2 bg-primary text-white rounded disabled:opacity-50"
           >
             Next
-          </button>
+          </Button>
         ) : (
-          <button
+          <Button
             onClick={handleSubmit}
             disabled={loading}
-            className="px-4 py-2 bg-primary text-white rounded disabled:opacity-50"
           >
             {loading ? "Creating..." : "Create Family"}
-          </button>
+          </Button>
         )}
       </div>
     </div>

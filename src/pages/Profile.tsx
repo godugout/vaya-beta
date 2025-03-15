@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
@@ -71,15 +72,19 @@ export default function Profile() {
       if (error) throw error;
 
       if (data && Array.isArray(data)) {
-        // Map the data to our UserFamily interface with type checking
+        // Fixed typecasting and property access
         const families: UserFamily[] = data
           .filter(item => item.families) // Filter out any null families
-          .map(item => ({
-            familyId: item.families.id,
-            familyName: item.families.name,
-            familyDescription: item.families.description,
-            role: item.role
-          }));
+          .map(item => {
+            // Safely access properties with typecasting
+            const family = item.families as any;
+            return {
+              familyId: family.id || "",
+              familyName: family.name || "",
+              familyDescription: family.description,
+              role: item.role || "member"
+            };
+          });
         
         setUserFamilies(families);
       }

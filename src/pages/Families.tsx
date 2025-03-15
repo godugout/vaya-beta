@@ -56,7 +56,29 @@ export default function Families() {
       
       // Type safety check to ensure we have valid data
       if (data && Array.isArray(data)) {
-        setFamilies(data as Family[]);
+        // Properly map the data to match the Family type structure
+        const safeData = data.map(item => ({
+          id: item.id as string,
+          name: item.name as string,
+          description: item.description as string | null,
+          members: (item.members || []).map((member: any) => ({
+            id: member.id as string,
+            user_id: member.user_id as string,
+            role: member.role as string,
+            // Ensure profiles is properly mapped as a single object, not an array
+            profiles: member.profiles && member.profiles.length > 0 
+              ? {
+                  full_name: member.profiles[0].full_name as string,
+                  avatar_url: member.profiles[0].avatar_url as string | null
+                }
+              : {
+                  full_name: "Unknown",
+                  avatar_url: null
+                }
+          }))
+        }));
+        
+        setFamilies(safeData);
       } else {
         setFamilies([]);
       }

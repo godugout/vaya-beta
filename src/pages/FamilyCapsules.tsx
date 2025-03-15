@@ -1,3 +1,4 @@
+
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect } from "react";
@@ -17,7 +18,7 @@ const FamilyCapsules = () => {
   // Transform example capsules into the format expected by the table
   const allExampleCapsules = [...detailedCapsules, ...simpleCapsules].map(capsule => ({
     ...capsule,
-    link: `/capsule/${crypto.randomUUID()}`,
+    link: `/capsule/${capsule.id}`,
     metadata: capsule.metadata || {
       creatorInitials: "JD",
       itemCount: Math.floor(Math.random() * 20) + 1,
