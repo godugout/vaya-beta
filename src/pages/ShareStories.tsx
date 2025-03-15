@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
-import { Mic, Camera, ChevronRight, Calendar } from "lucide-react";
+import { Mic, Camera, ChevronRight, Calendar, Gift, Heart, Music, Star } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import VoiceRecordingExperience from "@/components/voice-recording/VoiceRecordingExperience";
@@ -21,6 +21,7 @@ const patelFamilyEvents = [
     title: "Diwali Celebration",
     description: "Annual family gathering for Diwali festival of lights",
     colorKey: "memories",
+    icon: Gift,
     metadata: {
       creatorInitials: "NP",
       itemCount: 24,
@@ -33,6 +34,7 @@ const patelFamilyEvents = [
     title: "Navratri Garba Night",
     description: "Family dance celebration during Navratri",
     colorKey: "stories",
+    icon: Music,
     metadata: {
       creatorInitials: "RP",
       itemCount: 18,
@@ -45,6 +47,7 @@ const patelFamilyEvents = [
     title: "Riya's Graduation",
     description: "Celebrating Riya's medical school graduation",
     colorKey: "capsules",
+    icon: Star,
     metadata: {
       creatorInitials: "AP",
       itemCount: 12,
@@ -57,6 +60,7 @@ const patelFamilyEvents = [
     title: "Amit & Priya's Wedding",
     description: "Family wedding celebration memories",
     colorKey: "memories",
+    icon: Heart,
     metadata: {
       creatorInitials: "MP",
       itemCount: 32,
@@ -69,6 +73,7 @@ const patelFamilyEvents = [
     title: "Raksha Bandhan",
     description: "Brother-sister bond celebration",
     colorKey: "stories",
+    icon: Calendar,
     metadata: {
       creatorInitials: "SP",
       itemCount: 8,
