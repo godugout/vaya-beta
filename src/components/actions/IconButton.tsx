@@ -25,6 +25,7 @@ export interface IconButtonProps
   isLoading?: boolean;
   className?: string;
   disabled?: boolean;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
@@ -37,6 +38,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
       icon,
       isLoading = false,
       disabled,
+      onClick,
       ...props
     },
     ref
@@ -91,6 +93,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
           className
         )}
         disabled={disabled}
+        onClick={onClick}
         {...motionProps}
         {...props}
       >

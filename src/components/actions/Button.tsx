@@ -23,6 +23,9 @@ export interface ButtonProps
   rightIcon?: React.ReactNode;
   animateOnClick?: boolean;
   children?: React.ReactNode;
+  className?: string;
+  disabled?: boolean;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 export const VayaButton = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -36,6 +39,8 @@ export const VayaButton = forwardRef<HTMLButtonElement, ButtonProps>(
       rightIcon,
       children,
       animateOnClick = true,
+      disabled,
+      onClick,
       ...props
     },
     ref
@@ -73,6 +78,8 @@ export const VayaButton = forwardRef<HTMLButtonElement, ButtonProps>(
           "min-w-[44px] min-h-[44px]",
           className
         )}
+        disabled={disabled}
+        onClick={onClick}
         {...motionProps}
         {...props}
       >

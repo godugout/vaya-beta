@@ -21,6 +21,8 @@ export interface FloatingActionButtonProps
   extended?: boolean;
   label?: string;
   className?: string;
+  disabled?: boolean;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 export const FloatingActionButton = forwardRef<HTMLButtonElement, FloatingActionButtonProps>(
@@ -33,6 +35,8 @@ export const FloatingActionButton = forwardRef<HTMLButtonElement, FloatingAction
       isLoading = false,
       extended = false,
       label,
+      disabled,
+      onClick,
       ...props
     },
     ref
@@ -75,6 +79,8 @@ export const FloatingActionButton = forwardRef<HTMLButtonElement, FloatingAction
           "bottom-6 right-6",
           className
         )}
+        disabled={disabled}
+        onClick={onClick}
         {...motionProps}
         {...props}
       >
