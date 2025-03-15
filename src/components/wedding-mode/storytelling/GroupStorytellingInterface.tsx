@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Users, BookOpenText } from 'lucide-react';
 import { useWeddingMode } from '../WeddingModeProvider';
@@ -45,7 +44,7 @@ export const GroupStorytellingInterface: React.FC<GroupStorytellingInterfaceProp
     {
       id: '1',
       contributorName: 'Aunt Mary',
-      content: 'I remember when they first met at my dinner party. They couldn't stop talking to each other all night!',
+      content: "I remember when they first met at my dinner party. They couldn't stop talking to each other all night!",
       timestamp: new Date(Date.now() - 3600000), // 1 hour ago
     },
     {
