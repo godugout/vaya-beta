@@ -1,11 +1,12 @@
 
-/* Typography with Agencs style */
+/* Typography with Vaya style */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   font-weight: 500;
   color: var(--color-black);
   letter-spacing: -0.02em;
   line-height: 1.1;
+  margin-bottom: 0.5em;
 }
 
 h1 {
@@ -30,10 +31,13 @@ h4 {
 }
 
 p {
+  font-family: var(--font-body);
   margin-bottom: 1.5rem;
   font-weight: 400;
+  line-height: var(--line-height-normal);
 }
 
+/* Font family utility classes */
 .font-heading {
   font-family: var(--font-heading);
 }
@@ -42,8 +46,52 @@ p {
   font-family: var(--font-body);
 }
 
+.font-story {
+  font-family: var(--font-story);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
 .font-accent {
   font-family: var(--font-accent);
+}
+
+/* Text size utility classes based on 8px grid */
+.text-xs {
+  font-size: var(--font-size-xs);
+  line-height: 1.25rem; /* 20px */
+}
+
+.text-sm {
+  font-size: var(--font-size-sm);
+  line-height: 1.5rem; /* 24px */
+}
+
+.text-base {
+  font-size: var(--font-size-base);
+  line-height: 1.5rem; /* 24px */
+}
+
+.text-lg {
+  font-size: var(--font-size-lg);
+  line-height: 1.75rem; /* 28px */
+}
+
+.text-xl {
+  font-size: var(--font-size-xl);
+  line-height: 2rem; /* 32px */
+}
+
+.text-2xl {
+  font-size: var(--font-size-2xl);
+  line-height: 2.25rem; /* 36px */
+}
+
+.text-3xl {
+  font-size: var(--font-size-3xl);
+  line-height: 2.5rem; /* 40px */
 }
 
 /* Improved text contrast helpers */
@@ -51,30 +99,50 @@ p {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-/* Agencs-style text treatments */
-.oversized-text {
-  font-size: 8rem;
-  line-height: 1;
-  font-weight: 500;
-  letter-spacing: -0.03em;
+/* Story text specific styling */
+.story-text {
+  font-family: var(--font-story);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-primary);
 }
 
-.large-text {
-  font-size: 4.5rem;
-  line-height: 1;
-  font-weight: 500;
-  letter-spacing: -0.02em;
+.story-heading {
+  font-family: var(--font-heading);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  margin-bottom: 1rem;
 }
 
-.medium-text {
-  font-size: 2.5rem;
-  line-height: 1.2;
-  font-weight: 500;
-  letter-spacing: -0.02em;
+/* Responsive typography helpers */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 3.5rem;
+  }
+  
+  h2 {
+    font-size: 2.5rem;
+  }
+  
+  h3 {
+    font-size: 1.75rem;
+  }
+  
+  h4 {
+    font-size: 1.25rem;
+  }
 }
 
-.statement-text {
-  font-size: 1.75rem;
-  line-height: 1.4;
-  font-weight: 400;
+@media (max-width: 480px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+  
+  h2 {
+    font-size: 2rem;
+  }
+  
+  h3 {
+    font-size: 1.5rem;
+  }
 }

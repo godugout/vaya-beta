@@ -41,5 +41,25 @@ export const typography = {
     wider: "0.05em",
     widest: "0.1em",
   },
+  // Adding grid system based on 8px
+  grid: {
+    base: "8px",
+    1: "8px",
+    2: "16px",
+    3: "24px",
+    4: "32px",
+    5: "40px",
+    6: "48px",
+    8: "64px",
+    10: "80px",
+    12: "96px",
+  },
+  // Adding elevation system
+  elevation: {
+    1: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
+    2: "0 3px 6px rgba(0,0,0,0.15), 0 2px 4px rgba(0,0,0,0.12)",
+    3: "0 10px 20px rgba(0,0,0,0.15), 0 3px 6px rgba(0,0,0,0.10)",
+    4: "0 15px 25px rgba(0,0,0,0.15), 0 5px 10px rgba(0,0,0,0.05)",
+    5: "0 20px 40px rgba(0,0,0,0.2)",
+  }
 };
-

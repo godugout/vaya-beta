@@ -1,11 +1,11 @@
 
 export const vayaColors = {
   // Core brand colors
-  primary: '#000000',
-  secondary: '#6C5CE7',
+  primary: '#FF7675', // Coral primary
+  secondary: '#6C5CE7', // Purple secondary
   accent: {
     purple: '#9b87f5',
-    green: '#10B981',
+    green: '#10B981', // Tertiary green accent
     orange: '#FF7675',
     turquoise: '#0EA5E9',
     coral: '#FFA05A',
@@ -64,5 +64,14 @@ export const vayaColors = {
     700: '#374151',
     800: '#1F2937',
     900: '#111827',
+  },
+  
+  // Elevation overlay colors for dark mode
+  elevation: {
+    1: 'rgba(255,255,255,0.05)',
+    2: 'rgba(255,255,255,0.07)',
+    3: 'rgba(255,255,255,0.08)',
+    4: 'rgba(255,255,255,0.09)',
+    5: 'rgba(255,255,255,0.11)',
   },
 };

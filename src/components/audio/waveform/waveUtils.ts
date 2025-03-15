@@ -40,18 +40,68 @@ export const generateWavePath = (amplitudes: number[]): string => {
 };
 
 /**
- * Creates random amplitude data for simulating live recording
+ * Creates random amplitude data for simulating live recording with
+ * enhanced dynamic response and natural patterns
  */
-export const generateFluidAmplitudes = (prevAmplitudes: number[]): number[] => {
+export const generateFluidAmplitudes = (
+  prevAmplitudes: number[], 
+  sensitivity: number = 1.5
+): number[] => {
+  // Implement improved "natural" waveform algorithm
   return prevAmplitudes.map((amplitude, i) => {
+    // Get adjacent amplitudes with wrap-around
     const prevIndex = i === 0 ? prevAmplitudes.length - 1 : i - 1;
     const nextIndex = i === prevAmplitudes.length - 1 ? 0 : i + 1;
+    const prev = prevAmplitudes[prevIndex];
+    const next = prevAmplitudes[nextIndex];
     
-    // Mix the current value with neighbors for a more fluid effect
-    const change = Math.random() * 0.1 - 0.05;
-    const newValue = amplitude + change + (prevAmplitudes[prevIndex] + prevAmplitudes[nextIndex]) * 0.03;
+    // Random change with slight neighbor influence for natural flow
+    const neighborInfluence = (prev + next) * 0.03;
+    
+    // Add some randomness scaled by sensitivity
+    const randomChange = (Math.random() * 0.1 - 0.05) * sensitivity;
+    
+    // Create periodic patterns to simulate speech/audio rhythm
+    const periodicComponent = Math.sin(Date.now() / 500 + i / 5) * 0.03 * sensitivity;
+    
+    // Calculate new value using all components
+    const newValue = amplitude + randomChange + neighborInfluence + periodicComponent;
+    
+    // Keep within reasonable bounds
+    return Math.max(0.05, Math.min(0.95, newValue));
+  });
+};
+
+/**
+ * Process audio data for visualization with noise filtering
+ */
+export const processAudioData = (
+  audioData: Uint8Array,
+  noiseFloor: number = 10,
+  sensitivity: number = 1.5
+): number[] => {
+  return Array.from(audioData).map(value => {
+    // Apply noise floor filtering
+    const normalizedValue = Math.max(0, value - noiseFloor) / (255 - noiseFloor);
+    
+    // Apply sensitivity scaling
+    const scaledValue = Math.pow(normalizedValue, 0.7) * sensitivity;
     
     // Keep within bounds
-    return Math.max(0.1, Math.min(1, newValue));
+    return Math.min(1, scaledValue);
+  });
+};
+
+/**
+ * Smooth out waveform transitions for more pleasant visualization
+ */
+export const smoothWaveform = (
+  currentAmplitudes: number[],
+  targetAmplitudes: number[],
+  smoothingFactor: number = 0.3
+): number[] => {
+  return currentAmplitudes.map((current, i) => {
+    const target = targetAmplitudes[i] || current;
+    return current + (target - current) * smoothingFactor;
   });
 };
