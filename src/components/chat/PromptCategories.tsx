@@ -135,7 +135,7 @@ const PromptCategories = ({ onPromptSelect, isSpanish = false }: PromptCategorie
       if (data && data.length > 0) {
         // Transform database categories to match component structure
         const transformedCategories = data.map((category: PromptCategory) => {
-          const iconMap: Record<string, React.ReactNode> = {
+          const iconMap: Record<string, JSX.Element> = {
             "message-square": <MessageSquare className="h-4 w-4" />,
             "audio-waveform": <AudioWaveform className="h-4 w-4" />,
             "book-open": <BookOpen className="h-4 w-4" />,

@@ -38,12 +38,47 @@ export const useChat = () => {
   const [input, setInput] = useState("");
   const [prompts, setPrompts] = useState<LocalizedPrompt[]>([]);
   const [currentPromptIndex, setCurrentPromptIndex] = useState(0);
+  const [familyContext, setFamilyContext] = useState<any>(null);
   const { isSpanish } = useLanguage();
   const { toast } = useToast();
 
   useEffect(() => {
     fetchPrompts();
+    loadFamilyContext();
   }, []);
+
+  const loadFamilyContext = async () => {
+    // Try to get from local storage first
+    const localContext = localStorage.getItem('familyContextData');
+    
+    if (localContext) {
+      setFamilyContext(JSON.parse(localContext));
+      return;
+    }
+    
+    // Then try to get from Supabase if user is logged in
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      
+      const { data, error } = await supabase
+        .from('user_family_context')
+        .select('*')
+        .eq('user_id', user.id)
+        .single();
+      
+      if (error) {
+        console.error("Error fetching family context:", error);
+        return;
+      }
+      
+      if (data) {
+        setFamilyContext(data.context_data);
+      }
+    } catch (error) {
+      console.error("Error in loadFamilyContext:", error);
+    }
+  };
 
   const fetchPrompts = async () => {
     try {
@@ -78,12 +113,50 @@ export const useChat = () => {
     }
   };
 
+  const personalizePrompt = (promptText: string): string => {
+    if (!familyContext) return promptText;
+    
+    let personalizedText = promptText;
+    
+    // Replace placeholders with actual context data
+    if (familyContext.ancestralRegion) {
+      personalizedText = personalizedText.replace(/\[user's heritage\]/g, familyContext.ancestralRegion);
+      personalizedText = personalizedText.replace(/\[ancestral village\/city\]/g, familyContext.ancestralRegion);
+    }
+    
+    if (familyContext.currentLocation) {
+      personalizedText = personalizedText.replace(/\[current location\]/g, familyContext.currentLocation);
+    }
+    
+    if (familyContext.culturalIdentity) {
+      personalizedText = personalizedText.replace(/\[user's specific region in India\]/g, familyContext.culturalIdentity);
+    }
+    
+    // Handle family members
+    if (familyContext.familyElders && familyContext.familyElders.length > 0) {
+      const randomElder = familyContext.familyElders[Math.floor(Math.random() * familyContext.familyElders.length)];
+      personalizedText = personalizedText.replace(/\[family member\]/g, randomElder);
+    }
+    
+    // Handle traditions
+    if (familyContext.traditions && familyContext.traditions.length > 0) {
+      const randomTradition = familyContext.traditions[Math.floor(Math.random() * familyContext.traditions.length)];
+      personalizedText = personalizedText.replace(/\[tradition\]/g, randomTradition);
+    }
+    
+    return personalizedText;
+  };
+
   const getNextPrompt = (isSpanish: boolean = false) => {
     if (prompts.length === 0) return null;
     const prompt = prompts[currentPromptIndex];
     setCurrentPromptIndex((prev) => (prev + 1) % prompts.length);
+    
+    const promptContent = isSpanish ? prompt.prompt_es : prompt.prompt_en;
+    const personalizedPrompt = personalizePrompt(promptContent);
+    
     return {
-      content: isSpanish ? prompt.prompt_es : prompt.prompt_en,
+      content: personalizedPrompt,
       context: isSpanish ? prompt.cultural_context_es : prompt.cultural_context_en,
     };
   };
