@@ -25,3 +25,27 @@
 .staggered-fade-in > *:nth-child(3) { animation-delay: 0.5s; }
 .staggered-fade-in > *:nth-child(4) { animation-delay: 0.7s; }
 .staggered-fade-in > *:nth-child(5) { animation-delay: 0.9s; }
+
+/* Agencs-style animations */
+.agencs-hero h1 {
+  font-size: 4.5rem;
+  line-height: 1;
+  font-weight: 500;
+  margin: 0.5rem 0;
+  letter-spacing: -0.02em;
+}
+
+.agencs-btn {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  background-color: #000;
+  color: white;
+  text-decoration: none;
+  transition: background-color 0.3s;
+  font-weight: 500;
+  margin-top: 2rem;
+}
+
+.agencs-btn:hover {
+  background-color: #333;
+}

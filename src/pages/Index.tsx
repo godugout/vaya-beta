@@ -16,27 +16,29 @@ export default function Index() {
 
   return (
     <div className="page-container">
-      {/* Main Hero Section */}
-      <section className="hero-section bg-forest-stream">
-        <div className="hero-content staggered-fade-in">
+      {/* Main Hero Section - Agencs Simplified Style */}
+      <section className="min-h-[90vh] flex items-center justify-center bg-white">
+        <div className="container mx-auto px-4 text-center staggered-fade-in">
           <motion.h1 
-            className="text-4xl md:text-6xl font-bold text-white mb-3"
+            className="text-5xl md:text-6xl lg:text-7xl font-medium mb-3"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
             Preserve,
           </motion.h1>
+          
           <motion.h1 
-            className="text-4xl md:text-6xl font-bold text-white mb-3"
+            className="text-5xl md:text-6xl lg:text-7xl font-medium mb-3"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
             Connect,
           </motion.h1>
+          
           <motion.h1 
-            className="text-4xl md:text-6xl font-bold text-white mb-8"
+            className="text-5xl md:text-6xl lg:text-7xl font-medium mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
@@ -44,64 +46,44 @@ export default function Index() {
             Remember.
           </motion.h1>
           
-          <motion.p 
-            className="text-lg md:text-xl text-white mb-10 max-w-2xl mx-auto"
+          <motion.div
+            className="mt-10"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1 }}
           >
-            Vaya helps you capture, organize, and share meaningful family memories that persist for generations.
-          </motion.p>
-          
-          <motion.div
-            className="flex flex-col sm:flex-row gap-4 justify-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 1.2 }}
-          >
-            <Link to="/share-stories">
-              <Button 
-                size="lg" 
-                className="bg-ui-orange hover:bg-ui-orange/90 text-white font-medium w-full sm:w-auto"
-              >
-                <Mic className="mr-2 h-5 w-5" />
-                Start Recording
-              </Button>
-            </Link>
-            
-            <Link to="/family-capsules">
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="border-2 border-white text-white hover:bg-white/10 w-full sm:w-auto"
-              >
-                <Archive className="mr-2 h-5 w-5" />
-                Create Capsules
-              </Button>
+            <Link to="/share-stories" className="agencs-btn">
+              Start Recording
             </Link>
           </motion.div>
         </div>
       </section>
       
       {/* Voice Recording Demo */}
-      <section className="py-20 px-4 bg-light-gray">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="w-full max-w-xl mx-auto bg-white rounded-xl shadow-md p-6 relative z-10"
-        >
-          <VoiceRecordingDemo />
-        </motion.div>
+      <section className="py-20 px-4 bg-gray-50">
+        <div className="container mx-auto">
+          <h2 className="text-3xl md:text-4xl font-medium mb-10 text-center">Simple Voice Recording</h2>
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="w-full max-w-xl mx-auto bg-white rounded-xl shadow-sm p-6 relative z-10"
+          >
+            <VoiceRecordingDemo />
+          </motion.div>
+        </div>
       </section>
       
       {/* Example Capsules Section */}
-      <div className="py-20">
-        <ExampleCapsules />
+      <div className="py-20 bg-white">
+        <div className="container mx-auto">
+          <h2 className="text-3xl md:text-4xl font-medium mb-10 text-center">Family Capsules</h2>
+          <ExampleCapsules />
+        </div>
       </div>
       
       {/* Key Features */}
-      <div className="bg-light-gray">
+      <div className="bg-gray-50">
         <Features />
       </div>
       
@@ -109,7 +91,7 @@ export default function Index() {
       <Testimonials />
       
       {/* FAQ */}
-      <div className="bg-light-gray">
+      <div className="bg-gray-50">
         <FAQ />
       </div>
       
@@ -118,9 +100,9 @@ export default function Index() {
         <Button 
           size="lg"
           onClick={() => setShowCreateFamily(true)}
-          className="shadow-lg hover:shadow-xl transition-shadow duration-200 gap-2 bg-ui-orange text-white rounded-full"
+          className="bg-black hover:bg-gray-800 text-white rounded-full shadow-sm"
         >
-          <Users className="h-5 w-5" />
+          <Users className="h-5 w-5 mr-2" />
           Create Family
         </Button>
       </div>

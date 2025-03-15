@@ -21,29 +21,25 @@
   }
 
   body {
-    @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-white;
+    @apply bg-white text-gray-900;
     font-family: var(--font-family-main);
   }
   
   /* Route-specific styling */
   [data-route="index"] {
-    --page-accent-color: var(--color-ui-orange);
-    --page-accent-gradient: var(--gradient-sunrise);
+    --page-accent-color: #000;
   }
   
   [data-route="family-capsules"] {
-    --page-accent-color: var(--color-ui-green);
-    --page-accent-gradient: var(--gradient-forest);
+    --page-accent-color: #000;
   }
   
   [data-route="memory-lane"] {
-    --page-accent-color: var(--color-ui-teal);
-    --page-accent-gradient: var(--gradient-water);
+    --page-accent-color: #000;
   }
   
   [data-route="share-stories"] {
-    --page-accent-color: var(--color-ui-purple);
-    --page-accent-gradient: var(--gradient-purple);
+    --page-accent-color: #000;
   }
 }
 
@@ -60,16 +56,16 @@
   @apply py-[var(--section-padding-y)] px-[var(--section-padding-x)];
 }
 
-/* Consistent Hero sections */
+/* Consistent Hero sections - Simplified Agencs style */
 .hero-section {
-  @apply relative overflow-hidden min-h-[80vh] flex flex-col justify-center items-center;
+  @apply relative min-h-[90vh] flex flex-col justify-center items-center bg-white;
 }
 
 .hero-content {
   @apply max-w-4xl mx-auto text-center relative z-10;
 }
 
-/* Simplified animation classes */
+/* Agencs simplified animations */
 .fadeIn {
   animation: fadeIn 2s;
 }
