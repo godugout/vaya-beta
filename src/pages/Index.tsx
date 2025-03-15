@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mic, Archive, Users } from "lucide-react";
@@ -15,12 +16,12 @@ export default function Index() {
   const [showCreateFamily, setShowCreateFamily] = useState(false);
 
   return (
-    <div className="relative min-h-screen bg-white dark:bg-gray-900">
+    <div className="page-container">
       {/* Main Hero Section */}
-      <section className="relative overflow-hidden pt-24 pb-16 px-4 md:px-6 lg:px-8">
+      <section className="hero-section pt-24 pb-16 px-4 md:px-6 lg:px-8">
         <HeroPattern />
         
-        <div className="max-w-4xl mx-auto text-center relative z-10">
+        <div className="hero-content">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

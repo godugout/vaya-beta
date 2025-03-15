@@ -15,10 +15,10 @@
 .bg-pattern-lines {
   background-image: repeating-linear-gradient(
     45deg,
-    rgba(255, 118, 117, 0.15),
-    rgba(255, 118, 117, 0.15) 10px,
-    rgba(108, 92, 231, 0.15) 10px,
-    rgba(108, 92, 231, 0.15) 20px
+    var(--page-accent-color, rgba(255, 118, 117, 0.15)),
+    var(--page-accent-color, rgba(255, 118, 117, 0.15)) 10px,
+    var(--page-accent-color, rgba(108, 92, 231, 0.15)) 10px,
+    var(--page-accent-color, rgba(108, 92, 231, 0.15)) 20px
   );
 }
 

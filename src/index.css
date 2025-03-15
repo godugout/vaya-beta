@@ -14,7 +14,61 @@
 @import './styles/dark-mode.css';
 
 @layer base {
+  :root {
+    --page-padding-top: 6rem;
+    --section-padding-y: 4rem;
+    --section-padding-x: 1rem;
+  }
+
   body {
     @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-white;
   }
+  
+  /* Route-specific styling */
+  [data-route="index"] {
+    --page-accent-color: var(--color-ui-orange);
+    --page-accent-gradient: var(--gradient-sunrise);
+  }
+  
+  [data-route="family-capsules"] {
+    --page-accent-color: var(--color-ui-green);
+    --page-accent-gradient: var(--gradient-forest);
+  }
+  
+  [data-route="memory-lane"] {
+    --page-accent-color: var(--color-ui-teal);
+    --page-accent-gradient: var(--gradient-water);
+  }
+  
+  [data-route="share-stories"] {
+    --page-accent-color: var(--color-ui-purple);
+    --page-accent-gradient: var(--gradient-purple);
+  }
+}
+
+/* Global page layout */
+.page-container {
+  @apply relative min-h-screen;
+}
+
+.page-content {
+  @apply pt-[var(--page-padding-top)] px-4 md:px-6 lg:px-8;
+}
+
+.section-container {
+  @apply py-[var(--section-padding-y)] px-[var(--section-padding-x)];
+}
+
+/* Consistent Hero sections */
+.hero-section {
+  @apply relative overflow-hidden;
+}
+
+.hero-content {
+  @apply max-w-4xl mx-auto text-center relative z-10;
+}
+
+/* Consistent background patterns */
+.bg-pattern-base {
+  @apply absolute inset-0 opacity-20 z-0;
 }
