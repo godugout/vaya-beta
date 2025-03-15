@@ -1,24 +1,81 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Georgia&display=swap');
 
+/* Import custom fonts */
+@font-face {
+  font-family: 'Borna';
+  src: url('/fonts/Borna-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Borna';
+  src: url('/fonts/Borna-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Borna';
+  src: url('/fonts/Borna-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Borna';
+  src: url('/fonts/Borna-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT Hoves Pro';
+  src: url('/fonts/TTHovesPro-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT Hoves Pro';
+  src: url('/fonts/TTHovesPro-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT Hoves Pro';
+  src: url('/fonts/TTHovesPro-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Base styles */
 body {
-  font-family: 'Inter', sans-serif;
-  color: #2D3436;
+  font-family: 'Borna', 'Inter', sans-serif;
+  color: #113231;
   background-color: white;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'TT Hoves Pro', 'Montserrat', sans-serif;
 }
 
 /* Typography */
 .font-heading {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'TT Hoves Pro', 'Montserrat', sans-serif;
 }
 
 .font-body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Borna', 'Inter', sans-serif;
 }
 
 .font-story {
@@ -29,25 +86,45 @@ h1, h2, h3, h4, h5, h6 {
 .bg-grid-pattern {
   background-size: 40px 40px;
   background-image: 
-    linear-gradient(to right, rgba(118, 99, 238, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(118, 99, 238, 0.05) 1px, transparent 1px);
+    linear-gradient(to right, rgba(17, 50, 49, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(17, 50, 49, 0.05) 1px, transparent 1px);
+}
+
+.bg-wave-pattern {
+  background-image: url('/lovable-uploads/d42f87cc-df9d-4966-9975-10468e31ca27.png');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.1;
+}
+
+/* Dark mode styles */
+.dark {
+  color-scheme: dark;
+  --background: 222 47% 11%;
+  --foreground: 210 40% 98%;
+  --primary: 181 100% 41%;
+  --primary-foreground: 222 47% 11%;
+  --secondary: 217 32% 17%;
+  --secondary-foreground: 210 40% 98%;
+  --card: 222 47% 11%;
+  --card-foreground: 210 40% 98%;
 }
 
 /* Custom animations */
 @keyframes recording-pulse {
   0% {
     transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(255, 118, 117, 0.7);
+    box-shadow: 0 0 0 0 rgba(255, 51, 102, 0.7);
   }
   
   70% {
     transform: scale(1.05);
-    box-shadow: 0 0 0 10px rgba(255, 118, 117, 0);
+    box-shadow: 0 0 0 10px rgba(255, 51, 102, 0);
   }
   
   100% {
     transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(255, 118, 117, 0);
+    box-shadow: 0 0 0 0 rgba(255, 51, 102, 0);
   }
 }
 
@@ -73,7 +150,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Typewriter effect */
 .typewriter {
   overflow: hidden;
-  border-right: 3px solid #6C5CE7;
+  border-right: 3px solid #113231;
   white-space: nowrap;
   margin: 0 auto;
   animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
@@ -86,5 +163,143 @@ h1, h2, h3, h4, h5, h6 {
 
 @keyframes blink-caret {
   from, to { border-color: transparent }
-  50% { border-color: #6C5CE7 }
+  50% { border-color: #113231 }
+}
+
+/* Wave pattern animation */
+@keyframes wavePattern {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-20%);
+  }
+}
+
+.animate-wavePattern {
+  animation: wavePattern 15s linear infinite;
+}
+
+/* Mobile interface styling */
+.mobile-nav {
+  background-color: #113231;
+}
+
+.mobile-tab {
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.mobile-tab.active {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Greystone UI components */
+.greystone-input {
+  background-color: #F8F8F8;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 16px;
+  color: #113231;
+}
+
+.greystone-button {
+  background-color: #113231;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.greystone-button:hover {
+  background-color: #1E3D3C;
+}
+
+.greystone-button.secondary {
+  background-color: #EBDDD6;
+  color: #113231;
+}
+
+.greystone-button.secondary:hover {
+  background-color: #D4C5BD;
+}
+
+.greystone-card {
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.greystone-pattern-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.greystone-pattern-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('/lovable-uploads/d42f87cc-df9d-4966-9975-10468e31ca27.png');
+  background-size: 500px;
+  opacity: 0.05;
+  z-index: 0;
+}
+
+/* Action pill styling based on mobile mocks */
+.action-pill {
+  border-radius: 12px;
+  padding: 16px;
+  background-color: #F8F8F8;
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  transition: all 0.2s ease;
+}
+
+.action-pill-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+}
+
+/* Voice recorder UI */
+.voice-recorder-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #6E68FB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.voice-recorder-circle::before {
+  content: "";
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 2px solid #6E68FB;
+  opacity: 0.5;
+}
+
+.voice-recorder-circle::after {
+  content: "";
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 1px solid #6E68FB;
+  opacity: 0.2;
 }

@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
 
@@ -20,46 +21,79 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["Inter", ...fontFamily.sans],
-        heading: ["Montserrat", ...fontFamily.sans],
-        story: ["Georgia", ...fontFamily.serif],
+        sans: ["Borna", ...fontFamily.sans],
+        heading: ["TT Hoves Pro", ...fontFamily.sans],
+        mono: ["monospace", ...fontFamily.mono],
       },
       colors: {
         vaya: {
-          home: "#6C5CE7",      // Rich purple for home/landing
-          stories: "#FF7675",   // Vibrant coral for stories section
-          memories: "#00CEC9",  // Turquoise for memory lane
-          capsules: "#FFEAA7",  // Yellow for family capsules
-          narra: "#8A7EEC",     // Light purple for Narra's theme
+          primary: "#113231",      // Harmony Green - Primary
+          secondary: "#EBDDD6",    // Sandstone - Secondary
+          
+          home: "#113231",         // Dark green for home/landing
+          stories: "#FF3366",      // Magenta for stories section
+          memories: "#00CED1",     // Teal for memory lane
+          capsules: "#8A2BE2",     // Purple for family capsules
+          narra: "#4169E1",        // Blue for Narra's theme
           
           accent: {
-            turquoise: "#00CEC9",
-            yellow: "#FFEAA7",
-            coral: "#FF7675",
-            purple: "#6C5CE7",
+            turquoise: "#00CED1",
+            purple: "#8A2BE2",
+            magenta: "#FF3366",
+            blue: "#4169E1",
           },
           
           chat: {
-            bg: "#F8F5FF",
+            bg: "#F8F8F8",
             border: "#E2E8F0",
             hover: "#F1F5F9",
           },
           gray: {
-            50: "#F8FAFC",
+            50: "#F8F8F8",
             100: "#F1F5F9",
             200: "#E2E8F0",
             300: "#CBD5E1",
-            400: "#94A3B8",
-            500: "#64748B",
+            400: "#94A3A2",
+            500: "#5E7472",
             600: "#475569",
             700: "#334155",
             800: "#1E293B",
-            900: "#0F172A",
+            900: "#113231",
           },
           text: {
-            primary: "#2D3436",
-            secondary: "#636E72",
+            primary: "#113231",
+            secondary: "#5E7472",
+            light: "#FFFFFF",
+            muted: "#94A3A2",
           },
+        },
+        
+        greystone: {
+          green: {
+            DEFAULT: "#113231",
+            90: "#1E3D3C",
+            80: "#2B4847",
+            70: "#385352",
+            60: "#455F5D",
+            50: "#566A68",
+            40: "#778786",
+            30: "#98A3A3",
+            20: "#B9C0BF",
+            10: "#DBDDDC",
+          },
+          sandstone: {
+            DEFAULT: "#EBDDD6",
+            dark: "#D4C5BD",
+            darker: "#BEA99F",
+          },
+          ui: {
+            black: "#222222",
+            white: "#FFFFFF",
+            gray: "#F8F8F8",
+            error: "#E53E3E",
+            success: "#38A169",
+            warning: "#DD6B20",
+          }
         },
         
         lovable: {
@@ -96,12 +130,12 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#6C5CE7",
+          DEFAULT: "#113231",
           foreground: "#FFFFFF",
         },
         secondary: {
-          DEFAULT: "#FF7675",
-          foreground: "#FFFFFF",
+          DEFAULT: "#EBDDD6",
+          foreground: "#113231",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
@@ -112,7 +146,7 @@ export default {
           foreground: "hsl(var(--muted-foreground))",
         },
         accent: {
-          DEFAULT: "#00CEC9",
+          DEFAULT: "#00CED1",
           foreground: "#FFFFFF",
         },
         popover: {
@@ -161,8 +195,12 @@ export default {
         },
         blink: {
           "0%, 100%": { borderColor: "transparent" },
-          "50%": { borderColor: "#6C5CE7" },
+          "50%": { borderColor: "#113231" },
         },
+        wavePattern: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-20%)" },
+        }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -173,6 +211,10 @@ export default {
         bounce: "bounce 1s ease-in-out infinite",
         typing: "typing 3.5s steps(40, end)",
         blink: "blink 0.7s step-end infinite",
+        wavePattern: "wavePattern 15s linear infinite",
+      },
+      backgroundImage: {
+        'wave-pattern': "url('/lovable-uploads/d42f87cc-df9d-4966-9975-10468e31ca27.png')",
       },
     },
   },

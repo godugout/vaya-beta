@@ -1,47 +1,52 @@
+
 // Brand color palette
 export const colors = {
   // Primary colors
   primary: {
-    DEFAULT: "#6C5CE7", // Rich purple
-    light: "#8A7EEC",
-    dark: "#5348C0",
+    DEFAULT: "#113231", // Harmony Green
+    light: "#3D5A59",
+    dark: "#0A2120",
   },
   
   // Secondary colors
   secondary: {
-    DEFAULT: "#FF7675", // Vibrant coral
-    light: "#FF9D9C",
-    dark: "#E56160",
+    DEFAULT: "#EBDDD6", // Sandstone Skin
+    light: "#F5EBE7",
+    dark: "#D4C5BD",
   },
   
   // Background colors
   background: {
     DEFAULT: "#FFFFFF", // White
-    light: "#F8F5FF", // Light lavender
-    gradient: "linear-gradient(to bottom, #F8F5FF, #FFFFFF)",
+    light: "#F8F8F8", // Light gray
+    dark: "#222222", // Dark mode background
+    gradient: "linear-gradient(to bottom, #F8F8F8, #FFFFFF)",
   },
   
-  // Accent colors
+  // Accent colors - using Lovable colors for important CTAs
   accent: {
-    turquoise: "#00CEC9",
-    yellow: "#FFEAA7",
+    turquoise: "#00CED1",
+    purple: "#8A2BE2",
+    magenta: "#FF3366",
   },
   
   // Text colors
   text: {
-    primary: "#2D3436", // Deep indigo
-    secondary: "#636E72", // Warm gray
+    primary: "#113231", // Dark green
+    secondary: "#5E7472", // Medium green-gray
+    light: "#FFFFFF", // White text for dark backgrounds
+    muted: "#94A3A2", // Muted green-gray
   },
   
   // Feature section colors
   features: {
-    stories: "#FF7675", // Vibrant coral for stories
-    memories: "#00CEC9", // Turquoise for memory lane
-    capsules: "#6C5CE7", // Purple for family capsules
-    narra: "#FFEAA7", // Yellow for Narra AI assistant
+    stories: "#FF3366", // Lovable Magenta for stories
+    memories: "#00CED1", // Lovable Teal for memory lane
+    capsules: "#8A2BE2", // Lovable Purple for family capsules
+    narra: "#4169E1", // Lovable Blue for Narra AI assistant
   },
   
-  // Lovable logo colors with variations
+  // Lovable logo colors with variations (kept for accent buttons)
   lovable: {
     // Bright pink/magenta
     magenta: {
@@ -73,6 +78,38 @@ export const colors = {
       DEFAULT: "#87CEFA", // Original
       light: "#B0DFFF", // Lighter shade
     },
+  },
+  
+  // Greystone branded colors
+  greystone: {
+    // Primary green
+    green: {
+      DEFAULT: "#113231", // Harmony Green - Primary color
+      90: "#1E3D3C",
+      80: "#2B4847",
+      70: "#385352",
+      60: "#455F5D",
+      50: "#566A68",
+      40: "#778786",
+      30: "#98A3A3",
+      20: "#B9C0BF",
+      10: "#DBDDDC",
+    },
+    // Secondary sandstone
+    sandstone: {
+      DEFAULT: "#EBDDD6", // Sandstone Skin - Secondary color
+      dark: "#D4C5BD",
+      darker: "#BEA99F",
+    },
+    // UI colors
+    ui: {
+      black: "#222222",
+      white: "#FFFFFF",
+      gray: "#F8F8F8",
+      error: "#E53E3E",
+      success: "#38A169",
+      warning: "#DD6B20",
+    }
   }
 };
 
@@ -87,9 +124,9 @@ export const animation = {
 // Typography scale
 export const typography = {
   fontFamily: {
-    heading: "Montserrat, sans-serif",
-    body: "Inter, sans-serif",
-    story: "Georgia, serif",
+    heading: "TT Hoves Pro, system-ui, sans-serif",
+    body: "Borna, sans-serif",
+    mono: "monospace",
   },
   fontSize: {
     xs: "0.75rem",    // 12px

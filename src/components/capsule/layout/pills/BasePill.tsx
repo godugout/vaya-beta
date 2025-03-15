@@ -1,3 +1,4 @@
+
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import React from "react";
@@ -21,45 +22,41 @@ export const BasePill = ({
 }: BasePillProps) => {
   const colors = {
     memories: {
-      outline: "border-[#0EA5E9]",
-      bg: "bg-[#E0F2FE]"
+      outline: "border-lovable-teal",
+      bg: "bg-lovable-teal/10"
     },
     stories: {
-      outline: "border-[#F97316]",
-      bg: "bg-[#FDE1D3]"
+      outline: "border-lovable-magenta",
+      bg: "bg-lovable-magenta/10"
     },
     capsules: {
-      outline: "border-[#22C55E]",
-      bg: "bg-[#F2FCE2]"
+      outline: "border-lovable-purple",
+      bg: "bg-lovable-purple/10"
     },
     narra: {
-      outline: "border-[#9b87f5]",
-      bg: "bg-[#E5DEFF]"
+      outline: "border-lovable-blue",
+      bg: "bg-lovable-blue/10"
     },
-    purple: {
-      outline: "border-[#7E69AB]",
-      bg: "bg-[#F3EEFF]"
-    },
-    magenta: {
-      outline: "border-[#D946EF]",
-      bg: "bg-[#FFDEE2]"
+    default: {
+      outline: "border-greystone-green",
+      bg: "bg-greystone-green/5"
     }
   };
 
   const allColors = Object.keys(colors);
   const colorIndex = allColors.indexOf(colorKey) >= 0 ? 
     allColors.indexOf(colorKey) : 
-    Math.floor(Math.random() * allColors.length);
+    allColors.indexOf('default');
   
   const selectedColor = colors[allColors[colorIndex] as keyof typeof colors];
   
   const pillBaseClasses = cn(
-    "relative overflow-hidden rounded-[90px]",
+    "relative overflow-hidden rounded-xl",
     "min-h-[100px] w-[400px]",
     selectedColor.outline,
     isDetailed ? selectedColor.bg : "bg-white",
-    "shadow-[0_4px_12px_-2px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_24px_-4px_rgba(0,0,0,0.12)]",
-    "transition-all duration-300 group",
+    "shadow-[0_4px_12px_-2px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_20px_-4px_rgba(0,0,0,0.08)]",
+    "transition-all duration-300 group border",
     className
   );
 
@@ -68,8 +65,8 @@ export const BasePill = ({
       {!isDetailed && (
         <div 
           className={cn(
-            "absolute inset-0 bg-gradient-to-r transition-opacity duration-300",
-            `from-vaya-${colorKey}/5 via-vaya-${colorKey}/10 to-vaya-${colorKey}/5`,
+            "absolute inset-0 transition-opacity duration-300",
+            `bg-gradient-to-r from-${colorKey}/5 via-${colorKey}/10 to-${colorKey}/5`,
             isHovered ? "opacity-100" : "opacity-0"
           )}
         />
@@ -81,6 +78,9 @@ export const BasePill = ({
           style={{ backgroundImage: `url(${backgroundImage})` }}
         />
       )}
+
+      {/* Wave Pattern Background */}
+      <div className="absolute inset-0 bg-wave-pattern opacity-[0.02] pointer-events-none"></div>
       
       <div className="flex items-center justify-between h-full relative z-10 px-8 py-6">
         {children}

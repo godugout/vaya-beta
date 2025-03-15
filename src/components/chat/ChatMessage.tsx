@@ -1,3 +1,4 @@
+
 import { Message } from "./types";
 import { AudioWaveform, Image, Globe } from "lucide-react";
 import {
@@ -19,7 +20,7 @@ const ChatMessage = ({ message, isSpanish }: ChatMessageProps) => {
   const [isMessageSpanish, setIsMessageSpanish] = useState(isSpanish);
 
   return (
-    <div className={`flex ${isAI ? "justify-start" : "justify-end"} items-end gap-2 group`}>
+    <div className={`flex ${isAI ? "justify-start" : "justify-end"} items-end gap-2 group mb-4`}>
       {/* Translation toggle button - appears on hover */}
       <div className={`opacity-0 group-hover:opacity-100 transition-opacity ${isAI ? "order-first" : "order-last"}`}>
         <TooltipProvider>
@@ -28,10 +29,10 @@ const ChatMessage = ({ message, isSpanish }: ChatMessageProps) => {
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-8 w-8"
+                className="h-8 w-8 rounded-full"
                 onClick={() => setIsMessageSpanish(!isMessageSpanish)}
               >
-                <Globe className="h-4 w-4" />
+                <Globe className="h-4 w-4 text-greystone-green-40" />
               </Button>
             </TooltipTrigger>
             <TooltipContent>
@@ -44,8 +45,8 @@ const ChatMessage = ({ message, isSpanish }: ChatMessageProps) => {
       <div
         className={`max-w-[80%] rounded-2xl p-4 ${
           isAI
-            ? "bg-vaya-chat-bg text-vaya-gray-800"
-            : "bg-vaya-secondary text-white"
+            ? "bg-greystone-ui-gray text-greystone-green"
+            : "bg-lovable-blue text-white"
         } shadow-sm animate-fadeIn`}
       >
         <div className="text-sm md:text-base">

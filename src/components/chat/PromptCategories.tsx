@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -16,7 +17,7 @@ const categories = [
     name: "Tradiciones Familiares",
     name_es: "Tradiciones Familiares",
     icon: <MessageSquare className="h-4 w-4" />,
-    colorKey: "Primary Orange",
+    colorKey: "lovable-magenta",
     prompts: [
       {
         en: "What special holiday traditions does your family celebrate?",
@@ -36,7 +37,7 @@ const categories = [
     name: "Historias de Vida",
     name_es: "Historias de Vida",
     icon: <AudioWaveform className="h-4 w-4" />,
-    colorKey: "Ocean Blue",
+    colorKey: "lovable-teal",
     prompts: [
       {
         en: "What's the most important lesson your parents taught you?",
@@ -56,11 +57,11 @@ const categories = [
     name: "Herencia Cultural",
     name_es: "Herencia Cultural",
     icon: <BookOpen className="h-4 w-4" />,
-    colorKey: "Nature Green",
+    colorKey: "lovable-purple",
     prompts: [
       {
-        en: "What Costa Rican traditions do you maintain in your family?",
-        es: "¿Qué tradiciones costarricenses mantienes en tu familia?"
+        en: "What cultural traditions do you maintain in your family?",
+        es: "¿Qué tradiciones culturales mantienes en tu familia?"
       },
       {
         en: "Tell me about your favorite local celebration or festival.",
@@ -82,58 +83,57 @@ interface PromptCategoriesProps {
 const PromptCategories = ({ onPromptSelect, isSpanish = false }: PromptCategoriesProps) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  // Hardcoded colors that override any family brand colors
+  // Brand colors for categories
   const brandColors = {
-    "Primary Orange": "#F97316",
-    "Ocean Blue": "#0EA5E9",
-    "Nature Green": "#84CC16"
-  };
-
-  const getButtonStyle = (colorKey: string) => {
-    const color = brandColors[colorKey as keyof typeof brandColors];
-    return {
-      backgroundColor: `${color}15`,
-      color: color,
-      borderColor: `${color}30`
-    };
+    "lovable-magenta": {
+      bg: "bg-lovable-magenta/10",
+      text: "text-lovable-magenta",
+      border: "border-lovable-magenta/30"
+    },
+    "lovable-teal": {
+      bg: "bg-lovable-teal/10",
+      text: "text-lovable-teal",
+      border: "border-lovable-teal/30"
+    },
+    "lovable-purple": {
+      bg: "bg-lovable-purple/10",
+      text: "text-lovable-purple",
+      border: "border-lovable-purple/30"
+    }
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 p-4">
       <div className="flex flex-wrap gap-2">
-        {categories.map((category) => (
-          <Popover key={category.name}>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                className={`flex items-center gap-2 transition-colors hover:bg-opacity-25 font-outfit ${
-                  selectedCategory === category.name
-                    ? "ring-2 ring-offset-2"
-                    : ""
-                }`}
-                style={getButtonStyle(category.colorKey)}
-                onClick={() => setSelectedCategory(category.name)}
+        {categories.map((category) => {
+          const colors = brandColors[category.colorKey as keyof typeof brandColors];
+          return (
+            <Popover key={category.name}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className={`flex items-center gap-2 transition-colors hover:bg-opacity-25 font-heading ${colors.bg} ${colors.text} ${colors.border} border ${
+                    selectedCategory === category.name
+                      ? "ring-2 ring-offset-2"
+                      : ""
+                  }`}
+                  onClick={() => setSelectedCategory(category.name)}
+                >
+                  {category.icon}
+                  <span className="text-sm">{isSpanish ? category.name_es : category.name}</span>
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent 
+                className="w-80 p-2 bg-white shadow-lg rounded-xl"
+                style={{ borderColor: colors.border }}
+                sideOffset={5}
               >
-                {category.icon}
-                {isSpanish ? category.name_es : category.name}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent 
-              className="w-80 p-2 bg-white shadow-lg"
-              style={{ borderColor: `${brandColors[category.colorKey as keyof typeof brandColors]}30` }}
-              sideOffset={5}
-            >
-              <div className="space-y-1.5">
-                {category.prompts.map((prompt, index) => {
-                  const color = brandColors[category.colorKey as keyof typeof brandColors];
-                  return (
+                <div className="space-y-1.5">
+                  {category.prompts.map((prompt, index) => (
                     <Button
                       key={index}
                       variant="ghost"
-                      className="w-full justify-start text-left whitespace-normal h-auto py-3 hover:bg-opacity-10 font-inter"
-                      style={{
-                        color: color,
-                      }}
+                      className={`w-full justify-start text-left whitespace-normal h-auto py-3 hover:bg-opacity-10 text-sm ${colors.text} hover:${colors.bg}`}
                       onClick={() => {
                         onPromptSelect(isSpanish ? prompt.es : prompt.en);
                       }}
@@ -142,12 +142,12 @@ const PromptCategories = ({ onPromptSelect, isSpanish = false }: PromptCategorie
                         {isSpanish ? prompt.es : prompt.en}
                       </span>
                     </Button>
-                  );
-                })}
-              </div>
-            </PopoverContent>
-          </Popover>
-        ))}
+                  ))}
+                </div>
+              </PopoverContent>
+            </Popover>
+          );
+        })}
       </div>
     </div>
   );
