@@ -1,12 +1,13 @@
 
 import { Suspense, lazy } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { MainNav } from '@/components/MainNav';
 import LandingPage from '@/pages/LandingPage';
 import NotFound from '@/pages/NotFound';
 import Footer from '@/components/Footer';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import Meteor from '@/pages/Meteor';
+
 // Using lazy loading for better performance
 const FamilyCapsules = lazy(() => import('@/pages/FamilyCapsules'));
 const ShareStories = lazy(() => import('@/pages/ShareStories'));

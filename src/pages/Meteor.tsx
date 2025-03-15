@@ -3,7 +3,7 @@ import React from 'react';
 
 const Meteor = () => {
   return (
-    <div className="meteor-page">
+    <div className="meteor-page bg-white dark:bg-gray-900 text-black dark:text-white">
       <header>
         <nav className="flex justify-center space-x-6 p-4 bg-gray-100 dark:bg-gray-800">
           <a href="#home" className="hover:text-blue-500 transition-colors">Home</a>
