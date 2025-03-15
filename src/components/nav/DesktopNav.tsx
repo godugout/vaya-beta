@@ -1,3 +1,4 @@
+
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { User } from "@supabase/supabase-js";
@@ -25,7 +26,6 @@ export const DesktopNav = ({
   isVoiceActive,
   onVoiceToggle
 }: DesktopNavProps) => {
-
   return (
     <div className="hidden md:block py-3 px-6">
       <div className="flex items-center justify-between">
@@ -107,11 +107,3 @@ export const DesktopNav = ({
     </div>
   );
 };
-
-interface NavButtonProps {
-  to: string;
-  icon: React.ReactNode;
-  label: string;
-  isSimplified: boolean;
-}
-

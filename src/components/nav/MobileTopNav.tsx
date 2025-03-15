@@ -1,9 +1,11 @@
+
 import { Link } from "react-router-dom";
 import { User } from "@supabase/supabase-js";
 import { UserMenu } from "./UserMenu";
 import { GuestMenu } from "./GuestMenu";
 import { cn } from "@/lib/utils";
 import { ArrowLeft, Settings } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface MobileTopNavProps {
   user: User | null;
