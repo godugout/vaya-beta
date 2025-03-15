@@ -1,3 +1,4 @@
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { MainNav } from "./components/MainNav";
 import Footer from "./components/Footer";
@@ -14,6 +15,7 @@ import FamilyCapsules from "./pages/FamilyCapsules";
 import Families from "./pages/Families";
 import CreateFamily from "./pages/CreateFamily";
 import "./App.css";
+import "./styles/globals.css"; // Import our custom global styles
 
 // Create a client
 const queryClient = new QueryClient({

@@ -1,4 +1,6 @@
+
 import type { Config } from "tailwindcss";
+import { fontFamily } from "tailwindcss/defaultTheme";
 
 export default {
   darkMode: ["class"],
@@ -19,26 +21,27 @@ export default {
     },
     extend: {
       fontFamily: {
-        outfit: ['Outfit', 'sans-serif'],
-        inter: ['Inter', 'sans-serif'],
+        sans: ["Inter", ...fontFamily.sans],
+        heading: ["Montserrat", ...fontFamily.sans],
+        story: ["Georgia", ...fontFamily.serif],
       },
       colors: {
         vaya: {
-          home: "#F97316",      // Orange for home/landing
-          stories: "#F97316",   // Orange for stories section
-          memories: "#0EA5E9",  // Blue for memory lane
-          capsules: "#22C55E",  // Green for family capsules
-          narra: "#9b87f5",     // Purple for Narra's theme
+          home: "#6C5CE7",      // Rich purple for home/landing
+          stories: "#FF7675",   // Vibrant coral for stories section
+          memories: "#00CEC9",  // Turquoise for memory lane
+          capsules: "#FFEAA7",  // Yellow for family capsules
+          narra: "#8A7EEC",     // Light purple for Narra's theme
           
           accent: {
-            green: "#F2FCE2",   // Soft green backgrounds
-            yellow: "#FEF7CD",  // Warm accents
-            orange: "#FEC6A1",  // Muted orange accents
-            blue: "#E0F2FE",    // Soft blue backgrounds
+            turquoise: "#00CEC9",
+            yellow: "#FFEAA7",
+            coral: "#FF7675",
+            purple: "#6C5CE7",
           },
           
           chat: {
-            bg: "#F8FAFC",
+            bg: "#F8F5FF",
             border: "#E2E8F0",
             hover: "#F1F5F9",
           },
@@ -54,6 +57,10 @@ export default {
             800: "#1E293B",
             900: "#0F172A",
           },
+          text: {
+            primary: "#2D3436",
+            secondary: "#636E72",
+          },
         },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -61,12 +68,12 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: "#6C5CE7",
+          foreground: "#FFFFFF",
         },
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+          DEFAULT: "#FF7675",
+          foreground: "#FFFFFF",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
@@ -77,8 +84,8 @@ export default {
           foreground: "hsl(var(--muted-foreground))",
         },
         accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
+          DEFAULT: "#00CEC9",
+          foreground: "#FFFFFF",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
@@ -107,41 +114,37 @@ export default {
           "0%": { opacity: "0", transform: "translateY(10px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
-        iconPulse: {
-          "0%, 100%": { transform: "scale(1)" },
-          "50%": { transform: "scale(1.1)" },
+        pulse: {
+          "0%, 100%": { opacity: "1", transform: "scale(1)" },
+          "50%": { opacity: "0.8", transform: "scale(1.05)" },
         },
-        glow: {
-          '0%, 100%': { boxShadow: '0 0 20px rgba(34, 197, 94, 0.2)' },
-          '50%': { boxShadow: '0 0 40px rgba(34, 197, 94, 0.4)' }
+        wave: {
+          "0%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-5px)" },
+          "100%": { transform: "translateY(0)" },
         },
-        sparkle: {
-          '0%, 100%': { transform: 'scale(1) rotate(0deg)', opacity: '1' },
-          '50%': { transform: 'scale(1.2) rotate(180deg)', opacity: '0.8' }
+        bounce: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-20px)" },
         },
-        'capsule-rotate': {
-          '0%': { transform: 'rotate(0deg)' },
-          '100%': { transform: 'rotate(360deg)' }
+        typing: {
+          "0%": { width: "0" },
+          "100%": { width: "100%" },
         },
-        confetti: {
-          '0%': { transform: 'translateY(0) rotate(0deg)', opacity: '1' },
-          '100%': { transform: 'translateY(-100px) rotate(720deg)', opacity: '0' }
+        blink: {
+          "0%, 100%": { borderColor: "transparent" },
+          "50%": { borderColor: "#6C5CE7" },
         },
-        float: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-10px)' }
-        }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         fadeIn: "fadeIn 0.5s ease-out forwards",
-        iconPulse: "iconPulse 2s ease-in-out infinite",
-        glow: 'glow 2s ease-in-out infinite',
-        sparkle: 'sparkle 3s ease-in-out infinite',
-        'capsule-rotate': 'capsule-rotate 10s linear infinite',
-        confetti: 'confetti 1.5s ease-out forwards',
-        float: 'float 3s ease-in-out infinite'
+        pulse: "pulse 1.5s ease-in-out infinite",
+        wave: "wave 2s ease-in-out infinite",
+        bounce: "bounce 1s ease-in-out infinite",
+        typing: "typing 3.5s steps(40, end)",
+        blink: "blink 0.7s step-end infinite",
       },
     },
   },

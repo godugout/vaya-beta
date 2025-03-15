@@ -1,82 +1,89 @@
 
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/components/ui/use-toast";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { motion, AnimatePresence } from "framer-motion";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Users, ArrowRight, Check } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
-// Type definitions
-type WizardStep = "name" | "description" | "members" | "confirmation";
+interface CreateFamilyWizardProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}
 
-export function CreateFamilyWizard() {
-  const navigate = useNavigate();
-  const { toast } = useToast();
-  const [step, setStep] = useState<WizardStep>("name");
+export const CreateFamilyWizard = ({ open, onOpenChange }: CreateFamilyWizardProps) => {
+  const [step, setStep] = useState(1);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     description: "",
-    members: [] as string[]
   });
-  const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
 
-  const handleNextStep = () => {
-    if (step === "name") setStep("description");
-    else if (step === "description") setStep("members");
-    else if (step === "members") setStep("confirmation");
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handlePreviousStep = () => {
-    if (step === "description") setStep("name");
-    else if (step === "members") setStep("description");
-    else if (step === "confirmation") setStep("members");
+  const handleNext = () => {
+    if (step === 1 && !formData.name) {
+      toast({
+        title: "Family name required",
+        description: "Please enter a name for your family",
+        variant: "destructive",
+      });
+      return;
+    }
+    setStep((prev) => prev + 1);
   };
 
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      // Create the family
-      const { data: familyData, error: familyError } = await supabase
-        .from('families')
-        .insert([
-          { 
-            name: formData.name, 
-            description: formData.description 
-          }
-        ])
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user) {
+        throw new Error("User not authenticated");
+      }
+
+      // Create family
+      const { data: family, error: familyError } = await supabase
+        .from("families")
+        .insert({
+          name: formData.name,
+          description: formData.description || null,
+        })
         .select()
         .single();
 
       if (familyError) throw familyError;
 
-      // Add current user as admin
-      const user = await supabase.auth.getUser();
-      
-      if (user.error) throw user.error;
-      
+      // Add current user as family admin
       const { error: memberError } = await supabase
-        .from('family_members')
-        .insert([
-          { 
-            family_id: familyData.id, 
-            user_id: user.data.user?.id,
-            role: "admin" 
-          }
-        ]);
+        .from("family_members")
+        .insert({
+          family_id: family.id,
+          user_id: user.id,
+          role: "admin",
+        });
 
       if (memberError) throw memberError;
 
       toast({
-        title: "Success!",
-        description: "Your family has been created successfully.",
+        title: "Family created!",
+        description: `You've successfully created ${formData.name}`,
       });
-      
-      navigate(`/families`);
+
+      // Reset form and close dialog
+      setFormData({ name: "", description: "" });
+      setStep(1);
+      onOpenChange(false);
     } catch (error: any) {
       toast({
-        title: "Error",
+        title: "Error creating family",
         description: error.message,
         variant: "destructive",
       });
@@ -85,95 +92,135 @@ export function CreateFamilyWizard() {
     }
   };
 
-  // Component UI render
-  return (
-    <div className="space-y-8">
-      <div className="space-y-2">
-        {step === "name" && (
-          <div className="space-y-4">
-            <h2 className="text-2xl font-bold">Family Name</h2>
-            <p className="text-muted-foreground">
-              What would you like to call your family group?
-            </p>
+  const steps = [
+    {
+      title: "Create Your Family",
+      content: (
+        <div className="space-y-6">
+          <div>
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+              Family Name
+            </label>
             <Input
-              type="text"
+              id="name"
+              name="name"
               value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              onChange={handleChange}
+              placeholder="e.g., The Rodriguez Family"
               className="w-full"
-              placeholder="Enter family name"
             />
           </div>
-        )}
-
-        {step === "description" && (
-          <div className="space-y-4">
-            <h2 className="text-2xl font-bold">Family Description</h2>
-            <p className="text-muted-foreground">
-              Add a short description about your family (optional)
-            </p>
-            <textarea
+          <div>
+            <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
+              Description (Optional)
+            </label>
+            <Textarea
+              id="description"
+              name="description"
               value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              className="w-full p-2 border rounded"
-              rows={4}
-              placeholder="Enter family description"
+              onChange={handleChange}
+              placeholder="Tell us a bit about your family..."
+              className="w-full min-h-[120px]"
             />
           </div>
-        )}
-
-        {step === "members" && (
-          <div className="space-y-4">
-            <h2 className="text-2xl font-bold">Invite Family Members</h2>
-            <p className="text-muted-foreground">
-              You can invite family members after creating your family group.
-            </p>
-            {/* Member invitation UI would go here */}
+        </div>
+      ),
+    },
+    {
+      title: "Invite Family Members",
+      content: (
+        <div className="space-y-6">
+          <p className="text-vaya-text-secondary">
+            You can invite family members to join after creating your family. They'll be able to contribute stories and memories.
+          </p>
+          <div className="bg-[#F8F5FF] p-4 rounded-lg border border-vaya-home/20">
+            <h4 className="font-medium text-vaya-text-primary mb-2">Benefits of adding family members:</h4>
+            <ul className="space-y-2">
+              <li className="flex items-start">
+                <Check className="h-5 w-5 text-vaya-home mr-2 flex-shrink-0 mt-0.5" />
+                <span>Collect stories from multiple perspectives</span>
+              </li>
+              <li className="flex items-start">
+                <Check className="h-5 w-5 text-vaya-home mr-2 flex-shrink-0 mt-0.5" />
+                <span>Build a comprehensive family tree</span>
+              </li>
+              <li className="flex items-start">
+                <Check className="h-5 w-5 text-vaya-home mr-2 flex-shrink-0 mt-0.5" />
+                <span>Preserve memories across generations</span>
+              </li>
+            </ul>
           </div>
-        )}
-
-        {step === "confirmation" && (
-          <div className="space-y-4">
-            <h2 className="text-2xl font-bold">Confirm Family Creation</h2>
-            <div className="p-4 border rounded bg-muted">
-              <h3 className="font-semibold">Family Name:</h3>
-              <p>{formData.name}</p>
-              
-              {formData.description && (
-                <>
-                  <h3 className="font-semibold mt-2">Description:</h3>
-                  <p>{formData.description}</p>
-                </>
-              )}
-            </div>
+        </div>
+      ),
+    },
+    {
+      title: "Ready to Begin",
+      content: (
+        <div className="space-y-6 text-center">
+          <div className="w-20 h-20 bg-[#F8F5FF] rounded-full flex items-center justify-center mx-auto">
+            <Users className="h-10 w-10 text-vaya-home" />
           </div>
-        )}
-      </div>
+          <h3 className="text-xl font-heading font-semibold text-vaya-text-primary">
+            {formData.name} is ready!
+          </h3>
+          <p className="text-vaya-text-secondary">
+            Your family space has been created. Start capturing and preserving your family's legacy.
+          </p>
+        </div>
+      ),
+    },
+  ];
 
-      <div className="flex justify-between">
-        <Button
-          variant="outline"
-          onClick={handlePreviousStep}
-          disabled={step === "name" || loading}
-        >
-          Back
-        </Button>
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle className="text-xl font-heading font-semibold text-vaya-text-primary">
+            {steps[step - 1].title}
+          </DialogTitle>
+        </DialogHeader>
         
-        {step !== "confirmation" ? (
-          <Button
-            onClick={handleNextStep}
-            disabled={step === "name" && !formData.name.trim() || loading}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={step}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.3 }}
           >
-            Next
-          </Button>
-        ) : (
-          <Button
-            onClick={handleSubmit}
-            disabled={loading}
-          >
-            {loading ? "Creating..." : "Create Family"}
-          </Button>
-        )}
-      </div>
-    </div>
+            {steps[step - 1].content}
+          </motion.div>
+        </AnimatePresence>
+        
+        <div className="flex justify-end gap-2 mt-6">
+          {step > 1 && step < steps.length && (
+            <Button
+              variant="outline"
+              onClick={() => setStep((prev) => prev - 1)}
+              disabled={loading}
+            >
+              Back
+            </Button>
+          )}
+          
+          {step < steps.length - 1 && (
+            <Button onClick={handleNext} disabled={loading} className="bg-vaya-home hover:bg-vaya-home/90">
+              Next
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          )}
+          
+          {step === steps.length - 1 && (
+            <Button
+              onClick={handleSubmit}
+              disabled={loading}
+              className="bg-vaya-home hover:bg-vaya-home/90"
+            >
+              {loading ? "Creating..." : "Create Family"}
+            </Button>
+          )}
+        </div>
+      </DialogContent>
+    </Dialog>
   );
-}
+};
