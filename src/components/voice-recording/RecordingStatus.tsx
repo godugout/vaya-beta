@@ -1,4 +1,6 @@
 
+import { motion } from "framer-motion";
+
 interface RecordingStatusProps {
   isRecordingActive: boolean;
   hasAudioBlob: boolean;
@@ -6,8 +8,13 @@ interface RecordingStatusProps {
 
 const RecordingStatus = ({ isRecordingActive, hasAudioBlob }: RecordingStatusProps) => {
   return (
-    <div className="text-center">
-      <h3 className={`text-lg font-medium drop-shadow-md ${
+    <motion.div 
+      className="text-center"
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <h3 className={`text-xl font-heading font-semibold drop-shadow-md ${
         isRecordingActive 
           ? "text-[#FF7675]" 
           : hasAudioBlob 
@@ -20,14 +27,14 @@ const RecordingStatus = ({ isRecordingActive, hasAudioBlob }: RecordingStatusPro
             ? "Review Your Memory" 
             : "Record Your Memory"}
       </h3>
-      <p className="text-sm text-white/80 mt-1">
+      <p className="text-base text-white/90 mt-1 max-w-xs mx-auto">
         {isRecordingActive 
           ? "Speak clearly into your microphone" 
           : hasAudioBlob 
-            ? "Listen, transcript and save your memory" 
+            ? "Listen, transcribe and save your memory" 
             : "Tap the microphone to start recording"}
       </p>
-    </div>
+    </motion.div>
   );
 };
 
