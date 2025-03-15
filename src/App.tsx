@@ -6,6 +6,7 @@ import LandingPage from '@/pages/LandingPage';
 import NotFound from '@/pages/NotFound';
 import Footer from '@/components/Footer';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
+import Meteor from '@/pages/Meteor';
 // Using lazy loading for better performance
 const FamilyCapsules = lazy(() => import('@/pages/FamilyCapsules'));
 const ShareStories = lazy(() => import('@/pages/ShareStories'));
@@ -18,6 +19,7 @@ const Profile = lazy(() => import('@/pages/Profile'));
 const Account = lazy(() => import('@/pages/Account'));
 const DesignSystem = lazy(() => import('@/pages/DesignSystem'));
 const MediaLibrary = lazy(() => import('@/pages/MediaLibrary'));
+const ComponentsDemo = lazy(() => import('@/pages/ComponentsDemo'));
 
 function App() {
   return (
@@ -28,6 +30,7 @@ function App() {
           <Suspense fallback={<div className="flex items-center justify-center w-full h-96">Loading...</div>}>
             <Routes>
               <Route path="/" element={<LandingPage />} />
+              <Route path="/meteor" element={<Meteor />} />
               <Route path="/family-capsules" element={<FamilyCapsules />} />
               <Route path="/share-stories" element={<ShareStories />} />
               <Route path="/memory-lane" element={<MemoryLane />} />
@@ -39,6 +42,7 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/design-system/*" element={<DesignSystem />} />
               <Route path="/media-library" element={<MediaLibrary />} />
+              <Route path="/components-demo" element={<ComponentsDemo />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
