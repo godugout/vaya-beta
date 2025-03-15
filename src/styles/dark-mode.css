@@ -1,0 +1,39 @@
+
+/* Dark mode overrides with better contrast */
+.dark {
+  --color-sky: #2B5A69;
+  --color-forest: #1D402C;
+  --color-water: #234A5E;
+  --color-mountain: #1A3540;
+  --color-leaf: #4C6530;
+  --color-autumn: #FF7675; /* Updated to brand coral */
+  --color-sand: #8A7247;
+  
+  --color-ui-orange: #FF7675; /* Coral from brand */
+  --color-ui-green: #5C7E3A;
+  --color-ui-purple: #6C5CE7; /* Purple from brand */
+  --color-ui-teal: #2A8498;
+  --color-ui-red: #C53030;
+  
+  --color-text-dark: #F8F9FA;
+  --color-text-medium: #CCCCCC;
+  --color-text-light: #333333;
+  
+  --card-background: #1E293B;
+  --card-shadow: rgba(0, 0, 0, 0.3);
+}
+
+/* Ensure dark mode has proper background */
+.dark body {
+  background-color: #121212;
+  color: var(--color-text-dark);
+}
+
+.dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+  color: #FFFFFF; /* Ensure headings are white in dark mode */
+}
+
+/* Set dark mode as default */
+:root {
+  color-scheme: dark;
+}

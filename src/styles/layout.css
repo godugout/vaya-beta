@@ -1,0 +1,46 @@
+
+/* Layout helpers */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.space-x-4 > * + * {
+  margin-left: var(--space-4);
+}
+
+.space-y-4 > * + * {
+  margin-top: var(--space-4);
+}
+
+/* Standard page padding */
+.page-content {
+  @apply pt-10 px-4 md:px-6 lg:px-8;
+}
+  
+/* Section padding */
+.section-padding {
+  @apply py-16 px-4 md:px-6 lg:px-8;
+}

@@ -3,128 +3,18 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import our custom styles */
-@import './styles/globals.css';
-@import './styles/components.css';
+/* Import our modular style files */
+@import './styles/variables.css';
+@import './styles/base.css';
+@import './styles/typography.css';
+@import './styles/layout.css';
+@import './styles/utilities.css';
 @import './styles/animations.css';
+@import './styles/components.css';
+@import './styles/dark-mode.css';
 
 @layer base {
   body {
     @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-white;
-  }
-}
-
-@layer components {
-  /* Standard page padding */
-  .page-content {
-    @apply pt-10 px-4 md:px-6 lg:px-8;
-  }
-  
-  /* Section padding */
-  .section-padding {
-    @apply py-16 px-4 md:px-6 lg:px-8;
-  }
-  
-  /* Nature-themed card styling */
-  .nature-card {
-    @apply bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300;
-  }
-  
-  /* Fluid animations for water effect */
-  .water-ripple {
-    @apply relative overflow-hidden;
-  }
-  
-  .water-ripple::after {
-    @apply absolute inset-0 bg-sky-400/20 dark:bg-sky-600/20 opacity-0 pointer-events-none;
-    content: '';
-    animation: ripple 8s ease-in-out infinite;
-  }
-  
-  /* Forest-inspired elements */
-  .leaf-card {
-    @apply bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/40 dark:to-emerald-900/30 rounded-xl p-6 shadow-sm;
-  }
-  
-  /* Audio visualization inspired by water ripples */
-  .audio-wave {
-    @apply flex items-end justify-center h-12 gap-1;
-  }
-  
-  .audio-wave-bar {
-    @apply bg-ui-teal dark:bg-ui-teal/70 rounded-full w-1;
-    animation: audio-wave-anim 1.2s ease-in-out infinite;
-  }
-  
-  @keyframes audio-wave-anim {
-    0%, 100% {
-      transform: scaleY(0.3);
-    }
-    50% {
-      transform: scaleY(1);
-    }
-  }
-  
-  /* Frog character inspired elements */
-  .character-card {
-    @apply rounded-2xl overflow-hidden relative;
-  }
-  
-  .character-card::before {
-    @apply absolute inset-0 bg-gradient-to-br from-transparent to-black/40 opacity-0 transition-opacity duration-300;
-    content: '';
-  }
-  
-  .character-card:hover::before {
-    @apply opacity-100;
-  }
-  
-  /* Story elements with natural feel */
-  .story-container {
-    @apply relative p-6 rounded-xl bg-sand dark:bg-gray-800;
-  }
-  
-  .story-container::before {
-    @apply absolute inset-0 bg-leaf bg-opacity-5 rounded-xl pointer-events-none;
-    content: '';
-  }
-  
-  /* Mobile app styled components */
-  .mobile-app-card {
-    @apply bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-4 border border-gray-100 dark:border-gray-700;
-  }
-  
-  .mobile-record-button {
-    @apply w-16 h-16 rounded-full bg-ui-orange flex items-center justify-center text-white shadow-lg;
-    box-shadow: 0 0 0 10px rgba(243, 124, 33, 0.1);
-  }
-  
-  /* Pattern background */
-  .bg-pattern-lines {
-    background-image: repeating-linear-gradient(
-      45deg,
-      rgba(255, 118, 117, 0.15),
-      rgba(255, 118, 117, 0.15) 10px,
-      rgba(108, 92, 231, 0.15) 10px,
-      rgba(108, 92, 231, 0.15) 20px
-    );
-  }
-}
-
-@layer base {
-  :root {
-    --color-sky: 120 209 234;
-    --color-forest: 45 125 84;
-    --color-water: 58 160 188;
-    --color-mountain: 34 94 115;
-    --color-leaf: 136 177 89;
-    --color-autumn: 243 124 33;
-    --color-sand: 249 227 196;
-    
-    --color-ui-orange: 241 143 11;
-    --color-ui-green: 136 177 89;
-    --color-ui-purple: 139 92 246;
-    --color-ui-teal: 69 183 201;
-    --color-ui-red: 239 68 68;
   }
 }

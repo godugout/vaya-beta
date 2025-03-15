@@ -1,0 +1,56 @@
+
+/* Base variables */
+:root {
+  --font-heading: 'Gabarito', sans-serif;
+  --font-body: 'Poppins', sans-serif;
+  --font-accent: 'Montserrat', sans-serif;
+  
+  /* Color palette from nature illustration - with improved contrast */
+  --color-sky: #5BAED4;
+  --color-forest: #1D6A44;
+  --color-water: #1D8CA6;
+  --color-mountain: #156378;
+  --color-leaf: #6A9A3B;
+  --color-autumn: #FF7675; /* Updated to brand coral */
+  --color-sand: #F0D6A8;
+  
+  /* UI Colors from brand guidelines - with improved contrast */
+  --color-ui-orange: #FF7675; /* Coral from brand */
+  --color-ui-green: #6A9A3B;
+  --color-ui-purple: #6C5CE7; /* Purple from brand */
+  --color-ui-teal: #2A9DAF;
+  --color-ui-red: #DC2626;
+  
+  /* Text colors with better contrast */
+  --color-text-dark: #1A1A1A;
+  --color-text-medium: #444444;
+  --color-text-light: #FFFFFF;
+  
+  /* Gradients */
+  --gradient-sunrise: linear-gradient(to right, #F0D6A8, #FF7675);
+  --gradient-forest: linear-gradient(to right, #1D6A44, #6A9A3B);
+  --gradient-water: linear-gradient(to right, #1D8CA6, #5BAED4);
+  --gradient-purple: linear-gradient(to right, #6C5CE7, #8F84EB);
+  
+  /* Card colors */
+  --card-background: #FFFFFF;
+  --card-shadow: rgba(0, 0, 0, 0.1);
+  
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  
+  /* Borders */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+  --radius-full: 9999px;
+}
