@@ -99,6 +99,7 @@ export const useAudioTranscription = (options: TranscriptionOptions = {}) => {
       const audioBase64 = await audioBase64Promise;
       
       // Call Supabase Edge Function for transcription with options
+      // Removed the 'signal' property as it's not supported in FunctionInvokeOptions
       const { data, error } = await supabase.functions.invoke('transcribe-audio', {
         body: { 
           audio: audioBase64,
@@ -107,8 +108,7 @@ export const useAudioTranscription = (options: TranscriptionOptions = {}) => {
           response_format: wordTimestamps ? "verbose_json" : "json",
           temperature: 0.2, // Lower temperature for higher accuracy
           noise_filtering: noiseFiltering
-        },
-        signal: abortControllerRef.current.signal
+        }
       });
       
       if (error) throw error;

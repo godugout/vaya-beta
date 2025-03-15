@@ -72,13 +72,13 @@ export const useVoiceRecorder = (options: VoiceRecorderOptions = {}) => {
       setState(prev => ({ ...prev, isProcessing: true }));
       
       // Request audio with noise reduction if requested
+      // Removed 'latency' which is not a valid property of MediaTrackConstraints
       const constraints: MediaStreamConstraints = {
         audio: {
           echoCancellation: noiseFiltering,
           noiseSuppression: noiseFiltering,
           autoGainControl: true,
-          // Request low latency audio processing
-          latency: 0.01,
+          // Request appropriate sample rate and channel configuration based on quality
           sampleRate: quality === 'high' ? 48000 : quality === 'medium' ? 44100 : 22050,
           sampleSize: quality === 'low' ? 8 : 16,
           channelCount: quality === 'high' ? 2 : 1
