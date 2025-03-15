@@ -1,8 +1,9 @@
 
-import { motion } from 'framer-motion';
-import { Mic, Square, Loader2 } from 'lucide-react';
+import { useState } from 'react';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
+import { ButtonPulseEffect } from './button/ButtonPulseEffect';
+import { RecordingButtonIcon } from './button/RecordingButtonIcon';
+import { motion } from 'framer-motion';
 import { useAnimation } from '@/components/animation/AnimationProvider';
 
 export type RecordingState = 'idle' | 'recording' | 'processing';
@@ -23,7 +24,7 @@ export const EnhancedRecordingButton = ({
   className,
 }: EnhancedRecordingButtonProps) => {
   const { isReduced } = useAnimation();
-
+  
   // Size configurations
   const sizeConfig = {
     sm: { container: 'h-12 w-12', icon: 'h-4 w-4' },
@@ -31,55 +32,16 @@ export const EnhancedRecordingButton = ({
     lg: { container: 'h-20 w-20', icon: 'h-8 w-8' },
   };
 
-  // Animation variants based on recording state
-  const buttonVariants = {
-    idle: {
-      scale: 1,
-      backgroundColor: 'rgb(108, 92, 231)',
-    },
-    recording: {
-      scale: 1,
-      backgroundColor: 'rgb(255, 118, 117)',
-    },
-    processing: {
-      scale: 1,
-      backgroundColor: 'rgb(253, 121, 168)',
-    },
-  };
-
-  const pulseVariants = {
-    idle: {
-      scale: 1,
-      opacity: 0,
-    },
-    recording: {
-      scale: [1, 1.5, 1],
-      opacity: [0.7, 0, 0.7],
-      transition: {
-        repeat: Infinity,
-        duration: 1.5,
-      },
-    },
-    processing: {
-      scale: 1,
-      opacity: 0,
-    },
-  };
-
   return (
     <div className="relative flex items-center justify-center">
-      {!isReduced && (
-        <motion.div
-          className={cn(
-            'absolute rounded-full bg-red-500 opacity-70',
-            sizeConfig[size].container
-          )}
-          variants={pulseVariants}
-          initial="idle"
-          animate={state}
-        />
-      )}
+      {/* Pulse effect */}
+      <ButtonPulseEffect 
+        isActive={state === 'recording'} 
+        isReduced={isReduced}
+        size={sizeConfig[size].container}
+      />
 
+      {/* Main button */}
       <motion.div
         className="relative"
         whileTap={{ scale: 0.95 }}
@@ -92,9 +54,15 @@ export const EnhancedRecordingButton = ({
             disabled && 'opacity-70 cursor-not-allowed',
             className
           )}
-          variants={buttonVariants}
-          initial="idle"
-          animate={state}
+          initial={{ backgroundColor: 'rgb(108, 92, 231)' }}
+          animate={{
+            backgroundColor: 
+              state === 'recording' 
+                ? 'rgb(255, 118, 117)' 
+                : state === 'processing' 
+                  ? 'rgb(253, 121, 168)' 
+                  : 'rgb(108, 92, 231)',
+          }}
           onClick={onClick}
           disabled={disabled || state === 'processing'}
           transition={{
@@ -103,16 +71,10 @@ export const EnhancedRecordingButton = ({
             damping: 30,
           }}
         >
-          {state === 'idle' && <Mic className={sizeConfig[size].icon} />}
-          {state === 'recording' && <Square className={sizeConfig[size].icon} />}
-          {state === 'processing' && (
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}
-            >
-              <Loader2 className={sizeConfig[size].icon} />
-            </motion.div>
-          )}
+          <RecordingButtonIcon 
+            state={state} 
+            iconSize={sizeConfig[size].icon} 
+          />
         </motion.button>
       </motion.div>
     </div>
