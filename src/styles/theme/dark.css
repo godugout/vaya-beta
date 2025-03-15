@@ -1,6 +1,7 @@
 
-/* Agencs Dark mode styling */
+/* Agencs Dark mode styling with Forest Stream influences */
 .dark {
+  /* Base Agencs dark theme */
   --color-black: #FFFFFF;
   --color-white: #111111;
   --color-gray-100: #171717;
@@ -13,6 +14,16 @@
   --color-gray-800: #E5E5E5;
   --color-gray-900: #F5F5F5;
   
+  /* Forest Stream dark theme colors */
+  --color-sky: 68 122 153;         /* Darker sky blue */
+  --color-forest: 19 58 42;        /* Darker forest green */
+  --color-water: 45 104 122;       /* Darker stream water */
+  --color-mountain: 63 115 124;    /* Darker blue mountains */
+  --color-leaf: 98 129 20;         /* Darker leaf green */
+  --color-autumn: 184 116 34;      /* Darker autumn orange */
+  --color-sand: 126 114 96;        /* Darker sandy stone */
+  
+  /* UI Colors for dark mode */
   --color-ui-primary: #FFFFFF;
   --color-ui-secondary: #E5E5E5;
   --color-ui-accent: #F5F5F5;
@@ -22,13 +33,13 @@
   --color-text-medium: #E5E5E5;
   --color-text-light: #111111;
   
-  --card-background: #171717;
+  --card-background: #0C2A20;  /* Very dark forest green */
   --card-shadow: rgba(0, 0, 0, 0.5);
 }
 
 /* Ensure dark mode has proper background */
 .dark body {
-  background-color: #111111;
+  background-color: #0C2A20;  /* Very dark forest green */
   color: var(--color-text-dark);
 }
 

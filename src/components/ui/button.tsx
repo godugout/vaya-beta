@@ -16,20 +16,27 @@ const buttonVariants = cva(
         ghost: "hover:bg-gray-100 text-black dark:text-white dark:hover:bg-white/10",
         link: "text-black dark:text-white underline-offset-4 hover:underline p-0 h-auto",
         
-        // Feature-specific variants
-        stories: "bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200",
-        memories: "bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200", 
-        capsules: "bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200",
-        narra: "bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200",
+        // Forest Stream variants
+        forest: "bg-forest text-white hover:bg-forest/90 dark:bg-forest dark:text-white dark:hover:bg-forest/80",
+        water: "bg-water text-white hover:bg-water/90 dark:bg-water dark:text-white dark:hover:bg-water/80",
+        leaf: "bg-leaf text-black hover:bg-leaf/90 dark:bg-leaf dark:text-black dark:hover:bg-leaf/80",
+        autumn: "bg-autumn text-black hover:bg-autumn/90 dark:bg-autumn dark:text-black dark:hover:bg-autumn/80",
+        mountain: "bg-mountain text-white hover:bg-mountain/90 dark:bg-mountain dark:text-white dark:hover:bg-mountain/80",
         
-        // Accent color variants
+        // Feature-specific variants
+        stories: "bg-forest text-white hover:bg-forest/90 dark:bg-forest dark:text-white dark:hover:bg-forest/80",
+        memories: "bg-water text-white hover:bg-water/90 dark:bg-water dark:text-white dark:hover:bg-water/80", 
+        capsules: "bg-autumn text-black hover:bg-autumn/90 dark:bg-autumn dark:text-black dark:hover:bg-autumn/80",
+        narra: "bg-leaf text-black hover:bg-leaf/90 dark:bg-leaf dark:text-black dark:hover:bg-leaf/80",
+        
+        // Additional accent variants
         accent: "bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200",
         coral: "bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200",
         purple: "bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200",
         yellow: "bg-gray-100 text-black hover:bg-gray-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700",
-        orange: "bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200",
-        green: "bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200",
-        blue: "bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200",
+        orange: "bg-autumn text-black hover:bg-autumn/90 dark:bg-autumn dark:text-black dark:hover:bg-autumn/80",
+        green: "bg-leaf text-black hover:bg-leaf/90 dark:bg-leaf dark:text-black dark:hover:bg-leaf/80",
+        blue: "bg-water text-white hover:bg-water/90 dark:bg-water dark:text-white dark:hover:bg-water/80",
       },
       size: {
         default: "h-12 px-8 py-3",

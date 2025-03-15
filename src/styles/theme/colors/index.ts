@@ -6,6 +6,7 @@ import { greystoneColors } from './greystone';
 import { shadcnColors } from './shadcn';
 import { vayaColors } from './vaya';
 import { darkModeColors } from './darkMode';
+import { forestStreamColors } from './forestStream';
 
 // Export the full colors object with the same structure as before
 export const colors = {
@@ -16,6 +17,6 @@ export const colors = {
   greystone: greystoneColors,
   shadcn: shadcnColors,
   vaya: vayaColors,
-  dark: darkModeColors
+  dark: darkModeColors,
+  forestStream: forestStreamColors
 };
-
