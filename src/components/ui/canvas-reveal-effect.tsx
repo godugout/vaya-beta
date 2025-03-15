@@ -47,17 +47,17 @@ export const CanvasRevealEffect = ({
 
     const createParticles = () => {
       particles.current = [];
-      // Increased number of particles for better visual effect
-      const nParticles = 150;
+      // Reduced number of particles for subtler effect
+      const nParticles = 100;
       for (let i = 0; i < nParticles; i++) {
         particles.current.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * animationSpeed * 0.8,
-          vy: (Math.random() - 0.5) * animationSpeed * 0.8,
-          size: dotSize * (Math.random() * 0.5 + 0.75), // Varied dot sizes
+          vx: (Math.random() - 0.5) * animationSpeed * 0.5, // Slower velocity
+          vy: (Math.random() - 0.5) * animationSpeed * 0.5, // Slower velocity
+          size: dotSize * (Math.random() * 0.3 + 0.7), // More uniform dot sizes
           color: colors[Math.floor(Math.random() * colors.length)],
-          opacity: opacities[Math.floor(Math.random() * opacities.length)],
+          opacity: opacities[Math.floor(Math.random() * opacities.length)] * 0.5, // Reduced opacity
         });
       }
     };
@@ -73,12 +73,12 @@ export const CanvasRevealEffect = ({
         const dx = mouse.current.x - particle.x;
         const dy = mouse.current.y - particle.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        const maxDist = 150; // Increased interaction distance
+        const maxDist = 100; // Reduced interaction distance
 
         if (dist < maxDist) {
           const force = (maxDist - dist) / maxDist;
-          particle.vx -= dx * force * 0.02;
-          particle.vy -= dy * force * 0.02;
+          particle.vx -= dx * force * 0.01; // More subtle interaction
+          particle.vy -= dy * force * 0.01;
         }
 
         if (particle.x < 0) particle.x = canvas.width;
@@ -92,11 +92,11 @@ export const CanvasRevealEffect = ({
         ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${particle.opacity})`;
         ctx.fill();
         
-        // Add subtle glow effect to some particles
-        if (Math.random() > 0.7) {
+        // Add subtle glow to fewer particles
+        if (Math.random() > 0.9) {
           ctx.beginPath();
-          ctx.arc(particle.x, particle.y, particle.size * 1.5, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${particle.opacity * 0.3})`;
+          ctx.arc(particle.x, particle.y, particle.size * 1.2, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${particle.opacity * 0.2})`;
           ctx.fill();
         }
       });
@@ -130,6 +130,7 @@ export const CanvasRevealEffect = ({
     <canvas
       ref={canvasRef}
       className={`h-full w-full absolute inset-0 ${containerClassName}`}
+      style={{ touchAction: "none" }}
     />
   );
 };
