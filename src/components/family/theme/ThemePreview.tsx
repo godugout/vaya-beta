@@ -11,11 +11,11 @@ export const ThemePreview = ({ theme }: ThemePreviewProps) => {
   const isDark = resolvedTheme === "dark";
 
   return (
-    <div className="space-y-4 mt-6">
-      <p className="text-sm text-vaya-text-secondary dark:text-dark-text-secondary">Theme Preview:</p>
+    <div className="space-y-4 mt-6 relative z-content">
+      <p className="text-sm text-vaya-text-secondary dark:text-dark-text-secondary z-text">Theme Preview:</p>
       
       <div 
-        className="p-4 rounded-xl border"
+        className="p-4 rounded-xl border z-cards"
         style={{ 
           backgroundColor: `${theme.secondaryColor}${isDark ? "30" : "20"}`, // Slightly higher opacity for dark mode
           borderColor: `${theme.primaryColor}${isDark ? "60" : "40"}`,
@@ -23,23 +23,23 @@ export const ThemePreview = ({ theme }: ThemePreviewProps) => {
         }}
       >
         <h3 
-          className="text-lg font-semibold mb-2"
+          className="text-lg font-semibold mb-2 z-text"
           style={{ color: theme.textColor }}
         >
           Family Capsule Title
         </h3>
         <p 
-          className="text-sm mb-3" 
+          className="text-sm mb-3 z-text" 
           style={{ color: `${theme.textColor}${isDark ? "E6" : "CC"}` }} // More opacity in dark mode
         >
           This is how your family's custom content would appear.
         </p>
         <button
-          className="px-4 py-2 rounded transition-all"
+          className="px-4 py-2 rounded transition-all z-content"
           style={{ 
             backgroundColor: theme.primaryColor,
             color: "#FFFFFF",
-            boxShadow: isDark ? "0 2px 8px rgba(0, 0, 0, 0.3)" : "0 2px 6px rgba(0, 0, 0, 0.1)"
+            boxShadow: isDark ? "0 2px 8px rgba(0, 0, 0, 0.3)" : "0 2px 8px rgba(0, 0, 0, 0.1)"
           }}
         >
           Custom Action
@@ -48,4 +48,3 @@ export const ThemePreview = ({ theme }: ThemePreviewProps) => {
     </div>
   );
 };
-

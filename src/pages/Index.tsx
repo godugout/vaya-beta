@@ -14,30 +14,36 @@ export default function Index() {
 
   return (
     <div className="relative min-h-screen">
+      {/* Global background pattern */}
+      <div className="page-bg-pattern"></div>
+      
       {/* Hero Section */}
       <section className="relative min-h-[90vh] overflow-hidden">
         {/* Nature background - blurred */}
         <div className="absolute inset-0 nature-bg-blur nature-stream-bg">
-          <div className="absolute inset-0 bg-white/50"></div>
+          <div className="absolute inset-0 bg-white/50 dark:bg-dark-background/50 z-patterns"></div>
         </div>
         
-        <div className="container mx-auto px-4 py-24 flex flex-col items-center justify-center h-full relative z-10">
+        {/* Dot pattern overlay */}
+        <div className="absolute inset-0 dot-pattern opacity-50 z-patterns"></div>
+        
+        <div className="container mx-auto px-4 py-24 flex flex-col items-center justify-center h-full relative z-content">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-center max-w-4xl mx-auto"
+            className="text-center max-w-4xl mx-auto backdrop-card p-8 dark:bg-dark-background/30"
           >
-            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-semibold text-greystone-green mb-6 leading-tight">
+            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-semibold text-greystone-green dark:text-white mb-6 leading-tight z-text">
               Preserve Your Family's Voice<br />
-              <span className="text-greystone-green-80">Share Your Story</span>
+              <span className="text-greystone-green-80 dark:text-dark-text-secondary">Share Your Story</span>
             </h1>
             
-            <p className="text-greystone-green-50 text-lg md:text-xl mb-10 max-w-2xl mx-auto">
+            <p className="text-greystone-green-50 dark:text-dark-text-secondary text-lg md:text-xl mb-10 max-w-2xl mx-auto z-text">
               Vaya helps you capture, organize, and share meaningful family memories that persist for generations through voice-first storytelling.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center z-content">
               <Button 
                 size="lg" 
                 className="bg-lovable-magenta hover:bg-lovable-magenta-bright text-white group"
@@ -50,7 +56,7 @@ export default function Index() {
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="border-2 border-greystone-green text-greystone-green hover:bg-greystone-green-10"
+                className="border-2 border-greystone-green text-greystone-green hover:bg-greystone-green-10 dark:border-white dark:text-white"
                 onClick={() => setShowCreateFamily(true)}
               >
                 <Archive className="mr-2 h-5 w-5" />
@@ -64,7 +70,7 @@ export default function Index() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="mt-16 w-full max-w-xl mx-auto bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-lg"
+            className="mt-16 w-full max-w-xl mx-auto elevated-card p-6 z-cards"
           >
             <VoiceRecordingDemo />
           </motion.div>
@@ -81,7 +87,7 @@ export default function Index() {
       <FAQ />
       
       {/* Floating Action Button */}
-      <div className="fixed bottom-8 right-8 z-50">
+      <div className="fixed bottom-8 right-8 z-floating">
         <Button 
           size="lg"
           onClick={() => setShowCreateFamily(true)}

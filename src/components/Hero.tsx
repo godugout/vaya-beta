@@ -31,9 +31,15 @@ export default function Hero({ culturalContent }: HeroProps) {
       }`} 
       data-component="Hero"
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent" />
+      {/* Background pattern */}
+      <div className="absolute inset-0 bg-grid-pattern opacity-40"></div>
+      
+      {/* Gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent z-patterns"></div>
+      
       <HeroPattern />
-      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
+      
+      <div className="relative z-content mx-auto max-w-7xl px-6 lg:px-8">
         <HeroContent config={config} isSpanish={isSpanish} />
       </div>
     </div>
