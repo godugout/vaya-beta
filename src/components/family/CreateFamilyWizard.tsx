@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -173,11 +173,14 @@ export const CreateFamilyWizard = ({ open, onOpenChange }: CreateFamilyWizardPro
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-lg">
         <DialogHeader>
           <DialogTitle className="text-xl font-heading font-semibold text-vaya-text-primary">
             {steps[step - 1].title}
           </DialogTitle>
+          <DialogDescription className="text-gray-500 dark:text-gray-400">
+            Create your family space to collect and share memories
+          </DialogDescription>
         </DialogHeader>
         
         <AnimatePresence mode="wait">
@@ -204,7 +207,7 @@ export const CreateFamilyWizard = ({ open, onOpenChange }: CreateFamilyWizardPro
           )}
           
           {step < steps.length - 1 && (
-            <Button onClick={handleNext} disabled={loading} className="bg-vaya-home hover:bg-vaya-home/90">
+            <Button onClick={handleNext} disabled={loading} className="bg-ui-orange hover:bg-ui-orange/90 text-white">
               Next
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
@@ -214,7 +217,7 @@ export const CreateFamilyWizard = ({ open, onOpenChange }: CreateFamilyWizardPro
             <Button
               onClick={handleSubmit}
               disabled={loading}
-              className="bg-vaya-home hover:bg-vaya-home/90"
+              className="bg-ui-orange hover:bg-ui-orange/90 text-white"
             >
               {loading ? "Creating..." : "Create Family"}
             </Button>
