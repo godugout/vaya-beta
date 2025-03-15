@@ -21,8 +21,13 @@ const FamilyCapsules = () => {
 
   return (
     <div className="relative min-h-screen bg-white dark:bg-gray-900">
-      {/* Added ExampleCapsules at the top */}
-      <ExampleCapsules />
+      {/* Family Capsules Section with title */}
+      <div className="py-20 bg-white">
+        <div className="container mx-auto">
+          <h2 className="text-3xl md:text-4xl font-medium mb-10 text-center">Family Capsules</h2>
+          <ExampleCapsules />
+        </div>
+      </div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Removed the title section to be consistent with other pages */}

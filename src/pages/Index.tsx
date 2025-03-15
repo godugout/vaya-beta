@@ -73,8 +73,6 @@ export default function Index() {
         </div>
       </section>
       
-      {/* Removed Example Capsules Section */}
-      
       {/* Key Features */}
       <div className="bg-gray-50">
         <Features />
