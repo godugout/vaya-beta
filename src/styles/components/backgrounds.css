@@ -26,6 +26,7 @@
   background-position: center;
 }
 
+/* Pattern with overlay */
 .greystone-pattern-bg {
   position: relative;
   overflow: hidden;
@@ -44,6 +45,7 @@
   z-index: 0;
 }
 
+/* Blurred Nature Backgrounds */
 .nature-bg-blur {
   position: relative;
   overflow: hidden;
