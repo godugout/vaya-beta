@@ -1,133 +1,193 @@
 
-import { useState } from "react";
-import { PageTransition } from "@/components/animation/PageTransition";
-import { MediaGallery } from "@/components/media/MediaGallery";
+import React, { useState } from 'react';
+import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Input } from "@/components/ui/input";
+import { Search, Upload, Image, Video, AudioLines, FileText, Filter } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
 
-interface MediaAsset {
-  id: string;
-  title: string;
-  description: string | null;
-  file_path: string;
-  alt_text: string;
-  category: string;
-  tags: string[];
-}
-
-const MediaLibrary = () => {
-  const [selectedAsset, setSelectedAsset] = useState<MediaAsset | null>(null);
-
-  const handleAssetSelect = (asset: MediaAsset) => {
-    setSelectedAsset(asset);
-  };
-
-  const closeAssetDetail = () => {
-    setSelectedAsset(null);
+const MediaGalleryItem = ({ 
+  type, 
+  title, 
+  date, 
+  thumbnail = "/placeholder.svg" 
+}: { 
+  type: 'image' | 'video' | 'audio' | 'document'; 
+  title: string; 
+  date: string; 
+  thumbnail?: string;
+}) => {
+  const iconMap = {
+    image: <Image className="h-5 w-5 text-blue-500" />,
+    video: <Video className="h-5 w-5 text-purple-500" />,
+    audio: <AudioLines className="h-5 w-5 text-green-500" />,
+    document: <FileText className="h-5 w-5 text-orange-500" />
   };
 
   return (
-    <PageTransition location="media-library" mode="fade">
-      <div className="min-h-screen bg-gray-50 dark:bg-dark-background pb-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-dark-text-primary">
-              Media Library
-            </h1>
-          </div>
+    <Card className="overflow-hidden hover:shadow-md transition-shadow duration-200 group bg-white dark:bg-gray-800">
+      <div className="relative pt-[70%] bg-gray-100 dark:bg-gray-700">
+        <img 
+          src={thumbnail} 
+          alt={title}
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
+        />
+        <div className="absolute top-2 right-2">
+          <Badge variant="secondary" className="flex items-center gap-1">
+            {iconMap[type]}
+            <span className="capitalize">{type}</span>
+          </Badge>
+        </div>
+      </div>
+      <CardContent className="p-3">
+        <h3 className="font-medium text-sm truncate">{title}</h3>
+        <p className="text-xs text-gray-500 dark:text-gray-400">{date}</p>
+      </CardContent>
+    </Card>
+  );
+};
 
-          <Tabs defaultValue="all" className="w-full">
-            <TabsList className="w-full max-w-md mx-auto mb-8">
-              <TabsTrigger value="all">All Media</TabsTrigger>
-              <TabsTrigger value="nature">Nature</TabsTrigger>
-              <TabsTrigger value="sky">Sky & Space</TabsTrigger>
-              <TabsTrigger value="fantasy">Fantasy</TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="all">
-              <MediaGallery onSelect={handleAssetSelect} limit={24} />
-            </TabsContent>
-            
-            <TabsContent value="nature">
-              <MediaGallery category="nature" onSelect={handleAssetSelect} limit={24} />
-            </TabsContent>
-            
-            <TabsContent value="sky">
-              <MediaGallery category="sky" onSelect={handleAssetSelect} limit={24} />
-            </TabsContent>
-            
-            <TabsContent value="fantasy">
-              <MediaGallery category="fantasy" onSelect={handleAssetSelect} limit={24} />
-            </TabsContent>
-          </Tabs>
+const MediaLibrary = () => {
+  const [activeTab, setActiveTab] = useState("all");
+  
+  // Dummy data for example
+  const mediaItems = [
+    { id: 1, type: 'image', title: 'Family Trip to Gujarat', date: '4/8/2024', thumbnail: '/placeholder.svg' },
+    { id: 2, type: 'audio', title: 'Grandmother\'s Recipes', date: '4/6/2024', thumbnail: '/placeholder.svg' },
+    { id: 3, type: 'audio', title: 'Our First Diwali in America', date: '4/2/2024', thumbnail: '/placeholder.svg' },
+    { id: 4, type: 'image', title: 'Dad\'s Special Chai', date: '4/1/2024', thumbnail: '/placeholder.svg' },
+    { id: 5, type: 'video', title: 'Navratri Garba Night', date: '3/28/2024', thumbnail: '/placeholder.svg' },
+    { id: 6, type: 'document', title: 'Family Tree Document', date: '3/22/2024', thumbnail: '/placeholder.svg' },
+  ];
+
+  return (
+    <div className="container max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+        <div>
+          <h1 className="text-3xl font-bold mb-2">Media Library</h1>
+          <p className="text-gray-600 dark:text-gray-400">
+            All your family memories in one place
+          </p>
         </div>
         
-        {/* Asset detail modal */}
-        {selectedAsset && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70" onClick={closeAssetDetail}>
-            <div 
-              className="relative bg-white dark:bg-dark-background-surface rounded-lg max-w-3xl w-full max-h-[90vh] overflow-auto"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="sticky top-0 z-10 flex justify-between items-center p-4 border-b border-gray-200 dark:border-dark-background-elevated bg-white dark:bg-dark-background-surface">
-                <h2 className="text-xl font-medium">{selectedAsset.title}</h2>
-                <button 
-                  onClick={closeAssetDetail}
-                  className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-dark-background-elevated"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                  </svg>
-                </button>
-              </div>
-              
-              <div className="p-6">
-                <div className="aspect-video mb-6 overflow-hidden bg-gray-100 dark:bg-dark-background-surface rounded-lg border border-gray-200 dark:border-dark-background-elevated">
-                  <img 
-                    src={selectedAsset.file_path} 
-                    alt={selectedAsset.alt_text}
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-                
-                <div className="space-y-4">
-                  <div>
-                    <h3 className="text-sm font-medium text-gray-500 dark:text-dark-text-secondary">Description</h3>
-                    <p className="mt-1">{selectedAsset.description || "No description available."}</p>
-                  </div>
-                  
-                  <div>
-                    <h3 className="text-sm font-medium text-gray-500 dark:text-dark-text-secondary">Category</h3>
-                    <p className="mt-1 capitalize">{selectedAsset.category}</p>
-                  </div>
-                  
-                  <div>
-                    <h3 className="text-sm font-medium text-gray-500 dark:text-dark-text-secondary">Tags</h3>
-                    <div className="flex flex-wrap gap-2 mt-1">
-                      {selectedAsset.tags && selectedAsset.tags.map((tag) => (
-                        <span 
-                          key={tag} 
-                          className="px-2 py-1 bg-gray-100 dark:bg-dark-background-elevated rounded-full text-xs"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <h3 className="text-sm font-medium text-gray-500 dark:text-dark-text-secondary">File Path</h3>
-                    <code className="block p-2 mt-1 bg-gray-100 dark:bg-dark-background-elevated rounded text-sm overflow-x-auto">
-                      {selectedAsset.file_path}
-                    </code>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+        <Button className="bg-forest text-white hover:bg-forest/90">
+          <Upload className="mr-2 h-4 w-4" /> Upload Media
+        </Button>
       </div>
-    </PageTransition>
+      
+      <div className="flex flex-col md:flex-row gap-4 mb-6">
+        <div className="relative flex-grow">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          <Input 
+            placeholder="Search media files..." 
+            className="pl-10 bg-white dark:bg-gray-800" 
+          />
+        </div>
+        
+        <Button variant="outline" className="flex items-center gap-2 md:w-auto">
+          <Filter className="h-4 w-4" /> Filters
+        </Button>
+      </div>
+      
+      <Tabs defaultValue="all" value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+        <TabsList className="bg-gray-100 dark:bg-gray-800 p-1 mb-6">
+          <TabsTrigger value="all" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700">
+            All Media
+          </TabsTrigger>
+          <TabsTrigger value="images" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700">
+            Images
+          </TabsTrigger>
+          <TabsTrigger value="videos" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700">
+            Videos
+          </TabsTrigger>
+          <TabsTrigger value="audio" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700">
+            Audio
+          </TabsTrigger>
+          <TabsTrigger value="documents" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700">
+            Documents
+          </TabsTrigger>
+        </TabsList>
+        
+        <TabsContent value="all" className="space-y-6 mt-0">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {mediaItems.map((item) => (
+              <MediaGalleryItem 
+                key={item.id}
+                type={item.type as 'image' | 'video' | 'audio' | 'document'}
+                title={item.title}
+                date={item.date}
+                thumbnail={item.thumbnail}
+              />
+            ))}
+          </div>
+        </TabsContent>
+        
+        <TabsContent value="images" className="space-y-6 mt-0">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {mediaItems
+              .filter(item => item.type === 'image')
+              .map((item) => (
+                <MediaGalleryItem 
+                  key={item.id}
+                  type={item.type as 'image' | 'video' | 'audio' | 'document'}
+                  title={item.title}
+                  date={item.date}
+                  thumbnail={item.thumbnail}
+                />
+              ))}
+          </div>
+        </TabsContent>
+        
+        <TabsContent value="videos" className="space-y-6 mt-0">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {mediaItems
+              .filter(item => item.type === 'video')
+              .map((item) => (
+                <MediaGalleryItem 
+                  key={item.id}
+                  type={item.type as 'image' | 'video' | 'audio' | 'document'}
+                  title={item.title}
+                  date={item.date}
+                  thumbnail={item.thumbnail}
+                />
+              ))}
+          </div>
+        </TabsContent>
+        
+        <TabsContent value="audio" className="space-y-6 mt-0">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {mediaItems
+              .filter(item => item.type === 'audio')
+              .map((item) => (
+                <MediaGalleryItem 
+                  key={item.id}
+                  type={item.type as 'image' | 'video' | 'audio' | 'document'}
+                  title={item.title}
+                  date={item.date}
+                  thumbnail={item.thumbnail}
+                />
+              ))}
+          </div>
+        </TabsContent>
+        
+        <TabsContent value="documents" className="space-y-6 mt-0">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {mediaItems
+              .filter(item => item.type === 'document')
+              .map((item) => (
+                <MediaGalleryItem 
+                  key={item.id}
+                  type={item.type as 'image' | 'video' | 'audio' | 'document'}
+                  title={item.title}
+                  date={item.date}
+                  thumbnail={item.thumbnail}
+                />
+              ))}
+          </div>
+        </TabsContent>
+      </Tabs>
+    </div>
   );
 };
 

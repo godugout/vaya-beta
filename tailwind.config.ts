@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
 
@@ -30,12 +29,26 @@ export default {
         autumn: "rgb(var(--color-autumn) / <alpha-value>)",
         sand: "rgb(var(--color-sand) / <alpha-value>)",
         
+        // Forest Stream direct colors - can be used without RGB variables
+        "forest-green": "#154734",
+        "stream-blue": "#449EBA",
+        "leaf-green": "#94C11E",
+        "autumn-orange": "#F2992D",
+        "sky-blue": "#86CAE9",
+        "mountain-blue": "#5EACBA",
+        "sand-beige": "#C4B295",
+        
         // UI colors from frog character designs
         "ui-orange": "rgb(var(--color-ui-orange) / <alpha-value>)",
         "ui-green": "rgb(var(--color-ui-green) / <alpha-value>)",
         "ui-purple": "rgb(var(--color-ui-purple) / <alpha-value>)",
         "ui-teal": "rgb(var(--color-ui-teal) / <alpha-value>)",
         "ui-red": "rgb(var(--color-ui-red) / <alpha-value>)",
+        
+        // Vaya brand colors
+        "vaya-primary": "#449EBA", // Stream water blue
+        "vaya-secondary": "#94C11E", // Leaf green
+        "vaya-accent": "#F2992D", // Autumn orange
         
         // Dark mode specific colors
         "dark-background": {
@@ -56,6 +69,7 @@ export default {
           highlight: "#94C11E",
         },
         
+        // Keep shadcn system colors
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -101,7 +115,8 @@ export default {
         sm: "var(--radius-sm)",
       },
       backgroundImage: {
-        "forest-stream": "url('/lovable-uploads/bc413ab4-a49c-4baa-8d14-e2f0d6b00ac5.png')",
+        "forest-stream": "url('/lovable-uploads/d6f811da-1ea4-433c-87e8-10ed28f459e5.png')",
+        "vaya-screen": "url('/lovable-uploads/79a7f098-5d08-4543-8610-cab0055c5960.png')",
         "gradient-coral": "linear-gradient(135deg, #FF7675 0%, #FFA05A 100%)",
         "gradient-purple": "linear-gradient(135deg, #6C5CE7 0%, #8F84EB 100%)",
         "gradient-forest": "linear-gradient(135deg, #154734 0%, #94C11E 100%)",
