@@ -1,7 +1,8 @@
+
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import VoiceRecorder from "@/components/VoiceRecorder";
+import VoiceRecordingExperience from "@/components/VoiceRecordingExperience";
 
 interface AddMemoryModalProps {
   open: boolean;
@@ -9,16 +10,14 @@ interface AddMemoryModalProps {
 }
 
 const AddMemoryModal = ({ open, onOpenChange }: AddMemoryModalProps) => {
-  const [isRecording, setIsRecording] = useState(false);
-
-  const handleMessageSent = (message: { content: string; attachments?: { type: "audio" | "image"; url: string }[] }) => {
-    console.log("Memory recorded:", message);
+  const handleMemorySaved = (data: { audioUrl?: string; transcription?: string }) => {
+    console.log("Memory recorded:", data);
     onOpenChange(false);
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
           <DialogTitle>Add New Memory</DialogTitle>
         </DialogHeader>
@@ -28,10 +27,7 @@ const AddMemoryModal = ({ open, onOpenChange }: AddMemoryModalProps) => {
             <TabsTrigger value="text">Text</TabsTrigger>
           </TabsList>
           <TabsContent value="voice">
-            <VoiceRecorder
-              onMessageSent={handleMessageSent}
-              setIsRecording={setIsRecording}
-            />
+            <VoiceRecordingExperience onMemorySaved={handleMemorySaved} />
           </TabsContent>
           <TabsContent value="text">
             {/* Text input component will go here */}
