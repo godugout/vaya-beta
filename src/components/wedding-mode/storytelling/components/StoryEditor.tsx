@@ -15,7 +15,7 @@ interface StoryEditorProps {
   themeStyles: {
     borderAccent: string;
     bgAccent: string;
-    button: string;
+    button: "forest" | "water" | "autumn"; // Use literal types instead of string
   };
   onContentChange: (content: string) => void;
   onToggleRecording: () => void;

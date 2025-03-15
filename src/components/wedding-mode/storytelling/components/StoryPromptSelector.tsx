@@ -14,7 +14,7 @@ interface StoryPromptSelectorProps {
   storyTitle: string;
   activePromptId: string | null;
   onSelectPrompt: (promptId: string) => void;
-  themeButton: string;
+  themeButton: "forest" | "water" | "autumn"; // Use literal types instead of string
 }
 
 export const StoryPromptSelector: React.FC<StoryPromptSelectorProps> = ({

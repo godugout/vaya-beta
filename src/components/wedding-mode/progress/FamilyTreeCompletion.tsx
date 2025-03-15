@@ -120,17 +120,17 @@ export const FamilyTreeCompletion: React.FC<FamilyTreeCompletionProps> = ({
   const themeStyles = {
     classic: {
       accent: 'text-autumn',
-      button: 'autumn',
+      button: 'autumn' as const,
       border: 'border-autumn',
     },
     modern: {
       accent: 'text-water',
-      button: 'water',
+      button: 'water' as const,
       border: 'border-water',
     },
     rustic: {
       accent: 'text-forest',
-      button: 'forest',
+      button: 'forest' as const,
       border: 'border-forest',
     }
   };

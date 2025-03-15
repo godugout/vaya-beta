@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Vault, Lock, Key, EyeOff, Shield, Share2 } from 'lucide-react';
@@ -28,19 +27,19 @@ export const AnjanaeyaVault: React.FC<AnjanaeyaVaultProps> = ({
   const themeStyles = {
     classic: {
       accent: 'text-autumn',
-      button: 'autumn',
+      button: 'autumn' as const,
       bgAccent: 'bg-autumn',
       borderAccent: 'border-autumn',
     },
     modern: {
       accent: 'text-water',
-      button: 'water',
+      button: 'water' as const,
       bgAccent: 'bg-water',
       borderAccent: 'border-water',
     },
     rustic: {
       accent: 'text-forest',
-      button: 'forest',
+      button: 'forest' as const,
       bgAccent: 'bg-forest',
       borderAccent: 'border-forest',
     }
@@ -57,16 +56,13 @@ export const AnjanaeyaVault: React.FC<AnjanaeyaVaultProps> = ({
       const success = await onAccessAttempt(passcode);
       setAccessStatus(success ? 'success' : 'error');
       if (success) {
-        // Proceed with security verification steps
         setTimeout(() => {
           setSecuritySteps(2);
         }, 1000);
       }
     } else {
-      // Mock successful authentication after delay
       setTimeout(() => {
         setAccessStatus('success');
-        // Proceed with security verification steps
         setTimeout(() => {
           setSecuritySteps(2);
         }, 1000);
@@ -75,12 +71,10 @@ export const AnjanaeyaVault: React.FC<AnjanaeyaVaultProps> = ({
   };
   
   const handleLocationVerify = () => {
-    // Simulate location verification
     setSecuritySteps(3);
   };
   
   const handleFinalVerification = () => {
-    // Final verification step
     setTimeout(() => {
       setVaultOpen(true);
     }, 1000);
@@ -221,17 +215,17 @@ const VaultContents: React.FC<VaultContentsProps> = ({ theme }) => {
   const themeStyles = {
     classic: {
       accent: 'text-autumn',
-      button: 'autumn',
+      button: 'autumn' as const,
       bgAccent: 'bg-autumn/10',
     },
     modern: {
       accent: 'text-water',
-      button: 'water',
+      button: 'water' as const,
       bgAccent: 'bg-water/10',
     },
     rustic: {
       accent: 'text-forest',
-      button: 'forest',
+      button: 'forest' as const,
       bgAccent: 'bg-forest/10',
     }
   };

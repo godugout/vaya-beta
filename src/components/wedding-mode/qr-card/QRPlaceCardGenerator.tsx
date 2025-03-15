@@ -26,17 +26,17 @@ export const QRPlaceCardGenerator: React.FC<QRPlaceCardGeneratorProps> = ({
   const themeStyles = {
     classic: {
       accent: 'text-autumn border-autumn',
-      button: 'autumn',
+      button: 'autumn' as const,
       cardBg: 'bg-sand/10',
     },
     modern: {
       accent: 'text-water border-water',
-      button: 'water',
+      button: 'water' as const,
       cardBg: 'bg-sky/10',
     },
     rustic: {
       accent: 'text-forest border-forest',
-      button: 'forest',
+      button: 'forest' as const,
       cardBg: 'bg-leaf/10',
     }
   };

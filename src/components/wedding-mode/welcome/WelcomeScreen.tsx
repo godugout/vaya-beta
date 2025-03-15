@@ -25,17 +25,17 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
     classic: {
       background: 'bg-sand/20',
       accent: 'text-autumn',
-      button: 'autumn',
+      button: 'autumn' as const,
     },
     modern: {
       background: 'bg-water/10',
       accent: 'text-water',
-      button: 'water',
+      button: 'water' as const,
     },
     rustic: {
       background: 'bg-forest/10',
       accent: 'text-forest',
-      button: 'forest',
+      button: 'forest' as const,
     }
   };
   
