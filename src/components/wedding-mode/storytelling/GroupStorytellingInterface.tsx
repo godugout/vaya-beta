@@ -1,28 +1,15 @@
 
 import React, { useState } from 'react';
-import { Users, BookOpenText, Mic, Send, Image, Clock, ArrowRight } from 'lucide-react';
+import { Users, BookOpenText } from 'lucide-react';
 import { useWeddingMode } from '../WeddingModeProvider';
 import { AnimatedContainer } from '@/components/animation/AnimatedContainer';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { cn } from '@/lib/utils';
-import { SuccessAnimation } from '@/components/animation/SuccessAnimation';
-
-interface StoryPrompt {
-  id: string;
-  title: string;
-  description: string;
-}
-
-interface StoryContribution {
-  id: string;
-  contributorName: string;
-  contributorAvatar?: string;
-  content: string;
-  timestamp: Date;
-}
+import { getThemeStyles } from './utils/themeUtils';
+import { StoryPromptSelector, StoryPrompt } from './components/StoryPromptSelector';
+import { StoryEditor } from './components/StoryEditor';
+import { StoryContributions, StoryContribution } from './components/StoryContributions';
+import { SuccessMessage } from './components/SuccessMessage';
 
 interface GroupStorytellingInterfaceProps {
   storyTitle?: string;
@@ -71,28 +58,7 @@ export const GroupStorytellingInterface: React.FC<GroupStorytellingInterfaceProp
   
   const allContributions = contributions.length > 0 ? contributions : defaultContributions;
   
-  const themeStyles = {
-    classic: {
-      accent: 'text-autumn',
-      button: 'autumn',
-      borderAccent: 'border-autumn',
-      bgAccent: 'bg-autumn'
-    },
-    modern: {
-      accent: 'text-water',
-      button: 'water',
-      borderAccent: 'border-water',
-      bgAccent: 'bg-water'
-    },
-    rustic: {
-      accent: 'text-forest',
-      button: 'forest',
-      borderAccent: 'border-forest',
-      bgAccent: 'bg-forest'
-    }
-  };
-  
-  const currentTheme = themeStyles[theme];
+  const currentTheme = getThemeStyles(theme);
   
   const handleToggleRecording = () => {
     setIsRecording(!isRecording);
@@ -117,6 +83,10 @@ export const GroupStorytellingInterface: React.FC<GroupStorytellingInterfaceProp
     }
   };
   
+  const handleResetForm = () => {
+    setSubmittedStory(false);
+  };
+  
   return (
     <div className="p-6">
       <AnimatedContainer variant="fade" className="max-w-4xl mx-auto">
@@ -136,113 +106,37 @@ export const GroupStorytellingInterface: React.FC<GroupStorytellingInterfaceProp
           
           <TabsContent value="create" className="space-y-6">
             {submittedStory ? (
-              <AnimatedContainer variant="scale" className="py-12 text-center">
-                <SuccessAnimation 
-                  size="lg" 
-                  message="Your story has been added to the collection!" 
-                />
-                <Button 
-                  variant="link" 
-                  className={cn("mt-4", currentTheme.accent)}
-                  onClick={() => setSubmittedStory(false)}
-                >
-                  Add another story
-                </Button>
-              </AnimatedContainer>
+              <SuccessMessage 
+                accentClass={currentTheme.accent}
+                onAddAnother={handleResetForm}
+              />
             ) : (
               <>
-                <div className="mb-4">
-                  <h3 className="text-xl font-medium mb-2">{storyTitle}</h3>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {allPrompts.map(prompt => (
-                      <Button 
-                        key={prompt.id}
-                        variant={activePromptId === prompt.id ? currentTheme.button : "outline"}
-                        size="sm"
-                        onClick={() => selectPrompt(prompt.id)}
-                      >
-                        {prompt.title}
-                      </Button>
-                    ))}
-                  </div>
-                </div>
+                <StoryPromptSelector
+                  prompts={allPrompts}
+                  storyTitle={storyTitle}
+                  activePromptId={activePromptId}
+                  onSelectPrompt={selectPrompt}
+                  themeButton={currentTheme.button}
+                />
                 
-                <div className={cn(
-                  "border rounded-lg p-4 transition-all",
-                  isRecording ? `${currentTheme.borderAccent} ring-4 ring-red-500/10` : ""
-                )}>
-                  <Textarea
-                    placeholder="Share your story or memory..."
-                    className="min-h-[150px] border-0 focus-visible:ring-0 px-0 py-2 resize-none"
-                    value={storyContent}
-                    onChange={(e) => setStoryContent(e.target.value)}
-                  />
-                  
-                  <div className="flex items-center justify-between pt-2 border-t">
-                    <div className="flex items-center gap-2">
-                      <Button 
-                        variant="outline" 
-                        size="icon"
-                        onClick={handleToggleRecording}
-                        className={isRecording ? `${currentTheme.bgAccent} text-white` : ""}
-                      >
-                        <Mic size={18} />
-                      </Button>
-                      <Button variant="outline" size="icon">
-                        <Image size={18} />
-                      </Button>
-                    </div>
-                    
-                    <Button 
-                      variant={currentTheme.button}
-                      disabled={!storyContent.trim()}
-                      onClick={handleSubmit}
-                    >
-                      Share Story
-                      <Send size={16} className="ml-2" />
-                    </Button>
-                  </div>
-                </div>
+                <StoryEditor
+                  storyContent={storyContent}
+                  isRecording={isRecording}
+                  themeStyles={currentTheme}
+                  onContentChange={setStoryContent}
+                  onToggleRecording={handleToggleRecording}
+                  onSubmit={handleSubmit}
+                />
               </>
             )}
           </TabsContent>
           
           <TabsContent value="browse">
-            <div className="space-y-4">
-              {allContributions.map((contribution) => (
-                <AnimatedContainer 
-                  key={contribution.id} 
-                  variant="fade" 
-                  className="border rounded-lg p-4"
-                >
-                  <div className="flex items-start gap-3">
-                    <Avatar>
-                      <AvatarImage src={contribution.contributorAvatar} />
-                      <AvatarFallback className={cn("text-white", currentTheme.bgAccent)}>
-                        {contribution.contributorName.substring(0, 2)}
-                      </AvatarFallback>
-                    </Avatar>
-                    
-                    <div className="flex-1">
-                      <div className="flex justify-between items-center mb-1">
-                        <h4 className="font-medium">{contribution.contributorName}</h4>
-                        <div className="flex items-center text-gray-500 text-xs">
-                          <Clock size={12} className="mr-1" />
-                          {contribution.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                        </div>
-                      </div>
-                      <p className="text-gray-700 dark:text-gray-300">{contribution.content}</p>
-                    </div>
-                  </div>
-                </AnimatedContainer>
-              ))}
-              
-              <div className="text-center pt-4">
-                <Button variant="outline" className="gap-2">
-                  View More Stories <ArrowRight size={16} />
-                </Button>
-              </div>
-            </div>
+            <StoryContributions 
+              contributions={allContributions}
+              themeStyles={currentTheme}
+            />
           </TabsContent>
         </Tabs>
       </AnimatedContainer>
