@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { MessageCircle, Languages } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -7,14 +8,19 @@ import ChatMessage from "./chat/ChatMessage";
 import ChatInput from "./chat/ChatInput";
 import PromptCategories from "./chat/PromptCategories";
 import { useChat } from "./chat/useChat";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const NarraChat = () => {
   const [isRecording, setIsRecording] = useState(false);
-  const [isSpanish, setIsSpanish] = useState(false);
+  const { isSpanish, setLanguagePreference } = useLanguage();
   const { messages, input, setInput, handleSend, handleMorePrompts } = useChat();
 
   const handlePromptSelect = (prompt: string) => {
     setInput(prompt);
+  };
+
+  const toggleLanguage = () => {
+    setLanguagePreference(isSpanish ? 'en' : 'es');
   };
 
   return (
@@ -28,7 +34,7 @@ const NarraChat = () => {
         <Button
           variant="ghost"
           size="sm"
-          onClick={() => setIsSpanish(!isSpanish)}
+          onClick={toggleLanguage}
           className="text-vaya-gray-600 hover:text-vaya-gray-800"
         >
           <Languages className="h-4 w-4 mr-2" />
@@ -38,7 +44,7 @@ const NarraChat = () => {
 
       {/* Prompt Categories */}
       <div className="p-4 border-b border-vaya-chat-border">
-        <PromptCategories onPromptSelect={handlePromptSelect} />
+        <PromptCategories onPromptSelect={handlePromptSelect} isSpanish={isSpanish} />
       </div>
 
       {/* Messages Area */}

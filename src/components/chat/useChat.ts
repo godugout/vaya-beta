@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 import { Message, LocalizedPrompt } from "./types";
 import { useToast } from "@/components/ui/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 // Mock prompts data
 const mockPrompts: LocalizedPrompt[] = [
@@ -36,6 +38,7 @@ export const useChat = () => {
   const [input, setInput] = useState("");
   const [prompts, setPrompts] = useState<LocalizedPrompt[]>([]);
   const [currentPromptIndex, setCurrentPromptIndex] = useState(0);
+  const { isSpanish } = useLanguage();
   const { toast } = useToast();
 
   useEffect(() => {
@@ -44,14 +47,34 @@ export const useChat = () => {
 
   const fetchPrompts = async () => {
     try {
-      // Using mock data instead of fetching from Supabase
-      setPrompts(mockPrompts);
+      // Try to fetch from Supabase
+      const { data, error } = await supabase
+        .from('localized_prompts')
+        .select('*')
+        .eq('active', true);
+      
+      if (error) {
+        console.error("Error fetching prompts:", error);
+        // Fall back to mock data
+        setPrompts(mockPrompts);
+        return;
+      }
+      
+      if (data && data.length > 0) {
+        setPrompts(data as LocalizedPrompt[]);
+      } else {
+        // Fall back to mock data if no prompts found
+        setPrompts(mockPrompts);
+      }
     } catch (error) {
+      console.error("Error in fetchPrompts:", error);
       toast({
         title: "Error",
         description: "Failed to load story prompts",
         variant: "destructive",
       });
+      // Fall back to mock data
+      setPrompts(mockPrompts);
     }
   };
 
