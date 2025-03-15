@@ -49,7 +49,7 @@ export default function FamilyThemeCustomizer({
   };
 
   return (
-    <div className="space-y-6 dark:bg-[#1A1F2C] dark:text-white dark:rounded-lg dark:p-4 transition-colors duration-300">
+    <div className="space-y-6 bg-white dark:bg-dark-background-surface dark:text-dark-text-primary dark:rounded-lg dark:p-4 transition-colors duration-300 border border-transparent dark:border-dark-border">
       <ThemeHeader 
         currentTheme={theme} 
         onPresetSelected={handlePresetSelected} 
@@ -66,3 +66,4 @@ export default function FamilyThemeCustomizer({
     </div>
   );
 }
+

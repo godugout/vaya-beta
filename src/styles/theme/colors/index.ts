@@ -5,6 +5,7 @@ import { lovableColors } from './lovable';
 import { greystoneColors } from './greystone';
 import { shadcnColors } from './shadcn';
 import { vayaColors } from './vaya';
+import { darkModeColors } from './darkMode';
 
 // Export the full colors object with the same structure as before
 export const colors = {
@@ -14,5 +15,7 @@ export const colors = {
   lovable: lovableColors,
   greystone: greystoneColors,
   shadcn: shadcnColors,
-  vaya: vayaColors
+  vaya: vayaColors,
+  dark: darkModeColors
 };
+

@@ -34,6 +34,7 @@ export default {
         vaya: colors.features,
         greystone: colors.greystone,
         lovable: colors.lovable,
+        dark: colors.dark,
         
         border: colors.shadcn.border,
         input: colors.shadcn.input,
@@ -60,3 +61,4 @@ export default {
   },
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;
+

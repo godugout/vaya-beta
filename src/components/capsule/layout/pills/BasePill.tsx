@@ -2,6 +2,7 @@
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import React from "react";
+import { useTheme } from "next-themes";
 
 interface BasePillProps {
   children: React.ReactNode;
@@ -20,26 +21,29 @@ export const BasePill = ({
   backgroundImage,
   className
 }: BasePillProps) => {
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
+
   const colors = {
     memories: {
-      outline: "border-lovable-teal",
-      bg: "bg-lovable-teal/10"
+      outline: "border-lovable-teal dark:border-dark-accent-teal",
+      bg: "bg-lovable-teal/10 dark:bg-dark-accent-teal/20"
     },
     stories: {
-      outline: "border-lovable-magenta",
-      bg: "bg-lovable-magenta/10"
+      outline: "border-lovable-magenta dark:border-dark-accent-coral",
+      bg: "bg-lovable-magenta/10 dark:bg-dark-accent-coral/20"
     },
     capsules: {
-      outline: "border-lovable-blue", // Changed from purple to blue
-      bg: "bg-lovable-blue/10" // Changed from purple to blue
+      outline: "border-lovable-blue dark:border-dark-accent-blue", 
+      bg: "bg-lovable-blue/10 dark:bg-dark-accent-blue/20"
     },
     narra: {
-      outline: "border-lovable-navy",
-      bg: "bg-lovable-navy/10"
+      outline: "border-lovable-navy dark:border-dark-accent-purple",
+      bg: "bg-lovable-navy/10 dark:bg-dark-accent-purple/20"
     },
     default: {
-      outline: "border-greystone-green",
-      bg: "bg-greystone-green/5"
+      outline: "border-greystone-green dark:border-dark-border",
+      bg: "bg-greystone-green/5 dark:bg-dark-background-elevated"
     }
   };
 
@@ -54,8 +58,10 @@ export const BasePill = ({
     "relative overflow-hidden rounded-xl",
     "min-h-[100px] w-[400px]",
     selectedColor.outline,
-    isDetailed ? selectedColor.bg : "bg-white",
-    "shadow-[0_4px_12px_-2px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_20px_-4px_rgba(0,0,0,0.08)]",
+    isDetailed ? selectedColor.bg : "bg-white dark:bg-dark-background-surface",
+    isDark ? 
+      "shadow-[0_4px_12px_-2px_rgba(0,0,0,0.2)] hover:shadow-[0_8px_20px_-4px_rgba(0,0,0,0.3)]" :
+      "shadow-[0_4px_12px_-2px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_20px_-4px_rgba(0,0,0,0.08)]",
     "transition-all duration-300 group border",
     className
   );
@@ -66,7 +72,7 @@ export const BasePill = ({
         <div 
           className={cn(
             "absolute inset-0 transition-opacity duration-300",
-            `bg-gradient-to-r from-${colorKey}/5 via-${colorKey}/10 to-${colorKey}/5`,
+            `bg-gradient-to-r from-${colorKey}/5 via-${colorKey}/10 to-${colorKey}/5 dark:from-dark-accent-${colorKey}/10 dark:via-dark-accent-${colorKey}/20 dark:to-dark-accent-${colorKey}/10`,
             isHovered ? "opacity-100" : "opacity-0"
           )}
         />
@@ -80,7 +86,7 @@ export const BasePill = ({
       )}
 
       {/* Wave Pattern Background */}
-      <div className="absolute inset-0 bg-wave-pattern opacity-[0.02] pointer-events-none"></div>
+      <div className="absolute inset-0 bg-wave-pattern opacity-[0.02] dark:opacity-[0.03] pointer-events-none"></div>
       
       <div className="flex items-center justify-between h-full relative z-10 px-8 py-6">
         {children}
@@ -88,3 +94,4 @@ export const BasePill = ({
     </div>
   );
 };
+

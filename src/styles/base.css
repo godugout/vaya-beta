@@ -24,7 +24,7 @@ h1, h2, h3, h4, h5, h6 {
   --accent: 250 84% 64%; /* Changed to match theme purple */
   --accent-foreground: 210 40% 98%;
   
-  /* Custom dark theme colors */
+  /* Custom dark theme colors - using our new darkModeColors */
   --theme-bg: #1A1F2C;
   --theme-card: #222837;
   --theme-border: #2D3748;
@@ -49,3 +49,4 @@ body.dark {
 .dark .theme-text-secondary {
   color: var(--theme-text-secondary);
 }
+
