@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { FamilyTreeMain } from '@/components/family/FamilyTreeMain';
 import { FamilyTimelineView } from '@/components/family/FamilyTimelineView';
-import { EditFamilyDialog } from '@/components/family/EditFamilyDialog';
+import { EditFamilyDialog, Family } from '@/components/family/EditFamilyDialog';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { CalendarIcon, CameraIcon, Home, Settings, Users } from 'lucide-react';
 
@@ -14,7 +14,7 @@ const FamilyDetail = () => {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   
   // Mock family data - would normally come from an API or database query
-  const familyData = {
+  const familyData: Family = {
     id: id || '1',
     name: 'Patel Family',
     description: 'A loving family with strong traditions and values.',
@@ -39,10 +39,10 @@ const FamilyDetail = () => {
             <p className="text-gray-600 dark:text-gray-300">{familyData.description}</p>
             <div className="flex items-center mt-2 text-sm text-gray-500 dark:text-gray-400">
               <Users className="h-4 w-4 mr-1" />
-              <span>{familyData.members} members</span>
+              <span>{typeof familyData.members === 'number' ? familyData.members : familyData.members?.length || 0} members</span>
               <span className="mx-2">•</span>
               <CalendarIcon className="h-4 w-4 mr-1" />
-              <span>Created {new Date(familyData.createdAt).toLocaleDateString()}</span>
+              <span>Created {new Date(familyData.createdAt || '').toLocaleDateString()}</span>
             </div>
           </div>
         </div>

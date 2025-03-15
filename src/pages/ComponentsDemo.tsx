@@ -30,7 +30,7 @@ const ComponentsDemo = () => {
               Interactive family tree with relationship visualization, zooming, and editing capabilities.
             </p>
             <div className="h-[600px]">
-              <FamilyTreeMain />
+              <FamilyTreeMain familyId="demo-family-id" />
             </div>
           </div>
           
