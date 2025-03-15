@@ -35,7 +35,7 @@ export const GroupStorytellingInterface: React.FC<GroupStorytellingInterfaceProp
     { id: '1', title: 'First Impression', description: 'What was your first impression of the couple?' },
     { id: '2', title: 'Favorite Memory', description: 'What is your favorite memory with the couple?' },
     { id: '3', title: 'Love Story', description: 'What part of their love story inspires you?' },
-    { id: '4', title: 'Wishes', description: 'What wishes do you have for their future together?' },
+    { id: '4', title: 'Wishes', description: 'What wishes do you have for their future together?' }
   ];
   
   const allPrompts = prompts.length > 0 ? prompts : defaultPrompts;
@@ -53,7 +53,7 @@ export const GroupStorytellingInterface: React.FC<GroupStorytellingInterfaceProp
       contributorName: 'Uncle John',
       content: 'Their first dance at our family reunion was something special. Everyone could see the chemistry.',
       timestamp: new Date(Date.now() - 7200000), // 2 hours ago
-    },
+    }
   ];
   
   const allContributions = contributions.length > 0 ? contributions : defaultContributions;
