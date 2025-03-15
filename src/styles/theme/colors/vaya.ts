@@ -1,27 +1,27 @@
 
 export const vayaColors = {
-  // Core brand colors
-  primary: '#FF7675', // Coral primary
-  secondary: '#6C5CE7', // Purple secondary
+  // Core brand colors based on uploaded nature images
+  primary: '#F2992D', // Autumn orange
+  secondary: '#449EBA', // Stream water
   accent: {
     purple: '#9b87f5',
-    green: '#10B981', // Tertiary green accent
-    orange: '#FF7675',
-    turquoise: '#0EA5E9',
-    coral: '#FFA05A',
+    green: '#94C11E', // Vibrant leaf green
+    orange: '#F2992D', // Autumn orange 
+    turquoise: '#449EBA', // Stream water
+    coral: '#F2992D', // Autumn orange
   },
   
   // UI semantic colors
   ui: {
-    success: '#10B981',
-    warning: '#F59E0B',
-    error: '#DC2626',
-    info: '#0EA5E9',
+    success: '#94C11E', // Leaf green
+    warning: '#F2992D', // Autumn orange
+    error: '#D94843', // Red tones from images
+    info: '#449EBA', // Stream water
   },
   
   // Text colors
   text: {
-    primary: '#000000',
+    primary: '#154734', // Dark forest green
     secondary: '#4B5563',
     tertiary: '#9CA3AF',
     inverse: '#FFFFFF',
@@ -32,7 +32,7 @@ export const vayaColors = {
     white: '#FFFFFF',
     light: '#F9FAFB',
     subtle: '#F3F4F6',
-    dark: '#111827',
+    dark: '#0C2A20', // Very dark forest green
   },
   
   // Border colors
@@ -43,9 +43,9 @@ export const vayaColors = {
   },
   
   // Feature-specific colors
-  stories: '#6C5CE7',
-  memories: '#FF7675',
-  capsules: '#38BDF8',
+  stories: '#F2992D', // Autumn orange
+  memories: '#94C11E', // Leaf green
+  capsules: '#449EBA', // Stream water
   chat: {
     bg: '#F8F9FA',
     user: '#E5EDFF',
@@ -65,6 +65,15 @@ export const vayaColors = {
     800: '#1F2937',
     900: '#111827',
   },
+  
+  // Forest Stream specific colors
+  forest: '#154734',
+  water: '#449EBA',
+  leaf: '#94C11E',
+  autumn: '#F2992D',
+  sand: '#C4B295',
+  sky: '#86CAE9',
+  mountain: '#5EACBA',
   
   // Elevation overlay colors for dark mode
   elevation: {

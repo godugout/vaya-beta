@@ -5,7 +5,7 @@ import { User } from "@supabase/supabase-js";
 import { NavButton } from "./NavButton";
 import { UserMenu } from "./UserMenu";
 import { GuestMenu } from "./GuestMenu";
-import { Home, Mic, Image, Archive, Users, Settings } from "lucide-react";
+import { Home, Mic, Image, Archive, Users, Settings, Palette } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -65,6 +65,12 @@ export const DesktopNav = ({
               label="Capsules" 
               isSimplified={isSimplifiedView}
             />
+            <NavButton 
+              to="/media-library" 
+              icon={<Palette size={isSimplifiedView ? 20 : 16} />} 
+              label="Media" 
+              isSimplified={isSimplifiedView}
+            />
             {user && (
               <NavButton 
                 to="/families" 
@@ -87,12 +93,12 @@ export const DesktopNav = ({
             aria-label="Toggle voice navigation"
             className={cn(
               "rounded-full transition-colors",
-              isVoiceActive && "bg-black/10 dark:bg-white/10"
+              isVoiceActive && "bg-autumn/10 dark:bg-leaf/10"
             )}
           >
             <Mic className={cn(
               "h-5 w-5 transition-colors",
-              isVoiceActive ? "text-autumn" : "text-muted-foreground"
+              isVoiceActive ? "text-autumn dark:text-leaf" : "text-muted-foreground"
             )} />
           </Button>
           

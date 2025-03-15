@@ -125,6 +125,42 @@ export type Database = {
           },
         ]
       }
+      media_assets: {
+        Row: {
+          alt_text: string
+          category: string
+          created_at: string | null
+          description: string | null
+          file_path: string
+          id: string
+          tags: string[] | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          alt_text: string
+          category: string
+          created_at?: string | null
+          description?: string | null
+          file_path: string
+          id?: string
+          tags?: string[] | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          alt_text?: string
+          category?: string
+          created_at?: string | null
+          description?: string | null
+          file_path?: string
+          id?: string
+          tags?: string[] | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       photos: {
         Row: {
           caption: string | null

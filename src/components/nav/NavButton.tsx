@@ -19,15 +19,16 @@ export const NavButton = ({ to, icon, label, isSimplified }: NavButtonProps) => 
       to={to}
       className={cn(
         "flex items-center gap-2 px-3 py-2 rounded-lg transition-colors",
-        "hover:bg-black/5 dark:hover:bg-white/10",
-        isActive && "bg-black/5 dark:bg-white/10 text-forest dark:text-leaf",
-        !isActive && "text-gray-700 dark:text-gray-300"
+        "hover:bg-autumn/10 dark:hover:bg-leaf/10",
+        isActive 
+          ? "bg-autumn/10 dark:bg-leaf/10 text-autumn dark:text-leaf" 
+          : "text-black dark:text-white"
       )}
       aria-current={isActive ? "page" : undefined}
     >
       <span className={cn(
-        "transition-all",
-        isActive ? "text-autumn" : "text-muted-foreground"
+        "transition-colors",
+        isActive ? "text-autumn dark:text-leaf" : "text-muted-foreground"
       )}>
         {icon}
       </span>

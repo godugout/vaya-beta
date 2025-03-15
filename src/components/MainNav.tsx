@@ -46,6 +46,8 @@ export function MainNav() {
       toast({
         title: "Voice Navigation Active",
         description: "Try saying 'Go to Home' or 'Record Story'",
+        variant: "default",
+        className: "bg-autumn text-white dark:bg-leaf dark:text-black",
       });
     } else {
       toast({
@@ -71,6 +73,8 @@ export function MainNav() {
         toast({
           title: `Welcome, ${fullName}!`,
           description: "You have successfully signed in.",
+          variant: "default", 
+          className: "bg-autumn/90 text-white dark:bg-leaf/90 dark:text-black border-autumn/20 dark:border-leaf/20",
         });
       }
     });

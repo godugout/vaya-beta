@@ -1,5 +1,7 @@
 
-import React from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { Mic } from "lucide-react";
 
 interface VoiceNavigationIndicatorProps {
   isActive: boolean;
@@ -7,24 +9,42 @@ interface VoiceNavigationIndicatorProps {
 
 export const VoiceNavigationIndicator = ({ isActive }: VoiceNavigationIndicatorProps) => {
   if (!isActive) return null;
-  
+
   return (
-    <div className="fixed top-20 left-0 right-0 z-20 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 p-3">
-      <div className="container max-w-7xl">
-        <div className="flex items-center bg-gray-50 dark:bg-gray-800 p-3 rounded-lg animate-pulse">
-          <div className="h-10 w-10 bg-ui-orange rounded-full flex items-center justify-center text-white mr-3">
-            <span className="sr-only">Voice Active</span>
-            <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none">
-              <path d="M12 15C13.6569 15 15 13.6569 15 12V6C15 4.34315 13.6569 3 12 3C10.3431 3 9 4.34315 9 6V12C9 13.6569 10.3431 15 12 15Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M19 10V12C19 15.866 15.866 19 12 19M12 19C8.13401 19 5 15.866 5 12V10M12 19V22M8 22H16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
+    <AnimatePresence>
+      {isActive && (
+        <motion.div 
+          className="fixed top-16 left-0 right-0 z-50 bg-gradient-to-r from-autumn to-autumn border-b border-autumn/20 text-white dark:from-leaf dark:to-leaf dark:border-leaf/20 dark:text-black"
+          initial={{ y: -100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: -100, opacity: 0 }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+        >
+          <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <div className={cn(
+                "flex items-center justify-center h-8 w-8 rounded-full bg-white/20 dark:bg-black/20",
+                "animate-pulse"
+              )}>
+                <Mic className="h-4 w-4" />
+              </div>
+              <div>
+                <p className="font-medium">Voice navigation active</p>
+                <p className="text-xs opacity-90">Try saying "Go to stories" or "Record a memory"</p>
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-2">
+              <div className="flex gap-1">
+                <div className="h-2 w-2 rounded-full bg-white/60 dark:bg-black/60 animate-[pulse_1.2s_ease-in-out_infinite]" />
+                <div className="h-2 w-2 rounded-full bg-white/60 dark:bg-black/60 animate-[pulse_1.2s_ease-in-out_0.4s_infinite]" />
+                <div className="h-2 w-2 rounded-full bg-white/60 dark:bg-black/60 animate-[pulse_1.2s_ease-in-out_0.8s_infinite]" />
+              </div>
+              <span className="text-xs opacity-80">Listening...</span>
+            </div>
           </div>
-          <div>
-            <p className="font-medium">Listening for commands...</p>
-            <p className="text-sm text-gray-500 dark:text-gray-400">Try "Go to Home" or "Record Story"</p>
-          </div>
-        </div>
-      </div>
-    </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
