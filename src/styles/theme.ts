@@ -1,4 +1,3 @@
-
 // Brand color palette
 export const colors = {
   // Primary colors
@@ -40,6 +39,40 @@ export const colors = {
     memories: "#00CEC9", // Turquoise for memory lane
     capsules: "#6C5CE7", // Purple for family capsules
     narra: "#FFEAA7", // Yellow for Narra AI assistant
+  },
+  
+  // Lovable logo colors with variations
+  lovable: {
+    // Bright pink/magenta
+    magenta: {
+      bright: "#FF1A53", // Brighter version
+      DEFAULT: "#FF3366", // Original
+      light: "#FF708C", // Lighter shade
+    },
+    // Vibrant purple
+    purple: {
+      bright: "#9D33FF", // Brighter version
+      DEFAULT: "#8A2BE2", // Original
+      light: "#A555FF", // Lighter shade
+    },
+    // Deep blue
+    blue: {
+      bright: "#4D7AFF", // Brighter version
+      DEFAULT: "#4169E1", // Original
+      light: "#7695FF", // Lighter shade
+    },
+    // Teal/cyan
+    teal: {
+      bright: "#00E6EA", // Brighter version
+      DEFAULT: "#00CED1", // Original
+      light: "#4DDFE1", // Lighter shade
+    },
+    // Light blue
+    skyblue: {
+      bright: "#5DB7FF", // Brighter version
+      DEFAULT: "#87CEFA", // Original
+      light: "#B0DFFF", // Lighter shade
+    },
   }
 };
 

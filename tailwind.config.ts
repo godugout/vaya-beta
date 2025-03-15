@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
 
@@ -62,6 +61,35 @@ export default {
             secondary: "#636E72",
           },
         },
+        
+        lovable: {
+          magenta: {
+            bright: "#FF1A53", 
+            DEFAULT: "#FF3366", 
+            light: "#FF708C", 
+          },
+          purple: {
+            bright: "#9D33FF", 
+            DEFAULT: "#8A2BE2", 
+            light: "#A555FF", 
+          },
+          blue: {
+            bright: "#4D7AFF", 
+            DEFAULT: "#4169E1", 
+            light: "#7695FF", 
+          },
+          teal: {
+            bright: "#00E6EA", 
+            DEFAULT: "#00CED1", 
+            light: "#4DDFE1", 
+          },
+          skyblue: {
+            bright: "#5DB7FF", 
+            DEFAULT: "#87CEFA", 
+            light: "#B0DFFF", 
+          },
+        },
+        
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
