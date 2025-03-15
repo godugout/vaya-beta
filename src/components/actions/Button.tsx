@@ -22,6 +22,7 @@ export interface ButtonProps
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   animateOnClick?: boolean;
+  children?: React.ReactNode;
 }
 
 export const VayaButton = forwardRef<HTMLButtonElement, ButtonProps>(

@@ -23,6 +23,8 @@ export interface IconButtonProps
   shape?: IconButtonShape;
   icon: React.ReactNode;
   isLoading?: boolean;
+  className?: string;
+  disabled?: boolean;
 }
 
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
@@ -34,6 +36,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
       shape = "circle",
       icon,
       isLoading = false,
+      disabled,
       ...props
     },
     ref
@@ -87,6 +90,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
           "min-w-[44px] min-h-[44px]",
           className
         )}
+        disabled={disabled}
         {...motionProps}
         {...props}
       >

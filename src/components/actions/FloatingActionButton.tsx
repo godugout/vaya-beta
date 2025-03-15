@@ -20,6 +20,7 @@ export interface FloatingActionButtonProps
   isLoading?: boolean;
   extended?: boolean;
   label?: string;
+  className?: string;
 }
 
 export const FloatingActionButton = forwardRef<HTMLButtonElement, FloatingActionButtonProps>(
