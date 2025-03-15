@@ -14,6 +14,7 @@ import ShareStories from "./pages/ShareStories";
 import FamilyCapsules from "./pages/FamilyCapsules";
 import Families from "./pages/Families";
 import CreateFamily from "./pages/CreateFamily";
+import * as React from "react";
 import "./index.css";
 
 // Create a client

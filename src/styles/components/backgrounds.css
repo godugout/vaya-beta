@@ -1,0 +1,53 @@
+
+/* Background styles */
+.bg-forest {
+  background-color: var(--color-forest);
+  color: white;
+}
+
+.bg-water {
+  background-color: var(--color-water);
+  color: white;
+}
+
+.bg-sky {
+  background-color: var(--color-sky);
+  color: var(--color-text-dark);
+}
+
+.bg-sand {
+  background-color: var(--color-sand);
+  color: var(--color-text-dark);
+}
+
+.bg-gradient-sunrise {
+  background: var(--gradient-sunrise);
+  color: white;
+}
+
+.bg-gradient-forest {
+  background: var(--gradient-forest);
+  color: white;
+}
+
+.bg-gradient-water {
+  background: var(--gradient-water);
+  color: white;
+}
+
+.bg-forest-stream {
+  background-image: url('/lovable-uploads/d7f2208b-7bec-4c9e-9cb2-17cd8fca4ac2.png');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.bg-forest-stream::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+}

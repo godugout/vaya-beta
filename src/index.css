@@ -10,7 +10,12 @@
 @import './styles/layout.css';
 @import './styles/utilities.css';
 @import './styles/animations.css';
-@import './styles/components.css';
+/* Import component styles */
+@import './styles/components/cards.css';
+@import './styles/components/buttons.css';
+@import './styles/components/forms.css';
+@import './styles/components/navigation.css';
+@import './styles/components/backgrounds.css';
 @import './styles/dark-mode.css';
 
 @layer base {

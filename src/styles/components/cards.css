@@ -1,0 +1,48 @@
+
+/* Card Components */
+.nature-card {
+  background-color: var(--card-background);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 12px var(--card-shadow);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px var(--card-shadow);
+}
+
+.illustration-card {
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  position: relative;
+}
+
+.illustration-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--gradient-forest);
+  opacity: 0.1;
+  transition: opacity 0.3s ease;
+}
+
+.illustration-card:hover::before {
+  opacity: 0.2;
+}
+
+.frog-character-card {
+  background-color: var(--color-ui-orange);
+  color: white;
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  transition: all 0.3s ease;
+}
+
+.frog-character-card:hover {
+  transform: scale(1.02);
+}
