@@ -18,52 +18,52 @@ const ShareStories = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-indigo-950/20 to-purple-950/10 dark:from-indigo-950/40 dark:to-purple-950/30 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-dark-background-orange/80 to-dark-background-red/70 dark:from-dark-background-orange dark:to-dark-background-red/90 relative overflow-hidden">
       {/* Background pattern */}
-      <div className="page-bg-pattern"></div>
+      <div className="absolute inset-0 bg-pattern-lines opacity-20 z-0"></div>
       
       {/* Cosmic background effect */}
       <div className="absolute inset-0 z-patterns">
         <CanvasRevealEffect 
-          colors={[[155, 135, 245], [14, 165, 233], [214, 188, 250]]} 
+          colors={[[255, 118, 117], [108, 92, 231], [255, 160, 90]]} 
           dotSize={1.5}
           animationSpeed={2}
-          opacities={[0.1, 0.1, 0.1, 0.2, 0.2, 0.2, 0.3, 0.3, 0.3, 0.4]}
+          opacities={[0.1, 0.1, 0.2, 0.2, 0.3, 0.3, 0.4, 0.4]}
         />
       </div>
       
       <Hero />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-content">
-        <div className="text-center mb-8 backdrop-card p-6 dark:bg-dark-background/30">
-          <h2 className="text-3xl font-bold text-indigo-950 dark:text-indigo-50 drop-shadow-md z-text">
+        <div className="text-center mb-8 backdrop-blur-md bg-dark-background-surface/10 p-6 rounded-xl border border-[#FF7675]/20">
+          <h2 className="text-3xl font-bold text-white drop-shadow-lg z-text">
             Anjaneya Vault - Voice Recording
           </h2>
-          <p className="mt-4 text-xl text-indigo-800 dark:text-indigo-200 z-text">
+          <p className="mt-4 text-xl text-white/90 z-text">
             Preserve your memories with our cosmic voice recording experience
           </p>
         </div>
         
-        <div className="max-w-md mx-auto elevated-card bg-white/90 dark:bg-dark-background/80 backdrop-blur-lg p-6 border border-indigo-200/20 dark:border-indigo-200/10 shadow-xl z-cards">
+        <div className="max-w-md mx-auto bg-dark-background-surface/30 backdrop-blur-xl p-6 border border-[#FF7675]/30 rounded-xl shadow-2xl z-cards">
           <VoiceRecordingExperience onMemorySaved={handleMemorySaved} />
         </div>
         
         {/* Dimmed content - other UI elements that are not part of the demo */}
         <div className="mt-16 opacity-30 pointer-events-none">
           <div className="text-center mb-8 z-text">
-            <h3 className="text-2xl font-semibold text-indigo-900 dark:text-indigo-100">
+            <h3 className="text-2xl font-semibold text-white">
               Other Features (Currently Unavailable)
             </h3>
-            <p className="text-indigo-700 dark:text-indigo-200">
+            <p className="text-white/80">
               These sections are dimmed while we showcase the voice recording experience
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 z-cards">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="elevated-card p-6">
-                <h4 className="font-semibold text-lg mb-2 text-indigo-900 dark:text-indigo-100 z-text">Future Feature {i}</h4>
-                <p className="text-indigo-700 dark:text-indigo-200 z-text">
+              <div key={i} className="bg-dark-background-surface/20 backdrop-blur-sm p-6 rounded-lg border border-white/10">
+                <h4 className="font-semibold text-lg mb-2 text-white z-text">Future Feature {i}</h4>
+                <p className="text-white/70 z-text">
                   This feature is currently under development.
                 </p>
               </div>

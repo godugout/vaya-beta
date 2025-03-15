@@ -82,6 +82,17 @@
     @apply w-16 h-16 rounded-full bg-ui-orange flex items-center justify-center text-white shadow-lg;
     box-shadow: 0 0 0 10px rgba(243, 124, 33, 0.1);
   }
+  
+  /* Pattern background */
+  .bg-pattern-lines {
+    background-image: repeating-linear-gradient(
+      45deg,
+      rgba(255, 118, 117, 0.15),
+      rgba(255, 118, 117, 0.15) 10px,
+      rgba(108, 92, 231, 0.15) 10px,
+      rgba(108, 92, 231, 0.15) 20px
+    );
+  }
 }
 
 @layer base {

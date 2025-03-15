@@ -19,7 +19,7 @@ const AudioControls = ({
     <div className="flex justify-center space-x-4">
       <Button
         onClick={togglePlayback}
-        className="rounded-full bg-[#6C5CE7] hover:bg-[#5649C0] shadow-lg shadow-[#6C5CE7]/20"
+        className="rounded-full bg-[#6C5CE7] hover:bg-[#5649C0] shadow-lg shadow-[#6C5CE7]/30 border border-white/10"
         size="icon"
         disabled={isProcessing}
       >
@@ -32,7 +32,7 @@ const AudioControls = ({
       
       <Button
         onClick={handleReset}
-        className="rounded-full bg-dark-background-elevated hover:bg-dark-background-surface text-dark-text-secondary"
+        className="rounded-full bg-dark-background-elevated hover:bg-dark-background-surface text-white/70 border border-white/10"
         size="icon"
         disabled={isProcessing}
       >
