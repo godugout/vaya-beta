@@ -34,10 +34,13 @@ export const UserMenu = ({ user, handleSignOut, navigate }: UserMenuProps) => {
   
   if (!user) return null;
   
-  const userInitials = user.email 
-    ? user.email.substring(0, 2).toUpperCase() 
-    : "VA";
+  const userInitials = user.user_metadata?.full_name
+    ? user.user_metadata.full_name.substring(0, 2).toUpperCase()
+    : user.email 
+      ? user.email.substring(0, 2).toUpperCase() 
+      : "VA";
   
+  const userDisplayName = user.user_metadata?.full_name || "User";
   const userEmail = user.email || "user@example.com";
 
   return (
@@ -55,7 +58,7 @@ export const UserMenu = ({ user, handleSignOut, navigate }: UserMenuProps) => {
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel>
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium">{user.user_metadata?.full_name || userEmail}</p>
+            <p className="text-sm font-medium">{userDisplayName}</p>
             <p className="text-xs text-muted-foreground">{userEmail}</p>
           </div>
         </DropdownMenuLabel>

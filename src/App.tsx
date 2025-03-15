@@ -14,6 +14,7 @@ import ShareStories from "./pages/ShareStories";
 import FamilyCapsules from "./pages/FamilyCapsules";
 import Families from "./pages/Families";
 import CreateFamily from "./pages/CreateFamily";
+import Auth from "./pages/Auth";
 import * as React from "react";
 import "./index.css";
 
@@ -65,6 +66,7 @@ function App() {
                     <Route path="/family-capsules" element={<FamilyCapsules />} />
                     <Route path="/families" element={<Families />} />
                     <Route path="/create-family" element={<CreateFamily />} />
+                    <Route path="/auth" element={<Auth />} />
                   </Routes>
                 </main>
                 <Footer />
