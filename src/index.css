@@ -3,20 +3,12 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import our modular style files */
-@import './styles/variables.css';
-@import './styles/base.css';
-@import './styles/typography.css';
-@import './styles/layout.css';
-@import './styles/utilities.css';
-@import './styles/animations.css';
-/* Import component styles */
-@import './styles/components/cards.css';
-@import './styles/components/buttons.css';
-@import './styles/components/forms.css';
-@import './styles/components/navigation.css';
-@import './styles/components/backgrounds.css';
-@import './styles/dark-mode.css';
+/* Import our modular style files - new structure */
+@import './styles/variables/index.css';
+@import './styles/base/index.css';
+@import './styles/components/index.css';
+@import './styles/utilities/index.css';
+@import './styles/theme/dark.css';
 
 @layer base {
   :root {

@@ -1,0 +1,7 @@
+
+/* Typography variables */
+:root {
+  --font-heading: 'Gabarito', sans-serif;
+  --font-body: 'Poppins', sans-serif;
+  --font-accent: 'Montserrat', sans-serif;
+}
