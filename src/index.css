@@ -56,7 +56,7 @@
   @apply py-[var(--section-padding-y)] px-[var(--section-padding-x)];
 }
 
-/* Consistent Hero sections - Simplified Agencs style */
+/* Consistent Hero sections - Agencs style */
 .hero-section {
   @apply relative min-h-[90vh] flex flex-col justify-center items-center bg-white;
 }
@@ -65,7 +65,7 @@
   @apply max-w-4xl mx-auto text-center relative z-10;
 }
 
-/* Agencs simplified animations */
+/* Agencs animations */
 .fadeIn {
   animation: fadeIn 2s;
 }

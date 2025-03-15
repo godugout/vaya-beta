@@ -9,27 +9,27 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-vaya-brand-primary text-white hover:bg-vaya-brand-primary/90 shadow-sm hover:shadow-md",
+        default: "bg-black text-white hover:bg-gray-800 shadow-sm hover:shadow-md",
         destructive: "bg-red-500 text-white hover:bg-red-600 shadow-sm hover:shadow-md",
-        outline: "border border-vaya-brand-primary/30 bg-transparent text-vaya-brand-primary hover:bg-vaya-brand-primary/10",
-        secondary: "bg-vaya-brand-secondary text-white hover:bg-vaya-brand-secondary/90 shadow-sm hover:shadow-md",
-        ghost: "hover:bg-vaya-gray-100 text-vaya-brand-primary",
-        link: "text-vaya-brand-primary underline-offset-4 hover:underline p-0 h-auto",
+        outline: "border border-black/30 bg-transparent text-black hover:bg-black/10",
+        secondary: "bg-gray-200 text-black hover:bg-gray-300 shadow-sm hover:shadow-md",
+        ghost: "hover:bg-gray-100 text-black",
+        link: "text-black underline-offset-4 hover:underline p-0 h-auto",
         
         // Feature-specific variants
-        stories: "bg-vaya-stories text-white hover:bg-vaya-stories/90 shadow-sm hover:shadow-md",
-        memories: "bg-vaya-memories text-white hover:bg-vaya-memories/90 shadow-sm hover:shadow-md", 
-        capsules: "bg-vaya-capsules text-white hover:bg-vaya-capsules/90 shadow-sm hover:shadow-md",
-        narra: "bg-vaya-narra text-white hover:bg-vaya-narra/90 shadow-sm hover:shadow-md",
+        stories: "bg-black text-white hover:bg-gray-800 shadow-sm hover:shadow-md",
+        memories: "bg-black text-white hover:bg-gray-800 shadow-sm hover:shadow-md", 
+        capsules: "bg-black text-white hover:bg-gray-800 shadow-sm hover:shadow-md",
+        narra: "bg-black text-white hover:bg-gray-800 shadow-sm hover:shadow-md",
         
         // Accent color variants
-        accent: "bg-vaya-accent-turquoise text-white hover:bg-vaya-accent-turquoise/90 shadow-sm hover:shadow-md",
-        coral: "bg-vaya-accent-coral text-white hover:bg-vaya-accent-coral/90 shadow-sm hover:shadow-md",
-        purple: "bg-vaya-brand-primary text-white hover:bg-vaya-brand-primary/90 shadow-sm hover:shadow-md",
-        yellow: "bg-vaya-accent-yellow text-vaya-text-primary hover:bg-vaya-accent-yellow/90 shadow-sm hover:shadow-md",
-        orange: "bg-vaya-accent-orange text-white hover:bg-vaya-accent-orange/90 shadow-sm hover:shadow-md",
-        green: "bg-vaya-accent-green text-vaya-text-primary hover:bg-vaya-accent-green/90 shadow-sm hover:shadow-md",
-        blue: "bg-vaya-accent-blue text-white hover:bg-vaya-accent-blue/90 shadow-sm hover:shadow-md",
+        accent: "bg-black text-white hover:bg-gray-800 shadow-sm hover:shadow-md",
+        coral: "bg-black text-white hover:bg-gray-800 shadow-sm hover:shadow-md",
+        purple: "bg-black text-white hover:bg-gray-800 shadow-sm hover:shadow-md",
+        yellow: "bg-gray-100 text-black hover:bg-gray-200 shadow-sm hover:shadow-md",
+        orange: "bg-black text-white hover:bg-gray-800 shadow-sm hover:shadow-md",
+        green: "bg-black text-white hover:bg-gray-800 shadow-sm hover:shadow-md",
+        blue: "bg-black text-white hover:bg-gray-800 shadow-sm hover:shadow-md",
       },
       size: {
         default: "h-12 px-6 py-3",
