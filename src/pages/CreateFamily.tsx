@@ -1,12 +1,12 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase, getTable } from "@/integrations/supabase/client";
+import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
+import FamilyLogoCustomizer from "@/components/family/FamilyLogoCustomizer";
 
 export default function CreateFamily() {
   const navigate = useNavigate();
@@ -20,7 +20,6 @@ export default function CreateFamily() {
     setLoading(true);
 
     try {
-      // Insert the family
       const { data: familyData, error: familyError } = await supabase
         .from('families')
         .insert([
@@ -31,7 +30,6 @@ export default function CreateFamily() {
 
       if (familyError) throw familyError;
 
-      // Add the creator as an admin
       const { error: memberError } = await supabase
         .from('family_members')
         .insert([
