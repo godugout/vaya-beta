@@ -25,13 +25,16 @@ const WaveformVisualizer = ({ isRecording, audioBlob }: WaveformVisualizerProps)
 
   return (
     <div className="h-24 w-full flex items-center justify-center relative">
-      {/* Background cosmic effect */}
-      <div className="absolute inset-0 bg-gradient-to-b from-indigo-900/10 to-purple-900/5 rounded-lg opacity-50" />
+      {/* Background with brand colors */}
+      <div className="absolute inset-0 bg-gradient-to-b from-dark-background-purple/20 to-dark-background-orange/10 rounded-lg opacity-60" />
       
       <WavePath amplitudes={amplitudes} isRecording={isRecording} />
       
-      {/* Add subtle star-like particles for cosmic effect */}
-      <CosmicParticles />
+      {/* Add brand-colored particles for cosmic effect */}
+      <CosmicParticles 
+        count={30} 
+        colors={["#FF7675", "#6C5CE7", "#74B9FF"]} 
+      />
     </div>
   );
 };

@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 
 interface CosmicParticlesProps {
-  color?: string;
+  colors?: string[];
   count?: number;
   size?: number;
   duration?: number;
@@ -10,9 +10,9 @@ interface CosmicParticlesProps {
 }
 
 const CosmicParticles = ({
-  color = "white",
-  count = 20,
-  size = 2,
+  colors = ["#FF7675", "#6C5CE7", "#FFFFFF"],
+  count = 30,
+  size = 2.5,
   duration = 3,
   opacity = [0.1, 0.7, 0.1]
 }: CosmicParticlesProps) => {
@@ -27,7 +27,7 @@ const CosmicParticles = ({
             height: Math.random() * size + 1 + 'px',
             left: Math.random() * 100 + '%',
             top: Math.random() * 100 + '%',
-            background: color,
+            background: colors[Math.floor(Math.random() * colors.length)],
           }}
           animate={{
             opacity: opacity,

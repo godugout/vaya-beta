@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Square, Mic } from "lucide-react";
 
@@ -17,9 +18,9 @@ const RecordingControls = ({
       onClick={isRecordingActive ? onStopRecording : onStartRecording}
       className={`${
         isRecordingActive
-          ? "bg-red-500 hover:bg-red-600 animate-pulse"
-          : "bg-vaya-secondary hover:bg-vaya-secondary/90"
-      } text-white w-full`}
+          ? "bg-[#FF7675] hover:bg-[#FF7675]/90 animate-pulse"
+          : "bg-gradient-to-r from-[#6C5CE7] to-[#8F84EB] hover:from-[#6C5CE7]/90 hover:to-[#8F84EB]/90"
+      } text-white w-full shadow-md`}
     >
       {isRecordingActive ? (
         <Square className="mr-2 h-4 w-4" />

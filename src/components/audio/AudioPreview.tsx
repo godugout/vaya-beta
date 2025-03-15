@@ -1,3 +1,4 @@
+
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Play, Pause } from "lucide-react";
@@ -33,7 +34,7 @@ const AudioPreview = ({ audioBlob, disabled }: AudioPreviewProps) => {
     <Button
       onClick={togglePlayback}
       variant="outline"
-      className="w-full border-vaya-secondary text-vaya-secondary hover:bg-vaya-secondary hover:text-white"
+      className="w-full border-[#6C5CE7] text-[#6C5CE7] hover:bg-[#6C5CE7] hover:text-white dark:border-[#8F84EB] dark:text-[#8F84EB] dark:hover:bg-[#8F84EB]"
       disabled={disabled}
     >
       {isPlaying ? (

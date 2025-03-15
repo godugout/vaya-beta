@@ -15,21 +15,23 @@ const TranscriptionDisplay = ({ transcription }: TranscriptionDisplayProps) => {
       transition={{ duration: 0.4 }}
       className="relative rounded-xl overflow-hidden p-6"
     >
-      {/* Organic background effect */}
-      <div className="absolute inset-0 bg-gradient-to-r from-vaya-gray-50 to-vaya-gray-100 backdrop-blur-sm border border-vaya-gray-200/30 rounded-xl" />
+      {/* Background effect with brand colors */}
+      <div className="absolute inset-0 bg-gradient-to-r from-dark-background-purple/30 to-dark-background-orange/20 backdrop-blur-sm border border-dark-border/30 rounded-xl" />
       
-      {/* Subtle animated stars/dots - organic decorative elements */}
+      {/* Subtle animated stars/dots with brand colors */}
       <div className="absolute inset-0 overflow-hidden">
         {Array.from({ length: 15 }).map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 bg-vaya-brand-primary/20 rounded-full"
+            className="absolute w-1.5 h-1.5 rounded-full"
             style={{
               top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
+              backgroundColor: i % 3 === 0 ? '#FF7675' : i % 3 === 1 ? '#6C5CE7' : '#74B9FF',
+              opacity: 0.3,
             }}
             animate={{
-              opacity: [0.1, 0.4, 0.1],
+              opacity: [0.2, 0.5, 0.2],
               scale: [1, 1.5, 1],
             }}
             transition={{
@@ -44,7 +46,7 @@ const TranscriptionDisplay = ({ transcription }: TranscriptionDisplayProps) => {
       {/* Flowing line decoration */}
       <div className="absolute bottom-0 left-0 right-0 h-1 overflow-hidden">
         <motion.div 
-          className="h-full bg-gradient-to-r from-vaya-brand-primary/0 via-vaya-accent-turquoise/30 to-vaya-brand-primary/0" 
+          className="h-full bg-gradient-to-r from-[#6C5CE7]/0 via-[#FF7675]/40 to-[#6C5CE7]/0" 
           animate={{
             x: ["-100%", "100%"]
           }}
@@ -56,7 +58,7 @@ const TranscriptionDisplay = ({ transcription }: TranscriptionDisplayProps) => {
         />
       </div>
       
-      <p className="font-story italic relative z-10 text-vaya-text-primary dark:text-vaya-text-secondary text-lg leading-relaxed">{transcription}</p>
+      <p className="font-story italic relative z-10 text-dark-text-primary text-lg leading-relaxed">{transcription}</p>
     </motion.div>
   );
 };
