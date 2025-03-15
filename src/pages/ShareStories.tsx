@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -6,6 +5,7 @@ import { TabsList, TabsTrigger, Tabs, TabsContent } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { ChevronLeft, Home, Mic, ArrowRight, Search, Calendar, Play } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { SearchInput } from '@/components/input/SearchInput';
 
 const ShareStories = () => {
   return (
@@ -101,10 +101,9 @@ const ShareStories = () => {
           <h2 className="text-2xl font-bold mb-6">Patel Family Events & Celebrations</h2>
           
           <div className="mb-6 flex justify-between items-center">
-            <Input 
+            <SearchInput 
               placeholder="Search capsules..." 
-              className="max-w-xs bg-white dark:bg-gray-800"
-              startIcon={<Search className="h-4 w-4" />}
+              className="max-w-xs"
             />
             
             <div className="flex space-x-4">
