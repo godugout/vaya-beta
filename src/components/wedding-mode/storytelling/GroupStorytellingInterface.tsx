@@ -71,6 +71,7 @@ export const GroupStorytellingInterface: React.FC<GroupStorytellingInterfaceProp
       }
       setSubmittedStory(true);
       setStoryContent('');
+      setIsRecording(false);
       setTimeout(() => setSubmittedStory(false), 3000);
     }
   };

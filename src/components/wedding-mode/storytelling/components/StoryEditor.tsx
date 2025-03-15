@@ -1,9 +1,13 @@
 
-import React, { useState } from 'react';
-import { Mic, Image, Send } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Mic, Image, Send, Loader } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
+import { useVoiceRecorder } from '@/hooks/useVoiceRecorder';
+import { useAudioTranscription } from '@/components/voice-recording/hooks/useAudioTranscription';
+import { useToast } from '@/components/ui/use-toast';
+import AudioPreview from '@/components/audio/AudioPreview';
 
 interface StoryEditorProps {
   storyContent: string;
@@ -26,6 +30,59 @@ export const StoryEditor: React.FC<StoryEditorProps> = ({
   onToggleRecording,
   onSubmit
 }) => {
+  const { toast } = useToast();
+  const {
+    isRecordingActive,
+    audioBlob,
+    startRecording,
+    stopRecording,
+    setAudioBlob
+  } = useVoiceRecorder();
+  
+  const {
+    transcription,
+    isProcessing: isTranscribing,
+    transcribeAudio,
+    setTranscription
+  } = useAudioTranscription();
+
+  // Manage recording state
+  useEffect(() => {
+    if (isRecording !== isRecordingActive) {
+      if (isRecording) {
+        startRecording();
+      } else if (isRecordingActive) {
+        stopRecording();
+      }
+    }
+  }, [isRecording, isRecordingActive, startRecording, stopRecording]);
+
+  // Transcribe audio when recording stops
+  useEffect(() => {
+    const handleTranscription = async () => {
+      if (audioBlob && !isRecordingActive && !transcription) {
+        const text = await transcribeAudio(audioBlob);
+        if (text) {
+          onContentChange(storyContent ? `${storyContent}\n${text}` : text);
+        }
+      }
+    };
+    
+    handleTranscription();
+  }, [audioBlob, isRecordingActive, transcription, transcribeAudio, onContentChange, storyContent]);
+
+  // Sync external recording state with internal state
+  const handleToggleRecording = () => {
+    if (isTranscribing) return;
+    
+    onToggleRecording();
+    
+    if (audioBlob) {
+      setAudioBlob(null);
+      setTranscription(null);
+    }
+  };
+
   return (
     <div className={cn(
       "border rounded-lg p-4 transition-all",
@@ -38,15 +95,28 @@ export const StoryEditor: React.FC<StoryEditorProps> = ({
         onChange={(e) => onContentChange(e.target.value)}
       />
       
+      {audioBlob && !isRecording && (
+        <div className="mt-2 mb-4">
+          <AudioPreview audioBlob={audioBlob} disabled={isTranscribing} />
+          {isTranscribing && (
+            <div className="flex items-center justify-center mt-2 text-sm text-muted-foreground">
+              <Loader size={14} className="animate-spin mr-2" />
+              Transcribing your audio...
+            </div>
+          )}
+        </div>
+      )}
+      
       <div className="flex items-center justify-between pt-2 border-t">
         <div className="flex items-center gap-2">
           <Button 
             variant="outline" 
             size="icon"
-            onClick={onToggleRecording}
+            onClick={handleToggleRecording}
             className={isRecording ? `${themeStyles.bgAccent} text-white` : ""}
+            disabled={isTranscribing}
           >
-            <Mic size={18} />
+            <Mic size={18} className={isTranscribing ? "animate-pulse" : ""} />
           </Button>
           <Button variant="outline" size="icon">
             <Image size={18} />
@@ -55,7 +125,7 @@ export const StoryEditor: React.FC<StoryEditorProps> = ({
         
         <Button 
           variant={themeStyles.button}
-          disabled={!storyContent.trim()}
+          disabled={!storyContent.trim() || isTranscribing}
           onClick={onSubmit}
         >
           Share Story
