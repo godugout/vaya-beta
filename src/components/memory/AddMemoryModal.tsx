@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import VoiceRecordingExperience from "@/components/VoiceRecordingExperience";
+import VoiceRecordingExperience from "@/components/voice-recording/VoiceRecordingExperience";
 
 interface AddMemoryModalProps {
   open: boolean;

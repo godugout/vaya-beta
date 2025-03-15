@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useIsMobile } from "@/hooks/use-mobile";
 import Hero from "@/components/Hero";
-import VoiceRecordingExperience from "@/components/VoiceRecordingExperience";
+import VoiceRecordingExperience from "@/components/voice-recording/VoiceRecordingExperience";
 import { CanvasRevealEffect } from "@/components/ui/canvas-reveal-effect";
 
 const ShareStories = () => {
