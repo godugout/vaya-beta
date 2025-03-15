@@ -21,4 +21,6 @@ h1, h2, h3, h4, h5, h6 {
   --secondary-foreground: 210 40% 98%;
   --card: 222 47% 11%;
   --card-foreground: 210 40% 98%;
+  --accent: 199 84% 55%; /* Changed from purple to blue */
+  --accent-foreground: 210 40% 98%;
 }

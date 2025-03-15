@@ -30,12 +30,12 @@ export const BasePill = ({
       bg: "bg-lovable-magenta/10"
     },
     capsules: {
-      outline: "border-lovable-purple",
-      bg: "bg-lovable-purple/10"
+      outline: "border-lovable-blue", // Changed from purple to blue
+      bg: "bg-lovable-blue/10" // Changed from purple to blue
     },
     narra: {
-      outline: "border-lovable-blue",
-      bg: "bg-lovable-blue/10"
+      outline: "border-lovable-navy",
+      bg: "bg-lovable-navy/10"
     },
     default: {
       outline: "border-greystone-green",

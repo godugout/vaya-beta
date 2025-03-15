@@ -18,8 +18,8 @@ const buttonVariants = cva(
         // Feature-specific variants
         stories: "bg-lovable-magenta text-white hover:bg-lovable-magenta-bright",
         memories: "bg-lovable-teal text-white hover:bg-lovable-teal-bright", 
-        capsules: "bg-lovable-purple text-white hover:bg-lovable-purple-bright",
-        narra: "bg-lovable-blue text-white hover:bg-lovable-blue-bright",
+        capsules: "bg-lovable-blue text-white hover:bg-lovable-blue-bright", // Changed from purple to blue
+        narra: "bg-lovable-navy text-white hover:bg-lovable-navy-bright",
       },
       size: {
         default: "h-12 px-6 py-3",

@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -57,7 +56,7 @@ const categories = [
     name: "Herencia Cultural",
     name_es: "Herencia Cultural",
     icon: <BookOpen className="h-4 w-4" />,
-    colorKey: "lovable-purple",
+    colorKey: "lovable-blue",
     prompts: [
       {
         en: "What cultural traditions do you maintain in your family?",
@@ -95,10 +94,10 @@ const PromptCategories = ({ onPromptSelect, isSpanish = false }: PromptCategorie
       text: "text-lovable-teal",
       border: "border-lovable-teal/30"
     },
-    "lovable-purple": {
-      bg: "bg-lovable-purple/10",
-      text: "text-lovable-purple",
-      border: "border-lovable-purple/30"
+    "lovable-blue": {
+      bg: "bg-lovable-blue/10",
+      text: "text-lovable-blue",
+      border: "border-lovable-blue/30"
     }
   };
 

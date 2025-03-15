@@ -1,4 +1,3 @@
-
 // Brand color palette
 export const colors = {
   // Primary colors
@@ -26,7 +25,7 @@ export const colors = {
   // Accent colors - using Lovable colors for important CTAs
   accent: {
     turquoise: "#00CED1",
-    purple: "#8A2BE2",
+    blue: "#0EA5E9", // Changed from purple to blue
     magenta: "#FF3366",
   },
   
@@ -42,7 +41,7 @@ export const colors = {
   features: {
     stories: "#FF3366", // Lovable Magenta for stories
     memories: "#00CED1", // Lovable Teal for memory lane
-    capsules: "#8A2BE2", // Lovable Purple for family capsules
+    capsules: "#0EA5E9", // Changed from purple to blue for family capsules
     narra: "#4169E1", // Lovable Blue for Narra AI assistant
   },
   
@@ -54,14 +53,14 @@ export const colors = {
       DEFAULT: "#FF3366", // Original
       light: "#FF708C", // Lighter shade
     },
-    // Vibrant purple
-    purple: {
-      bright: "#9D33FF", // Brighter version
-      DEFAULT: "#8A2BE2", // Original
-      light: "#A555FF", // Lighter shade
+    // Blue replacing purple
+    blue: {
+      bright: "#33B1F0", // Brighter version
+      DEFAULT: "#0EA5E9", // Changed from purple to blue
+      light: "#70CFFF", // Lighter shade
     },
     // Deep blue
-    blue: {
+    navy: {
       bright: "#4D7AFF", // Brighter version
       DEFAULT: "#4169E1", // Original
       light: "#7695FF", // Lighter shade

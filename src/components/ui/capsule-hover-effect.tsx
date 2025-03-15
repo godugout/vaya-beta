@@ -1,3 +1,4 @@
+
 "use client";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -12,7 +13,7 @@ export const CapsuleHoverEffect = ({ colorKey, isHovered }: CapsuleHoverEffectPr
     const colors: { [key: string]: string } = {
       memories: "from-vaya-memories/20 via-vaya-memories/30 to-vaya-memories/20",
       stories: "from-vaya-stories/20 via-vaya-stories/30 to-vaya-stories/20",
-      capsules: "from-vaya-capsules/20 via-vaya-capsules/30 to-vaya-capsules/20"
+      capsules: "from-vaya-capsules/20 via-vaya-capsules/30 to-vaya-capsules/20" // This will now use the blue defined in tailwind theme
     };
     return colors[key] || "from-gray-100/20 via-gray-100/30 to-gray-100/20";
   };
