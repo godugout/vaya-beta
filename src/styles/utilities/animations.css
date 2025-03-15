@@ -76,6 +76,44 @@
   }
 }
 
+@keyframes shine {
+  0% {
+    background-position: -200px;
+  }
+  100% {
+    background-position: calc(200px + 100%);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes reveal {
+  0% {
+    clip-path: inset(0 100% 0 0);
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 /* Animation classes */
 .animate-float {
   animation: float 6s ease-in-out infinite;
@@ -116,9 +154,63 @@
   animation: ripple 1.5s infinite;
 }
 
-/* Hover effects */
+.animate-bounce {
+  animation: bounce 2s ease-in-out infinite;
+}
+
+.animate-reveal {
+  animation: reveal 0.5s ease-out forwards;
+}
+
+.animate-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.animate-shine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shine 3s infinite;
+}
+
+.animate-sparkle {
+  position: relative;
+}
+
+.animate-sparkle::before,
+.animate-sparkle::after {
+  content: '';
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+  width: 8px;
+  height: 8px;
+  top: 20%;
+  right: 20%;
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+.animate-sparkle::after {
+  width: 6px;
+  height: 6px;
+  top: 10%;
+  right: 40%;
+  animation-delay: 0.4s;
+}
+
+/* Hover effects with emotions */
 .hover-scale {
-  transition: transform 0.3s ease;
+  transition: transform 0.3s var(--vaya-easing-bounce);
 }
 
 .hover-scale:hover {
@@ -126,7 +218,7 @@
 }
 
 .hover-lift {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s var(--vaya-easing-bounce), box-shadow 0.3s ease;
 }
 
 .hover-lift:hover {
@@ -141,6 +233,75 @@
 .hover-glow:hover {
   filter: drop-shadow(0 0 8px var(--color-ui-orange));
   transform: scale(1.02);
+}
+
+.hover-heartbeat {
+  transition: transform 0.3s ease;
+}
+
+.hover-heartbeat:hover {
+  animation: pulse 1s ease-in-out;
+}
+
+.hover-shake {
+  transition: transform 0.3s ease;
+}
+
+.hover-shake:hover {
+  animation: wave 2s ease-in-out;
+}
+
+/* Character animation classes */
+.character-entry {
+  animation: fadeIn 0.6s var(--vaya-easing-bounce);
+}
+
+.character-exit {
+  animation: fadeIn 0.6s var(--vaya-easing-bounce) reverse;
+}
+
+.character-happy {
+  animation: bounce 1s var(--vaya-easing-bounce);
+}
+
+.character-excited {
+  animation: pulse 0.5s var(--vaya-easing-bounce) 3;
+}
+
+.character-thinking {
+  animation: float 3s ease-in-out infinite;
+}
+
+.character-surprised {
+  animation: pulse 0.3s var(--vaya-easing-bounce) 2;
+}
+
+/* Focus/validation states */
+.input-focus-animation {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.input-focus-animation:focus-within {
+  border-color: var(--color-ui-orange);
+  box-shadow: 0 0 0 2px var(--color-ui-orange-25);
+  transform: translateY(-2px);
+}
+
+.input-error-animation {
+  animation: shake 0.4s ease-in-out;
+}
+
+.input-success-animation::after {
+  content: '';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  background-color: var(--color-ui-green);
+  border-radius: 50%;
+  animation: pulse 1s var(--vaya-easing-bounce);
 }
 
 /* Button animations */
@@ -162,6 +323,14 @@
 
 .btn-animated-border:hover::before {
   width: 100%;
+}
+
+.btn-press {
+  transition: transform 0.2s var(--vaya-easing-bounce);
+}
+
+.btn-press:active {
+  transform: scale(0.96);
 }
 
 /* Progress animations */
@@ -191,4 +360,114 @@
   100% {
     left: 100%;
   }
+}
+
+/* CSS variables for animation */
+:root {
+  --vaya-duration-fast: 200ms;
+  --vaya-duration-standard: 350ms;
+  --vaya-duration-slow: 500ms;
+  
+  --vaya-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --vaya-easing-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --vaya-easing-gentle: cubic-bezier(0.4, 0.0, 0.2, 1);
+  --vaya-easing-elastic: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  
+  --color-ui-orange-25: rgba(255, 117, 24, 0.25);
+}
+
+/* Specific component animations */
+.recording-pulse {
+  animation: recordingPulse 1.5s infinite;
+}
+
+@keyframes recordingPulse {
+  0% { 
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 118, 117, 0.7);
+  }
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(255, 118, 117, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 118, 117, 0);
+  }
+}
+
+.success-pulse {
+  animation: successPulse 1.5s;
+}
+
+@keyframes successPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 206, 201, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(0, 206, 201, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 206, 201, 0);
+  }
+}
+
+/* Apply reduced motion settings */
+@media (prefers-reduced-motion) {
+  .animate-float,
+  .animate-pulse,
+  .animate-wave,
+  .animate-bounce,
+  .animate-shine,
+  .animate-ripple,
+  .character-happy,
+  .character-excited,
+  .character-thinking,
+  .character-surprised,
+  .recording-pulse,
+  .success-pulse {
+    animation: none;
+  }
+  
+  .hover-scale:hover,
+  .hover-lift:hover,
+  .hover-glow:hover,
+  .hover-heartbeat:hover,
+  .hover-shake:hover {
+    transform: none;
+    filter: none;
+    animation: none;
+  }
+  
+  .btn-press:active {
+    transform: none;
+  }
+  
+  .animate-fade-in,
+  .animate-slide-in-right,
+  .animate-reveal,
+  .character-entry,
+  .character-exit {
+    animation-duration: 0.1s;
+  }
+}
+
+[data-motion="reduced"] .animate-float,
+[data-motion="reduced"] .animate-pulse,
+[data-motion="reduced"] .animate-wave,
+[data-motion="reduced"] .animate-bounce,
+[data-motion="reduced"] .animate-shine,
+[data-motion="reduced"] .animate-ripple,
+[data-motion="reduced"] .character-happy,
+[data-motion="reduced"] .character-excited,
+[data-motion="reduced"] .character-thinking,
+[data-motion="reduced"] .character-surprised,
+[data-motion="reduced"] .recording-pulse,
+[data-motion="reduced"] .success-pulse {
+  animation: none;
+}
+
+[data-motion="none"] * {
+  transition: none !important;
+  animation: none !important;
 }
