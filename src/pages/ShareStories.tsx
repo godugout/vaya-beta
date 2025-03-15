@@ -1,125 +1,59 @@
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import NarraChat from "@/components/NarraChat";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { AudioWaveform, BookOpen, MessageSquare } from "lucide-react";
 import Hero from "@/components/Hero";
-
-interface StoryCategory {
-  title_en: string;
-  title_es: string;
-  description_en: string;
-  description_es: string;
-  icon: React.ReactNode;
-  colorKey: string;
-  chatCategory: string;
-}
+import VoiceRecordingExperience from "@/components/VoiceRecordingExperience";
 
 const ShareStories = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
-  const [isSpanish, setIsSpanish] = useState(true);
-  const [userLanguage, setUserLanguage] = useState<string>('es');
-
-  useEffect(() => {
-    // Only fetch language preference if there's a user session
-    const fetchUserLanguage = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (session) {
-        // Fetch user's language preference
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('preferred_language')
-          .eq('id', session.user.id)
-          .single();
-
-        if (profile) {
-          setUserLanguage(profile.preferred_language);
-          setIsSpanish(profile.preferred_language === 'es');
-        }
-      }
-    };
-    
-    fetchUserLanguage();
-  }, []);
-
-  const categories: StoryCategory[] = [
-    {
-      title_en: "Family Traditions",
-      title_es: "Tradiciones Familiares",
-      description_en: "Share cherished family traditions and customs that have been passed down through generations.",
-      description_es: "Comparte tradiciones y costumbres familiares que han pasado de generación en generación.",
-      icon: <MessageSquare className="h-8 w-8 text-white" />,
-      colorKey: "Primary Orange",
-      chatCategory: "traditions"
-    },
-    {
-      title_en: "Life Stories",
-      title_es: "Historias de Vida",
-      description_en: "Record personal journeys and important moments that shaped your family's story.",
-      description_es: "Graba historias personales y momentos importantes que formaron la historia de tu familia.",
-      icon: <AudioWaveform className="h-8 w-8 text-white" />,
-      colorKey: "Ocean Blue",
-      chatCategory: "life-lessons"
-    },
-    {
-      title_en: "Cultural Heritage",
-      title_es: "Herencia Cultural",
-      description_en: "Share stories about your Costa Rican heritage and cultural experiences.",
-      description_es: "Comparte historias sobre tu herencia costarricense y experiencias culturales.",
-      icon: <BookOpen className="h-8 w-8 text-white" />,
-      colorKey: "Nature Green",
-      chatCategory: "heritage"
-    },
-  ];
+  const [demoMode, setDemoMode] = useState(true);
+  
+  const handleMemorySaved = (data: { audioUrl?: string; transcription?: string }) => {
+    console.log("Memory saved:", data);
+    // Here you would typically do something with the saved memory
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
       <Hero />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="py-8">
-          {isMobile ? (
-            <NarraChat />
-          ) : (
-            <div className="grid grid-cols-12 gap-8">
-              <div className="col-span-8 bg-white rounded-lg shadow">
-                <NarraChat />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold text-gray-900">
+            Voice Recording Experience
+          </h2>
+          <p className="mt-4 text-xl text-gray-500">
+            Try our new streamlined voice recording interface
+          </p>
+        </div>
+        
+        <div className="max-w-md mx-auto">
+          <VoiceRecordingExperience onMemorySaved={handleMemorySaved} />
+        </div>
+        
+        {/* Dimmed content - other UI elements that are not part of the demo */}
+        <div className="mt-16 opacity-30 pointer-events-none">
+          <div className="text-center mb-8">
+            <h3 className="text-2xl font-semibold text-gray-700">
+              Other Features (Currently Unavailable)
+            </h3>
+            <p className="text-gray-500">
+              These sections are dimmed while we showcase the voice recording experience
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="bg-white p-6 rounded-lg shadow-md">
+                <h4 className="font-semibold text-lg mb-2">Future Feature {i}</h4>
+                <p className="text-gray-500">
+                  This feature is currently under development.
+                </p>
               </div>
-              <div className="col-span-4 space-y-6">
-                {categories.map((category, index) => {
-                  const bgColor = category.colorKey === "Primary Orange" 
-                    ? "#F97316" 
-                    : category.colorKey === "Ocean Blue" 
-                    ? "#0EA5E9" 
-                    : "#84CC16";
-                  
-                  return (
-                    <Card 
-                      key={index} 
-                      style={{ backgroundColor: bgColor }}
-                      className="hover:shadow-lg transition-shadow duration-200"
-                    >
-                      <CardHeader>
-                        <div className="mb-4">{category.icon}</div>
-                        <CardTitle className="text-xl text-white font-outfit">
-                          {isSpanish ? category.title_es : category.title_en}
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-white/90 font-inter">
-                          {isSpanish ? category.description_es : category.description_en}
-                        </p>
-                      </CardContent>
-                    </Card>
-                  );
-                })}
-              </div>
-            </div>
-          )}
+            ))}
+          </div>
         </div>
       </div>
     </div>
