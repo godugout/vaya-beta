@@ -11,7 +11,7 @@ interface MobileTopNavProps {
 
 export const MobileTopNav = ({ user, handleSignOut, navigate }: MobileTopNavProps) => {
   return (
-    <div className="md:hidden fixed top-0 left-0 right-0 border-b bg-greystone-green z-50">
+    <div className="md:hidden fixed top-0 left-0 right-0 border-b bg-greystone-green z-nav shadow-md">
       <div className="flex h-16 items-center px-4">
         <Link to="/" className="flex items-center gap-2">
           <div className="flex items-center">

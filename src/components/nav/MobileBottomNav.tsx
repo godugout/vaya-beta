@@ -17,7 +17,7 @@ export const MobileBottomNav = ({ user, navigate }: MobileBottomNavProps) => {
   };
 
   return (
-    <div className="md:hidden fixed bottom-0 left-0 right-0 bg-greystone-green border-t z-50">
+    <div className="md:hidden fixed bottom-0 left-0 right-0 bg-greystone-green border-t z-nav shadow-[0_-2px_10px_rgba(0,0,0,0.1)]">
       <div className="flex justify-around items-center h-16 px-4">
         <Link
           to="/"

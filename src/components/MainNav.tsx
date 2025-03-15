@@ -32,7 +32,7 @@ export function MainNav() {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 z-50">
+      <div className="fixed top-0 left-0 right-0 z-nav">
         <DesktopNav user={user} handleSignOut={handleSignOut} navigate={navigate} />
         <MobileTopNav user={user} handleSignOut={handleSignOut} navigate={navigate} />
       </div>

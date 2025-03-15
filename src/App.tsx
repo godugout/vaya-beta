@@ -33,7 +33,11 @@ function App() {
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <LanguageProvider>
           <Router>
-            <div className="flex min-h-screen flex-col page-background">
+            <div className="flex min-h-screen flex-col bg-[#f8f9fa] dark:bg-dark-background-DEFAULT">
+              {/* Fixed background patterns */}
+              <div className="fixed inset-0 bg-grid-pattern opacity-40 z-patterns"></div>
+              <div className="fixed inset-0 bg-wave-pattern opacity-10 z-patterns"></div>
+              
               <MainNav />
               <main className="flex-1 relative z-content">
                 <Routes>

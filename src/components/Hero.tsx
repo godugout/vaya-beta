@@ -26,8 +26,8 @@ export default function Hero({ culturalContent }: HeroProps) {
     <div 
       className={`relative overflow-hidden py-24 ${
         location.pathname.includes('family-capsules') 
-          ? 'bg-vaya-capsules/5 dark:bg-dark-background-elevated text-vaya-gray-900 dark:text-dark-text-primary' 
-          : 'bg-white/95 dark:bg-dark-background-surface/95'
+          ? 'bg-vaya-capsules/10 dark:bg-dark-background-elevated text-vaya-gray-900 dark:text-dark-text-primary' 
+          : 'bg-white/90 dark:bg-dark-background-surface/90'
       }`} 
       data-component="Hero"
     >

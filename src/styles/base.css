@@ -3,8 +3,13 @@
 body {
   font-family: 'Borna', 'Inter', sans-serif;
   color: #113231;
-  background-color: white;
+  background-color: #f8f9fa;
   position: relative;
+}
+
+.dark body {
+  background-color: var(--theme-bg);
+  color: var(--theme-text);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -20,6 +25,7 @@ h1, h2, h3, h4, h5, h6 {
   --z-text: 30;
   --z-floating: 40;
   --z-modal: 50;
+  --z-nav: 60;
 }
 
 .z-base {
@@ -48,6 +54,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .z-modal {
   z-index: var(--z-modal);
+}
+
+.z-nav {
+  z-index: var(--z-nav);
 }
 
 /* Dark mode styles */
@@ -137,4 +147,15 @@ body.dark {
 .text-layer {
   position: relative;
   z-index: var(--z-text);
+}
+
+/* Global page background */
+.page-background {
+  position: relative;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+
+.dark .page-background {
+  background-color: var(--theme-bg);
 }

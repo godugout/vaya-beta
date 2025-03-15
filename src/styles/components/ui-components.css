@@ -71,7 +71,7 @@
 }
 
 .backdrop-card {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(12px);
   border-radius: 1rem;
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -81,7 +81,7 @@
 }
 
 .dark .backdrop-card {
-  background-color: rgba(34, 40, 55, 0.8);
+  background-color: rgba(34, 40, 55, 0.85);
   border: 1px solid rgba(45, 55, 72, 0.4);
 }
 
@@ -110,4 +110,52 @@
 .dark .floating-action-button {
   background-color: var(--primary);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Content cards with proper elevation */
+.content-card {
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  position: relative;
+  z-index: var(--z-cards);
+  overflow: hidden;
+}
+
+.dark .content-card {
+  background-color: var(--theme-card);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Semi-transparent cards for overlays */
+.glass-card {
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  position: relative;
+  z-index: var(--z-cards);
+}
+
+.dark .glass-card {
+  background-color: rgba(34, 40, 55, 0.8);
+  border: 1px solid rgba(45, 55, 72, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Section containers */
+.section-container {
+  position: relative;
+  z-index: var(--z-content);
+  margin: 2rem 0;
+  padding: 2rem;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.dark .section-container {
+  background-color: rgba(34, 40, 55, 0.7);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
