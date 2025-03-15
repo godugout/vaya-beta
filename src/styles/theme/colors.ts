@@ -22,9 +22,9 @@ export const colors = {
   // UI colors with improved contrast
   ui: {
     orange: {
-      DEFAULT: "#D97A00", // Darkened for better contrast
-      light: "#FFB651",
-      dark: "#B35F00", // Darkened further for more contrast
+      DEFAULT: "#FF7675", // Warm coral from guidelines
+      light: "#FF9897",
+      dark: "#E55A59", // Darkened for contrast
     },
     green: {
       DEFAULT: "#6A9A3B", // Darkened for better contrast
@@ -32,9 +32,9 @@ export const colors = {
       dark: "#4E7229", // Darkened further for more contrast
     },
     purple: {
-      DEFAULT: "#7C3AED", // Already good contrast
-      light: "#A78BFA",
-      dark: "#5B21CA", // Darkened further for more contrast
+      DEFAULT: "#6C5CE7", // Purple from guidelines
+      light: "#8F84EB",
+      dark: "#5649C0", // Darkened for contrast
     },
     teal: {
       DEFAULT: "#2A9DAF", // Darkened for better contrast
@@ -54,16 +54,19 @@ export const colors = {
     forest: "#1D6A44", // Darkened for better contrast 
     water: "#1D8CA6", // Darkened for better contrast
     sand: "#F0D6A8", // Slightly darkened for better contrast with white text
+    coral: "#FF7675", // Warm coral from guidelines
+    purple: "#6C5CE7", // Purple from guidelines
     light: "#F8F9FA",
     dark: "#121212",
   },
   
   // Gradient combinations
   gradients: {
-    sunrise: "linear-gradient(to right, #F9E3C4, #F37C21)",
+    sunrise: "linear-gradient(to right, #F9E3C4, #FF7675)", // Updated with brand color
     forest: "linear-gradient(to right, #1D6A44, #6A9A3B)",
     water: "linear-gradient(to right, #1D8CA6, #5BAED4)",
-    purple: "linear-gradient(to right, #7C3AED, #A78BFA)",
+    purple: "linear-gradient(to right, #6C5CE7, #8F84EB)", // Updated with brand color
+    coral: "linear-gradient(to right, #FF7675, #FFA05A)", // New brand gradient
   },
   
   // Text colors with enhanced contrast
@@ -71,6 +74,7 @@ export const colors = {
     dark: "#1A1A1A", // Darkened for better contrast
     medium: "#444444", // Darkened for better contrast
     light: "#FFFFFF",
-    accent: "#E06600", // Darkened for better contrast
+    accent: "#FF7675", // Updated to use brand coral
+    purple: "#6C5CE7", // Added brand purple
   },
 };

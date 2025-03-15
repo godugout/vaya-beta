@@ -12,7 +12,7 @@ const HomeHero = ({ isSpanish }: HomeHeroProps) => {
   return (
     <div className="relative min-h-[90vh] overflow-hidden bg-forest-stream">
       {/* Overlay with increased contrast for better text visibility */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/60 z-0"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/70 z-0"></div>
       
       <div className="container relative z-10 flex flex-col items-center justify-center h-full pt-20 pb-32">
         <motion.div
@@ -26,7 +26,7 @@ const HomeHero = ({ isSpanish }: HomeHeroProps) => {
               ? "Preserva la Voz de tu Familia" 
               : "Preserve Your Family's Voice"}
             <br />
-            <span className="text-ui-orange-light">
+            <span className="text-ui-orange">
               {isSpanish ? "Comparte tu Historia" : "Share Your Story"}
             </span>
           </h1>
@@ -69,7 +69,7 @@ const HomeHero = ({ isSpanish }: HomeHeroProps) => {
         >
           <a 
             href="#features" 
-            className="inline-flex items-center gap-2 text-white hover:text-ui-orange-light transition-colors"
+            className="inline-flex items-center gap-2 text-white hover:text-ui-orange transition-colors"
           >
             <span className="font-medium">
               {isSpanish ? "Descubre Más" : "Discover More"}

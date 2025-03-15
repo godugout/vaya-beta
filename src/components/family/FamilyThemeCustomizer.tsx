@@ -18,8 +18,8 @@ export default function FamilyThemeCustomizer({
   const isDark = resolvedTheme === "dark";
   
   const [theme, setTheme] = useState<FamilyTheme>(initialTheme || {
-    primaryColor: isDark ? "#8B5CF6" : "#6C5CE7",
-    secondaryColor: isDark ? "#C4B5FD" : "#A29BFE",
+    primaryColor: "#FF7675", // Brand coral color
+    secondaryColor: "#6C5CE7", // Brand purple color
     textColor: isDark ? "#F8F9FA" : "#2D3436"
   });
 
@@ -66,4 +66,3 @@ export default function FamilyThemeCustomizer({
     </div>
   );
 }
-

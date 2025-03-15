@@ -13,13 +13,13 @@
   --color-water: #1D8CA6;
   --color-mountain: #156378;
   --color-leaf: #6A9A3B;
-  --color-autumn: #E06600;
+  --color-autumn: #FF7675; /* Updated to brand coral */
   --color-sand: #F0D6A8;
   
-  /* UI Colors from frog designs - with improved contrast */
-  --color-ui-orange: #D97A00;
+  /* UI Colors from brand guidelines - with improved contrast */
+  --color-ui-orange: #FF7675; /* Coral from brand */
   --color-ui-green: #6A9A3B;
-  --color-ui-purple: #7C3AED;
+  --color-ui-purple: #6C5CE7; /* Purple from brand */
   --color-ui-teal: #2A9DAF;
   --color-ui-red: #DC2626;
   
@@ -29,10 +29,10 @@
   --color-text-light: #FFFFFF;
   
   /* Gradients */
-  --gradient-sunrise: linear-gradient(to right, #F0D6A8, #E06600);
+  --gradient-sunrise: linear-gradient(to right, #F0D6A8, #FF7675); /* Updated with brand coral */
   --gradient-forest: linear-gradient(to right, #1D6A44, #6A9A3B);
   --gradient-water: linear-gradient(to right, #1D8CA6, #5BAED4);
-  --gradient-purple: linear-gradient(to right, #7C3AED, #A78BFA);
+  --gradient-purple: linear-gradient(to right, #6C5CE7, #8F84EB); /* Updated with brand purple */
   
   /* Card colors */
   --card-background: #FFFFFF;
@@ -64,12 +64,12 @@
   --color-water: #234A5E;
   --color-mountain: #1A3540;
   --color-leaf: #4C6530;
-  --color-autumn: #B35508;
+  --color-autumn: #FF7675; /* Updated to brand coral */
   --color-sand: #8A7247;
   
-  --color-ui-orange: #D17300;
+  --color-ui-orange: #FF7675; /* Coral from brand */
   --color-ui-green: #5C7E3A;
-  --color-ui-purple: #6D40D6;
+  --color-ui-purple: #6C5CE7; /* Purple from brand */
   --color-ui-teal: #2A8498;
   --color-ui-red: #C53030;
   
@@ -93,7 +93,7 @@ html, body {
   width: 100%;
   font-family: var(--font-body);
   color: var(--color-text-dark);
-  background-color: #FFFFFF; /* Set explicit background color */
+  background-color: #121212; /* Default to dark background */
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   scroll-behavior: smooth;
@@ -201,4 +201,21 @@ img {
   background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
   z-index: -1;
   border-radius: 0.25rem;
+}
+
+/* Background patterns and effects */
+.bg-pattern-dots {
+  background-image: radial-gradient(circle at 10px 10px, rgba(255, 255, 255, 0.1) 2px, transparent 0);
+  background-size: 20px 20px;
+}
+
+.bg-pattern-grid {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Set dark mode as default */
+:root {
+  color-scheme: dark;
 }

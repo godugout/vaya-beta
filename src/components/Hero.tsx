@@ -25,12 +25,12 @@ export default function Hero({ culturalContent }: HeroProps) {
   // Select background color based on the page with improved contrast
   const getBgClass = () => {
     if (location.pathname.includes('family-capsules')) 
-      return 'bg-ui-orange/15 dark:bg-[#2A1E17]';
+      return 'bg-gradient-to-br from-dark-background-orange/90 to-dark-background-orange/70 dark:from-dark-background-orange to-dark-background-orange/80';
     if (location.pathname.includes('memory-lane')) 
-      return 'bg-ui-teal/15 dark:bg-[#172A2A]';
+      return 'bg-gradient-to-br from-dark-background-green/90 to-dark-background-green/70 dark:from-dark-background-green to-dark-background-green/80';
     if (location.pathname.includes('share-stories')) 
-      return 'bg-ui-purple/15 dark:bg-[#211C2F]';
-    return 'bg-ui-green/15 dark:bg-[#1C2F21]';
+      return 'bg-gradient-to-br from-dark-background-purple/90 to-dark-background-purple/70 dark:from-dark-background-purple to-dark-background-purple/80';
+    return 'bg-gradient-to-br from-dark-background-red/90 to-dark-background-red/70 dark:from-dark-background-red to-dark-background-red/80';
   };
 
   return (

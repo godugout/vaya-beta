@@ -37,6 +37,25 @@ export default {
         "ui-teal": "rgb(var(--color-ui-teal) / <alpha-value>)",
         "ui-red": "rgb(var(--color-ui-red) / <alpha-value>)",
         
+        // Dark mode specific colors
+        "dark-background": {
+          DEFAULT: "#1A1F2C",
+          surface: "#222837",
+          elevated: "#2D3748",
+          inset: "#171C26",
+          orange: "#331F17",
+          red: "#2C1517",
+          green: "#192D1D",
+          purple: "#261E36",
+        },
+        
+        "dark-text": {
+          primary: "#F8F9FA",
+          secondary: "#A0AEC0",
+          tertiary: "#718096",
+          highlight: "#FF8E8D",
+        },
+        
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -83,6 +102,8 @@ export default {
       },
       backgroundImage: {
         "forest-stream": "url('/lovable-uploads/d7f2208b-7bec-4c9e-9cb2-17cd8fca4ac2.png')",
+        "gradient-coral": "linear-gradient(135deg, #FF7675 0%, #FFA05A 100%)",
+        "gradient-purple": "linear-gradient(135deg, #6C5CE7 0%, #8F84EB 100%)",
       },
       animation: {
         "wave-pattern": "wavePattern 50s linear infinite",
@@ -116,6 +137,12 @@ export default {
       },
       zIndex: {
         "nav": "100",
+        "content": "20",
+        "patterns": "10",
+        "cards": "30",
+        "text": "40",
+        "overlay": "50",
+        "floating": "60",
       },
     },
   },
