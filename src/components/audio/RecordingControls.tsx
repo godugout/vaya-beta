@@ -27,9 +27,9 @@ const RecordingControls = ({
         size="lg"
         className={`${
           isRecordingActive
-            ? "bg-[#FF7675] hover:bg-[#FF7675]/90 shadow-[0_0_15px_rgba(255,118,117,0.5)] animate-pulse"
-            : "bg-[#6C5CE7] hover:bg-[#6C5CE7]/90 shadow-[0_0_15px_rgba(108,92,231,0.5)]"
-        } text-white w-full font-medium border border-white/10 relative z-10`}
+            ? "bg-red-500 hover:bg-red-600"
+            : "bg-blue-600 hover:bg-blue-700"
+        } text-white w-full font-medium`}
       >
         {isRecordingActive ? (
           <Square className="mr-2 h-5 w-5" />

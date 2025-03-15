@@ -9,17 +9,17 @@ interface RecordingStatusProps {
 const RecordingStatus = ({ isRecordingActive, hasAudioBlob }: RecordingStatusProps) => {
   return (
     <motion.div 
-      className="text-center mb-4"
+      className="text-center mb-6"
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      <h3 className={`text-xl font-heading font-semibold drop-shadow-md ${
+      <h3 className={`text-xl font-semibold mb-2 ${
         isRecordingActive 
-          ? "text-[#FF7675]" 
+          ? "text-red-500" 
           : hasAudioBlob 
-            ? "text-[#6C5CE7]" 
-            : "text-white"
+            ? "text-blue-600" 
+            : "text-gray-800"
       }`}>
         {isRecordingActive 
           ? "Recording..." 
@@ -27,7 +27,7 @@ const RecordingStatus = ({ isRecordingActive, hasAudioBlob }: RecordingStatusPro
             ? "Review Your Memory" 
             : "Record Your Memory"}
       </h3>
-      <p className="text-base text-white/90 mt-1 max-w-xs mx-auto font-medium">
+      <p className="text-base text-gray-600 mt-1 max-w-xs mx-auto">
         {isRecordingActive 
           ? "Speak clearly into your microphone" 
           : hasAudioBlob 
