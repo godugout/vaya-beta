@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -134,7 +133,7 @@ export const MemoryCapsuleCreator = ({ onComplete }: MemoryCapsuleCreatorProps) 
               <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
                 <Clock className="h-4 w-4 mr-2" />
                 {selectedDate 
-                  ? `Time until reveal: ${Math.ceil((selectedDate.getTime() - Date.now()) / (1000 * 60 * A60 * 24))} days`
+                  ? `Time until reveal: ${Math.ceil((selectedDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24))} days`
                   : "Please select a date"
                 }
               </div>

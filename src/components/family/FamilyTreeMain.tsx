@@ -1,4 +1,3 @@
-
 import { useState, useCallback } from 'react';
 import { 
   ReactFlow, 
@@ -41,7 +40,6 @@ const edgeTypes = {
   familyConnection: FamilyTreeEdge,
 };
 
-// Example initial data
 const initialNodes: Node[] = [
   {
     id: '1',
@@ -278,11 +276,13 @@ export const FamilyTreeMain = () => {
             </div>
             
             <div className="space-y-2">
-              <Input 
-                placeholder="Search family members..."
-                className="text-sm"
-                prefix={<Search className="h-4 w-4 text-gray-500 dark:text-gray-400" />}
-              />
+              <div className="flex items-center relative">
+                <Search className="h-4 w-4 text-gray-500 dark:text-gray-400 absolute left-3" />
+                <Input 
+                  placeholder="Search family members..."
+                  className="text-sm pl-9"
+                />
+              </div>
               
               <Dialog open={isAddMemberOpen} onOpenChange={setIsAddMemberOpen}>
                 <DialogTrigger asChild>
