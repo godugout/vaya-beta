@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+
+import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,23 +13,6 @@ export default function Auth() {
   const [isSignUp, setIsSignUp] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
-
-  // Auto-login effect for development
-  useEffect(() => {
-    const autoLogin = async () => {
-      try {
-        const { error } = await supabase.auth.signInWithPassword({
-          email: "demo@vaya.com",
-          password: "demo123",
-        });
-        if (error) throw error;
-        navigate("/");
-      } catch (error: any) {
-        console.error("Auto-login failed:", error.message);
-      }
-    };
-    autoLogin();
-  }, [navigate]);
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -105,7 +89,7 @@ export default function Auth() {
           <div>
             <Button
               type="submit"
-              className="w-full bg-vaya-orange hover:bg-orange-600"
+              className="w-full bg-lovable-magenta hover:bg-lovable-magenta-bright"
               disabled={loading}
             >
               {loading
@@ -121,7 +105,7 @@ export default function Auth() {
           <Button
             variant="link"
             onClick={() => setIsSignUp(!isSignUp)}
-            className="text-vaya-orange"
+            className="text-lovable-blue"
           >
             {isSignUp
               ? "Already have an account? Sign in"
