@@ -1,35 +1,36 @@
 
-/* Base variables */
+/* Base variables with Agencs theme */
 :root {
-  /* Color palette from forest stream illustration */
-  --color-sky: #5BAED4;
-  --color-forest: #1D6A44;
-  --color-water: #1D8CA6;
-  --color-mountain: #156378;
-  --color-leaf: #6A9A3B;
-  --color-autumn: #FF7D45; /* Warm orange from the autumn trees */
-  --color-sand: #F0D6A8;
+  /* Agencs color palette - minimalist black/white with subtle grays */
+  --color-black: #000000;
+  --color-white: #FFFFFF;
+  --color-gray-100: #F4F4F4;
+  --color-gray-200: #E5E5E5;
+  --color-gray-300: #C8C8C9;
+  --color-gray-400: #9F9EA1;
+  --color-gray-500: #8A898C;
+  --color-gray-600: #6F6E73;
+  --color-gray-700: #555459;
+  --color-gray-800: #403E43;
+  --color-gray-900: #221F26;
   
-  /* UI Colors from brand guidelines with forest stream theme */
-  --color-ui-orange: #FF7D45; /* Autumn orange color */
-  --color-ui-green: #6A9A3B; /* Light forest green */
-  --color-ui-teal: #1D8CA6; /* Stream water color */
-  --color-ui-purple: #6C5CE7; /* Brand purple */
-  --color-ui-red: #DC2626;
+  /* UI Colors */
+  --color-ui-primary: var(--color-black);
+  --color-ui-secondary: var(--color-gray-800);
+  --color-ui-accent: var(--color-gray-900);
+  --color-ui-error: #DC2626;
+  --color-ui-success: #10B981;
+  --color-ui-warning: #F59E0B;
   
-  /* Text colors with better contrast */
-  --color-text-dark: #1A1A1A;
-  --color-text-medium: #444444;
-  --color-text-light: #FFFFFF;
+  /* Text colors */
+  --color-text-dark: var(--color-black);
+  --color-text-medium: var(--color-gray-800);
+  --color-text-light: var(--color-white);
   
   /* Gradients */
-  --gradient-sunrise: linear-gradient(to right, #F0D6A8, #FF7D45);
-  --gradient-forest: linear-gradient(to right, #1D6A44, #6A9A3B);
-  --gradient-water: linear-gradient(to right, #1D8CA6, #5BAED4);
-  --gradient-mountain: linear-gradient(to right, #156378, #1D8CA6);
-  --gradient-purple: linear-gradient(to right, #6C5CE7, #8F84EB);
+  --gradient-fade: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 100%);
   
   /* Card colors */
-  --card-background: #FFFFFF;
-  --card-shadow: rgba(0, 0, 0, 0.1);
+  --card-background: var(--color-white);
+  --card-shadow: rgba(0, 0, 0, 0.05);
 }

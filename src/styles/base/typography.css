@@ -1,11 +1,37 @@
 
-/* Typography */
+/* Typography with Agencs style */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   font-weight: 500;
-  color: #000;
+  color: var(--color-black);
   letter-spacing: -0.02em;
   line-height: 1.1;
+}
+
+h1 {
+  font-size: 4.5rem;
+  font-weight: 500;
+  margin: 0.5rem 0;
+}
+
+h2 {
+  font-size: 3.5rem;
+  margin-bottom: 1.5rem;
+}
+
+h3 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+p {
+  margin-bottom: 1.5rem;
+  font-weight: 400;
 }
 
 .font-heading {
@@ -25,19 +51,30 @@ h1, h2, h3, h4, h5, h6 {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-.text-with-bg {
-  position: relative;
-  display: inline-block;
+/* Agencs-style text treatments */
+.oversized-text {
+  font-size: 8rem;
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: -0.03em;
 }
 
-.text-with-bg::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 40%;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
-  z-index: -1;
-  border-radius: 0.25rem;
+.large-text {
+  font-size: 4.5rem;
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.medium-text {
+  font-size: 2.5rem;
+  line-height: 1.2;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.statement-text {
+  font-size: 1.75rem;
+  line-height: 1.4;
+  font-weight: 400;
 }

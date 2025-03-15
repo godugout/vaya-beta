@@ -2,10 +2,10 @@
 import { ThemePreset } from "./types";
 
 export const ThemePresets: ThemePreset[] = [
-  { name: "Ocean", primaryColor: "#0EA5E9", secondaryColor: "#7DD3FC", textColor: "#0F172A" },
-  { name: "Forest", primaryColor: "#10B981", secondaryColor: "#6EE7B7", textColor: "#064E3B" },
-  { name: "Sunset", primaryColor: "#F59E0B", secondaryColor: "#FCD34D", textColor: "#7C2D12" },
-  { name: "Berry", primaryColor: "#EC4899", secondaryColor: "#F9A8D4", textColor: "#831843" },
-  { name: "Lavender", primaryColor: "#8B5CF6", secondaryColor: "#C4B5FD", textColor: "#4C1D95" },
-  { name: "Coral", primaryColor: "#FF7675", secondaryColor: "#FFACAB", textColor: "#7C2D12" },
+  { name: "Black", primaryColor: "#000000", secondaryColor: "#FFFFFF", textColor: "#000000" },
+  { name: "White", primaryColor: "#FFFFFF", secondaryColor: "#F4F4F4", textColor: "#000000" },
+  { name: "Minimal", primaryColor: "#222222", secondaryColor: "#FAFAFA", textColor: "#222222" },
+  { name: "Slate", primaryColor: "#475569", secondaryColor: "#F8FAFC", textColor: "#0F172A" },
+  { name: "Clay", primaryColor: "#937264", secondaryColor: "#F5F2F0", textColor: "#3E2F29" },
+  { name: "Stone", primaryColor: "#78716C", secondaryColor: "#F5F5F4", textColor: "#44403C" },
 ];

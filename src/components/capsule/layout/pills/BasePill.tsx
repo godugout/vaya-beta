@@ -26,43 +26,36 @@ export const BasePill = ({
 
   const colors = {
     memories: {
-      outline: "border-lovable-teal dark:border-dark-accent-teal",
-      bg: "bg-lovable-teal/10 dark:bg-dark-accent-teal/20"
+      outline: "border-black dark:border-white",
+      bg: "bg-black/5 dark:bg-white/10"
     },
     stories: {
-      outline: "border-lovable-magenta dark:border-dark-accent-coral",
-      bg: "bg-lovable-magenta/10 dark:bg-dark-accent-coral/20"
+      outline: "border-black dark:border-white",
+      bg: "bg-black/5 dark:bg-white/10"
     },
     capsules: {
-      outline: "border-lovable-blue dark:border-dark-accent-blue", 
-      bg: "bg-lovable-blue/10 dark:bg-dark-accent-blue/20"
+      outline: "border-black dark:border-white", 
+      bg: "bg-black/5 dark:bg-white/10"
     },
     narra: {
-      outline: "border-lovable-navy dark:border-dark-accent-purple",
-      bg: "bg-lovable-navy/10 dark:bg-dark-accent-purple/20"
+      outline: "border-black dark:border-white",
+      bg: "bg-black/5 dark:bg-white/10"
     },
     default: {
-      outline: "border-greystone-green dark:border-dark-border",
-      bg: "bg-greystone-green/5 dark:bg-dark-background-elevated"
+      outline: "border-black dark:border-white",
+      bg: "bg-black/5 dark:bg-white/10"
     }
   };
 
-  const allColors = Object.keys(colors);
-  const colorIndex = allColors.indexOf(colorKey) >= 0 ? 
-    allColors.indexOf(colorKey) : 
-    allColors.indexOf('default');
-  
-  const selectedColor = colors[allColors[colorIndex] as keyof typeof colors];
-  
   const pillBaseClasses = cn(
-    "relative overflow-hidden rounded-xl",
+    "relative overflow-hidden",
     "min-h-[100px] w-[400px]",
-    selectedColor.outline,
-    isDetailed ? selectedColor.bg : "bg-white dark:bg-dark-background-surface",
+    "border border-black dark:border-white",
+    isDetailed ? "bg-black/5 dark:bg-white/10" : "bg-white dark:bg-black",
     isDark ? 
-      "shadow-[0_4px_12px_-2px_rgba(0,0,0,0.2)] hover:shadow-[0_8px_20px_-4px_rgba(0,0,0,0.3)]" :
-      "shadow-[0_4px_12px_-2px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_20px_-4px_rgba(0,0,0,0.08)]",
-    "transition-all duration-300 group border",
+      "shadow-[0_4px_12px_-2px_rgba(0,0,0,0.2)]" :
+      "shadow-[0_4px_12px_-2px_rgba(0,0,0,0.06)]",
+    "transition-all duration-300 group",
     className
   );
 
@@ -72,7 +65,7 @@ export const BasePill = ({
         <div 
           className={cn(
             "absolute inset-0 transition-opacity duration-300",
-            `bg-gradient-to-r from-${colorKey}/5 via-${colorKey}/10 to-${colorKey}/5 dark:from-dark-accent-${colorKey}/10 dark:via-dark-accent-${colorKey}/20 dark:to-dark-accent-${colorKey}/10`,
+            `bg-black/5 dark:bg-white/10`,
             isHovered ? "opacity-100" : "opacity-0"
           )}
         />
@@ -86,7 +79,7 @@ export const BasePill = ({
       )}
 
       {/* Wave Pattern Background */}
-      <div className="absolute inset-0 bg-wave-pattern opacity-[0.02] dark:opacity-[0.03] pointer-events-none"></div>
+      <div className="absolute inset-0 bg-dots opacity-[0.03] pointer-events-none"></div>
       
       <div className="flex items-center justify-between h-full relative z-10 px-8 py-6">
         {children}
@@ -94,4 +87,3 @@ export const BasePill = ({
     </div>
   );
 };
-

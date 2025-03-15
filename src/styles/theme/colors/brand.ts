@@ -1,40 +1,40 @@
 
-// Brand color palette
+// Brand color palette - Agencs style
 export const brandColors = {
   // Primary colors
   primary: {
-    DEFAULT: "#6C5CE7", // Rich purple
-    light: "#8F84EB",
-    dark: "#5649C0",
+    DEFAULT: "#000000", // Pure black
+    light: "#333333",
+    dark: "#000000",
   },
   
   // Secondary colors
   secondary: {
-    DEFAULT: "#FF7675", // Vibrant coral/orange
-    light: "#FF9897",
-    dark: "#E55A59",
+    DEFAULT: "#FFFFFF", // Pure white
+    light: "#FFFFFF",
+    dark: "#F4F4F4",
   },
   
   // Background colors
   background: {
     DEFAULT: "#FFFFFF", // White
-    light: "#F8F5FF", // Light lavender
-    dark: "#2D3436", // Deep indigo for dark mode
-    gradient: "linear-gradient(to bottom, #F8F5FF, #FFFFFF)",
+    light: "#FAFAFA", // Light gray
+    dark: "#111111", // Almost black for dark mode
+    gradient: "linear-gradient(to bottom, #FAFAFA, #FFFFFF)",
   },
   
-  // Accent colors
+  // Accent colors - minimal for Agencs style
   accent: {
-    turquoise: "#00CEC9", // Turquoise for success
-    yellow: "#FFEAA7", // Pastel yellow for notifications
-    coral: "#FF7675", // Coral for highlights
+    gray: "#8A898C", // Medium gray
+    lightGray: "#F4F4F4", // Light gray
+    darkGray: "#222222", // Dark gray
   },
   
   // Text colors
   text: {
-    primary: "#2D3436", // Deep indigo
-    secondary: "#636E72", // Warm gray
-    light: "#FFFFFF", // White text for dark backgrounds
-    muted: "#A0AEC0", // Muted text
+    primary: "#000000", // Black
+    secondary: "#8A898C", // Medium gray
+    light: "#FFFFFF", // White
+    muted: "#C8C8C9", // Light gray
   },
 };

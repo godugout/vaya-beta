@@ -1,5 +1,5 @@
 
-/* Reset and base styles */
+/* Reset and base styles - Agencs style */
 *, *::before, *::after {
   margin: 0;
   padding: 0;
@@ -9,12 +9,17 @@
 html, body {
   height: 100%;
   width: 100%;
-  font-family: var(--font-body);
-  color: var(--color-text-dark);
-  background-color: #121212; /* Default to dark background */
+  font-family: var(--font-family-main);
+  color: black;
+  background-color: white; 
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   scroll-behavior: smooth;
+}
+
+.dark body {
+  color: white;
+  background-color: black;
 }
 
 a {
@@ -23,7 +28,7 @@ a {
 }
 
 button {
-  font-family: var(--font-body);
+  font-family: var(--font-family-main);
   cursor: pointer;
   border: none;
   background: none;
@@ -32,4 +37,23 @@ button {
 img {
   max-width: 100%;
   height: auto;
+}
+
+/* Agencs-specific reset */
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 0 4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding: 0 6rem;
+  }
 }

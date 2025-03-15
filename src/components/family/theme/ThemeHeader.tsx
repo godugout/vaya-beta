@@ -18,22 +18,21 @@ export const ThemeHeader = ({ currentTheme, onPresetSelected }: ThemeHeaderProps
   };
 
   return (
-    <div className="flex items-center justify-between">
-      <div className="flex items-center gap-2">
-        <h3 className="text-lg font-semibold text-vaya-text-primary dark:text-white">
+    <div className="flex items-center justify-between py-4">
+      <div className="flex items-center gap-4">
+        <h2 className="text-2xl font-medium tracking-tight dark:text-white">
           Family Theme
-        </h3>
+        </h2>
         <Button
           variant="ghost"
           size="icon"
-          className="ml-2"
           onClick={toggleTheme}
           aria-label="Toggle theme"
         >
           {theme === "dark" ? (
-            <Sun className="h-5 w-5 text-yellow-400" />
+            <Sun className="h-5 w-5" />
           ) : (
-            <Moon className="h-5 w-5 text-vaya-gray-600" />
+            <Moon className="h-5 w-5" />
           )}
         </Button>
       </div>
