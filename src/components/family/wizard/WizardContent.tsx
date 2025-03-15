@@ -1,13 +1,12 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
 import { Step1FamilyInfo } from "./Step1FamilyInfo";
 import { Step2InviteMembers } from "./Step2InviteMembers";
 import { Step3Confirmation } from "./Step3Confirmation";
 import { useWizardController } from "./useWizardController";
 import { WizardControllerProps } from "./types";
+import { WizardNavigation } from "./WizardNavigation";
 
 export const WizardContent = ({ open, onOpenChange }: WizardControllerProps) => {
   const {
@@ -58,34 +57,14 @@ export const WizardContent = ({ open, onOpenChange }: WizardControllerProps) => 
         </motion.div>
       </AnimatePresence>
       
-      <div className="flex justify-end gap-2 mt-6">
-        {step > 1 && step < steps.length && (
-          <Button
-            variant="outline"
-            onClick={handleBack}
-            disabled={loading}
-          >
-            Back
-          </Button>
-        )}
-        
-        {step < steps.length - 1 && (
-          <Button onClick={handleNext} disabled={loading} className="bg-ui-orange hover:bg-ui-orange/90 text-white">
-            Next
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
-        )}
-        
-        {step === steps.length - 1 && (
-          <Button
-            onClick={handleSubmit}
-            disabled={loading}
-            className="bg-ui-orange hover:bg-ui-orange/90 text-white"
-          >
-            {loading ? "Creating..." : "Create Family"}
-          </Button>
-        )}
-      </div>
+      <WizardNavigation
+        step={step}
+        totalSteps={steps.length}
+        loading={loading}
+        handleBack={handleBack}
+        handleNext={handleNext}
+        handleSubmit={handleSubmit}
+      />
     </>
   );
 };
