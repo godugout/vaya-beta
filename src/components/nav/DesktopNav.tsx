@@ -3,15 +3,25 @@ import { Link, useLocation } from "react-router-dom";
 import { User } from "@supabase/supabase-js";
 import { UserMenu } from "./UserMenu";
 import { cn } from "@/lib/utils";
-import { Home, Mic, Archive, Users } from "lucide-react";
+import { Home, Mic, Archive, Users, Volume2 } from "lucide-react";
 
 interface DesktopNavProps {
   user: User | null;
   handleSignOut: () => Promise<void>;
   navigate: (path: string) => void;
+  isSimplifiedView?: boolean;
+  isVoiceActive?: boolean;
+  onVoiceToggle?: () => void;
 }
 
-export const DesktopNav = ({ user, handleSignOut, navigate }: DesktopNavProps) => {
+export const DesktopNav = ({ 
+  user, 
+  handleSignOut, 
+  navigate, 
+  isSimplifiedView = false, 
+  isVoiceActive = false, 
+  onVoiceToggle 
+}: DesktopNavProps) => {
   const location = useLocation();
   
   const navItems = [
@@ -38,7 +48,10 @@ export const DesktopNav = ({ user, handleSignOut, navigate }: DesktopNavProps) =
   ];
 
   return (
-    <div className="hidden md:flex h-20 bg-white dark:bg-[#1E293B] border-b border-gray-200 dark:border-gray-800 px-6 items-center justify-between">
+    <div className={cn(
+      "hidden md:flex h-20 bg-white dark:bg-[#1E293B] border-b border-gray-200 dark:border-gray-800 px-6 items-center justify-between",
+      isSimplifiedView && "simplified-nav"
+    )}>
       <div className="flex items-center">
         <Link to="/" className="flex items-center mr-8">
           <div className="h-10 w-10 text-ui-orange">
@@ -64,10 +77,11 @@ export const DesktopNav = ({ user, handleSignOut, navigate }: DesktopNavProps) =
                   "flex items-center px-4 py-2 rounded-md font-medium text-sm transition-colors relative",
                   isActive 
                     ? "text-ui-orange" 
-                    : "text-gray-600 dark:text-gray-300 hover:text-ui-orange dark:hover:text-ui-orange"
+                    : "text-gray-600 dark:text-gray-300 hover:text-ui-orange dark:hover:text-ui-orange",
+                  isSimplifiedView && "text-base py-3 px-5"
                 )}
               >
-                <item.icon className="h-4 w-4 mr-2" />
+                <item.icon className={cn("h-4 w-4 mr-2", isSimplifiedView && "h-5 w-5 mr-3")} />
                 {item.name}
                 {isActive && (
                   <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-ui-orange rounded-full" />
@@ -79,19 +93,39 @@ export const DesktopNav = ({ user, handleSignOut, navigate }: DesktopNavProps) =
       </div>
       
       <div className="flex items-center gap-4">
+        {onVoiceToggle && (
+          <button 
+            onClick={onVoiceToggle}
+            className={cn(
+              "flex items-center justify-center w-10 h-10 rounded-full transition-colors",
+              isVoiceActive 
+                ? "bg-ui-orange text-white animate-pulse" 
+                : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+            )}
+          >
+            <Volume2 className="h-5 w-5" />
+          </button>
+        )}
+        
         {user ? (
           <UserMenu user={user} handleSignOut={handleSignOut} navigate={navigate} />
         ) : (
           <div className="flex items-center space-x-2">
             <button 
               onClick={() => navigate('/auth')}
-              className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-ui-orange dark:hover:text-ui-orange"
+              className={cn(
+                "px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-ui-orange dark:hover:text-ui-orange",
+                isSimplifiedView && "text-base py-3 px-5"
+              )}
             >
               Sign In
             </button>
             <button
               onClick={() => navigate('/auth?register=true')}
-              className="px-4 py-2 rounded-md bg-ui-orange text-white text-sm font-medium hover:bg-ui-orange/90"
+              className={cn(
+                "px-4 py-2 rounded-md bg-ui-orange text-white text-sm font-medium hover:bg-ui-orange/90",
+                isSimplifiedView && "text-base py-3 px-5"
+              )}
             >
               Sign Up
             </button>
