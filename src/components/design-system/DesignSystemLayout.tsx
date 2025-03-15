@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { Palette, Type, Layout, Components, FileCode, CircleUser, BookIcon } from 'lucide-react';
+import { Palette, Type, Layout, Component, FileCode, CircleUser, BookIcon } from 'lucide-react';
 
 interface NavItemProps {
   href: string;
@@ -68,7 +68,7 @@ export const DesignSystemLayout: React.FC<{ children: React.ReactNode }> = ({ ch
           </NavItem>
           <NavItem 
             href="/design-system/components" 
-            icon={<Components size={18} />} 
+            icon={<Component size={18} />} 
             active={currentPath === 'components'}
           >
             Components
