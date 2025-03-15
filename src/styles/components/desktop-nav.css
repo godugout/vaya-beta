@@ -1,0 +1,72 @@
+
+/* Desktop Navigation Styles */
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--space-4) var(--space-6);
+  background-color: var(--background);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.nav-brand-logo {
+  height: 2rem;
+  width: 2rem;
+  color: var(--color-autumn);
+}
+
+.nav-brand-text {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--color-autumn);
+}
+
+.nav-menu {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: var(--space-2) var(--space-4);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
+}
+
+.nav-item:hover {
+  color: var(--color-autumn);
+  background-color: var(--bg-hover);
+}
+
+.nav-item.active {
+  color: var(--color-autumn);
+}
+
+.nav-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: var(--space-4);
+  right: var(--space-4);
+  height: 2px;
+  background-color: var(--color-autumn);
+  border-radius: 1px;
+}
+
+.nav-item-icon {
+  margin-right: var(--space-2);
+  font-size: 1rem;
+}

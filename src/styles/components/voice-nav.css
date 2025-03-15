@@ -1,0 +1,44 @@
+
+/* Voice Navigation */
+.voice-indicator {
+  display: flex;
+  align-items: center;
+  padding: var(--space-3);
+  background-color: var(--bg-subtle);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-4);
+  animation: pulse 2s infinite;
+}
+
+.voice-indicator-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background-color: var(--color-autumn);
+  color: white;
+  margin-right: var(--space-3);
+}
+
+.voice-indicator-text {
+  flex: 1;
+}
+
+.voice-indicator-title {
+  font-weight: 500;
+  margin-bottom: var(--space-1);
+}
+
+.voice-indicator-subtitle {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+/* Animation for Voice indicator */
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.7; }
+  100% { opacity: 1; }
+}

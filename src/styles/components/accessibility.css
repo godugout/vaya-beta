@@ -1,0 +1,24 @@
+
+/* Navigation for Elderly Users */
+.simplified-nav {
+  --simplified-font-size: 1.125rem;
+  --simplified-padding: var(--space-4);
+}
+
+.simplified-nav .nav-item,
+.simplified-nav .mobile-nav-item,
+.simplified-nav .breadcrumb-link,
+.simplified-nav .breadcrumb-current,
+.simplified-nav .view-option {
+  font-size: var(--simplified-font-size);
+  padding: var(--simplified-padding);
+}
+
+.simplified-nav .nav-item-icon,
+.simplified-nav .mobile-nav-item-icon {
+  font-size: calc(var(--simplified-font-size) * 1.5);
+}
+
+.simplified-nav .mobile-nav-item-text {
+  font-size: calc(var(--simplified-font-size) * 0.8);
+}
