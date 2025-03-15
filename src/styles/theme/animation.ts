@@ -13,9 +13,13 @@ export const animation = {
       "0%": { opacity: "0", transform: "translateY(10px)" },
       "100%": { opacity: "1", transform: "translateY(0)" },
     },
+    fadeInSlide: {
+      "0%": { opacity: "0", transform: "translateY(20px)" },
+      "100%": { opacity: "1", transform: "translateY(0)" },
+    },
     pulse: {
       "0%, 100%": { opacity: "1", transform: "scale(1)" },
-      "50%": { opacity: "0.8", transform: "scale(1.05)" },
+      "50%": { opacity: "0.85", transform: "scale(1.05)" },
     },
     wave: {
       "0%": { transform: "translateY(0)" },
@@ -32,28 +36,91 @@ export const animation = {
     },
     blink: {
       "0%, 100%": { borderColor: "transparent" },
-      "50%": { borderColor: "#113231" },
+      "50%": { borderColor: "#6C5CE7" },
     },
     wavePattern: {
       "0%": { transform: "translateX(0)" },
       "100%": { transform: "translateX(-20%)" },
+    },
+    float: {
+      "0%, 100%": { transform: "translateY(0)" },
+      "50%": { transform: "translateY(-10px)" },
+    },
+    breathe: {
+      "0%, 100%": { transform: "scale(1)", opacity: "1" },
+      "50%": { transform: "scale(1.03)", opacity: "0.9" },
+    },
+    shimmer: {
+      "0%": { backgroundPosition: "-500px 0" },
+      "100%": { backgroundPosition: "500px 0" },
+    },
+    gradientFlow: {
+      "0%": { backgroundPosition: "0% 50%" },
+      "50%": { backgroundPosition: "100% 50%" },
+      "100%": { backgroundPosition: "0% 50%" },
+    },
+    growShrink: {
+      "0%, 100%": { transform: "scale(1)" },
+      "50%": { transform: "scale(1.1)" },
+    },
+    recordingPulse: {
+      "0%": { 
+        transform: "scale(1)", 
+        boxShadow: "0 0 0 0 rgba(255, 118, 117, 0.7)" 
+      },
+      "70%": { 
+        transform: "scale(1.05)", 
+        boxShadow: "0 0 0 10px rgba(255, 118, 117, 0)" 
+      },
+      "100%": { 
+        transform: "scale(1)", 
+        boxShadow: "0 0 0 0 rgba(255, 118, 117, 0)" 
+      },
+    },
+    successPulse: {
+      "0%": { 
+        boxShadow: "0 0 0 0 rgba(0, 206, 201, 0.7)" 
+      },
+      "70%": { 
+        boxShadow: "0 0 0 10px rgba(0, 206, 201, 0)" 
+      },
+      "100%": { 
+        boxShadow: "0 0 0 0 rgba(0, 206, 201, 0)" 
+      },
     }
   },
   animation: {
     "accordion-down": "accordion-down 0.2s ease-out",
     "accordion-up": "accordion-up 0.2s ease-out",
     fadeIn: "fadeIn 0.5s ease-out forwards",
+    fadeInSlide: "fadeInSlide 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards",
     pulse: "pulse 1.5s ease-in-out infinite",
     wave: "wave 2s ease-in-out infinite",
-    bounce: "bounce 1s ease-in-out infinite",
+    bounce: "bounce 1s cubic-bezier(0.28, 0.84, 0.42, 1) infinite",
     typing: "typing 3.5s steps(40, end)",
     blink: "blink 0.7s step-end infinite",
     wavePattern: "wavePattern 15s linear infinite",
+    float: "float 3s ease-in-out infinite",
+    breathe: "breathe 4s ease-in-out infinite",
+    shimmer: "shimmer 2s infinite linear",
+    gradientFlow: "gradientFlow 6s ease infinite",
+    growShrink: "growShrink 2s ease-in-out infinite",
+    recordingPulse: "recordingPulse 1.5s infinite",
+    successPulse: "successPulse 1.5s", 
   },
   duration: {
     fast: "200ms",
     default: "300ms",
     slow: "400ms",
+    slower: "600ms",
     pulse: "1500ms",
   },
+  transition: {
+    default: "all 0.3s ease",
+    bounce: "all 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6)",
+    smooth: "all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+    spring: "all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+    elastic: "all 0.6s cubic-bezier(0.5, 1.5, 0.5, 0.9)",
+  },
 };
+

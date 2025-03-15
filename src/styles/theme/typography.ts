@@ -1,10 +1,11 @@
 
 export const typography = {
   fontFamily: {
-    heading: "TT Hoves Pro, system-ui, sans-serif",
-    body: "Borna, sans-serif",
+    heading: "Montserrat, system-ui, sans-serif",
+    body: "Inter, sans-serif",
     mono: "monospace",
     handwritten: "Architects Daughter, cursive",
+    story: "Georgia, serif",
   },
   fontSize: {
     xs: "0.75rem",    // 12px
@@ -16,6 +17,7 @@ export const typography = {
     "3xl": "1.875rem", // 30px
     "4xl": "2.25rem", // 36px
     "5xl": "3rem",    // 48px
+    "6xl": "3.75rem", // 60px
   },
   fontWeight: {
     normal: "400",
@@ -23,4 +25,21 @@ export const typography = {
     semibold: "600",
     bold: "700",
   },
+  lineHeight: {
+    none: "1",
+    tight: "1.25",
+    snug: "1.375",
+    normal: "1.5",
+    relaxed: "1.625",
+    loose: "2",
+  },
+  letterSpacing: {
+    tighter: "-0.05em",
+    tight: "-0.025em",
+    normal: "0",
+    wide: "0.025em",
+    wider: "0.05em",
+    widest: "0.1em",
+  },
 };
+

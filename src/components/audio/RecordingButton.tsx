@@ -13,11 +13,11 @@ interface RecordingButtonProps {
 const RecordingButton = ({ isRecording, onClick, disabled }: RecordingButtonProps) => {
   return (
     <div className="relative">
-      {/* Cosmic glow effect */}
+      {/* Organic glow effect */}
       <motion.div 
         className={cn(
           "absolute inset-0 rounded-full blur-md",
-          isRecording ? "bg-blue-400" : "bg-indigo-500"
+          isRecording ? "bg-vaya-stories" : "bg-vaya-capsules"
         )}
         initial={{ opacity: 0.5, scale: 1.2 }}
         animate={{ 
@@ -38,8 +38,8 @@ const RecordingButton = ({ isRecording, onClick, disabled }: RecordingButtonProp
         className={cn(
           "w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 z-10 relative",
           isRecording 
-            ? "bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500" 
-            : "bg-gradient-to-r from-indigo-600 to-purple-500 hover:from-indigo-700 hover:to-purple-600"
+            ? "bg-gradient-to-r from-vaya-stories to-vaya-stories/80 hover:from-vaya-stories/90 hover:to-vaya-stories/70" 
+            : "bg-gradient-to-r from-vaya-capsules to-vaya-accent-purple hover:from-vaya-capsules/90 hover:to-vaya-accent-purple/90"
         )}
         aria-label={isRecording ? "Stop Recording" : "Start Recording"}
       >
@@ -61,13 +61,13 @@ const RecordingButton = ({ isRecording, onClick, disabled }: RecordingButtonProp
         </motion.div>
       </Button>
       
-      {/* Cosmic particles */}
+      {/* Organic particles */}
       {isRecording && (
         <div className="absolute inset-0">
           {Array.from({ length: 8 }).map((_, i) => (
             <motion.div
               key={i}
-              className="absolute w-1 h-1 rounded-full bg-cyan-300"
+              className="absolute w-1 h-1 rounded-full bg-vaya-accent-coral/70"
               initial={{ 
                 x: 0, 
                 y: 0, 

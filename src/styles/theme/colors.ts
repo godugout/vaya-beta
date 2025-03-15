@@ -1,81 +1,111 @@
+
 // Brand color palette
 export const colors = {
   // Primary colors
   primary: {
-    DEFAULT: "#113231", // Harmony Green
-    light: "#3D5A59",
-    dark: "#0A2120",
+    DEFAULT: "#6C5CE7", // Rich purple
+    light: "#8F84EB",
+    dark: "#5649C0",
   },
   
   // Secondary colors
   secondary: {
-    DEFAULT: "#EBDDD6", // Sandstone Skin
-    light: "#F5EBE7",
-    dark: "#D4C5BD",
+    DEFAULT: "#FF7675", // Vibrant coral/orange
+    light: "#FF9897",
+    dark: "#E55A59",
   },
   
   // Background colors
   background: {
     DEFAULT: "#FFFFFF", // White
-    light: "#F8F8F8", // Light gray
-    dark: "#222222", // Dark mode background
-    gradient: "linear-gradient(to bottom, #F8F8F8, #FFFFFF)",
+    light: "#F8F5FF", // Light lavender
+    dark: "#2D3436", // Deep indigo for dark mode
+    gradient: "linear-gradient(to bottom, #F8F5FF, #FFFFFF)",
   },
   
-  // Accent colors - using Lovable colors for important CTAs
+  // Accent colors
   accent: {
-    turquoise: "#00CED1",
-    blue: "#0EA5E9", // Changed from purple to blue
-    magenta: "#FF3366",
+    turquoise: "#00CEC9", // Turquoise for success
+    yellow: "#FFEAA7", // Pastel yellow for notifications
+    coral: "#FF7675", // Coral for highlights
   },
   
   // Text colors
   text: {
-    primary: "#113231", // Dark green
-    secondary: "#5E7472", // Medium green-gray
+    primary: "#2D3436", // Deep indigo
+    secondary: "#636E72", // Warm gray
     light: "#FFFFFF", // White text for dark backgrounds
-    muted: "#94A3A2", // Muted green-gray
+    muted: "#A0AEC0", // Muted text
   },
   
   // Feature section colors
   features: {
-    stories: "#FF3366", // Lovable Magenta for stories
-    memories: "#00CED1", // Lovable Teal for memory lane
-    capsules: "#0EA5E9", // Changed from purple to blue for family capsules
-    narra: "#4169E1", // Lovable Blue for Narra AI assistant
+    stories: "#FF7675", // Coral for stories
+    memories: "#00CEC9", // Turquoise for memory lane
+    capsules: "#6C5CE7", // Purple for family capsules
+    narra: "#4169E1", // Royal blue for Narra AI assistant
+    home: "#FF9F43", // Warm orange for home
+    account: "#00B894", // Teal for account
+    
+    // Accent colors
+    "accent-green": "#55EFC4",
+    "accent-blue": "#74B9FF",
+    "accent-purple": "#A29BFE",
+    "accent-yellow": "#FFEAA7",
+    "accent-orange": "#FF9F43",
+    "accent-turquoise": "#00CEC9",
+    "accent-coral": "#FF7675",
   },
   
-  // Lovable logo colors with variations (kept for accent buttons)
+  // Lovable logo colors
   lovable: {
-    // Bright pink/magenta
-    magenta: {
-      bright: "#FF1A53", // Brighter version
-      DEFAULT: "#FF3366", // Original
-      light: "#FF708C", // Lighter shade
+    // Vibrant coral/orange - primary brand color
+    coral: {
+      bright: "#FF8E8D",
+      DEFAULT: "#FF7675",
+      light: "#FFACAB",
     },
-    // Blue replacing purple
+    // Rich purple - primary UI color
+    purple: {
+      bright: "#8F84EB",
+      DEFAULT: "#6C5CE7",
+      light: "#A29BFE",
+    },
+    // Royal blue
     blue: {
-      bright: "#33B1F0", // Brighter version
-      DEFAULT: "#0EA5E9", // Changed from purple to blue
-      light: "#70CFFF", // Lighter shade
+      bright: "#5C85E6",
+      DEFAULT: "#4169E1",
+      light: "#74B9FF",
     },
-    // Deep blue
-    navy: {
-      bright: "#4D7AFF", // Brighter version
-      DEFAULT: "#4169E1", // Original
-      light: "#7695FF", // Lighter shade
-    },
-    // Teal/cyan
+    // Turquoise
     teal: {
-      bright: "#00E6EA", // Brighter version
-      DEFAULT: "#00CED1", // Original
-      light: "#4DDFE1", // Lighter shade
+      bright: "#33E5E2",
+      DEFAULT: "#00CEC9",
+      light: "#55EFC4",
     },
-    // Light blue
+    // Sky blue
     skyblue: {
-      bright: "#5DB7FF", // Brighter version
-      DEFAULT: "#87CEFA", // Original
-      light: "#B0DFFF", // Lighter shade
+      bright: "#5DB7FF",
+      DEFAULT: "#87CEFA",
+      light: "#B0DFFF",
+    },
+    // Warm orange
+    orange: {
+      bright: "#FFA75A",
+      DEFAULT: "#FF9F43",
+      light: "#FFBE7A",
+    },
+    // Pastel yellow
+    yellow: {
+      bright: "#FFF0C4",
+      DEFAULT: "#FFEAA7",
+      light: "#FFF5D1",
+    },
+    // Deep indigo
+    indigo: {
+      bright: "#454C4E",
+      DEFAULT: "#2D3436",
+      light: "#636E72",
     },
   },
   
@@ -83,31 +113,31 @@ export const colors = {
   greystone: {
     // Primary green
     green: {
-      DEFAULT: "#113231", // Harmony Green - Primary color
-      90: "#1E3D3C",
-      80: "#2B4847",
-      70: "#385352",
-      60: "#455F5D",
-      50: "#566A68",
-      40: "#778786",
-      30: "#98A3A3",
-      20: "#B9C0BF",
-      10: "#DBDDDC",
+      DEFAULT: "#2D3436", // Updated to deep indigo for consistency
+      90: "#3E4446",
+      80: "#4F5456",
+      70: "#606466",
+      60: "#717576",
+      50: "#828586",
+      40: "#939596",
+      30: "#A4A6A6",
+      20: "#B5B7B6",
+      10: "#C6C7C6",
     },
-    // Secondary sandstone
+    // Secondary sandstone updated to warm tones
     sandstone: {
-      DEFAULT: "#EBDDD6", // Sandstone Skin - Secondary color
-      dark: "#D4C5BD",
-      darker: "#BEA99F",
+      DEFAULT: "#FFF5D1", // Light yellow
+      dark: "#FFEAA7", // Pastel yellow
+      darker: "#FFD166", // Darker yellow
     },
     // UI colors
     ui: {
-      black: "#222222",
+      black: "#2D3436",
       white: "#FFFFFF",
-      gray: "#F8F8F8",
-      error: "#E53E3E",
-      success: "#38A169",
-      warning: "#DD6B20",
+      gray: "#F8F5FF",
+      error: "#FF6B6B",
+      success: "#00B894",
+      warning: "#FF9F43",
     }
   },
   
@@ -119,12 +149,12 @@ export const colors = {
     background: "hsl(var(--background))",
     foreground: "hsl(var(--foreground))",
     primary: {
-      DEFAULT: "#113231",
+      DEFAULT: "#6C5CE7",
       foreground: "#FFFFFF",
     },
     secondary: {
-      DEFAULT: "#EBDDD6",
-      foreground: "#113231",
+      DEFAULT: "#FF7675",
+      foreground: "#FFFFFF",
     },
     destructive: {
       DEFAULT: "hsl(var(--destructive))",
@@ -135,7 +165,7 @@ export const colors = {
       foreground: "hsl(var(--muted-foreground))",
     },
     accent: {
-      DEFAULT: "#00CED1",
+      DEFAULT: "#00CEC9",
       foreground: "#FFFFFF",
     },
     popover: {
@@ -146,5 +176,58 @@ export const colors = {
       DEFAULT: "hsl(var(--card))",
       foreground: "hsl(var(--card-foreground))",
     },
+  },
+  
+  // Vaya specific branded colors
+  vaya: {
+    // Text colors
+    text: {
+      primary: "#2D3436", // Deep indigo
+      secondary: "#636E72", // Warm gray
+      muted: "#A0AEC0", // Muted text
+    },
+    // Background colors
+    background: {
+      light: "#F8F5FF", // Light lavender
+      paper: "#FFFFFF", // White
+      subtle: "#F7FAFC", // Very light gray
+    },
+    // Brand colors
+    brand: {
+      primary: "#6C5CE7", // Rich purple
+      secondary: "#FF7675", // Vibrant coral/orange
+      tertiary: "#00CEC9", // Turquoise
+    },
+    // Accent colors
+    accent: {
+      green: "#55EFC4",
+      blue: "#74B9FF", 
+      purple: "#A29BFE",
+      yellow: "#FFEAA7",
+      orange: "#FF9F43",
+      turquoise: "#00CEC9",
+      coral: "#FF7675",
+    },
+    // Feature colors
+    stories: "#FF7675", // Coral for stories
+    memories: "#00CEC9", // Turquoise for memory lane
+    capsules: "#6C5CE7", // Purple for family capsules
+    home: "#FF9F43", // Warm orange for home
+    narra: "#4169E1", // Royal blue for Narra AI assistant
+    
+    // UI state colors
+    gray: {
+      50: "#F7FAFC",
+      100: "#EDF2F7",
+      200: "#E2E8F0",
+      300: "#CBD5E0",
+      400: "#A0AEC0",
+      500: "#718096",
+      600: "#4A5568",
+      700: "#2D3748",
+      800: "#1A202C",
+      900: "#171923",
+    }
   }
 };
+
