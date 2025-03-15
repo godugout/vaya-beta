@@ -171,7 +171,7 @@ const FamilyDetail = () => {
       
       {/* Edit Family Dialog */}
       <EditFamilyDialog 
-        familyData={familyData}
+        family={familyData}
         open={isEditDialogOpen}
         onOpenChange={setIsEditDialogOpen}
       />

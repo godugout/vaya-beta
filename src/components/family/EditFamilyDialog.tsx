@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -11,15 +12,19 @@ interface Family {
   id: string;
   name: string;
   description: string | null;
+  members?: number;
+  createdAt?: string;
+  logoUrl?: string;
 }
 
 interface EditFamilyDialogProps {
   family: Family;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
   onFamilyUpdated?: () => void;
 }
 
-export function EditFamilyDialog({ family, onFamilyUpdated }: EditFamilyDialogProps) {
-  const [open, setOpen] = useState(false);
+export function EditFamilyDialog({ family, open, onOpenChange, onFamilyUpdated }: EditFamilyDialogProps) {
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
   const [formData, setFormData] = useState({
@@ -46,7 +51,7 @@ export function EditFamilyDialog({ family, onFamilyUpdated }: EditFamilyDialogPr
       });
 
       onFamilyUpdated?.();
-      setOpen(false);
+      onOpenChange(false);
     } catch (error: any) {
       toast({
         title: "Error updating family",
@@ -59,63 +64,53 @@ export function EditFamilyDialog({ family, onFamilyUpdated }: EditFamilyDialogPr
   };
 
   return (
-    <>
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={() => setOpen(true)}
-      >
-        <Settings className="h-4 w-4" />
-      </Button>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-[500px]">
+        <DialogHeader>
+          <DialogTitle>Edit Family</DialogTitle>
+        </DialogHeader>
 
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-[500px]">
-          <DialogHeader>
-            <DialogTitle>Edit Family</DialogTitle>
-          </DialogHeader>
-
-          <div className="space-y-6 py-4">
-            <div className="space-y-2">
-              <label htmlFor="name" className="text-sm font-medium">
-                Family Name
-              </label>
-              <Input
-                id="name"
-                value={formData.name}
-                onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                placeholder="Enter your family name"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label htmlFor="description" className="text-sm font-medium">
-                Description
-              </label>
-              <Textarea
-                id="description"
-                value={formData.description}
-                onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-                placeholder="Tell us about your family"
-              />
-            </div>
+        <div className="space-y-6 py-4">
+          <div className="space-y-2">
+            <label htmlFor="name" className="text-sm font-medium">
+              Family Name
+            </label>
+            <Input
+              id="name"
+              value={formData.name}
+              onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+              placeholder="Enter your family name"
+            />
           </div>
 
-          <div className="flex justify-end gap-4">
-            <Button
-              variant="outline"
-              onClick={() => setOpen(false)}
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={handleSubmit}
-              disabled={!formData.name || loading}
-            >
-              {loading ? "Saving..." : "Save Changes"}
-            </Button>
+          <div className="space-y-2">
+            <label htmlFor="description" className="text-sm font-medium">
+              Description
+            </label>
+            <Textarea
+              id="description"
+              value={formData.description}
+              onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+              placeholder="Tell us about your family"
+            />
           </div>
-        </DialogContent>
-      </Dialog>
-    </>
+        </div>
+
+        <div className="flex justify-end gap-4">
+          <Button
+            variant="outline"
+            onClick={() => onOpenChange(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={handleSubmit}
+            disabled={!formData.name || loading}
+          >
+            {loading ? "Saving..." : "Save Changes"}
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }
