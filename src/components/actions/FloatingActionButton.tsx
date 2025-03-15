@@ -1,6 +1,6 @@
 
 import { forwardRef } from "react";
-import { motion, MotionProps } from "framer-motion";
+import { motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -13,8 +13,7 @@ type FABVariant =
 type FABSize = "md" | "lg";
 
 export interface FloatingActionButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    Omit<MotionProps, keyof React.ButtonHTMLAttributes<HTMLButtonElement>> {
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: FABVariant;
   size?: FABSize;
   icon: React.ReactNode;
@@ -57,6 +56,12 @@ export const FloatingActionButton = forwardRef<HTMLButtonElement, FloatingAction
       lg: "h-7 w-7",
     };
 
+    // Animation props for Framer Motion
+    const motionProps = {
+      whileHover: { scale: 1.05, boxShadow: "0 10px 25px rgba(0, 0, 0, 0.15)" },
+      whileTap: { scale: 0.98 }
+    };
+
     return (
       <motion.button
         ref={ref}
@@ -69,8 +74,7 @@ export const FloatingActionButton = forwardRef<HTMLButtonElement, FloatingAction
           "bottom-6 right-6",
           className
         )}
-        whileHover={{ scale: 1.05, boxShadow: "0 10px 25px rgba(0, 0, 0, 0.15)" }}
-        whileTap={{ scale: 0.98 }}
+        {...motionProps}
         {...props}
       >
         {isLoading ? (

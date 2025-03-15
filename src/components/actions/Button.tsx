@@ -1,6 +1,6 @@
 
 import { forwardRef } from "react";
-import { motion, MotionProps } from "framer-motion";
+import { motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -14,9 +14,8 @@ type ButtonVariant =
 
 type ButtonSize = "sm" | "md" | "lg" | "xl";
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>, 
-    Omit<MotionProps, keyof React.ButtonHTMLAttributes<HTMLButtonElement>> {
+export interface ButtonProps 
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   size?: ButtonSize;
   isLoading?: boolean;
@@ -58,8 +57,8 @@ export const VayaButton = forwardRef<HTMLButtonElement, ButtonProps>(
       xl: "h-14 px-8 text-lg rounded-xl",
     };
 
-    // Animation variants
-    const clickAnimation = animateOnClick 
+    // Animation props for Framer Motion
+    const motionProps = animateOnClick 
       ? { whileTap: { scale: 0.97 } } 
       : {};
 
@@ -73,7 +72,7 @@ export const VayaButton = forwardRef<HTMLButtonElement, ButtonProps>(
           "min-w-[44px] min-h-[44px]",
           className
         )}
-        {...clickAnimation}
+        {...motionProps}
         {...props}
       >
         {isLoading && (
