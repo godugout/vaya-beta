@@ -35,13 +35,13 @@ export default function Families() {
 
   const getFamilies = async () => {
     try {
-      const { data: familiesData, error: familiesError } = await supabase
-        .from('vaya_families')
+      const { data, error } = await supabase
+        .from('families')
         .select(`
           id,
           name,
           description,
-          members:vaya_family_members(
+          members:family_members(
             id,
             user_id,
             role,
@@ -52,8 +52,14 @@ export default function Families() {
           )
         `);
 
-      if (familiesError) throw familiesError;
-      setFamilies(familiesData || []);
+      if (error) throw error;
+      
+      // Type safety check to ensure we have valid data
+      if (data && Array.isArray(data)) {
+        setFamilies(data as Family[]);
+      } else {
+        setFamilies([]);
+      }
     } catch (error: any) {
       toast({
         title: "Error loading families",

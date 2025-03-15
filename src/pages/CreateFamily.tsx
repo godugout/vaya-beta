@@ -1,6 +1,7 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase, getTable } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,7 +22,7 @@ export default function CreateFamily() {
     try {
       // Insert the family
       const { data: familyData, error: familyError } = await supabase
-        .from('vaya_families')
+        .from('families')
         .insert([
           { name, description }
         ])
@@ -32,7 +33,7 @@ export default function CreateFamily() {
 
       // Add the creator as an admin
       const { error: memberError } = await supabase
-        .from('vaya_family_members')
+        .from('family_members')
         .insert([
           { 
             family_id: familyData.id,

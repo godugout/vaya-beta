@@ -9,7 +9,7 @@ export interface CapsuleMetadata {
 }
 
 export interface Capsule {
-  id?: string;  // Adding id property to the Capsule interface
+  id: string;  // Changed from optional to required
   title: string;
   description?: string;
   icon: any;
