@@ -72,6 +72,59 @@ export type Database = {
           },
         ]
       }
+      localized_prompts: {
+        Row: {
+          active: boolean | null
+          category_id: string
+          created_at: string | null
+          cultural_context_en: string | null
+          cultural_context_es: string | null
+          edition: string
+          id: string
+          prompt_en: string
+          prompt_es: string | null
+          relevance_score: number | null
+          updated_at: string | null
+          usage_count: number | null
+        }
+        Insert: {
+          active?: boolean | null
+          category_id: string
+          created_at?: string | null
+          cultural_context_en?: string | null
+          cultural_context_es?: string | null
+          edition: string
+          id?: string
+          prompt_en: string
+          prompt_es?: string | null
+          relevance_score?: number | null
+          updated_at?: string | null
+          usage_count?: number | null
+        }
+        Update: {
+          active?: boolean | null
+          category_id?: string
+          created_at?: string | null
+          cultural_context_en?: string | null
+          cultural_context_es?: string | null
+          edition?: string
+          id?: string
+          prompt_en?: string
+          prompt_es?: string | null
+          relevance_score?: number | null
+          updated_at?: string | null
+          usage_count?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "localized_prompts_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "prompt_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       photos: {
         Row: {
           caption: string | null
@@ -144,6 +197,42 @@ export type Database = {
         }
         Relationships: []
       }
+      prompt_categories: {
+        Row: {
+          active: boolean | null
+          created_at: string | null
+          description_en: string | null
+          description_es: string | null
+          icon: string | null
+          id: string
+          name_en: string
+          name_es: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          active?: boolean | null
+          created_at?: string | null
+          description_en?: string | null
+          description_es?: string | null
+          icon?: string | null
+          id?: string
+          name_en: string
+          name_es?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          active?: boolean | null
+          created_at?: string | null
+          description_en?: string | null
+          description_es?: string | null
+          icon?: string | null
+          id?: string
+          name_en?: string
+          name_es?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       stories: {
         Row: {
           audio_url: string
@@ -194,6 +283,42 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      user_custom_prompts: {
+        Row: {
+          active: boolean | null
+          created_at: string | null
+          family_id: string | null
+          id: string
+          language: string | null
+          private: boolean | null
+          prompt: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          active?: boolean | null
+          created_at?: string | null
+          family_id?: string | null
+          id?: string
+          language?: string | null
+          private?: boolean | null
+          prompt: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          active?: boolean | null
+          created_at?: string | null
+          family_id?: string | null
+          id?: string
+          language?: string | null
+          private?: boolean | null
+          prompt?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
       }
     }
     Views: {
