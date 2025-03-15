@@ -13,6 +13,48 @@
   box-shadow: 0 12px 24px var(--card-shadow);
 }
 
+.forest-card {
+  background-color: var(--color-forest);
+  color: white;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.forest-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.water-card {
+  background-color: var(--color-water);
+  color: white;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.water-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.autumn-card {
+  background-color: var(--color-autumn);
+  color: white;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.autumn-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
 .illustration-card {
   border-radius: var(--radius-xl);
   overflow: hidden;
@@ -36,7 +78,7 @@
 }
 
 .frog-character-card {
-  background-color: var(--color-ui-orange);
+  background-color: var(--color-autumn);
   color: white;
   border-radius: var(--radius-xl);
   padding: var(--space-6);
@@ -44,5 +86,30 @@
 }
 
 .frog-character-card:hover {
+  transform: scale(1.02);
+}
+
+.stream-card {
+  background-color: var(--color-water);
+  color: white;
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.stream-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30%;
+  background: linear-gradient(to top, var(--color-mountain), transparent);
+  z-index: 1;
+}
+
+.stream-card:hover {
   transform: scale(1.02);
 }

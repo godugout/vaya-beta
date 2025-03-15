@@ -6,13 +6,13 @@
   --color-water: #234A5E;
   --color-mountain: #1A3540;
   --color-leaf: #4C6530;
-  --color-autumn: #FF7675; /* Updated to brand coral */
+  --color-autumn: #E55A59; /* Darker autumn orange for dark mode */
   --color-sand: #8A7247;
   
-  --color-ui-orange: #FF7675; /* Coral from brand */
+  --color-ui-orange: #E55A59; /* Darker autumn orange for UI */
   --color-ui-green: #5C7E3A;
-  --color-ui-purple: #6C5CE7; /* Purple from brand */
   --color-ui-teal: #2A8498;
+  --color-ui-purple: #6C5CE7; /* Purple from brand */
   --color-ui-red: #C53030;
   
   --color-text-dark: #F8F9FA;
@@ -21,6 +21,11 @@
   
   --card-background: #1E293B;
   --card-shadow: rgba(0, 0, 0, 0.3);
+  
+  --gradient-sunrise: linear-gradient(to right, #8A7247, #E55A59);
+  --gradient-forest: linear-gradient(to right, #1D402C, #5C7E3A);
+  --gradient-water: linear-gradient(to right, #234A5E, #2B5A69);
+  --gradient-mountain: linear-gradient(to right, #1A3540, #234A5E);
 }
 
 /* Ensure dark mode has proper background */
@@ -31,6 +36,37 @@
 
 .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
   color: #FFFFFF; /* Ensure headings are white in dark mode */
+}
+
+/* Dark mode background patterns */
+.dark .bg-pattern-dots {
+  background-image: radial-gradient(circle at 10px 10px, rgba(255, 255, 255, 0.05) 2px, transparent 0);
+}
+
+.dark .bg-pattern-grid {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+/* Dark mode specific cards */
+.dark .nature-card {
+  background-color: #1E293B;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.dark .forest-card {
+  background-color: var(--color-forest);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.dark .water-card {
+  background-color: var(--color-water);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.dark .autumn-card {
+  background-color: var(--color-autumn);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 /* Set dark mode as default */

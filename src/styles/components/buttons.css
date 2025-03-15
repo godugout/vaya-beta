@@ -11,33 +11,64 @@
 }
 
 .btn-primary {
-  background-color: var(--color-ui-orange);
+  background-color: var(--color-autumn);
   color: white;
 }
 
 .btn-primary:hover {
-  background-color: var(--color-autumn);
+  background-color: var(--color-autumn-dark, #E55A59);
   transform: translateY(-2px);
 }
 
 .btn-secondary {
-  background-color: var(--color-ui-teal);
+  background-color: var(--color-water);
   color: white;
 }
 
 .btn-secondary:hover {
-  background-color: var(--color-water);
+  background-color: var(--color-mountain);
+  transform: translateY(-2px);
+}
+
+.btn-forest {
+  background-color: var(--color-forest);
+  color: white;
+}
+
+.btn-forest:hover {
+  background-color: var(--color-leaf);
+  transform: translateY(-2px);
+}
+
+.btn-sky {
+  background-color: var(--color-sky);
+  color: white;
+}
+
+.btn-sky:hover {
+  background-color: var(--color-sky-light, #7DCAED);
   transform: translateY(-2px);
 }
 
 .btn-outline {
   background-color: transparent;
-  border: 2px solid var(--color-ui-orange);
-  color: var(--color-ui-orange);
+  border: 2px solid var(--color-autumn);
+  color: var(--color-autumn);
 }
 
 .btn-outline:hover {
-  background-color: var(--color-ui-orange);
+  background-color: var(--color-autumn);
+  color: white;
+}
+
+.btn-outline-forest {
+  background-color: transparent;
+  border: 2px solid var(--color-forest);
+  color: var(--color-forest);
+}
+
+.btn-outline-forest:hover {
+  background-color: var(--color-forest);
   color: white;
 }
 

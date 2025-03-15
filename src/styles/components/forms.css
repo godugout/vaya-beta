@@ -10,7 +10,42 @@
 }
 
 .input:focus {
-  border-color: var(--color-ui-purple);
+  border-color: var(--color-water);
+}
+
+.input-forest {
+  border: 2px solid #E2E8F0;
+}
+
+.input-forest:focus {
+  border-color: var(--color-forest);
+}
+
+.input-autumn {
+  border: 2px solid #E2E8F0;
+}
+
+.input-autumn:focus {
+  border-color: var(--color-autumn);
+}
+
+.select {
+  width: 100%;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  border: 2px solid #E2E8F0;
+  outline: none;
+  background-color: white;
+  transition: border-color 0.3s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23718096'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 1.5em 1.5em;
+}
+
+.select:focus {
+  border-color: var(--color-water);
 }
 
 /* Avatars */
@@ -19,10 +54,66 @@
   height: 48px;
   border-radius: var(--radius-full);
   overflow: hidden;
-  background-color: var(--color-ui-purple);
+  background-color: var(--color-forest);
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   font-weight: 600;
+}
+
+.avatar-autumn {
+  background-color: var(--color-autumn);
+}
+
+.avatar-water {
+  background-color: var(--color-water);
+}
+
+.avatar-leaf {
+  background-color: var(--color-leaf);
+}
+
+/* Checkbox */
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+}
+
+.checkbox input[type="checkbox"] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #CBD5E0;
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.checkbox input[type="checkbox"]:checked {
+  background-color: var(--color-water);
+  border-color: var(--color-water);
+}
+
+.checkbox input[type="checkbox"]:checked::after {
+  content: '✓';
+  font-size: 12px;
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.checkbox.forest input[type="checkbox"]:checked {
+  background-color: var(--color-forest);
+  border-color: var(--color-forest);
+}
+
+.checkbox.autumn input[type="checkbox"]:checked {
+  background-color: var(--color-autumn);
+  border-color: var(--color-autumn);
 }

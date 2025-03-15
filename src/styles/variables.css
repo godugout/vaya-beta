@@ -5,20 +5,20 @@
   --font-body: 'Poppins', sans-serif;
   --font-accent: 'Montserrat', sans-serif;
   
-  /* Color palette from nature illustration - with improved contrast */
+  /* Color palette from forest stream illustration */
   --color-sky: #5BAED4;
   --color-forest: #1D6A44;
   --color-water: #1D8CA6;
   --color-mountain: #156378;
   --color-leaf: #6A9A3B;
-  --color-autumn: #FF7675; /* Updated to brand coral */
+  --color-autumn: #FF7D45; /* Warm orange from the autumn trees */
   --color-sand: #F0D6A8;
   
-  /* UI Colors from brand guidelines - with improved contrast */
-  --color-ui-orange: #FF7675; /* Coral from brand */
-  --color-ui-green: #6A9A3B;
-  --color-ui-purple: #6C5CE7; /* Purple from brand */
-  --color-ui-teal: #2A9DAF;
+  /* UI Colors from brand guidelines with forest stream theme */
+  --color-ui-orange: #FF7D45; /* Autumn orange color */
+  --color-ui-green: #6A9A3B; /* Light forest green */
+  --color-ui-teal: #1D8CA6; /* Stream water color */
+  --color-ui-purple: #6C5CE7; /* Brand purple */
   --color-ui-red: #DC2626;
   
   /* Text colors with better contrast */
@@ -27,9 +27,10 @@
   --color-text-light: #FFFFFF;
   
   /* Gradients */
-  --gradient-sunrise: linear-gradient(to right, #F0D6A8, #FF7675);
+  --gradient-sunrise: linear-gradient(to right, #F0D6A8, #FF7D45);
   --gradient-forest: linear-gradient(to right, #1D6A44, #6A9A3B);
   --gradient-water: linear-gradient(to right, #1D8CA6, #5BAED4);
+  --gradient-mountain: linear-gradient(to right, #156378, #1D8CA6);
   --gradient-purple: linear-gradient(to right, #6C5CE7, #8F84EB);
   
   /* Card colors */
