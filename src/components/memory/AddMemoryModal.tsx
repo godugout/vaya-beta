@@ -3,6 +3,9 @@ import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import VoiceRecordingExperience from "@/components/voice-recording/VoiceRecordingExperience";
+import { TranscriptionInput } from "@/components/input/TranscriptionInput";
+import { Button } from "@/components/ui/button";
+import { FadeIn } from "@/components/animation/FadeIn";
 
 interface AddMemoryModalProps {
   open: boolean;
@@ -10,9 +13,18 @@ interface AddMemoryModalProps {
 }
 
 const AddMemoryModal = ({ open, onOpenChange }: AddMemoryModalProps) => {
+  const [textMemory, setTextMemory] = useState("");
+  
   const handleMemorySaved = (data: { audioUrl?: string; transcription?: string }) => {
     console.log("Memory recorded:", data);
     onOpenChange(false);
+  };
+  
+  const handleTextMemorySave = () => {
+    if (textMemory.trim()) {
+      console.log("Text memory saved:", textMemory);
+      onOpenChange(false);
+    }
   };
 
   return (
@@ -30,7 +42,24 @@ const AddMemoryModal = ({ open, onOpenChange }: AddMemoryModalProps) => {
             <VoiceRecordingExperience onMemorySaved={handleMemorySaved} />
           </TabsContent>
           <TabsContent value="text">
-            {/* Text input component will go here */}
+            <FadeIn>
+              <div className="space-y-4">
+                <TranscriptionInput
+                  value={textMemory}
+                  onChange={setTextMemory}
+                  placeholder="Type your memory here..."
+                  maxLength={1000}
+                />
+                
+                <Button 
+                  onClick={handleTextMemorySave}
+                  className="w-full"
+                  disabled={!textMemory.trim()}
+                >
+                  Save Memory
+                </Button>
+              </div>
+            </FadeIn>
           </TabsContent>
         </Tabs>
       </DialogContent>

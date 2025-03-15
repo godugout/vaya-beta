@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Play, Pause, Trash2 } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface AudioControlsProps {
   isPlaying: boolean;
@@ -16,7 +17,12 @@ const AudioControls = ({
   isProcessing
 }: AudioControlsProps) => {
   return (
-    <div className="flex justify-center space-x-4">
+    <motion.div 
+      className="flex justify-center space-x-4"
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, delay: 0.1 }}
+    >
       <Button
         onClick={togglePlayback}
         className="rounded-full bg-ui-orange hover:bg-ui-orange/90 shadow"
@@ -38,7 +44,7 @@ const AudioControls = ({
       >
         <Trash2 className="h-5 w-5" />
       </Button>
-    </div>
+    </motion.div>
   );
 };
 
