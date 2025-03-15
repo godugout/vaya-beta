@@ -40,7 +40,7 @@ export const AnimatedContainer: React.FC<AnimatedContainerProps & Omit<MotionPro
   once = false,
   from,
   to,
-  as = 'div',
+  as,
   whileHover,
   whileTap,
   ...motionProps
@@ -124,9 +124,11 @@ export const AnimatedContainer: React.FC<AnimatedContainerProps & Omit<MotionPro
   // For continuous animations like pulse or bounce
   const isContinuous = ['pulse', 'bounce'].includes(variant);
 
+  // Use the appropriate element based on the 'as' prop
+  const MotionComponent = motion[as as keyof typeof motion] || motion.div;
+
   return (
-    <motion.div
-      as={as}
+    <MotionComponent
       className={cn(className)}
       initial="hidden"
       animate={isAnimating || hasAnimated ? "visible" : "hidden"}
@@ -141,6 +143,6 @@ export const AnimatedContainer: React.FC<AnimatedContainerProps & Omit<MotionPro
       {...motionProps}
     >
       {children}
-    </motion.div>
+    </MotionComponent>
   );
 };
