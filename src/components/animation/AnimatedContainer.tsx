@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { motion, MotionProps, Variants } from 'framer-motion';
+import { motion, MotionProps, Variants, HTMLMotionProps } from 'framer-motion';
 import { useAnimation } from './AnimationProvider';
 import { cn } from '@/lib/utils';
 
@@ -40,7 +40,7 @@ export const AnimatedContainer: React.FC<AnimatedContainerProps & Omit<MotionPro
   once = false,
   from,
   to,
-  as,
+  as = 'div', // Default to div if not specified
   whileHover,
   whileTap,
   ...motionProps
@@ -124,25 +124,52 @@ export const AnimatedContainer: React.FC<AnimatedContainerProps & Omit<MotionPro
   // For continuous animations like pulse or bounce
   const isContinuous = ['pulse', 'bounce'].includes(variant);
 
-  // Use the appropriate element based on the 'as' prop
-  const MotionComponent = motion[as as keyof typeof motion] || motion.div;
+  // Create the props object that will be passed to the motion component
+  const componentProps: HTMLMotionProps<any> = {
+    className: cn(className),
+    initial: "hidden",
+    animate: isAnimating || hasAnimated ? "visible" : "hidden",
+    variants: variants,
+    transition: {
+      duration: duration || durationPresets.standard / 1000,
+      delay: delay,
+      ease: isContinuous ? "linear" : easing.standard
+    },
+    whileHover: whileHover,
+    whileTap: whileTap,
+    ...motionProps
+  };
 
-  return (
-    <MotionComponent
-      className={cn(className)}
-      initial="hidden"
-      animate={isAnimating || hasAnimated ? "visible" : "hidden"}
-      variants={variants}
-      transition={{
-        duration: duration || durationPresets.standard / 1000,
-        delay: delay,
-        ease: isContinuous ? "linear" : easing.standard
-      }}
-      whileHover={whileHover}
-      whileTap={whileTap}
-      {...motionProps}
-    >
-      {children}
-    </MotionComponent>
-  );
+  // Render the appropriate motion component based on the 'as' prop
+  switch (as) {
+    case 'div':
+      return <motion.div {...componentProps}>{children}</motion.div>;
+    case 'span':
+      return <motion.span {...componentProps}>{children}</motion.span>;
+    case 'p':
+      return <motion.p {...componentProps}>{children}</motion.p>;
+    case 'section':
+      return <motion.section {...componentProps}>{children}</motion.section>;
+    case 'article':
+      return <motion.article {...componentProps}>{children}</motion.article>;
+    case 'aside':
+      return <motion.aside {...componentProps}>{children}</motion.aside>;
+    case 'header':
+      return <motion.header {...componentProps}>{children}</motion.header>;
+    case 'footer':
+      return <motion.footer {...componentProps}>{children}</motion.footer>;
+    case 'main':
+      return <motion.main {...componentProps}>{children}</motion.main>;
+    case 'nav':
+      return <motion.nav {...componentProps}>{children}</motion.nav>;
+    case 'ul':
+      return <motion.ul {...componentProps}>{children}</motion.ul>;
+    case 'li':
+      return <motion.li {...componentProps}>{children}</motion.li>;
+    case 'button':
+      return <motion.button {...componentProps}>{children}</motion.button>;
+    default:
+      // Default to div for any unsupported element type
+      return <motion.div {...componentProps}>{children}</motion.div>;
+  }
 };
