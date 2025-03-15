@@ -15,9 +15,6 @@ import FamilyCapsules from "./pages/FamilyCapsules";
 import Families from "./pages/Families";
 import CreateFamily from "./pages/CreateFamily";
 import "./index.css";
-import "./styles/globals.css";
-import "./styles/components.css";
-import "./styles/animations.css";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -36,9 +33,6 @@ function App() {
         <LanguageProvider>
           <Router>
             <div className="flex min-h-screen flex-col bg-white dark:bg-gray-900">
-              {/* Nature-inspired background image */}
-              <div className="fixed inset-0 bg-forest-stream opacity-5 dark:opacity-10 pointer-events-none"></div>
-              
               <MainNav />
               <main className="flex-1 relative z-10">
                 <Routes>

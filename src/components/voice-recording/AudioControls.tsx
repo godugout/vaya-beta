@@ -19,7 +19,7 @@ const AudioControls = ({
     <div className="flex justify-center space-x-4">
       <Button
         onClick={togglePlayback}
-        className="rounded-full bg-blue-600 hover:bg-blue-700 shadow"
+        className="rounded-full bg-ui-orange hover:bg-ui-orange/90 shadow"
         size="icon"
         disabled={isProcessing}
       >

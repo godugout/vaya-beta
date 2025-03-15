@@ -32,14 +32,14 @@ export function MainNav() {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 z-nav">
+      <div className="fixed top-0 left-0 right-0 z-nav bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
         <DesktopNav user={user} handleSignOut={handleSignOut} navigate={navigate} />
         <MobileTopNav user={user} handleSignOut={handleSignOut} navigate={navigate} />
       </div>
       <MobileBottomNav user={user} navigate={navigate} />
       
-      <div className="h-16 md:h-20" /> {/* Top spacing for content */}
-      <div className="md:hidden h-16" /> {/* Bottom spacing for mobile nav */}
+      {/* Spacer for fixed header */}
+      <div className="h-20" /> 
     </>
   );
 }

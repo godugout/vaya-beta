@@ -1,67 +1,58 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mic, Archive, Camera, Music, Users, Book, ArrowRight } from "lucide-react";
+import { Mic, Archive, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CreateFamilyWizard } from "@/components/family/CreateFamilyWizard";
 import { Features } from "@/components/home/Features";
 import { Testimonials } from "@/components/home/Testimonials";
 import { FAQ } from "@/components/home/FAQ";
 import { VoiceRecordingDemo } from "@/components/home/VoiceRecordingDemo";
+import { Link } from "react-router-dom";
 
 export default function Index() {
   const [showCreateFamily, setShowCreateFamily] = useState(false);
 
   return (
-    <div className="relative min-h-screen">
-      {/* Global background pattern */}
-      <div className="page-bg-pattern"></div>
-      
-      {/* Hero Section */}
-      <section className="relative min-h-[90vh] overflow-hidden">
-        {/* Nature background - blurred */}
-        <div className="absolute inset-0 nature-bg-blur nature-stream-bg">
-          <div className="absolute inset-0 bg-white/50 dark:bg-dark-background/50 z-patterns"></div>
-        </div>
-        
-        {/* Dot pattern overlay */}
-        <div className="absolute inset-0 dot-pattern opacity-50 z-patterns"></div>
-        
-        <div className="container mx-auto px-4 py-24 flex flex-col items-center justify-center h-full relative z-content">
+    <div className="relative min-h-screen bg-white dark:bg-gray-900">
+      {/* Main Hero Section */}
+      <section className="pt-24 pb-16 px-4 md:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-center max-w-4xl mx-auto backdrop-card p-8 dark:bg-dark-background/30"
           >
-            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-semibold text-greystone-green dark:text-white mb-6 leading-tight z-text">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6">
               Preserve Your Family's Voice<br />
-              <span className="text-greystone-green-80 dark:text-dark-text-secondary">Share Your Story</span>
+              <span className="text-ui-orange">Share Your Story</span>
             </h1>
             
-            <p className="text-greystone-green-50 dark:text-dark-text-secondary text-lg md:text-xl mb-10 max-w-2xl mx-auto z-text">
+            <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-10 max-w-2xl mx-auto">
               Vaya helps you capture, organize, and share meaningful family memories that persist for generations through voice-first storytelling.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center z-content">
-              <Button 
-                size="lg" 
-                className="bg-lovable-magenta hover:bg-lovable-magenta-bright text-white group"
-                onClick={() => window.location.href = "/share-stories"}
-              >
-                <Mic className="mr-2 h-5 w-5 group-hover:animate-pulse" />
-                Start Recording
-              </Button>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to="/share-stories">
+                <Button 
+                  size="lg" 
+                  className="bg-ui-orange hover:bg-ui-orange/90 text-white font-medium w-full sm:w-auto"
+                >
+                  <Mic className="mr-2 h-5 w-5" />
+                  Start Recording
+                </Button>
+              </Link>
               
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="border-2 border-greystone-green text-greystone-green hover:bg-greystone-green-10 dark:border-white dark:text-white"
-                onClick={() => setShowCreateFamily(true)}
-              >
-                <Archive className="mr-2 h-5 w-5" />
-                Create Family
-              </Button>
+              <Link to="/family-capsules">
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="border-2 border-gray-300 dark:border-gray-700 text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 w-full sm:w-auto"
+                >
+                  <Archive className="mr-2 h-5 w-5" />
+                  Create Capsules
+                </Button>
+              </Link>
             </div>
           </motion.div>
           
@@ -70,7 +61,7 @@ export default function Index() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="mt-16 w-full max-w-xl mx-auto elevated-card p-6 z-cards"
+            className="mt-16 w-full max-w-xl mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-md p-6"
           >
             <VoiceRecordingDemo />
           </motion.div>
@@ -91,7 +82,7 @@ export default function Index() {
         <Button 
           size="lg"
           onClick={() => setShowCreateFamily(true)}
-          className="shadow-lg hover:shadow-xl transition-shadow duration-200 gap-2 bg-greystone-green text-white rounded-full"
+          className="shadow-lg hover:shadow-xl transition-shadow duration-200 gap-2 bg-ui-orange text-white rounded-full"
         >
           <Users className="h-5 w-5" />
           Create Family

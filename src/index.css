@@ -8,7 +8,23 @@
 @import './styles/components.css';
 @import './styles/animations.css';
 
+@layer base {
+  body {
+    @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-white;
+  }
+}
+
 @layer components {
+  /* Standard page padding */
+  .page-content {
+    @apply pt-10 px-4 md:px-6 lg:px-8;
+  }
+  
+  /* Section padding */
+  .section-padding {
+    @apply py-16 px-4 md:px-6 lg:px-8;
+  }
+  
   /* Nature-themed card styling */
   .nature-card {
     @apply bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300;
