@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -13,6 +12,7 @@ import { StoryCard } from "@/components/content/StoryCard";
 import { heroConfigs } from "@/config/heroConfigs";
 import { CapsuleScrollSection } from "@/components/capsule/sections/CapsuleScrollSection";
 import { detailedCapsules } from "@/components/capsule/ExampleCapsules";
+import { CapsuleStatus } from "@/types/capsule";
 
 // Patel family cultural events data
 const patelFamilyEvents = [
@@ -25,7 +25,7 @@ const patelFamilyEvents = [
     metadata: {
       creatorInitials: "NP",
       itemCount: 24,
-      status: "upcoming",
+      status: "upcoming" as CapsuleStatus,
       date: "2024-10-31"
     }
   },
@@ -38,7 +38,7 @@ const patelFamilyEvents = [
     metadata: {
       creatorInitials: "RP",
       itemCount: 18,
-      status: "active",
+      status: "active" as CapsuleStatus,
       date: "2024-10-03"
     }
   },
@@ -51,7 +51,7 @@ const patelFamilyEvents = [
     metadata: {
       creatorInitials: "AP",
       itemCount: 12,
-      status: "upcoming",
+      status: "upcoming" as CapsuleStatus,
       date: "2025-05-15"
     }
   },
@@ -64,7 +64,7 @@ const patelFamilyEvents = [
     metadata: {
       creatorInitials: "MP",
       itemCount: 32,
-      status: "locked",
+      status: "locked" as CapsuleStatus,
       date: "2024-12-12"
     }
   },
@@ -77,7 +77,7 @@ const patelFamilyEvents = [
     metadata: {
       creatorInitials: "SP",
       itemCount: 8,
-      status: "upcoming",
+      status: "upcoming" as CapsuleStatus,
       date: "2024-08-19"
     }
   }
