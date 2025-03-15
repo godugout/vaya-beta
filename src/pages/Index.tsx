@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mic, Archive, Users } from "lucide-react";
@@ -9,6 +8,8 @@ import { Testimonials } from "@/components/home/Testimonials";
 import { FAQ } from "@/components/home/FAQ";
 import { VoiceRecordingDemo } from "@/components/home/VoiceRecordingDemo";
 import { Link } from "react-router-dom";
+import { HeroPattern } from "@/components/hero/HeroPattern";
+import { ExampleCapsules } from "@/components/capsule/ExampleCapsules";
 
 export default function Index() {
   const [showCreateFamily, setShowCreateFamily] = useState(false);
@@ -16,8 +17,10 @@ export default function Index() {
   return (
     <div className="relative min-h-screen bg-white dark:bg-gray-900">
       {/* Main Hero Section */}
-      <section className="pt-24 pb-16 px-4 md:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="relative overflow-hidden pt-24 pb-16 px-4 md:px-6 lg:px-8">
+        <HeroPattern />
+        
+        <div className="max-w-4xl mx-auto text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -61,12 +64,18 @@ export default function Index() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="mt-16 w-full max-w-xl mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-md p-6"
+            className="mt-16 w-full max-w-xl mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 relative z-10"
           >
             <VoiceRecordingDemo />
           </motion.div>
         </div>
       </section>
+      
+      {/* Example Capsules Section with parallax effect */}
+      <div className="relative -mt-20 mb-20">
+        <div className="absolute inset-0 bg-pattern-grid opacity-20"></div>
+        <ExampleCapsules />
+      </div>
       
       {/* Key Features */}
       <Features />
