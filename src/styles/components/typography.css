@@ -1,0 +1,36 @@
+
+/* Typography utility classes */
+.font-heading {
+  font-family: 'TT Hoves Pro', 'Montserrat', sans-serif;
+}
+
+.font-body {
+  font-family: 'Borna', 'Inter', sans-serif;
+}
+
+.font-story {
+  font-family: 'Georgia', serif;
+}
+
+.font-handwritten {
+  font-family: 'Architects Daughter', cursive;
+}
+
+/* Typewriter effect */
+.typewriter {
+  overflow: hidden;
+  border-right: 3px solid #113231;
+  white-space: nowrap;
+  margin: 0 auto;
+  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: #113231 }
+}

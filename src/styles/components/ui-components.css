@@ -1,0 +1,39 @@
+
+/* Greystone UI components */
+.greystone-input {
+  background-color: #F8F8F8;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 16px;
+  color: #113231;
+}
+
+.greystone-button {
+  background-color: #113231;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.greystone-button:hover {
+  background-color: #1E3D3C;
+}
+
+.greystone-button.secondary {
+  background-color: #EBDDD6;
+  color: #113231;
+}
+
+.greystone-button.secondary:hover {
+  background-color: #D4C5BD;
+}
+
+.greystone-card {
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}

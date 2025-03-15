@@ -1,0 +1,24 @@
+
+/* Base styles */
+body {
+  font-family: 'Borna', 'Inter', sans-serif;
+  color: #113231;
+  background-color: white;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'TT Hoves Pro', 'Montserrat', sans-serif;
+}
+
+/* Dark mode styles */
+.dark {
+  color-scheme: dark;
+  --background: 222 47% 11%;
+  --foreground: 210 40% 98%;
+  --primary: 181 100% 41%;
+  --primary-foreground: 222 47% 11%;
+  --secondary: 217 32% 17%;
+  --secondary-foreground: 210 40% 98%;
+  --card: 222 47% 11%;
+  --card-foreground: 210 40% 98%;
+}
