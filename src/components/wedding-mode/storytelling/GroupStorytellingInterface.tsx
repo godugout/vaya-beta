@@ -76,19 +76,19 @@ export const GroupStorytellingInterface: React.FC<GroupStorytellingInterfaceProp
       accent: 'text-autumn',
       button: 'autumn',
       borderAccent: 'border-autumn',
-      bgAccent: 'bg-autumn',
+      bgAccent: 'bg-autumn'
     },
     modern: {
       accent: 'text-water',
       button: 'water',
       borderAccent: 'border-water',
-      bgAccent: 'bg-water',
+      bgAccent: 'bg-water'
     },
     rustic: {
       accent: 'text-forest',
       button: 'forest',
       borderAccent: 'border-forest',
-      bgAccent: 'bg-forest',
+      bgAccent: 'bg-forest'
     }
   };
   
