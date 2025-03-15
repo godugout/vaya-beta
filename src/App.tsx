@@ -33,9 +33,9 @@ function App() {
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <LanguageProvider>
           <Router>
-            <div className="flex min-h-screen flex-col">
+            <div className="flex min-h-screen flex-col page-background">
               <MainNav />
-              <main className="flex-1">
+              <main className="flex-1 relative z-content">
                 <Routes>
                   <Route path="/" element={<Index />} />
                   <Route path="/profile" element={<Profile />} />

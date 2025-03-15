@@ -26,16 +26,16 @@ export default function Hero({ culturalContent }: HeroProps) {
     <div 
       className={`relative overflow-hidden py-24 ${
         location.pathname.includes('family-capsules') 
-          ? 'bg-vaya-capsules/5 text-vaya-gray-900' 
-          : 'bg-white/95'
+          ? 'bg-vaya-capsules/5 dark:bg-dark-background-elevated text-vaya-gray-900 dark:text-dark-text-primary' 
+          : 'bg-white/95 dark:bg-dark-background-surface/95'
       }`} 
       data-component="Hero"
     >
       {/* Background pattern */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-40"></div>
+      <div className="absolute inset-0 bg-grid-pattern opacity-40 z-patterns"></div>
       
       {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent z-patterns"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-white/40 dark:from-dark-background-surface/40 to-transparent z-patterns"></div>
       
       <HeroPattern />
       

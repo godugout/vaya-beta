@@ -11,33 +11,43 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'TT Hoves Pro', 'Montserrat', sans-serif;
 }
 
-/* Base z-index layers */
+/* Base z-index layers - explicitly defined to avoid conflicts */
+:root {
+  --z-base: 1;
+  --z-patterns: 5;
+  --z-content: 10;
+  --z-cards: 20;
+  --z-text: 30;
+  --z-floating: 40;
+  --z-modal: 50;
+}
+
 .z-base {
-  z-index: 1;
+  z-index: var(--z-base);
 }
 
 .z-patterns {
-  z-index: 5;
+  z-index: var(--z-patterns);
 }
 
 .z-content {
-  z-index: 10;
+  z-index: var(--z-content);
 }
 
 .z-cards {
-  z-index: 20;
+  z-index: var(--z-cards);
 }
 
 .z-text {
-  z-index: 30;
+  z-index: var(--z-text);
 }
 
 .z-floating {
-  z-index: 40;
+  z-index: var(--z-floating);
 }
 
 .z-modal {
-  z-index: 50;
+  z-index: var(--z-modal);
 }
 
 /* Dark mode styles */
@@ -92,7 +102,7 @@ body.dark {
     linear-gradient(to right, rgba(17, 50, 49, 0.03) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(17, 50, 49, 0.03) 1px, transparent 1px);
   opacity: 0.8;
-  z-index: var(--z-patterns, 5);
+  z-index: var(--z-patterns);
   pointer-events: none;
 }
 
@@ -105,13 +115,13 @@ body.dark {
 /* Content layer */
 .content-layer {
   position: relative;
-  z-index: var(--z-content, 10);
+  z-index: var(--z-content);
 }
 
 /* Card layer */
 .card-layer {
   position: relative;
-  z-index: var(--z-cards, 20);
+  z-index: var(--z-cards);
   background-color: white;
   border-radius: 0.75rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
@@ -126,5 +136,5 @@ body.dark {
 /* Text layer */
 .text-layer {
   position: relative;
-  z-index: var(--z-text, 30);
+  z-index: var(--z-text);
 }

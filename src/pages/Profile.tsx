@@ -1,6 +1,8 @@
 
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { useTheme } from "next-themes";
 
 interface UserFamily {
   familyId: string;
@@ -22,6 +24,8 @@ interface BookmarkedMemory {
 
 export default function Profile() {
   const { toast } = useToast();
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
   const [userFamilies, setUserFamilies] = useState<UserFamily[]>([]);
   const [bookmarkedMemories, setBookmarkedMemories] = useState<BookmarkedMemory[]>([]);
   const [loading, setLoading] = useState(false);
@@ -68,48 +72,70 @@ export default function Profile() {
 
   return (
     <div className="container max-w-4xl py-10">
-      <h1 className="text-2xl font-bold mb-4">Your Profile</h1>
+      <div className="relative z-base">
+        {/* Background pattern */}
+        <div className="absolute inset-0 bg-grid-pattern opacity-40 z-patterns"></div>
+      </div>
+      
+      <h1 className="text-2xl font-bold mb-4 relative z-text text-vaya-text-primary dark:text-dark-text-primary">
+        Your Profile
+      </h1>
+      
       {loading ? (
-        <p>Loading...</p>
+        <p className="z-text">Loading...</p>
       ) : (
         <>
           <div className="mb-8">
-            <h2 className="text-xl font-semibold mb-4">Your Families</h2>
+            <h2 className="text-xl font-semibold mb-4 z-text text-vaya-text-primary dark:text-dark-text-primary">
+              Your Families
+            </h2>
             {mockFamilies.length > 0 ? (
               <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
                 {mockFamilies.map((family) => (
-                  <div key={family.familyId} className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-                    <h3 className="font-semibold text-lg">{family.familyName}</h3>
-                    <p className="text-sm text-gray-500 mb-2">{family.role}</p>
-                    {family.familyDescription && (
-                      <p className="text-sm text-gray-700">
-                        {family.familyDescription}
-                      </p>
-                    )}
-                  </div>
+                  <Card key={family.familyId} className="z-cards dark:bg-dark-background-elevated">
+                    <CardHeader>
+                      <CardTitle className="text-lg">{family.familyName}</CardTitle>
+                      <p className="text-sm text-gray-500 dark:text-dark-text-secondary">{family.role}</p>
+                    </CardHeader>
+                    <CardContent>
+                      {family.familyDescription && (
+                        <p className="text-sm text-gray-700 dark:text-dark-text-secondary">
+                          {family.familyDescription}
+                        </p>
+                      )}
+                    </CardContent>
+                  </Card>
                 ))}
               </div>
             ) : (
-              <p>You are not a member of any families yet.</p>
+              <p className="z-text dark:text-dark-text-secondary">You are not a member of any families yet.</p>
             )}
           </div>
 
           <div>
-            <h2 className="text-xl font-semibold mb-4">Bookmarked Memories</h2>
+            <h2 className="text-xl font-semibold mb-4 z-text text-vaya-text-primary dark:text-dark-text-primary">
+              Bookmarked Memories
+            </h2>
             {mockBookmarkedMemories.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {mockBookmarkedMemories.map((bookmark) => (
-                  <div key={bookmark.memory_id} className="bg-white rounded-lg shadow-md p-4">
-                    <h3 className="font-semibold">{bookmark.memories.title}</h3>
-                    <p className="text-sm text-gray-500">{bookmark.memories.description}</p>
-                    {bookmark.memories.type === 'photo' && (
-                      <img src={bookmark.memories.content_url} alt={bookmark.memories.title} className="mt-2 rounded-md" />
-                    )}
-                  </div>
+                  <Card key={bookmark.memory_id} className="z-cards dark:bg-dark-background-elevated">
+                    <CardHeader>
+                      <CardTitle className="text-lg">{bookmark.memories.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-gray-500 dark:text-dark-text-secondary">
+                        {bookmark.memories.description}
+                      </p>
+                      {bookmark.memories.type === 'photo' && (
+                        <img src={bookmark.memories.content_url} alt={bookmark.memories.title} className="mt-2 rounded-md z-content" />
+                      )}
+                    </CardContent>
+                  </Card>
                 ))}
               </div>
             ) : (
-              <p>You have not bookmarked any memories yet.</p>
+              <p className="z-text dark:text-dark-text-secondary">You have not bookmarked any memories yet.</p>
             )}
           </div>
         </>

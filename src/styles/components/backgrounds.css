@@ -7,7 +7,7 @@
     linear-gradient(to bottom, rgba(17, 50, 49, 0.05) 1px, transparent 1px);
   position: absolute;
   inset: 0;
-  z-index: var(--z-patterns, 5);
+  z-index: var(--z-patterns);
   pointer-events: none;
 }
 
@@ -24,12 +24,31 @@
   opacity: 0.1;
   position: absolute;
   inset: 0;
-  z-index: var(--z-patterns, 5);
+  z-index: var(--z-patterns);
   pointer-events: none;
 }
 
 .dark .bg-wave-pattern {
   opacity: 0.05;
+}
+
+/* Add this class to any page container for a consistent background */
+.app-page-container {
+  position: relative;
+  min-height: 100vh;
+  background-color: #FFFFFF;
+  color: #113231;
+}
+
+.dark .app-page-container {
+  background-color: var(--theme-bg);
+  color: var(--theme-text);
+}
+
+/* Add this class to the main content area of each page */
+.app-page-content {
+  position: relative;
+  z-index: var(--z-content);
 }
 
 .bg-nature-stream {
@@ -38,7 +57,7 @@
   background-position: center;
   position: absolute;
   inset: 0;
-  z-index: var(--z-patterns, 5);
+  z-index: var(--z-patterns);
 }
 
 .bg-nature-waterfall {
@@ -47,7 +66,7 @@
   background-position: center;
   position: absolute;
   inset: 0;
-  z-index: var(--z-patterns, 5);
+  z-index: var(--z-patterns);
 }
 
 /* Pattern with overlay */
@@ -66,7 +85,7 @@
   background-image: url('/lovable-uploads/d42f87cc-df9d-4966-9975-10468e31ca27.png');
   background-size: 500px;
   opacity: 0.05;
-  z-index: var(--z-patterns, 5);
+  z-index: var(--z-patterns);
   pointer-events: none;
 }
 
@@ -91,7 +110,7 @@
   background-position: center;
   filter: blur(8px);
   transform: scale(1.05);
-  z-index: var(--z-patterns, 5);
+  z-index: var(--z-patterns);
   pointer-events: none;
 }
 
@@ -109,7 +128,7 @@
   background-size: 20px 20px;
   position: absolute;
   inset: 0;
-  z-index: var(--z-patterns, 5);
+  z-index: var(--z-patterns);
   pointer-events: none;
 }
 
@@ -122,10 +141,35 @@
   position: absolute;
   inset: 0;
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.3));
-  z-index: var(--z-patterns, 6);
+  z-index: var(--z-patterns);
   pointer-events: none;
 }
 
 .dark .gradient-overlay {
   background: linear-gradient(to bottom, rgba(26, 31, 44, 0.8), rgba(26, 31, 44, 0.3));
+}
+
+/* Apply to root element to ensure the page has a nice background */
+.page-background {
+  position: relative;
+  min-height: 100vh;
+}
+
+.page-background::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(17, 50, 49, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(17, 50, 49, 0.03) 1px, transparent 1px);
+  opacity: 0.6;
+  z-index: var(--z-patterns);
+  pointer-events: none;
+}
+
+.dark .page-background::before {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
 }
