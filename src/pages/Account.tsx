@@ -1,86 +1,38 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
+
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useToast } from "@/components/ui/use-toast";
-import { User } from "@supabase/supabase-js";
-import { Loader2, User as UserIcon } from "lucide-react";
+import { User as UserIcon } from "lucide-react";
 
 export default function Account() {
-  const navigate = useNavigate();
   const { toast } = useToast();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
-  const [fullName, setFullName] = useState("");
+  const [fullName, setFullName] = useState("Demo User");
+  const [email, setEmail] = useState("demo@vaya.com");
   const [avatar, setAvatar] = useState<string | null>(null);
-
-  useEffect(() => {
-    getProfile();
-  }, []);
-
-  const getProfile = async () => {
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      
-      if (!user) {
-        navigate("/auth");
-        return;
-      }
-
-      setUser(user);
-
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', user.id)
-        .single();
-
-      if (profile) {
-        setFullName(profile.full_name);
-        setAvatar(profile.avatar_url);
-      }
-    } catch (error: any) {
-      toast({
-        title: "Error",
-        description: error.message,
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const updateProfile = async () => {
     try {
       setLoading(true);
-      if (!user) throw new Error("No user");
-
-      const { error } = await supabase
-        .from('profiles')
-        .update({
-          full_name: fullName,
-          updated_at: new Date().toISOString(),
-        })
-        .eq('id', user.id);
-
-      if (error) throw error;
-
-      toast({
-        title: "Success",
-        description: "Profile updated successfully",
-      });
+      // Simulate update
+      setTimeout(() => {
+        toast({
+          title: "Success",
+          description: "Profile updated successfully",
+        });
+        setLoading(false);
+      }, 1000);
     } catch (error: any) {
       toast({
         title: "Error",
         description: error.message,
         variant: "destructive",
       });
-    } finally {
       setLoading(false);
     }
   };
@@ -92,50 +44,24 @@ export default function Account() {
         throw new Error("You must select an image to upload.");
       }
 
-      const file = event.target.files[0];
-      const fileExt = file.name.split('.').pop();
-      const filePath = `${user?.id}-${Math.random()}.${fileExt}`;
-
-      const { error: uploadError } = await supabase.storage
-        .from('avatars')
-        .upload(filePath, file);
-
-      if (uploadError) throw uploadError;
-
-      const { data: { publicUrl } } = supabase.storage
-        .from('avatars')
-        .getPublicUrl(filePath);
-
-      const { error: updateError } = await supabase
-        .from('profiles')
-        .update({ avatar_url: publicUrl })
-        .eq('id', user?.id);
-
-      if (updateError) throw updateError;
-
-      setAvatar(publicUrl);
-      toast({
-        title: "Success",
-        description: "Avatar updated successfully",
-      });
+      // Simulate upload
+      setTimeout(() => {
+        setAvatar(URL.createObjectURL(event.target.files![0]));
+        toast({
+          title: "Success",
+          description: "Avatar updated successfully",
+        });
+        setUploading(false);
+      }, 1000);
     } catch (error: any) {
       toast({
         title: "Error",
         description: error.message,
         variant: "destructive",
       });
-    } finally {
       setUploading(false);
     }
   };
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Loader2 className="h-8 w-8 animate-spin" />
-      </div>
-    );
-  }
 
   return (
     <div className="container max-w-2xl py-10">
@@ -175,8 +101,8 @@ export default function Account() {
               <Input
                 id="email"
                 type="email"
-                value={user?.email}
-                disabled
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="space-y-2">

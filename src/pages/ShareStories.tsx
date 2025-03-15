@@ -1,6 +1,7 @@
+
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { useEffect, useState } from "react";
 import NarraChat from "@/components/NarraChat";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -24,27 +25,27 @@ const ShareStories = () => {
   const [userLanguage, setUserLanguage] = useState<string>('es');
 
   useEffect(() => {
-    const checkUser = async () => {
+    // Only fetch language preference if there's a user session
+    const fetchUserLanguage = async () => {
       const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        navigate("/auth");
-        return;
-      }
+      
+      if (session) {
+        // Fetch user's language preference
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('preferred_language')
+          .eq('id', session.user.id)
+          .single();
 
-      // Fetch user's language preference
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('preferred_language')
-        .eq('id', session.user.id)
-        .single();
-
-      if (profile) {
-        setUserLanguage(profile.preferred_language);
-        setIsSpanish(profile.preferred_language === 'es');
+        if (profile) {
+          setUserLanguage(profile.preferred_language);
+          setIsSpanish(profile.preferred_language === 'es');
+        }
       }
     };
-    checkUser();
-  }, [navigate]);
+    
+    fetchUserLanguage();
+  }, []);
 
   const categories: StoryCategory[] = [
     {

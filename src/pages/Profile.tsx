@@ -1,6 +1,5 @@
 
-import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 
 interface UserFamily {
@@ -25,95 +24,47 @@ export default function Profile() {
   const { toast } = useToast();
   const [userFamilies, setUserFamilies] = useState<UserFamily[]>([]);
   const [bookmarkedMemories, setBookmarkedMemories] = useState<BookmarkedMemory[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    fetchUserData();
-  }, []);
+  // Example data for display purposes
+  const mockFamilies: UserFamily[] = [
+    {
+      familyId: "1",
+      familyName: "González Family",
+      familyDescription: "A close-knit Costa Rican family with roots in Guanacaste",
+      role: "member"
+    },
+    {
+      familyId: "2",
+      familyName: "Hernández Family",
+      familyDescription: "Extended family from San José",
+      role: "admin"
+    }
+  ];
 
-  const fetchUserData = async () => {
-    try {
-      const { data: userData } = await supabase.auth.getUser();
-      if (!userData.user) {
-        toast({
-          title: "Authentication error",
-          description: "You must be logged in to view this page",
-          variant: "destructive",
-        });
-        return;
+  // Mock bookmarked memories
+  const mockBookmarkedMemories: BookmarkedMemory[] = [
+    {
+      memory_id: "1",
+      memories: {
+        id: "1",
+        title: "Family Vacation",
+        description: "Our trip to the mountains",
+        type: "photo",
+        content_url: "/images/vacation.jpg"
       }
-
-      await Promise.all([
-        fetchUserFamilies(userData.user.id),
-        fetchBookmarkedMemories(userData.user.id)
-      ]);
-
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-      setLoading(false);
-    }
-  };
-
-  const fetchUserFamilies = async (userId: string) => {
-    try {
-      const { data, error } = await supabase
-        .from('family_members')
-        .select(`
-          role,
-          families:family_id(
-            id,
-            name,
-            description
-          )
-        `)
-        .eq('user_id', userId);
-
-      if (error) throw error;
-
-      if (data && Array.isArray(data)) {
-        // Fixed typecasting and property access
-        const families: UserFamily[] = data
-          .filter(item => item.families) // Filter out any null families
-          .map(item => {
-            // Safely access properties with typecasting
-            const family = item.families as any;
-            return {
-              familyId: family.id || "",
-              familyName: family.name || "",
-              familyDescription: family.description,
-              role: item.role || "member"
-            };
-          });
-        
-        setUserFamilies(families);
+    },
+    {
+      memory_id: "2",
+      memories: {
+        id: "2",
+        title: "Grandmother's Recipe",
+        description: "Traditional gallo pinto recipe",
+        type: "text",
+        content_url: ""
       }
-    } catch (error: any) {
-      console.error("Error fetching user families:", error);
     }
-  };
-
-  const fetchBookmarkedMemories = async (userId: string) => {
-    try {
-      // Use mock data for now to avoid TypeScript errors
-      const mockBookmarkedMemories: BookmarkedMemory[] = [
-        {
-          memory_id: "1",
-          memories: {
-            id: "1",
-            title: "Family Vacation",
-            description: "Our trip to the mountains",
-            type: "photo",
-            content_url: "/images/vacation.jpg"
-          }
-        }
-      ];
-      
-      setBookmarkedMemories(mockBookmarkedMemories);
-    } catch (error: any) {
-      console.error("Error fetching bookmarked memories:", error);
-    }
-  };
+  ];
 
   return (
     <div className="container max-w-4xl py-10">
@@ -122,35 +73,38 @@ export default function Profile() {
         <p>Loading...</p>
       ) : (
         <>
-          <div>
-            <h2 className="text-xl font-semibold mb-2">Your Families</h2>
-            {userFamilies.length > 0 ? (
-              <ul>
-                {userFamilies.map((family) => (
-                  <li key={family.familyId} className="mb-2">
-                    <strong>{family.familyName}</strong> - {family.role}
+          <div className="mb-8">
+            <h2 className="text-xl font-semibold mb-4">Your Families</h2>
+            {mockFamilies.length > 0 ? (
+              <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
+                {mockFamilies.map((family) => (
+                  <div key={family.familyId} className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+                    <h3 className="font-semibold text-lg">{family.familyName}</h3>
+                    <p className="text-sm text-gray-500 mb-2">{family.role}</p>
                     {family.familyDescription && (
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-gray-700">
                         {family.familyDescription}
                       </p>
                     )}
-                  </li>
+                  </div>
                 ))}
-              </ul>
+              </div>
             ) : (
               <p>You are not a member of any families yet.</p>
             )}
           </div>
 
           <div>
-            <h2 className="text-xl font-semibold mb-2">Bookmarked Memories</h2>
-            {bookmarkedMemories.length > 0 ? (
+            <h2 className="text-xl font-semibold mb-4">Bookmarked Memories</h2>
+            {mockBookmarkedMemories.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {bookmarkedMemories.map((bookmark) => (
+                {mockBookmarkedMemories.map((bookmark) => (
                   <div key={bookmark.memory_id} className="bg-white rounded-lg shadow-md p-4">
                     <h3 className="font-semibold">{bookmark.memories.title}</h3>
                     <p className="text-sm text-gray-500">{bookmark.memories.description}</p>
-                    <img src={bookmark.memories.content_url} alt={bookmark.memories.title} className="mt-2 rounded-md" />
+                    {bookmark.memories.type === 'photo' && (
+                      <img src={bookmark.memories.content_url} alt={bookmark.memories.title} className="mt-2 rounded-md" />
+                    )}
                   </div>
                 ))}
               </div>
@@ -162,4 +116,4 @@ export default function Profile() {
       )}
     </div>
   );
-}
+};

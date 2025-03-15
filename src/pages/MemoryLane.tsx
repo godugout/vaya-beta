@@ -1,25 +1,14 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
-import Hero from "@/components/Hero";
+
 import MemoryFeedLayout from "@/components/memory/MemoryFeedLayout";
 import AddMemoryButton from "@/components/memory/AddMemoryButton";
+import Hero from "@/components/Hero";
 import { Button } from "@/components/ui/button";
 import { MessageCircle, User, Tag, Calendar, Bookmark } from "lucide-react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { useNavigate } from "react-router-dom";
 
 const MemoryLane = () => {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const checkUser = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        navigate("/auth");
-      }
-    };
-    checkUser();
-  }, [navigate]);
 
   return (
     <div className="min-h-screen bg-gray-50 pb-16 md:pb-0">
