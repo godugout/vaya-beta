@@ -27,7 +27,7 @@ interface FamilyTreeViewProps {
   onZoomOut: () => void;
   onFitView: () => void;
   onAddMember: () => void;
-  onConnect: () => void;
+  onOpenConnectDialog: () => void;
   onRemoveConnection: () => void;
   onImport: () => void;
   onShare: () => void;
@@ -47,7 +47,7 @@ export const FamilyTreeView = ({
   onZoomOut,
   onFitView,
   onAddMember,
-  onConnect: handleOpenConnectDialog,
+  onOpenConnectDialog,
   onRemoveConnection,
   onImport,
   onShare,
@@ -82,7 +82,7 @@ export const FamilyTreeView = ({
         onZoomOut={onZoomOut}
         onFitView={onFitView}
         onAddMember={onAddMember}
-        onConnect={handleOpenConnectDialog}
+        onConnect={onOpenConnectDialog}
         onRemoveConnection={onRemoveConnection}
         onImport={onImport}
         onShare={onShare}

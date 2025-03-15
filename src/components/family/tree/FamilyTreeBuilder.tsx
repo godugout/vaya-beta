@@ -53,7 +53,7 @@ const FamilyTreeBuilder = ({ familyId, initialMembers = [] }: FamilyTreeBuilderP
         onZoomOut={handleZoomOut}
         onFitView={handleFitView}
         onAddMember={() => setAddMemberDialogOpen(true)}
-        onConnect={() => setConnectDialogOpen(true)}
+        onOpenConnectDialog={() => setConnectDialogOpen(true)}
         onRemoveConnection={handleRemoveConnection}
         onImport={() => setImportDialogOpen(true)}
         onShare={handleShareTree}
