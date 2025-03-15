@@ -2,7 +2,7 @@
 import { useNavigate } from "react-router-dom";
 import { CapsuleScrollSection } from "@/components/capsule/sections/CapsuleScrollSection";
 import { CapsulePills } from "@/components/capsule/sections/CapsulePills";
-import { detailedCapsules, simpleCapsules } from "@/components/capsule/ExampleCapsules";
+import { detailedCapsules, simpleCapsules, ExampleCapsules } from "@/components/capsule/ExampleCapsules";
 
 const FamilyCapsules = () => {
   const navigate = useNavigate();
@@ -21,7 +21,10 @@ const FamilyCapsules = () => {
 
   return (
     <div className="relative min-h-screen bg-white dark:bg-gray-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-8">
+      {/* Added ExampleCapsules at the top */}
+      <ExampleCapsules />
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Removed the title section to be consistent with other pages */}
       </div>
       

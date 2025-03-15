@@ -9,7 +9,6 @@ import { Testimonials } from "@/components/home/Testimonials";
 import { FAQ } from "@/components/home/FAQ";
 import { VoiceRecordingDemo } from "@/components/home/VoiceRecordingDemo";
 import { Link } from "react-router-dom";
-import { ExampleCapsules } from "@/components/capsule/ExampleCapsules";
 
 export default function Index() {
   const [showCreateFamily, setShowCreateFamily] = useState(false);
@@ -74,13 +73,7 @@ export default function Index() {
         </div>
       </section>
       
-      {/* Example Capsules Section */}
-      <div className="py-20 bg-white">
-        <div className="container mx-auto">
-          <h2 className="text-3xl md:text-4xl font-medium mb-10 text-center">Family Capsules</h2>
-          <ExampleCapsules />
-        </div>
-      </div>
+      {/* Removed Example Capsules Section */}
       
       {/* Key Features */}
       <div className="bg-gray-50">
