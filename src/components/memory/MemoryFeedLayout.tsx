@@ -7,7 +7,7 @@ import { Memory } from "./types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useInView } from "framer-motion";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { InfoCircle } from "lucide-react";
+import { Info } from "lucide-react";
 
 const MemoryFeedLayout = () => {
   const {
@@ -82,7 +82,7 @@ const MemoryFeedLayout = () => {
     <div className="space-y-6">
       <Alert variant="default" className="bg-gray-100 border-gray-200 mb-4">
         <AlertDescription className="flex items-center text-sm text-gray-600">
-          <InfoCircle className="h-4 w-4 mr-2" />
+          <Info className="h-4 w-4 mr-2" />
           The content below is demo data. Connect to a real database for your actual memories.
         </AlertDescription>
       </Alert>

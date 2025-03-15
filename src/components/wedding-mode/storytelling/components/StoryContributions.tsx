@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Clock, ArrowRight, InfoCircle } from 'lucide-react';
+import { Clock, ArrowRight, Info } from 'lucide-react';
 import { AnimatedContainer } from '@/components/animation/AnimatedContainer';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -34,7 +34,7 @@ export const StoryContributions: React.FC<StoryContributionsProps> = ({
       {allPlaceholder && (
         <Alert variant="default" className="bg-gray-100 border-gray-200 mb-4">
           <AlertDescription className="flex items-center text-sm text-gray-600">
-            <InfoCircle className="h-4 w-4 mr-2" />
+            <Info className="h-4 w-4 mr-2" />
             Demo content shown below. Real contributions will appear here when shared.
           </AlertDescription>
         </Alert>
