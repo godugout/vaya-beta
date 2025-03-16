@@ -18,6 +18,7 @@ import "./styles/components/mobile-nav.css";
 import "./styles/components/desktop-nav.css";
 import "./styles/components/voice-nav.css";
 import "./styles/components/transitions.css";
+import "./styles/components/space-vault.css";
 
 const queryClient = new QueryClient();
 

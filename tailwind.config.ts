@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
 
@@ -49,6 +50,31 @@ export default {
         "vaya-primary": "#449EBA", // Stream water blue
         "vaya-secondary": "#94C11E", // Leaf green
         "vaya-accent": "#F2992D", // Autumn orange
+        
+        // Space Vault colors
+        "space-black": "#0B0E17",
+        "space-darkBlue": "#1A2033",
+        "space-indigo": "#2D3250",
+        "space-blue": "#0A4ECA",
+        "space-lightBlue": "#7CB7FF",
+        "space-purple": "#6C63FF",
+        "space-violet": "#A78BFA",
+        "space-red": "#E4263B",
+        "space-orange": "#FF7E47",
+        "space-gold": "#FFD700",
+        "space-silver": "#E2E8F0",
+        
+        // Space UI colors
+        "space-background": "#0B0E17",
+        "space-surface": "#1A2033",
+        "space-border": "#2D3250",
+        
+        // Space text colors
+        "space-text": {
+          primary: "#FFFFFF",
+          secondary: "#CBD5E1",
+          tertiary: "#94A3B8",
+        },
         
         // Dark mode specific colors
         "dark-background": {
@@ -108,6 +134,8 @@ export default {
         sans: ["var(--font-body)", ...fontFamily.sans],
         heading: ["var(--font-heading)", ...fontFamily.sans],
         accent: ["var(--font-accent)", ...fontFamily.sans],
+        mono: ["'JetBrains Mono'", "monospace"],
+        nasa: ["'Orbitron'", "sans-serif"],
       },
       borderRadius: {
         lg: "var(--radius-lg)",
@@ -117,17 +145,26 @@ export default {
       backgroundImage: {
         "forest-stream": "url('/lovable-uploads/d6f811da-1ea4-433c-87e8-10ed28f459e5.png')",
         "vaya-screen": "url('/lovable-uploads/79a7f098-5d08-4543-8610-cab0055c5960.png')",
+        "space-stars": "url('/lovable-uploads/dbfde90d-4253-4295-b1e9-e9bb049cd9cd.png')",
         "gradient-coral": "linear-gradient(135deg, #FF7675 0%, #FFA05A 100%)",
-        "gradient-purple": "linear-gradient(135deg, #6C5CE7 0%, #8F84EB 100%)",
+        "gradient-purple": "linear-gradient(135deg, #6C63FF 0%, #8F84EB 100%)",
         "gradient-forest": "linear-gradient(135deg, #154734 0%, #94C11E 100%)",
         "gradient-water": "linear-gradient(135deg, #449EBA 0%, #86CAE9 100%)",
         "gradient-autumn": "linear-gradient(135deg, #F2992D 0%, #D94843 100%)",
+        "gradient-space": "linear-gradient(180deg, #0B0E17 0%, #1A2033 100%)",
+        "gradient-cosmic": "linear-gradient(135deg, #6C63FF 0%, #A78BFA 100%)",
+        "gradient-nebula": "linear-gradient(135deg, #0A4ECA 0%, #7CB7FF 100%)",
+        "gradient-mars": "linear-gradient(135deg, #E4263B 0%, #FF7E47 100%)",
+        "gradient-solar": "linear-gradient(135deg, #FFD700 0%, #FF7E47 100%)",
       },
       animation: {
         "wave-pattern": "wavePattern 50s linear infinite",
         float: "float 6s ease-in-out infinite",
         pulse: "pulse 2s ease-in-out infinite",
         wave: "wave 2.5s linear infinite",
+        "star-twinkle": "starTwinkle 3s ease-in-out infinite",
+        "orbit": "orbit 20s linear infinite",
+        "scanning": "scanning 3s ease-in-out infinite",
       },
       keyframes: {
         wavePattern: {
@@ -152,6 +189,19 @@ export default {
           "60%": { transform: "rotate(0deg)" },
           "100%": { transform: "rotate(0deg)" },
         },
+        starTwinkle: {
+          "0%, 100%": { opacity: "0.2" },
+          "50%": { opacity: "0.8" },
+        },
+        orbit: {
+          "0%": { transform: "rotate(0deg) translateX(100px) rotate(0deg)" },
+          "100%": { transform: "rotate(360deg) translateX(100px) rotate(-360deg)" },
+        },
+        scanning: {
+          "0%": { transform: "translateY(0)", opacity: "0.5" },
+          "50%": { transform: "translateY(100px)", opacity: "0.8" },
+          "100%": { transform: "translateY(0)", opacity: "0.5" },
+        }
       },
       zIndex: {
         "nav": "100",

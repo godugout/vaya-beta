@@ -21,6 +21,8 @@ const MemoryLane = lazy(() => import('@/pages/MemoryLane'));
 const MemoryPost = lazy(() => import('@/pages/MemoryPost'));
 const SacredFoundation = lazy(() => import('@/pages/SacredFoundation'));
 const ShareStoriesPage = lazy(() => import('@/pages/ShareStories'));
+const AnjanaeyaVault = lazy(() => import('@/pages/AnjanaeyaVault'));
+const HanumanEdition = lazy(() => import('@/pages/HanumanEdition'));
 
 function App() {
   return (
@@ -52,6 +54,8 @@ function App() {
             <Route path="/memory/:id" element={<MemoryPost />} />
             <Route path="/sacred-foundation" element={<SacredFoundation />} />
             <Route path="/share-stories" element={<ShareStoriesPage />} />
+            <Route path="/anjanaeya-vault" element={<AnjanaeyaVault />} />
+            <Route path="/hanuman-edition" element={<HanumanEdition />} />
           </Routes>
         </Suspense>
         <Toaster position="bottom-right" closeButton richColors />
