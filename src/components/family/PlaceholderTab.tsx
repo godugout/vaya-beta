@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Info, Plus, Lock } from "lucide-react";
+import { Info, Plus, Lock, Image, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface PlaceholderTabProps {
@@ -16,6 +16,15 @@ export function PlaceholderTab({
   comingSoon = true 
 }: PlaceholderTabProps) {
   const defaultDescription = `This is where ${title.toLowerCase()} will be displayed once the feature is available.`;
+  
+  // Get the appropriate icon based on the title
+  const getIcon = () => {
+    if (title.includes("Photos")) return Image;
+    if (title.includes("Stories")) return BookOpen;
+    return Info;
+  };
+  
+  const Icon = getIcon();
   
   return (
     <motion.div
@@ -39,7 +48,7 @@ export function PlaceholderTab({
             <div className="h-16 w-16 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4">
               {comingSoon ? 
                 <Lock className="h-6 w-6 text-gray-500" /> : 
-                <Info className="h-6 w-6 text-blue-500" />
+                <Icon className="h-6 w-6 text-blue-500" />
               }
             </div>
             <p className="text-gray-500 dark:text-gray-400 mb-6">
