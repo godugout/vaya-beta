@@ -1,12 +1,43 @@
 
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { Badge } from '@/components/ui/badge';
 import { ArrowRight } from 'lucide-react';
 import { SearchInput } from '@/components/input/SearchInput';
 import { FadeIn } from '@/components/animation/FadeIn';
+import FamilyEventRow, { FamilyEvent } from './FamilyEventRow';
+import { 
+  Table, 
+  TableHeader, 
+  TableBody, 
+  TableHead, 
+  TableRow
+} from '@/components/ui/table';
+
+const sampleEvents: FamilyEvent[] = [
+  {
+    icon: '🎓',
+    name: 'Riya\'s Graduation',
+    description: 'Celebrating Riya\'s medical school graduation',
+    owner: 'AP',
+    status: 'upcoming',
+    date: '5/14/2025'
+  },
+  {
+    icon: '💍',
+    name: 'Amit & Priya\'s Wedding',
+    description: 'Family wedding celebration memories',
+    owner: 'MP',
+    status: 'locked',
+    date: '12/11/2024'
+  }
+];
 
 export const PatelFamilyEventsSection = () => {
+  const handleViewEvent = (event: FamilyEvent) => {
+    console.log('View event:', event);
+    // Implementation for viewing the event details
+  };
+
   return (
     <FadeIn className="mt-16">
       <h2 className="text-2xl font-bold mb-6">Family Events & Celebrations</h2>
@@ -35,63 +66,27 @@ export const PatelFamilyEventsSection = () => {
       
       <div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-            <thead className="bg-gray-50 dark:bg-gray-900">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Name</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Description</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Owner</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Date</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"></th>
-              </tr>
-            </thead>
-            <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-              <tr>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="flex items-center">
-                    <span className="mr-2">🎓</span>
-                    <span className="font-medium">Riya's Graduation</span>
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  Celebrating Riya's medical school graduation
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">AP</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300">upcoming</Badge>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">5/14/2025</td>
-                <td className="px-6 py-4 whitespace-nowrap text-right">
-                  <Button variant="ghost" size="sm" className="text-gray-500">
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                </td>
-              </tr>
-              
-              <tr>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="flex items-center">
-                    <span className="mr-2">💍</span>
-                    <span className="font-medium">Amit & Priya's Wedding</span>
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  Family wedding celebration memories
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">MP</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <Badge className="bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300">locked</Badge>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">12/11/2024</td>
-                <td className="px-6 py-4 whitespace-nowrap text-right">
-                  <Button variant="ghost" size="sm" className="text-gray-500">
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Name</TableHead>
+                <TableHead>Description</TableHead>
+                <TableHead>Owner</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Date</TableHead>
+                <TableHead className="w-10"></TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {sampleEvents.map((event, index) => (
+                <FamilyEventRow 
+                  key={index} 
+                  event={event} 
+                  onViewEvent={handleViewEvent}
+                />
+              ))}
+            </TableBody>
+          </Table>
         </div>
       </div>
     </FadeIn>
