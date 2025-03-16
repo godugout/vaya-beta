@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
-import { Label } from "@/components/ui/label";
 import { 
   Tabs, 
   TabsContent, 
@@ -35,20 +34,18 @@ import {
   Lock, 
   User, 
   ArrowRight,
-  Apple,
-  Chrome,
-  Instagram
+  Key
 } from "lucide-react";
 
 // Form validation schemas
 const loginSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address" }),
-  password: z.string().min(6, { message: "Password must be at least 6 characters" }),
+  secretWord: z.string().min(3, { message: "Secret word must be at least 3 characters" }),
 });
 
 const signupSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address" }),
-  password: z.string().min(6, { message: "Password must be at least 6 characters" }),
+  secretWord: z.string().min(3, { message: "Secret word must be at least 3 characters" }),
   fullName: z.string().min(2, { message: "Please enter your full name" }),
 });
 
@@ -83,7 +80,7 @@ export default function Auth() {
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
-      password: "",
+      secretWord: "",
     },
   });
   
@@ -92,7 +89,7 @@ export default function Auth() {
     resolver: zodResolver(signupSchema),
     defaultValues: {
       email: "",
-      password: "",
+      secretWord: "",
       fullName: "",
     },
   });
@@ -105,16 +102,64 @@ export default function Auth() {
     },
   });
   
+  const checkFamilyAccess = async (secretWord: string): Promise<boolean> => {
+    try {
+      const { data, error } = await supabase.rpc('check_family_secret', {
+        _secret_word: secretWord
+      });
+      
+      if (error) {
+        console.error("Error checking secret word:", error);
+        return false;
+      }
+      
+      return !!data; // Return true if a family ID was found
+    } catch (error) {
+      console.error("Error in checkFamilyAccess:", error);
+      return false;
+    }
+  };
+  
   const handleEmailLogin = async (values: z.infer<typeof loginSchema>) => {
     try {
       setLoading(true);
+      
+      // First validate the secret word
+      const hasAccess = await checkFamilyAccess(values.secretWord);
+      if (!hasAccess) {
+        toast({
+          title: "Access Denied",
+          description: "The secret word you entered is not valid. Please try again or contact your family administrator.",
+          variant: "destructive",
+        });
+        return;
+      }
+      
+      // If secret word is valid, attempt to log in
       const { error } = await supabase.auth.signInWithPassword({
         email: values.email,
-        password: values.password,
+        password: values.secretWord, // Using the secret word as the password
       });
 
-      if (error) throw error;
-      navigate("/");
+      if (error) {
+        // If login fails, try a passwordless magic link login
+        const { error: magicLinkError } = await supabase.auth.signInWithOtp({
+          email: values.email,
+          options: {
+            // Store the secret for verification later
+            data: { secretWord: values.secretWord }
+          }
+        });
+        
+        if (magicLinkError) throw magicLinkError;
+        
+        toast({
+          title: "Check your email",
+          description: "We've sent you a magic link to sign in.",
+        });
+      } else {
+        navigate("/");
+      }
     } catch (error: any) {
       toast({
         title: "Error",
@@ -129,9 +174,22 @@ export default function Auth() {
   const handleEmailSignup = async (values: z.infer<typeof signupSchema>) => {
     try {
       setLoading(true);
+      
+      // First validate the secret word
+      const hasAccess = await checkFamilyAccess(values.secretWord);
+      if (!hasAccess) {
+        toast({
+          title: "Access Denied",
+          description: "The secret word you entered is not valid. Please ask an existing family member for the correct secret word.",
+          variant: "destructive",
+        });
+        return;
+      }
+      
+      // If secret word is valid, attempt to sign up
       const { error } = await supabase.auth.signUp({
         email: values.email,
-        password: values.password,
+        password: values.secretWord, // Using the secret word as the password
         options: {
           data: {
             full_name: values.fullName,
@@ -143,7 +201,7 @@ export default function Auth() {
       
       toast({
         title: "Success!",
-        description: "Please check your email to verify your account.",
+        description: "Please check your email to verify your account. You'll be able to join your family after verification.",
       });
       
       setActiveTab("login");
@@ -184,27 +242,6 @@ export default function Auth() {
     }
   };
 
-  const handleSocialLogin = async (provider: 'google' | 'apple' | 'facebook') => {
-    try {
-      setLoading(true);
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider,
-        options: {
-          redirectTo: `${window.location.origin}/`,
-        },
-      });
-
-      if (error) throw error;
-    } catch (error: any) {
-      toast({
-        title: "Error",
-        description: error.message,
-        variant: "destructive",
-      });
-      setLoading(false);
-    }
-  };
-
   return (
     <div className="flex min-h-screen flex-col items-center justify-center relative overflow-hidden">
       {/* Nature waterfall background - blurred */}
@@ -215,19 +252,19 @@ export default function Auth() {
       <div className="w-full max-w-md space-y-6 rounded-xl bg-white/80 backdrop-blur-md p-8 shadow-lg z-10">
         <div className="text-center">
           <h2 className="text-3xl font-bold tracking-tight text-gray-900">
-            Welcome to Vaya
+            Welcome to Your Family App
           </h2>
           <p className="mt-2 text-sm text-gray-600">
             {activeTab === "login" 
-              ? "Sign in to your account to continue" 
-              : "Create an account to get started"}
+              ? "Sign in with your email and family secret word" 
+              : "Join your family with the secret word you were given"}
           </p>
         </div>
 
         <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as "login" | "signup")}>
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="login">Sign In</TabsTrigger>
-            <TabsTrigger value="signup">Sign Up</TabsTrigger>
+            <TabsTrigger value="signup">Join Family</TabsTrigger>
           </TabsList>
           
           <TabsContent value="login" className="space-y-4 pt-4">
@@ -257,17 +294,17 @@ export default function Auth() {
                 
                 <FormField
                   control={loginForm.control}
-                  name="password"
+                  name="secretWord"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Password</FormLabel>
+                      <FormLabel>Family Secret Word</FormLabel>
                       <FormControl>
                         <div className="relative">
-                          <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                          <Key className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                           <Input
                             {...field}
                             type="password"
-                            placeholder="Your password"
+                            placeholder="Your family's secret word"
                             className="pl-10"
                           />
                         </div>
@@ -294,43 +331,7 @@ export default function Auth() {
                 onClick={() => setResetPasswordOpen(true)}
                 className="text-lovable-blue"
               >
-                Forgot password?
-              </Button>
-            </div>
-            
-            <div className="relative flex items-center py-2">
-              <div className="flex-grow border-t border-gray-300"></div>
-              <span className="mx-4 flex-shrink text-xs text-gray-500">OR CONTINUE WITH</span>
-              <div className="flex-grow border-t border-gray-300"></div>
-            </div>
-            
-            <div className="grid grid-cols-3 gap-3">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => handleSocialLogin('google')}
-                disabled={loading}
-                className="flex items-center justify-center"
-              >
-                <Chrome className="h-5 w-5" />
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => handleSocialLogin('apple')}
-                disabled={loading}
-                className="flex items-center justify-center"
-              >
-                <Apple className="h-5 w-5" />
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => handleSocialLogin('facebook')}
-                disabled={loading}
-                className="flex items-center justify-center"
-              >
-                <Instagram className="h-5 w-5" />
+                Forgot your secret word?
               </Button>
             </div>
           </TabsContent>
@@ -383,22 +384,25 @@ export default function Auth() {
                 
                 <FormField
                   control={signupForm.control}
-                  name="password"
+                  name="secretWord"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Password</FormLabel>
+                      <FormLabel>Family Secret Word</FormLabel>
                       <FormControl>
                         <div className="relative">
-                          <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                          <Key className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                           <Input
                             {...field}
                             type="password"
-                            placeholder="Create a password"
+                            placeholder="Enter the family secret word"
                             className="pl-10"
                           />
                         </div>
                       </FormControl>
                       <FormMessage />
+                      <p className="text-xs text-gray-500">
+                        You must know the family's secret word to join. Ask an existing family member for this word.
+                      </p>
                     </FormItem>
                   )}
                 />
@@ -408,47 +412,11 @@ export default function Auth() {
                   className="w-full bg-lovable-magenta hover:bg-lovable-magenta-bright"
                   disabled={loading}
                 >
-                  {loading ? "Creating account..." : "Create Account"}
+                  {loading ? "Joining family..." : "Join Family"}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </form>
             </Form>
-            
-            <div className="relative flex items-center py-2">
-              <div className="flex-grow border-t border-gray-300"></div>
-              <span className="mx-4 flex-shrink text-xs text-gray-500">OR SIGN UP WITH</span>
-              <div className="flex-grow border-t border-gray-300"></div>
-            </div>
-            
-            <div className="grid grid-cols-3 gap-3">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => handleSocialLogin('google')}
-                disabled={loading}
-                className="flex items-center justify-center"
-              >
-                <Chrome className="h-5 w-5" />
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => handleSocialLogin('apple')}
-                disabled={loading}
-                className="flex items-center justify-center"
-              >
-                <Apple className="h-5 w-5" />
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => handleSocialLogin('facebook')}
-                disabled={loading}
-                className="flex items-center justify-center"
-              >
-                <Instagram className="h-5 w-5" />
-              </Button>
-            </div>
           </TabsContent>
         </Tabs>
         
@@ -456,9 +424,9 @@ export default function Auth() {
         <Dialog open={resetPasswordOpen} onOpenChange={setResetPasswordOpen}>
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
-              <DialogTitle>Reset password</DialogTitle>
+              <DialogTitle>Reset access</DialogTitle>
               <DialogDescription>
-                Enter your email address and we'll send you a link to reset your password.
+                Enter your email address and we'll send you a link to reset your access.
               </DialogDescription>
             </DialogHeader>
             

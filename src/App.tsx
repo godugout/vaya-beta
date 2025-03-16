@@ -14,6 +14,7 @@ const Account = lazy(() => import('@/pages/Account'));
 const Families = lazy(() => import('@/pages/Families'));
 const FamilyDetail = lazy(() => import('@/pages/FamilyDetail'));
 const CreateFamily = lazy(() => import('@/pages/CreateFamily'));
+const InitialSetup = lazy(() => import('@/pages/InitialSetup'));
 const MediaLibrary = lazy(() => import('@/pages/MediaLibrary'));
 const FamilyCapsules = lazy(() => import('@/pages/FamilyCapsules'));
 const MemoryLane = lazy(() => import('@/pages/MemoryLane'));
@@ -39,6 +40,7 @@ function App() {
             <Route path="/families" element={<Families />} />
             <Route path="/family/:familyId" element={<FamilyDetail />} />
             <Route path="/create-family" element={<CreateFamily />} />
+            <Route path="/setup" element={<InitialSetup />} />
             <Route path="/media-library" element={<MediaLibrary />} />
             <Route path="/family-capsules" element={<FamilyCapsules />} />
             <Route path="/memory-lane" element={<MemoryLane />} />
