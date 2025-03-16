@@ -15,6 +15,7 @@ export type DatabaseTables = {
   vaya_localized_prompts: 'vaya_localized_prompts';
   vaya_capsule_schedules: 'vaya_capsule_schedules';
   capsule_schedules: 'capsule_schedules';
+  user_activities: 'user_activities';
 };
 
 // This is a helper type to map table names to their original names
@@ -37,5 +38,6 @@ export const TABLE_NAMES: TableNameMapping = {
   vaya_bookmarks: 'vaya_bookmarks',
   vaya_localized_prompts: 'vaya_localized_prompts',
   vaya_capsule_schedules: 'vaya_capsule_schedules',
-  capsule_schedules: 'capsule_schedules'
+  capsule_schedules: 'capsule_schedules',
+  user_activities: 'user_activities'
 };

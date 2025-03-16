@@ -9,9 +9,21 @@ import { FAQ } from "@/components/home/FAQ";
 import { Link } from "react-router-dom";
 import { MainNav } from "@/components/MainNav";
 import { HomeRecordingSection } from "@/components/home/HomeRecordingSection";
+import { useActivityTracking } from "@/hooks/useActivityTracking";
+import { ActivityTypes } from "@/hooks/useActivityTracking";
+import { useEffect } from "react";
 
 export default function Index() {
   const [showCreateFamily, setShowCreateFamily] = useState(false);
+  const { trackActivity } = useActivityTracking();
+
+  useEffect(() => {
+    // Track page view when component mounts
+    trackActivity(ActivityTypes.PAGE_VIEW, { 
+      page: "home",
+      referrer: document.referrer
+    });
+  }, []);
 
   return (
     <div className="page-container">

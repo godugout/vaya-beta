@@ -72,6 +72,7 @@ serve(async (req) => {
       
       // Extract user ID if available
       let userId = null;
+      let anonymousId = null;
       const authorization = req.headers.get('Authorization');
       if (authorization && authorization.startsWith('Bearer ')) {
         const token = authorization.slice(7);
@@ -81,15 +82,22 @@ serve(async (req) => {
         }
       }
       
+      // Try to get anonymous ID from headers if user is not authenticated
+      if (!userId) {
+        anonymousId = req.headers.get('X-Anonymous-ID');
+      }
+      
       // Log the transcription activity
       await supabaseAdmin.from('user_activities').insert({
         user_id: userId,
+        anonymous_id: anonymousId,
         activity_type: 'audio_transcribed',
         metadata: {
           model,
           has_language_specified: !!language,
           response_format,
-          audio_duration_approx: (blob.size / 16000).toFixed(2) + 's' // Rough estimate
+          audio_duration_approx: (blob.size / 16000).toFixed(2) + 's', // Rough estimate
+          noise_filtering
         }
       });
     }

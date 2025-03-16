@@ -1,14 +1,25 @@
+
 import { useState } from "react";
 import VoiceRecorder from "@/components/VoiceRecorder";
 import MemoryUpload from "@/components/MemoryUpload";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Message } from "@/components/chat/types";
+import { useActivityTracking } from "@/hooks/useActivityTracking";
+import { ActivityTypes } from "@/hooks/useActivityTracking";
 
 const ShareStories = () => {
   const [isRecording, setIsRecording] = useState(false);
+  const { trackActivity } = useActivityTracking();
 
   const handleMessageSent = (message: { content: string; attachments?: { type: "audio" | "image"; url: string }[] }) => {
+    // Track this activity
+    trackActivity(ActivityTypes.STORY_RECORDED, {
+      contentLength: message.content.length,
+      hasAudio: message.attachments?.some(a => a.type === "audio") || false,
+      hasImage: message.attachments?.some(a => a.type === "image") || false,
+      source: "share_stories_page"
+    });
+
     console.log("Message sent:", message);
     // Handle the message being sent
   };
@@ -21,10 +32,20 @@ const ShareStories = () => {
       <CardContent>
         <Tabs defaultValue="voice" className="w-full">
           <TabsList className="w-full">
-            <TabsTrigger value="voice" className="w-full bg-vaya-secondary/10 data-[state=active]:bg-vaya-secondary data-[state=active]:text-white">
+            <TabsTrigger 
+              value="voice" 
+              className="w-full bg-vaya-secondary/10 data-[state=active]:bg-vaya-secondary data-[state=active]:text-white"
+              onClick={() => trackActivity(ActivityTypes.FEATURE_USED, { feature: "voice_recording", source: "share_stories" })}
+            >
               Voice Recording
             </TabsTrigger>
-            <TabsTrigger value="upload" className="w-full">Upload Memory</TabsTrigger>
+            <TabsTrigger 
+              value="upload" 
+              className="w-full"
+              onClick={() => trackActivity(ActivityTypes.FEATURE_USED, { feature: "memory_upload", source: "share_stories" })}
+            >
+              Upload Memory
+            </TabsTrigger>
           </TabsList>
           <TabsContent value="voice">
             <VoiceRecorder 

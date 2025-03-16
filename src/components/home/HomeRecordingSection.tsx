@@ -1,181 +1,148 @@
 
-import { useState } from "react";
-import VoiceRecordingExperience from "@/components/voice-recording/VoiceRecordingExperience";
-import { Card, CardContent } from "@/components/ui/card";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent } from "@/components/ui/card";
+import VoiceRecordingExperience from "@/components/voice-recording/VoiceRecordingExperience";
+import { useActivityTracking } from "@/hooks/useActivityTracking";
+import { ActivityTypes } from "@/hooks/useActivityTracking";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
+import { Mic, Star, Heart, Lightbulb } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
-import { NarraStoryPrompt } from "@/components/narra/NarraStoryPrompt";
 
-// Story prompts to choose from
+// Sample story prompts
 const STORY_PROMPTS = [
-  "Tell us about a cherished family tradition",
-  "Share a story about a family member who inspired you",
-  "Describe a memorable family gathering or celebration",
-  "Tell us about a family recipe and the story behind it",
-  "Share a challenge your family overcame together",
-  "Describe a family heirloom and its significance"
+  { id: 1, prompt: "Share a memorable childhood experience that shaped who you are today." },
+  { id: 2, prompt: "Describe a family tradition that holds special meaning to you." },
+  { id: 3, prompt: "Tell us about a person who changed your life and why." },
+  { id: 4, prompt: "Share a story about a challenge you overcame and what you learned." },
+  { id: 5, prompt: "Describe a place that feels like home to you and why it matters." },
 ];
 
-// Get random prompts from the list
-const getRandomPrompts = (count = 3) => {
-  const shuffled = [...STORY_PROMPTS].sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, count);
-};
-
 export const HomeRecordingSection = () => {
+  const { trackActivity } = useActivityTracking();
+  const [showAuth, setShowAuth] = useState(false);
+  const [savedMemory, setSavedMemory] = useState<{ audioUrl?: string; transcription?: string } | null>(null);
+  const [randomPrompt, setRandomPrompt] = useState(STORY_PROMPTS[0]);
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [selectedPrompt, setSelectedPrompt] = useState<string | null>(null);
-  const [randomPrompts] = useState(() => getRandomPrompts());
-  const [hasRecorded, setHasRecorded] = useState(false);
-  const [showSignupPrompt, setShowSignupPrompt] = useState(false);
-  
-  // Track a user activity
-  const trackActivity = async (activityType: string, metadata?: any) => {
-    try {
-      const { data: session } = await supabase.auth.getSession();
-      const userId = session?.session?.user?.id;
-      
-      // Record the activity
-      await supabase.from('user_activities').insert({
-        user_id: userId || null, // Will be null for anonymous users
-        activity_type: activityType,
-        metadata,
-        anonymous_id: localStorage.getItem('anonymous_id') || crypto.randomUUID()
-      });
-      
-      // Set anonymous ID if not already set
-      if (!localStorage.getItem('anonymous_id')) {
-        const anonymousId = crypto.randomUUID();
-        localStorage.setItem('anonymous_id', anonymousId);
-      }
-    } catch (error) {
-      console.error("Failed to track activity:", error);
-    }
-  };
 
-  // Handle prompt selection
-  const handlePromptSelect = (prompt: string) => {
-    setSelectedPrompt(prompt);
-    trackActivity("prompt_selected", { prompt });
-  };
+  // Select a random prompt on component mount
+  useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * STORY_PROMPTS.length);
+    setRandomPrompt(STORY_PROMPTS[randomIndex]);
+    
+    // Track page view
+    trackActivity(ActivityTypes.PAGE_VIEW, { 
+      page: "home",
+      section: "recording"
+    });
+  }, []);
 
-  // Handle when memory is saved
   const handleMemorySaved = (data: { audioUrl?: string; transcription?: string }) => {
-    setHasRecorded(true);
-    setShowSignupPrompt(true);
+    setSavedMemory(data);
+    setShowAuth(true);
     
-    // Store recording details in local storage to retrieve after signup
-    localStorage.setItem('pending_recording', JSON.stringify({
-      audioUrl: data.audioUrl,
-      transcription: data.transcription,
-      createdAt: new Date().toISOString(),
-      prompt: selectedPrompt
-    }));
-    
-    trackActivity("story_recorded", { 
+    // Track successful recording
+    trackActivity(ActivityTypes.STORY_RECORDED, {
       hasTranscription: !!data.transcription,
-      prompt: selectedPrompt
+      source: "home_page"
+    });
+    
+    toast({
+      title: "Your story has been recorded!",
+      description: "Sign up or log in to save it permanently and access it later.",
     });
   };
 
-  // Handle signup navigation
-  const handleSignupNavigation = () => {
-    trackActivity("signup_prompted_from_recording");
-    navigate('/auth');
+  const handleSignup = () => {
+    trackActivity(ActivityTypes.SIGNUP_STARTED, { source: "post_recording" });
+    navigate("/auth?source=recording");
+  };
+
+  const handleNewPrompt = () => {
+    const currentIndex = STORY_PROMPTS.findIndex(p => p.id === randomPrompt.id);
+    const nextIndex = (currentIndex + 1) % STORY_PROMPTS.length;
+    setRandomPrompt(STORY_PROMPTS[nextIndex]);
+    
+    trackActivity(ActivityTypes.FEATURE_USED, { 
+      feature: "prompt_refresh",
+      source: "home_recording"
+    });
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 md:px-6">
-      {!hasRecorded ? (
-        <>
-          <div className="mb-6 text-center">
-            <h2 className="text-2xl font-semibold mb-3 text-white">
-              Share Your Story
-            </h2>
-            <p className="text-gray-300 max-w-2xl mx-auto">
-              Record a memory to preserve your family's legacy. Choose a prompt to get started or record your own story.
-            </p>
-          </div>
-          
-          {!selectedPrompt ? (
-            <div className="space-y-3 mb-8">
-              <p className="text-gray-400 text-sm font-medium">
-                Select a prompt to get inspired:
-              </p>
-              {randomPrompts.map((prompt, index) => (
-                <NarraStoryPrompt 
-                  key={index}
-                  prompt={prompt}
-                  onClick={handlePromptSelect}
-                />
-              ))}
-              
-              <Button 
-                variant="link" 
-                className="text-gray-400 hover:text-white"
-                onClick={() => handlePromptSelect("I'll share my own story")}
-              >
-                I'll share my own story
-              </Button>
-            </div>
-          ) : (
-            <Card className="bg-gray-900 border-gray-800 mb-6">
-              <CardContent className="p-4">
-                <p className="text-white italic">"{selectedPrompt}"</p>
+    <motion.div 
+      className="w-full max-w-3xl mx-auto"
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, delay: 0.2 }}
+    >
+      <Card className="border border-gray-800/20 bg-gray-900/50 backdrop-blur-sm">
+        <CardContent className="pt-6">
+          {!savedMemory ? (
+            <>
+              <div className="mb-6 text-center">
+                <div className="inline-flex items-center px-4 py-2 rounded-full bg-indigo-500/10 text-indigo-300 mb-4">
+                  <Lightbulb size={16} className="mr-2" />
+                  <span>Prompt Inspiration</span>
+                </div>
+                <h3 className="text-xl text-gray-100 mb-2">{randomPrompt.prompt}</h3>
                 <Button 
-                  variant="link" 
-                  className="text-sm text-gray-400 p-0 h-auto mt-2"
-                  onClick={() => setSelectedPrompt(null)}
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={handleNewPrompt}
+                  className="text-gray-400 hover:text-white"
                 >
-                  Choose a different prompt
+                  Try another prompt
                 </Button>
-              </CardContent>
-            </Card>
+              </div>
+              
+              <VoiceRecordingExperience onMemorySaved={handleMemorySaved} />
+              
+              <div className="mt-4 text-center text-gray-400 text-sm">
+                Your recording will be temporarily saved. Create an account to keep it forever.
+              </div>
+            </>
+          ) : (
+            <div className="py-8 text-center">
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                className="mb-6"
+              >
+                <div className="w-20 h-20 bg-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Star size={32} className="text-white" />
+                </div>
+                <h3 className="text-2xl font-medium text-white mb-2">Your Story Has Been Recorded!</h3>
+                <p className="text-gray-300 max-w-md mx-auto">
+                  Sign up or log in to save your recording permanently and access it anytime.
+                </p>
+              </motion.div>
+              
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button 
+                  size="lg" 
+                  onClick={handleSignup}
+                  className="bg-indigo-600 hover:bg-indigo-700"
+                >
+                  Sign Up Free
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="lg"
+                  onClick={() => navigate("/auth?action=login&source=recording")}
+                  className="border-gray-600 text-gray-300 hover:bg-gray-800"
+                >
+                  Log In
+                </Button>
+              </div>
+            </div>
           )}
-          
-          <VoiceRecordingExperience onMemorySaved={handleMemorySaved} />
-        </>
-      ) : (
-        <motion.div 
-          className="text-center py-12 space-y-6"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <h2 className="text-2xl font-semibold text-white">
-            Your Story Has Been Recorded!
-          </h2>
-          <p className="text-gray-300 max-w-xl mx-auto">
-            Sign up or login to access your recording, save it to your collection, 
-            and start building your family's legacy.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-6">
-            <Button 
-              size="lg" 
-              className="bg-autumn hover:bg-autumn/90"
-              onClick={handleSignupNavigation}
-            >
-              Sign Up to Access Your Story
-            </Button>
-            <Button 
-              variant="outline" 
-              className="border-gray-700 text-gray-300 hover:bg-gray-800"
-              onClick={() => {
-                setHasRecorded(false);
-                setSelectedPrompt(null);
-                setShowSignupPrompt(false);
-                trackActivity("started_new_recording");
-              }}
-            >
-              Record Another Story
-            </Button>
-          </div>
-        </motion.div>
-      )}
-    </div>
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 };

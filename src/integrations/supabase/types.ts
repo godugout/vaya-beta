@@ -320,6 +320,36 @@ export type Database = {
           },
         ]
       }
+      user_activities: {
+        Row: {
+          activity_type: string
+          anonymous_id: string | null
+          created_at: string
+          id: string
+          metadata: Json | null
+          session_id: string | null
+          user_id: string | null
+        }
+        Insert: {
+          activity_type: string
+          anonymous_id?: string | null
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          session_id?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          activity_type?: string
+          anonymous_id?: string | null
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          session_id?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       user_custom_prompts: {
         Row: {
           active: boolean | null
