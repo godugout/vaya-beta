@@ -10,7 +10,7 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // Import styles
-import "./styles/index.css";
+import "./index.css";
 import "./styles/animations.css";
 import "./styles/components/cosmic-effects.css";
 import "./styles/components/temple-transitions.css";
