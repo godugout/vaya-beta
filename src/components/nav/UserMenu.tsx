@@ -22,7 +22,8 @@ import {
   Users,
   Image,
   TreeDeciduous,
-  Layers
+  Layers,
+  Feather
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
@@ -92,6 +93,10 @@ export const UserMenu = ({ user, handleSignOut, navigate }: UserMenuProps) => {
         <DropdownMenuItem onClick={() => navigate('/family/:id')}>
           <TreeDeciduous className="mr-2 h-4 w-4" />
           <span>Family Tree</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate('/sacred-foundation')}>
+          <Feather className="mr-2 h-4 w-4" />
+          <span>Sacred Foundation</span>
         </DropdownMenuItem>
         
         {/* Settings Section */}

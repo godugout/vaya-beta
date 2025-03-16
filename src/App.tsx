@@ -1,48 +1,55 @@
 
-import { Suspense, lazy } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import LandingPage from '@/pages/LandingPage';
-import NotFound from '@/pages/NotFound';
-import Meteor from '@/pages/Meteor';
+import { lazy, Suspense } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Toaster } from "sonner";
+import { ThemeProvider } from 'next-themes';
 import { MainLayout } from '@/components/layout/MainLayout';
+import './App.css';
 
-// Using lazy loading for better performance
-const FamilyCapsules = lazy(() => import('@/pages/FamilyCapsules'));
-const ShareStories = lazy(() => import('@/pages/ShareStories'));
-const MemoryLane = lazy(() => import('@/pages/MemoryLane'));
-const Families = lazy(() => import('@/pages/Families'));
-const Settings = lazy(() => import('@/pages/Settings'));
-const FamilyDetail = lazy(() => import('@/pages/FamilyDetail'));
-const Authentication = lazy(() => import('@/pages/Authentication'));
-const Profile = lazy(() => import('@/pages/Profile'));
-const Account = lazy(() => import('@/pages/Account'));
-const DesignSystem = lazy(() => import('@/pages/DesignSystem'));
-const MediaLibrary = lazy(() => import('@/pages/MediaLibrary'));
+// Lazy load pages
+const Index = lazy(() => import('@/pages/Index'));
+const Auth = lazy(() => import('@/pages/Auth'));
 const ComponentsDemo = lazy(() => import('@/pages/ComponentsDemo'));
+const DesignSystem = lazy(() => import('@/pages/DesignSystem'));
+const Account = lazy(() => import('@/pages/Account'));
+const Families = lazy(() => import('@/pages/Families'));
+const FamilyDetail = lazy(() => import('@/pages/FamilyDetail'));
+const CreateFamily = lazy(() => import('@/pages/CreateFamily'));
+const MediaLibrary = lazy(() => import('@/pages/MediaLibrary'));
+const FamilyCapsules = lazy(() => import('@/pages/FamilyCapsules'));
+const MemoryLane = lazy(() => import('@/pages/MemoryLane'));
+const MemoryPost = lazy(() => import('@/pages/MemoryPost'));
+const SacredFoundation = lazy(() => import('@/pages/SacredFoundation'));
 
 function App() {
   return (
-    <MainLayout>
-      <Suspense fallback={<div className="flex items-center justify-center w-full h-96">Loading...</div>}>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/meteor" element={<Meteor />} />
-          <Route path="/family-capsules" element={<FamilyCapsules />} />
-          <Route path="/share-stories" element={<ShareStories />} />
-          <Route path="/memory-lane" element={<MemoryLane />} />
-          <Route path="/families" element={<Families />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/family/:id" element={<FamilyDetail />} />
-          <Route path="/auth" element={<Authentication />} />
-          <Route path="/account" element={<Account />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/design-system/*" element={<DesignSystem />} />
-          <Route path="/media-library" element={<MediaLibrary />} />
-          <Route path="/components-demo" element={<ComponentsDemo />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Suspense>
-    </MainLayout>
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+    >
+      <Router>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/account" element={<Account />} />
+            <Route path="/components" element={<ComponentsDemo />} />
+            <Route path="/design/*" element={<DesignSystem />} />
+            <Route path="/families" element={<Families />} />
+            <Route path="/family/:familyId" element={<FamilyDetail />} />
+            <Route path="/create-family" element={<CreateFamily />} />
+            <Route path="/media-library" element={<MediaLibrary />} />
+            <Route path="/family-capsules" element={<FamilyCapsules />} />
+            <Route path="/memory-lane" element={<MemoryLane />} />
+            <Route path="/memory/:id" element={<MemoryPost />} />
+            <Route path="/sacred-foundation" element={<SacredFoundation />} />
+          </Routes>
+        </Suspense>
+      </Router>
+      <Toaster position="bottom-right" />
+    </ThemeProvider>
   );
 }
 
