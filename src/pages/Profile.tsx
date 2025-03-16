@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -65,7 +64,6 @@ export default function Profile() {
       const { data: user } = await supabase.auth.getUser();
       
       if (user?.user) {
-        // Define the query with proper typing for nested objects
         const { data, error } = await supabase
           .from("family_members")
           .select(`
@@ -81,15 +79,13 @@ export default function Profile() {
       
         if (error) throw error;
       
-        // Add type checking and safely access potentially undefined properties
         const formattedFamilies = data.map(item => {
-          // Make sure families exists and is an object before accessing its properties
-          const familyData = item.families;
+          const familyData = item.families as any;
           
           return {
-            familyId: typeof familyData === 'object' && familyData !== null ? familyData.id : '',
-            familyName: typeof familyData === 'object' && familyData !== null ? familyData.name : '',
-            familyDescription: typeof familyData === 'object' && familyData !== null ? familyData.description : null,
+            familyId: familyData?.id || '',
+            familyName: familyData?.name || '',
+            familyDescription: familyData?.description || null,
             role: item.role
           };
         });
@@ -110,7 +106,6 @@ export default function Profile() {
           title: "Success",
           description: "Patel family members have been added successfully",
         });
-        // Refresh the profiles
         fetchProfiles();
       } else {
         throw new Error("Failed to seed Patel family");
