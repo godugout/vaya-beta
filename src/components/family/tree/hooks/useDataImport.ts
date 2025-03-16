@@ -1,6 +1,7 @@
 
 import { useCallback } from 'react';
 import { Node, Edge } from '@xyflow/react';
+import { v4 as uuidv4 } from 'uuid';
 
 interface UseDataImportProps {
   setNodes: React.Dispatch<React.SetStateAction<Node[]>>;
@@ -77,8 +78,9 @@ export function useDataImport({ setNodes, setEdges, autoLayoutTree }: UseDataImp
               name: row.name || row.fullName || row.full_name || `Person ${index}`,
               role: row.role || 'member',
               birthDate: row.birthDate || row.birth_date || row.dob || null,
+              details: row.details || '',
+              // Add any additional fields needed
               imageUrl: row.imageUrl || row.avatar_url || row.image || null,
-              details: row.details || row.bio || row.description || null
             },
             draggable: true
           });

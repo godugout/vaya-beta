@@ -35,7 +35,24 @@ export function useFileParser() {
               throw new Error('Excel file contains no valid data');
             }
             
-            resolve(jsonData);
+            // Process data to handle various column naming conventions
+            const processedData = jsonData.map((row: any) => {
+              // Handle different possible column names for common fields
+              return {
+                name: row.Name || row.name || row.full_name || row.fullName,
+                birthDate: row.Birthdate || row.birthDate || row.birth_date || row.dob,
+                email: row.Email || row["Email Address"] || row.email,
+                address: row.Address || row["Home Addresses"] || row.address,
+                // Extract village information from name if available
+                role: row.Name?.includes("Miroli") ? "mother's side" :
+                      row.Name?.includes("Mandva") ? "father's side" :
+                      row.Name?.includes("Malsar") ? "village" : "member",
+                // Add any additional details as needed
+                details: `Email: ${row["Email Address"] || ''}\nAddress: ${row["Home Addresses"] || ''}`
+              };
+            });
+            
+            resolve(processedData);
           } else {
             reject(new Error('Unsupported file format. Please upload an .xlsx or .xls file.'));
           }
