@@ -11,7 +11,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // Import styles
 import "./index.css";
-import "./styles/animations.css";
+import "./styles/utilities/animations.css";
 import "./styles/components/cosmic-effects.css";
 import "./styles/components/temple-transitions.css";
 import "./styles/components/mobile-nav.css";
