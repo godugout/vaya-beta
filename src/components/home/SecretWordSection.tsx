@@ -5,22 +5,67 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/components/ui/use-toast';
 
 interface SecretWordSectionProps {
   user: any | null;
 }
 
+// Special secret words that are always accepted
+const SPECIAL_SECRET_WORDS = ['hanuman', 'jsk', 'sriram', 'ramramram'];
+
 export const SecretWordSection = ({ user }: SecretWordSectionProps) => {
   const navigate = useNavigate();
   const [secretWord, setSecretWord] = useState('');
   const [joiningFamily, setJoiningFamily] = useState(false);
+  const { toast } = useToast();
   
   const handleJoinWithSecretWord = async () => {
     if (!secretWord.trim()) return;
     
     setJoiningFamily(true);
     try {
-      // Check if the secret word is valid
+      // Check if the secret word is one of the special words that should always be accepted
+      if (SPECIAL_SECRET_WORDS.includes(secretWord.toLowerCase().trim())) {
+        // Get the first family to join
+        const { data: families, error: familiesError } = await supabase
+          .from('families')
+          .select('id')
+          .limit(1);
+          
+        if (familiesError) throw familiesError;
+        
+        if (families && families.length > 0) {
+          const familyId = families[0].id;
+          
+          if (user) {
+            // User is logged in, add them to the family
+            const { error: memberError } = await supabase
+              .from('family_members')
+              .insert({
+                family_id: familyId,
+                user_id: user.id,
+                role: 'member'
+              });
+              
+            if (memberError) throw memberError;
+            
+            toast({
+              title: "Welcome to the Family!",
+              description: "You've successfully joined using a special access code.",
+            });
+            
+            // Navigate to that family
+            navigate(`/family/${familyId}`);
+          } else {
+            // User is not logged in, send them to auth with the secret word
+            navigate(`/auth?secret=${encodeURIComponent(secretWord)}`);
+          }
+          return;
+        }
+      }
+      
+      // Standard flow for checking the secret word in the database
       const { data: familyId, error } = await supabase.rpc('check_family_secret', {
         _secret_word: secretWord.trim()
       });
@@ -40,6 +85,11 @@ export const SecretWordSection = ({ user }: SecretWordSectionProps) => {
             
           if (memberError) throw memberError;
           
+          toast({
+            title: "Welcome to the Family!",
+            description: "You've successfully joined with the family secret word.",
+          });
+          
           // Navigate to that family
           navigate(`/family/${familyId}`);
         } else {
@@ -51,7 +101,11 @@ export const SecretWordSection = ({ user }: SecretWordSectionProps) => {
       }
     } catch (error: any) {
       console.error('Error joining family:', error);
-      alert(error.message);
+      toast({
+        title: "Error Joining Family",
+        description: error.message,
+        variant: "destructive"
+      });
     } finally {
       setJoiningFamily(false);
     }

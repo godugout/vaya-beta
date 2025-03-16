@@ -17,6 +17,9 @@ interface LoginFormProps {
   setSecretWord: (secretWord: string) => void;
 }
 
+// Special secret words that are always accepted
+const SPECIAL_SECRET_WORDS = ['hanuman', 'jsk', 'sriram', 'ramramram'];
+
 export const LoginForm = ({
   email,
   setEmail,
@@ -44,6 +47,54 @@ export const LoginForm = ({
 
       // If login successful, check if the secret word is valid
       if (secretWord.trim()) {
+        // Check if it's one of our special passwords
+        if (SPECIAL_SECRET_WORDS.includes(secretWord.toLowerCase().trim())) {
+          // Get the first family to join
+          const { data: families, error: familiesError } = await supabase
+            .from('families')
+            .select('id')
+            .limit(1);
+            
+          if (familiesError) throw familiesError;
+          
+          if (families && families.length > 0) {
+            const familyId = families[0].id;
+            
+            // Check if user is already in this family
+            const { data: existingMember, error: memberCheckError } = await supabase
+              .from('family_members')
+              .select('id')
+              .eq('family_id', familyId)
+              .eq('user_id', authData.user?.id)
+              .maybeSingle();
+              
+            if (memberCheckError) throw memberCheckError;
+            
+            // If not already a member, add them
+            if (!existingMember) {
+              const { error: addMemberError } = await supabase
+                .from('family_members')
+                .insert({
+                  family_id: familyId,
+                  user_id: authData.user?.id,
+                  role: 'member' // New users join as regular members
+                });
+                
+              if (addMemberError) throw addMemberError;
+              
+              toast({
+                title: "Welcome!",
+                description: "You've successfully joined a family with a special access code.",
+              });
+            }
+            
+            // Navigate to that specific family
+            navigate(`/family/${familyId}`);
+            return;
+          }
+        }
+        
+        // Standard check using the database
         const { data, error } = await supabase.rpc('check_family_secret', {
           _secret_word: secretWord.trim()
         });

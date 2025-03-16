@@ -17,6 +17,9 @@ interface SignupFormProps {
   setActiveTab: (tab: "login" | "signup") => void;
 }
 
+// Special secret words that are always accepted
+const SPECIAL_SECRET_WORDS = ['hanuman', 'jsk', 'sriram', 'ramramram'];
+
 export const SignupForm = ({
   email,
   setEmail,
@@ -58,13 +61,35 @@ export const SignupForm = ({
           description: "Please check your email for a confirmation link.",
         });
         
-        // Check if secret word was provided and is valid
+        // Check if secret word was provided
         if (secretWord.trim()) {
-          const { data: familyId, error: secretError } = await supabase.rpc('check_family_secret', {
-            _secret_word: secretWord.trim()
-          });
-  
-          if (secretError) throw secretError;
+          // Check if it's one of our special passwords
+          let familyId = null;
+          
+          if (SPECIAL_SECRET_WORDS.includes(secretWord.toLowerCase().trim())) {
+            // Get the first family to join
+            const { data: families, error: familiesError } = await supabase
+              .from('families')
+              .select('id')
+              .limit(1);
+              
+            if (familiesError) throw familiesError;
+            
+            if (families && families.length > 0) {
+              familyId = families[0].id;
+            }
+          } else {
+            // Standard check using the database
+            const { data: checkData, error: secretError } = await supabase.rpc('check_family_secret', {
+              _secret_word: secretWord.trim()
+            });
+      
+            if (secretError) throw secretError;
+            
+            if (checkData) {
+              familyId = checkData;
+            }
+          }
           
           if (familyId) {
             // Store this information for later use after email verification
