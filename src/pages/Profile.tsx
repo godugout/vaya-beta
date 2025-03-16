@@ -65,7 +65,7 @@ export default function Profile() {
       const { data: user } = await supabase.auth.getUser();
       
       if (user?.user) {
-        // Fixed the query to properly return an array of objects with correct typing
+        // Define the query with proper typing for nested objects
         const { data, error } = await supabase
           .from("family_members")
           .select(`
@@ -81,13 +81,18 @@ export default function Profile() {
       
         if (error) throw error;
       
-        // Properly map each item in the returned array
-        const formattedFamilies = data.map(item => ({
-          familyId: item.families?.id,
-          familyName: item.families?.name,
-          familyDescription: item.families?.description,
-          role: item.role
-        }));
+        // Add type checking and safely access potentially undefined properties
+        const formattedFamilies = data.map(item => {
+          // Make sure families exists and is an object before accessing its properties
+          const familyData = item.families;
+          
+          return {
+            familyId: typeof familyData === 'object' && familyData !== null ? familyData.id : '',
+            familyName: typeof familyData === 'object' && familyData !== null ? familyData.name : '',
+            familyDescription: typeof familyData === 'object' && familyData !== null ? familyData.description : null,
+            role: item.role
+          };
+        });
       
         setUserFamilies(formattedFamilies);
       }
