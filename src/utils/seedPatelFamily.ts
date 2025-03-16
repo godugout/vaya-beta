@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 
 interface FamilyMember {
   name: string;
-  birthdate: string;
+  birthdate: string | null;
   email: string;
   home_address: string;
 }
@@ -27,6 +27,7 @@ export async function seedPatelFamily() {
     
     // Define the family members based on the provided data
     const patelFamilyMembers: FamilyMember[] = [
+      // Original family members
       { name: "Urmila Patel", birthdate: "1969-06-22", email: "", home_address: "" },
       { name: "MH Patel", birthdate: "1932-06-26", email: "", home_address: "" },
       { name: "Nita Patel", birthdate: "1973-07-04", email: "", home_address: "" },
@@ -65,6 +66,34 @@ export async function seedPatelFamily() {
       { name: "Minali Patel", birthdate: "1984-08-27", email: "minalip@gmail.com", home_address: "4702 Deepwater LN. Sugar Land TX 77479" },
       { name: "Swasti Patel", birthdate: "1988-03-31", email: "swastipatel@gmail.com", home_address: "112 Eagle Point, Irvine, CA 92604" },
       { name: "Dhara Patel", birthdate: "2000-01-14", email: "dharapatel@gmail.com", home_address: "112 Eagle Point, Irvine, CA 92604" },
+      
+      // New family members from phonebook data
+      { name: "Daivyabhai Patel", birthdate: "2023-04-30", email: "", home_address: "" },
+      { name: "Jai Patel", birthdate: "2023-05-03", email: "", home_address: "" },
+      { name: "Vaishali Patel", birthdate: "2023-04-16", email: "", home_address: "" },
+      { name: "Grishma Patel", birthdate: "2023-04-15", email: "", home_address: "" },
+      { name: "Vinay Patel", birthdate: "2023-04-13", email: "", home_address: "" },
+      { name: "Trushar Patel", birthdate: "2023-04-13", email: "", home_address: "" },
+      { name: "Anu Patel", birthdate: "2023-04-05", email: "", home_address: "" },
+      { name: "Emma Patel", birthdate: "2023-03-16", email: "", home_address: "" },
+      { name: "Deevanshi Desai", birthdate: "2023-01-16", email: "", home_address: "" },
+      { name: "Varsha Patel", birthdate: "2023-01-15", email: "", home_address: "" },
+      { name: "Tanishee Patel", birthdate: "2023-01-05", email: "", home_address: "" },
+      { name: "Mala Patel", birthdate: "2022-12-22", email: "", home_address: "" },
+      { name: "Ronak Patel", birthdate: "2022-12-21", email: "", home_address: "" },
+      { name: "Binita Dilip Patel", birthdate: "2022-10-17", email: "", home_address: "" },
+      { name: "Thakor Patel", birthdate: "2022-09-07", email: "", home_address: "" },
+      { name: "Jayesh Patel", birthdate: "2022-06-09", email: "", home_address: "" },
+      { name: "Vrunda Patel", birthdate: "2022-08-30", email: "", home_address: "" },
+      { name: "Pankaj Master", birthdate: "2022-08-19", email: "", home_address: "" },
+      { name: "Shefali Patel", birthdate: "2022-06-01", email: "", home_address: "" },
+      { name: "Alpa Patel", birthdate: null, email: "", home_address: "" },
+      { name: "Ajay Patel", birthdate: null, email: "", home_address: "" },
+      { name: "Kayur Patel", birthdate: null, email: "", home_address: "" },
+      { name: "Ankur Patel", birthdate: null, email: "", home_address: "" },
+      { name: "Vina Patel", birthdate: null, email: "", home_address: "" },
+      { name: "Sunita Narshibhai Patel", birthdate: null, email: "", home_address: "" },
+      { name: "Renjen Patel", birthdate: null, email: "", home_address: "" }
     ];
     
     // Seed each family member
