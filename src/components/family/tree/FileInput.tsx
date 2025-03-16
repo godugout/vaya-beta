@@ -59,7 +59,7 @@ export const FileInput = ({ onFileSelected }: FileInputProps) => {
           <span className="font-semibold">Click to upload</span> or drag and drop
         </p>
         <p className="text-xs text-gray-500 dark:text-gray-400">
-          CSV, JSON, or Excel files
+          Excel (.xlsx, .xls), CSV, or JSON files
         </p>
       </div>
       <input
@@ -67,7 +67,7 @@ export const FileInput = ({ onFileSelected }: FileInputProps) => {
         id="dropzone-file"
         type="file"
         className="hidden"
-        accept=".csv,.json,.xlsx"
+        accept=".csv,.json,.xlsx,.xls"
         onChange={handleChange}
       />
     </div>

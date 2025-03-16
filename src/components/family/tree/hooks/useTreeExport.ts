@@ -1,4 +1,3 @@
-
 import { useCallback } from 'react';
 import { Node, Edge } from '@xyflow/react';
 import * as XLSX from 'xlsx';
@@ -47,10 +46,29 @@ export function useTreeExport({ setNodes, setEdges, autoLayoutTree }: UseTreeExp
         const nodes: Node[] = [];
         const edges: Edge[] = [];
         
+        // Map of ids to ensure we don't create duplicate nodes
+        const idMap = new Map<string, boolean>();
+        
         // Process each row as a potential family member
         data.forEach((row, index) => {
-          // Create a node for this person
+          // Skip rows without name data
+          if (!row.name && !row.fullName && !row.full_name) {
+            console.warn('Skipping row without name data:', row);
+            return;
+          }
+          
+          // Create a node ID or use provided one
           const id = row.id || `node-${index}`;
+          
+          // Skip duplicate IDs
+          if (idMap.has(id)) {
+            console.warn(`Duplicate ID found: ${id}, skipping`);
+            return;
+          }
+          
+          idMap.set(id, true);
+          
+          // Create a node for this person
           nodes.push({
             id: id,
             type: 'familyMember',
@@ -67,9 +85,10 @@ export function useTreeExport({ setNodes, setEdges, autoLayoutTree }: UseTreeExp
           
           // Create edges if parent/child relationships are defined
           if (row.parentId || row.parent_id) {
+            const parentId = row.parentId || row.parent_id;
             edges.push({
-              id: `edge-${row.parentId || row.parent_id}-${id}`,
-              source: row.parentId || row.parent_id,
+              id: `edge-${parentId}-${id}`,
+              source: parentId,
               target: id,
               type: 'parentChild',
               animated: true
@@ -78,15 +97,20 @@ export function useTreeExport({ setNodes, setEdges, autoLayoutTree }: UseTreeExp
           
           // Create spouse edges if defined
           if (row.spouseId || row.spouse_id) {
+            const spouseId = row.spouseId || row.spouse_id;
             edges.push({
-              id: `edge-spouse-${id}-${row.spouseId || row.spouse_id}`,
+              id: `edge-spouse-${id}-${spouseId}`,
               source: id,
-              target: row.spouseId || row.spouse_id,
+              target: spouseId,
               type: 'spouse',
               animated: false
             });
           }
         });
+        
+        if (nodes.length === 0) {
+          throw new Error('No valid family members found in the imported data');
+        }
         
         setNodes(nodes);
         setEdges(edges);
@@ -95,9 +119,12 @@ export function useTreeExport({ setNodes, setEdges, autoLayoutTree }: UseTreeExp
         setTimeout(() => {
           autoLayoutTree();
         }, 100);
+      } else {
+        throw new Error('Invalid data format: Expected array or object with nodes/edges');
       }
     } catch (error) {
       console.error('Error importing data:', error);
+      throw error; // Rethrow to allow handling in the UI
     }
   }, [setNodes, setEdges, autoLayoutTree]);
 
@@ -146,6 +173,7 @@ export function useTreeExport({ setNodes, setEdges, autoLayoutTree }: UseTreeExp
       
     } catch (error) {
       console.error('Error exporting to Excel:', error);
+      throw error;
     }
   }, []);
 
@@ -157,21 +185,45 @@ export function useTreeExport({ setNodes, setEdges, autoLayoutTree }: UseTreeExp
       reader.onload = (e) => {
         try {
           const data = e.target?.result;
-          const workbook = XLSX.read(data, { type: 'binary' });
+          if (!data) {
+            throw new Error('Failed to read file data');
+          }
           
-          // Get first worksheet
-          const worksheetName = workbook.SheetNames[0];
-          const worksheet = workbook.Sheets[worksheetName];
-          
-          // Convert to JSON
-          const jsonData = XLSX.utils.sheet_to_json(worksheet);
-          resolve(jsonData);
+          // Parse based on file extension
+          if (file.name.endsWith('.xlsx') || file.name.endsWith('.xls')) {
+            const workbook = XLSX.read(data, { type: 'binary' });
+            
+            // Get first worksheet
+            const worksheetName = workbook.SheetNames[0];
+            if (!worksheetName) {
+              throw new Error('Excel file contains no worksheets');
+            }
+            
+            const worksheet = workbook.Sheets[worksheetName];
+            
+            // Convert to JSON
+            const jsonData = XLSX.utils.sheet_to_json(worksheet);
+            console.log('Parsed Excel data:', jsonData);
+            
+            if (!Array.isArray(jsonData) || jsonData.length === 0) {
+              throw new Error('Excel file contains no valid data');
+            }
+            
+            resolve(jsonData);
+          } else {
+            reject(new Error('Unsupported file format. Please upload an .xlsx or .xls file.'));
+          }
         } catch (error) {
+          console.error('Error parsing Excel file:', error);
           reject(error);
         }
       };
       
-      reader.onerror = (error) => reject(error);
+      reader.onerror = (error) => {
+        console.error('FileReader error:', error);
+        reject(new Error('Error reading the file'));
+      };
+      
       reader.readAsBinaryString(file);
     });
   }, []);
