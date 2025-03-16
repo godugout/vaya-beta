@@ -1,8 +1,9 @@
 
 import { Link, useLocation } from "react-router-dom";
 import { User } from "@supabase/supabase-js";
-import { Home, Mic, Archive, Users, Menu, Volume2, Image } from "lucide-react";
+import { Home, Mic, Archive, Users, Menu, Volume2, Image, Palette } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 interface MobileBottomNavProps {
   user: User | null;
@@ -43,11 +44,20 @@ export const MobileBottomNav = ({
       icon: Archive,
     },
     {
-      name: "Families",
-      path: "/families",
-      icon: Users,
+      name: "Media",
+      path: "/media-library",
+      icon: Palette,
     }
   ];
+  
+  // Only show Families for logged-in users
+  if (user) {
+    navItems.push({
+      name: "Family",
+      path: "/families",
+      icon: Users,
+    });
+  }
 
   return (
     <div className={cn(
@@ -66,22 +76,33 @@ export const MobileBottomNav = ({
                 "flex flex-col items-center justify-center w-full h-full transition-colors",
                 isActive 
                   ? "text-autumn dark:text-leaf" 
-                  : "text-gray-600 dark:text-gray-400 hover:text-autumn dark:hover:text-leaf"
+                  : "text-gray-600 dark:text-gray-400"
               )}
             >
-              <item.icon 
+              <motion.div
+                whileTap={{ scale: 0.9 }}
                 className={cn(
-                  "h-5 w-5 mb-1",
-                  isActive && "animate-pulse",
-                  isSimplifiedView && "h-6 w-6 mb-2"
-                )} 
-              />
+                  "flex items-center justify-center rounded-full p-1",
+                  isActive && "bg-autumn/10 dark:bg-leaf/10"
+                )}
+              >
+                <item.icon 
+                  className={cn(
+                    "h-5 w-5 mb-1",
+                    isActive && "animate-pulse",
+                    isSimplifiedView && "h-6 w-6 mb-1"
+                  )} 
+                />
+              </motion.div>
               <span className={cn(
                 "text-xs font-medium",
                 isSimplifiedView && "text-sm"
               )}>{item.name}</span>
               {isActive && (
-                <span className="absolute top-0 w-1/5 h-0.5 bg-autumn dark:bg-leaf rounded-full" />
+                <motion.span 
+                  layoutId="mobileActiveIndicator"
+                  className="absolute bottom-1 w-1 h-1 bg-autumn dark:bg-leaf rounded-full" 
+                />
               )}
             </Link>
           );
@@ -90,7 +111,8 @@ export const MobileBottomNav = ({
       
       {onVoiceToggle && (
         <div className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2">
-          <button
+          <motion.button
+            whileTap={{ scale: 0.95 }}
             onClick={onVoiceToggle}
             className={cn(
               "flex items-center justify-center h-12 w-12 rounded-full shadow-lg",
@@ -100,7 +122,7 @@ export const MobileBottomNav = ({
             )}
           >
             <Volume2 className="h-6 w-6" />
-          </button>
+          </motion.button>
         </div>
       )}
     </div>

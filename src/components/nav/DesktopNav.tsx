@@ -2,12 +2,21 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { User } from "@supabase/supabase-js";
-import { NavButton } from "./NavButton";
 import { UserMenu } from "./UserMenu";
 import { GuestMenu } from "./GuestMenu";
-import { Home, Mic, Image, Archive, Users, Settings, Palette } from "lucide-react";
+import { NavGlyphItem } from "./NavGlyphItem";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { 
+  Home, 
+  Mic, 
+  Image, 
+  Archive, 
+  Users, 
+  Settings, 
+  Palette,
+  Volume2
+} from "lucide-react";
 
 interface DesktopNavProps {
   user: User | null;
@@ -26,38 +35,75 @@ export const DesktopNav = ({
   isVoiceActive,
   onVoiceToggle
 }: DesktopNavProps) => {
+  const mainNavItems = [
+    {
+      label: "Home",
+      path: "/",
+      icon: <Home size={24} />,
+      description: "Dashboard and welcome"
+    },
+    {
+      label: "Stories",
+      path: "/share-stories",
+      icon: <Mic size={24} />,
+      description: "Record and share family stories"
+    },
+    {
+      label: "Memories",
+      path: "/memory-lane",
+      icon: <Image size={24} />,
+      description: "Browse family photos and memories"
+    },
+    {
+      label: "Capsules",
+      path: "/family-capsules",
+      icon: <Archive size={24} />,
+      description: "Time capsules for your family"
+    },
+    {
+      label: "Media",
+      path: "/media-library",
+      icon: <Palette size={24} />,
+      description: "Your family media library"
+    },
+  ];
+  
+  // Add the Families nav item only for logged-in users
+  const userSpecificItems = user ? [
+    {
+      label: "Family",
+      path: "/families",
+      icon: <Users size={24} />,
+      description: "Manage your family connections"
+    }
+  ] : [];
+  
+  // Combine all nav items
+  const allNavItems = [...mainNavItems, ...userSpecificItems];
+
   return (
     <div className="hidden md:block py-3 px-6">
-      <div className="flex items-center justify-between relative">
-        {/* Left side navigation */}
-        <div className="flex items-center gap-1 nav-menu-left">
-          <NavButton 
-            to="/" 
-            icon={<Home size={isSimplifiedView ? 20 : 16} />} 
-            label="Home" 
-            isSimplified={isSimplifiedView}
-          />
-          <NavButton 
-            to="/share-stories" 
-            icon={<Mic size={isSimplifiedView ? 20 : 16} />} 
-            label="Stories" 
-            isSimplified={isSimplifiedView}
-          />
-          <NavButton 
-            to="/memory-lane" 
-            icon={<Image size={isSimplifiedView ? 20 : 16} />} 
-            label="Memories" 
-            isSimplified={isSimplifiedView}
-          />
+      <div className="flex items-center justify-between relative h-20">
+        {/* Glyph navigation - evenly spaced */}
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1/3 flex items-center justify-start gap-4">
+          {allNavItems.slice(0, Math.floor(allNavItems.length / 2)).map((item) => (
+            <NavGlyphItem
+              key={item.path}
+              to={item.path}
+              icon={item.icon}
+              label={item.label}
+              description={item.description}
+            />
+          ))}
         </div>
         
         {/* Centered logo and brand */}
         <button 
           onClick={() => navigate('/')} 
-          className="flex flex-col items-center gap-1 absolute left-1/2 transform -translate-x-1/2"
+          className="absolute left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2"
           aria-label="Go to homepage"
         >
-          <div className="relative h-12 w-12 rounded-lg bg-black flex items-center justify-center overflow-hidden">
+          <div className="relative h-16 w-16 rounded-lg bg-black flex items-center justify-center overflow-hidden">
             <div className="absolute inset-0 opacity-20">
               {/* Star dots background */}
               <span className="absolute h-1 w-1 bg-white rounded-full top-1 left-1"></span>
@@ -68,36 +114,25 @@ export const DesktopNav = ({
             <img 
               src="/lovable-uploads/2a8faf45-bcfa-46d2-8314-ee4fd404aa94.png" 
               alt="Vaya Logo" 
-              className="h-9 w-9 object-contain"
+              className="h-12 w-12 object-contain"
             />
           </div>
-          <span className="text-lg font-heading font-semibold tracking-widest uppercase text-forest dark:text-autumn">
-            Vaya
+          <span className="text-xl font-heading font-semibold tracking-widest uppercase text-forest dark:text-autumn">
+            VAYA
           </span>
         </button>
         
         {/* Right side navigation */}
-        <div className="flex items-center gap-1 nav-menu-right">
-          <NavButton 
-            to="/family-capsules" 
-            icon={<Archive size={isSimplifiedView ? 20 : 16} />} 
-            label="Capsules" 
-            isSimplified={isSimplifiedView}
-          />
-          <NavButton 
-            to="/media-library" 
-            icon={<Palette size={isSimplifiedView ? 20 : 16} />} 
-            label="Media" 
-            isSimplified={isSimplifiedView}
-          />
-          {user && (
-            <NavButton 
-              to="/families" 
-              icon={<Users size={isSimplifiedView ? 20 : 16} />} 
-              label="Family" 
-              isSimplified={isSimplifiedView}
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1/3 flex items-center justify-end gap-4">
+          {allNavItems.slice(Math.floor(allNavItems.length / 2)).map((item) => (
+            <NavGlyphItem
+              key={item.path}
+              to={item.path}
+              icon={item.icon}
+              label={item.label}
+              description={item.description}
             />
-          )}
+          ))}
           
           {/* Voice control button */}
           <Button 
@@ -107,11 +142,11 @@ export const DesktopNav = ({
             aria-pressed={isVoiceActive}
             aria-label="Toggle voice navigation"
             className={cn(
-              "rounded-full transition-colors ml-2",
+              "rounded-full transition-colors ml-2 h-12 w-12",
               isVoiceActive && "bg-autumn/10 dark:bg-autumn/20"
             )}
           >
-            <Mic className={cn(
+            <Volume2 className={cn(
               "h-5 w-5 transition-colors",
               isVoiceActive ? "text-autumn" : "text-muted-foreground"
             )} />

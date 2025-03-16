@@ -19,11 +19,10 @@ export const JamnabenCircularGlyph = ({
     xl: 'w-48 h-48',
   };
   
-  // Slow breathing animation for the glow
-  const glowVariants = {
+  // Animation variants
+  const circleVariants = {
     animate: {
-      opacity: [0.2, 0.6, 0.2],
-      scale: [0.95, 1, 0.95],
+      scale: [1, 1.05, 1],
       transition: {
         duration: 4,
         repeat: Infinity,
@@ -31,66 +30,109 @@ export const JamnabenCircularGlyph = ({
       }
     }
   };
+  
+  // Dot animation
+  const dotVariants = {
+    animate: (index: number) => ({
+      scale: [1, 1.3, 1],
+      transition: {
+        delay: index * 0.2,
+        duration: 2,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }
+    })
+  };
 
   return (
-    <div className={cn('relative', sizeMap[size], className)}>
+    <motion.div 
+      className={cn(
+        'relative', 
+        sizeMap[size],
+        className
+      )}
+      variants={circleVariants}
+      animate="animate"
+    >
       <svg viewBox="0 0 100 100" className="w-full h-full">
-        {/* Inner glow */}
-        <motion.circle
-          cx="50" cy="50" r="30"
-          fill="#FFDD59"
-          opacity="0.2"
-          variants={glowVariants}
-          animate="animate"
-        />
-        
-        {/* Circular trunk forming circumference */}
+        {/* Outer circle */}
         <circle
           cx="50" cy="50" r="40"
           fill="none"
-          stroke="#FFDD59"
+          stroke="#F59E0B"
           strokeWidth="3"
         />
         
-        {/* Trunk continuing upward */}
-        <path
-          d="M50,10 L50,30"
+        {/* Inner circle */}
+        <circle
+          cx="50" cy="50" r="25"
           fill="none"
-          stroke="#FFDD59"
-          strokeWidth="3"
+          stroke="#F59E0B"
+          strokeWidth="2"
         />
         
-        {/* Bottom V-shaped branches (longest) */}
-        <path
-          d="M50,65 L35,80 M50,65 L65,80"
+        {/* Center circle */}
+        <circle
+          cx="50" cy="50" r="10"
           fill="none"
-          stroke="#FFDD59"
-          strokeWidth="2.5"
+          stroke="#F59E0B"
+          strokeWidth="2"
         />
         
-        {/* Middle V-shaped branches */}
-        <path
-          d="M50,50 L40,60 M50,50 L60,60"
-          fill="none"
-          stroke="#FFDD59"
-          strokeWidth="2.5"
-        />
+        {/* Animated dots along the circles (12 positions) */}
+        {[...Array(12)].map((_, index) => {
+          const angle = (index * 30) * (Math.PI / 180);
+          const x = 50 + 40 * Math.cos(angle);
+          const y = 50 + 40 * Math.sin(angle);
+          
+          return (
+            <motion.circle
+              key={`outer-${index}`}
+              cx={x} cy={y} r="2"
+              fill="#F59E0B"
+              custom={index}
+              variants={dotVariants}
+              animate="animate"
+            />
+          );
+        })}
         
-        {/* Top V-shaped branches (shortest) */}
-        <path
-          d="M50,35 L45,45 M50,35 L55,45"
-          fill="none"
-          stroke="#FFDD59"
-          strokeWidth="2.5"
-        />
+        {/* Middle circle dots (8 positions) */}
+        {[...Array(8)].map((_, index) => {
+          const angle = (index * 45) * (Math.PI / 180);
+          const x = 50 + 25 * Math.cos(angle);
+          const y = 50 + 25 * Math.sin(angle);
+          
+          return (
+            <motion.circle
+              key={`middle-${index}`}
+              cx={x} cy={y} r="1.5"
+              fill="#F59E0B"
+              custom={index + 3} // Offset timing
+              variants={dotVariants}
+              animate="animate"
+            />
+          );
+        })}
         
-        {/* Silhouette of praying hands (negative space) */}
-        <path
-          d="M50,50 C45,60 40,65 50,75 C60,65 55,60 50,50 Z"
-          fill="#FFDD59"
-          opacity="0.2"
-        />
+        {/* Inner circle dots (4 positions) */}
+        {[...Array(4)].map((_, index) => {
+          const angle = (index * 90) * (Math.PI / 180);
+          const x = 50 + 10 * Math.cos(angle);
+          const y = 50 + 10 * Math.sin(angle);
+          
+          return (
+            <motion.circle
+              key={`inner-${index}`}
+              cx={x} cy={y} r="1"
+              fill="#F59E0B"
+              custom={index + 6} // Offset timing
+              variants={dotVariants}
+              animate="animate"
+            />
+          );
+        })}
       </svg>
-    </div>
+    </motion.div>
   );
 };
