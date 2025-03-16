@@ -29,7 +29,11 @@ export const MobileTopNav = ({
         className="flex items-center gap-1"
         aria-label="Go to homepage"
       >
-        <img src="/lovable-uploads/4425ec86-56fe-44c4-9f47-75e59d3cb287.png" alt="Vaya Logo" className="h-7" />
+        <img 
+          src="/lovable-uploads/530d6c54-2d96-42b1-ac19-0192889eb279.png" 
+          alt="Vaya - Hanuman Edition" 
+          className="h-8 w-8"
+        />
         <span className="text-lg font-heading font-semibold text-forest dark:text-leaf">Vaya</span>
       </button>
       

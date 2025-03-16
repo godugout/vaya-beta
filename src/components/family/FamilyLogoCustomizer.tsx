@@ -19,9 +19,9 @@ export default function FamilyLogoCustomizer({
 }: LogoCustomizerProps) {
   const { toast } = useToast();
   const [logo, setLogo] = useState(initialLogo || {
-    icon: "Tree",
-    color: "#6C5CE7",
-    background: "bg-vaya-accent-green/10"
+    icon: "Om Symbol", // Default to Om Symbol for Hanuman Edition
+    color: "#F2992D", // Autumn orange as default color
+    background: "bg-autumn/10"
   });
   const [customLogo, setCustomLogo] = useState<string | null>(null);
 
@@ -29,7 +29,8 @@ export default function FamilyLogoCustomizer({
     const newLogo = { 
       ...logo, 
       icon: option.name, 
-      background: option.background || "bg-vaya-gray-100" 
+      background: option.background || "bg-vaya-gray-100",
+      isCustomIcon: option.customIcon
     };
     setLogo(newLogo);
     
@@ -89,7 +90,7 @@ export default function FamilyLogoCustomizer({
       <CustomLogoUpload onLogoUploaded={setCustomLogo} />
       
       <div className="flex justify-end pt-2">
-        <Button onClick={handleSaveLogo}>
+        <Button onClick={handleSaveLogo} className="bg-autumn hover:bg-autumn/90 text-white">
           Save Logo
         </Button>
       </div>

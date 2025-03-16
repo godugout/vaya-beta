@@ -7,11 +7,15 @@ interface LogoPreviewProps {
     icon: string;
     color: string;
     background: string;
+    isCustomIcon?: boolean;
   };
   customLogo: string | null;
 }
 
 export const LogoPreview = ({ logo, customLogo }: LogoPreviewProps) => {
+  // Find the icon option
+  const selectedIconOption = FamilyIconOptions.find(option => option.name === logo.icon);
+  
   return (
     <div className="flex justify-center mb-6">
       <div className="flex flex-col items-center">
@@ -30,9 +34,15 @@ export const LogoPreview = ({ logo, customLogo }: LogoPreviewProps) => {
               logo.background
             )}
           >
-            {FamilyIconOptions.find(option => option.name === logo.icon)?.icon && (
-              <div className="transform scale-[2]" style={{ color: logo.color }}>
-                {FamilyIconOptions.find(option => option.name === logo.icon)?.icon}
+            {selectedIconOption && (
+              <div 
+                className={cn(
+                  "transform scale-[2]",
+                  !selectedIconOption.customIcon && "text-vaya-text-primary"
+                )} 
+                style={{ color: !selectedIconOption.customIcon ? logo.color : undefined }}
+              >
+                {selectedIconOption.icon}
               </div>
             )}
           </div>

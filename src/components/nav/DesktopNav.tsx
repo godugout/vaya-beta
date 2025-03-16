@@ -36,8 +36,14 @@ export const DesktopNav = ({
             className="flex items-center gap-2"
             aria-label="Go to homepage"
           >
-            <img src="/lovable-uploads/4425ec86-56fe-44c4-9f47-75e59d3cb287.png" alt="Vaya Logo" className="h-8" />
-            <span className="text-xl font-heading font-semibold text-forest dark:text-leaf">Vaya</span>
+            <img 
+              src="/lovable-uploads/530d6c54-2d96-42b1-ac19-0192889eb279.png" 
+              alt="Vaya - Hanuman Edition" 
+              className="h-10 w-10"
+            />
+            <span className="text-xl font-heading font-semibold text-forest dark:text-leaf">
+              Vaya <span className="text-autumn text-sm">Hanuman Edition</span>
+            </span>
           </button>
           
           <nav className="flex items-center gap-1">

@@ -18,7 +18,7 @@ const screens = [
       en: "Discover a culturally enriched storytelling experience designed specifically for South Asian families",
       es: "Descubre una experiencia narrativa culturalmente enriquecida diseñada específicamente para familias del sur asiático"
     },
-    image: "/lovable-uploads/33c609d9-9189-49d2-b9c1-106d8257557c.png"
+    image: "/lovable-uploads/530d6c54-2d96-42b1-ac19-0192889eb279.png"
   },
   {
     id: "features",
@@ -30,7 +30,7 @@ const screens = [
       en: "Explore prompts tailored for North Indian and Gujarati families, with familiar references to traditions, festivals, and values",
       es: "Explora indicaciones adaptadas para familias del norte de la India y gujarati, con referencias familiares a tradiciones, festivales y valores"
     },
-    image: "/lovable-uploads/4425ec86-56fe-44c4-9f47-75e59d3cb287.png"
+    image: "/lovable-uploads/409da586-864c-4df0-9e54-61c03fa7bfdd.png"
   },
   {
     id: "languages",
@@ -42,7 +42,7 @@ const screens = [
       en: "Experience storytelling enriched with Sanskrit, Hindi, and Gujarati terminology for a more authentic cultural connection",
       es: "Experimenta la narración enriquecida con terminología de sánscrito, hindi y gujarati para una conexión cultural más auténtica"
     },
-    image: "/lovable-uploads/ef40fff0-4da4-4937-af3d-c2276b1d2588.png"
+    image: "/lovable-uploads/28c7c4bc-01c1-461e-829b-3730a83cec0d.png"
   }
 ];
 
@@ -116,6 +116,13 @@ export function HanumanEditionOnboarding({ open, onOpenChange }: { open: boolean
                     <h3 className="text-lg font-medium">
                       {isSpanish ? "Jai Hanuman!" : "Jai Hanuman!"}
                     </h3>
+                    <div className="flex items-center justify-center mb-4">
+                      <img 
+                        src="/lovable-uploads/530d6c54-2d96-42b1-ac19-0192889eb279.png" 
+                        alt="Om Symbol" 
+                        className="w-16 h-16"
+                      />
+                    </div>
                     <p>
                       {isSpanish 
                         ? "La Edición Hanuman de Vaya honra las ricas tradiciones y valores de las familias del sur asiático, ayudándole a preservar historias y recuerdos significativos para las generaciones futuras."
@@ -200,7 +207,7 @@ export function HanumanEditionOnboarding({ open, onOpenChange }: { open: boolean
                 <div
                   key={i}
                   className={`w-2 h-2 rounded-full transition-colors ${
-                    i === step ? "bg-lovable-magenta" : "bg-gray-200"
+                    i === step ? "bg-autumn" : "bg-gray-200"
                   }`}
                 />
               ))}
@@ -216,7 +223,7 @@ export function HanumanEditionOnboarding({ open, onOpenChange }: { open: boolean
               </Button>
               <Button 
                 onClick={handleNext}
-                className="bg-lovable-magenta hover:bg-lovable-magenta/90"
+                className="bg-autumn hover:bg-autumn/90 text-white"
               >
                 {step === screens.length - 1 ? (
                   <span>{isSpanish ? "Personalizar" : "Customize"}</span>
