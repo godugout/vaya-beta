@@ -65,6 +65,7 @@ export default function Profile() {
       const { data: user } = await supabase.auth.getUser();
       
       if (user?.user) {
+        // Fixed the query to properly return an array of objects with correct typing
         const { data, error } = await supabase
           .from("family_members")
           .select(`
@@ -80,10 +81,11 @@ export default function Profile() {
       
         if (error) throw error;
       
+        // Properly map each item in the returned array
         const formattedFamilies = data.map(item => ({
-          familyId: item.families.id,
-          familyName: item.families.name,
-          familyDescription: item.families.description,
+          familyId: item.families?.id,
+          familyName: item.families?.name,
+          familyDescription: item.families?.description,
           role: item.role
         }));
       
