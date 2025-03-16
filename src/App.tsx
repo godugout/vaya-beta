@@ -3,7 +3,6 @@ import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Toaster } from "sonner";
 import { ThemeProvider } from 'next-themes';
-import { MainLayout } from '@/components/layout/MainLayout';
 import './App.css';
 
 // Lazy load pages
@@ -25,12 +24,12 @@ function App() {
   return (
     <ThemeProvider
       attribute="class"
-      defaultTheme="system"
-      enableSystem
+      defaultTheme="dark"
+      enableSystem={false}
       disableTransitionOnChange
     >
-      <MainLayout>
-        <Suspense fallback={<div className="p-8 flex justify-center items-center">Loading...</div>}>
+      <div className="flex flex-col min-h-screen bg-slate-900 text-white">
+        <Suspense fallback={<div className="p-8 flex justify-center items-center text-white">Loading...</div>}>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
@@ -47,8 +46,8 @@ function App() {
             <Route path="/sacred-foundation" element={<SacredFoundation />} />
           </Routes>
         </Suspense>
-      </MainLayout>
-      <Toaster position="bottom-right" />
+        <Toaster position="bottom-right" />
+      </div>
     </ThemeProvider>
   );
 }

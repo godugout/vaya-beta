@@ -6,9 +6,6 @@ import { MainNav } from '@/components/MainNav';
 import Footer from '@/components/Footer';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { Toaster } from "@/components/ui/toaster";
-import { MobileBottomNav } from '@/components/nav/MobileBottomNav';
-import { MobileTopNav } from '@/components/nav/MobileTopNav';
-import { DesktopNav } from '@/components/nav/DesktopNav';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useActivityTracking, ActivityTypes } from '@/hooks/useActivityTracking';
 
@@ -21,8 +18,6 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { trackActivity } = useActivityTracking();
-  const [isSimplifiedView, setIsSimplifiedView] = useState(false);
-  const [isVoiceActive, setIsVoiceActive] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   
   // Track page views
@@ -49,22 +44,6 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
     return () => subscription.unsubscribe();
   }, []);
   
-  const handleVoiceToggle = () => {
-    setIsVoiceActive(prev => !prev);
-    trackActivity(ActivityTypes.FEATURE_USED, { 
-      feature: 'voice_navigation',
-      action: !isVoiceActive ? 'enabled' : 'disabled'
-    });
-  };
-  
-  const handleSettingsToggle = () => {
-    setIsSimplifiedView(prev => !prev);
-    trackActivity(ActivityTypes.SETTINGS_CHANGED, {
-      setting: 'simplified_view',
-      value: !isSimplifiedView
-    });
-  };
-  
   const handleSignOut = async () => {
     // Track logout before signing out
     trackActivity(ActivityTypes.LOGOUT);
@@ -77,57 +56,49 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
   };
   
   return (
-    <div className="flex flex-col min-h-screen bg-background text-foreground">
-      {/* Mobile Top Navigation */}
-      <MobileTopNav 
-        user={user} 
-        handleSignOut={handleSignOut} 
-        navigate={navigate}
-        isSimplifiedView={isSimplifiedView}
-        onSettingsToggle={handleSettingsToggle}
-      />
-      
-      {/* Desktop Navigation */}
-      <DesktopNav 
-        user={user} 
-        handleSignOut={handleSignOut} 
-        navigate={navigate}
-        isSimplifiedView={isSimplifiedView}
-        isVoiceActive={isVoiceActive}
-        onVoiceToggle={handleVoiceToggle}
-      />
-      
-      {/* Voice Navigation Banner - show when voice is active */}
-      {isVoiceActive && (
-        <div className="bg-gray-900 border-b border-gray-800 px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <div className="w-6 h-6 rounded-full bg-autumn text-white flex items-center justify-center">
-              <span className="text-xs">Om</span>
-            </div>
-            <span className="text-sm font-medium">Hanuman voice navigation active</span>
+    <div className="flex flex-col min-h-screen bg-slate-900 text-white">
+      {/* Simple header for now */}
+      <header className="px-4 py-3 border-b border-slate-800 bg-slate-900 flex items-center justify-between">
+        <div onClick={() => navigate('/')} className="flex items-center gap-2 cursor-pointer">
+          <div className="h-9 w-9 flex items-center justify-center">
+            <img 
+              src="/lovable-uploads/2a8faf45-bcfa-46d2-8314-ee4fd404aa94.png" 
+              alt="Vaya Logo" 
+              className="h-7 w-7 object-contain"
+            />
           </div>
-          <div className="flex items-center">
-            <span className="text-xs text-gray-400">Listening...</span>
-          </div>
+          <span className="text-lg font-semibold">Vaya</span>
         </div>
-      )}
+        
+        <div className="flex items-center gap-2">
+          {user ? (
+            <button 
+              onClick={handleSignOut}
+              className="px-3 py-1 text-sm bg-slate-800 hover:bg-slate-700 rounded"
+            >
+              Sign Out
+            </button>
+          ) : (
+            <button 
+              onClick={() => navigate('/auth')}
+              className="px-3 py-1 text-sm bg-slate-800 hover:bg-slate-700 rounded"
+            >
+              Sign In
+            </button>
+          )}
+        </div>
+      </header>
       
-      <main className={`flex-grow pt-16 ${className}`}>
+      <main className="flex-grow p-4">
         <ErrorBoundary>
           {children}
         </ErrorBoundary>
       </main>
       
-      <Footer />
-      
-      {/* Mobile Bottom Navigation */}
-      <MobileBottomNav 
-        user={user} 
-        navigate={navigate}
-        isSimplifiedView={isSimplifiedView}
-        isVoiceActive={isVoiceActive}
-        onVoiceToggle={handleVoiceToggle}
-      />
+      {/* Simplified footer */}
+      <footer className="p-4 border-t border-slate-800 bg-slate-900 text-slate-400 text-center text-sm">
+        Vaya © {new Date().getFullYear()}
+      </footer>
       
       <Toaster />
     </div>

@@ -15,8 +15,7 @@ import {
   Image,
   Link,
   Landmark,
-  LucideIcon,
-  LucideProps
+  LucideIcon
 } from "lucide-react";
 import React, { ReactNode } from "react";
 
