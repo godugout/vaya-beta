@@ -1,9 +1,47 @@
 
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Play } from 'lucide-react';
+import { StoryCard, StoryType } from "@/components/content/StoryCard";
 import { FadeIn } from '@/components/animation/FadeIn';
+
+const sampleStories = [
+  {
+    id: "1",
+    title: "My Grandmother's Recipes",
+    content: "I remember how she would wake up early to prepare fresh rotis and...",
+    type: "audio" as StoryType,
+    date: "2024-04-06",
+    author: {
+      name: "Priya Patel"
+    },
+    audioUrl: "/audio/sample-story-1.mp3",
+    isPlaceholder: true
+  },
+  {
+    id: "2",
+    title: "Our First Diwali in America",
+    content: "It was difficult finding all the materials for the puja, but we managed to...",
+    type: "audio" as StoryType,
+    date: "2024-04-02",
+    author: {
+      name: "Raj Patel"
+    },
+    audioUrl: "/audio/sample-story-2.mp3",
+    isPlaceholder: true
+  },
+  {
+    id: "3",
+    title: "Learning to Make Dad's Special Chai",
+    content: "The secret was the fresh ginger and cardamom he'd grind himself...",
+    type: "audio" as StoryType,
+    date: "2024-04-01",
+    author: {
+      name: "Ananya Patel"
+    },
+    audioUrl: "/audio/sample-story-3.mp3",
+    isPlaceholder: true
+  }
+];
 
 export const RecentFamilyStories = () => {
   return (
@@ -13,44 +51,19 @@ export const RecentFamilyStories = () => {
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="border border-gray-200 dark:border-gray-700">
-          <CardContent className="p-4">
-            <p className="text-xs text-gray-500 mb-2">4/6/2024</p>
-            <h3 className="text-lg font-medium mb-2">My Grandmother's Recipes</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
-              I remember how she would wake up early to prepare fresh rotis and...
-            </p>
-            <Button variant="ghost" size="sm" className="flex items-center text-water">
-              <Play className="h-4 w-4 mr-1" /> Play Audio
-            </Button>
-          </CardContent>
-        </Card>
-        
-        <Card className="border border-gray-200 dark:border-gray-700">
-          <CardContent className="p-4">
-            <p className="text-xs text-gray-500 mb-2">4/2/2024</p>
-            <h3 className="text-lg font-medium mb-2">Our First Diwali in America</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
-              It was difficult finding all the materials for the puja, but we managed to...
-            </p>
-            <Button variant="ghost" size="sm" className="flex items-center text-water">
-              <Play className="h-4 w-4 mr-1" /> Play Audio
-            </Button>
-          </CardContent>
-        </Card>
-        
-        <Card className="border border-gray-200 dark:border-gray-700">
-          <CardContent className="p-4">
-            <p className="text-xs text-gray-500 mb-2">4/1/2024</p>
-            <h3 className="text-lg font-medium mb-2">Learning to Make Dad's Special Chai</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
-              The secret was the fresh ginger and cardamom he'd grind himself...
-            </p>
-            <Button variant="ghost" size="sm" className="flex items-center text-water">
-              <Play className="h-4 w-4 mr-1" /> Play Audio
-            </Button>
-          </CardContent>
-        </Card>
+        {sampleStories.map(story => (
+          <StoryCard
+            key={story.id}
+            id={story.id}
+            title={story.title}
+            content={story.content}
+            type={story.type}
+            audioUrl={story.audioUrl}
+            date={story.date}
+            author={story.author}
+            isPlaceholder={story.isPlaceholder}
+          />
+        ))}
       </div>
       
       <div className="flex justify-center mt-8">
