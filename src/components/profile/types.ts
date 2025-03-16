@@ -8,4 +8,5 @@ export interface UserProfile {
   home_address: string | null;
   data_source: string | null;
   imported_at: string | null;
+  is_wedding_guest?: boolean;
 }

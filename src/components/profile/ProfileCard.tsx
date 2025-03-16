@@ -3,19 +3,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
-import { CalendarDays, Mail, MapPin, FileSpreadsheet, Clock } from "lucide-react";
+import { CalendarDays, Mail, MapPin, FileSpreadsheet, Clock, Heart } from "lucide-react";
+import { UserProfile } from "./types";
+import { cn } from "@/lib/utils";
 
 interface ProfileCardProps {
-  profile: {
-    id: string;
-    full_name: string;
-    avatar_url: string | null;
-    birthdate: string | null;
-    email: string | null;
-    home_address: string | null;
-    data_source: string | null;
-    imported_at: string | null;
-  };
+  profile: UserProfile;
 }
 
 export const ProfileCard = ({ profile }: ProfileCardProps) => {
@@ -26,19 +19,35 @@ export const ProfileCard = ({ profile }: ProfileCardProps) => {
     .toUpperCase()
     .substring(0, 2);
 
+  const isWeddingGuest = profile.birthdate !== null; // Simple assumption for demo purposes
+
   return (
-    <Card className="overflow-hidden transition-all duration-300 hover:shadow-md">
-      <CardHeader className="bg-gradient-to-r from-autumn to-leaf p-4">
+    <Card className="overflow-hidden transition-all duration-300 hover:shadow-md group">
+      <CardHeader className={cn(
+        "bg-gradient-to-r p-4",
+        isWeddingGuest 
+          ? "from-[#D4AF37] to-[#F3D6E4]" // Wedding gold to rose colors for wedding guests
+          : "from-autumn to-leaf" // Default colors for others
+      )}>
         <div className="flex items-center gap-4">
-          <Avatar className="h-16 w-16 border-2 border-white">
+          <Avatar className="h-16 w-16 border-2 border-white ring-2 ring-white/20 transition-all duration-300 group-hover:ring-4">
             <AvatarImage src={profile.avatar_url || ""} alt={profile.full_name} />
-            <AvatarFallback className="bg-ui-teal text-white text-xl">
+            <AvatarFallback className={cn(
+              "text-white text-xl",
+              isWeddingGuest ? "bg-[#91A8D0]" : "bg-ui-teal"
+            )}>
               {initials}
             </AvatarFallback>
           </Avatar>
           <div className="text-white">
             <h3 className="font-semibold text-xl">{profile.full_name}</h3>
             <div className="flex items-center gap-2 mt-1">
+              {isWeddingGuest && (
+                <Badge variant="outline" className="bg-white/30 text-white border-white/30">
+                  <Heart className="h-3 w-3 mr-1 fill-white" />
+                  Wedding Guest
+                </Badge>
+              )}
               {profile.data_source && (
                 <Badge variant="outline" className="bg-white/20 text-white border-white/30">
                   {profile.data_source}

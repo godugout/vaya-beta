@@ -5,15 +5,32 @@ import { useToast } from "@/components/ui/use-toast";
 import { ProfileLoading } from "@/components/profile/ProfileLoading";
 import { ProfileGrid } from "@/components/profile/ProfileGrid";
 import { UserProfile } from "@/components/profile/types";
+import { SearchInput } from "@/components/input/SearchInput";
 
 export function ProfilesSection() {
   const { toast } = useToast();
   const [userProfiles, setUserProfiles] = useState<UserProfile[]>([]);
+  const [filteredProfiles, setFilteredProfiles] = useState<UserProfile[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     fetchProfiles();
   }, []);
+
+  useEffect(() => {
+    if (searchQuery.trim() === "") {
+      setFilteredProfiles(userProfiles);
+    } else {
+      const query = searchQuery.toLowerCase();
+      const filtered = userProfiles.filter(profile => 
+        profile.full_name.toLowerCase().includes(query) ||
+        (profile.email && profile.email.toLowerCase().includes(query)) ||
+        (profile.home_address && profile.home_address.toLowerCase().includes(query))
+      );
+      setFilteredProfiles(filtered);
+    }
+  }, [searchQuery, userProfiles]);
 
   const fetchProfiles = async () => {
     setLoading(true);
@@ -25,6 +42,7 @@ export function ProfilesSection() {
 
       if (error) throw error;
       setUserProfiles(data || []);
+      setFilteredProfiles(data || []);
     } catch (error: any) {
       console.error("Error fetching profiles:", error.message);
       toast({
@@ -37,12 +55,23 @@ export function ProfilesSection() {
     }
   };
 
+  const handleSearch = (value: string) => {
+    setSearchQuery(value);
+  };
+
   return (
     <div>
-      <h2 className="text-xl font-semibold mb-4 text-vaya-text-primary dark:text-dark-text-primary">
-        All Profiles ({userProfiles.length})
-      </h2>
-      {loading ? <ProfileLoading /> : <ProfileGrid profiles={userProfiles} />}
+      <div className="mb-6">
+        <h2 className="text-xl font-semibold mb-4 text-vaya-text-primary dark:text-dark-text-primary">
+          All Profiles ({filteredProfiles.length}/{userProfiles.length})
+        </h2>
+        <SearchInput 
+          placeholder="Search by name, email, or address..." 
+          onChange={handleSearch}
+          className="max-w-xl"
+        />
+      </div>
+      {loading ? <ProfileLoading /> : <ProfileGrid profiles={filteredProfiles} />}
     </div>
   );
 }
