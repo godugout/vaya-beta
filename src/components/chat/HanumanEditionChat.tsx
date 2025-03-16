@@ -11,8 +11,10 @@ import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { FamilyContextForm } from './FamilyContextForm';
 import { FamilyContext } from './types';
 import { SacredGlyphGrid } from '../sacred/SacredGlyphGrid';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export const HanumanEditionChat: React.FC = () => {
+  const { isSpanish } = useLanguage();
   const { 
     messages, 
     input, 
@@ -70,7 +72,7 @@ export const HanumanEditionChat: React.FC = () => {
       
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.map((message, idx) => (
-          <ChatMessage key={idx} message={message} />
+          <ChatMessage key={idx} message={message} isSpanish={isSpanish} />
         ))}
         <div ref={messagesEndRef} />
       </div>
@@ -80,16 +82,9 @@ export const HanumanEditionChat: React.FC = () => {
           input={input}
           setInput={setInput}
           handleSend={handleSend}
-          additionalButton={
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => handleMorePrompts(false)}
-              className="text-gray-500 border-gray-300"
-            >
-              More Prompts
-            </Button>
-          }
+          handleMorePrompts={handleMorePrompts}
+          setIsRecording={() => {}}
+          isSpanish={isSpanish}
         />
       </div>
       
