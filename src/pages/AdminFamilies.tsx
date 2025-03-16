@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { Button } from "@/components/ui/button";
@@ -42,6 +41,7 @@ import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { ImportDataDialog } from "@/components/family/tree/ImportDataDialog";
 import { useTreeExport } from "@/components/family/tree/hooks/useTreeExport";
+import { useFileParser } from "@/components/family/tree/hooks/useFileParser";
 
 export default function AdminFamilies() {
   const [families, setFamilies] = useState<Family[]>([]);
@@ -54,13 +54,15 @@ export default function AdminFamilies() {
   const mockNodes = [];
   const mockEdges = [];
   
-  // Using useTreeExport hook even though we're not setting nodes/edges in this component
-  // We're just using its utility functions
-  const { handleImportData, handleExportToExcel, parseExcelFile } = useTreeExport({ 
+  // Using useTreeExport hook for its utility functions
+  const { handleExportToExcel } = useTreeExport({ 
     setNodes: () => {}, 
     setEdges: () => {}, 
     autoLayoutTree: () => {} 
   });
+  
+  // Using useFileParser hook to get the parseExcelFile function
+  const { parseExcelFile } = useFileParser();
 
   useEffect(() => {
     async function fetchFamilies() {
@@ -281,7 +283,6 @@ export default function AdminFamilies() {
         open={importDialogOpen}
         onOpenChange={setImportDialogOpen}
         onImportData={handleImport}
-        parseExcelFile={parseExcelFile}
       />
     </AdminLayout>
   );

@@ -1,32 +1,29 @@
 
 import { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { FileUp, Table } from "lucide-react";
-import { useToast } from "@/components/ui/use-toast";
-import { FileUploadTab } from './import/FileUploadTab';
-import { JsonInputTab } from './import/JsonInputTab';
-import { ErrorDisplay } from './import/ErrorDisplay';
-import { parseCSVFile, parseJSONFile, parseExcelFile } from './import/importUtils';
+import { Button } from "@/components/ui/button";
+import { FileUploadTab } from "./import/FileUploadTab";
+import { JsonInputTab } from "./import/JsonInputTab";
+import { ErrorDisplay } from "./import/ErrorDisplay";
+import { parseCSVFile, parseJSONFile, parseExcelFile } from "./import/importUtils";
 
-interface ImportDataDialogProps {
+export interface ImportDataDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onImportData: (data: any) => void;
 }
 
-export const ImportDataDialog = ({ 
-  open, 
-  onOpenChange, 
-  onImportData
+export const ImportDataDialog = ({
+  open,
+  onOpenChange,
+  onImportData,
 }: ImportDataDialogProps) => {
-  const { toast } = useToast();
-  const [importMethod, setImportMethod] = useState('file');
   const [file, setFile] = useState<File | null>(null);
   const [jsonData, setJsonData] = useState('');
-  const [processing, setProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState('file');
 
   const handleFileUpload = (selectedFile: File) => {
     setFile(selectedFile);
@@ -34,113 +31,81 @@ export const ImportDataDialog = ({
   };
 
   const handleImport = async () => {
-    setProcessing(true);
     setError(null);
+    setIsLoading(true);
     
     try {
-      if (importMethod === 'file' && file) {
-        // For CSV files
+      if (activeTab === 'file' && file) {
+        let data;
         if (file.name.endsWith('.csv')) {
-          const data = await parseCSVFile(file);
-          onImportData(data);
-          onOpenChange(false);
-          toast({
-            title: "Import successful",
-            description: `Imported ${data.length} records from CSV`,
-          });
-        } 
-        // For JSON files
-        else if (file.name.endsWith('.json')) {
-          const jsonData = await parseJSONFile(file);
-          onImportData(jsonData);
-          onOpenChange(false);
-          toast({
-            title: "Import successful",
-            description: "JSON data imported successfully",
-          });
-        } 
-        // For Excel files
-        else if (file.name.endsWith('.xlsx') || file.name.endsWith('.xls')) {
-          try {
-            const data = await parseExcelFile(file);
-            onImportData(data);
-            onOpenChange(false);
-            toast({
-              title: "Import successful",
-              description: `Imported ${data.length} records from Excel`,
-            });
-          } catch (error: any) {
-            setError(error.message || 'Error parsing Excel file. Please check the format.');
-            console.error('Error parsing Excel file:', error);
-          }
+          data = await parseCSVFile(file);
+        } else if (file.name.endsWith('.json')) {
+          data = await parseJSONFile(file);
+        } else if (file.name.endsWith('.xlsx') || file.name.endsWith('.xls')) {
+          data = await parseExcelFile(file);
         } else {
-          setError(`Unsupported file format: ${file.name}. Please use .xlsx, .xls, .csv, or .json files.`);
+          throw new Error('Unsupported file format. Please upload a CSV, JSON, or Excel file.');
         }
-      } else if (importMethod === 'json' && jsonData.trim()) {
+        
+        onImportData(data);
+        onOpenChange(false);
+      } else if (activeTab === 'json' && jsonData.trim()) {
         try {
           const data = JSON.parse(jsonData);
           onImportData(data);
           onOpenChange(false);
-          toast({
-            title: "Import successful",
-            description: "JSON data imported successfully",
-          });
-        } catch (error) {
-          setError('Invalid JSON format');
-          console.error('Invalid JSON format:', error);
+        } catch (e) {
+          throw new Error('Invalid JSON format. Please check your input.');
         }
       } else {
-        setError('No data to import');
+        throw new Error('Please upload a file or enter JSON data first.');
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error('Import error:', error);
-      setError(error.message || 'An unexpected error occurred during import');
+      setError(error instanceof Error ? error.message : 'Unknown error occurred');
     } finally {
-      setProcessing(false);
+      setIsLoading(false);
     }
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[550px]">
+      <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle>Import Family Data</DialogTitle>
+          <DialogTitle>Import Family Tree Data</DialogTitle>
         </DialogHeader>
         
-        <Tabs defaultValue="file" onValueChange={setImportMethod}>
+        <Tabs defaultValue="file" value={activeTab} onValueChange={setActiveTab}>
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="file" className="flex items-center gap-2">
-              <FileUp className="h-4 w-4" />
-              <span>File Upload</span>
-            </TabsTrigger>
-            <TabsTrigger value="json" className="flex items-center gap-2">
-              <Table className="h-4 w-4" />
-              <span>Paste JSON</span>
-            </TabsTrigger>
+            <TabsTrigger value="file">Upload File</TabsTrigger>
+            <TabsTrigger value="json">Paste JSON</TabsTrigger>
           </TabsList>
           
-          <TabsContent value="file" className="py-4">
-            <FileUploadTab file={file} handleFileUpload={handleFileUpload} />
+          <TabsContent value="file" className="py-4 space-y-4">
+            <FileUploadTab 
+              file={file} 
+              handleFileUpload={handleFileUpload} 
+            />
           </TabsContent>
           
-          <TabsContent value="json" className="py-4">
-            <JsonInputTab jsonData={jsonData} setJsonData={setJsonData} />
+          <TabsContent value="json" className="py-4 space-y-4">
+            <JsonInputTab 
+              jsonData={jsonData}
+              setJsonData={setJsonData}
+            />
           </TabsContent>
         </Tabs>
         
         <ErrorDisplay error={error} />
         
-        <DialogFooter>
+        <div className="flex justify-end gap-2 mt-4">
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
-          <Button 
-            onClick={handleImport}
-            disabled={processing || (importMethod === 'file' && !file) || (importMethod === 'json' && !jsonData.trim())}
-          >
-            {processing ? 'Processing...' : 'Import Data'}
+          <Button onClick={handleImport} disabled={isLoading}>
+            {isLoading ? 'Importing...' : 'Import Data'}
           </Button>
-        </DialogFooter>
+        </div>
       </DialogContent>
     </Dialog>
   );
