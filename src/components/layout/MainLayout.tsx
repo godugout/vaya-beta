@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MainNav } from '@/components/MainNav';
 import Footer from '@/components/Footer';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
@@ -7,7 +7,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { MobileBottomNav } from '@/components/nav/MobileBottomNav';
 import { MobileTopNav } from '@/components/nav/MobileTopNav';
 import { DesktopNav } from '@/components/nav/DesktopNav';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useActivityTracking, ActivityTypes } from '@/hooks/useActivityTracking';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -16,18 +17,40 @@ interface MainLayoutProps {
 
 export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { trackActivity } = useActivityTracking();
   const [isSimplifiedView, setIsSimplifiedView] = useState(false);
   const [isVoiceActive, setIsVoiceActive] = useState(false);
   
+  // Track page views
+  useEffect(() => {
+    trackActivity(ActivityTypes.PAGE_VIEW, {
+      path: location.pathname,
+      search: location.search,
+      title: document.title
+    });
+  }, [location.pathname, location.search, trackActivity]);
+  
   const handleVoiceToggle = () => {
     setIsVoiceActive(prev => !prev);
+    trackActivity(ActivityTypes.FEATURE_USED, { 
+      feature: 'voice_navigation',
+      action: !isVoiceActive ? 'enabled' : 'disabled'
+    });
   };
   
   const handleSettingsToggle = () => {
     setIsSimplifiedView(prev => !prev);
+    trackActivity(ActivityTypes.SETTINGS_CHANGED, {
+      setting: 'simplified_view',
+      value: !isSimplifiedView
+    });
   };
   
   const handleSignOut = async () => {
+    // Track logout before signing out
+    trackActivity(ActivityTypes.LOGOUT);
+    
     // Placeholder for sign out functionality
     console.log("Sign out clicked");
     return Promise.resolve();
