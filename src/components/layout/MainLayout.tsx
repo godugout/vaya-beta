@@ -34,7 +34,7 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
   };
   
   return (
-    <div className="flex flex-col min-h-screen bg-sky-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100">
+    <div className="flex flex-col min-h-screen bg-black text-white">
       {/* Mobile Top Navigation */}
       <MobileTopNav 
         user={null} 
@@ -56,7 +56,7 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
       
       {/* Voice Navigation Banner - show when voice is active */}
       {isVoiceActive && (
-        <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3 flex items-center justify-between">
+        <div className="bg-gray-900 border-b border-gray-800 px-4 py-3 flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <div className="w-6 h-6 rounded-full bg-autumn text-white flex items-center justify-center">
               <span className="text-xs">Om</span>
@@ -64,7 +64,7 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
             <span className="text-sm font-medium">Hanuman voice navigation active</span>
           </div>
           <div className="flex items-center">
-            <span className="text-xs text-gray-500 dark:text-gray-400">Listening...</span>
+            <span className="text-xs text-gray-400">Listening...</span>
           </div>
         </div>
       )}

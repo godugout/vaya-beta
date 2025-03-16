@@ -20,7 +20,7 @@ export const LogoPreview = ({ logo, customLogo }: LogoPreviewProps) => {
     <div className="flex justify-center mb-6">
       <div className="flex flex-col items-center">
         {customLogo ? (
-          <div className="w-24 h-24 rounded-lg overflow-hidden shadow-sm">
+          <div className="w-24 h-24 rounded-lg overflow-hidden">
             <img 
               src={customLogo} 
               alt="Custom family logo" 
@@ -30,7 +30,7 @@ export const LogoPreview = ({ logo, customLogo }: LogoPreviewProps) => {
         ) : (
           <div 
             className={cn(
-              "w-24 h-24 rounded-lg flex items-center justify-center shadow-sm",
+              "w-24 h-24 rounded-lg flex items-center justify-center",
               logo.background
             )}
           >
@@ -38,7 +38,7 @@ export const LogoPreview = ({ logo, customLogo }: LogoPreviewProps) => {
               <div 
                 className={cn(
                   "transform scale-[2]",
-                  !selectedIconOption.customIcon && "text-vaya-text-primary"
+                  !selectedIconOption.customIcon && "text-white"
                 )} 
                 style={{ color: !selectedIconOption.customIcon ? logo.color : undefined }}
               >
@@ -47,7 +47,7 @@ export const LogoPreview = ({ logo, customLogo }: LogoPreviewProps) => {
             )}
           </div>
         )}
-        <p className="mt-2 text-sm font-medium text-vaya-text-secondary dark:text-gray-300">
+        <p className="mt-2 text-sm font-medium text-gray-300">
           {customLogo ? "Custom Logo" : logo.icon}
         </p>
       </div>
