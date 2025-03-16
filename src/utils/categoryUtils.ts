@@ -14,7 +14,9 @@ import {
   Network,
   Image,
   Link,
-  Landmark
+  Landmark,
+  LucideIcon,
+  LucideProps
 } from "lucide-react";
 import { ReactNode } from "react";
 
