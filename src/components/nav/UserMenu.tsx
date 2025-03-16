@@ -18,7 +18,11 @@ import {
   Moon, 
   Sun, 
   Phone,
-  Palette
+  Palette,
+  Users,
+  Image,
+  TreeDeciduous,
+  Layers
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
@@ -67,11 +71,35 @@ export const UserMenu = ({ user, handleSignOut, navigate }: UserMenuProps) => {
           <UserIcon className="mr-2 h-4 w-4" />
           <span>Profile</span>
         </DropdownMenuItem>
+        
+        {/* Pages Navigation Section */}
+        <DropdownMenuSeparator />
+        <DropdownMenuLabel>
+          <span className="text-xs text-muted-foreground">Pages</span>
+        </DropdownMenuLabel>
+        <DropdownMenuItem onClick={() => navigate('/families')}>
+          <Users className="mr-2 h-4 w-4" />
+          <span>Families</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate('/family-capsules')}>
+          <Layers className="mr-2 h-4 w-4" />
+          <span>Family Capsules</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate('/media-library')}>
+          <Image className="mr-2 h-4 w-4" />
+          <span>Media Library</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate('/family/:id')}>
+          <TreeDeciduous className="mr-2 h-4 w-4" />
+          <span>Family Tree</span>
+        </DropdownMenuItem>
+        
+        {/* Settings Section */}
+        <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => navigate('/account')}>
           <Settings className="mr-2 h-4 w-4" />
           <span>Account</span>
         </DropdownMenuItem>
-        <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
           {theme === 'dark' ? (
             <>
@@ -93,6 +121,8 @@ export const UserMenu = ({ user, handleSignOut, navigate }: UserMenuProps) => {
           <Phone className="mr-2 h-4 w-4" />
           <span>Contact Support</span>
         </DropdownMenuItem>
+        
+        {/* Sign Out */}
         <DropdownMenuSeparator />
         <DropdownMenuItem 
           onClick={async () => {

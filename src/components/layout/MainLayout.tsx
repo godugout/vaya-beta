@@ -1,5 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
+import { supabase } from "@/integrations/supabase/client";
+import { User } from "@supabase/supabase-js";
 import { MainNav } from '@/components/MainNav';
 import Footer from '@/components/Footer';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
@@ -21,6 +23,7 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
   const { trackActivity } = useActivityTracking();
   const [isSimplifiedView, setIsSimplifiedView] = useState(false);
   const [isVoiceActive, setIsVoiceActive] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
   
   // Track page views
   useEffect(() => {
@@ -30,6 +33,21 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
       title: document.title
     });
   }, [location.pathname, location.search, trackActivity]);
+  
+  // Get the current user
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
   
   const handleVoiceToggle = () => {
     setIsVoiceActive(prev => !prev);
@@ -51,8 +69,10 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
     // Track logout before signing out
     trackActivity(ActivityTypes.LOGOUT);
     
-    // Placeholder for sign out functionality
-    console.log("Sign out clicked");
+    // Actual sign out functionality
+    const { error } = await supabase.auth.signOut();
+    if (error) console.error("Error signing out:", error);
+    navigate("/auth");
     return Promise.resolve();
   };
   
@@ -60,7 +80,7 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
     <div className="flex flex-col min-h-screen bg-black text-white">
       {/* Mobile Top Navigation */}
       <MobileTopNav 
-        user={null} 
+        user={user} 
         handleSignOut={handleSignOut} 
         navigate={navigate}
         isSimplifiedView={isSimplifiedView}
@@ -69,7 +89,7 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
       
       {/* Desktop Navigation */}
       <DesktopNav 
-        user={null} 
+        user={user} 
         handleSignOut={handleSignOut} 
         navigate={navigate}
         isSimplifiedView={isSimplifiedView}
@@ -102,7 +122,7 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
       
       {/* Mobile Bottom Navigation */}
       <MobileBottomNav 
-        user={null} 
+        user={user} 
         navigate={navigate}
         isSimplifiedView={isSimplifiedView}
         isVoiceActive={isVoiceActive}
