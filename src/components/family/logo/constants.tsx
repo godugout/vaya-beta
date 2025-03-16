@@ -38,9 +38,9 @@ export const FamilyIconOptions: FamilyLogoIconOption[] = [
   
   // Custom icons for cultural representation - we'll render these differently in the UI
   { 
-    icon: <img src="/lovable-uploads/530d6c54-2d96-42b1-ac19-0192889eb279.png" alt="Om" className="w-6 h-6" />, 
-    name: "Om Symbol", 
-    background: "bg-autumn/10",
+    icon: <img src="/lovable-uploads/2a8faf45-bcfa-46d2-8314-ee4fd404aa94.png" alt="Vaya Star" className="w-6 h-6" />, 
+    name: "Vaya Star", 
+    background: "bg-black",
     customIcon: true 
   },
   { 
@@ -62,7 +62,7 @@ export const FamilyIconOptions: FamilyLogoIconOption[] = [
     customIcon: true 
   },
   { 
-    icon: <img src="/lovable-uploads/601683fb-5c58-4468-946b-7bd998a42791.png" alt="Leaf" className="w-6 h-6" />, 
+    icon: <img src="/lovable-uploads/601683fb-5c58-4468-946b-7bd998a42791.png" alt="Sacred Leaf" className="w-6 h-6" />, 
     name: "Sacred Leaf", 
     background: "bg-sand/10",
     customIcon: true 

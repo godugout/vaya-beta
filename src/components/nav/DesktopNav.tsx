@@ -36,13 +36,22 @@ export const DesktopNav = ({
             className="flex items-center gap-2"
             aria-label="Go to homepage"
           >
-            <img 
-              src="/lovable-uploads/530d6c54-2d96-42b1-ac19-0192889eb279.png" 
-              alt="Vaya - Hanuman Edition" 
-              className="h-10 w-10"
-            />
-            <span className="text-xl font-heading font-semibold text-forest dark:text-leaf">
-              Vaya <span className="text-autumn text-sm">Hanuman Edition</span>
+            <div className="relative h-11 w-11 rounded-lg bg-black flex items-center justify-center overflow-hidden">
+              <div className="absolute inset-0 opacity-20">
+                {/* Star dots background */}
+                <span className="absolute h-1 w-1 bg-white rounded-full top-1 left-1"></span>
+                <span className="absolute h-1 w-1 bg-white rounded-full top-2 right-3"></span>
+                <span className="absolute h-0.5 w-0.5 bg-white rounded-full bottom-2 left-3"></span>
+                <span className="absolute h-0.5 w-0.5 bg-white rounded-full bottom-1 right-1"></span>
+              </div>
+              <img 
+                src="/lovable-uploads/2a8faf45-bcfa-46d2-8314-ee4fd404aa94.png" 
+                alt="Vaya Logo" 
+                className="h-7 w-7 object-contain"
+              />
+            </div>
+            <span className="text-xl font-heading font-semibold text-forest dark:text-autumn">
+              Vaya
             </span>
           </button>
           
@@ -99,12 +108,12 @@ export const DesktopNav = ({
             aria-label="Toggle voice navigation"
             className={cn(
               "rounded-full transition-colors",
-              isVoiceActive && "bg-autumn/10 dark:bg-leaf/10"
+              isVoiceActive && "bg-autumn/10 dark:bg-autumn/20"
             )}
           >
             <Mic className={cn(
               "h-5 w-5 transition-colors",
-              isVoiceActive ? "text-autumn dark:text-leaf" : "text-muted-foreground"
+              isVoiceActive ? "text-autumn" : "text-muted-foreground"
             )} />
           </Button>
           

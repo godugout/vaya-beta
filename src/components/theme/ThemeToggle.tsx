@@ -18,19 +18,19 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
   const { theme, setTheme } = useTheme();
   
   const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
+    setTheme(theme === 'light' ? 'dark' : 'light');
   };
 
   if (variant === 'switch') {
     return (
       <div className={cn("flex items-center gap-2", className)}>
-        <Sun size={16} className="text-muted-foreground" />
+        <Moon size={16} className="text-muted-foreground" />
         <Switch 
-          checked={theme === 'dark'}
+          checked={theme !== 'light'}
           onCheckedChange={toggleTheme}
           aria-label="Toggle dark mode"
         />
-        <Moon size={16} className="text-muted-foreground" />
+        <Sun size={16} className="text-muted-foreground" />
       </div>
     );
   }
@@ -43,15 +43,15 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
         onClick={toggleTheme}
         className={className}
       >
-        {theme === 'dark' ? (
-          <div className="flex items-center gap-2">
-            <Sun size={16} />
-            <span>Light Mode</span>
-          </div>
-        ) : (
+        {theme === 'light' ? (
           <div className="flex items-center gap-2">
             <Moon size={16} />
             <span>Dark Mode</span>
+          </div>
+        ) : (
+          <div className="flex items-center gap-2">
+            <Sun size={16} />
+            <span>Light Mode</span>
           </div>
         )}
       </Button>
@@ -67,10 +67,10 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
       aria-label="Toggle theme"
       className={className}
     >
-      {theme === 'dark' ? (
-        <Sun className="h-5 w-5" />
-      ) : (
+      {theme === 'light' ? (
         <Moon className="h-5 w-5" />
+      ) : (
+        <Sun className="h-5 w-5" />
       )}
     </Button>
   );

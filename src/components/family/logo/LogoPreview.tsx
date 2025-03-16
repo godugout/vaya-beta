@@ -47,7 +47,7 @@ export const LogoPreview = ({ logo, customLogo }: LogoPreviewProps) => {
             )}
           </div>
         )}
-        <p className="mt-2 text-sm font-medium text-vaya-text-secondary">
+        <p className="mt-2 text-sm font-medium text-vaya-text-secondary dark:text-gray-300">
           {customLogo ? "Custom Logo" : logo.icon}
         </p>
       </div>
