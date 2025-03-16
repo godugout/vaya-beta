@@ -71,13 +71,31 @@ export default function FamilyDetail() {
       
       if (error) throw error;
       
+      // Process the data to match our Family interface
+      const processedData: Family = {
+        id: data.id,
+        name: data.name,
+        description: data.description,
+        members: data.members.map((member: any) => ({
+          id: member.id,
+          user_id: member.user_id,
+          role: member.role,
+          profiles: member.profiles && member.profiles.length > 0 
+            ? {
+                full_name: member.profiles[0].full_name,
+                avatar_url: member.profiles[0].avatar_url
+              }
+            : null
+        }))
+      };
+      
       // Find the current user's role in this family
-      const currentMember = data.members.find((m: any) => m.user_id === user?.id);
+      const currentMember = processedData.members.find(m => m.user_id === user?.id);
       if (currentMember) {
         setUserRole(currentMember.role);
       }
       
-      setFamily(data);
+      setFamily(processedData);
     } catch (error: any) {
       console.error("Error loading family:", error);
       toast({

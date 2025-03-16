@@ -24,6 +24,13 @@ export default function InitialSetup() {
   useEffect(() => {
     const checkExistingFamilies = async () => {
       try {
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        if (!user) {
+          navigate('/auth');
+          return;
+        }
+        
         const { count, error } = await supabase
           .from("families")
           .select("*", { count: "exact", head: true });
@@ -38,7 +45,7 @@ export default function InitialSetup() {
     };
 
     checkExistingFamilies();
-  }, []);
+  }, [navigate]);
 
   // If we're already set up, redirect to families page
   useEffect(() => {

@@ -33,6 +33,41 @@ export type Database = {
         }
         Relationships: []
       }
+      family_access_codes: {
+        Row: {
+          active: boolean
+          created_at: string
+          created_by: string | null
+          family_id: string
+          id: string
+          secret_word: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          created_by?: string | null
+          family_id: string
+          id?: string
+          secret_word: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          created_by?: string | null
+          family_id?: string
+          id?: string
+          secret_word?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "family_access_codes_family_id_fkey"
+            columns: ["family_id"]
+            isOneToOne: false
+            referencedRelation: "families"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       family_members: {
         Row: {
           created_at: string | null
@@ -415,7 +450,12 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      check_family_secret: {
+        Args: {
+          _secret_word: string
+        }
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never
