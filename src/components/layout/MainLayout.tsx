@@ -77,7 +77,7 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
   };
   
   return (
-    <div className="flex flex-col min-h-screen bg-black text-white">
+    <div className="flex flex-col min-h-screen bg-background text-foreground">
       {/* Mobile Top Navigation */}
       <MobileTopNav 
         user={user} 
