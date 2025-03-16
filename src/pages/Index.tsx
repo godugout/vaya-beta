@@ -4,7 +4,7 @@ import { MainLayout } from '@/components/layout/MainLayout';
 import { HomeWelcomeSection } from '@/components/home/HomeWelcomeSection';
 import StoriesHeroSection from '@/components/stories/StoriesHeroSection';
 import { ContentShowcase } from '@/components/showcase/ContentShowcase';
-import { DualPaneRecordingSection } from '@/components/stories/DualPaneRecordingSection';
+import DualPaneRecordingSection from '@/components/stories/DualPaneRecordingSection';
 import { motion } from 'framer-motion';
 import { FadeIn } from '@/components/animation/FadeIn';
 

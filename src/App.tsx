@@ -20,17 +20,22 @@ const FamilyCapsules = lazy(() => import('@/pages/FamilyCapsules'));
 const MemoryLane = lazy(() => import('@/pages/MemoryLane'));
 const MemoryPost = lazy(() => import('@/pages/MemoryPost'));
 const SacredFoundation = lazy(() => import('@/pages/SacredFoundation'));
+const ShareStoriesPage = lazy(() => import('@/pages/ShareStories'));
 
 function App() {
   return (
     <ThemeProvider
       attribute="class"
       defaultTheme="dark"
-      enableSystem={false}
-      disableTransitionOnChange
+      enableSystem={true}
+      disableTransitionOnChange={false}
     >
-      <div className="flex flex-col min-h-screen bg-slate-900 text-white">
-        <Suspense fallback={<div className="p-8 flex justify-center items-center text-white">Loading...</div>}>
+      <div className="app-container">
+        <Suspense fallback={
+          <div className="p-8 flex justify-center items-center min-h-screen">
+            <div className="animate-pulse text-white">Loading...</div>
+          </div>
+        }>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
@@ -46,9 +51,10 @@ function App() {
             <Route path="/memory-lane" element={<MemoryLane />} />
             <Route path="/memory/:id" element={<MemoryPost />} />
             <Route path="/sacred-foundation" element={<SacredFoundation />} />
+            <Route path="/share-stories" element={<ShareStoriesPage />} />
           </Routes>
         </Suspense>
-        <Toaster position="bottom-right" />
+        <Toaster position="bottom-right" closeButton richColors />
       </div>
     </ThemeProvider>
   );

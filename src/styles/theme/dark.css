@@ -8,43 +8,43 @@
 :root, .dark {
   /* Base dark theme */
   --color-black: #FFFFFF;
-  --color-white: #000000; /* Deep black background */
-  --color-gray-100: #0A0A0A;
-  --color-gray-200: #121212;
-  --color-gray-300: #1A1A1A;
-  --color-gray-400: #2F2F2F;
-  --color-gray-500: #3C3C3C;
-  --color-gray-600: #505050;
-  --color-gray-700: #8B8B8B;
-  --color-gray-800: #AEAEAE;
-  --color-gray-900: #D6D6D6;
+  --color-white: #121212; /* Slightly lighter black for better contrast */
+  --color-gray-100: #18181B;
+  --color-gray-200: #27272A;
+  --color-gray-300: #3F3F46;
+  --color-gray-400: #52525B;
+  --color-gray-500: #71717A;
+  --color-gray-600: #A1A1AA;
+  --color-gray-700: #D4D4D8;
+  --color-gray-800: #E4E4E7;
+  --color-gray-900: #F4F4F5;
   
-  /* Cosmic theme colors */
-  --color-sky: 68 122 153;         /* Darker sky blue */
-  --color-forest: 19 58 42;        /* Darker forest green */
-  --color-water: 45 104 122;       /* Darker stream water */
-  --color-mountain: 63 115 124;    /* Darker blue mountains */
-  --color-leaf: 98 129 20;         /* Darker leaf green */
+  /* Cosmic theme colors with improved contrast for accessibility */
+  --color-sky: 98 152 183;         /* Brighter sky blue */
+  --color-forest: 39 78 62;        /* Brighter forest green */
+  --color-water: 65 134 152;       /* Brighter stream water */
+  --color-mountain: 83 135 144;    /* Brighter blue mountains */
+  --color-leaf: 138 169 30;        /* Brighter leaf green */
   --color-autumn: 242 153 45;      /* Keep autumn orange bright as accent */
-  --color-sand: 126 114 96;        /* Darker sandy stone */
+  --color-sand: 196 184 166;       /* Brighter sandy stone */
   
-  /* UI Colors for cosmic dark mode */
+  /* UI Colors for cosmic dark mode with better contrast */
   --color-ui-primary: #FFFFFF;
-  --color-ui-secondary: #AEAEAE;
+  --color-ui-secondary: #D4D4D8;
   --color-ui-accent: #F2992D;      /* Autumn orange as accent */
   
   /* Text colors for cosmic dark mode */
   --color-text-dark: #FFFFFF;
-  --color-text-medium: #AEAEAE;
-  --color-text-light: #0C0C0C;
+  --color-text-medium: #D4D4D8;
+  --color-text-light: #121212;
   
-  --card-background: #0A0A0A;      /* Deep black background */
+  --card-background: #18181B;      /* Dark background with better contrast */
   --card-shadow: rgba(0, 0, 0, 0.5);
 }
 
 /* Ensure dark mode has proper background */
 body {
-  background-color: #000000; /* Deep black background */
+  background-color: #121212; /* Slightly lighter black background for better contrast */
   color: var(--color-text-dark);
   background-image: 
     radial-gradient(1px 1px at 25% 25%, rgba(255, 255, 255, 0.15) 0%, transparent 100%),
@@ -59,20 +59,20 @@ h1, h2, h3, h4, h5, h6 {
   color: #FFFFFF;
 }
 
-/* Cosmic background patterns */
+/* Cosmic background patterns with improved visibility */
 .bg-pattern-stars {
   background-image: 
-    radial-gradient(1px 1px at 10% 10%, rgba(255, 255, 255, 0.1) 0%, transparent 100%),
-    radial-gradient(1px 1px at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 100%),
-    radial-gradient(1px 1px at 30% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 100%),
-    radial-gradient(1px 1px at 40% 40%, rgba(255, 255, 255, 0.1) 0%, transparent 100%),
-    radial-gradient(1px 1px at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+    radial-gradient(1px 1px at 10% 10%, rgba(255, 255, 255, 0.15) 0%, transparent 100%),
+    radial-gradient(1px 1px at 20% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 100%),
+    radial-gradient(1px 1px at 30% 30%, rgba(255, 255, 255, 0.15) 0%, transparent 100%),
+    radial-gradient(1px 1px at 40% 40%, rgba(255, 255, 255, 0.15) 0%, transparent 100%),
+    radial-gradient(1px 1px at 50% 50%, rgba(255, 255, 255, 0.15) 0%, transparent 100%);
   background-size: 100px 100px;
   background-attachment: fixed;
 }
 
 .bg-pattern-nebula {
-  background: linear-gradient(45deg, #0f0c29, #302b63, #24243e);
+  background: linear-gradient(45deg, #1A1A2E, #302b63, #24243e);
   position: relative;
   overflow: hidden;
 }
@@ -85,42 +85,62 @@ h1, h2, h3, h4, h5, h6 {
   right: 0;
   bottom: 0;
   background-image: 
-    radial-gradient(circle at 20% 30%, rgba(242, 153, 45, 0.2) 0%, transparent 20%),
-    radial-gradient(circle at 70% 60%, rgba(148, 193, 30, 0.1) 0%, transparent 30%),
-    radial-gradient(circle at 90% 10%, rgba(68, 158, 186, 0.2) 0%, transparent 20%);
-  opacity: 0.5;
+    radial-gradient(circle at 20% 30%, rgba(242, 153, 45, 0.25) 0%, transparent 20%),
+    radial-gradient(circle at 70% 60%, rgba(148, 193, 30, 0.15) 0%, transparent 30%),
+    radial-gradient(circle at 90% 10%, rgba(68, 158, 186, 0.25) 0%, transparent 20%);
+  opacity: 0.6;
   pointer-events: none;
   z-index: -1;
 }
 
-/* Cosmic cards */
+/* Cosmic cards with improved contrast */
 .card {
-  background-color: rgba(10, 10, 12, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(24, 24, 27, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
 }
 
-/* Set dark mode colors specific to Cosmic theme */
+/* Focus states for keyboard navigation - improved accessibility */
+:focus-visible {
+  outline: 2px solid var(--color-autumn);
+  outline-offset: 2px;
+}
+
+button:focus-visible, 
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-autumn);
+  outline-offset: 2px;
+}
+
+/* Set dark mode colors specific to Cosmic theme with better accessibility */
 :root, .dark {
   --primary: #F2992D; /* Autumn orange as primary */
-  --primary-foreground: #000000; /* Deep black */
+  --primary-foreground: #121212; /* Dark background */
   
-  --secondary: #1A1A1A; /* Dark gray */
+  --secondary: #27272A; /* Dark gray with better contrast */
   --secondary-foreground: #FFFFFF;
   
   --accent: #F2992D; /* Autumn orange */
-  --accent-foreground: #000000; /* Deep black */
+  --accent-foreground: #121212; /* Dark background */
   
-  --destructive: #FF4D4F; /* Bright red */
+  --destructive: #FF6B6B; /* Brighter red for better contrast */
   --destructive-foreground: #FFFFFF;
   
   --ring: #F2992D; /* Autumn orange */
   
-  --background: #000000; /* Deep black background */
+  --background: #121212; /* Dark background with better contrast */
   --foreground: #FFFFFF; /* White text */
   
   color-scheme: dark;
+
+  /* For dialog and overlay components */
+  --overlay-background: rgba(0, 0, 0, 0.8);
+  --dialog-background: #18181B;
+  --dialog-border: rgba(255, 255, 255, 0.15);
 }
 
 /* Light mode overrides */
@@ -167,6 +187,11 @@ h1, h2, h3, h4, h5, h6 {
   --foreground: #000000;
   
   color-scheme: light;
+
+  /* For dialog and overlay components */
+  --overlay-background: rgba(0, 0, 0, 0.7);
+  --dialog-background: #FFFFFF;
+  --dialog-border: rgba(0, 0, 0, 0.1);
 }
 
 .light body {
@@ -179,58 +204,25 @@ h1, h2, h3, h4, h5, h6 {
   color: #000000;
 }
 
-/* Special cosmic-inspired elements */
+/* Ensure proper text contrast for all interactive elements */
+button, a, input, select, textarea {
+  color: inherit;
+}
+
+/* Button focus states for better accessibility */
+button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* Special cosmic-inspired elements with better accessibility */
 .cosmic-card {
-  background: linear-gradient(135deg, #0A0A0A 0%, #000000 100%);
-  border: 1px solid rgba(242, 153, 45, 0.2);
+  background: linear-gradient(135deg, #18181B 0%, #121212 100%);
+  border: 1px solid rgba(242, 153, 45, 0.25);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
 }
 
 .cosmic-glow {
-  box-shadow: 0 0 15px rgba(242, 153, 45, 0.3);
-}
-
-.star-bg {
-  position: relative;
-}
-
-.star-bg::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: 
-    radial-gradient(1px 1px at 10% 10%, rgba(255, 255, 255, 0.2) 1px, transparent 0),
-    radial-gradient(1px 1px at 20% 20%, rgba(255, 255, 255, 0.15) 1px, transparent 0),
-    radial-gradient(1px 1px at 30% 30%, rgba(255, 255, 255, 0.1) 1px, transparent 0),
-    radial-gradient(1px 1px at 40% 40%, rgba(255, 255, 255, 0.05) 1px, transparent 0);
-  background-size: 100px 100px;
-  pointer-events: none;
-  z-index: -1;
-}
-
-/* Nebula effect */
-.nebula-effect {
-  position: relative;
-  overflow: hidden;
-}
-
-.nebula-effect::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 35%, rgba(242, 153, 45, 0.15) 0%, transparent 25%),
-    radial-gradient(circle at 75% 44%, rgba(148, 193, 30, 0.1) 0%, transparent 30%),
-    radial-gradient(circle at 40% 60%, rgba(68, 158, 186, 0.15) 0%, transparent 25%);
-  filter: blur(8px);
-  opacity: 0.6;
-  z-index: -1;
-  pointer-events: none;
+  box-shadow: 0 0 15px rgba(242, 153, 45, 0.35);
 }
