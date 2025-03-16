@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { AuthLayout } from "@/components/auth/AuthLayout";
 import { LoginForm } from "@/components/auth/LoginForm";
 import { SignupForm } from "@/components/auth/SignupForm";
+import { SimulatedAuth } from "@/components/auth/SimulatedAuth";
 
 export default function Auth() {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ export default function Auth() {
   const [password, setPassword] = useState("");
   const [secretWord, setSecretWord] = useState("");
   const [activeTab, setActiveTab] = useState<"login" | "signup">("login");
+  const [useSimulatedAuth, setUseSimulatedAuth] = useState(true);
 
   useEffect(() => {
     // Check if user is already logged in
@@ -35,6 +37,11 @@ export default function Auth() {
       setSecretWord(secret);
     }
   }, []);
+
+  // For simulated auth, don't render anything else
+  if (useSimulatedAuth) {
+    return <SimulatedAuth />;
+  }
 
   return (
     <AuthLayout>

@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { User } from "@supabase/supabase-js";
 import { 
@@ -43,17 +42,18 @@ export const UserMenu = ({ user, handleSignOut, navigate }: UserMenuProps) => {
     ? user.user_metadata.full_name.substring(0, 2).toUpperCase()
     : user.email 
       ? user.email.substring(0, 2).toUpperCase() 
-      : "VA";
+      : "GO";
   
-  const userDisplayName = user.user_metadata?.full_name || "User";
-  const userEmail = user.email || "user@example.com";
+  const userDisplayName = user.user_metadata?.full_name || "Gopal";
+  const userEmail = user.email || "gopal@vaya.family";
+  const avatarUrl = user.user_metadata?.avatar_url || "https://images.unsplash.com/photo-1466721591366-2d5fba72006d?auto=format&fit=crop&w=150&h=150";
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-10 w-10 rounded-full">
           <Avatar className="h-10 w-10 border-2 border-ui-teal">
-            <AvatarImage src={user.user_metadata?.avatar_url} />
+            <AvatarImage src={avatarUrl} />
             <AvatarFallback className="bg-ui-green text-white">
               {userInitials}
             </AvatarFallback>
