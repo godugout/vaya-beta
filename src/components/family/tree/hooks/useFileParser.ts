@@ -55,17 +55,17 @@ export function useFileParser() {
               
               // Extract village information from name or other fields if available
               if (nameValue && typeof nameValue === 'string') {
-                if (nameValue.includes("Miroli") || 
-                    (row.village === 'Miroli') || 
-                    (row.comments && row.comments.includes('Miroli'))) {
+                if (nameValue.toLowerCase().includes("miroli") || 
+                    (row.village && row.village.toLowerCase() === 'miroli') || 
+                    (row.comments && row.comments.toLowerCase().includes('miroli'))) {
                   roleValue = "mother's side";
-                } else if (nameValue.includes("Mandva") || 
-                         (row.village === 'Mandva') || 
-                         (row.comments && row.comments.includes('Mandva'))) {
+                } else if (nameValue.toLowerCase().includes("mandva") || 
+                         (row.village && row.village.toLowerCase() === 'mandva') || 
+                         (row.comments && row.comments.toLowerCase().includes('mandva'))) {
                   roleValue = "father's side";
-                } else if (nameValue.includes("Malsar") || 
-                         (row.village === 'Malsar') || 
-                         (row.comments && row.comments.includes('Malsar'))) {
+                } else if (nameValue.toLowerCase().includes("malsar") || 
+                         (row.village && row.village.toLowerCase() === 'malsar') || 
+                         (row.comments && row.comments.toLowerCase().includes('malsar'))) {
                   roleValue = "village";
                 }
               }
@@ -89,7 +89,7 @@ export function useFileParser() {
                 role: roleValue,
                 details: detailsArray.join('\n'),
                 // Ensure we have an ID for each member
-                id: row.id || row.ID || null,
+                id: row.id || row.ID || `member-${Math.random().toString(36).substring(2, 11)}`,
                 // Pass through any other known fields
                 parentId: row.parentId || row.parent_id || row['Parent ID'] || null,
                 spouseId: row.spouseId || row.spouse_id || row['Spouse ID'] || null,

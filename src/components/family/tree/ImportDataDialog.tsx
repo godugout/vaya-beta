@@ -8,6 +8,7 @@ import { FileUploadTab } from "./import/FileUploadTab";
 import { JsonInputTab } from "./import/JsonInputTab";
 import { ErrorDisplay } from "./import/ErrorDisplay";
 import { parseCSVFile, parseJSONFile, parseExcelFile } from "./import/importUtils";
+import { enrichFamilyData } from "./services/familyDataEnrichment";
 import { Sparkles } from "lucide-react";
 
 export interface ImportDataDialogProps {
@@ -50,10 +51,10 @@ export const ImportDataDialog = ({
           throw new Error('Unsupported file format. Please upload a CSV, JSON, or Excel file.');
         }
         
-        // If AI enhancement is enabled, we would process the data here
+        // If AI enhancement is enabled, process the data with AI enrichment
         if (enhanceWithAI && data.length > 0) {
           try {
-            data = await enrichFamilyDataWithAI(data);
+            data = await enrichFamilyData(data);
           } catch (aiError) {
             console.error('Error enriching data with AI:', aiError);
             // Continue with original data if AI enhancement fails
@@ -70,7 +71,7 @@ export const ImportDataDialog = ({
           if (enhanceWithAI && (Array.isArray(data) ? data.length > 0 : data.nodes?.length > 0)) {
             try {
               const dataToEnrich = Array.isArray(data) ? data : data.nodes;
-              const enrichedData = await enrichFamilyDataWithAI(dataToEnrich);
+              const enrichedData = await enrichFamilyData(dataToEnrich);
               
               if (Array.isArray(data)) {
                 onImportData(enrichedData);
@@ -103,31 +104,6 @@ export const ImportDataDialog = ({
     } finally {
       setIsLoading(false);
     }
-  };
-
-  // Function to enrich family data with AI
-  // This is a placeholder for where you would implement the actual AI enhancement
-  const enrichFamilyDataWithAI = async (data: any[]) => {
-    // In a real implementation, this would call an API to enrich the data
-    console.log('Enriching data with AI...', data);
-    
-    // For now, we'll simulate the enhancement by adding placeholders
-    // In a real implementation, you would call an API service
-    return data.map(member => {
-      // Only enhance if we have a name
-      if (!member.name || member.name === 'Unknown Member') {
-        return member;
-      }
-      
-      return {
-        ...member,
-        details: member.details ? 
-          `${member.details}\n\n[AI could enhance this profile with additional information found online]` :
-          '[AI could enhance this profile with additional information found online]',
-        // We're not actually modifying data here, just demonstrating what could be done
-        // This would be replaced with real AI-generated content
-      };
-    });
   };
 
   return (
@@ -169,7 +145,7 @@ export const ImportDataDialog = ({
             className="text-sm font-medium flex items-center gap-2 cursor-pointer"
           >
             <Sparkles className="h-4 w-4 text-amber-500" />
-            AI-enhance family data (placeholder - full implementation coming soon)
+            AI-enhance family data with cultural and historical context
           </label>
         </div>
         

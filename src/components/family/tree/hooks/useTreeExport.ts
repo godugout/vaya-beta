@@ -3,6 +3,7 @@ import { Node, Edge } from '@xyflow/react';
 import { useDataImport } from './useDataImport';
 import { useDataExport } from './useDataExport';
 import { useFileParser } from './useFileParser';
+import { enrichFamilyData } from '../services/familyDataEnrichment';
 
 interface UseTreeExportProps {
   setNodes: React.Dispatch<React.SetStateAction<Node[]>>;
@@ -15,9 +16,20 @@ export function useTreeExport({ setNodes, setEdges, autoLayoutTree }: UseTreeExp
   const { handleExportToExcel } = useDataExport();
   const { parseExcelFile } = useFileParser();
 
+  // Add a function to enrich family data with AI
+  const enrichFamilyTreeData = async (data: any[]) => {
+    try {
+      return await enrichFamilyData(data);
+    } catch (error) {
+      console.error('Error enriching family data:', error);
+      return data;
+    }
+  };
+
   return { 
     handleImportData,
     handleExportToExcel,
-    parseExcelFile
+    parseExcelFile,
+    enrichFamilyTreeData
   };
 }
