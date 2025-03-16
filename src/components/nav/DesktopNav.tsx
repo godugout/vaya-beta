@@ -7,6 +7,7 @@ import { GuestMenu } from "./GuestMenu";
 import { NavGlyphItem } from "./NavGlyphItem";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 import { 
   Home, 
   Mic, 
@@ -97,30 +98,53 @@ export const DesktopNav = ({
           ))}
         </div>
         
-        {/* Centered logo and brand */}
-        <button 
+        {/* Centered logo and brand with cosmic effects */}
+        <motion.button 
           onClick={() => navigate('/')} 
           className="absolute left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.98 }}
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
           aria-label="Go to homepage"
         >
-          <div className="relative h-16 w-16 rounded-lg bg-black flex items-center justify-center overflow-hidden">
+          <div className="relative h-16 w-16 rounded-lg bg-black flex items-center justify-center overflow-hidden cosmic-glow">
             <div className="absolute inset-0 opacity-20">
               {/* Star dots background */}
               <span className="absolute h-1 w-1 bg-white rounded-full top-1 left-1"></span>
               <span className="absolute h-1 w-1 bg-white rounded-full top-2 right-3"></span>
               <span className="absolute h-0.5 w-0.5 bg-white rounded-full bottom-2 left-3"></span>
               <span className="absolute h-0.5 w-0.5 bg-white rounded-full bottom-1 right-1"></span>
+              
+              {/* Subtle nebula background */}
+              <div className="absolute inset-0 opacity-30 bg-gradient-to-br from-purple-900/20 via-transparent to-blue-900/20"></div>
             </div>
-            <img 
+            <motion.img 
               src="/lovable-uploads/2a8faf45-bcfa-46d2-8314-ee4fd404aa94.png" 
               alt="Vaya Logo" 
               className="h-12 w-12 object-contain"
+              initial={{ rotate: -5 }}
+              animate={{ 
+                rotate: 5,
+                filter: ["drop-shadow(0 0 8px rgba(242, 153, 45, 0.4))", "drop-shadow(0 0 12px rgba(242, 153, 45, 0.7))", "drop-shadow(0 0 8px rgba(242, 153, 45, 0.4))"]
+              }}
+              transition={{ 
+                rotate: { repeat: Infinity, duration: 4, repeatType: "reverse" },
+                filter: { repeat: Infinity, duration: 3, repeatType: "reverse" }
+              }}
             />
           </div>
-          <span className="text-xl font-heading font-semibold tracking-widest uppercase text-forest dark:text-autumn">
+          <motion.span 
+            className="text-xl font-heading font-semibold tracking-widest uppercase text-autumn"
+            animate={{ 
+              textShadow: ["0 0 8px rgba(242, 153, 45, 0.3)", "0 0 12px rgba(242, 153, 45, 0.5)", "0 0 8px rgba(242, 153, 45, 0.3)"]  
+            }}
+            transition={{ duration: 3, repeat: Infinity, repeatType: "reverse" }}
+          >
             VAYA
-          </span>
-        </button>
+          </motion.span>
+        </motion.button>
         
         {/* Right side navigation */}
         <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1/3 flex items-center justify-end gap-4">
@@ -134,7 +158,7 @@ export const DesktopNav = ({
             />
           ))}
           
-          {/* Voice control button */}
+          {/* Voice control button with cosmic style */}
           <Button 
             variant="ghost" 
             size="icon" 
@@ -142,13 +166,17 @@ export const DesktopNav = ({
             aria-pressed={isVoiceActive}
             aria-label="Toggle voice navigation"
             className={cn(
-              "rounded-full transition-colors ml-2 h-12 w-12",
-              isVoiceActive && "bg-autumn/10 dark:bg-autumn/20"
+              "rounded-full transition-colors ml-2 h-12 w-12 border border-transparent",
+              isVoiceActive 
+                ? "bg-autumn/10 border-autumn/30 dark:bg-autumn/20" 
+                : "hover:bg-gray-800/50 hover:border-white/10"
             )}
           >
             <Volume2 className={cn(
               "h-5 w-5 transition-colors",
-              isVoiceActive ? "text-autumn" : "text-muted-foreground"
+              isVoiceActive 
+                ? "text-autumn animate-pulse" 
+                : "text-muted-foreground"
             )} />
           </Button>
           

@@ -29,40 +29,51 @@ export const NavGlyphItem = ({ to, icon, label, description }: NavGlyphItemProps
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
               className={cn(
-                "w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center",
-                "transition-colors duration-300",
+                "w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center border transition-all duration-300",
                 isActive 
-                  ? "bg-autumn/20 dark:bg-leaf/20" 
-                  : "bg-gray-100 dark:bg-gray-800 hover:bg-autumn/10 dark:hover:bg-leaf/10"
+                  ? "bg-autumn/20 border-autumn/30 cosmic-glow" 
+                  : "bg-black/60 backdrop-blur-md border-white/10 hover:bg-black/80 hover:border-white/20"
               )}
             >
-              <span className={cn(
-                "transition-colors",
-                isActive ? "text-autumn dark:text-leaf" : "text-gray-600 dark:text-gray-400"
-              )}>
+              <motion.span 
+                className={cn(
+                  "transition-colors",
+                  isActive ? "text-autumn" : "text-gray-400"
+                )}
+                animate={isActive ? {
+                  filter: ["drop-shadow(0 0 2px rgba(242, 153, 45, 0.3))", "drop-shadow(0 0 4px rgba(242, 153, 45, 0.5))", "drop-shadow(0 0 2px rgba(242, 153, 45, 0.3))"]
+                } : {}}
+                transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
+              >
                 {icon}
-              </span>
+              </motion.span>
             </motion.div>
             <span className={cn(
               "mt-1 text-xs font-medium",
-              isActive ? "text-autumn dark:text-leaf" : "text-gray-600 dark:text-gray-400"
+              isActive ? "text-autumn" : "text-gray-400"
             )}>
               {label}
             </span>
             {isActive && (
               <motion.div 
                 layoutId="activeIndicator"
-                className="absolute -bottom-1 w-1.5 h-1.5 rounded-full bg-autumn dark:bg-leaf"
+                className="absolute -bottom-1 w-1.5 h-1.5 rounded-full bg-autumn"
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3 }}
+                animate={{ 
+                  opacity: 1,
+                  boxShadow: ["0 0 3px rgba(242, 153, 45, 0.3)", "0 0 5px rgba(242, 153, 45, 0.5)", "0 0 3px rgba(242, 153, 45, 0.3)"]  
+                }}
+                transition={{ 
+                  opacity: { duration: 0.3 }, 
+                  boxShadow: { duration: 2, repeat: Infinity, repeatType: "reverse" } 
+                }}
               />
             )}
           </Link>
         </TooltipTrigger>
-        <TooltipContent side="bottom">
+        <TooltipContent side="bottom" className="bg-black/80 border-white/10 backdrop-blur text-white">
           <p className="font-medium">{label}</p>
-          {description && <p className="text-xs text-muted-foreground">{description}</p>}
+          {description && <p className="text-xs text-gray-400">{description}</p>}
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>

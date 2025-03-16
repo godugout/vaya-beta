@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { MainNav } from '@/components/MainNav';
 import Footer from '@/components/Footer';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
@@ -24,13 +24,24 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
       title: document.title
     });
   }, [location.pathname, location.search, trackActivity]);
+
+  // Apply the cosmic theme class to body
+  useEffect(() => {
+    document.body.classList.add('star-bg', 'nebula-effect');
+    
+    return () => {
+      document.body.classList.remove('star-bg', 'nebula-effect');
+    };
+  }, []);
   
   return (
-    <div className="flex flex-col min-h-screen bg-white dark:bg-slate-900 text-black dark:text-white">
-      {/* Use MainNav for all pages */}
-      <MainNav />
+    <div className="flex flex-col min-h-screen bg-black text-white">
+      {/* Use MainNav for all pages with cosmic theme */}
+      <div className="cosmic-nav">
+        <MainNav />
+      </div>
       
-      <main className="flex-grow mt-20">
+      <main className="flex-grow mt-20 relative z-content">
         <ErrorBoundary>
           {children}
         </ErrorBoundary>

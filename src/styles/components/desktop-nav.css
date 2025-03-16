@@ -1,14 +1,16 @@
 
-/* Desktop Navigation Styles */
+/* Desktop Navigation Styles - Cosmic Theme */
 .nav-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   padding: var(--space-4) var(--space-6);
-  background-color: var(--background);
-  border-bottom: 1px solid var(--border);
+  background-color: rgba(0, 0, 0, 0.7);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   position: relative;
+  backdrop-filter: blur(10px);
+  z-index: var(--z-nav);
 }
 
 .nav-brand {
@@ -22,18 +24,26 @@
 }
 
 .nav-brand-logo {
-  height: 4rem;
-  width: 4rem;
+  height: 4.5rem;
+  width: 4.5rem;
   color: var(--color-autumn);
+  filter: drop-shadow(0 0 8px rgba(242, 153, 45, 0.5));
+  transition: all 0.3s ease;
+}
+
+.nav-brand-logo:hover {
+  filter: drop-shadow(0 0 12px rgba(242, 153, 45, 0.7));
+  transform: scale(1.05);
 }
 
 .nav-brand-text {
   font-family: var(--font-heading);
   font-weight: 700;
   font-size: 1.75rem;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--color-autumn);
+  text-shadow: 0 0 10px rgba(242, 153, 45, 0.3);
 }
 
 .nav-glyph-container {
@@ -46,11 +56,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: transform 0.2s ease;
+  transition: transform 0.3s ease;
 }
 
 .nav-glyph-item:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
 }
 
 .nav-glyph-icon {
@@ -60,13 +70,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--background-hover);
-  transition: all 0.2s ease;
+  background-color: rgba(10, 10, 10, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
 .nav-glyph-icon.active {
-  background-color: var(--bg-autumn-light);
+  background-color: rgba(242, 153, 45, 0.2);
   color: var(--color-autumn);
+  border-color: rgba(242, 153, 45, 0.3);
+  box-shadow: 0 0 15px rgba(242, 153, 45, 0.2);
+}
+
+.nav-glyph-icon:hover {
+  box-shadow: 0 0 20px rgba(242, 153, 45, 0.3);
+  background-color: rgba(30, 30, 30, 0.8);
 }
 
 .nav-glyph-label {
@@ -87,6 +106,7 @@
   border-radius: 50%;
   background-color: var(--color-autumn);
   margin-top: var(--space-1);
+  box-shadow: 0 0 5px rgba(242, 153, 45, 0.5);
 }
 
 .nav-menu {
@@ -116,7 +136,7 @@
 
 .nav-item:hover {
   color: var(--color-autumn);
-  background-color: var(--bg-hover);
+  background-color: rgba(30, 30, 30, 0.5);
 }
 
 .nav-item.active {
@@ -132,9 +152,33 @@
   height: 2px;
   background-color: var(--color-autumn);
   border-radius: 1px;
+  box-shadow: 0 0 5px rgba(242, 153, 45, 0.5);
 }
 
 .nav-item-icon {
   margin-right: var(--space-2);
   font-size: 1rem;
+}
+
+/* Starry background for nav */
+.cosmic-nav {
+  position: relative;
+}
+
+.cosmic-nav::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(1px 1px at 10% 10%, rgba(255, 255, 255, 0.1) 1px, transparent 0),
+    radial-gradient(1px 1px at 30% 30%, rgba(255, 255, 255, 0.1) 1px, transparent 0),
+    radial-gradient(1px 1px at 50% 50%, rgba(255, 255, 255, 0.1) 1px, transparent 0),
+    radial-gradient(1px 1px at 70% 70%, rgba(255, 255, 255, 0.1) 1px, transparent 0),
+    radial-gradient(1px 1px at 90% 90%, rgba(255, 255, 255, 0.1) 1px, transparent 0);
+  background-size: 100px 100px;
+  pointer-events: none;
+  z-index: -1;
 }
