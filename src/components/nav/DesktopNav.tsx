@@ -28,77 +28,77 @@ export const DesktopNav = ({
 }: DesktopNavProps) => {
   return (
     <div className="hidden md:block py-3 px-6">
-      <div className="flex items-center justify-between">
-        {/* Logo and main navigation */}
-        <div className="flex items-center gap-8">
-          <button 
-            onClick={() => navigate('/')} 
-            className="flex items-center gap-2"
-            aria-label="Go to homepage"
-          >
-            <div className="relative h-11 w-11 rounded-lg bg-black flex items-center justify-center overflow-hidden">
-              <div className="absolute inset-0 opacity-20">
-                {/* Star dots background */}
-                <span className="absolute h-1 w-1 bg-white rounded-full top-1 left-1"></span>
-                <span className="absolute h-1 w-1 bg-white rounded-full top-2 right-3"></span>
-                <span className="absolute h-0.5 w-0.5 bg-white rounded-full bottom-2 left-3"></span>
-                <span className="absolute h-0.5 w-0.5 bg-white rounded-full bottom-1 right-1"></span>
-              </div>
-              <img 
-                src="/lovable-uploads/2a8faf45-bcfa-46d2-8314-ee4fd404aa94.png" 
-                alt="Vaya Logo" 
-                className="h-7 w-7 object-contain"
-              />
-            </div>
-            <span className="text-xl font-heading font-semibold text-forest dark:text-autumn">
-              Vaya
-            </span>
-          </button>
-          
-          <nav className="flex items-center gap-1">
-            <NavButton 
-              to="/" 
-              icon={<Home size={isSimplifiedView ? 20 : 16} />} 
-              label="Home" 
-              isSimplified={isSimplifiedView}
-            />
-            <NavButton 
-              to="/share-stories" 
-              icon={<Mic size={isSimplifiedView ? 20 : 16} />} 
-              label="Stories" 
-              isSimplified={isSimplifiedView}
-            />
-            <NavButton 
-              to="/memory-lane" 
-              icon={<Image size={isSimplifiedView ? 20 : 16} />} 
-              label="Memories" 
-              isSimplified={isSimplifiedView}
-            />
-            <NavButton 
-              to="/family-capsules" 
-              icon={<Archive size={isSimplifiedView ? 20 : 16} />} 
-              label="Capsules" 
-              isSimplified={isSimplifiedView}
-            />
-            <NavButton 
-              to="/media-library" 
-              icon={<Palette size={isSimplifiedView ? 20 : 16} />} 
-              label="Media" 
-              isSimplified={isSimplifiedView}
-            />
-            {user && (
-              <NavButton 
-                to="/families" 
-                icon={<Users size={isSimplifiedView ? 20 : 16} />} 
-                label="Family" 
-                isSimplified={isSimplifiedView}
-              />
-            )}
-          </nav>
+      <div className="flex items-center justify-between relative">
+        {/* Left side navigation */}
+        <div className="flex items-center gap-1 nav-menu-left">
+          <NavButton 
+            to="/" 
+            icon={<Home size={isSimplifiedView ? 20 : 16} />} 
+            label="Home" 
+            isSimplified={isSimplifiedView}
+          />
+          <NavButton 
+            to="/share-stories" 
+            icon={<Mic size={isSimplifiedView ? 20 : 16} />} 
+            label="Stories" 
+            isSimplified={isSimplifiedView}
+          />
+          <NavButton 
+            to="/memory-lane" 
+            icon={<Image size={isSimplifiedView ? 20 : 16} />} 
+            label="Memories" 
+            isSimplified={isSimplifiedView}
+          />
         </div>
         
-        {/* Right side - user menu, accessibility controls */}
-        <div className="flex items-center gap-2">
+        {/* Centered logo and brand */}
+        <button 
+          onClick={() => navigate('/')} 
+          className="flex flex-col items-center gap-1 absolute left-1/2 transform -translate-x-1/2"
+          aria-label="Go to homepage"
+        >
+          <div className="relative h-12 w-12 rounded-lg bg-black flex items-center justify-center overflow-hidden">
+            <div className="absolute inset-0 opacity-20">
+              {/* Star dots background */}
+              <span className="absolute h-1 w-1 bg-white rounded-full top-1 left-1"></span>
+              <span className="absolute h-1 w-1 bg-white rounded-full top-2 right-3"></span>
+              <span className="absolute h-0.5 w-0.5 bg-white rounded-full bottom-2 left-3"></span>
+              <span className="absolute h-0.5 w-0.5 bg-white rounded-full bottom-1 right-1"></span>
+            </div>
+            <img 
+              src="/lovable-uploads/2a8faf45-bcfa-46d2-8314-ee4fd404aa94.png" 
+              alt="Vaya Logo" 
+              className="h-9 w-9 object-contain"
+            />
+          </div>
+          <span className="text-lg font-heading font-semibold tracking-widest uppercase text-forest dark:text-autumn">
+            Vaya
+          </span>
+        </button>
+        
+        {/* Right side navigation */}
+        <div className="flex items-center gap-1 nav-menu-right">
+          <NavButton 
+            to="/family-capsules" 
+            icon={<Archive size={isSimplifiedView ? 20 : 16} />} 
+            label="Capsules" 
+            isSimplified={isSimplifiedView}
+          />
+          <NavButton 
+            to="/media-library" 
+            icon={<Palette size={isSimplifiedView ? 20 : 16} />} 
+            label="Media" 
+            isSimplified={isSimplifiedView}
+          />
+          {user && (
+            <NavButton 
+              to="/families" 
+              icon={<Users size={isSimplifiedView ? 20 : 16} />} 
+              label="Family" 
+              isSimplified={isSimplifiedView}
+            />
+          )}
+          
           {/* Voice control button */}
           <Button 
             variant="ghost" 
@@ -107,7 +107,7 @@ export const DesktopNav = ({
             aria-pressed={isVoiceActive}
             aria-label="Toggle voice navigation"
             className={cn(
-              "rounded-full transition-colors",
+              "rounded-full transition-colors ml-2",
               isVoiceActive && "bg-autumn/10 dark:bg-autumn/20"
             )}
           >
