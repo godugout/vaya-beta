@@ -3,10 +3,12 @@ import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
 import { FileUploadTab } from "./import/FileUploadTab";
 import { JsonInputTab } from "./import/JsonInputTab";
 import { ErrorDisplay } from "./import/ErrorDisplay";
 import { parseCSVFile, parseJSONFile, parseExcelFile } from "./import/importUtils";
+import { Sparkles } from "lucide-react";
 
 export interface ImportDataDialogProps {
   open: boolean;
@@ -24,6 +26,7 @@ export const ImportDataDialog = ({
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('file');
+  const [enhanceWithAI, setEnhanceWithAI] = useState(false);
 
   const handleFileUpload = (selectedFile: File) => {
     setFile(selectedFile);
@@ -47,12 +50,46 @@ export const ImportDataDialog = ({
           throw new Error('Unsupported file format. Please upload a CSV, JSON, or Excel file.');
         }
         
+        // If AI enhancement is enabled, we would process the data here
+        if (enhanceWithAI && data.length > 0) {
+          try {
+            data = await enrichFamilyDataWithAI(data);
+          } catch (aiError) {
+            console.error('Error enriching data with AI:', aiError);
+            // Continue with original data if AI enhancement fails
+          }
+        }
+        
         onImportData(data);
         onOpenChange(false);
       } else if (activeTab === 'json' && jsonData.trim()) {
         try {
           const data = JSON.parse(jsonData);
-          onImportData(data);
+          
+          // If AI enhancement is enabled
+          if (enhanceWithAI && (Array.isArray(data) ? data.length > 0 : data.nodes?.length > 0)) {
+            try {
+              const dataToEnrich = Array.isArray(data) ? data : data.nodes;
+              const enrichedData = await enrichFamilyDataWithAI(dataToEnrich);
+              
+              if (Array.isArray(data)) {
+                onImportData(enrichedData);
+              } else {
+                // If the original data had a nodes/edges structure
+                onImportData({
+                  ...data,
+                  nodes: enrichedData
+                });
+              }
+            } catch (aiError) {
+              console.error('Error enriching data with AI:', aiError);
+              // Continue with original data if AI enhancement fails
+              onImportData(data);
+            }
+          } else {
+            onImportData(data);
+          }
+          
           onOpenChange(false);
         } catch (e) {
           throw new Error('Invalid JSON format. Please check your input.');
@@ -66,6 +103,31 @@ export const ImportDataDialog = ({
     } finally {
       setIsLoading(false);
     }
+  };
+
+  // Function to enrich family data with AI
+  // This is a placeholder for where you would implement the actual AI enhancement
+  const enrichFamilyDataWithAI = async (data: any[]) => {
+    // In a real implementation, this would call an API to enrich the data
+    console.log('Enriching data with AI...', data);
+    
+    // For now, we'll simulate the enhancement by adding placeholders
+    // In a real implementation, you would call an API service
+    return data.map(member => {
+      // Only enhance if we have a name
+      if (!member.name || member.name === 'Unknown Member') {
+        return member;
+      }
+      
+      return {
+        ...member,
+        details: member.details ? 
+          `${member.details}\n\n[AI could enhance this profile with additional information found online]` :
+          '[AI could enhance this profile with additional information found online]',
+        // We're not actually modifying data here, just demonstrating what could be done
+        // This would be replaced with real AI-generated content
+      };
+    });
   };
 
   return (
@@ -95,6 +157,21 @@ export const ImportDataDialog = ({
             />
           </TabsContent>
         </Tabs>
+        
+        <div className="flex items-center space-x-2 py-2">
+          <Switch
+            id="ai-enhance"
+            checked={enhanceWithAI}
+            onCheckedChange={setEnhanceWithAI}
+          />
+          <label
+            htmlFor="ai-enhance"
+            className="text-sm font-medium flex items-center gap-2 cursor-pointer"
+          >
+            <Sparkles className="h-4 w-4 text-amber-500" />
+            AI-enhance family data (placeholder - full implementation coming soon)
+          </label>
+        </div>
         
         <ErrorDisplay error={error} />
         

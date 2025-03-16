@@ -37,18 +37,63 @@ export function useFileParser() {
             
             // Process data to handle various column naming conventions
             const processedData = jsonData.map((row: any) => {
-              // Handle different possible column names for common fields
+              // Extract key information from available fields
+              const nameValue = row.Name || row.name || row.full_name || row.fullName || 
+                              row['Full Name'] || row.person || row.member || '';
+              
+              const birthDateValue = row.Birthdate || row.birthDate || row.birth_date || 
+                                  row.dob || row['Date of Birth'] || row.DOB || '';
+              
+              const emailValue = row.Email || row["Email Address"] || row.email || 
+                              row['e-mail'] || row.contact || row.emailAddress || '';
+              
+              const addressValue = row.Address || row["Home Addresses"] || row.address || 
+                                row['Home Address'] || row.location || row.residence || '';
+              
+              // More flexible role detection
+              let roleValue = row.role || row.Role || row.relation || row.Relation || 'member';
+              
+              // Extract village information from name or other fields if available
+              if (nameValue && typeof nameValue === 'string') {
+                if (nameValue.includes("Miroli") || 
+                    (row.village === 'Miroli') || 
+                    (row.comments && row.comments.includes('Miroli'))) {
+                  roleValue = "mother's side";
+                } else if (nameValue.includes("Mandva") || 
+                         (row.village === 'Mandva') || 
+                         (row.comments && row.comments.includes('Mandva'))) {
+                  roleValue = "father's side";
+                } else if (nameValue.includes("Malsar") || 
+                         (row.village === 'Malsar') || 
+                         (row.comments && row.comments.includes('Malsar'))) {
+                  roleValue = "village";
+                }
+              }
+              
+              // Build details string from all available information
+              const detailsArray = [];
+              if (emailValue) detailsArray.push(`Email: ${emailValue}`);
+              if (addressValue) detailsArray.push(`Address: ${addressValue}`);
+              
+              // Add any other fields that might be useful
+              const fieldsToAdd = ['phone', 'Phone', 'Phone Number', 'occupation', 'Occupation', 'notes', 'Notes'];
+              fieldsToAdd.forEach(field => {
+                if (row[field]) detailsArray.push(`${field}: ${row[field]}`);
+              });
+              
               return {
-                name: row.Name || row.name || row.full_name || row.fullName,
-                birthDate: row.Birthdate || row.birthDate || row.birth_date || row.dob,
-                email: row.Email || row["Email Address"] || row.email,
-                address: row.Address || row["Home Addresses"] || row.address,
-                // Extract village information from name if available
-                role: row.Name?.includes("Miroli") ? "mother's side" :
-                      row.Name?.includes("Mandva") ? "father's side" :
-                      row.Name?.includes("Malsar") ? "village" : "member",
-                // Add any additional details as needed
-                details: `Email: ${row["Email Address"] || ''}\nAddress: ${row["Home Addresses"] || ''}`
+                name: nameValue || 'Unknown Member',
+                birthDate: birthDateValue || null,
+                email: emailValue || null,
+                address: addressValue || null,
+                role: roleValue,
+                details: detailsArray.join('\n'),
+                // Ensure we have an ID for each member
+                id: row.id || row.ID || null,
+                // Pass through any other known fields
+                parentId: row.parentId || row.parent_id || row['Parent ID'] || null,
+                spouseId: row.spouseId || row.spouse_id || row['Spouse ID'] || null,
+                imageUrl: row.imageUrl || row.image || row.photo || row.avatar || null
               };
             });
             
