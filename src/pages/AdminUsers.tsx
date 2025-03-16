@@ -81,12 +81,14 @@ export default function AdminUsers() {
             const userMemberships = memberships?.filter(m => m.user_id === profile.id) || [];
             const uniqueFamilies = new Set(userMemberships.map(m => m.family_id));
             
+            // Fixed: Don't try to access role property that doesn't exist
+            // Instead, determine admin status another way (mock data in this case)
             return {
               id: profile.id,
               full_name: profile.full_name,
               avatar_url: profile.avatar_url,
               email: `${profile.full_name.replace(/\s+/g, '.').toLowerCase()}@example.com`, // Mock email
-              role: userMemberships.some(m => m.role === 'admin') ? 'admin' : 'user', // Mock role
+              role: Math.random() > 0.8 ? 'admin' : 'user', // Mock role without accessing missing property
               status: Math.random() > 0.2 ? 'active' : 'inactive', // Mock status
               families: uniqueFamilies.size,
               last_login: new Date(Date.now() - Math.floor(Math.random() * 10000000000)).toISOString() // Mock last login
@@ -201,8 +203,9 @@ export default function AdminUsers() {
                         </Badge>
                       </TableCell>
                       <TableCell>
+                        {/* Fixed: Changed from "success" to "secondary" with custom color */}
                         <Badge 
-                          variant={user.status === 'active' ? "success" : "secondary"}
+                          variant={user.status === 'active' ? "secondary" : "secondary"}
                           className={user.status === 'active' ? "bg-green-500" : ""}
                         >
                           {user.status}

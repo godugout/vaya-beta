@@ -11,7 +11,8 @@ import {
   ArrowUpRight,
   FileText,
   Image,
-  HardDrive
+  HardDrive,
+  Headphones
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
