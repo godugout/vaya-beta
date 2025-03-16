@@ -12,113 +12,36 @@ import {
   BookOpen,
   Users,
   HeartHandshake,
-  Lightbulb
+  Lightbulb,
+  Globe,
+  Heart,
+  Milestone,
+  User,
+  Home,
+  Network,
+  Image,
+  Link,
+  Landmark
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { PromptCategory } from "./types";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-// Default categories with cultural context
-const defaultCategories = [
-  {
-    id: "family_heritage",
-    name_en: "Family Heritage",
-    name_es: "Patrimonio Familiar",
-    icon: <MessageSquare className="h-4 w-4" />,
-    colorKey: "lovable-magenta",
-    prompts: [
-      {
-        en: "Tell me about your family's roots and heritage.",
-        es: "Cuéntame sobre las raíces y el patrimonio de tu familia."
-      },
-      {
-        en: "What traditions have been passed down through generations in your family?",
-        es: "¿Qué tradiciones se han transmitido a través de las generaciones en tu familia?"
-      },
-      {
-        en: "Share a family recipe that has special meaning to you.",
-        es: "Comparte una receta familiar que tenga un significado especial para ti."
-      },
-    ],
-  },
-  {
-    id: "personal_connections",
-    name_en: "Personal Connections",
-    name_es: "Conexiones Personales",
-    icon: <HeartHandshake className="h-4 w-4" />,
-    colorKey: "lovable-yellow",
-    prompts: [
-      {
-        en: "Who in your family has influenced you the most?",
-        es: "¿Quién en tu familia te ha influenciado más?"
-      },
-      {
-        en: "What family heirloom holds special meaning to you?",
-        es: "¿Qué reliquia familiar tiene un significado especial para ti?"
-      },
-      {
-        en: "What values did you learn from your family?",
-        es: "¿Qué valores aprendiste de tu familia?"
-      },
-    ],
-  },
-  {
-    id: "cultural_identity",
-    name_en: "Cultural Identity",
-    name_es: "Identidad Cultural",
-    icon: <Users className="h-4 w-4" />,
-    colorKey: "lovable-blue",
-    prompts: [
-      {
-        en: "How do you celebrate your cultural heritage?",
-        es: "¿Cómo celebras tu herencia cultural?"
-      },
-      {
-        en: "What cultural practices or traditions are important in your family?",
-        es: "¿Qué prácticas o tradiciones culturales son importantes en tu familia?"
-      },
-      {
-        en: "How has your family's cultural identity evolved over generations?",
-        es: "¿Cómo ha evolucionado la identidad cultural de tu familia a lo largo de las generaciones?"
-      },
-    ],
-  },
-  {
-    id: "life_wisdom",
-    name_en: "Life Wisdom",
-    name_es: "Sabiduría de Vida",
-    icon: <Lightbulb className="h-4 w-4" />,
-    colorKey: "lovable-teal",
-    prompts: [
-      {
-        en: "What's the most valuable lesson you've learned from a family elder?",
-        es: "¿Cuál es la lección más valiosa que has aprendido de un anciano de la familia?"
-      },
-      {
-        en: "Share a story about overcoming a challenge in your family.",
-        es: "Comparte una historia sobre cómo superar un desafío en tu familia."
-      },
-      {
-        en: "What wisdom would you most want to pass down to future generations?",
-        es: "¿Qué sabiduría querrías transmitir a las generaciones futuras?"
-      },
-    ],
-  },
-];
-
 interface PromptCategoriesProps {
   onPromptSelect: (prompt: string) => void;
   isSpanish?: boolean;
+  edition?: string;
 }
 
-const PromptCategories = ({ onPromptSelect, isSpanish = false }: PromptCategoriesProps) => {
+const PromptCategories = ({ onPromptSelect, isSpanish = false, edition = "hanuman" }: PromptCategoriesProps) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [categories, setCategories] = useState(defaultCategories);
+  const [categories, setCategories] = useState<any[]>([]);
+  const [categoryPrompts, setCategoryPrompts] = useState<Record<string, {en: string, es: string}[]>>({});
   const { isSpanish: appLanguageIsSpanish } = useLanguage();
   
   useEffect(() => {
     fetchCategories();
-  }, []);
+  }, [edition]);
 
   const fetchCategories = async () => {
     try {
@@ -142,9 +65,18 @@ const PromptCategories = ({ onPromptSelect, isSpanish = false }: PromptCategorie
             "users": <Users className="h-4 w-4" />,
             "heart-handshake": <HeartHandshake className="h-4 w-4" />,
             "lightbulb": <Lightbulb className="h-4 w-4" />,
+            "globe": <Globe className="h-4 w-4" />,
+            "heart": <Heart className="h-4 w-4" />,
+            "milestone": <Milestone className="h-4 w-4" />,
+            "user": <User className="h-4 w-4" />,
+            "home": <Home className="h-4 w-4" />,
+            "network": <Network className="h-4 w-4" />,
+            "image": <Image className="h-4 w-4" />,
+            "link": <Link className="h-4 w-4" />,
+            "landmark": <Landmark className="h-4 w-4" />
           };
           
-          // Attempt to fetch prompts for this category
+          // Fetch prompts for this category
           fetchPromptsForCategory(category.id);
           
           return {
@@ -170,7 +102,8 @@ const PromptCategories = ({ onPromptSelect, isSpanish = false }: PromptCategorie
         .from('localized_prompts')
         .select('*')
         .eq('category_id', categoryId)
-        .eq('active', true);
+        .eq('active', true)
+        .eq('edition', edition);
       
       if (error) {
         console.error(`Error fetching prompts for category ${categoryId}:`, error);
@@ -178,20 +111,17 @@ const PromptCategories = ({ onPromptSelect, isSpanish = false }: PromptCategorie
       }
       
       if (data && data.length > 0) {
-        setCategories(prevCategories => {
-          return prevCategories.map(category => {
-            if (category.id === categoryId) {
-              return {
-                ...category,
-                prompts: data.map((prompt: any) => ({
-                  en: prompt.prompt_en,
-                  es: prompt.prompt_es || prompt.prompt_en
-                }))
-              };
-            }
-            return category;
-          });
-        });
+        // Create a formatted array of prompts for this category
+        const formattedPrompts = data.map((prompt: any) => ({
+          en: prompt.prompt_en,
+          es: prompt.prompt_es || prompt.prompt_en
+        }));
+        
+        // Update the categoryPrompts state
+        setCategoryPrompts(prev => ({
+          ...prev,
+          [categoryId]: formattedPrompts
+        }));
       }
     } catch (error) {
       console.error(`Error in fetchPromptsForCategory for ${categoryId}:`, error);
@@ -199,12 +129,26 @@ const PromptCategories = ({ onPromptSelect, isSpanish = false }: PromptCategorie
   };
   
   const getCategoryColor = (categoryId: string): string => {
+    // Map category IDs to color classes
     const colorMapping: Record<string, string> = {
+      // Assign colors based on category types
       "family_heritage": "lovable-magenta",
       "personal_connections": "lovable-yellow",
       "cultural_identity": "lovable-blue",
-      "life_wisdom": "lovable-teal",
+      "life_milestones": "lovable-teal",
+      "cultural_dimensions": "lovable-magenta",
+      "intergenerational_bridges": "lovable-yellow",
+      "family_wisdom": "lovable-teal",
+      "historical_context": "lovable-blue",
+      // If we have more categories than colors, we can recycle colors
     };
+    
+    // If we don't have a specific mapping, determine based on index in categories
+    if (!colorMapping[categoryId]) {
+      const availableColors = ["lovable-magenta", "lovable-yellow", "lovable-teal", "lovable-blue"];
+      const index = Math.abs(categoryId.charCodeAt(0) + categoryId.charCodeAt(1)) % availableColors.length;
+      return availableColors[index];
+    }
     
     return colorMapping[categoryId] || "lovable-magenta";
   };
@@ -240,6 +184,8 @@ const PromptCategories = ({ onPromptSelect, isSpanish = false }: PromptCategorie
       <div className="flex flex-wrap gap-2">
         {categories.map((category) => {
           const colors = brandColors[category.colorKey as keyof typeof brandColors];
+          const categoryPromptsList = categoryPrompts[category.id] || [];
+          
           return (
             <Popover key={category.id}>
               <PopoverTrigger asChild>
@@ -262,20 +208,26 @@ const PromptCategories = ({ onPromptSelect, isSpanish = false }: PromptCategorie
                 sideOffset={5}
               >
                 <div className="space-y-1.5">
-                  {category.prompts.map((prompt, index) => (
-                    <Button
-                      key={index}
-                      variant="ghost"
-                      className={`w-full justify-start text-left whitespace-normal h-auto py-3 hover:bg-opacity-10 text-sm ${colors.text} hover:${colors.bg}`}
-                      onClick={() => {
-                        onPromptSelect(currentIsSpanish ? prompt.es : prompt.en);
-                      }}
-                    >
-                      <span className="line-clamp-2">
-                        {currentIsSpanish ? prompt.es : prompt.en}
-                      </span>
-                    </Button>
-                  ))}
+                  {categoryPromptsList.length > 0 ? (
+                    categoryPromptsList.map((prompt, index) => (
+                      <Button
+                        key={index}
+                        variant="ghost"
+                        className={`w-full justify-start text-left whitespace-normal h-auto py-3 hover:bg-opacity-10 text-sm ${colors.text} hover:${colors.bg}`}
+                        onClick={() => {
+                          onPromptSelect(currentIsSpanish ? prompt.es : prompt.en);
+                        }}
+                      >
+                        <span className="line-clamp-2">
+                          {currentIsSpanish ? prompt.es : prompt.en}
+                        </span>
+                      </Button>
+                    ))
+                  ) : (
+                    <div className="p-3 text-sm text-gray-500 text-center">
+                      Loading prompts...
+                    </div>
+                  )}
                 </div>
               </PopoverContent>
             </Popover>

@@ -386,6 +386,30 @@ export type Database = {
         }
         Relationships: []
       }
+      user_family_context: {
+        Row: {
+          context_data: Json
+          created_at: string | null
+          id: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          context_data?: Json
+          created_at?: string | null
+          id?: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          context_data?: Json
+          created_at?: string | null
+          id?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

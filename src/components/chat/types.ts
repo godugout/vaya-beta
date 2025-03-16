@@ -24,4 +24,15 @@ export interface LocalizedPrompt {
   cultural_context_en: string | null;
   cultural_context_es: string | null;
   active?: boolean;
+  category_name_en?: string;
+  category_name_es?: string;
+}
+
+export interface FamilyContext {
+  ancestralRegion: string;
+  currentLocation: string;
+  culturalIdentity: string;
+  familyElders: string[];
+  traditions: string[];
+  hobbies: string[];
 }

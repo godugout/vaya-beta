@@ -5,28 +5,6 @@ import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-// Mock prompts data
-const mockPrompts: LocalizedPrompt[] = [
-  {
-    id: "1",
-    category_id: "family",
-    prompt_en: "Tell me about a family tradition that's special to you.",
-    prompt_es: "Háblame de una tradición familiar que sea especial para ti.",
-    cultural_context_en: "Family traditions help preserve cultural heritage.",
-    cultural_context_es: "Las tradiciones familiares ayudan a preservar el patrimonio cultural.",
-    active: true
-  },
-  {
-    id: "2",
-    category_id: "childhood",
-    prompt_en: "What's your earliest childhood memory?",
-    prompt_es: "¿Cuál es tu primer recuerdo de la infancia?",
-    cultural_context_en: null,
-    cultural_context_es: null,
-    active: true
-  }
-];
-
 export const useChat = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -39,6 +17,7 @@ export const useChat = () => {
   const [prompts, setPrompts] = useState<LocalizedPrompt[]>([]);
   const [currentPromptIndex, setCurrentPromptIndex] = useState(0);
   const [familyContext, setFamilyContext] = useState<any>(null);
+  const [edition, setEdition] = useState<string>("hanuman"); // Default to Hanuman edition
   const { isSpanish } = useLanguage();
   const { toast } = useToast();
 
@@ -74,6 +53,8 @@ export const useChat = () => {
       
       if (data) {
         setFamilyContext(data.context_data);
+        // Also save to localStorage for quicker access next time
+        localStorage.setItem('familyContextData', JSON.stringify(data.context_data));
       }
     } catch (error) {
       console.error("Error in loadFamilyContext:", error);
@@ -82,24 +63,44 @@ export const useChat = () => {
 
   const fetchPrompts = async () => {
     try {
-      // Try to fetch from Supabase
+      // Fetch from Supabase with edition filter
       const { data, error } = await supabase
         .from('localized_prompts')
-        .select('*')
+        .select('*, prompt_categories(name_en, name_es)')
+        .eq('edition', edition)
         .eq('active', true);
       
       if (error) {
         console.error("Error fetching prompts:", error);
-        // Fall back to mock data
-        setPrompts(mockPrompts);
+        toast({
+          title: "Error",
+          description: "Failed to load story prompts",
+          variant: "destructive",
+        });
         return;
       }
       
       if (data && data.length > 0) {
-        setPrompts(data as LocalizedPrompt[]);
+        // Transform the data to match our LocalizedPrompt type
+        const formattedPrompts = data.map((item: any) => ({
+          id: item.id,
+          category_id: item.category_id,
+          prompt_en: item.prompt_en,
+          prompt_es: item.prompt_es || item.prompt_en,
+          cultural_context_en: item.cultural_context_en,
+          cultural_context_es: item.cultural_context_es,
+          active: item.active,
+          category_name_en: item.prompt_categories?.name_en,
+          category_name_es: item.prompt_categories?.name_es
+        }));
+        
+        setPrompts(formattedPrompts);
       } else {
-        // Fall back to mock data if no prompts found
-        setPrompts(mockPrompts);
+        toast({
+          title: "No prompts found",
+          description: "No prompts available for the selected edition",
+          variant: "destructive",
+        });
       }
     } catch (error) {
       console.error("Error in fetchPrompts:", error);
@@ -108,8 +109,51 @@ export const useChat = () => {
         description: "Failed to load story prompts",
         variant: "destructive",
       });
-      // Fall back to mock data
-      setPrompts(mockPrompts);
+    }
+  };
+
+  const saveFamilyContext = async (contextData: any) => {
+    try {
+      // Save to localStorage
+      localStorage.setItem('familyContextData', JSON.stringify(contextData));
+      setFamilyContext(contextData);
+      
+      // Save to Supabase if user is logged in
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      
+      const { error } = await supabase
+        .from('user_family_context')
+        .upsert({ 
+          user_id: user.id, 
+          context_data: contextData,
+          updated_at: new Date().toISOString()
+        }, { 
+          onConflict: 'user_id' 
+        });
+      
+      if (error) {
+        console.error("Error saving family context:", error);
+        toast({
+          title: "Error",
+          description: "Failed to save your family context",
+          variant: "destructive",
+        });
+        return;
+      }
+      
+      toast({
+        title: "Success",
+        description: "Your family context has been saved",
+        variant: "default",
+      });
+    } catch (error) {
+      console.error("Error in saveFamilyContext:", error);
+      toast({
+        title: "Error",
+        description: "Failed to save your family context",
+        variant: "destructive",
+      });
     }
   };
 
@@ -120,7 +164,7 @@ export const useChat = () => {
     
     // Replace placeholders with actual context data
     if (familyContext.ancestralRegion) {
-      personalizedText = personalizedText.replace(/\[user's heritage\]/g, familyContext.ancestralRegion);
+      personalizedText = personalizedText.replace(/\[user's specific region in India\]/g, familyContext.ancestralRegion);
       personalizedText = personalizedText.replace(/\[ancestral village\/city\]/g, familyContext.ancestralRegion);
     }
     
@@ -144,6 +188,12 @@ export const useChat = () => {
       personalizedText = personalizedText.replace(/\[tradition\]/g, randomTradition);
     }
     
+    // Handle hobbies/interests
+    if (familyContext.hobbies && familyContext.hobbies.length > 0) {
+      const randomHobby = familyContext.hobbies[Math.floor(Math.random() * familyContext.hobbies.length)];
+      personalizedText = personalizedText.replace(/\[hobby\/interest\]/g, randomHobby);
+    }
+    
     return personalizedText;
   };
 
@@ -158,6 +208,7 @@ export const useChat = () => {
     return {
       content: personalizedPrompt,
       context: isSpanish ? prompt.cultural_context_es : prompt.cultural_context_en,
+      category: isSpanish ? prompt.category_name_es : prompt.category_name_en
     };
   };
 
@@ -203,11 +254,20 @@ export const useChat = () => {
     }
   };
 
+  const setHanumanEdition = () => {
+    setEdition("hanuman");
+    fetchPrompts();
+  };
+
   return {
     messages,
     input,
     setInput,
     handleSend,
     handleMorePrompts,
+    familyContext,
+    saveFamilyContext,
+    edition,
+    setHanumanEdition,
   };
 };
