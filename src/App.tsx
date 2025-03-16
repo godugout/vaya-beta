@@ -1,6 +1,6 @@
 
 import { lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { Toaster } from "sonner";
 import { ThemeProvider } from 'next-themes';
 import { MainLayout } from '@/components/layout/MainLayout';
@@ -29,25 +29,23 @@ function App() {
       enableSystem
       disableTransitionOnChange
     >
-      <Router>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/account" element={<Account />} />
-            <Route path="/components" element={<ComponentsDemo />} />
-            <Route path="/design/*" element={<DesignSystem />} />
-            <Route path="/families" element={<Families />} />
-            <Route path="/family/:familyId" element={<FamilyDetail />} />
-            <Route path="/create-family" element={<CreateFamily />} />
-            <Route path="/media-library" element={<MediaLibrary />} />
-            <Route path="/family-capsules" element={<FamilyCapsules />} />
-            <Route path="/memory-lane" element={<MemoryLane />} />
-            <Route path="/memory/:id" element={<MemoryPost />} />
-            <Route path="/sacred-foundation" element={<SacredFoundation />} />
-          </Routes>
-        </Suspense>
-      </Router>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/components" element={<ComponentsDemo />} />
+          <Route path="/design/*" element={<DesignSystem />} />
+          <Route path="/families" element={<Families />} />
+          <Route path="/family/:familyId" element={<FamilyDetail />} />
+          <Route path="/create-family" element={<CreateFamily />} />
+          <Route path="/media-library" element={<MediaLibrary />} />
+          <Route path="/family-capsules" element={<FamilyCapsules />} />
+          <Route path="/memory-lane" element={<MemoryLane />} />
+          <Route path="/memory/:id" element={<MemoryPost />} />
+          <Route path="/sacred-foundation" element={<SacredFoundation />} />
+        </Routes>
+      </Suspense>
       <Toaster position="bottom-right" />
     </ThemeProvider>
   );

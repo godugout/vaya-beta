@@ -8,6 +8,7 @@ import { ThemeProvider } from 'next-themes'
 import { LanguageProvider } from '@/contexts/LanguageContext'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { AnimationProvider } from '@/components/animation/AnimationProvider'
+import { WeddingModeProvider } from '@/components/wedding-mode/WeddingModeProvider'
 
 // Create a client with configuration
 const queryClient = new QueryClient({
@@ -26,7 +27,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
           <LanguageProvider>
             <AnimationProvider>
-              <App />
+              <WeddingModeProvider>
+                <App />
+              </WeddingModeProvider>
             </AnimationProvider>
           </LanguageProvider>
         </ThemeProvider>
