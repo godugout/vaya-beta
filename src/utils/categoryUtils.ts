@@ -18,28 +18,28 @@ import {
   LucideIcon,
   LucideProps
 } from "lucide-react";
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 
 export const getIconComponent = (iconName: string): ReactNode => {
   const iconMap: Record<string, ReactNode> = {
-    "message-square": <MessageSquare className="h-4 w-4" />,
-    "audio-waveform": <AudioWaveform className="h-4 w-4" />,
-    "book-open": <BookOpen className="h-4 w-4" />,
-    "users": <Users className="h-4 w-4" />,
-    "heart-handshake": <HeartHandshake className="h-4 w-4" />,
-    "lightbulb": <Lightbulb className="h-4 w-4" />,
-    "globe": <Globe className="h-4 w-4" />,
-    "heart": <Heart className="h-4 w-4" />,
-    "milestone": <Milestone className="h-4 w-4" />,
-    "user": <User className="h-4 w-4" />,
-    "home": <Home className="h-4 w-4" />,
-    "network": <Network className="h-4 w-4" />,
-    "image": <Image className="h-4 w-4" />,
-    "link": <Link className="h-4 w-4" />,
-    "landmark": <Landmark className="h-4 w-4" />
+    "message-square": React.createElement(MessageSquare, { className: "h-4 w-4" }),
+    "audio-waveform": React.createElement(AudioWaveform, { className: "h-4 w-4" }),
+    "book-open": React.createElement(BookOpen, { className: "h-4 w-4" }),
+    "users": React.createElement(Users, { className: "h-4 w-4" }),
+    "heart-handshake": React.createElement(HeartHandshake, { className: "h-4 w-4" }),
+    "lightbulb": React.createElement(Lightbulb, { className: "h-4 w-4" }),
+    "globe": React.createElement(Globe, { className: "h-4 w-4" }),
+    "heart": React.createElement(Heart, { className: "h-4 w-4" }),
+    "milestone": React.createElement(Milestone, { className: "h-4 w-4" }),
+    "user": React.createElement(User, { className: "h-4 w-4" }),
+    "home": React.createElement(Home, { className: "h-4 w-4" }),
+    "network": React.createElement(Network, { className: "h-4 w-4" }),
+    "image": React.createElement(Image, { className: "h-4 w-4" }),
+    "link": React.createElement(Link, { className: "h-4 w-4" }),
+    "landmark": React.createElement(Landmark, { className: "h-4 w-4" })
   };
   
-  return iconMap[iconName] || <MessageSquare className="h-4 w-4" />;
+  return iconMap[iconName] || React.createElement(MessageSquare, { className: "h-4 w-4" });
 };
 
 export const getCategoryColor = (categoryId: string): string => {
