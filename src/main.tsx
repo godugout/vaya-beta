@@ -1,39 +1,39 @@
 
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
-import App from './App.tsx'
-import './index.css'
-import { ThemeProvider } from 'next-themes'
-import { LanguageProvider } from '@/contexts/LanguageContext'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { AnimationProvider } from '@/components/animation/AnimationProvider'
-import { WeddingModeProvider } from '@/components/wedding-mode/WeddingModeProvider'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import App from "./App.tsx";
+import { Toaster } from "@/components/ui/toaster";
+import { ThemeProvider } from "@/contexts/ThemeContext";
+import { AnimationProvider } from "@/components/animation/AnimationProvider";
+import { LanguageProvider } from "@/contexts/LanguageContext";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-// Create a client with configuration
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 5 * 60 * 1000, // 5 minutes
-      retry: 1,
-    },
-  },
-})
+// Import styles
+import "./styles/index.css";
+import "./styles/animations.css";
+import "./styles/components/cosmic-effects.css";
+import "./styles/components/temple-transitions.css";
+import "./styles/components/mobile-nav.css";
+import "./styles/components/desktop-nav.css";
+import "./styles/components/voice-nav.css";
+import "./styles/components/transitions.css";
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+const queryClient = new QueryClient();
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-          <LanguageProvider>
-            <AnimationProvider>
-              <WeddingModeProvider>
-                <App />
-              </WeddingModeProvider>
-            </AnimationProvider>
-          </LanguageProvider>
+        <ThemeProvider>
+          <AnimationProvider>
+            <LanguageProvider>
+              <App />
+              <Toaster />
+            </LanguageProvider>
+          </AnimationProvider>
         </ThemeProvider>
       </QueryClientProvider>
     </BrowserRouter>
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);

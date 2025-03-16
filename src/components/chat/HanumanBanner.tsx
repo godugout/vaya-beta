@@ -1,8 +1,9 @@
 
 import React from 'react';
-import { Card, CardContent } from '@/components/ui/card';
+import { motion } from 'framer-motion';
+import { Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Heart } from 'lucide-react';
+import { JamnabenCircularGlyph } from '@/components/sacred/JamnabenCircularGlyph';
 
 interface HanumanBannerProps {
   onFamilySettingsClick: () => void;
@@ -10,27 +11,42 @@ interface HanumanBannerProps {
 
 export const HanumanBanner: React.FC<HanumanBannerProps> = ({ onFamilySettingsClick }) => {
   return (
-    <Card className="bg-gradient-to-r from-amber-50 to-amber-100 border-amber-200 mb-6">
-      <CardContent className="p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <div className="bg-amber-500 text-white p-2 rounded-full">
-            <Heart className="h-5 w-5" />
-          </div>
+    <motion.div 
+      className="mb-6 relative overflow-hidden rounded-lg bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-950/40 dark:to-orange-950/30 p-6"
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+    >
+      <div className="absolute inset-0 bg-[url('/lovable-uploads/auspicious-pattern.svg')] opacity-5" />
+      
+      <div className="flex items-center justify-between relative z-10">
+        <div className="flex items-center">
+          <JamnabenCircularGlyph size="md" className="mr-4" />
+          
           <div>
-            <h3 className="font-semibold text-amber-800 font-heading">Hanuman Edition</h3>
-            <p className="text-sm text-amber-700">
-              Culturally relevant prompts for South Asian families
+            <h2 className="text-2xl font-heading text-amber-800 dark:text-amber-300">
+              Hanuman Edition
+            </h2>
+            <p className="text-amber-700/70 dark:text-amber-300/70 max-w-md">
+              Sacred family storytelling, guided by spiritual wisdom and cultural heritage
             </p>
           </div>
         </div>
+        
         <Button 
           variant="outline" 
-          className="border-amber-400 hover:bg-amber-200 text-amber-800"
+          size="sm" 
           onClick={onFamilySettingsClick}
+          className="border-amber-200 text-amber-800 hover:bg-amber-100 dark:border-amber-800 dark:text-amber-300 dark:hover:bg-amber-900/50"
         >
-          Personalize Your Experience
+          <Settings className="h-4 w-4 mr-2" />
+          Family Context
         </Button>
-      </CardContent>
-    </Card>
+      </div>
+      
+      <div className="mt-4 p-3 bg-amber-100/50 dark:bg-amber-900/20 rounded border border-amber-200 dark:border-amber-800/30 text-sm text-amber-800 dark:text-amber-300/90">
+        <p className="font-medium">✨ Ask me about your family stories, traditions, or to help record new memories.</p>
+      </div>
+    </motion.div>
   );
 };
