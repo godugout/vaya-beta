@@ -9,12 +9,17 @@ import { supabase } from './integrations/supabase/client';
 import { toast } from "./hooks/use-toast";
 import { Toaster } from "./components/ui/toaster";
 import { getTable } from './integrations/supabase/client';
+import { MainLayout } from './components/layout/MainLayout';
 
-// Add the import for the new FamilySetupPage
+// Import pages
 import FamilySetupPage from "./pages/FamilySetupPage";
+import Memories from './pages/Memories';
+import Account from './pages/Account';
+import Auth from './pages/Auth';
 
 function App() {
   const [session, setSession] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -27,16 +32,12 @@ function App() {
   }, []);
 
   return (
-    <main className="container relative mx-auto md:px-6 py-12 grow">
+    <MainLayout>
       <Routes>
         <Route path="/" element={<div>Home Page</div>} />
-        <Route path="/auth" element={
-          <div className="w-full h-full flex justify-center items-center">
-            <p>Authentication Page</p>
-          </div>
-        } />
-        <Route path="/account" element={<div>Account Page</div>} />
-        <Route path="/memories" element={<div>Memories Page</div>} />
+        <Route path="/auth" element={<Auth />} />
+        <Route path="/account" element={<Account />} />
+        <Route path="/memories" element={<Memories />} />
         <Route path="/family/:familyId" element={<div>Family Page</div>} />
         <Route path="/invite-member/:familyId" element={<div>Invite Member Page</div>} />
         <Route path="/terms" element={<div>Terms of Service</div>} />
@@ -48,12 +49,10 @@ function App() {
         <Route path="/family-setup" element={<div>Family Setup Page</div>} />
         <Route path="/tree/:familyId" element={<div>Family Tree Builder</div>} />
         <Route path="/stories" element={<div>Stories Page</div>} />
-
-        {/* Route to the new FamilySetupPage */}
         <Route path="/setup" element={<FamilySetupPage />} />
       </Routes>
       <Toaster />
-    </main>
+    </MainLayout>
   );
 }
 
