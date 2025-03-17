@@ -55,11 +55,15 @@ export const useMediaAssets = (
         }
         
         // Process the data to add uploader name
-        const processedData: MediaAsset[] = data?.map(item => ({
-          ...item,
-          // The profiles field from the query is an object with full_name, not an array
-          uploader_name: item.profiles ? item.profiles.full_name : 'Unknown user'
-        })) || [];
+        const processedData: MediaAsset[] = data?.map(item => {
+          // The profiles object from the join query is an object, not an array
+          const uploaderName = item.profiles ? item.profiles.full_name : 'Unknown user';
+          
+          return {
+            ...item,
+            uploader_name: uploaderName
+          };
+        }) || [];
         
         setAssets(processedData);
       } catch (error) {
