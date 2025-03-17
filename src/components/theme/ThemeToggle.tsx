@@ -1,10 +1,10 @@
 
 import React from 'react';
-import { useTheme } from 'next-themes';
 import { Moon, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { cn } from '@/lib/utils';
+import { useTheme } from '@/contexts/ThemeContext';
 
 interface ThemeToggleProps {
   variant?: 'icon' | 'switch' | 'text';
@@ -15,18 +15,14 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
   variant = 'icon',
   className 
 }) => {
-  const { theme, setTheme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
   
-  const toggleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
-  };
-
   if (variant === 'switch') {
     return (
       <div className={cn("flex items-center gap-2", className)}>
         <Moon size={16} className="text-muted-foreground" />
         <Switch 
-          checked={theme !== 'light'}
+          checked={theme === 'dark'}
           onCheckedChange={toggleTheme}
           aria-label="Toggle dark mode"
         />

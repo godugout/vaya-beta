@@ -7,8 +7,6 @@ import {
 } from 'react-router-dom';
 import { supabase } from './integrations/supabase/client';
 import { toast } from "./hooks/use-toast";
-import { Toaster } from "./components/ui/toaster";
-import { getTable } from './integrations/supabase/client';
 import { MainLayout } from './components/layout/MainLayout';
 
 // Import pages
@@ -16,6 +14,7 @@ import FamilySetupPage from "./pages/FamilySetupPage";
 import Memories from './pages/Memories';
 import Account from './pages/Account';
 import Auth from './pages/Auth';
+import Settings from './pages/Settings';
 
 function App() {
   const [session, setSession] = useState(null);
@@ -38,6 +37,7 @@ function App() {
         <Route path="/auth" element={<Auth />} />
         <Route path="/account" element={<Account />} />
         <Route path="/memories" element={<Memories />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="/family/:familyId" element={<div>Family Page</div>} />
         <Route path="/invite-member/:familyId" element={<div>Invite Member Page</div>} />
         <Route path="/terms" element={<div>Terms of Service</div>} />

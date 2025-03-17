@@ -6,6 +6,7 @@ import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { Toaster } from "@/components/ui/toaster";
 import { useLocation } from 'react-router-dom';
 import { useActivityTracking, ActivityTypes } from '@/hooks/useActivityTracking';
+import { useTheme } from '@/contexts/ThemeContext';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -15,6 +16,7 @@ interface MainLayoutProps {
 export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
   const location = useLocation();
   const { trackActivity } = useActivityTracking();
+  const { theme } = useTheme();
   
   // Track page views
   React.useEffect(() => {
@@ -29,13 +31,17 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
   useEffect(() => {
     document.body.classList.add('star-bg', 'nebula-effect');
     
+    // Apply theme class to body
+    document.body.classList.remove('light', 'dark');
+    document.body.classList.add(theme);
+    
     return () => {
-      document.body.classList.remove('star-bg', 'nebula-effect');
+      document.body.classList.remove('star-bg', 'nebula-effect', 'light', 'dark');
     };
-  }, []);
+  }, [theme]);
   
   return (
-    <div className="flex flex-col min-h-screen bg-black text-white">
+    <div className={`flex flex-col min-h-screen ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
       {/* Fixed header area with cosmic theme - position fixed */}
       <div className="cosmic-nav fixed top-0 left-0 right-0 z-[100]">
         <MainNav />
