@@ -3,13 +3,17 @@ import { useState } from "react";
 import { usePromptFetching } from "@/hooks/usePromptFetching";
 import { useFamilyContextManagement } from "@/hooks/useFamilyContextManagement";
 import { personalizePrompt } from "@/utils/promptPersonalization";
+import { Message } from "../types";
 
-export const usePromptManager = (setMessages: React.Dispatch<React.SetStateAction<any[]>>) => {
+export const usePromptManager = () => {
   const [edition, setEdition] = useState<string>("hanuman"); // Default to Hanuman edition
   const { prompts, fetchPrompts, getNextPrompt } = usePromptFetching(edition);
   const { familyContext } = useFamilyContextManagement();
 
-  const handleMorePrompts = (isSpanish: boolean = false) => {
+  const handleMorePrompts = (
+    setMessages: React.Dispatch<React.SetStateAction<Message[]>>,
+    isSpanish: boolean = false
+  ) => {
     const nextPrompt = getNextPrompt(isSpanish);
     if (nextPrompt) {
       setMessages((prev) => [
