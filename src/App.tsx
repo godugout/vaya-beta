@@ -51,7 +51,6 @@ function App() {
         <Route path="/stories" element={<div>Stories Page</div>} />
         <Route path="/setup" element={<FamilySetupPage />} />
       </Routes>
-      <Toaster />
     </MainLayout>
   );
 }

@@ -36,12 +36,13 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
   
   return (
     <div className="flex flex-col min-h-screen bg-black text-white">
-      {/* Use MainNav for all pages with cosmic theme */}
-      <div className="cosmic-nav">
+      {/* Fixed header area with cosmic theme - position fixed */}
+      <div className="cosmic-nav fixed top-0 left-0 right-0 z-[100]">
         <MainNav />
       </div>
       
-      <main className="flex-grow pt-32 relative z-content container mx-auto">
+      {/* Content area with proper spacing to avoid overlap with fixed header */}
+      <main className={`flex-grow mt-48 sm:mt-40 relative z-content container mx-auto px-4 ${className}`}>
         <ErrorBoundary>
           {children}
         </ErrorBoundary>
