@@ -1,4 +1,3 @@
-
 import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Toaster } from "sonner";
@@ -23,6 +22,7 @@ const SacredFoundation = lazy(() => import('@/pages/SacredFoundation'));
 const ShareStoriesPage = lazy(() => import('@/pages/ShareStories'));
 const AnjanaeyaVault = lazy(() => import('@/pages/AnjanaeyaVault'));
 const HanumanEdition = lazy(() => import('@/pages/HanumanEdition'));
+const MediaLibraryEnhanced = lazy(() => import('@/pages/MediaLibraryEnhanced'));
 
 function App() {
   return (
@@ -49,6 +49,7 @@ function App() {
             <Route path="/create-family" element={<CreateFamily />} />
             <Route path="/setup" element={<InitialSetup />} />
             <Route path="/media-library" element={<MediaLibrary />} />
+            <Route path="/media-library-enhanced" element={<MediaLibraryEnhanced />} />
             <Route path="/family-capsules" element={<FamilyCapsules />} />
             <Route path="/memory-lane" element={<MemoryLane />} />
             <Route path="/memory/:id" element={<MemoryPost />} />
