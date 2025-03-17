@@ -84,7 +84,7 @@ export const MediaGallery = ({
         }
         
         // Process the data to add uploader name
-        const processedData = data?.map(item => ({
+        const processedData: MediaAsset[] = data?.map(item => ({
           ...item,
           // Fixed: properly access full_name from the profiles object
           uploader_name: item.profiles?.full_name || 'Unknown user'
