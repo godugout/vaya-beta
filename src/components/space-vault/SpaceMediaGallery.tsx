@@ -38,7 +38,10 @@ export const SpaceMediaGallery: React.FC = () => {
       <Breadcrumb className="mb-6">
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbLink as={Link} to="/"><Home className="h-4 w-4 mr-1" /> Home</BreadcrumbLink>
+            {/* Fix: Replace BreadcrumbLink with as={Link} prop with direct Link component */}
+            <Link to="/" className="flex items-center transition-colors hover:text-foreground">
+              <Home className="h-4 w-4 mr-1" /> Home
+            </Link>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
