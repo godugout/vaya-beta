@@ -41,7 +41,7 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
         <MainNav />
       </div>
       
-      <main className="flex-grow mt-20 relative z-content">
+      <main className="flex-grow pt-32 relative z-content">
         <ErrorBoundary>
           {children}
         </ErrorBoundary>
