@@ -9,6 +9,8 @@ import {
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 interface ChatMessageProps {
   message: Message;
@@ -20,7 +22,12 @@ const ChatMessage = ({ message, isSpanish }: ChatMessageProps) => {
   const [isMessageSpanish, setIsMessageSpanish] = useState(isSpanish);
 
   return (
-    <div className={`flex ${isAI ? "justify-start" : "justify-end"} items-end gap-2 group mb-4`}>
+    <motion.div 
+      className={`flex ${isAI ? "justify-start" : "justify-end"} items-end gap-2 group mb-4`}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+    >
       {/* Translation toggle button - appears on hover */}
       <div className={`opacity-0 group-hover:opacity-100 transition-opacity ${isAI ? "order-first" : "order-last"}`}>
         <TooltipProvider>
@@ -43,11 +50,12 @@ const ChatMessage = ({ message, isSpanish }: ChatMessageProps) => {
       </div>
 
       <div
-        className={`max-w-[80%] rounded-2xl p-4 ${
+        className={cn(
+          "max-w-[80%] rounded-2xl p-4 shadow-sm",
           isAI
-            ? "bg-greystone-ui-gray text-greystone-green"
-            : "bg-lovable-blue text-white"
-        } shadow-sm animate-fadeIn`}
+            ? "bg-gradient-to-br from-greystone-ui-gray to-greystone-ui-gray/90 text-greystone-green border-l-2 border-lovable-blue/40"
+            : "bg-gradient-to-br from-lovable-blue to-blue-600 text-white border-r-2 border-blue-400/40"
+        )}
       >
         <div className="text-sm md:text-base">
           {message.content}
@@ -73,7 +81,7 @@ const ChatMessage = ({ message, isSpanish }: ChatMessageProps) => {
           </div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

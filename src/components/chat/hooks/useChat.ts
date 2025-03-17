@@ -6,8 +6,8 @@ import { useFamilyContextManagement } from "@/hooks/useFamilyContextManagement";
 
 export const useChat = () => {
   const { input, setInput } = useInput();
+  const { messages, setMessages, handleSendMessage } = useMessages();
   const { edition, setHanumanEdition, handleMorePrompts } = usePromptManager(setMessages);
-  const { messages, setMessages, handleSendMessage } = useMessages(edition);
   const { familyContext, saveFamilyContext } = useFamilyContextManagement();
 
   const handleSend = (messageContent?: { content: string; attachments?: { type: "audio" | "image"; url: string }[] }, isSpanish: boolean = false) => {

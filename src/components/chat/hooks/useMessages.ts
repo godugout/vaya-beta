@@ -6,7 +6,7 @@ import { usePromptFetching } from "@/hooks/usePromptFetching";
 import { useFamilyContextManagement } from "@/hooks/useFamilyContextManagement";
 import { personalizePrompt } from "@/utils/promptPersonalization";
 
-export const useMessages = (edition: string) => {
+export const useMessages = (edition: string = "hanuman") => {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
