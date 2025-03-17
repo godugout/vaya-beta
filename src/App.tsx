@@ -1,66 +1,89 @@
-import { lazy, Suspense } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import { Toaster } from "sonner";
-import { ThemeProvider } from 'next-themes';
-import './App.css';
+import { useEffect, useState } from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useNavigate,
+} from 'react-router-dom';
+import { ThemeProvider } from './components/theme-provider';
+import { SiteHeader } from './components/header/site-header';
+import { SiteFooter } from './components/footer/site-footer';
+import { Auth } from '@supabase/auth-ui-react';
+import { ThemeSupa } from '@supabase/auth-ui-shared';
+import { supabase } from './integrations/supabase/client';
+import { Account } from './components/account/Account';
+import { Home } from './pages/Home';
+import { Memories } from './pages/Memories';
+import { Family } from './pages/Family';
+import { InviteMember } from './pages/InviteMember';
+import { OnboardingController } from './components/onboarding/OnboardingController';
+import { TermsOfService } from './pages/TermsOfService';
+import { PrivacyPolicy } from './pages/PrivacyPolicy';
+import { Contact } from './pages/Contact';
+import { About } from './pages/About';
+import { MemoryLane } from './pages/MemoryLane';
+import { Story } from './pages/Story';
+import { DualPaneRecordingSection } from './components/stories/DualPaneRecordingSection';
+import { FamilySetup } from './pages/FamilySetup';
+import FamilyTreeBuilder from './components/family/tree/FamilyTreeBuilder';
+import { getTable } from './integrations/supabase/client';
+import { Database } from './types/supabase';
+import { Toast } from './components/ui/use-toast';
 
-// Lazy load pages
-const Index = lazy(() => import('@/pages/Index'));
-const Auth = lazy(() => import('@/pages/Auth'));
-const ComponentsDemo = lazy(() => import('@/pages/ComponentsDemo'));
-const DesignSystem = lazy(() => import('@/pages/DesignSystem'));
-const Account = lazy(() => import('@/pages/Account'));
-const Families = lazy(() => import('@/pages/Families'));
-const FamilyDetail = lazy(() => import('@/pages/FamilyDetail'));
-const CreateFamily = lazy(() => import('@/pages/CreateFamily'));
-const InitialSetup = lazy(() => import('@/pages/InitialSetup'));
-const MediaLibrary = lazy(() => import('@/pages/MediaLibrary'));
-const FamilyCapsules = lazy(() => import('@/pages/FamilyCapsules'));
-const MemoryLane = lazy(() => import('@/pages/MemoryLane'));
-const MemoryPost = lazy(() => import('@/pages/MemoryPost'));
-const SacredFoundation = lazy(() => import('@/pages/SacredFoundation'));
-const ShareStoriesPage = lazy(() => import('@/pages/ShareStories'));
-const AnjanaeyaVault = lazy(() => import('@/pages/AnjanaeyaVault'));
-const HanumanEdition = lazy(() => import('@/pages/HanumanEdition'));
-const MediaLibraryEnhanced = lazy(() => import('@/pages/MediaLibraryEnhanced'));
+// Add the import for the new FamilySetupPage
+import FamilySetupPage from "./pages/FamilySetupPage";
 
 function App() {
+  const [session, setSession] = useState(null);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+  }, []);
+
   return (
-    <ThemeProvider
-      attribute="class"
-      defaultTheme="dark"
-      enableSystem={true}
-      disableTransitionOnChange={false}
-    >
-      <div className="app-container">
-        <Suspense fallback={
-          <div className="p-8 flex justify-center items-center min-h-screen">
-            <div className="animate-pulse text-white">Loading...</div>
-          </div>
-        }>
+    <ThemeProvider defaultTheme="system" storageKey="vite-react-supabase-theme">
+      <Router>
+        <SiteHeader session={session} />
+        <main className="container relative mx-auto md:px-6 py-12 grow">
           <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/account" element={<Account />} />
-            <Route path="/components" element={<ComponentsDemo />} />
-            <Route path="/design/*" element={<DesignSystem />} />
-            <Route path="/families" element={<Families />} />
-            <Route path="/family/:familyId" element={<FamilyDetail />} />
-            <Route path="/create-family" element={<CreateFamily />} />
-            <Route path="/setup" element={<InitialSetup />} />
-            <Route path="/media-library" element={<MediaLibrary />} />
-            <Route path="/media-library-enhanced" element={<MediaLibraryEnhanced />} />
-            <Route path="/family-capsules" element={<FamilyCapsules />} />
+            <Route path="/" element={<Home session={session} />} />
+            <Route path="/auth" element={
+              <div className="w-full h-full flex justify-center items-center">
+                <Auth
+                  supabaseClient={supabase}
+                  appearance={{ theme: ThemeSupa }}
+                  providers={['google', 'github']}
+                />
+              </div>
+            } />
+            <Route path="/account" element={<Account session={session} />} />
+            <Route path="/memories" element={<Memories session={session} />} />
+            <Route path="/family/:familyId" element={<Family session={session} />} />
+            <Route path="/invite-member/:familyId" element={<InviteMember session={session} />} />
+            <Route path="/terms" element={<TermsOfService />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/about" element={<About />} />
             <Route path="/memory-lane" element={<MemoryLane />} />
-            <Route path="/memory/:id" element={<MemoryPost />} />
-            <Route path="/sacred-foundation" element={<SacredFoundation />} />
-            <Route path="/share-stories" element={<ShareStoriesPage />} />
-            <Route path="/anjanaeya-vault" element={<AnjanaeyaVault />} />
-            <Route path="/hanuman-edition" element={<HanumanEdition />} />
+            <Route path="/story/:storyId" element={<Story />} />
+            <Route path="/family-setup" element={<FamilySetup />} />
+            <Route path="/tree/:familyId" element={<FamilyTreeBuilder familyId="your_family_id" />} />
+            <Route path="/stories" element={<DualPaneRecordingSection />} />
+
+            {/* Route to the new FamilySetupPage */}
+            <Route path="/setup" element={<FamilySetupPage />} />
           </Routes>
-        </Suspense>
-        <Toaster position="bottom-right" closeButton richColors />
-      </div>
+        </main>
+        <SiteFooter />
+      </Router>
+      <OnboardingController />
+      <Toast/>
     </ThemeProvider>
   );
 }

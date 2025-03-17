@@ -11,14 +11,20 @@ import { useToast } from "@/components/ui/use-toast";
 
 export interface InitialSetupFormProps {
   onSubmit?: (familyId: string) => void;
+  defaultSecretWord?: string;
+  showCard?: boolean;
 }
 
-export function InitialSetupForm({ onSubmit }: InitialSetupFormProps) {
+export function InitialSetupForm({ 
+  onSubmit, 
+  defaultSecretWord = "", 
+  showCard = true 
+}: InitialSetupFormProps) {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [familyName, setFamilyName] = useState("");
   const [familyDescription, setFamilyDescription] = useState("");
-  const [secretWord, setSecretWord] = useState("");
+  const [secretWord, setSecretWord] = useState(defaultSecretWord);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -105,6 +111,60 @@ export function InitialSetupForm({ onSubmit }: InitialSetupFormProps) {
     }
   };
 
+  const formContent = (
+    <form onSubmit={handleSubmit}>
+      <div className="space-y-4">
+        <div className="space-y-2">
+          <Label htmlFor="family-name">Family Name</Label>
+          <Input
+            id="family-name"
+            placeholder="e.g., The Smith Family"
+            value={familyName}
+            onChange={(e) => setFamilyName(e.target.value)}
+            required
+          />
+        </div>
+        
+        <div className="space-y-2">
+          <Label htmlFor="family-description">Description (Optional)</Label>
+          <Textarea
+            id="family-description"
+            placeholder="Tell us a bit about your family..."
+            value={familyDescription}
+            onChange={(e) => setFamilyDescription(e.target.value)}
+            rows={3}
+          />
+        </div>
+        
+        <div className="space-y-2">
+          <Label htmlFor="secret-word">Family Secret Word</Label>
+          <Input
+            id="secret-word"
+            placeholder="Create a memorable word or phrase"
+            value={secretWord}
+            onChange={(e) => setSecretWord(e.target.value)}
+            required
+          />
+          <p className="text-xs text-gray-500">
+            This secret word will be used by family members to join. Choose something memorable that all family members would know.
+          </p>
+        </div>
+        
+        <Button
+          type="submit"
+          className="w-full"
+          disabled={loading}
+        >
+          {loading ? "Creating..." : "Create Family"}
+        </Button>
+      </div>
+    </form>
+  );
+
+  if (!showCard) {
+    return formContent;
+  }
+
   return (
     <Card>
       <CardHeader>
@@ -113,55 +173,9 @@ export function InitialSetupForm({ onSubmit }: InitialSetupFormProps) {
           Set up your family space and create the first secret word that will allow family members to join.
         </CardDescription>
       </CardHeader>
-      <form onSubmit={handleSubmit}>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="family-name">Family Name</Label>
-            <Input
-              id="family-name"
-              placeholder="e.g., The Smith Family"
-              value={familyName}
-              onChange={(e) => setFamilyName(e.target.value)}
-              required
-            />
-          </div>
-          
-          <div className="space-y-2">
-            <Label htmlFor="family-description">Description (Optional)</Label>
-            <Textarea
-              id="family-description"
-              placeholder="Tell us a bit about your family..."
-              value={familyDescription}
-              onChange={(e) => setFamilyDescription(e.target.value)}
-              rows={3}
-            />
-          </div>
-          
-          <div className="space-y-2">
-            <Label htmlFor="secret-word">Family Secret Word</Label>
-            <Input
-              id="secret-word"
-              placeholder="Create a memorable word or phrase"
-              value={secretWord}
-              onChange={(e) => setSecretWord(e.target.value)}
-              required
-            />
-            <p className="text-xs text-gray-500">
-              This secret word will be used by family members to join. Choose something memorable that all family members would know.
-            </p>
-          </div>
-        </CardContent>
-        
-        <CardFooter>
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={loading}
-          >
-            {loading ? "Creating..." : "Create Family"}
-          </Button>
-        </CardFooter>
-      </form>
+      <CardContent>
+        {formContent}
+      </CardContent>
     </Card>
   );
 }
