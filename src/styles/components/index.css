@@ -13,3 +13,8 @@
 @import './backgrounds.css';
 @import './placeholders.css';
 @import './dark-mode.css';
+
+/* Theme specific styles */
+@import './space-vault.css';
+@import './ambalal-theme.css';
+@import './dispatch-theme.css';

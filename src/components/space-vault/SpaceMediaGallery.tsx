@@ -33,7 +33,7 @@ export const SpaceMediaGallery: React.FC = () => {
   ];
 
   return (
-    <div className="container mx-auto px-4 py-6">
+    <div className="container mx-auto px-4 py-6 anjaneya-bg">
       {/* Custom breadcrumb navigation */}
       <Breadcrumb className="mb-6">
         <BreadcrumbList>
@@ -55,7 +55,7 @@ export const SpaceMediaGallery: React.FC = () => {
       {/* Page header */}
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-heading font-bold text-gradient-cosmic">
-          Family Media Vault
+          Anjaneya Media Vault
         </h1>
       </div>
       
@@ -69,7 +69,7 @@ export const SpaceMediaGallery: React.FC = () => {
         {mediaItems.map((item) => (
           <motion.div 
             key={item.id}
-            className="bg-space-ui-surface rounded-lg overflow-hidden border border-space-ui-border transition-all hover:border-space-ui-accent hover:shadow-md hover:shadow-space-ui-accent/20"
+            className="anjaneya-card hover:anjaneya-glow"
             variants={itemVariants}
             whileHover={{ y: -5, transition: { duration: 0.2 } }}
           >

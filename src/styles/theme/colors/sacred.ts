@@ -1,102 +1,92 @@
 
-// Sacred color scheme for Vaya + Hanuman Edition
+// Define the Ambalal/Sacred theme colors
 
 export const sacredColors = {
-  // Primary Sacred Colors
+  // Primary brand colors
   primary: {
     saffron: {
-      DEFAULT: '#FF7A00',
-      50: '#FFF3E6',
-      100: '#FFE0C0',
-      200: '#FFC999',
-      300: '#FFB273',
-      400: '#FF954C',
-      500: '#FF7A00',
-      600: '#E06600',
-      700: '#B35000',
-      800: '#803900',
-      900: '#4D2200',
+      50: "#FFF7E6",
+      100: "#FFEABD",
+      200: "#FFD78F",
+      400: "#FFBA57",
+      DEFAULT: "#F59E0B", // Main saffron
+      600: "#D97706",
+      800: "#92400E",
+      dark: "#92400E",
+      light: "#FFEABD"
     },
     teal: {
-      DEFAULT: '#1E9C95',
-      50: '#E6F6F5',
-      100: '#C0ECE9',
-      200: '#99DFDC',
-      300: '#73D1CE',
-      400: '#4DC4BF',
-      500: '#1E9C95',
-      600: '#17827C',
-      700: '#106763',
-      800: '#094C49',
-      900: '#032F2D',
+      50: "#E6FFFA",
+      100: "#B3F5EC",
+      200: "#81E6D9",
+      400: "#4FD1C5",
+      DEFAULT: "#0D9488", // Main teal
+      600: "#047481",
+      800: "#05505C",
+      dark: "#05505C",
+      light: "#B3F5EC"
     },
     yellow: {
-      DEFAULT: '#FFDD59',
-      50: '#FFFBEB',
-      100: '#FFF5C4',
-      200: '#FFEF9E',
-      300: '#FFE978',
-      400: '#FFE359',
-      500: '#FFDD59',
-      600: '#E0C03B',
-      700: '#B3982F',
-      800: '#867023',
-      900: '#594C17',
+      50: "#FFFBEB",
+      100: "#FEF3C7",
+      200: "#FDE68A", 
+      400: "#FBBF24",
+      DEFAULT: "#F59E0B", // Main yellow
+      600: "#D97706",
+      800: "#92400E",
+      dark: "#92400E",
+      light: "#FEF3C7"
     },
     green: {
-      DEFAULT: '#2ECC71',
-      50: '#EBFAF1',
-      100: '#CFF2DA',
-      200: '#A3E9BC',
-      300: '#77DF9E',
-      400: '#4BD680',
-      500: '#2ECC71',
-      600: '#27AD5F',
-      700: '#1F8A4C',
-      800: '#186738',
-      900: '#104425',
-    },
+      50: "#ECFDF5",
+      100: "#D1FAE5",
+      200: "#A7F3D0",
+      400: "#34D399",
+      DEFAULT: "#059669", // Main green
+      600: "#047857",
+      800: "#065F46",
+      dark: "#065F46",
+      light: "#D1FAE5"
+    }
   },
   
-  // Earth Elements
+  // Earth element colors
   earth: {
-    brown: {
-      DEFAULT: '#8D6E63',
-      light: '#A18C83',
-      dark: '#725756',
+    clay: {
+      light: "#DFC2A6",
+      DEFAULT: "#C4956A",
+      dark: "#A97144"
     },
-    gray: {
-      DEFAULT: '#7F8C8D',
-      light: '#A3AEB0',
-      dark: '#5F6A6A',
+    soil: {
+      light: "#9C6F44",
+      DEFAULT: "#815C39",
+      dark: "#5F432A"
     },
-    terracotta: {
-      DEFAULT: '#E74C3C',
-      light: '#F1796A',
-      dark: '#BF382C',
+    sand: {
+      light: "#F0D6A8",
+      DEFAULT: "#E6C788",
+      dark: "#D2BF6E"
     },
-    forest: {
-      DEFAULT: '#1E392A',
-      light: '#2D543F',
-      dark: '#112118',
-    },
+    stone: {
+      light: "#B7B7A4",
+      DEFAULT: "#A5A58D",
+      dark: "#6B705C"
+    }
   },
   
   // Neutrals
   neutral: {
-    parchment: '#F5EFE6',
-    sandstone: '#E6D7B9',
-    charcoal: '#2D3436',
+    light: "#FAF9F7",
+    medium: "#E8E6E1",
+    dark: "#6B6B6B"
   },
   
-  // Gradients
+  // Gradient combinations
   gradients: {
-    devotion: 'linear-gradient(135deg, #FF7A00 0%, #FF954C 100%)',
-    flow: 'linear-gradient(135deg, #1E9C95 0%, #4DC4BF 100%)',
-    nurture: 'linear-gradient(135deg, #FFDD59 0%, #FFE359 100%)',
-    growth: 'linear-gradient(135deg, #2ECC71 0%, #4BD680 100%)',
-    earth: 'linear-gradient(135deg, #8D6E63 0%, #A18C83 100%)',
-    spiritual: 'linear-gradient(135deg, #FF7A00 0%, #FFDD59 100%)',
-    nature: 'linear-gradient(135deg, #1E9C95 0%, #2ECC71 100%)',
-  },
+    sunrise: "linear-gradient(135deg, #F59E0B 0%, #D97706 100%)",
+    forest: "linear-gradient(135deg, #059669 0%, #065F46 100%)",
+    water: "linear-gradient(135deg, #0D9488 0%, #047481 100%)",
+    earth: "linear-gradient(135deg, #C4956A 0%, #A97144 100%)",
+    mantra: "linear-gradient(135deg, #F59E0B 0%, #0D9488 100%)",
+  }
 };
