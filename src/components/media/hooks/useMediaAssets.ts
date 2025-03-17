@@ -57,7 +57,10 @@ export const useMediaAssets = (
         // Process the data to add uploader name
         const processedData: MediaAsset[] = data?.map(item => {
           // Extract uploader name from profiles object
-          const uploaderName = item.profiles ? item.profiles.full_name : 'Unknown user';
+          // Supabase returns this as an object, not an array
+          const uploaderName = item.profiles && typeof item.profiles === 'object' && 'full_name' in item.profiles
+            ? item.profiles.full_name
+            : 'Unknown user';
           
           // Create a clean MediaAsset object without the profiles property
           const asset: MediaAsset = {

@@ -22,9 +22,7 @@ export interface MediaItemDetail {
   }[];
   uploader_id: string | null;
   uploader_name?: string;
-  profiles?: {
-    full_name: string;
-  } | null;
+  // Removed profiles from the interface since it's only used internally
 }
 
 export const useMediaDetail = (id: string) => {
@@ -59,11 +57,22 @@ export const useMediaDetail = (id: string) => {
         if (error) throw error;
         
         // Extract uploader name from profiles object
+        // Supabase returns this as an object, not an array
         const uploaderName = data.profiles ? data.profiles.full_name : 'Unknown user';
         
-        // Format the data
+        // Format the data, omitting the profiles property which is not part of our interface
         setMediaItem({
-          ...data,
+          id: data.id,
+          title: data.title,
+          description: data.description,
+          file_path: data.file_path,
+          file_type: data.file_type,
+          file_size: data.file_size,
+          original_filename: data.original_filename,
+          created_at: data.created_at,
+          tags: data.tags || [],
+          annotations: data.annotations || [],
+          uploader_id: data.uploader_id,
           uploader_name: uploaderName
         });
       } catch (error) {

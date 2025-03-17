@@ -10,9 +10,7 @@ export interface MediaAsset {
   annotations: any[];
   uploader_id: string | null;
   uploader_name?: string;
-  profiles?: {
-    full_name: string;
-  } | null;
+  // We don't include profiles in the interface since it's only used internally
 }
 
 export interface MediaGalleryProps {
