@@ -12,7 +12,7 @@ export interface MediaAsset {
   uploader_name?: string;
   profiles?: {
     full_name: string;
-  };
+  } | null;
 }
 
 export interface MediaGalleryProps {

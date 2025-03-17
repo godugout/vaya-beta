@@ -56,13 +56,24 @@ export const useMediaAssets = (
         
         // Process the data to add uploader name
         const processedData: MediaAsset[] = data?.map(item => {
-          // The profiles object from the join query is an object, not an array
+          // Extract uploader name from profiles object
           const uploaderName = item.profiles ? item.profiles.full_name : 'Unknown user';
           
-          return {
-            ...item,
+          // Create a clean MediaAsset object without the profiles property
+          const asset: MediaAsset = {
+            id: item.id,
+            title: item.title,
+            description: item.description,
+            file_path: item.file_path,
+            file_type: item.file_type,
+            created_at: item.created_at,
+            tags: item.tags || [],
+            annotations: item.annotations || [],
+            uploader_id: item.uploader_id,
             uploader_name: uploaderName
           };
+          
+          return asset;
         }) || [];
         
         setAssets(processedData);

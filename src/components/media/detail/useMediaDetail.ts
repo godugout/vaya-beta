@@ -22,6 +22,9 @@ export interface MediaItemDetail {
   }[];
   uploader_id: string | null;
   uploader_name?: string;
+  profiles?: {
+    full_name: string;
+  } | null;
 }
 
 export const useMediaDetail = (id: string) => {
@@ -55,8 +58,7 @@ export const useMediaDetail = (id: string) => {
         
         if (error) throw error;
         
-        // Properly handle the profiles data structure
-        // The profiles property from the query will be an object, not an array
+        // Extract uploader name from profiles object
         const uploaderName = data.profiles ? data.profiles.full_name : 'Unknown user';
         
         // Format the data
