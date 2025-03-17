@@ -55,11 +55,13 @@ export const useMediaDetail = (id: string) => {
         
         if (error) throw error;
         
+        // Properly handle the profiles data structure
+        const uploaderName = data.profiles ? data.profiles.full_name : 'Unknown user';
+        
         // Format the data
         setMediaItem({
           ...data,
-          // Properly access full_name from the profiles object
-          uploader_name: data.profiles?.full_name || 'Unknown user'
+          uploader_name: uploaderName
         });
       } catch (error) {
         console.error('Error fetching media item:', error);
