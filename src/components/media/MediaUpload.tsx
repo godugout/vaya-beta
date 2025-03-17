@@ -13,13 +13,15 @@ interface MediaUploadProps {
   maxFileSize?: number; // in MB
   allowedFileTypes?: string[];
   multiple?: boolean;
+  familyId?: string; // Add familyId prop
 }
 
 export const MediaUpload = ({
   onUploadComplete,
   maxFileSize = 50,
   allowedFileTypes = ['image/*'],
-  multiple = false
+  multiple = false,
+  familyId, // Add familyId to the props
 }: MediaUploadProps) => {
   const [files, setFiles] = useState<File[]>([]);
   const [uploading, setUploading] = useState(false);
@@ -186,7 +188,8 @@ export const MediaUpload = ({
             file_size: file.size,
             original_filename: file.name,
             tags: tags[i] || [],
-            annotations: []
+            annotations: [],
+            family_id: familyId || null, // Use the familyId prop if provided
           });
         
         if (insertError) {

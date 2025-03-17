@@ -5,11 +5,13 @@ import { cn } from "@/lib/utils";
 interface StepsContextValue {
   activeStep: number;
   orientation: 'horizontal' | 'vertical';
+  children?: React.ReactNode; // Add the children property to the interface
 }
 
 const StepsContext = React.createContext<StepsContextValue>({
   activeStep: 0,
   orientation: 'horizontal',
+  children: null, // Initialize with null
 });
 
 export interface StepsProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -26,7 +28,7 @@ export function Steps({
   ...props
 }: StepsProps) {
   return (
-    <StepsContext.Provider value={{ activeStep, orientation }}>
+    <StepsContext.Provider value={{ activeStep, orientation, children }}>
       <div
         className={cn(
           "w-full",
