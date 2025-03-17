@@ -18,6 +18,9 @@ interface MediaAsset {
   annotations: any[];
   uploader_id: string | null;
   uploader_name?: string;
+  profiles?: {
+    full_name: string;
+  };
 }
 
 interface MediaGalleryProps {
@@ -52,6 +55,8 @@ export const MediaGallery = ({
             description,
             file_path,
             file_type,
+            file_size,
+            original_filename,
             created_at,
             tags,
             annotations,
@@ -81,6 +86,7 @@ export const MediaGallery = ({
         // Process the data to add uploader name
         const processedData = data?.map(item => ({
           ...item,
+          // Fixed: properly access full_name from the profiles object
           uploader_name: item.profiles?.full_name || 'Unknown user'
         })) || [];
         

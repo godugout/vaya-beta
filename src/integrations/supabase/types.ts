@@ -196,6 +196,66 @@ export type Database = {
         }
         Relationships: []
       }
+      media_items: {
+        Row: {
+          annotations: Json | null
+          category: string | null
+          created_at: string | null
+          date_taken: string | null
+          description: string | null
+          file_path: string
+          file_size: number
+          file_type: string
+          geographical_location: string | null
+          id: string
+          last_modified_at: string | null
+          metadata: Json | null
+          original_filename: string
+          people: string[] | null
+          tags: string[] | null
+          title: string
+          uploader_id: string | null
+        }
+        Insert: {
+          annotations?: Json | null
+          category?: string | null
+          created_at?: string | null
+          date_taken?: string | null
+          description?: string | null
+          file_path: string
+          file_size: number
+          file_type: string
+          geographical_location?: string | null
+          id?: string
+          last_modified_at?: string | null
+          metadata?: Json | null
+          original_filename: string
+          people?: string[] | null
+          tags?: string[] | null
+          title: string
+          uploader_id?: string | null
+        }
+        Update: {
+          annotations?: Json | null
+          category?: string | null
+          created_at?: string | null
+          date_taken?: string | null
+          description?: string | null
+          file_path?: string
+          file_size?: number
+          file_type?: string
+          geographical_location?: string | null
+          id?: string
+          last_modified_at?: string | null
+          metadata?: Json | null
+          original_filename?: string
+          people?: string[] | null
+          tags?: string[] | null
+          title?: string
+          uploader_id?: string | null
+        }
+        Relationships: []
+      }
       photos: {
         Row: {
           caption: string | null

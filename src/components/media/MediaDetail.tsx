@@ -23,7 +23,7 @@ interface MediaItemDetail {
     x: number;
     y: number;
     text: string;
-    type: string;
+    type: 'object' | 'person' | 'location' | 'building' | 'other';
   }[];
   uploader_id: string | null;
   uploader_name?: string;
@@ -68,6 +68,7 @@ export const MediaDetail = ({ id, onBack }: MediaDetailProps) => {
         // Format the data
         setMediaItem({
           ...data,
+          // Fixed: properly access full_name from the profiles object
           uploader_name: data.profiles?.full_name || 'Unknown user'
         });
       } catch (error) {

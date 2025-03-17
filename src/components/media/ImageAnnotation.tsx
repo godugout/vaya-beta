@@ -13,7 +13,7 @@ import {
   DialogFooter
 } from "@/components/ui/dialog";
 
-interface Annotation {
+export interface Annotation {
   id: string;
   x: number;
   y: number;
