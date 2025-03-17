@@ -87,7 +87,8 @@ export const MediaGallery = ({
         const processedData: MediaAsset[] = data?.map(item => ({
           ...item,
           // Fixed: properly access full_name from the profiles object
-          uploader_name: item.profiles?.full_name || 'Unknown user'
+          // The profiles field from the query is an object, not an array
+          uploader_name: item.profiles ? item.profiles.full_name : 'Unknown user'
         })) || [];
         
         setAssets(processedData);

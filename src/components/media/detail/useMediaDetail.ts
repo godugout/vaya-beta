@@ -56,6 +56,7 @@ export const useMediaDetail = (id: string) => {
         if (error) throw error;
         
         // Properly handle the profiles data structure
+        // The profiles property from the query will be an object, not an array
         const uploaderName = data.profiles ? data.profiles.full_name : 'Unknown user';
         
         // Format the data
