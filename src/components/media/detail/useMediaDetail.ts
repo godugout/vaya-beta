@@ -57,8 +57,14 @@ export const useMediaDetail = (id: string) => {
         if (error) throw error;
         
         // Extract uploader name from profiles object
-        // Supabase returns this as an object, not an array
-        const uploaderName = data.profiles ? data.profiles.full_name : 'Unknown user';
+        // Handle the profiles data in a type-safe way
+        let uploaderName = 'Unknown user';
+        if (data.profiles && typeof data.profiles === 'object') {
+          // Check if it's a valid object with the full_name property
+          if ('full_name' in data.profiles && typeof data.profiles.full_name === 'string') {
+            uploaderName = data.profiles.full_name;
+          }
+        }
         
         // Format the data, omitting the profiles property which is not part of our interface
         setMediaItem({
