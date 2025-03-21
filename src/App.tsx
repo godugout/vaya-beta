@@ -16,6 +16,8 @@ import Memories from './pages/Memories';
 import Account from './pages/Account';
 import Auth from './pages/Auth';
 import Settings from './pages/Settings';
+import HanumanEdition from './pages/HanumanEdition';
+import HouseOfHanuman from './pages/HouseOfHanuman';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Create a query client
@@ -56,6 +58,8 @@ function App() {
           <Route path="/tree/:familyId" element={<div>Family Tree Builder</div>} />
           <Route path="/stories" element={<div>Stories Page</div>} />
           <Route path="/setup" element={<FamilySetupPage />} />
+          <Route path="/hanuman-edition" element={<HanumanEdition />} />
+          <Route path="/houseofhanuman" element={<HouseOfHanuman />} />
         </Routes>
       </MainLayout>
     </QueryClientProvider>

@@ -64,7 +64,10 @@ const Footer = () => {
 
           {/* Copyright line */}
           <p className="text-lg text-center text-gray-500 dark:text-gray-600 mt-8">
-            &copy; {new Date().getFullYear()} Allusion Ink. All rights reserved. Building memories that last generations.
+            &copy; {new Date().getFullYear()} Allusion Ink. All rights reserved. 
+            <Link to="/houseofhanuman" className="hover:text-autumn transition-colors ml-1">
+              Building memories that last generations.
+            </Link>
           </p>
         </div>
       </div>
