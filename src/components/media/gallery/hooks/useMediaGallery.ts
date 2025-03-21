@@ -1,16 +1,17 @@
 
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { MediaAsset } from "../types";
+import { MediaAsset } from "../../types";
 import { useToast } from "@/components/ui/use-toast";
 
-export const useMediaAssets = (
+export const useMediaGallery = (
   category?: string,
   limit: number = 30,
   searchTerm: string = ""
 ) => {
   const [assets, setAssets] = useState<MediaAsset[]>([]);
   const [loading, setLoading] = useState(true);
+  const [totalCount, setTotalCount] = useState(0);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -18,6 +19,28 @@ export const useMediaAssets = (
       setLoading(true);
       
       try {
+        // First get the total count for pagination
+        let countQuery = supabase
+          .from('media_items')
+          .select('id', { count: 'exact' });
+        
+        if (category) {
+          countQuery = countQuery.eq('category', category);
+        }
+        
+        if (searchTerm) {
+          countQuery = countQuery.ilike('title', `%${searchTerm}%`);
+        }
+        
+        const { count, error: countError } = await countQuery;
+        
+        if (countError) {
+          throw countError;
+        }
+        
+        setTotalCount(count || 0);
+        
+        // Now fetch the actual data
         let query = supabase
           .from('media_items')
           .select(`
@@ -58,10 +81,12 @@ export const useMediaAssets = (
         const processedData: MediaAsset[] = data?.map(item => {
           // Extract uploader name from profiles object in a type-safe way
           let uploaderName = 'Unknown user';
-          if (item.profiles && typeof item.profiles === 'object') {
-            // Check if it's a valid object with the full_name property
-            if ('full_name' in item.profiles && typeof item.profiles.full_name === 'string') {
-              uploaderName = item.profiles.full_name;
+          if (item.profiles) {
+            if (typeof item.profiles === 'object' && item.profiles !== null) {
+              // Check if it's a valid object with the full_name property
+              if ('full_name' in item.profiles && typeof item.profiles.full_name === 'string') {
+                uploaderName = item.profiles.full_name;
+              }
             }
           }
           
@@ -98,5 +123,5 @@ export const useMediaAssets = (
     fetchAssets();
   }, [category, limit, toast, searchTerm]);
 
-  return { assets, loading };
+  return { assets, loading, totalCount };
 };

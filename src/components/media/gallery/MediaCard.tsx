@@ -1,4 +1,5 @@
 
+import { memo } from "react";
 import { MediaAsset } from "../types";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -9,7 +10,8 @@ interface MediaCardProps {
   onClick: () => void;
 }
 
-export const MediaCard = ({ asset, onClick }: MediaCardProps) => {
+// Using memo to prevent unnecessary re-renders when other cards change
+export const MediaCard = memo(({ asset, onClick }: MediaCardProps) => {
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString(undefined, {
       year: 'numeric',
@@ -18,17 +20,21 @@ export const MediaCard = ({ asset, onClick }: MediaCardProps) => {
     });
   };
 
+  // Decide if we need to show an image or a file icon
+  const isImage = asset.file_type.startsWith('image/');
+
   return (
     <Card 
       className="overflow-hidden transition-all hover:shadow-md cursor-pointer border border-gray-200 dark:border-gray-700 hover:border-autumn dark:hover:border-leaf"
       onClick={onClick}
     >
       <div className="aspect-[4/3] overflow-hidden bg-gray-100 dark:bg-gray-800/50 relative">
-        {asset.file_type.startsWith('image/') ? (
+        {isImage ? (
           <img 
             src={asset.file_path} 
             alt={asset.title || 'Media item'}
             className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+            loading="lazy" // Add lazy loading for better performance
           />
         ) : (
           <div className="flex items-center justify-center h-full">
@@ -77,4 +83,6 @@ export const MediaCard = ({ asset, onClick }: MediaCardProps) => {
       </CardContent>
     </Card>
   );
-};
+});
+
+MediaCard.displayName = "MediaCard";

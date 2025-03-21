@@ -1,4 +1,5 @@
 
+import { memo } from "react";
 import { MediaAsset } from "../types";
 import { MediaCard } from "./MediaCard";
 
@@ -7,7 +8,8 @@ interface MediaGridProps {
   onSelect: (asset: MediaAsset) => void;
 }
 
-export const MediaGrid = ({ assets, onSelect }: MediaGridProps) => {
+// Using memo to prevent unnecessary re-renders
+export const MediaGrid = memo(({ assets, onSelect }: MediaGridProps) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {assets.map((asset) => (
@@ -19,4 +21,6 @@ export const MediaGrid = ({ assets, onSelect }: MediaGridProps) => {
       ))}
     </div>
   );
-};
+});
+
+MediaGrid.displayName = "MediaGrid";

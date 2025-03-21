@@ -2,7 +2,7 @@
 import { MediaDetailSkeleton } from './detail/MediaDetailSkeleton';
 import { MediaNotFound } from './detail/MediaNotFound';
 import { MediaDetailContent } from './detail/MediaDetailContent';
-import { useMediaDetail } from './detail/useMediaDetail';
+import { useMediaDetail } from './detail/hooks/useMediaDetail';
 
 interface MediaDetailProps {
   id: string;
