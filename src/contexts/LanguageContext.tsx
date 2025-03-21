@@ -10,6 +10,7 @@ interface LanguageContextType {
   t: (key: string) => string;
   isCurrentLanguage: (lang: Language) => boolean;
   setLanguagePreference: (language: Language) => void;
+  isSpanish: boolean; // Add this property for Spanish language check
 }
 
 // Expanded translation dictionary with more languages and keys
@@ -110,6 +111,7 @@ const LanguageContext = createContext<LanguageContextType>({
   t: (key: string) => key,
   isCurrentLanguage: () => false,
   setLanguagePreference: () => {},
+  isSpanish: false, // Default value
 });
 
 export const useLanguage = () => useContext(LanguageContext);
@@ -176,12 +178,16 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setLanguage(lang);
   };
 
+  // Compute isSpanish value based on current language
+  const isSpanish = language === 'es';
+
   const value = {
     language,
     setLanguage,
     t,
     isCurrentLanguage,
-    setLanguagePreference
+    setLanguagePreference,
+    isSpanish // Add this to the context value
   };
 
   return (
