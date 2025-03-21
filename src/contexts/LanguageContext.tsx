@@ -1,55 +1,82 @@
 
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { useToast } from "@/components/ui/use-toast";
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
-type LanguageContextType = {
-  isSpanish: boolean;
-  setLanguagePreference: (language: string) => Promise<void>;
+type Language = 'en' | 'es';
+
+interface LanguageContextType {
+  language: Language;
+  setLanguage: (language: Language) => void;
+  t: (key: string) => string;
+}
+
+// Simple translation dictionary - can be expanded later
+const translations: Record<Language, Record<string, string>> = {
+  en: {
+    'home': 'Home',
+    'memories': 'Memories',
+    'family': 'Family',
+    'stories': 'Stories',
+    'settings': 'Settings',
+    'account': 'Account',
+    'welcome': 'Welcome to VayaSpace',
+    'menu': 'Menu',
+  },
+  es: {
+    'home': 'Inicio',
+    'memories': 'Recuerdos',
+    'family': 'Familia',
+    'stories': 'Historias',
+    'settings': 'Configuración',
+    'account': 'Cuenta',
+    'welcome': 'Bienvenido a VayaSpace',
+    'menu': 'Menú',
+  }
 };
 
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+const LanguageContext = createContext<LanguageContextType>({
+  language: 'en',
+  setLanguage: () => {},
+  t: (key: string) => key,
+});
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [isSpanish, setIsSpanish] = useState(false); // Default to English
-  const { toast } = useToast();
+export const useLanguage = () => useContext(LanguageContext);
 
-  // Simplified implementation that doesn't use Supabase
-  const setLanguagePreference = async (language: string) => {
-    try {
-      setIsSpanish(language === 'es');
-      
-      // Save to localStorage as fallback
-      localStorage.setItem('preferred_language', language);
-
-    } catch (error) {
-      console.error('Error updating language:', error);
-      toast({
-        title: "Error",
-        description: "Failed to update language preference",
-        variant: "destructive",
-      });
+export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  // Get initial language from localStorage or default to English
+  const getInitialLanguage = (): Language => {
+    if (typeof window === 'undefined') return 'en';
+    
+    const savedLanguage = localStorage.getItem('vaya-language');
+    if (savedLanguage === 'en' || savedLanguage === 'es') {
+      return savedLanguage;
     }
+    
+    // Check browser language preference
+    const browserLang = navigator.language.substring(0, 2);
+    return browserLang === 'es' ? 'es' : 'en';
   };
 
-  // Load from localStorage on mount
+  const [language, setLanguage] = useState<Language>(getInitialLanguage);
+
+  // Simple translation function
+  const t = (key: string): string => {
+    return translations[language][key] || key;
+  };
+
+  // Update localStorage when language changes
   useEffect(() => {
-    const savedLanguage = localStorage.getItem('preferred_language');
-    if (savedLanguage) {
-      setIsSpanish(savedLanguage === 'es');
-    }
-  }, []);
+    localStorage.setItem('vaya-language', language);
+  }, [language]);
+
+  const value = {
+    language,
+    setLanguage,
+    t
+  };
 
   return (
-    <LanguageContext.Provider value={{ isSpanish, setLanguagePreference }}>
+    <LanguageContext.Provider value={value}>
       {children}
     </LanguageContext.Provider>
   );
-}
-
-export function useLanguage() {
-  const context = useContext(LanguageContext);
-  if (context === undefined) {
-    throw new Error('useLanguage must be used within a LanguageProvider');
-  }
-  return context;
-}
+};

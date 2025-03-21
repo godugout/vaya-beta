@@ -10,6 +10,7 @@ import { toast } from "./hooks/use-toast";
 import { MainLayout } from './components/layout/MainLayout';
 
 // Import pages
+import Home from "./pages/Home";
 import FamilySetupPage from "./pages/FamilySetupPage";
 import Memories from './pages/Memories';
 import Account from './pages/Account';
@@ -33,7 +34,7 @@ function App() {
   return (
     <MainLayout>
       <Routes>
-        <Route path="/" element={<div>Home Page</div>} />
+        <Route path="/" element={<Home />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/account" element={<Account />} />
         <Route path="/memories" element={<Memories />} />
