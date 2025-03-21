@@ -63,7 +63,7 @@ export const HouseOfHanumanContent = () => {
 
   // Default to English if the current language isn't supported
   const currentContent = language === 'gu' ? content.gu : 
-                        language === 'hi' ? content.hi : content.en;
+                         language === 'hi' ? content.hi : content.en;
 
   return (
     <div className="gujarati-content surya-glow-container">
