@@ -1,6 +1,6 @@
 
 import { updateFileMetadata, updateFileTags, updateFileProgress } from '../fileUtils';
-import { FileWithMeta } from '../types';
+import { FileWithMeta } from '../../types';
 
 describe('fileUtils', () => {
   const mockFile = new File(['test content'], 'test.jpg', { type: 'image/jpeg' });

@@ -25,8 +25,13 @@ class MockFileReader {
 }
 
 // Mock for URL.createObjectURL
-global.URL.createObjectURL = jest.fn(() => 'mocked-url');
-global.URL.revokeObjectURL = jest.fn();
+if (typeof global.URL.createObjectURL === 'undefined') {
+  global.URL.createObjectURL = function() { return 'mocked-url'; };
+}
+
+if (typeof global.URL.revokeObjectURL === 'undefined') {
+  global.URL.revokeObjectURL = function() {};
+}
 
 // Set up FileReader mock
 global.FileReader = MockFileReader as any;

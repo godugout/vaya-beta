@@ -85,3 +85,4 @@ const MediaCard = React.memo(({ asset, onSelect }: MediaCardProps) => {
 MediaCard.displayName = 'MediaCard';
 
 export { MediaCard };
+export type { MediaCardProps };

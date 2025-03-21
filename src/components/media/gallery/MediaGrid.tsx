@@ -16,7 +16,7 @@ export const MediaGrid = memo(({ assets, onSelect }: MediaGridProps) => {
         <MediaCard
           key={asset.id}
           asset={asset}
-          onClick={() => onSelect(asset)}
+          onSelect={onSelect}
         />
       ))}
     </div>
