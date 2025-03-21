@@ -147,4 +147,3 @@ export const HouseOfHanumanContent = () => {
     </div>
   );
 };
-
