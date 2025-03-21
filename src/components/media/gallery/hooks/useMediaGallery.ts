@@ -15,113 +15,72 @@ export const useMediaGallery = (
   const { toast } = useToast();
 
   useEffect(() => {
-    const fetchAssets = async () => {
-      setLoading(true);
-      
+    const fetchMediaAssets = async () => {
       try {
-        // First get the total count for pagination
-        let countQuery = supabase
-          .from('media_items')
-          .select('id', { count: 'exact' });
+        setLoading(true);
         
-        if (category) {
-          countQuery = countQuery.eq('category', category);
-        }
+        // Build the query
+        let query = supabase.from('media_items').select(`
+          id,
+          title,
+          description,
+          file_path,
+          file_type,
+          tags,
+          created_at
+        `);
         
-        if (searchTerm) {
-          countQuery = countQuery.ilike('title', `%${searchTerm}%`);
-        }
-        
-        const { count, error: countError } = await countQuery;
-        
-        if (countError) {
-          throw countError;
-        }
-        
-        setTotalCount(count || 0);
-        
-        // Now fetch the actual data
-        let query = supabase
-          .from('media_items')
-          .select(`
-            id,
-            title,
-            description,
-            file_path,
-            file_type,
-            file_size,
-            original_filename,
-            created_at,
-            tags,
-            annotations,
-            uploader_id,
-            profiles:uploader_id(full_name)
-          `)
-          .order('created_at', { ascending: false });
-        
+        // Filter by category if provided
         if (category) {
           query = query.eq('category', category);
         }
         
+        // Apply search filter if provided
         if (searchTerm) {
-          query = query.ilike('title', `%${searchTerm}%`);
+          query = query.or(`title.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%`);
         }
         
-        if (limit > 0) {
-          query = query.limit(limit);
-        }
+        // Get total count for pagination
+        const { count: totalCount, error: countError } = await query.count();
         
-        const { data, error } = await query;
+        if (countError) throw countError;
         
-        if (error) {
-          throw error;
-        }
+        // Set total count
+        setTotalCount(totalCount || 0);
         
-        // Process the data to add uploader name
-        const processedData: MediaAsset[] = data?.map(item => {
-          // Extract uploader name from profiles object in a type-safe way
-          let uploaderName = 'Unknown user';
-          if (item.profiles) {
-            if (typeof item.profiles === 'object' && item.profiles !== null) {
-              // Check if it's a valid object with the full_name property
-              if ('full_name' in item.profiles && typeof item.profiles.full_name === 'string') {
-                uploaderName = item.profiles.full_name;
-              }
-            }
-          }
-          
-          // Create a clean MediaAsset object without the profiles property
-          const asset: MediaAsset = {
-            id: item.id,
-            title: item.title,
-            description: item.description,
-            file_path: item.file_path,
-            file_type: item.file_type,
-            created_at: item.created_at,
-            tags: item.tags || [],
-            annotations: item.annotations || [],
-            uploader_id: item.uploader_id,
-            uploader_name: uploaderName
-          };
-          
-          return asset;
-        }) || [];
+        // Execute the query with limit
+        const { data, error } = await query
+          .order('created_at', { ascending: false })
+          .limit(limit);
         
-        setAssets(processedData);
+        if (error) throw error;
+        
+        // Transform the data into MediaAsset format
+        const mediaAssets = data.map((item: any) => ({
+          id: item.id,
+          title: item.title,
+          description: item.description || '',
+          filePath: item.file_path,
+          fileType: item.file_type,
+          tags: item.tags || [],
+          uploadDate: item.created_at
+        }));
+        
+        setAssets(mediaAssets);
       } catch (error) {
         console.error('Error fetching media assets:', error);
         toast({
-          title: "Error loading media",
-          description: "Could not load media assets from the library",
-          variant: "destructive",
+          title: "Failed to load media",
+          description: "Could not retrieve media assets. Please try again.",
+          variant: "destructive"
         });
       } finally {
         setLoading(false);
       }
     };
     
-    fetchAssets();
-  }, [category, limit, toast, searchTerm]);
+    fetchMediaAssets();
+  }, [category, limit, searchTerm, toast]);
 
   return { assets, loading, totalCount };
 };

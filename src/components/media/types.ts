@@ -1,26 +1,12 @@
 
-// If this file already exists, we're just adding/updating the MediaUploadProps interface
-
 export interface MediaAsset {
   id: string;
   title: string;
-  description: string | null;
-  file_path: string;
-  file_type: string;
-  created_at: string;
+  description: string;
+  filePath: string;
+  fileType: string;
   tags: string[];
-  annotations: any[];
-  uploader_id: string | null;
-  uploader_name?: string;
-}
-
-export interface MediaUploadProps {
-  onUploadComplete: (urls: string[]) => void;
-  familyId?: string;
-  maxFileSize?: number; // in MB
-  allowedFileTypes?: string[];
-  multiple?: boolean;
-  showPreview?: boolean;
+  uploadDate: string;
 }
 
 export interface MediaGalleryProps {
@@ -29,4 +15,13 @@ export interface MediaGalleryProps {
   onSelect?: (asset: MediaAsset) => void;
   className?: string;
   searchTerm?: string;
+}
+
+export interface MediaUploadProps {
+  onUploadComplete: (urls: string[]) => void;
+  familyId?: string;
+  maxFileSize?: number;
+  allowedFileTypes?: string[];
+  multiple?: boolean;
+  showPreview?: boolean;
 }
