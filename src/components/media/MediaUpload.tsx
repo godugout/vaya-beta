@@ -7,7 +7,7 @@ import { Upload } from 'lucide-react';
 import { FileItem } from './upload/FileItem';
 import { ErrorDisplay } from './upload/ErrorDisplay';
 import { useFileUpload } from './upload/useFileUpload';
-import { MediaUploadProps } from './upload/types';
+import { MediaUploadProps } from './types';
 
 export const MediaUpload = ({
   onUploadComplete,

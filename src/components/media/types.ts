@@ -15,9 +15,18 @@ export interface MediaAsset {
 }
 
 export interface MediaUploadProps {
-  onUploadComplete: () => void;
+  onUploadComplete: (urls: string[]) => void;
   familyId?: string;
-  maxFiles?: number;
-  acceptedFileTypes?: string[];
+  maxFileSize?: number; // in MB
+  allowedFileTypes?: string[];
+  multiple?: boolean;
   showPreview?: boolean;
+}
+
+export interface MediaGalleryProps {
+  category?: string;
+  limit?: number;
+  onSelect?: (asset: MediaAsset) => void;
+  className?: string;
+  searchTerm?: string;
 }
