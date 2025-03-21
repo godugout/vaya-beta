@@ -5,13 +5,11 @@ import { cn } from "@/lib/utils";
 interface StepsContextValue {
   activeStep: number;
   orientation: 'horizontal' | 'vertical';
-  children?: React.ReactNode; // Add the children property to the interface
 }
 
 const StepsContext = React.createContext<StepsContextValue>({
   activeStep: 0,
   orientation: 'horizontal',
-  children: null, // Initialize with null
 });
 
 export interface StepsProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -28,7 +26,7 @@ export function Steps({
   ...props
 }: StepsProps) {
   return (
-    <StepsContext.Provider value={{ activeStep, orientation, children }}>
+    <StepsContext.Provider value={{ activeStep, orientation }}>
       <div
         className={cn(
           "w-full",
@@ -60,9 +58,14 @@ export function Step({
   const index = React.useRef(-1);
   
   // Get the index of this step
-  index.current = React.Children.toArray(
+  const childrenArray = React.Children.toArray(children);
+  React.Children.forEach(React.Children.toArray(
     React.useContext(StepsContext).children
-  ).findIndex((child) => child === children);
+  ), (child, i) => {
+    if (child === children) {
+      index.current = i;
+    }
+  });
   
   // Determine the step status
   const isActive = activeStep === index.current;

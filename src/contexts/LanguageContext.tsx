@@ -7,6 +7,8 @@ interface LanguageContextType {
   language: Language;
   setLanguage: (language: Language) => void;
   t: (key: string) => string;
+  isSpanish: boolean;
+  setLanguagePreference: (language: Language) => void;
 }
 
 // Simple translation dictionary - can be expanded later
@@ -37,6 +39,8 @@ const LanguageContext = createContext<LanguageContextType>({
   language: 'en',
   setLanguage: () => {},
   t: (key: string) => key,
+  isSpanish: false,
+  setLanguagePreference: () => {},
 });
 
 export const useLanguage = () => useContext(LanguageContext);
@@ -58,6 +62,9 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const [language, setLanguage] = useState<Language>(getInitialLanguage);
 
+  // Derived property to check if language is Spanish
+  const isSpanish = language === 'es';
+
   // Simple translation function
   const t = (key: string): string => {
     return translations[language][key] || key;
@@ -68,10 +75,17 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     localStorage.setItem('vaya-language', language);
   }, [language]);
 
+  // Alias for setLanguage for compatibility with existing components
+  const setLanguagePreference = (lang: Language) => {
+    setLanguage(lang);
+  };
+
   const value = {
     language,
     setLanguage,
-    t
+    t,
+    isSpanish,
+    setLanguagePreference
   };
 
   return (

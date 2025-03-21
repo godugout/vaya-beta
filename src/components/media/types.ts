@@ -1,4 +1,6 @@
 
+// If this file already exists, we're just adding/updating the MediaUploadProps interface
+
 export interface MediaAsset {
   id: string;
   title: string;
@@ -10,13 +12,12 @@ export interface MediaAsset {
   annotations: any[];
   uploader_id: string | null;
   uploader_name?: string;
-  // We don't include profiles in the interface since it's only used internally
 }
 
-export interface MediaGalleryProps {
-  category?: string;
-  limit?: number;
-  onSelect?: (asset: MediaAsset) => void;
-  className?: string;
-  searchTerm?: string;
+export interface MediaUploadProps {
+  onUploadComplete: () => void;
+  familyId?: string;
+  maxFiles?: number;
+  acceptedFileTypes?: string[];
+  showPreview?: boolean;
 }
