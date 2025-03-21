@@ -116,7 +116,6 @@
 .sacred-verse p {
   margin: 0;
   position: relative;
-  white-space: pre-line;
 }
 
 /* Family glyph styling */
@@ -236,11 +235,6 @@
   margin-bottom: 0.5rem;
 }
 
-.glyph-caption p {
-  margin: 0.5rem 0;
-  white-space: pre-line;
-}
-
 /* Quote styling */
 .quote-container {
   background-color: rgba(255, 118, 117, 0.2);
@@ -295,56 +289,6 @@
 .back-to-top-button span {
   font-size: 14px;
   font-weight: 500;
-}
-
-/* Language picker styling */
-.language-picker-container {
-  position: relative;
-  z-index: 10;
-}
-
-.language-picker-container select {
-  background-color: rgba(108, 92, 231, 0.4);
-  border: 1px solid rgba(162, 155, 254, 0.5);
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  font-family: 'Baloo Bhai 2', sans-serif;
-  font-size: 0.9rem;
-  cursor: pointer;
-  backdrop-filter: blur(5px);
-  transition: all 0.3s ease;
-}
-
-.language-picker-container select:hover,
-.language-picker-container select:focus {
-  background-color: rgba(108, 92, 231, 0.6);
-  box-shadow: 0 0 10px rgba(108, 92, 231, 0.5);
-}
-
-/* Special purple cosmic background for House of Hanuman page */
-.purple-cosmic-bg {
-  background: linear-gradient(135deg, #2D1F6D 0%, #42275a 50%, #734b6d 100%);
-  background-attachment: fixed;
-}
-
-.purple-cosmic-bg::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: 
-    radial-gradient(1px 1px at 25% 25%, rgba(255, 255, 255, 0.2) 1px, transparent 0),
-    radial-gradient(1px 1px at 50% 50%, rgba(255, 255, 255, 0.2) 1px, transparent 0),
-    radial-gradient(1px 1px at 75% 75%, rgba(255, 255, 255, 0.2) 1px, transparent 0),
-    radial-gradient(2px 2px at 10% 40%, rgba(255, 255, 255, 0.3) 1px, transparent 0),
-    radial-gradient(2px 2px at 60% 30%, rgba(255, 255, 255, 0.3) 1px, transparent 0),
-    radial-gradient(2px 2px at 90% 10%, rgba(255, 255, 255, 0.3) 1px, transparent 0);
-  background-size: 100px 100px, 120px 120px, 150px 150px, 200px 200px, 250px 250px, 300px 300px;
-  pointer-events: none;
-  z-index: 0;
 }
 
 /* Responsive adjustments */
