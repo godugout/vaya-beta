@@ -26,6 +26,7 @@ export const LanguageScriptPicker = () => {
         </SelectTrigger>
         <SelectContent className="bg-purple-900/80 backdrop-blur-md border-purple-500/50 text-white">
           <SelectItem value="en" className="text-white hover:bg-purple-700/50">English</SelectItem>
+          <SelectItem value="es" className="text-white hover:bg-purple-700/50">Español</SelectItem>
           <SelectItem value="gu" className="text-white hover:bg-purple-700/50">ગુજરાતી (Gujarati)</SelectItem>
           <SelectItem value="hi" className="text-white hover:bg-purple-700/50">हिंदी (Hindi)</SelectItem>
         </SelectContent>
