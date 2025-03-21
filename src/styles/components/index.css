@@ -1,20 +1,20 @@
 
-/* Re-export all component styles */
+@import './accessibility.css';
+@import './ambalal-theme.css';
+@import './backgrounds.css';
+@import './breadcrumbs.css';
 @import './buttons.css';
 @import './cards.css';
-@import './forms.css';
-@import './desktop-nav.css';
-@import './mobile-nav.css';
-@import './breadcrumbs.css';
-@import './voice-nav.css';
-@import './view-switchers.css';
-@import './accessibility.css';
-@import './transitions.css';
-@import './backgrounds.css';
-@import './placeholders.css';
+@import './cosmic-effects.css';
 @import './dark-mode.css';
-
-/* Theme specific styles */
-@import './space-vault.css';
-@import './ambalal-theme.css';
+@import './desktop-nav.css';
 @import './dispatch-theme.css';
+@import './forms.css';
+@import './mobile-nav.css';
+@import './placeholders.css';
+@import './space-vault.css';
+@import './temple-transitions.css';
+@import './transitions.css';
+@import './view-switchers.css';
+@import './voice-nav.css';
+@import './gujarati-content.css';
