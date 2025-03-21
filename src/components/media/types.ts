@@ -7,6 +7,8 @@ export interface MediaAsset {
   fileType: string;
   tags: string[];
   uploadDate: string;
+  uploaderName?: string;
+  annotations?: Array<{ id: string; content: string; position: { x: number; y: number } }>;
 }
 
 export interface MediaGalleryProps {

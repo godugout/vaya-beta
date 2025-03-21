@@ -1,17 +1,16 @@
 
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { MediaAsset } from "../../types";
+import { MediaAsset } from "../types";
 import { useToast } from "@/components/ui/use-toast";
 
-export const useMediaGallery = (
+export const useMediaAssets = (
   category?: string,
   limit: number = 30,
   searchTerm: string = ""
 ) => {
   const [assets, setAssets] = useState<MediaAsset[]>([]);
   const [loading, setLoading] = useState(true);
-  const [totalCount, setTotalCount] = useState(0);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -27,7 +26,8 @@ export const useMediaGallery = (
           file_path,
           file_type,
           tags,
-          created_at
+          created_at,
+          uploader_name
         `);
         
         // Filter by category if provided
@@ -39,26 +39,7 @@ export const useMediaGallery = (
         if (searchTerm) {
           query = query.or(`title.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%`);
         }
-        
-        // Get total count for pagination
-        const countQuery = supabase.from('media_items').select('id', { count: 'exact' });
-        
-        // Apply the same filters to count query
-        if (category) {
-          countQuery.eq('category', category);
-        }
-        
-        if (searchTerm) {
-          countQuery.or(`title.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%`);
-        }
-        
-        const { count, error: countError } = await countQuery;
-        
-        if (countError) throw countError;
-        
-        // Set total count
-        setTotalCount(count || 0);
-        
+                
         // Execute the query with limit
         const { data, error } = await query
           .order('created_at', { ascending: false })
@@ -74,7 +55,9 @@ export const useMediaGallery = (
           filePath: item.file_path,
           fileType: item.file_type,
           tags: item.tags || [],
-          uploadDate: item.created_at
+          uploadDate: item.created_at,
+          uploaderName: item.uploader_name,
+          // Add any additional fields needed for the MediaAsset type
         }));
         
         setAssets(mediaAssets);
@@ -93,5 +76,5 @@ export const useMediaGallery = (
     fetchMediaAssets();
   }, [category, limit, searchTerm, toast]);
 
-  return { assets, loading, totalCount };
+  return { assets, loading };
 };
