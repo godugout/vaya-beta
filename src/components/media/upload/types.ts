@@ -7,10 +7,17 @@ export interface FileWithMeta {
   tags: string[];
 }
 
-export interface MediaUploadProps {
-  onUploadComplete?: (urls: string[]) => void;
-  maxFileSize?: number; // in MB
-  allowedFileTypes?: string[];
-  multiple?: boolean;
-  familyId?: string;
+export interface FileItemProps {
+  file: FileWithMeta;
+  index: number;
+  uploading: boolean;
+  onRemove: (index: number) => void;
+  onTitleChange: (index: number, value: string) => void;
+  onDescriptionChange: (index: number, value: string) => void;
+  onTagsChange: (index: number, value: string) => void;
+}
+
+export interface FileError {
+  fileName: string;
+  message: string;
 }

@@ -1,9 +1,10 @@
 
 import { useState, useRef } from 'react';
-import { supabase } from '@/integrations/supabase/client';
-import { v4 as uuidv4 } from 'uuid';
 import { useToast } from '@/components/ui/use-toast';
 import { FileWithMeta } from './types';
+import { validateFiles } from './utils/fileValidation';
+import { updateFileMetadata, updateFileTags, updateFileProgress } from './utils/fileUtils';
+import { uploadFileToStorage, createMediaRecord } from './services/uploadService';
 
 export const useFileUpload = (familyId?: string) => {
   const [files, setFiles] = useState<FileWithMeta[]>([]);
@@ -12,43 +13,18 @@ export const useFileUpload = (familyId?: string) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
-  const validateFiles = (selectedFiles: File[], maxFileSize: number, allowedFileTypes: string[]) => {
-    const validFiles: File[] = [];
-    const newErrors: string[] = [];
-    
-    selectedFiles.forEach(file => {
-      // Check file type if allowed types are specified
-      const isTypeAllowed = allowedFileTypes.length === 0 || 
-        allowedFileTypes.some(type => {
-          if (type.endsWith('/*')) {
-            const category = type.split('/')[0];
-            return file.type.startsWith(`${category}/`);
-          }
-          return file.type === type;
-        });
-      
-      // Check file size
-      const isFileSizeValid = file.size <= maxFileSize * 1024 * 1024;
-      
-      if (!isTypeAllowed) {
-        newErrors.push(`${file.name}: Unsupported file type`);
-      } else if (!isFileSizeValid) {
-        newErrors.push(`${file.name}: File size exceeds ${maxFileSize}MB limit`);
-      } else {
-        validFiles.push(file);
-      }
-    });
-
-    return { validFiles, newErrors };
-  };
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>, maxFileSize: number, allowedFileTypes: string[], multiple: boolean) => {
+  const handleFileChange = (
+    event: React.ChangeEvent<HTMLInputElement>, 
+    maxFileSize: number, 
+    allowedFileTypes: string[], 
+    multiple: boolean
+  ) => {
     if (!event.target.files || event.target.files.length === 0) {
       return;
     }
     
     const selectedFiles = Array.from(event.target.files);
-    const { validFiles, newErrors } = validateFiles(selectedFiles, maxFileSize, allowedFileTypes);
+    const { validFiles, errors: newErrors } = validateFiles(selectedFiles, maxFileSize, allowedFileTypes);
     
     if (newErrors.length > 0) {
       setErrors(prev => [...prev, ...newErrors]);
@@ -76,23 +52,12 @@ export const useFileUpload = (familyId?: string) => {
     setFiles(prev => prev.filter((_, i) => i !== index));
   };
 
-  const updateFileMetadata = (index: number, field: 'title' | 'description', value: string) => {
-    setFiles(prev => {
-      const newFiles = [...prev];
-      newFiles[index] = { ...newFiles[index], [field]: value };
-      return newFiles;
-    });
+  const handleUpdateFileMetadata = (index: number, field: 'title' | 'description', value: string) => {
+    setFiles(prev => updateFileMetadata(prev, index, field, value));
   };
 
-  const updateFileTags = (index: number, value: string) => {
-    setFiles(prev => {
-      const newFiles = [...prev];
-      newFiles[index] = { 
-        ...newFiles[index], 
-        tags: value.split(',').map(tag => tag.trim()).filter(tag => tag)
-      };
-      return newFiles;
-    });
+  const handleUpdateFileTags = (index: number, value: string) => {
+    setFiles(prev => updateFileTags(prev, index, value));
   };
 
   const uploadFiles = async () => {
@@ -105,70 +70,33 @@ export const useFileUpload = (familyId?: string) => {
       for (let i = 0; i < files.length; i++) {
         const fileWithMeta = files[i];
         const file = fileWithMeta.file;
-        const fileId = uuidv4();
-        const fileExt = file.name.split('.').pop();
-        const fileName = `${fileId}.${fileExt}`;
-        const filePath = `${fileName}`;
         
-        // Update progress
-        setFiles(prev => {
-          const newFiles = [...prev];
-          newFiles[i] = { ...newFiles[i], progress: 30 };
-          return newFiles;
-        });
+        // Update progress to 30%
+        setFiles(prev => updateFileProgress(prev, i, 30));
         
         // Upload file to storage
-        const { data: uploadData, error: uploadError } = await supabase.storage
-          .from('media')
-          .upload(filePath, file, {
-            cacheControl: '3600',
-            upsert: false
-          });
+        const uploadResult = await uploadFileToStorage(file);
         
-        if (uploadError) {
-          throw new Error(`Error uploading file: ${uploadError.message}`);
+        if (!uploadResult) {
+          throw new Error(`Error uploading file: ${file.name}`);
         }
         
-        // Update progress
-        setFiles(prev => {
-          const newFiles = [...prev];
-          newFiles[i] = { ...newFiles[i], progress: 60 };
-          return newFiles;
-        });
+        const { fileId, publicUrl } = uploadResult;
         
-        // Get the public URL
-        const { data: { publicUrl } } = supabase.storage
-          .from('media')
-          .getPublicUrl(filePath);
+        // Update progress to 60%
+        setFiles(prev => updateFileProgress(prev, i, 60));
         
         uploadedUrls.push(publicUrl);
         
         // Create a record in the media_items table
-        const { error: insertError } = await supabase
-          .from('media_items')
-          .insert({
-            id: fileId,
-            title: fileWithMeta.title || file.name.split('.')[0],
-            description: fileWithMeta.description || null,
-            file_path: publicUrl,
-            file_type: file.type,
-            file_size: file.size,
-            original_filename: file.name,
-            tags: fileWithMeta.tags || [],
-            annotations: [],
-            family_id: familyId || null,
-          });
+        const success = await createMediaRecord(fileId, publicUrl, file, fileWithMeta, familyId);
         
-        if (insertError) {
-          throw new Error(`Error creating media item record: ${insertError.message}`);
+        if (!success) {
+          throw new Error(`Error creating media item record for ${file.name}`);
         }
         
         // Update to completed progress
-        setFiles(prev => {
-          const newFiles = [...prev];
-          newFiles[i] = { ...newFiles[i], progress: 100 };
-          return newFiles;
-        });
+        setFiles(prev => updateFileProgress(prev, i, 100));
       }
       
       // All uploads completed
@@ -198,8 +126,8 @@ export const useFileUpload = (familyId?: string) => {
     fileInputRef,
     handleFileChange,
     removeFile,
-    updateFileMetadata,
-    updateFileTags,
+    updateFileMetadata: handleUpdateFileMetadata,
+    updateFileTags: handleUpdateFileTags,
     uploadFiles,
     resetUpload: () => {
       setFiles([]);
