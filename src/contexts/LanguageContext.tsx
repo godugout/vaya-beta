@@ -1,17 +1,19 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-type Language = 'en' | 'es';
+type Language = 'en' | 'es' | 'gu' | 'hi';
 
 interface LanguageContextType {
   language: Language;
   setLanguage: (language: Language) => void;
   t: (key: string) => string;
   isSpanish: boolean;
+  isGujarati: boolean;
+  isHindi: boolean;
   setLanguagePreference: (language: Language) => void;
 }
 
-// Simple translation dictionary - can be expanded later
+// Expanded translation dictionary with Gujarati and Hindi
 const translations: Record<Language, Record<string, string>> = {
   en: {
     'home': 'Home',
@@ -32,6 +34,26 @@ const translations: Record<Language, Record<string, string>> = {
     'account': 'Cuenta',
     'welcome': 'Bienvenido a VayaSpace',
     'menu': 'Menú',
+  },
+  gu: {
+    'home': 'ઘર',
+    'memories': 'સ્મૃતિઓ',
+    'family': 'પરિવાર',
+    'stories': 'વાર્તાઓ',
+    'settings': 'સેટિંગ્સ',
+    'account': 'એકાઉન્ટ',
+    'welcome': 'વાયાસ્પેસમાં આપનું સ્વાગત છે',
+    'menu': 'મેનૂ',
+  },
+  hi: {
+    'home': 'घर',
+    'memories': 'यादें',
+    'family': 'परिवार',
+    'stories': 'कहानियाँ',
+    'settings': 'सेटिंग्स',
+    'account': 'खाता',
+    'welcome': 'वयास्पेस में आपका स्वागत है',
+    'menu': 'मेन्यू',
   }
 };
 
@@ -40,6 +62,8 @@ const LanguageContext = createContext<LanguageContextType>({
   setLanguage: () => {},
   t: (key: string) => key,
   isSpanish: false,
+  isGujarati: false,
+  isHindi: false,
   setLanguagePreference: () => {},
 });
 
@@ -51,19 +75,24 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     if (typeof window === 'undefined') return 'en';
     
     const savedLanguage = localStorage.getItem('vaya-language');
-    if (savedLanguage === 'en' || savedLanguage === 'es') {
+    if (savedLanguage === 'en' || savedLanguage === 'es' || savedLanguage === 'gu' || savedLanguage === 'hi') {
       return savedLanguage;
     }
     
     // Check browser language preference
     const browserLang = navigator.language.substring(0, 2);
-    return browserLang === 'es' ? 'es' : 'en';
+    if (browserLang === 'es') return 'es';
+    if (browserLang === 'gu') return 'gu';
+    if (browserLang === 'hi') return 'hi';
+    return 'en';
   };
 
   const [language, setLanguage] = useState<Language>(getInitialLanguage);
 
-  // Derived property to check if language is Spanish
+  // Derived properties to check language type
   const isSpanish = language === 'es';
+  const isGujarati = language === 'gu';
+  const isHindi = language === 'hi';
 
   // Simple translation function
   const t = (key: string): string => {
@@ -85,6 +114,8 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setLanguage,
     t,
     isSpanish,
+    isGujarati,
+    isHindi,
     setLanguagePreference
   };
 
