@@ -4,7 +4,6 @@ import { MainLayout } from '@/components/layout/MainLayout';
 import { HomeWelcomeSection } from '@/components/home/HomeWelcomeSection';
 import StoriesHeroSection from '@/components/stories/StoriesHeroSection';
 import { ContentShowcase } from '@/components/showcase/ContentShowcase';
-import DualPaneRecordingSection from '@/components/stories/DualPaneRecordingSection';
 import { motion } from 'framer-motion';
 import { FadeIn } from '@/components/animation/FadeIn';
 
@@ -23,15 +22,31 @@ export default function Index() {
         </section>
       </FadeIn>
       
-      {/* Record Stories Section */}
-      <section className="bg-gray-50 dark:bg-gray-800 relative">
+      {/* Record Stories Section - Replacing DualPaneRecordingSection */}
+      <section className="bg-gray-50 dark:bg-gray-800 relative py-16">
         <motion.div 
           className="absolute inset-0 bg-dots opacity-[0.15] pointer-events-none"
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.15 }}
           transition={{ duration: 1 }}
         />
-        <DualPaneRecordingSection />
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row gap-8">
+            <div className="md:w-1/2">
+              <h2 className="text-3xl font-bold mb-6 text-hanuman-orange">Record Your Stories</h2>
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
+                Use our simple voice recording tools to preserve your family memories for generations to come.
+              </p>
+            </div>
+            <div className="md:w-1/2">
+              <div className="bg-white dark:bg-gray-700 rounded-lg shadow-sm p-6">
+                <p className="text-center text-gray-500 dark:text-gray-400">
+                  Voice recording features available after login
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
       
       {/* Content Showcase */}
