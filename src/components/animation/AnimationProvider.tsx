@@ -1,69 +1,76 @@
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 
-interface AnimationContextType {
+export type AnimationPreference = 'enabled' | 'reduced' | 'disabled';
+
+export interface AnimationContextType {
+  isEnabled: boolean;
   isReduced: boolean;
-  enableAnimations: () => void;
-  disableAnimations: () => void;
-  toggleAnimations: () => void;
+  preference: AnimationPreference;
+  setPreference: (pref: AnimationPreference) => void;
+  duration: number;
+  easing: string;
 }
 
-const AnimationContext = createContext<AnimationContextType>({
+const defaultContext: AnimationContextType = {
+  isEnabled: true,
   isReduced: false,
-  enableAnimations: () => {},
-  disableAnimations: () => {},
-  toggleAnimations: () => {},
-});
+  preference: 'enabled',
+  setPreference: () => {},
+  duration: 0.4,
+  easing: 'ease-in-out',
+};
 
-interface AnimationProviderProps {
-  children: ReactNode;
-}
+const AnimationContext = createContext<AnimationContextType>(defaultContext);
 
-export const AnimationProvider: React.FC<AnimationProviderProps> = ({ children }) => {
-  // Initialize based on user's system preference
-  const [isReduced, setIsReduced] = useState<boolean>(false);
+export const useAnimation = () => useContext(AnimationContext);
+
+export const AnimationProvider: React.FC<{ children: React.ReactNode }> = ({ 
+  children 
+}) => {
+  const [preference, setPreference] = useState<AnimationPreference>('enabled');
+  const [isEnabled, setIsEnabled] = useState(true);
+  const [isReduced, setIsReduced] = useState(false);
   
+  // Check system preferences on initial load
   useEffect(() => {
-    // Check for prefers-reduced-motion media query
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setIsReduced(mediaQuery.matches);
-    
-    // Add listener for changes
-    const handleChange = (e: MediaQueryListEvent) => {
-      setIsReduced(e.matches);
-    };
-    
-    // Modern browsers
-    if (mediaQuery.addEventListener) {
-      mediaQuery.addEventListener('change', handleChange);
-      return () => mediaQuery.removeEventListener('change', handleChange);
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      setPreference('reduced');
     }
     
-    // Safari < 14
-    else if ('addListener' in mediaQuery) {
-      // @ts-ignore - older API
-      mediaQuery.addListener(handleChange);
-      return () => {
-        // @ts-ignore - older API
-        mediaQuery.removeListener(handleChange);
-      };
+    // Get user preference from localStorage if available
+    const savedPreference = localStorage.getItem('animation-preference');
+    if (savedPreference) {
+      setPreference(savedPreference as AnimationPreference);
     }
   }, []);
   
-  const enableAnimations = () => setIsReduced(false);
-  const disableAnimations = () => setIsReduced(true);
-  const toggleAnimations = () => setIsReduced(prev => !prev);
+  // Update state based on preference changes
+  useEffect(() => {
+    setIsEnabled(preference !== 'disabled');
+    setIsReduced(preference === 'reduced');
+    
+    // Save to localStorage
+    localStorage.setItem('animation-preference', preference);
+  }, [preference]);
+  
+  // Calculate animation duration based on preference
+  const duration = isReduced ? 0.2 : preference === 'disabled' ? 0 : 0.4;
+  const easing = isReduced ? 'ease-out' : 'ease-in-out';
+  
+  const value = {
+    isEnabled,
+    isReduced,
+    preference,
+    setPreference,
+    duration,
+    easing,
+  };
   
   return (
-    <AnimationContext.Provider value={{ 
-      isReduced, 
-      enableAnimations, 
-      disableAnimations,
-      toggleAnimations
-    }}>
+    <AnimationContext.Provider value={value}>
       {children}
     </AnimationContext.Provider>
   );
 };
-
-export const useAnimation = () => useContext(AnimationContext);

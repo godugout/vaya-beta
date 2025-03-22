@@ -1,54 +1,44 @@
 
-import React from 'react';
-import { promptCategories } from '@/data/hanumanPrompts';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { Badge } from '@/components/ui/badge';
-import { PromptCategory } from '@/components/chat/hooks/types';
+import { useState } from "react";
+import { CategoryButton } from "./CategoryButton";
+import { PromptList } from "./PromptList";
+import { PromptCategory, PromptCategoriesProps } from "./hooks/types";
+import { hanumanPrompts } from "@/data/hanumanPrompts";
 
-interface PromptCategoriesProps {
-  onSelectCategory: (categoryId: string) => void;
-  selectedCategory: string;
-}
-
-const PromptCategories: React.FC<PromptCategoriesProps> = ({
-  onSelectCategory,
-  selectedCategory,
-}) => {
-  const { language } = useLanguage();
-  const isSpanish = language === 'es';
-
-  // Add an "All" category at the beginning
-  const allCategories: PromptCategory[] = [
-    {
-      id: 'all',
-      name: { en: 'All Topics', es: 'Todos los Temas' },
-      icon: null,
-      description: {
-        en: 'View prompts from all categories',
-        es: 'Ver temas de todas las categorías'
-      }
-    },
-    ...promptCategories,
-  ];
-
+export const PromptCategories = ({ onPromptSelect, isSpanish, edition = "hanuman" }: PromptCategoriesProps) => {
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  
+  // Filter categories based on edition if needed
+  const categories = hanumanPrompts;
+  
+  const handleCategorySelect = (categoryId: string) => {
+    setSelectedCategory(categoryId === selectedCategory ? null : categoryId);
+  };
+  
+  const selectedCategoryData = selectedCategory
+    ? categories.find((cat) => cat.id === selectedCategory)
+    : null;
+    
   return (
-    <div className="prompt-categories mb-6">
-      <h3 className="font-medium text-sm mb-2 text-muted-foreground">
-        {isSpanish ? 'Categorías' : 'Categories'}
-      </h3>
+    <div className="w-full flex flex-col gap-4">
       <div className="flex flex-wrap gap-2">
-        {allCategories.map((category) => (
-          <Badge
+        {categories.map((category) => (
+          <CategoryButton
             key={category.id}
-            variant={category.id === selectedCategory ? 'default' : 'outline'}
-            className="cursor-pointer py-1 px-3"
-            onClick={() => onSelectCategory(category.id)}
-          >
-            {category.icon && <span className="mr-1">{category.icon}</span>}
-            {isSpanish ? category.name.es : category.name.en}
-          </Badge>
+            category={category}
+            isSelected={category.id === selectedCategory}
+            onSelect={handleCategorySelect}
+            isSpanish={isSpanish}
+          />
         ))}
       </div>
+      
+      {selectedCategoryData && (
+        <PromptList
+          prompts={selectedCategoryData.prompts.filter(p => p.isSpanish === isSpanish)}
+          onSelect={onPromptSelect}
+        />
+      )}
     </div>
   );
 };

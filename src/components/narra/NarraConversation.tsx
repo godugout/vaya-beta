@@ -1,11 +1,10 @@
-
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MessagesSquare, Sparkles } from "lucide-react";
 import { NarraHeader } from "./NarraHeader";
 import { ConversationView } from "./ConversationView";
 import { InputArea } from "./InputArea";
-import { SuggestedPrompts } from "./SuggestedPrompts";
+import SuggestedPrompts from "./SuggestedPrompts";
 import { useNarraConversation } from "./hooks/useNarraConversation";
 import { NarraConversationProps } from "./types";
 

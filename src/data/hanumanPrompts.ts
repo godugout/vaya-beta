@@ -1,237 +1,237 @@
 
 import React from 'react';
-import { LifeBuoy, Heart, Trees, MessageCircle, BookOpen, Users, Home } from 'lucide-react';
-import { PromptCategory, PromptItem } from '@/components/chat/hooks/types';
+import { Heart, User, Home, Clock, Gift, Star, Sparkles, Music, Leaf, Sun } from 'lucide-react';
+import { PromptCategory } from '@/components/chat/hooks/types';
 
-export const promptCategories: PromptCategory[] = [
+export const hanumanPrompts: PromptCategory[] = [
   {
-    id: 'family',
-    name: { en: 'Family', es: 'Familia' },
-    icon: React.createElement(Users, { size: 20 }),
-    description: {
-      en: 'Discover stories about your family history and traditions',
-      es: 'Descubre historias sobre la historia y tradiciones de tu familia'
-    }
-  },
-  {
-    id: 'spirituality',
-    name: { en: 'Spirituality', es: 'Espiritualidad' },
-    icon: React.createElement(Heart, { size: 20 }),
-    description: {
-      en: 'Explore spiritual teachings and wisdom',
-      es: 'Explora enseñanzas espirituales y sabiduría'
-    }
-  },
-  {
-    id: 'stories',
-    name: { en: 'Stories', es: 'Historias' },
-    icon: React.createElement(BookOpen, { size: 20 }),
-    description: {
-      en: 'Listen to engaging stories and parables',
-      es: 'Escucha historias y parábolas interesantes'
-    }
-  },
-  {
-    id: 'nature',
-    name: { en: 'Nature', es: 'Naturaleza' },
-    icon: React.createElement(Trees, { size: 20 }),
-    description: {
-      en: 'Learn about natural harmony and environmental wisdom',
-      es: 'Aprende sobre la armonía natural y la sabiduría ambiental'
-    }
-  },
-  {
-    id: 'general',
-    name: { en: 'General', es: 'General' },
-    icon: React.createElement(MessageCircle, { size: 20 }),
-    description: {
-      en: 'Ask about various topics and get helpful responses',
-      es: 'Pregunta sobre varios temas y obtén respuestas útiles'
-    }
-  },
-  {
-    id: 'home',
-    name: { en: 'Home', es: 'Hogar' },
+    id: "family",
+    name: "Family",
+    nameEs: "Familia",
+    description: "Explore your family roots and connections",
+    descriptionEs: "Explora tus raíces familiares y conexiones",
     icon: React.createElement(Home, { size: 20 }),
-    description: {
-      en: 'Guidance for creating a harmonious home environment',
-      es: 'Guía para crear un ambiente hogareño armonioso'
-    }
+    prompts: [
+      {
+        id: "family-1",
+        content: "Tell me about your earliest family memory.",
+        category: "family",
+        isSpanish: false
+      },
+      {
+        id: "family-2",
+        content: "Who was the family member that influenced you the most growing up?",
+        category: "family",
+        isSpanish: false
+      },
+      {
+        id: "family-3",
+        content: "What family traditions are most important to you?",
+        category: "family",
+        isSpanish: false
+      },
+      {
+        id: "family-1-es",
+        content: "Cuéntame sobre tu primer recuerdo familiar.",
+        category: "family",
+        isSpanish: true
+      },
+      {
+        id: "family-2-es",
+        content: "¿Quién fue el miembro de la familia que más te influyó durante tu crecimiento?",
+        category: "family",
+        isSpanish: true
+      },
+      {
+        id: "family-3-es",
+        content: "¿Qué tradiciones familiares son más importantes para ti?",
+        category: "family",
+        isSpanish: true
+      }
+    ]
   },
   {
-    id: 'help',
-    name: { en: 'Help', es: 'Ayuda' },
-    icon: React.createElement(LifeBuoy, { size: 20 }),
-    description: {
-      en: 'Get help with using this application',
-      es: 'Obtén ayuda para usar esta aplicación'
-    }
+    id: "childhood",
+    name: "Childhood",
+    nameEs: "Infancia",
+    description: "Remember your early years",
+    descriptionEs: "Recuerda tus primeros años",
+    icon: React.createElement(Star, { size: 20 }),
+    prompts: [
+      {
+        id: "childhood-1",
+        content: "What was your favorite childhood game or toy?",
+        category: "childhood",
+        isSpanish: false
+      },
+      {
+        id: "childhood-2",
+        content: "Describe the neighborhood where you grew up.",
+        category: "childhood",
+        isSpanish: false
+      },
+      {
+        id: "childhood-3",
+        content: "What is your most vivid school memory?",
+        category: "childhood",
+        isSpanish: false
+      },
+      {
+        id: "childhood-1-es",
+        content: "¿Cuál era tu juego o juguete favorito de la infancia?",
+        category: "childhood",
+        isSpanish: true
+      },
+      {
+        id: "childhood-2-es",
+        content: "Describe el vecindario donde creciste.",
+        category: "childhood",
+        isSpanish: true
+      },
+      {
+        id: "childhood-3-es",
+        content: "¿Cuál es tu recuerdo escolar más vívido?",
+        category: "childhood",
+        isSpanish: true
+      }
+    ]
+  },
+  {
+    id: "love",
+    name: "Love & Relationships",
+    nameEs: "Amor y Relaciones",
+    description: "Share stories of love and connection",
+    descriptionEs: "Comparte historias de amor y conexión",
+    icon: React.createElement(Heart, { size: 20 }),
+    prompts: [
+      {
+        id: "love-1",
+        content: "How did you meet your partner/spouse?",
+        category: "love",
+        isSpanish: false
+      },
+      {
+        id: "love-2",
+        content: "What was your first date like?",
+        category: "love",
+        isSpanish: false
+      },
+      {
+        id: "love-3",
+        content: "Tell me about your wedding day.",
+        category: "love",
+        isSpanish: false
+      },
+      {
+        id: "love-1-es",
+        content: "¿Cómo conociste a tu pareja/cónyuge?",
+        category: "love",
+        isSpanish: true
+      },
+      {
+        id: "love-2-es",
+        content: "¿Cómo fue tu primera cita?",
+        category: "love",
+        isSpanish: true
+      },
+      {
+        id: "love-3-es",
+        content: "Háblame de tu día de boda.",
+        category: "love",
+        isSpanish: true
+      }
+    ]
+  },
+  {
+    id: "legacy",
+    name: "Legacy & Wisdom",
+    nameEs: "Legado y Sabiduría",
+    description: "Capture your life lessons",
+    descriptionEs: "Captura las lecciones de tu vida",
+    icon: React.createElement(Sparkles, { size: 20 }),
+    prompts: [
+      {
+        id: "legacy-1",
+        content: "What life lessons would you like to pass on to future generations?",
+        category: "legacy",
+        isSpanish: false
+      },
+      {
+        id: "legacy-2",
+        content: "What are you most proud of in your life?",
+        category: "legacy",
+        isSpanish: false
+      },
+      {
+        id: "legacy-3",
+        content: "What values are most important to you?",
+        category: "legacy",
+        isSpanish: false
+      },
+      {
+        id: "legacy-1-es",
+        content: "¿Qué lecciones de vida te gustaría transmitir a las generaciones futuras?",
+        category: "legacy",
+        isSpanish: true
+      },
+      {
+        id: "legacy-2-es",
+        content: "¿De qué estás más orgulloso/a en tu vida?",
+        category: "legacy",
+        isSpanish: true
+      },
+      {
+        id: "legacy-3-es",
+        content: "¿Qué valores son más importantes para ti?",
+        category: "legacy",
+        isSpanish: true
+      }
+    ]
+  },
+  {
+    id: "celebrations",
+    name: "Celebrations",
+    nameEs: "Celebraciones",
+    description: "Remember special occasions",
+    descriptionEs: "Recuerda ocasiones especiales",
+    icon: React.createElement(Gift, { size: 20 }),
+    prompts: [
+      {
+        id: "celebrations-1",
+        content: "What was your most memorable birthday?",
+        category: "celebrations",
+        isSpanish: false
+      },
+      {
+        id: "celebrations-2",
+        content: "How did your family celebrate holidays?",
+        category: "celebrations",
+        isSpanish: false
+      },
+      {
+        id: "celebrations-3",
+        content: "Tell me about a family reunion that stands out in your memory.",
+        category: "celebrations",
+        isSpanish: false
+      },
+      {
+        id: "celebrations-1-es",
+        content: "¿Cuál fue tu cumpleaños más memorable?",
+        category: "celebrations",
+        isSpanish: true
+      },
+      {
+        id: "celebrations-2-es",
+        content: "¿Cómo celebraba tu familia los días festivos?",
+        category: "celebrations",
+        isSpanish: true
+      },
+      {
+        id: "celebrations-3-es",
+        content: "Cuéntame sobre una reunión familiar que destaque en tu memoria.",
+        category: "celebrations",
+        isSpanish: true
+      }
+    ]
   }
-];
-
-export const familyPrompts: PromptItem[] = [
-  {
-    id: 'family-history',
-    category: 'family',
-    content: {
-      en: 'Tell me about the history of the Patel family',
-      es: 'Cuéntame sobre la historia de la familia Patel'
-    },
-    context: 'Learn about your roots'
-  },
-  {
-    id: 'family-traditions',
-    category: 'family',
-    content: {
-      en: 'What are some important family traditions we should maintain?',
-      es: '¿Cuáles son algunas tradiciones familiares importantes que deberíamos mantener?'
-    },
-    context: 'Cultural preservation'
-  },
-  {
-    id: 'family-values',
-    category: 'family',
-    content: {
-      en: 'What values were most important to our ancestors?',
-      es: '¿Qué valores eran más importantes para nuestros antepasados?'
-    },
-    context: 'Family wisdom'
-  }
-];
-
-export const spiritualityPrompts: PromptItem[] = [
-  {
-    id: 'spiritual-teaching',
-    category: 'spirituality',
-    content: {
-      en: 'Share a spiritual teaching about inner peace',
-      es: 'Comparte una enseñanza espiritual sobre la paz interior'
-    },
-    context: 'Spiritual wisdom'
-  },
-  {
-    id: 'meditation-guidance',
-    category: 'spirituality',
-    content: {
-      en: 'Can you guide me through a simple meditation practice?',
-      es: '¿Puedes guiarme a través de una práctica de meditación simple?'
-    },
-    context: 'Meditation'
-  }
-];
-
-export const storyPrompts: PromptItem[] = [
-  {
-    id: 'hanuman-story',
-    category: 'stories',
-    content: {
-      en: 'Tell me a story about Lord Hanuman',
-      es: 'Cuéntame una historia sobre el Señor Hanuman'
-    },
-    context: 'Mythology'
-  },
-  {
-    id: 'wisdom-parable',
-    category: 'stories',
-    content: {
-      en: 'Share a parable that teaches about patience',
-      es: 'Comparte una parábola que enseñe sobre la paciencia'
-    },
-    context: 'Wisdom stories'
-  }
-];
-
-export const naturePrompts: PromptItem[] = [
-  {
-    id: 'harmony-nature',
-    category: 'nature',
-    content: {
-      en: 'How can we live in harmony with nature?',
-      es: '¿Cómo podemos vivir en armonía con la naturaleza?'
-    },
-    context: 'Environmental wisdom'
-  },
-  {
-    id: 'plants-teaching',
-    category: 'nature',
-    content: {
-      en: 'What can we learn from plants and trees?',
-      es: '¿Qué podemos aprender de las plantas y los árboles?'
-    },
-    context: 'Natural wisdom'
-  }
-];
-
-export const generalPrompts: PromptItem[] = [
-  {
-    id: 'daily-wisdom',
-    category: 'general',
-    content: {
-      en: 'Share a piece of daily wisdom',
-      es: 'Comparte un poco de sabiduría diaria'
-    },
-    context: 'Inspiration'
-  },
-  {
-    id: 'balance-life',
-    category: 'general',
-    content: {
-      en: 'How can I find better balance in my life?',
-      es: '¿Cómo puedo encontrar mejor equilibrio en mi vida?'
-    },
-    context: 'Life advice'
-  }
-];
-
-export const homePrompts: PromptItem[] = [
-  {
-    id: 'harmonious-home',
-    category: 'home',
-    content: {
-      en: 'How can I create a more harmonious home environment?',
-      es: '¿Cómo puedo crear un ambiente hogareño más armonioso?'
-    },
-    context: 'Home harmony'
-  },
-  {
-    id: 'family-space',
-    category: 'home',
-    content: {
-      en: 'What makes a house feel like a family home?',
-      es: '¿Qué hace que una casa se sienta como un hogar familiar?'
-    },
-    context: 'Family spaces'
-  }
-];
-
-export const helpPrompts: PromptItem[] = [
-  {
-    id: 'app-features',
-    category: 'help',
-    content: {
-      en: 'What can I do with this application?',
-      es: '¿Qué puedo hacer con esta aplicación?'
-    },
-    context: 'App features'
-  },
-  {
-    id: 'conversation-tips',
-    category: 'help',
-    content: {
-      en: 'How can I have the most meaningful conversations here?',
-      es: '¿Cómo puedo tener las conversaciones más significativas aquí?'
-    },
-    context: 'Usage tips'
-  }
-];
-
-// All prompts combined
-export const allPrompts: PromptItem[] = [
-  ...familyPrompts,
-  ...spiritualityPrompts,
-  ...storyPrompts,
-  ...naturePrompts,
-  ...generalPrompts,
-  ...homePrompts,
-  ...helpPrompts
 ];

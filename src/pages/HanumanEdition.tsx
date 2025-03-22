@@ -1,160 +1,229 @@
+import React, { useState, useRef, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent } from "@/components/ui/card";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Send, Loader2, Mic } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { useFamilyContextManagement } from "@/hooks/useFamilyContextManagement";
+import { usePromptManager } from "@/components/chat/hooks/usePromptManager";
+import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
+import { Message } from "@/components/chat/types";
+import SuggestedPrompts from "@/components/narra/SuggestedPrompts";
 
-import React, { useState } from 'react';
-import { MainLayout } from '@/components/layout/MainLayout';
-import { HanumanEditionChat } from '@/components/chat/HanumanEditionChat';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { SuggestedPrompts } from '@/components/narra/SuggestedPrompts';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { motion } from 'framer-motion';
-import { JamnabenCircularGlyph } from '@/components/sacred/JamnabenCircularGlyph';
-import { AmbaTriangleGlyph } from '@/components/sacred/AmbaTriangleGlyph';
-import { ChanchalRectangleGlyph } from '@/components/sacred/ChanchalRectangleGlyph';
-import { Button } from '@/components/ui/button';
-import { Globe } from 'lucide-react';
+const initialMessages: Message[] = [
+  {
+    role: "assistant",
+    content: "Hello! I'm here to help you capture and share your family stories. What would you like to talk about today?",
+  },
+];
 
-export default function HanumanEdition() {
-  const { isSpanish, setLanguagePreference } = useLanguage();
-  const [selectedLanguage, setSelectedLanguage] = useState<'en' | 'es' | 'hi' | 'gu'>('en');
-  
-  const handleLanguageChange = (lang: 'en' | 'es' | 'hi' | 'gu') => {
-    setSelectedLanguage(lang);
-    if (lang === 'es') {
-      setLanguagePreference('es');
-    } else {
-      setLanguagePreference('en');
+const suggestedPrompts = [
+  {
+    id: "prompt-1",
+    content: "Tell me about your childhood.",
+  },
+  {
+    id: "prompt-2",
+    content: "What are some of your favorite family traditions?",
+  },
+  {
+    id: "prompt-3",
+    content: "What is your favorite memory?",
+  },
+  {
+    id: "prompt-4",
+    content: "Tell me about a time you overcame a challenge.",
+  },
+  {
+    id: "prompt-5",
+    content: "What are some of the most important lessons you've learned in life?",
+  },
+];
+
+const HanumanEdition = () => {
+  const { t, isSpanish } = useLanguage();
+  const { toast } = useToast();
+  const { familyContext } = useFamilyContextManagement();
+  const { handleMorePrompts } = usePromptManager();
+  const [messages, setMessages] = useState<Message[]>(initialMessages);
+  const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
+  const {
+    transcript,
+    resetTranscript,
+    listening,
+    startListening,
+    stopListening,
+    hasRecognitionSupport,
+  } = useSpeechRecognition(isSpanish ? "es-ES" : "en-US");
+
+  // Speech recognition event handlers
+  const handleStartListening = () => {
+    startListening();
+  };
+
+  const handleStopListening = () => {
+    stopListening();
+  };
+
+  // Update input with speech recognition transcript
+  useEffect(() => {
+    if (transcript) {
+      setInput(transcript);
+    }
+  }, [transcript]);
+
+  // Scroll to bottom on new messages
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
+    }
+  }, [messages]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim()) return;
+
+    const userMessage: Message = { role: "user", content: input };
+    setMessages((prev) => [...prev, userMessage]);
+    setInput("");
+    setIsLoading(true);
+
+    try {
+      // Simulate an API call
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      const assistantResponse: Message = {
+        role: "assistant",
+        content: `This is a simulated response to: ${input}. I am using the family context: ${JSON.stringify(
+          familyContext
+        )}`,
+      };
+      setMessages((prev) => [...prev, assistantResponse]);
+    } catch (error: any) {
+      toast({
+        title: "Something went wrong.",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+      resetTranscript();
     }
   };
-  
-  const fadeInUpVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut" }
-    }
+
+  const handlePromptSelect = (prompt: string) => {
+    setInput(prompt);
   };
-  
-  const staggerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
-  
+
   return (
-    <MainLayout>
-      <motion.div 
-        className="container mx-auto py-8"
-        variants={staggerVariants}
-        initial="hidden"
-        animate="visible"
+    <div className="flex flex-col h-screen">
+      <div
+        ref={chatContainerRef}
+        className="flex-grow overflow-y-auto p-4 space-y-4"
       >
-        {/* Header Card */}
-        <motion.div variants={fadeInUpVariants}>
-          <Card className="mb-8 overflow-hidden border-2 border-amber-100 dark:border-amber-900/40">
-            {/* Decorative background pattern */}
-            <div className="absolute inset-0 opacity-5 pointer-events-none">
-              <div className="w-full h-full bg-[url('/patterns/sacred-yantra.svg')] bg-repeat opacity-20"></div>
-            </div>
-            
-            <CardHeader className="text-center relative z-10">
-              <div className="flex justify-center items-center gap-4 mb-4">
-                <AmbaTriangleGlyph size="md" className="text-amber-600 dark:text-amber-500" />
-                <JamnabenCircularGlyph size="md" className="text-amber-600 dark:text-amber-500" />
-                <ChanchalRectangleGlyph size="md" className="text-amber-600 dark:text-amber-500" />
-              </div>
-              
-              <CardTitle className="text-3xl font-bold text-amber-800 dark:text-amber-400">
-                {selectedLanguage === 'en' && "Hanuman Edition"}
-                {selectedLanguage === 'es' && "Edición Hanuman"}
-                {selectedLanguage === 'hi' && "हनुमान संस्करण"}
-                {selectedLanguage === 'gu' && "હનુમાન એડિશન"}
-              </CardTitle>
-              
-              <CardDescription className="text-lg max-w-2xl mx-auto">
-                {selectedLanguage === 'en' && "A culturally relevant storytelling experience for South Asian families, with a focus on Gujarati and Hindi traditions."}
-                {selectedLanguage === 'es' && "Una experiencia de narración de historias culturalmente relevante para familias del sur de Asia, con enfoque en tradiciones gujarati e hindi."}
-                {selectedLanguage === 'hi' && "दक्षिण एशियाई परिवारों के लिए एक सांस्कृतिक रूप से प्रासंगिक कहानी अनुभव, गुजराती और हिंदी परंपराओं पर विशेष ध्यान देने के साथ।"}
-                {selectedLanguage === 'gu' && "દક્ષિણ એશિયાઈ પરિવારો માટે સાંસ્કૃતિક રીતે પ્રસ્તુત વાર્તા અનુભવ, ગુજરાતી અને હિન્દી પરંપરાઓ પર ધ્યાન કેન્દ્રિત કરવાની સાથે."}
-              </CardDescription>
-              
-              <div className="flex justify-center gap-2 mt-4">
-                <Button 
-                  variant={selectedLanguage === 'en' ? 'default' : 'outline'} 
-                  size="sm"
-                  onClick={() => handleLanguageChange('en')}
-                  className="font-medium"
-                >
-                  English
-                </Button>
-                <Button 
-                  variant={selectedLanguage === 'es' ? 'default' : 'outline'} 
-                  size="sm"
-                  onClick={() => handleLanguageChange('es')}
-                  className="font-medium"
-                >
-                  Español
-                </Button>
-                <Button 
-                  variant={selectedLanguage === 'hi' ? 'default' : 'outline'} 
-                  size="sm"
-                  onClick={() => handleLanguageChange('hi')}
-                  className="font-medium hindi-content"
-                >
-                  हिंदी
-                </Button>
-                <Button 
-                  variant={selectedLanguage === 'gu' ? 'default' : 'outline'} 
-                  size="sm"
-                  onClick={() => handleLanguageChange('gu')}
-                  className="font-medium gujarati-content"
-                >
-                  ગુજરાતી
-                </Button>
-              </div>
-            </CardHeader>
-            
-            <CardContent>
-              <div className="max-w-4xl mx-auto">
-                <HanumanEditionChat />
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
-        
-        {/* Story Ideas Card */}
-        <motion.div variants={fadeInUpVariants}>
-          <Card className="border-2 border-amber-100 dark:border-amber-900/40">
-            <CardHeader>
-              <CardTitle className="text-2xl flex items-center gap-2">
-                <Globe className="h-5 w-5 text-amber-600" />
-                {selectedLanguage === 'en' && "Story Ideas"}
-                {selectedLanguage === 'es' && "Ideas para Historias"}
-                {selectedLanguage === 'hi' && "कहानी के विचार"}
-                {selectedLanguage === 'gu' && "વાર્તા વિચારો"}
-              </CardTitle>
-              <CardDescription>
-                {selectedLanguage === 'en' && "Explore these suggestions to capture your family's stories"}
-                {selectedLanguage === 'es' && "Explora estas sugerencias para capturar las historias de tu familia"}
-                {selectedLanguage === 'hi' && "अपने परिवार की कहानियों को कैप्चर करने के लिए इन सुझावों का अन्वेषण करें"}
-                {selectedLanguage === 'gu' && "તમારા પરિવારની વાર્તાઓને કેપ્ચર કરવા માટે આ સૂચનોની શોધ કરો"}
-              </CardDescription>
-            </CardHeader>
-            
-            <CardContent>
-              <SuggestedPrompts 
-                isSpanish={selectedLanguage === 'es'} 
-                onPromptSelect={(prompt) => {
-                  document.querySelector('.HanumanEditionChat')?.scrollIntoView({ behavior: 'smooth' });
-                }} 
-              />
-            </CardContent>
-          </Card>
-        </motion.div>
-      </motion.div>
-    </MainLayout>
+        {messages.map((message, index) => (
+          <div
+            key={index}
+            className={`flex items-start gap-2 ${
+              message.role === "user" ? "justify-end" : ""
+            }`}
+          >
+            {message.role === "assistant" && (
+              <Avatar className="h-8 w-8">
+                <AvatarImage src="https://github.com/shadcn.png" alt="Narra" />
+                <AvatarFallback>N</AvatarFallback>
+              </Avatar>
+            )}
+            <Card
+              className={`w-fit max-w-[80%] ${
+                message.role === "user"
+                  ? "bg-lovable-blue text-white"
+                  : "bg-gray-100 dark:bg-gray-800"
+              }`}
+            >
+              <CardContent className="p-3 break-words">
+                {message.content}
+              </CardContent>
+            </Card>
+          </div>
+        ))}
+        {isLoading && (
+          <div className="flex items-center gap-2">
+            <Avatar className="h-8 w-8">
+              <AvatarImage src="https://github.com/shadcn.png" alt="Narra" />
+              <AvatarFallback>N</AvatarFallback>
+            </Avatar>
+            <Card className="bg-gray-100 dark:bg-gray-800">
+              <CardContent className="p-3">
+                <Loader2 className="h-4 w-4 animate-spin" />
+              </CardContent>
+            </Card>
+          </div>
+        )}
+      </div>
+
+      <SuggestedPrompts prompts={suggestedPrompts} onSelect={handlePromptSelect} />
+
+      <div className="p-4">
+        <form onSubmit={handleSubmit} className="relative">
+          <Input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            className="pr-12"
+            placeholder={t("Type your message...")}
+          />
+          <Button
+            type="submit"
+            className="absolute right-1 top-1 rounded-full"
+            disabled={isLoading}
+          >
+            {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+          </Button>
+        </form>
+
+        {hasRecognitionSupport ? (
+          <div className="flex justify-center mt-2">
+            <Button
+              variant="outline"
+              onClick={listening ? handleStopListening : handleStartListening}
+              disabled={isLoading}
+            >
+              {listening ? (
+                <>
+                  {t("Stop Listening")}
+                  <Mic className="ml-2 h-4 w-4" />
+                </>
+              ) : (
+                <>
+                  {t("Start Listening")}
+                  <Mic className="ml-2 h-4 w-4" />
+                </>
+              )}
+            </Button>
+          </div>
+        ) : (
+          <p className="text-center mt-2">
+            {t("Speech recognition not supported in this browser.")}
+          </p>
+        )}
+
+        <div className="flex justify-center mt-4">
+          <Button
+            variant="secondary"
+            onClick={() => handleMorePrompts(setMessages, isSpanish)}
+          >
+            {t("More Prompts")}
+          </Button>
+        </div>
+      </div>
+    </div>
   );
-}
+};
+
+export default HanumanEdition;
