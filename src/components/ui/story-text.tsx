@@ -184,10 +184,10 @@ const StoryDivider = forwardRef<HTMLHRElement, React.HTMLAttributes<HTMLHRElemen
 StoryDivider.displayName = "StoryDivider";
 
 // StoryCitation component
-const StoryCitation = forwardRef<HTMLElement, Omit<StoryTextProps, 'as'> & { as?: React.ElementType }>(
-  ({ className, size = "xs", children, as: Component = "cite", ...props }, ref) => {
+const StoryCitation = forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement> & { size?: "xs" | "sm" | "md" | "lg" | "xl" }>(
+  ({ className, size = "xs", children, ...props }, ref) => {
     return (
-      <Component
+      <cite
         ref={ref}
         className={cn(
           "text-muted-foreground italic", 
@@ -197,7 +197,7 @@ const StoryCitation = forwardRef<HTMLElement, Omit<StoryTextProps, 'as'> & { as?
         {...props}
       >
         {children}
-      </Component>
+      </cite>
     );
   }
 );

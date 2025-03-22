@@ -1,42 +1,36 @@
 
 import React from 'react';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { VayaButton } from '@/components/ui/vaya-button';
-import { StoryText, StoryHeading, StoryQuote, StoryDivider } from '@/components/ui/story-text';
-import { FlexBox } from '@/components/ui/grid-layout';
+import { VayaCard } from '@/components/ui/vaya-card';
+import { StoryHeading, StoryText } from '@/components/ui/story-text';
 
 export const MultilingualStoryExample: React.FC = () => {
   return (
-    <Card variant="purple" elevation={2}>
-      <CardHeader>
-        <CardTitle>Multilingual Support</CardTitle>
-        <CardDescription>Gujarati and Hindi typography</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <StoryHeading language="gujarati">પરિવારની વાર્તાઓ</StoryHeading>
-        
-        <StoryText language="gujarati">
-          અમારા પરિવારની વાર્તાઓ પેઢી દર પેઢી આગળ વધતી રહી છે. દરેક કહાની આપણા સંસ્કૃતિક વારસાનો એક ભાગ છે જે આપણી ઓળખને આકાર આપે છે.
-        </StoryText>
-        
-        <StoryDivider />
-        
-        <StoryHeading language="hindi">परिवार की कहानियाँ</StoryHeading>
-        
-        <StoryText language="hindi">
-          हमारे परिवार की कहानियाँ पीढ़ी दर पीढ़ी आगे बढ़ती रही हैं। हर कहानी हमारी सांस्कृतिक विरासत का एक हिस्सा है जो हमारी पहचान को आकार देती है।
-        </StoryText>
-        
-        <StoryQuote language="hindi">
-          "कहानियों के माध्यम से हम अपने पूर्वजों से जुड़े रहते हैं और अपनी परंपराओं को आगे बढ़ाते हैं।"
-        </StoryQuote>
-      </CardContent>
-      <CardFooter>
-        <FlexBox gap={2}>
-          <VayaButton variant="secondary">Read More</VayaButton>
-          <VayaButton variant="ghost">Translate</VayaButton>
-        </FlexBox>
-      </CardFooter>
-    </Card>
+    <div>
+      <h3 className="text-lg font-medium mb-3">Multilingual Story</h3>
+      
+      <VayaCard elevation={2} className="overflow-hidden">
+        <div className="p-6 space-y-4">
+          <StoryHeading level={3} size="lg" language="gujarati">
+            જયેશ પટેલની યાદગાર
+          </StoryHeading>
+          
+          <StoryText language="gujarati" leading="relaxed">
+            ૧૯૭૨માં અમે ગુજરાતના ગામમાં રહેતા હતા. અમારું ઘર નાનું હતું, પણ આખો પરિવાર સાથે રહેતો
+            હતો. દાદા-દાદી, માતા-પિતા, કાકા-કાકી, અને ઘણા બધા ભાઈ-બહેન. દરરોજ સવારે માતા ગરમ ચા 
+            બનાવતી અને આખો પરિવાર સાથે નાસ્તો કરતો.
+          </StoryText>
+          
+          <StoryHeading level={3} size="lg" language="hindi">
+            जयेश पटेल की यादें
+          </StoryHeading>
+          
+          <StoryText language="hindi" leading="relaxed">
+            १९७२ में हम गुजरात के एक छोटे से गांव में रहते थे। हमारा घर छोटा था, लेकिन पूरा परिवार एक साथ रहता था।
+            दादा-दादी, माता-पिता, चाचा-चाची, और कई भाई-बहन। हर सुबह माँ गरम चाय बनाती थी और पूरा परिवार साथ
+            में नाश्ता करता था।
+          </StoryText>
+        </div>
+      </VayaCard>
+    </div>
   );
 };
