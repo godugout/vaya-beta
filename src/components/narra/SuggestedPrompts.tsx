@@ -2,13 +2,13 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { PromptItem } from "@/components/chat/hooks/types";
+import { HanumanPromptItem } from "@/types/hanuman";
 import { Sparkles } from "lucide-react";
 
 export interface SuggestedPromptsProps {
-  prompts?: PromptItem[];
+  prompts?: HanumanPromptItem[];
   onSelect?: (prompt: string) => void;
-  onPromptSelect?: (prompt: string) => void; // Add this prop to support both naming conventions
+  onPromptSelect?: (prompt: string) => void; // Keep for backward compatibility
   isSpanish?: boolean;
 }
 
@@ -21,7 +21,7 @@ const SuggestedPrompts = ({
   const [expanded, setExpanded] = useState(false);
   
   // Use a set of default prompts if none are provided
-  const defaultPrompts = [
+  const defaultPrompts: HanumanPromptItem[] = [
     { id: "1", content: isSpanish ? "Cuéntame sobre tu familia" : "Tell me about your family", category: "general" },
     { id: "2", content: isSpanish ? "¿Cuál es tu recuerdo favorito?" : "What is your favorite memory?", category: "general" },
     { id: "3", content: isSpanish ? "¿Cómo celebras las tradiciones familiares?" : "How do you celebrate family traditions?", category: "general" },
