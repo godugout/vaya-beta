@@ -1,14 +1,14 @@
 
 import React from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { PromptItem } from "@/components/chat/hooks/types";
+import { HanumanPromptItem } from "@/types/hanuman";
 import SuggestedPrompts from "@/components/narra/SuggestedPrompts";
 import { useHanumanChat } from "@/hooks/useHanumanChat";
 import ChatMessages from "@/components/hanuman/ChatMessages";
 import ChatInputArea from "@/components/hanuman/ChatInputArea";
 
-// Add category to each prompt item to match the PromptItem type
-const suggestedPrompts: PromptItem[] = [
+// Add category to each prompt item to match the HanumanPromptItem type
+const suggestedPrompts: HanumanPromptItem[] = [
   {
     id: "prompt-1",
     content: "Tell me about your childhood.",

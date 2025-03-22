@@ -3,10 +3,10 @@ import React, { useRef, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Loader2 } from "lucide-react";
-import { Message } from "@/components/narra/types";
+import { HanumanMessage } from "@/types/hanuman";
 
 interface ChatMessagesProps {
-  messages: Message[];
+  messages: HanumanMessage[];
   isLoading: boolean;
 }
 
