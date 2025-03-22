@@ -24,7 +24,8 @@ const HanumanEdition = lazy(() => import('@/pages/HanumanEdition'));
 const Profile = lazy(() => import('@/pages/Profile'));
 const Settings = lazy(() => import('@/pages/Settings'));
 const StoryShowcase = lazy(() => import('@/components/design-system/StoryShowcase'));
-const ComponentsShowcase = lazy(() => import('@/components/design-system/ComponentsShowcase'));
+// Fix import by ensuring it has a default export
+const ComponentsShowcase = lazy(() => import('@/components/design-system/ComponentsShowcase').then(module => ({ default: module.default || module })));
 const DesignSystem = lazy(() => import('@/pages/DesignSystem'));
 
 // Admin components are a good candidate for code splitting
