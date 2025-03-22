@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 export interface StoryHeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
   level?: 1 | 2 | 3 | 4 | 5 | 6;
   size?: "sm" | "md" | "lg" | "xl";
-  language?: "english" | "gujarati" | "hindi";
+  language?: "english" | "gujarati" | "hindi" | "sanskrit";
 }
 
 const StoryHeading = forwardRef<HTMLHeadingElement, StoryHeadingProps>(
@@ -20,7 +20,8 @@ const StoryHeading = forwardRef<HTMLHeadingElement, StoryHeadingProps>(
     const languageClasses = {
       english: "font-story",
       gujarati: "font-gujarati gujarati-content",
-      hindi: "font-hindi hindi-content"
+      hindi: "font-hindi hindi-content",
+      sanskrit: "font-sanskrit sanskrit-content"
     };
     
     // Create the component dynamically with proper typing

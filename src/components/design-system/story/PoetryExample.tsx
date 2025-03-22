@@ -47,6 +47,21 @@ export const PoetryExample: React.FC = () => {
             <StoryVerse language="hindi" isLast>बन्द है मेरी वाणी।</StoryVerse>
           </StoryStanza>
         </StoryPoem>
+        
+        <StoryPoem 
+          title="सुभाषितम्" 
+          author="भर्तृहरि"
+          year="5th century CE"
+          language="sanskrit"
+          centered={true}
+        >
+          <StoryStanza language="sanskrit">
+            <StoryVerse language="sanskrit">सत्यं ब्रूयात् प्रियं ब्रूयात्</StoryVerse>
+            <StoryVerse language="sanskrit">न ब्रूयात् सत्यमप्रियम्।</StoryVerse>
+            <StoryVerse language="sanskrit">प्रियं च नानृतं ब्रूयात्</StoryVerse>
+            <StoryVerse language="sanskrit" isLast>एष धर्मः सनातनः॥</StoryVerse>
+          </StoryStanza>
+        </StoryPoem>
       </CardContent>
     </Card>
   );

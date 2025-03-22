@@ -2,7 +2,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 // Expanded type to include more languages
-export type Language = 'en' | 'es' | 'gu' | 'hi';
+export type Language = 'en' | 'es' | 'gu' | 'hi' | 'sa';
 
 interface LanguageContextType {
   language: Language;
@@ -102,6 +102,28 @@ const translations: Record<Language, Record<string, string>> = {
     'back': 'वापस',
     'next': 'आगे',
     'finish': 'समाप्त',
+  },
+  sa: {
+    'home': 'गृहम्',
+    'memories': 'स्मृतयः',
+    'family': 'कुटुम्बम्',
+    'stories': 'कथाः',
+    'settings': 'समायोजनम्',
+    'account': 'खातम्',
+    'welcome': 'वयास्पेस् मध्ये स्वागतम्',
+    'menu': 'सूची',
+    'recording': 'ध्वनिमुद्रणम्',
+    'voice': 'ध्वनि',
+    'transcription': 'लिप्यन्तरणम्',
+    'save': 'संग्रहयतु',
+    'cancel': 'रद्दीकरोतु',
+    'edit': 'सम्पादयतु',
+    'delete': 'विलोपयतु',
+    'loading': 'आनयन् अस्ति...',
+    'retry': 'पुनः प्रयत्नं करोतु',
+    'back': 'पृष्ठम्',
+    'next': 'अग्रे',
+    'finish': 'समाप्तम्',
   }
 };
 
@@ -122,7 +144,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     if (typeof window === 'undefined') return 'en';
     
     const savedLanguage = localStorage.getItem('vaya-language');
-    if (savedLanguage && ['en', 'es', 'gu', 'hi'].includes(savedLanguage)) {
+    if (savedLanguage && ['en', 'es', 'gu', 'hi', 'sa'].includes(savedLanguage)) {
       return savedLanguage as Language;
     }
     
@@ -131,6 +153,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     if (browserLang === 'es') return 'es';
     if (browserLang === 'gu') return 'gu';
     if (browserLang === 'hi') return 'hi';
+    if (browserLang === 'sa') return 'sa';
     return 'en';
   };
 

@@ -15,7 +15,8 @@ const StorySectionTitle = forwardRef<HTMLHeadingElement, StoryHeadingProps>(
     const languageClasses = {
       english: "font-story",
       gujarati: "font-gujarati gujarati-content",
-      hindi: "font-hindi hindi-content"
+      hindi: "font-hindi hindi-content",
+      sanskrit: "font-sanskrit sanskrit-content"
     };
     
     // Create the component dynamically with proper typing

@@ -34,6 +34,7 @@ export const storyTextVariants = cva(
         english: "font-story",
         gujarati: "font-gujarati gujarati-content",
         hindi: "font-hindi hindi-content",
+        sanskrit: "font-sanskrit sanskrit-content",
       },
     },
     defaultVariants: {

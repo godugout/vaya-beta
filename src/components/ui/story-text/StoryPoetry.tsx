@@ -6,7 +6,7 @@ import { storyTextVariants } from "./StoryText";
 export interface StoryVerseProps extends React.HTMLAttributes<HTMLParagraphElement> {
   size?: "xs" | "sm" | "md" | "lg" | "xl";
   leading?: "tight" | "normal" | "relaxed" | "loose";
-  language?: "english" | "gujarati" | "hindi";
+  language?: "english" | "gujarati" | "hindi" | "sanskrit";
   indent?: boolean;
   isLast?: boolean;
 }
@@ -34,7 +34,7 @@ StoryVerse.displayName = "StoryVerse";
 
 export interface StoryStanzaProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: "xs" | "sm" | "md" | "lg" | "xl";
-  language?: "english" | "gujarati" | "hindi";
+  language?: "english" | "gujarati" | "hindi" | "sanskrit";
 }
 
 export const StoryStanza = forwardRef<HTMLDivElement, StoryStanzaProps>(
@@ -46,6 +46,7 @@ export const StoryStanza = forwardRef<HTMLDivElement, StoryStanzaProps>(
           "mb-6",
           language === "gujarati" && "font-gujarati gujarati-content",
           language === "hindi" && "font-hindi hindi-content",
+          language === "sanskrit" && "font-sanskrit sanskrit-content",
           className
         )}
         {...props}
@@ -63,7 +64,7 @@ export interface StoryPoemProps extends React.HTMLAttributes<HTMLDivElement> {
   author?: string;
   year?: string;
   size?: "xs" | "sm" | "md" | "lg" | "xl";
-  language?: "english" | "gujarati" | "hindi";
+  language?: "english" | "gujarati" | "hindi" | "sanskrit";
   centered?: boolean;
 }
 
@@ -99,6 +100,7 @@ export const StoryPoem = forwardRef<HTMLDivElement, StoryPoemProps>(
             size === "xl" && "text-2xl",
             language === "gujarati" && "font-gujarati gujarati-content",
             language === "hindi" && "font-hindi hindi-content",
+            language === "sanskrit" && "font-sanskrit sanskrit-content",
             centered && "text-center"
           )}>
             {title}

@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { storyTextVariants } from "./StoryText";
 
 export interface StoryQuoteProps extends React.HTMLAttributes<HTMLQuoteElement> {
-  language?: "english" | "gujarati" | "hindi";
+  language?: "english" | "gujarati" | "hindi" | "sanskrit";
   size?: "xs" | "sm" | "md" | "lg" | "xl";
   leading?: "tight" | "normal" | "relaxed" | "loose";
 }
