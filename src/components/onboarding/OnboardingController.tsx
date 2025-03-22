@@ -2,12 +2,13 @@
 import { useState, useEffect } from "react";
 import { HanumanEditionOnboarding } from "./HanumanEditionOnboarding";
 import { WelcomeModal } from "./WelcomeModal";
+import { VayaOnboarding } from "./VayaOnboarding";
 import { supabase } from "@/integrations/supabase/client";
 
 export function OnboardingController() {
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [showWelcome, setShowWelcome] = useState(false);
-  const [onboardingType, setOnboardingType] = useState<"standard" | "hanuman">("standard");
+  const [onboardingType, setOnboardingType] = useState<"standard" | "hanuman" | "modern">("modern");
 
   useEffect(() => {
     // Check if user has completed onboarding
@@ -19,7 +20,7 @@ export function OnboardingController() {
     }
   }, []);
 
-  const handleWelcomeComplete = (chosenEdition: "standard" | "hanuman") => {
+  const handleWelcomeComplete = (chosenEdition: "standard" | "hanuman" | "modern") => {
     setShowWelcome(false);
     setOnboardingType(chosenEdition);
     setShowOnboarding(true);
@@ -57,6 +58,14 @@ export function OnboardingController() {
           onOpenChange={() => handleOnboardingComplete()}
         />
       )}
+      
+      {/* Modern dark theme onboarding - new default */}
+      {showOnboarding && onboardingType === "modern" && (
+        <VayaOnboarding
+          open={showOnboarding}
+          onOpenChange={handleOnboardingComplete}
+        />
+      )}
     </>
   );
 }
@@ -69,26 +78,23 @@ function WelcomeModalWithEdition({
 }: { 
   open: boolean; 
   onOpenChange: (open: boolean) => void;
-  onComplete: (edition: "standard" | "hanuman") => void;
+  onComplete: (edition: "standard" | "hanuman" | "modern") => void;
 }) {
-  const [currentStep, setCurrentStep] = useState(0);
-  const [selectedEdition, setSelectedEdition] = useState<"standard" | "hanuman">("standard");
-  
-  // Reuse the existing WelcomeModal steps and content
-  // but add a final step for edition selection
-  
-  const handleNext = () => {
-    if (currentStep < 4) {
-      setCurrentStep(currentStep + 1);
-    } else {
-      onComplete(selectedEdition);
-    }
+  // Default to modern theme
+  const handleEditionSelect = (edition: "standard" | "hanuman" | "modern") => {
+    onComplete(edition);
   };
   
-  return (
-    <WelcomeModal
-      open={open}
-      onOpenChange={onOpenChange}
-    />
-  );
+  useEffect(() => {
+    // Auto-select modern theme after a brief delay
+    if (open) {
+      const timer = setTimeout(() => {
+        handleEditionSelect("modern");
+      }, 500);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [open]);
+  
+  return null; // Skipping the selection UI and directly using the modern theme
 }

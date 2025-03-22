@@ -1,48 +1,66 @@
 
-import React from 'react';
-import { useAnimation } from '@/components/animation/AnimationProvider';
-import { RadioGroup } from '@/components/input/FormControls';
+import React, { useState } from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
-import { Info } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useAnimation } from '@/components/animation/AnimationProvider';
+import { AnimationPreference } from '@/types/animation';
 
-export function AnimationSettings() {
-  const { preference, setPreference } = useAnimation();
+export const AnimationSettings = () => {
+  const { animationPreference, setAnimationPreference } = useAnimation();
+  const [selectedPreference, setSelectedPreference] = useState<AnimationPreference>(animationPreference);
+
+  const handleSave = () => {
+    setAnimationPreference(selectedPreference);
+    localStorage.setItem('animationPreference', selectedPreference);
+  };
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-start gap-2">
-        <Label className="font-medium text-base">Motion & Animation</Label>
-        <div className="rounded-full bg-gray-100 dark:bg-gray-800 p-1 flex items-center justify-center">
-          <Info size={14} className="text-gray-500" />
-        </div>
-      </div>
-      
-      <p className="text-sm text-gray-600 dark:text-gray-400">
-        Control how animations and transitions appear throughout the application.
-      </p>
-      
-      <RadioGroup
-        name="animation-preference"
-        value={preference}
-        onChange={(value) => setPreference(value as 'full' | 'reduced' | 'none')}
-        options={[
-          { 
-            value: 'full', 
-            label: 'Full animations', 
-            description: 'Experience all animations and transitions as designed.'
-          },
-          { 
-            value: 'reduced', 
-            label: 'Reduced motion', 
-            description: 'Simpler animations for improved accessibility and reduced visual stimulation.'
-          },
-          { 
-            value: 'none', 
-            label: 'No animations', 
-            description: 'Turn off all non-essential animations and transitions.'
-          },
-        ]}
-      />
-    </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>Animation Settings</CardTitle>
+        <CardDescription>
+          Choose how animations are displayed throughout the application
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <RadioGroup 
+          value={selectedPreference} 
+          onValueChange={(value: AnimationPreference) => setSelectedPreference(value)}
+          className="space-y-4"
+        >
+          <div className="flex items-start space-x-3">
+            <RadioGroupItem id="full" value="full" />
+            <div className="grid gap-1.5">
+              <Label htmlFor="full" className="font-medium">
+                Full Animations
+              </Label>
+              <p className="text-sm text-muted-foreground">
+                Display all animations at normal speed
+              </p>
+            </div>
+          </div>
+          
+          <div className="flex items-start space-x-3">
+            <RadioGroupItem id="reduced" value="reduced" />
+            <div className="grid gap-1.5">
+              <Label htmlFor="reduced" className="font-medium">
+                Reduced Animations
+              </Label>
+              <p className="text-sm text-muted-foreground">
+                Simplify and reduce the speed of animations
+              </p>
+            </div>
+          </div>
+        </RadioGroup>
+        
+        <Button onClick={handleSave} className="mt-6">
+          Save Preferences
+        </Button>
+      </CardContent>
+    </Card>
   );
-}
+};
+
+export default AnimationSettings;

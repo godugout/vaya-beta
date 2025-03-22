@@ -1,26 +1,30 @@
 
-import { useState, useEffect } from "react";
-import { PromptItem } from "@/components/chat/hooks/types";
-import { allPrompts, promptCategories } from "@/data/hanumanPrompts";
+import { useState, useEffect } from 'react';
+import { PromptCategory, PromptItem } from '@/components/chat/hooks/types';
+import { hanumanPrompts } from '@/data/hanumanPrompts';
 
-export const useCategoryPrompts = (categoryId: string = "all") => {
-  const [prompts, setPrompts] = useState<PromptItem[]>([]);
+export const useCategoryPrompts = (isSpanish: boolean = false) => {
+  const [categories, setCategories] = useState<PromptCategory[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [allPrompts, setAllPrompts] = useState<PromptItem[]>([]);
 
   useEffect(() => {
-    if (categoryId === "all") {
-      setPrompts(allPrompts);
-    } else {
-      const filteredPrompts = allPrompts.filter(
-        (prompt) => prompt.category === categoryId
-      );
-      setPrompts(filteredPrompts);
-    }
-  }, [categoryId]);
+    setCategories(hanumanPrompts);
+    
+    // Flatten all prompts from all categories
+    const flattenedPrompts = hanumanPrompts.flatMap(category => 
+      category.prompts.filter(prompt => prompt.isSpanish === isSpanish)
+    );
+    
+    setAllPrompts(flattenedPrompts);
+    setLoading(false);
+  }, [isSpanish]);
 
-  const getCategoryName = (categoryId: string, language: 'en' | 'es' = 'en') => {
-    const category = promptCategories.find(cat => cat.id === categoryId);
-    return category ? category.name[language] : categoryId;
+  return {
+    categories,
+    allPrompts,
+    loading,
   };
-
-  return { prompts, getCategoryName };
 };
+
+export default useCategoryPrompts;

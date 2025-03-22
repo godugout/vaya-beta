@@ -4,7 +4,7 @@
 @tailwind utilities;
 
 /* Import fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 /* Import base reset styles */
 @import './styles/base/reset.css';
@@ -22,3 +22,4 @@
 @import './styles/theme/soft-theme.css';
 @import './styles/theme/index.css';
 @import './styles/theme/dark.css';
+@import './styles/theme/dark-theme.css'; /* New dark theme */

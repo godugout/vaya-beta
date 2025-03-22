@@ -1,7 +1,7 @@
 
 import { useState } from "react";
-import { CategoryButton } from "./CategoryButton";
-import { PromptList } from "./PromptList";
+import CategoryButton from "./CategoryButton";
+import PromptList from "./PromptList";
 import { PromptCategory, PromptCategoriesProps } from "./hooks/types";
 import { hanumanPrompts } from "@/data/hanumanPrompts";
 

@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { PromptItem } from "@/components/chat/hooks/types";
 import { Sparkles } from "lucide-react";
 
-interface SuggestedPromptsProps {
+export interface SuggestedPromptsProps {
   prompts: PromptItem[];
   onSelect: (prompt: string) => void;
   isSpanish?: boolean;
