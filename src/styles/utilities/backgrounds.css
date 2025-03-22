@@ -1,58 +1,42 @@
 
-/* Background styles - simplified */
-.bg-forest {
-  background-color: var(--color-forest);
+/* Hanuman Theme Backgrounds */
+.bg-hanuman-orange {
+  background-color: var(--hanuman-primary);
   color: white;
 }
 
-.bg-water {
-  background-color: var(--color-water);
+.bg-hanuman-red {
+  background-color: var(--hanuman-secondary);
   color: white;
 }
 
-.bg-sky {
-  background-color: var(--color-sky);
-  color: var(--color-text-dark);
+.bg-hanuman-gold {
+  background-color: var(--hanuman-accent);
+  color: var(--text-primary);
 }
 
-.bg-sand {
-  background-color: var(--color-sand);
-  color: var(--color-text-dark);
+.bg-hanuman-light {
+  background-color: var(--hanuman-bg-light);
+  color: var(--text-primary);
 }
 
-/* Simplified image backgrounds */
-.bg-forest-stream {
-  background-image: url('/lovable-uploads/cd5eb0a6-71c2-43a8-a8c6-0a9e222958ab.png');
-  background-size: cover;
-  background-position: center;
+.bg-hanuman-dark {
+  background-color: var(--hanuman-bg-dark);
+  color: white;
 }
 
+/* Image backgrounds */
 .bg-hanuman-bg {
   background-image: url('/lovable-uploads/e972aa49-7146-43ba-a1e8-b6e0b5f975d5.png');
   background-size: cover;
   background-position: center;
 }
 
-.bg-light-gray {
-  background-color: #f4f4f4;
-}
-
-/* Simple gradients */
-.bg-gradient-clean {
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-}
-
-/* Spiritual theme gradients */
-.bg-spiritual-gradient {
+/* Gradients */
+.bg-hanuman-gradient {
   background: linear-gradient(135deg, rgba(255, 165, 0, 0.1) 0%, rgba(255, 69, 0, 0.1) 100%);
 }
 
 .bg-orange-saffron-gradient {
   background: linear-gradient(135deg, rgba(255, 200, 97, 0.15) 0%, rgba(255, 117, 26, 0.15) 100%);
-}
-
-/* Basic pattern */
-.bg-dots {
-  background-image: radial-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px);
-  background-size: 20px 20px;
 }

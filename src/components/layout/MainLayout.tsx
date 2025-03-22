@@ -35,7 +35,7 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
 
   // Apply the theme class to body
   useEffect(() => {
-    document.body.classList.remove('light', 'dark', 'star-bg', 'nebula-effect', 'nasa-theme', 'cosmic-bg');
+    document.body.classList.remove('light', 'dark');
     document.body.classList.add(theme, 'hanuman-theme');
     
     return () => {
@@ -44,14 +44,14 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
   }, [theme]);
   
   return (
-    <div className={`flex flex-col min-h-screen ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
+    <div className={`flex flex-col min-h-screen ${theme === 'dark' ? 'bg-hanuman-dark text-white' : 'bg-hanuman-light text-black'}`}>
       {/* Simple background with Hanuman image */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="bg-hanuman-bg absolute inset-0 bg-no-repeat bg-cover bg-center opacity-5 dark:opacity-10"></div>
       </div>
       
       {/* Header area */}
-      <header className={`sticky top-0 z-10 ${isSoftTheme ? 'bg-[var(--soft-bg-primary)]' : 'bg-background/95 backdrop-blur-sm'}`}>
+      <header className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm">
         <MainNav />
       </header>
       
@@ -61,7 +61,7 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
       </div>
       
       {/* Content area */}
-      <main className={`flex-grow pt-8 container mx-auto px-4 ${className} ${isSoftTheme ? 'bg-[var(--soft-bg-primary)] text-[var(--soft-text-primary)]' : ''}`}>
+      <main className={`flex-grow pt-8 ${className}`}>
         <ErrorBoundary>
           {children}
         </ErrorBoundary>

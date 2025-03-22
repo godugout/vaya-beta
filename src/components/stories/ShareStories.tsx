@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useActivityTracking } from "@/hooks/useActivityTracking";
 import { ActivityTypes } from "@/hooks/useActivityTracking";
+import { FadeIn } from '@/components/animation/FadeIn';
 
 const ShareStories = () => {
   const [isRecording, setIsRecording] = useState(false);
@@ -21,44 +22,45 @@ const ShareStories = () => {
     });
 
     console.log("Message sent:", message);
-    // Handle the message being sent
   };
 
   return (
-    <Card className="border-hanuman-orange/20 shadow-sm">
-      <CardHeader>
-        <CardTitle className="text-hanuman-orange font-heading">Share Your Story</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <Tabs defaultValue="voice" className="w-full">
-          <TabsList className="w-full">
-            <TabsTrigger 
-              value="voice" 
-              className="w-full data-[state=active]:bg-hanuman-orange data-[state=active]:text-white"
-              onClick={() => trackActivity(ActivityTypes.FEATURE_USED, { feature: "voice_recording", source: "share_stories" })}
-            >
-              Voice Recording
-            </TabsTrigger>
-            <TabsTrigger 
-              value="upload" 
-              className="w-full"
-              onClick={() => trackActivity(ActivityTypes.FEATURE_USED, { feature: "memory_upload", source: "share_stories" })}
-            >
-              Upload Memory
-            </TabsTrigger>
-          </TabsList>
-          <TabsContent value="voice">
-            <VoiceRecorder 
-              onMessageSent={handleMessageSent}
-              setIsRecording={setIsRecording}
-            />
-          </TabsContent>
-          <TabsContent value="upload">
-            <MemoryUpload />
-          </TabsContent>
-        </Tabs>
-      </CardContent>
-    </Card>
+    <FadeIn>
+      <Card className="border-hanuman-orange/20 shadow-sm">
+        <CardHeader>
+          <CardTitle className="text-hanuman-orange font-heading">Share Your Story</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Tabs defaultValue="voice" className="w-full">
+            <TabsList className="w-full">
+              <TabsTrigger 
+                value="voice" 
+                className="w-full data-[state=active]:bg-hanuman-orange data-[state=active]:text-white"
+                onClick={() => trackActivity(ActivityTypes.FEATURE_USED, { feature: "voice_recording", source: "share_stories" })}
+              >
+                Voice Recording
+              </TabsTrigger>
+              <TabsTrigger 
+                value="upload" 
+                className="w-full"
+                onClick={() => trackActivity(ActivityTypes.FEATURE_USED, { feature: "memory_upload", source: "share_stories" })}
+              >
+                Upload Memory
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="voice">
+              <VoiceRecorder 
+                onMessageSent={handleMessageSent}
+                setIsRecording={setIsRecording}
+              />
+            </TabsContent>
+            <TabsContent value="upload">
+              <MemoryUpload />
+            </TabsContent>
+          </Tabs>
+        </CardContent>
+      </Card>
+    </FadeIn>
   );
 };
 

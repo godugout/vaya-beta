@@ -4,7 +4,7 @@ import { MainLayout } from '@/components/layout/MainLayout';
 import { FadeIn } from '@/components/animation/FadeIn';
 import StoriesHeader from "@/components/stories/StoriesHeader";
 import StoriesHeroSection from "@/components/stories/StoriesHeroSection";
-import DualPaneRecordingSection from "@/components/stories/DualPaneRecordingSection";
+import ShareStories from "@/components/stories/ShareStories";
 import PatelFamilyEventsSection from "@/components/stories/PatelFamilyEventsSection";
 import RecentFamilyStories from "@/components/stories/RecentFamilyStories";
 
@@ -17,10 +17,14 @@ export default function ShareStoriesPage() {
 
         <div className="flex flex-col md:flex-row gap-8">
           {/* Left Column - Feature Cards */}
-          <StoriesHeroSection />
+          <div className="md:w-1/2">
+            <StoriesHeroSection />
+          </div>
 
           {/* Right Column - Recording Interface */}
-          <DualPaneRecordingSection />
+          <div className="md:w-1/2">
+            <ShareStories />
+          </div>
         </div>
 
         {/* Family Events Table */}
