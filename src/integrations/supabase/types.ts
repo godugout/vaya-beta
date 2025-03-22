@@ -67,15 +67,7 @@ export type Database = {
           note?: string
           updated_at?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "cultural_notes_member_id_fkey"
-            columns: ["member_id"]
-            isOneToOne: false
-            referencedRelation: "family_members"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       families: {
         Row: {
@@ -173,60 +165,86 @@ export type Database = {
           uploaded_by?: string | null
           url?: string
         }
+        Relationships: []
+      }
+      family_members: {
+        Row: {
+          birth_date: string | null
+          birth_place: string | null
+          created_at: string | null
+          description: string | null
+          glyph_type: string
+          id: string
+          name: string
+          occupation: string | null
+          parent_id: string | null
+          photo_url: string | null
+          title: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          birth_date?: string | null
+          birth_place?: string | null
+          created_at?: string | null
+          description?: string | null
+          glyph_type: string
+          id?: string
+          name: string
+          occupation?: string | null
+          parent_id?: string | null
+          photo_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          birth_date?: string | null
+          birth_place?: string | null
+          created_at?: string | null
+          description?: string | null
+          glyph_type?: string
+          id?: string
+          name?: string
+          occupation?: string | null
+          parent_id?: string | null
+          photo_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+        }
         Relationships: [
           {
-            foreignKeyName: "family_media_member_id_fkey"
-            columns: ["member_id"]
+            foreignKeyName: "family_members_parent_id_fkey"
+            columns: ["parent_id"]
             isOneToOne: false
             referencedRelation: "family_members"
             referencedColumns: ["id"]
           },
         ]
       }
-      family_members: {
+      family_members_audit: {
         Row: {
           created_at: string | null
-          cultural_significance: string | null
-          family_id: string | null
-          generation_level: number | null
+          created_by: string | null
           id: string
-          life_story: string | null
-          role: string
-          user_id: string | null
+          member_id: string | null
         }
         Insert: {
           created_at?: string | null
-          cultural_significance?: string | null
-          family_id?: string | null
-          generation_level?: number | null
+          created_by?: string | null
           id?: string
-          life_story?: string | null
-          role?: string
-          user_id?: string | null
+          member_id?: string | null
         }
         Update: {
           created_at?: string | null
-          cultural_significance?: string | null
-          family_id?: string | null
-          generation_level?: number | null
+          created_by?: string | null
           id?: string
-          life_story?: string | null
-          role?: string
-          user_id?: string | null
+          member_id?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "family_members_family_id_fkey"
-            columns: ["family_id"]
+            foreignKeyName: "family_members_audit_member_id_fkey"
+            columns: ["member_id"]
             isOneToOne: false
-            referencedRelation: "families"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "family_members_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
+            referencedRelation: "family_members"
             referencedColumns: ["id"]
           },
         ]
@@ -399,15 +417,7 @@ export type Database = {
           interest?: string
           member_id?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "member_interests_member_id_fkey"
-            columns: ["member_id"]
-            isOneToOne: false
-            referencedRelation: "family_members"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       photos: {
         Row: {

@@ -80,29 +80,31 @@ export const useOfflineOperations = () => {
   // Subscribe to offline manager status changes
   useEffect(() => {
     const unsubscribe = offlineManager.subscribe((newStatus) => {
-      setStatus(prev => ({
-        ...prev,
-        ...newStatus
-      }));
-      
-      // Show a toast when we go online/offline
-      if (prev.isOnline !== newStatus.isOnline) {
-        if (newStatus.isOnline) {
-          toast({
-            title: "You're back online",
-            description: newStatus.pendingOperations > 0 
-              ? `Synchronizing ${newStatus.pendingOperations} pending changes...` 
-              : "All your data is up to date.",
-            variant: "default"
-          });
-        } else {
-          toast({
-            title: "You're offline",
-            description: "Don't worry, your changes will be saved and synchronized when you're back online.",
-            variant: "destructive"
-          });
+      setStatus(prevStatus => {
+        // Show a toast when we go online/offline
+        if (prevStatus.isOnline !== newStatus.isOnline) {
+          if (newStatus.isOnline) {
+            toast({
+              title: "You're back online",
+              description: newStatus.pendingOperations > 0 
+                ? `Synchronizing ${newStatus.pendingOperations} pending changes...` 
+                : "All your data is up to date.",
+              variant: "default"
+            });
+          } else {
+            toast({
+              title: "You're offline",
+              description: "Don't worry, your changes will be saved and synchronized when you're back online.",
+              variant: "destructive"
+            });
+          }
         }
-      }
+
+        return {
+          ...prevStatus,
+          ...newStatus
+        };
+      });
     });
     
     // Clean up subscription on unmount

@@ -1,6 +1,6 @@
 
 import { useState, useEffect, useCallback } from 'react';
-import { FamilyGraph, FamilyNode, FamilyEdge } from '@/utils/graphDb/familyGraphTypes';
+import { FamilyGraph, FamilyNode, FamilyEdge, FamilyRelationshipType } from '@/utils/graphDb/familyGraphTypes';
 import { familyTreeCache } from '@/utils/offline/familyTreeCache';
 import { useOfflineOperations } from './useOfflineOperations';
 import { useToast } from '@/components/ui/use-toast';
@@ -44,13 +44,12 @@ export const useFamilyTreeCache = (familyId: string | undefined) => {
   }, [loadGraph]);
 
   // Add a new person node with offline support
-  const addPerson = useCallback(async (personData: Partial<FamilyNode['data']>) => {
+  const addPerson = useCallback(async (personData: Partial<FamilyNode['data']> & { full_name: string }) => {
     if (!familyId) return null;
     
     try {
       const newNode = await familyTreeCache.addNode(familyId, {
         type: 'person',
-        position: { x: 0, y: 0 }, // Default position, should be calculated based on graph layout
         data: personData
       });
       
@@ -80,7 +79,7 @@ export const useFamilyTreeCache = (familyId: string | undefined) => {
   const addRelationship = useCallback(async (
     sourceId: string,
     targetId: string,
-    type: string,
+    type: FamilyRelationshipType,
     metadata: Record<string, any> = {}
   ) => {
     if (!familyId) return null;

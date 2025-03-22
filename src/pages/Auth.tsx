@@ -8,7 +8,7 @@ import { LoginForm } from "@/components/auth/LoginForm";
 import { SignupForm } from "@/components/auth/SignupForm";
 import { SimulatedAuth } from "@/components/auth/SimulatedAuth";
 
-export default function Auth() {
+export const Auth = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -76,4 +76,6 @@ export default function Auth() {
       </Tabs>
     </AuthLayout>
   );
-}
+};
+
+export default Auth;

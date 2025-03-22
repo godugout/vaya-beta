@@ -2,7 +2,7 @@
 import React from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
-export default function Home() {
+export const Home = () => {
   const { t } = useLanguage();
   
   return (
@@ -30,4 +30,6 @@ export default function Home() {
       </div>
     </div>
   );
-}
+};
+
+export default Home;

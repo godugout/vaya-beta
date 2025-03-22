@@ -11,9 +11,9 @@ import { LoadingIndicator } from '@/components/animation/LoadingIndicator';
 
 // Eagerly loaded components for critical paths
 import { MainLayout } from '@/components/layout/MainLayout';
-import { Home } from '@/pages/Home';
-import { Auth } from '@/pages/Auth';
-import { NotFound } from '@/pages/NotFound';
+import Home from '@/pages/Home';
+import Auth from '@/pages/Auth';
+import NotFound from '@/pages/NotFound';
 
 // Lazily loaded components
 const Families = lazy(() => import('@/pages/Families'));
@@ -24,7 +24,7 @@ const HanumanEdition = lazy(() => import('@/pages/HanumanEdition'));
 const Profile = lazy(() => import('@/pages/Profile'));
 const Settings = lazy(() => import('@/pages/Settings'));
 const StoryShowcase = lazy(() => import('@/components/design-system/StoryShowcase'));
-const ComponentsShowcase = lazy(() => import('@/components/design-system/ComponentsShowcase'));
+const ComponentsShowcase = lazy(() => import('@/components/design-system/ComponentsShowcase').then(m => ({ default: m })));
 const DesignSystem = lazy(() => import('@/pages/DesignSystem'));
 
 // Admin components are a good candidate for code splitting

@@ -3,7 +3,7 @@ import React from 'react';
 import { useOfflineOperations } from '@/hooks/useOfflineOperations';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Tooltip } from '@/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Wifi, WifiOff, RefreshCw, Check } from 'lucide-react';
 
 interface OfflineStatusIndicatorProps {
@@ -27,35 +27,49 @@ export const OfflineStatusIndicator: React.FC<OfflineStatusIndicatorProps> = ({
   return (
     <div className={`flex items-center gap-2 ${className}`}>
       {showBadge && (
-        <Tooltip content={isOnline ? "Connected" : "Offline"}>
-          <Badge 
-            variant={isOnline ? "default" : "destructive"} 
-            className="px-2 py-1 flex items-center gap-1"
-          >
-            {isOnline ? (
-              <>
-                <Wifi className="w-3.5 h-3.5" />
-                <span className="text-xs">Online</span>
-              </>
-            ) : (
-              <>
-                <WifiOff className="w-3.5 h-3.5" />
-                <span className="text-xs">Offline</span>
-              </>
-            )}
-          </Badge>
-        </Tooltip>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Badge 
+                variant={isOnline ? "default" : "destructive"} 
+                className="px-2 py-1 flex items-center gap-1"
+              >
+                {isOnline ? (
+                  <>
+                    <Wifi className="w-3.5 h-3.5" />
+                    <span className="text-xs">Online</span>
+                  </>
+                ) : (
+                  <>
+                    <WifiOff className="w-3.5 h-3.5" />
+                    <span className="text-xs">Offline</span>
+                  </>
+                )}
+              </Badge>
+            </TooltipTrigger>
+            <TooltipContent>
+              {isOnline ? "Connected" : "Offline"}
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       )}
       
       {hasPendingOperations && (
-        <Tooltip content="Pending changes to be synchronized">
-          <Badge 
-            variant="outline" 
-            className="px-2 py-1 flex items-center gap-1 border-amber-400 text-amber-600"
-          >
-            <span className="text-xs">{status.pendingOperations} pending</span>
-          </Badge>
-        </Tooltip>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Badge 
+                variant="outline" 
+                className="px-2 py-1 flex items-center gap-1 border-amber-400 text-amber-600"
+              >
+                <span className="text-xs">{status.pendingOperations} pending</span>
+              </Badge>
+            </TooltipTrigger>
+            <TooltipContent>
+              Pending changes to be synchronized
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       )}
       
       {showSyncButton && hasPendingOperations && isOnline && (
@@ -81,15 +95,22 @@ export const OfflineStatusIndicator: React.FC<OfflineStatusIndicatorProps> = ({
       )}
       
       {!hasPendingOperations && isOnline && showBadge && (
-        <Tooltip content="All changes are synchronized">
-          <Badge 
-            variant="outline" 
-            className="px-2 py-1 flex items-center gap-1 border-green-400 text-green-600"
-          >
-            <Check className="w-3.5 h-3.5" />
-            <span className="text-xs">Synced</span>
-          </Badge>
-        </Tooltip>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Badge 
+                variant="outline" 
+                className="px-2 py-1 flex items-center gap-1 border-green-400 text-green-600"
+              >
+                <Check className="w-3.5 h-3.5" />
+                <span className="text-xs">Synced</span>
+              </Badge>
+            </TooltipTrigger>
+            <TooltipContent>
+              All changes are synchronized
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       )}
     </div>
   );
