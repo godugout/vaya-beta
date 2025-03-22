@@ -25,37 +25,60 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ messages, isLoading }) => {
     <div
       ref={chatContainerRef}
       className="flex-grow overflow-y-auto p-4 space-y-4 bg-pattern-subtle"
-      style={{backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg stroke='%23FF7A00' stroke-width='1' stroke-opacity='0.05'%3E%3Cpath d='M30 10 L50 45 L10 45 Z M15 25 L45 25 M12.5 35 L47.5 35'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`}}
+      style={{
+        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg stroke='%23FF7A00' stroke-width='1' stroke-opacity='0.05'%3E%3Cpath d='M30 10 L50 45 L10 45 Z M15 25 L45 25 M12.5 35 L47.5 35'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+        minHeight: '60vh', // Ensure minimum height for messages area
+      }}
     >
-      {messages.map((message, index) => (
-        <motion.div
-          key={index}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className={`flex items-start gap-2 ${
-            message.role === "user" ? "justify-end" : ""
-          }`}
+      {messages.length === 0 ? (
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+          className="flex flex-col items-center justify-center h-full text-center text-gray-500 p-8"
         >
-          {message.role === "assistant" && (
-            <Avatar className="h-8 w-8 border-2 border-hanuman-primary/20">
+          <div className="w-16 h-16 rounded-full bg-hanuman-primary/10 flex items-center justify-center mb-4">
+            <Avatar className="h-10 w-10 border-2 border-hanuman-primary/20">
               <AvatarImage src="/assets/hanuman-avatar.png" alt="Hanuman" />
               <AvatarFallback className="bg-hanuman-primary text-white">H</AvatarFallback>
             </Avatar>
-          )}
-          <Card
-            className={`w-fit max-w-[80%] shadow-md ${
-              message.role === "user"
-                ? "bg-hanuman-primary text-white dark:bg-hanuman-primary dark:text-white"
-                : "bg-white dark:bg-gray-800 border-hanuman-accent/20"
+          </div>
+          <h3 className="text-xl font-medium text-hanuman-primary mb-2">Begin your sacred conversation</h3>
+          <p className="max-w-md">
+            Share your family stories and preserve your heritage through meaningful dialogue
+          </p>
+        </motion.div>
+      ) : (
+        messages.map((message, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className={`flex items-start gap-2 ${
+              message.role === "user" ? "justify-end" : ""
             }`}
           >
-            <CardContent className="p-3 break-words">
-              {message.content}
-            </CardContent>
-          </Card>
-        </motion.div>
-      ))}
+            {message.role === "assistant" && (
+              <Avatar className="h-8 w-8 border-2 border-hanuman-primary/20">
+                <AvatarImage src="/assets/hanuman-avatar.png" alt="Hanuman" />
+                <AvatarFallback className="bg-hanuman-primary text-white">H</AvatarFallback>
+              </Avatar>
+            )}
+            <Card
+              className={`w-fit max-w-[80%] shadow-md ${
+                message.role === "user"
+                  ? "bg-hanuman-primary text-white dark:bg-hanuman-primary dark:text-white"
+                  : "bg-white dark:bg-gray-800 border-hanuman-accent/20"
+              }`}
+            >
+              <CardContent className="p-3 break-words text-left">
+                {message.content}
+              </CardContent>
+            </Card>
+          </motion.div>
+        ))
+      )}
       {isLoading && (
         <motion.div 
           initial={{ opacity: 0 }}

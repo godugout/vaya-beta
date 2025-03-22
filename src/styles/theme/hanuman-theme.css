@@ -139,6 +139,34 @@
   box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
 }
 
+/* Chat container specific styles */
+.hanuman-theme .chat-container {
+  height: 75vh;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+/* Specific height adjustments for different viewport sizes */
+@media (min-height: 800px) {
+  .hanuman-theme .chat-container {
+    height: 70vh;
+  }
+}
+
+@media (min-height: 1000px) {
+  .hanuman-theme .chat-container {
+    height: 75vh;
+  }
+}
+
+@media (max-height: 700px) {
+  .hanuman-theme .chat-container {
+    height: 65vh;
+  }
+}
+
 /* Animation effects */
 @keyframes gentle-pulse {
   0% { transform: scale(1); }

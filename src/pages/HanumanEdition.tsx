@@ -97,10 +97,10 @@ const HanumanEdition = () => {
       </header>
 
       {/* Main content area */}
-      <main className="flex-grow container mx-auto max-w-4xl px-4 pb-8">
+      <main className="flex-grow container mx-auto max-w-5xl px-4 pb-12">
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl overflow-hidden border border-hanuman-primary/20">
-          <div className="chat-container h-[600px] flex flex-col">
-            {/* Chat messages area */}
+          <div className="chat-container flex flex-col h-[75vh]">
+            {/* Chat messages area - increased height */}
             <ChatMessages messages={messages} isLoading={isLoading} />
             
             {/* Suggested prompts */}
