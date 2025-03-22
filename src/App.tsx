@@ -5,9 +5,9 @@ import { Toaster } from '@/components/ui/sonner';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { LanguageProvider } from '@/contexts/LanguageContext';
-import MainLayout from '@/components/layout/MainLayout';
-import LoadingIndicator from '@/components/animation/LoadingIndicator';
-import ErrorBoundary from '@/components/ErrorBoundary';
+import { MainLayout } from '@/components/layout/MainLayout';
+import { LoadingIndicator } from '@/components/animation/LoadingIndicator';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 // Lazy load components to improve initial load time
 const Home = lazy(() => import('@/pages/Home'));
@@ -25,8 +25,8 @@ const ShareStories = lazy(() => import('@/pages/ShareStories'));
 const Profile = lazy(() => import('@/pages/Profile'));
 const Settings = lazy(() => import('@/pages/Settings'));
 const StoryShowcase = lazy(() => import('@/components/design-system/StoryShowcase'));
-// Fix the import - reference the module directly
-const ComponentsShowcase = lazy(() => import('@/components/design-system/ComponentsShowcase'));
+// Import directly without expecting a default export
+const ComponentsShowcase = lazy(() => import('@/components/design-system/ComponentsShowcase').then(module => ({ default: module.ComponentsShowcase })));
 const DesignSystem = lazy(() => import('@/pages/DesignSystem'));
 
 // Admin components are a good candidate for code splitting
