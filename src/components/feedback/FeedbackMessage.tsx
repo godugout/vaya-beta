@@ -2,7 +2,7 @@
 import React from 'react';
 import { VariantProps, cva } from 'class-variance-authority';
 import { AlertCircle, CheckCircle, Info, AlertTriangle, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, HTMLMotionProps } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useAnimation } from '@/components/animation/AnimationProvider';
 
@@ -29,7 +29,7 @@ const feedbackVariants = cva(
 );
 
 export interface FeedbackMessageProps
-  extends React.HTMLAttributes<HTMLDivElement>,
+  extends Omit<HTMLMotionProps<"div">, "animate" | "initial" | "exit" | "transition">,
     VariantProps<typeof feedbackVariants> {
   title?: string;
   onClose?: () => void;

@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useToast } from '@/components/ui/use-toast';
 
 // Define the types of devices we can detect
-export type ProximityDeviceType = 'bluetooth' | 'wifi' | 'nfc';
+export type ProximityDeviceType = 'bluetooth' | 'wifi' | 'nfc' | 'uwb';
 
 export interface ProximityDevice {
   id: string;
@@ -12,28 +12,79 @@ export interface ProximityDevice {
   distance?: number; // Approximate distance in meters (if available)
   rssi?: number; // Signal strength
   lastSeen: Date;
+  metadata?: Record<string, any>; // Additional device-specific data
 }
 
 export interface UseProximityDetectionOptions {
   enabled?: boolean;
   onDeviceDetected?: (device: ProximityDevice) => void;
+  onDeviceLost?: (deviceId: string) => void;
   detectionInterval?: number; // in milliseconds
   signalThreshold?: number; // RSSI threshold for considering a device "near"
+  crowdedEnvironment?: boolean; // Optimize for crowded environments
+  batteryEfficient?: boolean; // Optimize for battery efficiency
+  deviceFilters?: Partial<ProximityDevice>[]; // Filter specific devices
+  offlineMode?: boolean; // Continue tracking when offline
 }
 
 export function useProximityDetection({
   enabled = true,
   onDeviceDetected,
+  onDeviceLost,
   detectionInterval = 5000,
-  signalThreshold = -70
+  signalThreshold = -70,
+  crowdedEnvironment = false,
+  batteryEfficient = false,
+  deviceFilters = [],
+  offlineMode = false
 }: UseProximityDetectionOptions = {}) {
   const [isScanning, setIsScanning] = useState(false);
   const [nearbyDevices, setNearbyDevices] = useState<ProximityDevice[]>([]);
   const [permissionGranted, setPermissionGranted] = useState<boolean | null>(null);
+  const [deviceHistory, setDeviceHistory] = useState<Record<string, { appearances: number, lastRssi: number[] }>>({}); 
   const { toast } = useToast();
 
-  // Check if Web Bluetooth API is available
+  // Check if available APIs are supported
   const isBluetoothSupported = typeof navigator !== 'undefined' && 'bluetooth' in navigator;
+  const isNFCSupported = typeof window !== 'undefined' && 'NDEFReader' in window;
+  const isUWBSupported = typeof navigator !== 'undefined' && 'uwb' in navigator;
+
+  // Adjust scanning parameters based on options
+  const effectiveInterval = batteryEfficient ? detectionInterval * 2 : detectionInterval;
+  const effectiveThreshold = crowdedEnvironment ? signalThreshold - 10 : signalThreshold; // Require stronger signal in crowded areas
+
+  // Filter devices with potential interference in crowded environments
+  const filterDeviceInCrowdedEnvironment = useCallback((device: ProximityDevice) => {
+    if (!crowdedEnvironment) return true;
+    
+    // In crowded environments, apply more strict filtering
+    const deviceStats = deviceHistory[device.id];
+    
+    if (!deviceStats) return true; // First appearance
+    
+    // Device must have been seen multiple times with consistent signal strength
+    if (deviceStats.appearances < 3) return false;
+    
+    // Check for signal stability
+    const recentRssi = deviceStats.lastRssi.slice(-3);
+    const avgRssi = recentRssi.reduce((a, b) => a + b, 0) / recentRssi.length;
+    const variance = recentRssi.reduce((a, b) => a + Math.pow(b - avgRssi, 2), 0) / recentRssi.length;
+    
+    // High variance indicates potential interference or unstable signal
+    return variance < 25; // Empirical threshold for stable signals
+  }, [crowdedEnvironment, deviceHistory]);
+
+  // Apply user-defined filters
+  const matchesFilters = useCallback((device: ProximityDevice) => {
+    if (deviceFilters.length === 0) return true;
+    
+    return deviceFilters.some(filter => {
+      // Match all specified filter properties
+      return Object.entries(filter).every(([key, value]) => {
+        return device[key as keyof ProximityDevice] === value;
+      });
+    });
+  }, [deviceFilters]);
 
   // Scan for nearby Bluetooth devices
   const scanForDevices = useCallback(async () => {
@@ -50,34 +101,68 @@ export function useProximityDetection({
       
       setPermissionGranted(true);
       
+      // Get RSSI if available (not standardized in Web Bluetooth yet)
+      let rssi: number | undefined = undefined;
+      if ('gattServer' in device && device.gatt) {
+        try {
+          // This is a non-standard extension some browsers might support
+          const server = await device.gatt.connect();
+          // @ts-ignore - Accessing experimental properties
+          if (server.device && server.device.rssi) {
+            // @ts-ignore
+            rssi = server.device.rssi;
+          }
+          // Disconnect immediately to save battery
+          server.disconnect();
+        } catch (e) {
+          // RSSI detection failed, not critical
+        }
+      }
+      
       // Create a device object from the scan result
       const newDevice: ProximityDevice = {
         id: device.id,
         name: device.name || 'Unknown Device',
         type: 'bluetooth',
+        rssi: rssi,
         lastSeen: new Date()
       };
       
-      // Add to nearby devices if not already present
-      setNearbyDevices(prevDevices => {
-        const existingDevice = prevDevices.find(d => d.id === newDevice.id);
-        if (existingDevice) {
-          // Update existing device
-          return prevDevices.map(d => 
-            d.id === newDevice.id 
-              ? { ...d, lastSeen: new Date() } 
-              : d
-          );
-        } else {
-          // Add new device
-          onDeviceDetected?.(newDevice);
-          toast({
-            title: 'New Device Detected',
-            description: `Found ${newDevice.name} nearby`,
-          });
-          return [...prevDevices, newDevice];
-        }
+      // Update device history for crowded environment filtering
+      setDeviceHistory(prev => {
+        const current = prev[newDevice.id] || { appearances: 0, lastRssi: [] };
+        return {
+          ...prev,
+          [newDevice.id]: {
+            appearances: current.appearances + 1,
+            lastRssi: [...current.lastRssi.slice(-4), rssi || -100].filter(Boolean)
+          }
+        };
       });
+      
+      // Apply filters before adding device
+      if (matchesFilters(newDevice) && filterDeviceInCrowdedEnvironment(newDevice)) {
+        // Add to nearby devices if not already present
+        setNearbyDevices(prevDevices => {
+          const existingDevice = prevDevices.find(d => d.id === newDevice.id);
+          if (existingDevice) {
+            // Update existing device
+            return prevDevices.map(d => 
+              d.id === newDevice.id 
+                ? { ...d, lastSeen: new Date(), rssi: newDevice.rssi || d.rssi } 
+                : d
+            );
+          } else {
+            // Add new device
+            onDeviceDetected?.(newDevice);
+            toast({
+              title: 'New Device Detected',
+              description: `Found ${newDevice.name} nearby`,
+            });
+            return [...prevDevices, newDevice];
+          }
+        });
+      }
     } catch (error) {
       if (error instanceof Error) {
         if (error.name === 'NotFoundError') {
@@ -96,11 +181,18 @@ export function useProximityDetection({
     } finally {
       setIsScanning(false);
     }
-  }, [enabled, isBluetoothSupported, onDeviceDetected, toast]);
+  }, [
+    enabled, 
+    isBluetoothSupported, 
+    onDeviceDetected, 
+    toast, 
+    filterDeviceInCrowdedEnvironment, 
+    matchesFilters
+  ]);
 
   // Alternative implementation for Web NFC when available
   const scanNFC = useCallback(async () => {
-    if (!enabled || !('NDEFReader' in window)) return;
+    if (!enabled || !isNFCSupported) return;
     
     try {
       // @ts-ignore - NDEFReader might not be recognized by TypeScript
@@ -115,18 +207,25 @@ export function useProximityDetection({
           id: event.serialNumber || Date.now().toString(),
           name: 'NFC Tag',
           type: 'nfc',
-          lastSeen: new Date()
+          distance: 0.1, // NFC typically works at very close range (a few cm)
+          lastSeen: new Date(),
+          metadata: {
+            message: event.message,
+            recordCount: event.message?.records?.length || 0
+          }
         };
         
-        setNearbyDevices(prevDevices => {
-          // Always treat NFC as a new detection
-          onDeviceDetected?.(newDevice);
-          toast({
-            title: 'NFC Tag Detected',
-            description: 'Found an NFC tag very close by',
+        if (matchesFilters(newDevice)) {
+          setNearbyDevices(prevDevices => {
+            // Always treat NFC as a new detection
+            onDeviceDetected?.(newDevice);
+            toast({
+              title: 'NFC Tag Detected',
+              description: 'Found an NFC tag very close by',
+            });
+            return [...prevDevices, newDevice];
           });
-          return [...prevDevices, newDevice];
-        });
+        }
       });
     } catch (error) {
       if (error instanceof Error) {
@@ -142,7 +241,31 @@ export function useProximityDetection({
         }
       }
     }
-  }, [enabled, onDeviceDetected, toast]);
+  }, [enabled, isNFCSupported, onDeviceDetected, toast, matchesFilters]);
+
+  // Queue for offline device detections
+  const [offlineQueue, setOfflineQueue] = useState<ProximityDevice[]>([]);
+
+  // Handle device synchronization
+  useEffect(() => {
+    if (!offlineMode || offlineQueue.length === 0) return;
+    
+    // Check if we're back online
+    if (navigator.onLine) {
+      // Process offline queue
+      offlineQueue.forEach(device => {
+        onDeviceDetected?.(device);
+        toast({
+          title: 'Synced Device Detection',
+          description: `Found ${device.name} while offline`,
+          variant: 'info'
+        });
+      });
+      
+      // Clear the queue
+      setOfflineQueue([]);
+    }
+  }, [navigator.onLine, offlineQueue, offlineMode, onDeviceDetected, toast]);
 
   // Start scanning when enabled
   useEffect(() => {
@@ -151,7 +274,7 @@ export function useProximityDetection({
     let scanTimer: NodeJS.Timeout;
     
     // Try NFC first if available
-    if ('NDEFReader' in window) {
+    if (isNFCSupported) {
       scanNFC();
     }
     
@@ -165,33 +288,66 @@ export function useProximityDetection({
         if (!isScanning) {
           scanForDevices();
         }
-      }, detectionInterval);
+      }, effectiveInterval);
     }
     
     // Clean up timer on unmount
     return () => {
       clearInterval(scanTimer);
     };
-  }, [enabled, isBluetoothSupported, isScanning, scanForDevices, scanNFC, detectionInterval]);
+  }, [
+    enabled, 
+    isBluetoothSupported, 
+    isNFCSupported, 
+    isScanning, 
+    scanForDevices, 
+    scanNFC, 
+    effectiveInterval
+  ]);
 
   // Filter devices based on last seen time (remove old devices)
   useEffect(() => {
     const now = new Date();
-    const EXPIRATION_TIME = 30000; // 30 seconds
+    const EXPIRATION_TIME = batteryEfficient ? 60000 : 30000; // 30-60 seconds based on battery efficiency setting
     
-    setNearbyDevices(prevDevices => 
-      prevDevices.filter(device => {
+    setNearbyDevices(prevDevices => {
+      const newDevices = prevDevices.filter(device => {
         const timeDiff = now.getTime() - device.lastSeen.getTime();
-        return timeDiff < EXPIRATION_TIME;
-      })
-    );
-  }, [nearbyDevices]);
+        const shouldKeep = timeDiff < EXPIRATION_TIME;
+        
+        // Notify when devices are lost
+        if (!shouldKeep) {
+          onDeviceLost?.(device.id);
+        }
+        
+        return shouldKeep;
+      });
+      
+      return newDevices;
+    });
+  }, [nearbyDevices, batteryEfficient, onDeviceLost]);
+
+  // Sort devices by signal strength/proximity
+  const sortedDevices = [...nearbyDevices].sort((a, b) => {
+    // First by distance if available
+    if (a.distance !== undefined && b.distance !== undefined) {
+      return a.distance - b.distance;
+    }
+    // Then by RSSI (higher RSSI = stronger signal = closer)
+    if (a.rssi !== undefined && b.rssi !== undefined) {
+      return b.rssi - a.rssi;
+    }
+    // Finally by last seen
+    return b.lastSeen.getTime() - a.lastSeen.getTime();
+  });
 
   return {
     isScanning,
-    nearbyDevices,
+    nearbyDevices: sortedDevices,
     permissionGranted,
     startScan: scanForDevices,
-    isSupported: isBluetoothSupported || 'NDEFReader' in window
+    isSupported: isBluetoothSupported || isNFCSupported || isUWBSupported,
+    batteryEfficient,
+    crowdedEnvironmentMode: crowdedEnvironment
   };
 }
