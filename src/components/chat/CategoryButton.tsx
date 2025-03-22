@@ -11,7 +11,7 @@ export interface CategoryButtonProps {
 }
 
 const CategoryButton = ({ category, isSelected, onSelect, isSpanish = false }: CategoryButtonProps) => {
-  const displayName = isSpanish && category.nameEs ? category.nameEs : category.name;
+  const displayName = isSpanish && category.nameSpanish ? category.nameSpanish : category.name;
   
   return (
     <Button
@@ -20,7 +20,7 @@ const CategoryButton = ({ category, isSelected, onSelect, isSpanish = false }: C
       onClick={() => onSelect(category.id)}
       className={`gap-2 ${isSelected ? "bg-primary/20 text-primary border-primary/50" : ""}`}
     >
-      {category.icon && <span className="text-muted-foreground">{category.icon}</span>}
+      {category.iconName && <span className="text-muted-foreground">{category.iconName}</span>}
       <span>{displayName}</span>
       <Badge variant="outline" className="ml-1 text-xs">
         {category.prompts ? category.prompts.filter(p => p.isSpanish === isSpanish).length : 0}

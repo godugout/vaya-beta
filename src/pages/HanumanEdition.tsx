@@ -10,7 +10,8 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useFamilyContextManagement } from "@/hooks/useFamilyContextManagement";
 import { usePromptManager } from "@/components/chat/hooks/usePromptManager";
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
-import { Message, PromptItem } from "@/components/chat/hooks/types";
+import { PromptItem } from "@/components/chat/hooks/types";
+import { Message } from "@/components/narra/types"; // Changed import source
 import SuggestedPrompts from "@/components/narra/SuggestedPrompts";
 
 const initialMessages: Message[] = [
