@@ -1,108 +1,97 @@
 
 import React from 'react';
-import { VariantProps, cva } from 'class-variance-authority';
-import { AlertCircle, CheckCircle, Info, AlertTriangle, X } from 'lucide-react';
-import { motion, AnimatePresence, HTMLMotionProps } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { AlertCircle, CheckCircle, Info, XCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useAnimation } from '@/components/animation/AnimationProvider';
 
-const feedbackVariants = cva(
-  "rounded-lg p-4 mb-4 flex items-start gap-3 text-sm border",
-  {
-    variants: {
-      variant: {
-        success: "bg-green-50 text-green-800 dark:bg-green-900/20 dark:text-green-100 border-green-100 dark:border-green-800",
-        info: "bg-blue-50 text-blue-800 dark:bg-blue-900/20 dark:text-blue-100 border-blue-100 dark:border-blue-800",
-        warning: "bg-yellow-50 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-100 border-yellow-100 dark:border-yellow-800",
-        error: "bg-red-50 text-red-800 dark:bg-red-900/20 dark:text-red-100 border-red-100 dark:border-red-800",
-      },
-      hasAction: {
-        true: "pr-10",
-        false: ""
-      }
-    },
-    defaultVariants: {
-      variant: "info",
-      hasAction: false
-    }
-  }
-);
+type FeedbackVariant = 'success' | 'error' | 'warning' | 'info';
 
-export interface FeedbackMessageProps
-  extends Omit<HTMLMotionProps<"div">, "animate" | "initial" | "exit" | "transition">,
-    VariantProps<typeof feedbackVariants> {
+interface FeedbackMessageProps {
+  variant?: FeedbackVariant;
   title?: string;
+  children: React.ReactNode;
+  className?: string;
   onClose?: () => void;
-  action?: React.ReactNode;
-  showIcon?: boolean;
-  dismissible?: boolean;
+  icon?: React.ReactNode;
 }
 
+const variantStyles = {
+  success: {
+    icon: CheckCircle,
+    bgColor: 'bg-green-50 dark:bg-green-900/20',
+    borderColor: 'border-green-200 dark:border-green-800',
+    textColor: 'text-green-800 dark:text-green-200',
+    iconColor: 'text-green-500 dark:text-green-400',
+  },
+  error: {
+    icon: XCircle,
+    bgColor: 'bg-red-50 dark:bg-red-900/20',
+    borderColor: 'border-red-200 dark:border-red-800',
+    textColor: 'text-red-800 dark:text-red-200',
+    iconColor: 'text-red-500 dark:text-red-400',
+  },
+  warning: {
+    icon: AlertCircle,
+    bgColor: 'bg-amber-50 dark:bg-amber-900/20',
+    borderColor: 'border-amber-200 dark:border-amber-800',
+    textColor: 'text-amber-800 dark:text-amber-200',
+    iconColor: 'text-amber-500 dark:text-amber-400',
+  },
+  info: {
+    icon: Info,
+    bgColor: 'bg-blue-50 dark:bg-blue-900/20',
+    borderColor: 'border-blue-200 dark:border-blue-800',
+    textColor: 'text-blue-800 dark:text-blue-200',
+    iconColor: 'text-blue-500 dark:text-blue-400',
+  },
+};
+
 export function FeedbackMessage({
-  variant,
-  className,
-  children,
+  variant = 'info',
   title,
+  children,
+  className,
   onClose,
-  action,
-  showIcon = true,
-  dismissible = false,
-  hasAction,
-  ...props
+  icon,
 }: FeedbackMessageProps) {
-  const { isReduced } = useAnimation();
+  const styles = variantStyles[variant];
+  const IconComponent = styles.icon;
   
-  const iconMap = {
-    success: <CheckCircle className="h-5 w-5" />,
-    info: <Info className="h-5 w-5" />,
-    warning: <AlertTriangle className="h-5 w-5" />,
-    error: <AlertCircle className="h-5 w-5" />,
+  const motionConfig = {
+    initial: { opacity: 0, y: -20 },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, scale: 0.95 },
+    transition: { duration: 0.2 }
   };
-  
-  const motionConfig = isReduced 
-    ? { animate: { opacity: 1 }, exit: { opacity: 0 }, transition: { duration: 0.1 } }
-    : { 
-        initial: { opacity: 0, y: -10 },
-        animate: { opacity: 1, y: 0 },
-        exit: { opacity: 0, y: -10 },
-        transition: { duration: 0.3 }
-      };
 
   return (
-    <AnimatePresence>
-      <motion.div
-        {...motionConfig}
-        className={cn(feedbackVariants({ variant, hasAction: !!action, className }))}
-        {...props}
-      >
-        {showIcon && variant && (
-          <div className="shrink-0">
-            {iconMap[variant]}
-          </div>
+    <motion.div
+      {...motionConfig}
+      className={cn(
+        'rounded-lg border p-4 flex items-start space-x-3',
+        styles.bgColor,
+        styles.borderColor,
+        className
+      )}
+    >
+      <div className={cn('flex-shrink-0', styles.iconColor)}>
+        {icon || <IconComponent className="h-5 w-5" />}
+      </div>
+      <div className="flex-grow">
+        {title && (
+          <h3 className={cn('font-semibold', styles.textColor)}>{title}</h3>
         )}
-        
-        <div className="flex-1">
-          {title && <div className="font-medium mb-1">{title}</div>}
-          <div className="text-sm">{children}</div>
-          
-          {action && (
-            <div className="mt-2">
-              {action}
-            </div>
-          )}
-        </div>
-        
-        {dismissible && (
-          <button
-            type="button"
-            className="absolute top-4 right-3 text-gray-400 hover:text-gray-900 dark:hover:text-gray-50"
-            onClick={onClose}
-          >
-            <X className="h-4 w-4" aria-hidden="true" />
-            <span className="sr-only">Dismiss</span>
-          </button>
-        )}
-      </motion.div>
-    </AnimatePresence>
+        <div className={cn('text-sm', styles.textColor)}>{children}</div>
+      </div>
+      {onClose && (
+        <button 
+          onClick={onClose}
+          className={cn('flex-shrink-0 ml-2', styles.textColor, 'hover:opacity-75')}
+          aria-label="Close notification"
+        >
+          <XCircle className="h-5 w-5" />
+        </button>
+      )}
+    </motion.div>
   );
 }
