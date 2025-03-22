@@ -4,79 +4,77 @@ import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import { Toaster } from '@/components/ui/sonner';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 import { useTheme } from '@/contexts/ThemeContext';
-import { ErrorBoundary } from '@/components/ErrorBoundary';
+import { LanguageProvider } from '@/contexts/LanguageContext';
+import MainLayout from '@/components/layout/MainLayout';
+import LoadingIndicator from '@/components/animation/LoadingIndicator';
+import ErrorBoundary from '@/components/ErrorBoundary';
 
-// Loading fallback
-import { LoadingIndicator } from '@/components/animation/LoadingIndicator';
-
-// Eagerly loaded components for critical paths
-import { MainLayout } from '@/components/layout/MainLayout';
-import Home from '@/pages/Home';
-import Auth from '@/pages/Auth';
-import NotFound from '@/pages/NotFound';
-
-// Lazily loaded components
+// Lazy load components to improve initial load time
+const Home = lazy(() => import('@/pages/Home'));
+const Auth = lazy(() => import('@/pages/Auth'));
 const Families = lazy(() => import('@/pages/Families'));
-const FamilyDetail = lazy(() => import('@/pages/FamilyDetail'));
 const CreateFamily = lazy(() => import('@/pages/CreateFamily'));
+const FamilyDetail = lazy(() => import('@/pages/FamilyDetail'));
 const MediaLibrary = lazy(() => import('@/pages/MediaLibrary'));
+const MediaLibraryEnhanced = lazy(() => import('@/pages/MediaLibraryEnhanced'));
+const NotFound = lazy(() => import('@/pages/NotFound'));
 const HanumanEdition = lazy(() => import('@/pages/HanumanEdition'));
+const MemoryLane = lazy(() => import('@/pages/MemoryLane'));
+const MemoryPost = lazy(() => import('@/pages/MemoryPost'));
+const ShareStories = lazy(() => import('@/pages/ShareStories'));
 const Profile = lazy(() => import('@/pages/Profile'));
 const Settings = lazy(() => import('@/pages/Settings'));
 const StoryShowcase = lazy(() => import('@/components/design-system/StoryShowcase'));
-// Fix import by ensuring it has a default export
-const ComponentsShowcase = lazy(() => import('@/components/design-system/ComponentsShowcase').then(module => ({ default: module.default || module })));
+// Fix the import - reference the module directly
+const ComponentsShowcase = lazy(() => import('@/components/design-system/ComponentsShowcase'));
 const DesignSystem = lazy(() => import('@/pages/DesignSystem'));
 
 // Admin components are a good candidate for code splitting
 const Admin = lazy(() => import('@/pages/Admin'));
 const AdminUsers = lazy(() => import('@/pages/AdminUsers'));
-const AdminFamilies = lazy(() => import('@/pages/AdminFamilies'));
 const AdminMedia = lazy(() => import('@/pages/AdminMedia'));
-const AdminPermissions = lazy(() => import('@/pages/AdminPermissions'));
 
-function App() {
+const App = () => {
   const { theme } = useTheme();
-
+  
   return (
     <ThemeProvider>
-      <div className={`app-container ${theme}`}>
-        <ErrorBoundary>
-          <Suspense fallback={<LoadingIndicator />}>
-            <Routes>
-              <Route path="/" element={<MainLayout><Outlet /></MainLayout>}>
-                <Route index element={<Home />} />
-                <Route path="auth" element={<Auth />} />
-                <Route path="families" element={<Families />} />
-                <Route path="families/new" element={<CreateFamily />} />
-                <Route path="families/:id" element={<FamilyDetail />} />
-                <Route path="media" element={<MediaLibrary />} />
-                <Route path="hanuman" element={<HanumanEdition />} />
-                <Route path="profile" element={<Profile />} />
-                <Route path="settings" element={<Settings />} />
-                <Route path="components" element={<ComponentsShowcase />} />
-                <Route path="design-system" element={<DesignSystem />} />
-                <Route path="stories" element={<StoryShowcase />} />
-                
-                {/* Admin routes */}
-                <Route path="admin" element={<Admin />}>
-                  <Route index element={<Navigate to="users" replace />} />
-                  <Route path="users" element={<AdminUsers />} />
-                  <Route path="families" element={<AdminFamilies />} />
-                  <Route path="media" element={<AdminMedia />} />
-                  <Route path="permissions" element={<AdminPermissions />} />
+      <LanguageProvider>
+        <div className={`app ${theme}`}>
+          <ErrorBoundary>
+            <Suspense fallback={<LoadingIndicator />}>
+              <Routes>
+                <Route path="/" element={<MainLayout><Outlet /></MainLayout>}>
+                  <Route index element={<Home />} />
+                  <Route path="auth" element={<Auth />} />
+                  <Route path="families" element={<Families />} />
+                  <Route path="families/create" element={<CreateFamily />} />
+                  <Route path="families/:familyId" element={<FamilyDetail />} />
+                  <Route path="media" element={<MediaLibrary />} />
+                  <Route path="media-enhanced" element={<MediaLibraryEnhanced />} />
+                  <Route path="hanuman" element={<HanumanEdition />} />
+                  <Route path="memories" element={<MemoryLane />} />
+                  <Route path="memories/:memoryId" element={<MemoryPost />} />
+                  <Route path="stories" element={<ShareStories />} />
+                  <Route path="profile" element={<Profile />} />
+                  <Route path="settings" element={<Settings />} />
+                  <Route path="story-showcase" element={<StoryShowcase />} />
+                  <Route path="components" element={<ComponentsShowcase />} />
+                  <Route path="design" element={<DesignSystem />} />
+                  <Route path="admin" element={<Admin />}>
+                    <Route path="users" element={<AdminUsers />} />
+                    <Route path="media" element={<AdminMedia />} />
+                  </Route>
+                  <Route path="*" element={<NotFound />} />
                 </Route>
-                
-                {/* 404 route */}
-                <Route path="*" element={<NotFound />} />
-              </Route>
-            </Routes>
-          </Suspense>
-        </ErrorBoundary>
-        <Toaster richColors />
-      </div>
+              </Routes>
+            </Suspense>
+          </ErrorBoundary>
+          <Toaster position="top-center" />
+        </div>
+      </LanguageProvider>
     </ThemeProvider>
   );
-}
+};
 
 export default App;
