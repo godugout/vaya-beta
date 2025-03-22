@@ -12,7 +12,7 @@ const WavePath: React.FC<WavePathProps> = ({
   amplitudes, 
   isRecording, 
   lineWidth = 2,
-  color = "#FF7675"
+  color = "#FF7A00"
 }) => {
   // Default to a flat line if not recording
   const effectiveAmplitudes = isRecording 

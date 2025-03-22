@@ -1,71 +1,78 @@
 
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { User } from "lucide-react";
-import { Message } from "./types";
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { Message } from "./types";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Card } from "@/components/ui/card";
+import AudioPreview from "@/components/audio/AudioPreview";
+import { User } from "lucide-react";
 
 interface MessageBubbleProps {
   message: Message;
 }
 
 export const MessageBubble = ({ message }: MessageBubbleProps) => {
-  const isAssistant = message.role === "assistant";
+  const isUser = message.role === "user";
   
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      className={`flex ${isUser ? "justify-end" : "justify-start"} items-start gap-3`}
+      initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
-      className={`flex ${
-        isAssistant ? "justify-start" : "justify-end"
-      } items-start gap-3`}
+      transition={{ duration: 0.3 }}
     >
-      {isAssistant && (
-        <Avatar className="mt-0.5 bg-gradient-to-br from-lovable-blue to-indigo-600 text-white shadow-md">
+      {!isUser && (
+        <Avatar className="mt-0.5 bg-lovable-blue text-white">
           <AvatarFallback>N</AvatarFallback>
         </Avatar>
       )}
-
-      <div
-        className={cn(
-          "max-w-[80%] rounded-2xl p-4 shadow-sm transition-all",
-          isAssistant 
-            ? "bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 text-black dark:text-white rounded-tl-sm" 
-            : "bg-gradient-to-br from-lovable-blue to-blue-600 text-white rounded-tr-sm"
-        )}
-      >
-        <div className="text-sm md:text-base whitespace-pre-wrap leading-relaxed">
-          {message.content}
-        </div>
-
-        {message.attachments?.map((attachment, i) => (
-          <div key={i} className="mt-2 text-xs flex items-center gap-2 opacity-80">
-            {attachment.type === "audio" && (
-              <span className="px-2 py-1 rounded-full bg-black/10 dark:bg-white/10">
-                Audio recording
-              </span>
-            )}
-            {attachment.type === "image" && (
-              <span className="px-2 py-1 rounded-full bg-black/10 dark:bg-white/10">
-                Image attachment
-              </span>
-            )}
+      
+      <div className={`${isUser ? "ml-12" : "mr-12"} max-w-[80%]`}>
+        <Card className={`p-4 ${
+          isUser 
+            ? "bg-lovable-blue/10 dark:bg-lovable-blue/20 border-lovable-blue/20" 
+            : "bg-gray-100 dark:bg-gray-800"
+        }`}>
+          <div className="space-y-3">
+            <div className="whitespace-pre-wrap text-sm">
+              {message.content}
+            </div>
+            
+            {message.attachments?.map((attachment, i) => (
+              <div key={i} className="mt-2">
+                {attachment.type === "audio" && (
+                  <AudioPreview audioBlob={new Blob()} />
+                )}
+                {attachment.type === "image" && (
+                  <img 
+                    src={attachment.url} 
+                    alt="Attachment" 
+                    className="rounded-md max-w-full" 
+                  />
+                )}
+              </div>
+            ))}
           </div>
-        ))}
-
-        <div className="mt-2 text-xs opacity-70 text-right">
-          {message.timestamp?.toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          }) || ""}
+        </Card>
+        
+        <div className="text-xs text-gray-500 mt-1 ml-1">
+          {message.timestamp ? (
+            new Date(message.timestamp).toLocaleTimeString([], { 
+              hour: '2-digit', 
+              minute: '2-digit' 
+            })
+          ) : (
+            new Date().toLocaleTimeString([], { 
+              hour: '2-digit', 
+              minute: '2-digit' 
+            })
+          )}
         </div>
       </div>
-
-      {!isAssistant && (
-        <Avatar className="mt-0.5 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 shadow-md">
+      
+      {isUser && (
+        <Avatar className="mt-0.5 bg-gray-200 dark:bg-gray-700">
           <AvatarFallback>
-            <User className="h-4 w-4" />
+            <User className="h-4 w-4 text-gray-500" />
           </AvatarFallback>
         </Avatar>
       )}

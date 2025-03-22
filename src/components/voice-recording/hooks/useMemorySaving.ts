@@ -1,85 +1,97 @@
 
-import { useState } from "react";
-import { useToast } from "@/components/ui/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+import { useState, useCallback } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 
-interface MemorySavingOptions {
+interface UseMemorySavingProps {
   onMemorySaved?: (data: { 
-    audioUrl?: string;
+    audioUrl?: string; 
     transcription?: string;
   }) => void;
 }
 
-export const useMemorySaving = ({ onMemorySaved }: MemorySavingOptions = {}) => {
-  const { toast } = useToast();
+interface UseMemorySavingReturn {
+  isProcessing: boolean;
+  error: Error | null;
+  hasSaved: boolean;
+  saveMemory: (audioBlob: Blob, transcription?: string | null) => Promise<void>;
+  resetSavedState: () => void;
+}
+
+export function useMemorySaving({ onMemorySaved }: UseMemorySavingProps = {}): UseMemorySavingReturn {
   const [isProcessing, setIsProcessing] = useState(false);
-  const [audioUrl, setAudioUrl] = useState<string | null>(null);
+  const [error, setError] = useState<Error | null>(null);
   const [hasSaved, setHasSaved] = useState(false);
-
-  const saveMemory = async (audioBlob: Blob | null, transcription: string | null) => {
-    if (!audioBlob) return;
-    
+  
+  const resetSavedState = useCallback(() => {
+    setHasSaved(false);
+    setError(null);
+  }, []);
+  
+  const saveMemory = useCallback(async (audioBlob: Blob, transcription?: string | null): Promise<void> => {
     setIsProcessing(true);
+    setError(null);
+    
     try {
-      // Upload audio to Supabase Storage
-      const { data: uploadData, error: uploadError } = await supabase.storage
-        .from('memories')
-        .upload(`memory-${Date.now()}.webm`, audioBlob);
-
-      if (uploadError) throw uploadError;
-
-      // Get public URL
-      const { data: { publicUrl } } = supabase.storage
-        .from('memories')
-        .getPublicUrl(uploadData.path);
+      // Upload audio file to storage
+      const fileName = `audio-memory-${Date.now()}.webm`;
       
-      setAudioUrl(publicUrl);
-
-      // Provide haptic feedback on success
-      if (navigator.vibrate) {
-        navigator.vibrate([100, 50, 100]);
+      // Upload to Supabase storage
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from('memory-recordings')
+        .upload(fileName, audioBlob, {
+          contentType: 'audio/webm'
+        });
+      
+      if (uploadError) {
+        throw new Error(`Error uploading audio: ${uploadError.message}`);
       }
-
+      
+      // Get public URL
+      const { data: publicUrlData } = supabase.storage
+        .from('memory-recordings')
+        .getPublicUrl(fileName);
+      
+      const audioUrl = publicUrlData.publicUrl;
+      
+      // Save memory metadata in database
+      const { error: insertError } = await supabase
+        .from('memories')
+        .insert({
+          audio_url: audioUrl,
+          transcription: transcription || null,
+          type: 'audio',
+        });
+      
+      if (insertError) {
+        throw new Error(`Error saving memory data: ${insertError.message}`);
+      }
+      
       setHasSaved(true);
       
-      toast({
-        title: "Memory saved",
-        description: "Your memory has been saved successfully",
-      });
-
-      // Call the callback with data
+      // Notify caller if callback provided
       if (onMemorySaved) {
         onMemorySaved({
-          audioUrl: publicUrl,
+          audioUrl,
           transcription: transcription || undefined
         });
       }
-
-      return publicUrl;
-
-    } catch (error) {
-      console.error('Error saving memory:', error);
-      toast({
-        variant: "destructive",
-        title: "Failed to save",
-        description: "There was an error saving your memory. Please try again.",
-      });
-      return null;
+      
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error saving memory';
+      console.error('Memory saving error:', errorMessage);
+      setError(err instanceof Error ? err : new Error(errorMessage));
+      setHasSaved(false);
+      
     } finally {
       setIsProcessing(false);
     }
-  };
-
-  const resetSavedState = () => {
-    setAudioUrl(null);
-    setHasSaved(false);
-  };
-
+  }, [onMemorySaved]);
+  
   return {
     isProcessing,
-    audioUrl,
+    error,
     hasSaved,
     saveMemory,
     resetSavedState
   };
-};
+}

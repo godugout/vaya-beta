@@ -1,27 +1,71 @@
-// Generate amplitudes for a fluid, natural-looking wave animation
+/**
+ * Utility functions for creating dynamic waveform visualizations
+ * inspired by Vedic elements (water, fire, air)
+ */
+
+// Generate smooth, fluid amplitudes (water-like)
 export const generateFluidAmplitudes = (
-  prevAmplitudes: number[], 
-  sensitivity: number = 1
+  prevAmplitudes: number[],
+  intensity: number = 1
 ): number[] => {
-  // Ensure we have a valid array to work with
-  if (!prevAmplitudes || prevAmplitudes.length === 0) {
-    return Array(40).fill(0.1);
-  }
-  
-  // Create new amplitudes that are related to the previous ones
-  // for a more natural and less jarring transition
-  return prevAmplitudes.map(prev => {
-    // Calculate change - larger sensitivity means more dramatic changes
-    const change = (Math.random() - 0.5) * 0.3 * sensitivity;
-    
-    // New value based on previous + change
+  return prevAmplitudes.map((prev) => {
+    // Create smooth transitions between values (water-like effect)
+    const change = (Math.random() - 0.5) * 0.2 * intensity;
     let newValue = prev + change;
     
-    // Keep within reasonable bounds (0.1 to 0.8)
-    newValue = Math.max(0.1, Math.min(0.8, newValue));
+    // Keep values within bounds
+    newValue = Math.max(0.05, Math.min(0.8, newValue));
     
     return newValue;
   });
+};
+
+// Generate more dynamic, rising amplitudes (flame-like)
+export const generateFlamingAmplitudes = (
+  prevAmplitudes: number[],
+  intensity: number = 1
+): number[] => {
+  return prevAmplitudes.map((prev, i) => {
+    // Create more vertical movement with occasional sharp peaks
+    const flameEffect = Math.random() < 0.2 ? 0.3 * intensity : 0.1;
+    const change = (Math.random() - 0.3) * flameEffect;
+    
+    // Central values tend to be higher (like flame center)
+    const centerInfluence = 0.1 * Math.abs(i - prevAmplitudes.length / 2) / (prevAmplitudes.length / 4);
+    
+    let newValue = prev + change + centerInfluence;
+    newValue = Math.max(0.05, Math.min(0.9, newValue));
+    
+    return newValue;
+  });
+};
+
+// Generate gentle, breeze-like amplitudes
+export const generateBreezeAmplitudes = (
+  prevAmplitudes: number[],
+  intensity: number = 1
+): number[] => {
+  return prevAmplitudes.map((prev) => {
+    // Create gentle, subtle movements
+    const change = (Math.random() - 0.5) * 0.08 * intensity;
+    let newValue = prev + change;
+    
+    // Keep values low for gentle breeze effect
+    newValue = Math.max(0.02, Math.min(0.4, newValue));
+    
+    return newValue;
+  });
+};
+
+// Analyze audio data to determine emotional state
+export const analyzeAudioEmotion = (audioData: Float32Array): 'calm' | 'passionate' | 'soft' => {
+  // A simplified version of emotion detection based on amplitude
+  const sum = audioData.reduce((acc, val) => acc + Math.abs(val), 0);
+  const average = sum / audioData.length;
+  
+  if (average > 0.4) return 'passionate';
+  if (average < 0.15) return 'soft';
+  return 'calm';
 };
 
 // Generate visualization data from audio analysis

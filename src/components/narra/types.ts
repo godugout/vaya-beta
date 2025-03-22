@@ -1,22 +1,22 @@
 
 export interface Message {
-  id: string;
-  role: "user" | "assistant";
+  id?: string;
+  role: "assistant" | "user" | "system";
   content: string;
-  timestamp: Date;
-  attachments?: Array<{
-    type: "image" | "audio";
+  attachments?: {
+    type: "audio" | "image";
     url: string;
-  }>;
+  }[];
+  timestamp?: Date;
+}
+
+export interface PromptItem {
+  id: string;
+  content: string;
+  category: string;
+  isSpanish?: boolean;
 }
 
 export interface NarraConversationProps {
   initialMessages?: Message[];
-}
-
-export interface SuggestedPrompt {
-  id: string;
-  promptEn: string;
-  promptEs: string;
-  icon: React.ReactNode;
 }

@@ -1,4 +1,5 @@
 
+import React from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
@@ -6,73 +7,34 @@ interface ButtonPulseEffectProps {
   isActive: boolean;
   isReduced?: boolean;
   size?: string;
-  color?: string;
 }
 
-export const ButtonPulseEffect = ({ 
+export const ButtonPulseEffect: React.FC<ButtonPulseEffectProps> = ({ 
   isActive, 
-  isReduced = false, 
-  size = 'h-16 w-16', 
-  color = 'rgba(255, 118, 117, 0.3)' 
-}: ButtonPulseEffectProps) => {
+  isReduced = false,
+  size = 'h-16 w-16' 
+}) => {
   if (!isActive) return null;
   
-  // Reduced motion alternative
-  if (isReduced) {
-    return (
-      <div 
-        className={cn(
-          "absolute rounded-full",
-          size
-        )}
-        style={{ 
-          backgroundColor: color,
-          opacity: 0.5
-        }}
-      />
-    );
-  }
+  const pulseAnimation = isReduced ? {} : {
+    scale: [1, 1.2, 1],
+    opacity: [0.7, 0.3, 0]
+  };
 
   return (
-    <>
-      {/* First pulse ring */}
+    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
       <motion.div
         className={cn(
-          "absolute rounded-full",
+          "rounded-full bg-red-500/30",
           size
         )}
-        initial={{ opacity: 0, scale: 1 }}
-        animate={{ 
-          opacity: [0, 0.5, 0], 
-          scale: [1, 1.8, 2.2] 
-        }}
-        transition={{ 
-          duration: 2, 
+        animate={pulseAnimation}
+        transition={{
+          duration: 2,
           repeat: Infinity,
           repeatType: "loop"
         }}
-        style={{ backgroundColor: color }}
       />
-      
-      {/* Second pulse ring (slightly delayed) */}
-      <motion.div
-        className={cn(
-          "absolute rounded-full",
-          size
-        )}
-        initial={{ opacity: 0, scale: 1 }}
-        animate={{ 
-          opacity: [0, 0.5, 0], 
-          scale: [1, 1.8, 2.2] 
-        }}
-        transition={{ 
-          duration: 2, 
-          repeat: Infinity, 
-          repeatType: "loop",
-          delay: 0.6 
-        }}
-        style={{ backgroundColor: color }}
-      />
-    </>
+    </div>
   );
 };
