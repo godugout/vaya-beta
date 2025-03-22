@@ -1,0 +1,58 @@
+
+/* NASA-style components */
+
+/* Dark mode is default for NASA theme */
+.nasa-theme .cosmic-bg {
+  background: linear-gradient(180deg, var(--space-black) 0%, var(--space-dark-blue) 100%);
+}
+
+/* NASA-style cards */
+.nasa-theme .card {
+  background: var(--space-dark-blue);
+  border: 1px solid var(--space-indigo);
+  border-radius: var(--card-radius);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* NASA-style buttons */
+.nasa-theme .button {
+  background: var(--nasa-blue);
+  color: var(--nasa-white);
+  border-radius: var(--button-radius);
+  font-family: var(--font-heading);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+}
+
+.nasa-theme .button:hover {
+  background: var(--space-blue);
+  box-shadow: 0 0 15px rgba(10, 78, 202, 0.5);
+}
+
+.nasa-theme .button-secondary {
+  background: var(--nasa-red);
+}
+
+.nasa-theme .button-secondary:hover {
+  background: var(--space-red);
+  box-shadow: 0 0 15px rgba(228, 38, 59, 0.5);
+}
+
+/* Space UI glassmorphism */
+.nasa-theme .space-glass {
+  background: rgba(26, 32, 51, 0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(124, 183, 255, 0.2);
+  border-radius: var(--card-radius);
+}
+
+/* NASA-style terminal typography */
+.nasa-theme .terminal-text {
+  font-family: 'JetBrains Mono', monospace;
+  color: #00ff41;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 1rem;
+  border-radius: 4px;
+  border: 1px solid #00ff41;
+}

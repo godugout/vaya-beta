@@ -1,9 +1,12 @@
 
+import { Heart, History, Star, Lightbulb, Music, Scroll, Laugh, Utensils, Tree, Globe } from 'lucide-react';
 import React from 'react';
-import { 
-  Pin, Calendar, Cake, Heart, Camera, Family, 
-  Map, School, Briefcase, Sparkles, Music 
-} from 'lucide-react';
+
+export interface LocalizedPrompt {
+  id: string;
+  content: string;
+  context?: string;
+}
 
 export interface HanumanPromptCategory {
   id: string;
@@ -11,204 +14,301 @@ export interface HanumanPromptCategory {
   name_es: string;
   description_en: string;
   description_es: string;
-  colorKey: string;
   icon: React.ReactNode;
-  prompts?: string[];
-}
-
-export interface LocalizedPrompt {
-  id: string;
-  category_id: string;
-  prompt_en: string;
-  prompt_es: string;
-  cultural_context_en?: string;
-  cultural_context_es?: string;
-  active: boolean;
+  colorKey: string;
+  prompts?: LocalizedPrompt[];
+  prompts_es?: LocalizedPrompt[];
 }
 
 export const hanumanPromptCategories: HanumanPromptCategory[] = [
   {
-    id: 'childhood',
-    name_en: 'Childhood',
-    name_es: 'Infancia',
-    description_en: 'Memories from your early years',
-    description_es: 'Recuerdos de tus primeros años',
-    colorKey: 'personal',
-    icon: <Pin className="h-4 w-4" />,
+    id: "love",
+    name_en: "Love & Relationships",
+    name_es: "Amor y Relaciones",
+    description_en: "Explore the bonds of love and relationships in your family",
+    description_es: "Explora los lazos de amor y relaciones en tu familia",
+    icon: React.createElement(Heart),
+    colorKey: "red",
     prompts: [
-      'Tell me about your favorite childhood toy.',
-      'What was your favorite game to play as a child?',
-      'Describe your childhood home.'
+      {
+        id: "love-1",
+        content: "Tell me about how your parents met and fell in love."
+      },
+      {
+        id: "love-2",
+        content: "What's the most romantic gesture someone in your family has made?"
+      }
+    ],
+    prompts_es: [
+      {
+        id: "love-1-es",
+        content: "Cuéntame cómo se conocieron y se enamoraron tus padres."
+      },
+      {
+        id: "love-2-es",
+        content: "¿Cuál es el gesto más romántico que ha hecho alguien en tu familia?"
+      }
     ]
   },
   {
-    id: 'events',
-    name_en: 'Events',
-    name_es: 'Eventos',
-    description_en: 'Significant occasions and celebrations',
-    description_es: 'Ocasiones y celebraciones importantes',
-    colorKey: 'celebrations',
-    icon: <Calendar className="h-4 w-4" />,
+    id: "history",
+    name_en: "Family History",
+    name_es: "Historia Familiar",
+    description_en: "Discover your family's heritage and historical journey",
+    description_es: "Descubre la herencia e historia de tu familia",
+    icon: React.createElement(History),
+    colorKey: "blue",
     prompts: [
-      'Share a memory from an important family celebration.',
-      'Tell me about a holiday tradition your family keeps.',
-      'Describe a memorable family vacation.'
+      {
+        id: "history-1",
+        content: "What's the oldest family story that has been passed down through generations?"
+      },
+      {
+        id: "history-2",
+        content: "Tell me about your family's migration story or how they came to live where they are now."
+      }
+    ],
+    prompts_es: [
+      {
+        id: "history-1-es",
+        content: "¿Cuál es la historia familiar más antigua que se ha transmitido de generación en generación?"
+      },
+      {
+        id: "history-2-es",
+        content: "Cuéntame sobre la historia de migración de tu familia o cómo llegaron a vivir donde están ahora."
+      }
     ]
   },
   {
-    id: 'milestones',
-    name_en: 'Milestones',
-    name_es: 'Hitos',
-    description_en: 'Important life achievements',
-    description_es: 'Logros importantes de la vida',
-    colorKey: 'wisdom',
-    icon: <Cake className="h-4 w-4" />,
+    id: "values",
+    name_en: "Values & Beliefs",
+    name_es: "Valores y Creencias",
+    description_en: "Reflect on the core values that unite your family",
+    description_es: "Reflexiona sobre los valores fundamentales que unen a tu familia",
+    icon: React.createElement(Star),
+    colorKey: "yellow",
     prompts: [
-      'What was one of your proudest moments?',
-      'Tell me about a significant transition in your life.',
-      'Describe an important decision you made.'
+      {
+        id: "values-1",
+        content: "What values do you think are most important in your family?"
+      },
+      {
+        id: "values-2",
+        content: "How have your family's beliefs shaped who you are today?"
+      }
+    ],
+    prompts_es: [
+      {
+        id: "values-1-es",
+        content: "¿Qué valores crees que son más importantes en tu familia?"
+      },
+      {
+        id: "values-2-es",
+        content: "¿Cómo han influido las creencias de tu familia en quién eres hoy?"
+      }
     ]
   },
   {
-    id: 'relationships',
-    name_en: 'Relationships',
-    name_es: 'Relaciones',
-    description_en: 'Connections with family and friends',
-    description_es: 'Conexiones con familiares y amigos',
-    colorKey: 'relationships',
-    icon: <Heart className="h-4 w-4" />,
+    id: "lessons",
+    name_en: "Life Lessons",
+    name_es: "Lecciones de Vida",
+    description_en: "Share important lessons and wisdom gained through experience",
+    description_es: "Comparte lecciones importantes y sabiduría adquirida a través de la experiencia",
+    icon: React.createElement(Lightbulb),
+    colorKey: "purple",
     prompts: [
-      'How did you meet your spouse or partner?',
-      'Tell me about a friendship that has meant a lot to you.',
-      'Who has been a mentor in your life?'
+      {
+        id: "lessons-1",
+        content: "What's the most important life lesson you've learned from an elder in your family?"
+      },
+      {
+        id: "lessons-2",
+        content: "Share a mistake you've made that taught you something valuable."
+      }
+    ],
+    prompts_es: [
+      {
+        id: "lessons-1-es",
+        content: "¿Cuál es la lección de vida más importante que has aprendido de un anciano en tu familia?"
+      },
+      {
+        id: "lessons-2-es",
+        content: "Comparte un error que hayas cometido que te enseñó algo valioso."
+      }
     ]
   },
   {
-    id: 'photographs',
-    name_en: 'Photographs',
-    name_es: 'Fotografías',
-    description_en: 'Stories behind family pictures',
-    description_es: 'Historias detrás de fotos familiares',
-    colorKey: 'heritage',
-    icon: <Camera className="h-4 w-4" />,
+    id: "traditions",
+    name_en: "Traditions",
+    name_es: "Tradiciones",
+    description_en: "Celebrate the traditions that define your family's identity",
+    description_es: "Celebra las tradiciones que definen la identidad de tu familia",
+    icon: React.createElement(Music),
+    colorKey: "green",
     prompts: [
-      'Tell me about an old family photograph.',
-      'What\'s the story behind this picture?',
-      'Describe a photograph you wish you had taken.'
+      {
+        id: "traditions-1",
+        content: "Describe a special family tradition and why it's meaningful to you."
+      },
+      {
+        id: "traditions-2",
+        content: "What holiday celebration is most important in your family and how do you celebrate it?"
+      }
+    ],
+    prompts_es: [
+      {
+        id: "traditions-1-es",
+        content: "Describe una tradición familiar especial y por qué es significativa para ti."
+      },
+      {
+        id: "traditions-2-es",
+        content: "¿Qué celebración festiva es más importante en tu familia y cómo la celebran?"
+      }
     ]
   },
   {
-    id: 'ancestors',
-    name_en: 'Ancestors',
-    name_es: 'Ancestros',
-    description_en: 'Stories from previous generations',
-    description_es: 'Historias de generaciones anteriores',
-    colorKey: 'generations',
-    icon: <Family className="h-4 w-4" />,
+    id: "stories",
+    name_en: "Family Stories",
+    name_es: "Historias Familiares",
+    description_en: "Capture the memorable stories that bring your family to life",
+    description_es: "Captura las historias memorables que dan vida a tu familia",
+    icon: React.createElement(Scroll),
+    colorKey: "orange",
     prompts: [
-      'What stories did your grandparents tell about their lives?',
-      'Tell me about a family heirloom and its history.',
-      'What do you know about where our family came from?'
+      {
+        id: "stories-1",
+        content: "Tell me about a family member who has an extraordinary or unusual story."
+      },
+      {
+        id: "stories-2",
+        content: "What's your favorite childhood memory involving your family?"
+      }
+    ],
+    prompts_es: [
+      {
+        id: "stories-1-es",
+        content: "Háblame de un familiar que tenga una historia extraordinaria o inusual."
+      },
+      {
+        id: "stories-2-es",
+        content: "¿Cuál es tu recuerdo de infancia favorito que involucre a tu familia?"
+      }
     ]
   },
   {
-    id: 'places',
-    name_en: 'Places',
-    name_es: 'Lugares',
-    description_en: 'Locations that shaped your life',
-    description_es: 'Lugares que formaron tu vida',
-    colorKey: 'places',
-    icon: <Map className="h-4 w-4" />,
+    id: "humor",
+    name_en: "Humor",
+    name_es: "Humor",
+    description_en: "Share the laughter and jokes that lighten your family gatherings",
+    description_es: "Comparte las risas y bromas que alegran tus reuniones familiares",
+    icon: React.createElement(Laugh),
+    colorKey: "pink",
     prompts: [
-      'Tell me about where you grew up.',
-      'What place holds special meaning for you?',
-      'Describe a place you\'ve lived that changed you.'
+      {
+        id: "humor-1",
+        content: "Who is the funniest person in your family and what makes them so funny?"
+      },
+      {
+        id: "humor-2",
+        content: "Share a family inside joke and the story behind it."
+      }
+    ],
+    prompts_es: [
+      {
+        id: "humor-1-es",
+        content: "¿Quién es la persona más divertida de tu familia y qué la hace tan graciosa?"
+      },
+      {
+        id: "humor-2-es",
+        content: "Comparte una broma interna familiar y la historia detrás de ella."
+      }
     ]
   },
   {
-    id: 'education',
-    name_en: 'Education',
-    name_es: 'Educación',
-    description_en: 'Learning experiences and schooling',
-    description_es: 'Experiencias de aprendizaje y educación',
-    colorKey: 'cultural',
-    icon: <School className="h-4 w-4" />,
+    id: "food",
+    name_en: "Food & Recipes",
+    name_es: "Comida y Recetas",
+    description_en: "Preserve the flavors and recipes that have been passed down",
+    description_es: "Preserva los sabores y recetas que se han transmitido",
+    icon: React.createElement(Utensils),
+    colorKey: "teal",
     prompts: [
-      'Who was your favorite teacher and why?',
-      'Tell me about a lesson that stayed with you.',
-      'What was school like for you?'
+      {
+        id: "food-1",
+        content: "What's a family recipe that has been passed down through generations?"
+      },
+      {
+        id: "food-2",
+        content: "Tell me about a memorable meal that your family shared together."
+      }
+    ],
+    prompts_es: [
+      {
+        id: "food-1-es",
+        content: "¿Cuál es una receta familiar que se ha transmitido de generación en generación?"
+      },
+      {
+        id: "food-2-es",
+        content: "Cuéntame sobre una comida memorable que tu familia compartió junta."
+      }
     ]
   },
   {
-    id: 'career',
-    name_en: 'Career',
-    name_es: 'Carrera',
-    description_en: 'Work experiences and professional life',
-    description_es: 'Experiencias laborales y vida profesional',
-    colorKey: 'default',
-    icon: <Briefcase className="h-4 w-4" />,
+    id: "ancestry",
+    name_en: "Ancestry & Roots",
+    name_es: "Ancestros y Raíces",
+    description_en: "Trace your family's roots and connect with your ancestors",
+    description_es: "Rastrea las raíces de tu familia y conéctate con tus ancestros",
+    icon: React.createElement(Tree),
+    colorKey: "brown",
     prompts: [
-      'What was your first job?',
-      'Tell me about your career path.',
-      'What work achievements are you most proud of?'
+      {
+        id: "ancestry-1",
+        content: "Do you know the story of your family name and what it means?"
+      },
+      {
+        id: "ancestry-2",
+        content: "If you've done ancestry research, what's the most interesting thing you've discovered?"
+      }
+    ],
+    prompts_es: [
+      {
+        id: "ancestry-1-es",
+        content: "¿Conoces la historia de tu apellido familiar y lo que significa?"
+      },
+      {
+        id: "ancestry-2-es",
+        content: "Si has hecho investigación de ancestros, ¿qué es lo más interesante que has descubierto?"
+      }
     ]
   },
   {
-    id: 'wisdom',
-    name_en: 'Wisdom',
-    name_es: 'Sabiduría',
-    description_en: 'Life lessons and advice',
-    description_es: 'Lecciones de vida y consejos',
-    colorKey: 'wisdom',
-    icon: <Sparkles className="h-4 w-4" />,
+    id: "culture",
+    name_en: "Cultural Heritage",
+    name_es: "Herencia Cultural",
+    description_en: "Honor the cultural traditions that enrich your family's heritage",
+    description_es: "Honra las tradiciones culturales que enriquecen la herencia de tu familia",
+    icon: React.createElement(Globe),
+    colorKey: "indigo",
     prompts: [
-      'What\'s the best advice you\'ve ever received?',
-      'What would you tell your younger self?',
-      'What life lessons would you like to pass on?'
-    ]
-  },
-  {
-    id: 'traditions',
-    name_en: 'Traditions',
-    name_es: 'Tradiciones',
-    description_en: 'Family customs and rituals',
-    description_es: 'Costumbres y rituales familiares',
-    colorKey: 'heritage',
-    icon: <Music className="h-4 w-4" />,
-    prompts: [
-      'What family traditions are most important to you?',
-      'Tell me about a food tradition in our family.',
-      'What cultural practices have you maintained?'
+      {
+        id: "culture-1",
+        content: "How does your family maintain connection to its cultural heritage?"
+      },
+      {
+        id: "culture-2",
+        content: "What aspects of your cultural background are you most proud of?"
+      }
+    ],
+    prompts_es: [
+      {
+        id: "culture-1-es",
+        content: "¿Cómo mantiene tu familia la conexión con su herencia cultural?"
+      },
+      {
+        id: "culture-2-es",
+        content: "¿Qué aspectos de tu origen cultural te enorgullecen más?"
+      }
     ]
   }
 ];
-
-export const hanumanPrompts: LocalizedPrompt[] = [
-  {
-    id: 'childhood-1',
-    category_id: 'childhood',
-    prompt_en: 'Tell me about your favorite childhood toy.',
-    prompt_es: 'Cuéntame sobre tu juguete favorito de la infancia.',
-    cultural_context_en: 'Toys often have cultural significance across generations',
-    cultural_context_es: 'Los juguetes a menudo tienen significado cultural a través de generaciones',
-    active: true
-  },
-  {
-    id: 'childhood-2',
-    category_id: 'childhood',
-    prompt_en: 'What games did you play as a child?',
-    prompt_es: '¿A qué juegos jugabas cuando eras niño/a?',
-    cultural_context_en: 'Traditional games reflect cultural values',
-    cultural_context_es: 'Los juegos tradicionales reflejan valores culturales',
-    active: true
-  },
-  {
-    id: 'childhood-3',
-    category_id: 'childhood',
-    prompt_en: 'Describe your childhood home and neighborhood.',
-    prompt_es: 'Describe tu hogar y vecindario de la infancia.',
-    active: true
-  }
-];
-
-export default hanumanPromptCategories;

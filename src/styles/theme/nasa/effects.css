@@ -1,0 +1,25 @@
+
+/* NASA Theme Visual Effects */
+
+/* Background pattern for cosmic effect */
+.nasa-theme .cosmic-bg {
+  background-image: 
+    radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px),
+    radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px),
+    radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 3px);
+  background-size: 550px 550px, 350px 350px, 250px 250px;
+  background-position: 0 0, 30px 60px, 130px 270px;
+}
+
+/* NASA-style glowing effects */
+.nasa-theme .glow-text {
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.nasa-theme .blue-glow {
+  box-shadow: 0 0 15px rgba(10, 78, 202, 0.5);
+}
+
+.nasa-theme .red-glow {
+  box-shadow: 0 0 15px rgba(228, 38, 59, 0.5);
+}
