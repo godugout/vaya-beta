@@ -1,72 +1,202 @@
 
-import { useState, useEffect, useCallback } from "react";
-import { familyTreeCache } from "@/utils/offline/familyTreeCache";
+import { useState, useEffect, useCallback } from 'react';
+import { FamilyGraph, FamilyNode, FamilyEdge } from '@/utils/graphDb/familyGraphTypes';
+import { familyTreeCache } from '@/utils/offline/familyTreeCache';
+import { useOfflineOperations } from './useOfflineOperations';
+import { useToast } from '@/components/ui/use-toast';
 
-export function useFamilyTreeCache(familyId: string) {
-  const [cachedData, setCachedData] = useState<any | null>(null);
-  const [lastUpdated, setLastUpdated] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+export const useFamilyTreeCache = (familyId: string | undefined) => {
+  const [graph, setGraph] = useState<FamilyGraph | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+  const { queueOperation, isOnline } = useOfflineOperations();
+  const { toast } = useToast();
 
-  // Load cached data on mount
-  useEffect(() => {
+  // Load the family graph from cache or server
+  const loadGraph = useCallback(async () => {
     if (!familyId) {
-      setIsLoading(false);
+      setLoading(false);
       return;
     }
 
+    setLoading(true);
     try {
-      const data = familyTreeCache.getCachedFamily(familyId);
-      setCachedData(data);
+      const result = await familyTreeCache.getFamilyGraph(familyId);
+      setGraph(result);
+      setError(null);
+    } catch (err) {
+      setError(err instanceof Error ? err : new Error(String(err)));
+      console.error('Error loading family graph:', err);
       
-      const updated = familyTreeCache.getLastUpdated(familyId);
-      setLastUpdated(updated);
-    } catch (error) {
-      console.error('Error loading cached family tree:', error);
+      toast({
+        title: "Error loading family tree",
+        description: err instanceof Error ? err.message : "An unexpected error occurred",
+        variant: "destructive"
+      });
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
-  }, [familyId]);
+  }, [familyId, toast]);
 
-  // Update cache
-  const updateCache = useCallback(async (data: any) => {
-    if (!familyId) return;
+  // Initial load
+  useEffect(() => {
+    loadGraph();
+  }, [loadGraph]);
+
+  // Add a new person node with offline support
+  const addPerson = useCallback(async (personData: Partial<FamilyNode['data']>) => {
+    if (!familyId) return null;
     
     try {
-      await familyTreeCache.cacheFamily(familyId, data);
-      setCachedData(data);
+      const newNode = await familyTreeCache.addNode(familyId, {
+        type: 'person',
+        position: { x: 0, y: 0 }, // Default position, should be calculated based on graph layout
+        data: personData
+      });
       
-      const updated = familyTreeCache.getLastUpdated(familyId);
-      setLastUpdated(updated);
+      // Update local state for immediate UI update
+      if (newNode && graph) {
+        setGraph({
+          ...graph,
+          nodes: [...graph.nodes, newNode]
+        });
+      }
       
-      return true;
-    } catch (error) {
-      console.error('Error updating family tree cache:', error);
-      return false;
+      return newNode;
+    } catch (err) {
+      console.error('Error adding person:', err);
+      
+      toast({
+        title: "Error adding person",
+        description: err instanceof Error ? err.message : "An unexpected error occurred",
+        variant: "destructive"
+      });
+      
+      return null;
     }
-  }, [familyId]);
+  }, [familyId, graph, toast]);
 
-  // Clear cache
-  const clearCache = useCallback(() => {
-    if (!familyId) return;
+  // Add a relationship edge with offline support
+  const addRelationship = useCallback(async (
+    sourceId: string,
+    targetId: string,
+    type: string,
+    metadata: Record<string, any> = {}
+  ) => {
+    if (!familyId) return null;
     
     try {
-      familyTreeCache.clearFamilyCache(familyId);
-      setCachedData(null);
-      setLastUpdated(null);
+      const newEdge = await familyTreeCache.addEdge(familyId, {
+        source: sourceId,
+        target: targetId,
+        type,
+        metadata
+      });
       
-      return true;
-    } catch (error) {
-      console.error('Error clearing family tree cache:', error);
+      // Update local state for immediate UI update
+      if (newEdge && graph) {
+        setGraph({
+          ...graph,
+          edges: [...graph.edges, newEdge]
+        });
+      }
+      
+      return newEdge;
+    } catch (err) {
+      console.error('Error adding relationship:', err);
+      
+      toast({
+        title: "Error adding relationship",
+        description: err instanceof Error ? err.message : "An unexpected error occurred",
+        variant: "destructive"
+      });
+      
+      return null;
+    }
+  }, [familyId, graph, toast]);
+
+  // Update a person's data with offline support
+  const updatePerson = useCallback(async (
+    personId: string,
+    updates: Partial<FamilyNode['data']>
+  ) => {
+    if (!familyId) return false;
+    
+    try {
+      const success = await familyTreeCache.updateNode(familyId, personId, updates);
+      
+      if (success && graph) {
+        // Update local state for immediate UI update
+        const updatedNodes = graph.nodes.map(node => 
+          node.id === personId 
+            ? { ...node, data: { ...node.data, ...updates } }
+            : node
+        );
+        
+        setGraph({
+          ...graph,
+          nodes: updatedNodes
+        });
+      }
+      
+      return success;
+    } catch (err) {
+      console.error('Error updating person:', err);
+      
+      toast({
+        title: "Error updating person",
+        description: err instanceof Error ? err.message : "An unexpected error occurred",
+        variant: "destructive"
+      });
+      
       return false;
     }
-  }, [familyId]);
+  }, [familyId, graph, toast]);
+
+  // Delete a person with offline support
+  const deletePerson = useCallback(async (personId: string) => {
+    if (!familyId) return false;
+    
+    try {
+      const success = await familyTreeCache.deleteNode(familyId, personId);
+      
+      if (success && graph) {
+        // Update local state for immediate UI update
+        const updatedNodes = graph.nodes.filter(node => node.id !== personId);
+        const updatedEdges = graph.edges.filter(edge => 
+          edge.source !== personId && edge.target !== personId
+        );
+        
+        setGraph({
+          ...graph,
+          nodes: updatedNodes,
+          edges: updatedEdges
+        });
+      }
+      
+      return success;
+    } catch (err) {
+      console.error('Error deleting person:', err);
+      
+      toast({
+        title: "Error deleting person",
+        description: err instanceof Error ? err.message : "An unexpected error occurred",
+        variant: "destructive"
+      });
+      
+      return false;
+    }
+  }, [familyId, graph, toast]);
 
   return {
-    cachedData,
-    lastUpdated,
-    isLoading,
-    updateCache,
-    clearCache,
-    hasCachedData: !!cachedData
+    graph,
+    loading,
+    error,
+    refreshGraph: loadGraph,
+    addPerson,
+    addRelationship,
+    updatePerson,
+    deletePerson,
+    isOnline
   };
-}
+};

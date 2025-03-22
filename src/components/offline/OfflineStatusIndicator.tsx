@@ -1,93 +1,96 @@
 
-import React from "react";
-import { useOfflineOperations } from "@/hooks/useOfflineOperations";
-import { Cloud, CloudOff, AlertCircle } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
+import React from 'react';
+import { useOfflineOperations } from '@/hooks/useOfflineOperations';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Tooltip } from '@/components/ui/tooltip';
+import { Wifi, WifiOff, RefreshCw, Check } from 'lucide-react';
 
 interface OfflineStatusIndicatorProps {
   className?: string;
+  showBadge?: boolean;
   showSyncButton?: boolean;
 }
 
-export function OfflineStatusIndicator({ 
-  className,
+export const OfflineStatusIndicator: React.FC<OfflineStatusIndicatorProps> = ({
+  className = '',
+  showBadge = true,
   showSyncButton = true
-}: OfflineStatusIndicatorProps) {
-  const { isOnline, hasPendingOperations, pendingOperations, forceSync } = useOfflineOperations();
-  const { toast } = useToast();
-
-  const handleSyncClick = async () => {
-    if (!isOnline) {
-      toast({
-        title: "No internet connection",
-        description: "Please connect to the internet to sync your changes.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    if (!hasPendingOperations) {
-      toast({
-        title: "No pending changes",
-        description: "All your changes are already synced.",
-      });
-      return;
-    }
-
-    try {
-      await forceSync();
-      toast({
-        title: "Sync complete",
-        description: "Your changes have been synced successfully.",
-      });
-    } catch (error) {
-      toast({
-        title: "Sync failed",
-        description: "There was an error syncing your changes. Please try again later.",
-        variant: "destructive",
-      });
-    }
-  };
-
-  // Don't render anything if online and no pending operations
-  if (isOnline && !hasPendingOperations) {
+}) => {
+  const { status, syncNow, isOnline, hasPendingOperations, isSyncing } = useOfflineOperations();
+  
+  // If online with no pending operations, optionally show nothing
+  if (isOnline && !hasPendingOperations && !showBadge) {
     return null;
   }
-
+  
   return (
-    <div className={cn(
-      "flex items-center gap-2 px-3 py-1.5 rounded-md text-sm",
-      isOnline ? "bg-amber-50 text-amber-700" : "bg-red-50 text-red-700",
-      className
-    )}>
-      {isOnline ? (
-        <Cloud className="h-4 w-4" />
-      ) : (
-        <CloudOff className="h-4 w-4" />
+    <div className={`flex items-center gap-2 ${className}`}>
+      {showBadge && (
+        <Tooltip content={isOnline ? "Connected" : "Offline"}>
+          <Badge 
+            variant={isOnline ? "default" : "destructive"} 
+            className="px-2 py-1 flex items-center gap-1"
+          >
+            {isOnline ? (
+              <>
+                <Wifi className="w-3.5 h-3.5" />
+                <span className="text-xs">Online</span>
+              </>
+            ) : (
+              <>
+                <WifiOff className="w-3.5 h-3.5" />
+                <span className="text-xs">Offline</span>
+              </>
+            )}
+          </Badge>
+        </Tooltip>
       )}
       
-      <span>
-        {!isOnline ? (
-          "You're offline. Changes will sync when you reconnect."
-        ) : hasPendingOperations ? (
-          `${pendingOperations.length} changes pending sync`
-        ) : (
-          "All changes synced"
-        )}
-      </span>
+      {hasPendingOperations && (
+        <Tooltip content="Pending changes to be synchronized">
+          <Badge 
+            variant="outline" 
+            className="px-2 py-1 flex items-center gap-1 border-amber-400 text-amber-600"
+          >
+            <span className="text-xs">{status.pendingOperations} pending</span>
+          </Badge>
+        </Tooltip>
+      )}
       
       {showSyncButton && hasPendingOperations && isOnline && (
-        <Button 
-          variant="outline" 
-          size="sm" 
-          className="ml-2 h-7 bg-white"
-          onClick={handleSyncClick}
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={syncNow}
+          disabled={isSyncing || !isOnline}
+          className="h-8 flex items-center gap-1"
         >
-          Sync now
+          {isSyncing ? (
+            <>
+              <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+              <span>Syncing...</span>
+            </>
+          ) : (
+            <>
+              <RefreshCw className="w-3.5 h-3.5" />
+              <span>Sync Now</span>
+            </>
+          )}
         </Button>
+      )}
+      
+      {!hasPendingOperations && isOnline && showBadge && (
+        <Tooltip content="All changes are synchronized">
+          <Badge 
+            variant="outline" 
+            className="px-2 py-1 flex items-center gap-1 border-green-400 text-green-600"
+          >
+            <Check className="w-3.5 h-3.5" />
+            <span className="text-xs">Synced</span>
+          </Badge>
+        </Tooltip>
       )}
     </div>
   );
-}
+};
