@@ -25,16 +25,16 @@ const ShareStories = () => {
   };
 
   return (
-    <Card className="bg-white border-vaya-purple/10">
+    <Card className="border-hanuman-orange/20 shadow-sm">
       <CardHeader>
-        <CardTitle className="text-gray-900 font-outfit">Share Your Story</CardTitle>
+        <CardTitle className="text-hanuman-orange font-heading">Share Your Story</CardTitle>
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="voice" className="w-full">
           <TabsList className="w-full">
             <TabsTrigger 
               value="voice" 
-              className="w-full bg-vaya-secondary/10 data-[state=active]:bg-vaya-secondary data-[state=active]:text-white"
+              className="w-full data-[state=active]:bg-hanuman-orange data-[state=active]:text-white"
               onClick={() => trackActivity(ActivityTypes.FEATURE_USED, { feature: "voice_recording", source: "share_stories" })}
             >
               Voice Recording

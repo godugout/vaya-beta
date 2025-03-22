@@ -18,7 +18,6 @@ export function HanumanEditionChat() {
   const [activeTab, setActiveTab] = useState("chat");
   const { messages, input, setInput, handleSend, handleMorePrompts, familyContext, saveFamilyContext } = useChat();
   const { isSpanish, setLanguagePreference } = useLanguage();
-  const [settingsOpen, setSettingsOpen] = useState(false);
 
   const handlePromptSelect = (prompt: string) => {
     setInput(prompt);
@@ -34,7 +33,7 @@ export function HanumanEditionChat() {
   };
 
   return (
-    <Card className="h-[80vh] max-h-[80vh] flex flex-col">
+    <Card className="h-[80vh] max-h-[80vh] flex flex-col border-vaya-purple/10">
       <CardHeader className="px-4 py-2 flex-none border-b">
         <div className="flex justify-between items-center">
           <CardTitle className="flex items-center text-xl">

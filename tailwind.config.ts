@@ -1,3 +1,4 @@
+
 import { type Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
 
@@ -19,29 +20,6 @@ export default {
           orange: '#FF7E47',     // Mars orange
           gold: '#FFD700',       // Star gold
           silver: '#E2E8F0',     // Spacecraft silver
-        },
-        
-        // UI functional colors for space theme
-        "space-ui": {
-          background: '#0B0E17',  // Main background
-          surface: '#1A2033',     // Card/element surface
-          accent: '#7CB7FF',      // Primary accent
-          secondary: '#A78BFA',   // Secondary accent
-          highlight: '#FFD700',   // Important highlights
-          warning: '#FF7E47',     // Warning elements
-          critical: '#E4263B',    // Critical alerts
-          success: '#4ADE80',     // Success indicators
-          border: '#2D3250',      // Border elements
-          subtle: '#2D3250',      // Subtle accents
-        },
-        
-        // Text colors for space theme
-        "space-text": {
-          primary: '#FFFFFF',     // Primary text
-          secondary: '#CBD5E1',   // Secondary text
-          tertiary: '#94A3B8',    // Tertiary/muted text
-          accent: '#7CB7FF',      // Accent text
-          highlight: '#FFD700',   // Highlighted text
         },
         
         // Hanuman theme colors
@@ -113,12 +91,7 @@ export default {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       backgroundImage: {
-        'space-gradient': 'linear-gradient(180deg, #0B0E17 0%, #1A2033 100%)',
-        'cosmic-purple': 'linear-gradient(135deg, #6C63FF 0%, #A78BFA 100%)',
-        'blue-nebula': 'linear-gradient(135deg, #0A4ECA 0%, #7CB7FF 100%)',
-        'mars-atmosphere': 'linear-gradient(135deg, #E4263B 0%, #FF7E47 100%)',
-        'solar-flare': 'linear-gradient(135deg, #FFD700 0%, #FF7E47 100%)',
-        'hanuman-bg': "url('/hanuman-bg.png')",
+        'hanuman-bg': "url('/lovable-uploads/e972aa49-7146-43ba-a1e8-b6e0b5f975d5.png')",
         'hanuman-gradient': 'linear-gradient(135deg, rgba(255, 126, 0, 0.1) 0%, rgba(198, 40, 40, 0.1) 100%)',
       },
     },

@@ -47,20 +47,20 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
     <div className={`flex flex-col min-h-screen ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
       {/* Simple background with Hanuman image */}
       <div className="fixed inset-0 pointer-events-none">
-        <div className="bg-hanuman-bg opacity-5 dark:opacity-10 absolute inset-0 bg-no-repeat bg-cover bg-center"></div>
+        <div className="bg-hanuman-bg absolute inset-0 bg-no-repeat bg-cover bg-center opacity-5 dark:opacity-10"></div>
       </div>
       
       {/* Header area */}
-      <header className={`sticky top-0 ${isSoftTheme ? 'bg-[var(--soft-bg-primary)]' : 'bg-background/95 backdrop-blur-sm'}`}>
+      <header className={`sticky top-0 z-10 ${isSoftTheme ? 'bg-[var(--soft-bg-primary)]' : 'bg-background/95 backdrop-blur-sm'}`}>
         <MainNav />
       </header>
       
       {/* Theme toggle controls */}
-      <div className="fixed top-20 right-4">
+      <div className="fixed top-20 right-4 z-10">
         <ThemeToggle />
       </div>
       
-      {/* Content area with proper spacing */}
+      {/* Content area */}
       <main className={`flex-grow pt-8 container mx-auto px-4 ${className} ${isSoftTheme ? 'bg-[var(--soft-bg-primary)] text-[var(--soft-text-primary)]' : ''}`}>
         <ErrorBoundary>
           {children}
