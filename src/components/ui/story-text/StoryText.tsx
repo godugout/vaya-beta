@@ -1,69 +1,58 @@
 
 import React, { forwardRef } from "react";
-import { VariantProps, cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
+import { VariantProps, cva } from "class-variance-authority";
 
 export const storyTextVariants = cva(
-  "font-story", 
+  "text-gray-900 dark:text-gray-100", 
   {
     variants: {
+      language: {
+        english: "font-story",
+        gujarati: "font-gujarati gujarati-content",
+        hindi: "font-hindi hindi-content",
+        sanskrit: "font-sanskrit sanskrit-content"
+      },
       size: {
-        xs: "text-xs",
-        sm: "text-sm",
-        md: "text-base",
-        lg: "text-lg",
-        xl: "text-xl",
+        xs: "text-sm",
+        sm: "text-base",
+        md: "text-lg",
+        lg: "text-xl",
+        xl: "text-2xl"
       },
       leading: {
         tight: "leading-tight",
         normal: "leading-normal",
         relaxed: "leading-relaxed",
-        loose: "leading-loose",
-      },
-      fontStyle: {
-        normal: "font-normal",
-        italic: "font-italic",
-        quote: "italic pl-4 border-l-4 border-autumn my-4",
-      },
-      textColor: {
-        default: "text-foreground",
-        muted: "text-muted-foreground",
-        light: "text-gray-200",
-      },
-      language: {
-        english: "font-story",
-        gujarati: "font-gujarati gujarati-content",
-        hindi: "font-hindi hindi-content",
-        sanskrit: "font-sanskrit sanskrit-content",
-      },
+        loose: "leading-loose"
+      }
     },
     defaultVariants: {
-      size: "md",
-      leading: "relaxed",
-      fontStyle: "normal",
-      textColor: "default",
       language: "english",
-    },
+      size: "md",
+      leading: "relaxed"
+    }
   }
 );
 
-export interface StoryTextProps 
+export interface StoryTextProps
   extends React.HTMLAttributes<HTMLParagraphElement>,
-    Omit<VariantProps<typeof storyTextVariants>, 'textColor'> {
-  as?: React.ElementType;
-  textColor?: "default" | "muted" | "light";
+    VariantProps<typeof storyTextVariants> {
+  language?: "english" | "gujarati" | "hindi" | "sanskrit";
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
+  leading?: "tight" | "normal" | "relaxed" | "loose";
 }
 
 const StoryText = forwardRef<HTMLParagraphElement, StoryTextProps>(
-  ({ className, size, leading, fontStyle, textColor, language, as: Component = "p", children, ...props }, ref) => {
+  ({ className, size = "md", leading = "relaxed", language = "english", children, ...props }, ref) => {
     return (
-      <Component
+      <p
         ref={ref}
-        className={cn(storyTextVariants({ size, leading, fontStyle, textColor, language }), className)}
+        className={cn(storyTextVariants({ size, leading, language }), className)}
         {...props}
       >
         {children}
-      </Component>
+      </p>
     );
   }
 );

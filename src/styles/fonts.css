@@ -58,3 +58,9 @@
   font-style: normal;
   font-display: swap;
 }
+
+/* Sanskrit style class - using Hind Madurai as the fallback font */
+.sanskrit-content {
+  font-feature-settings: "liga", "kern";
+  text-rendering: optimizeLegibility;
+}
