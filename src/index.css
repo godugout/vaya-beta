@@ -41,6 +41,93 @@
   [data-route="share-stories"] {
     --page-accent-color: #000;
   }
+
+  /* Soft theme overrides */
+  .soft-theme {
+    --background: 210 40% 98%;
+    --foreground: 222.2 47.4% 11.2%;
+    
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 47.4% 11.2%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 47.4% 11.2%;
+    
+    --primary: 215 90% 50%;
+    --primary-foreground: 210 40% 98%;
+    
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 215 90% 50%;
+    
+    --radius: 1rem;
+
+    /* Social platform colors */
+    --whatsapp-green: #25D366;
+    --meta-blue: #0866FF;
+    --messenger-blue: #0099FF;
+    --nextdoor-green: #00B551;
+    
+    /* Custom soft UI colors */
+    --soft-bg-primary: #F0F2F5;
+    --soft-bg-secondary: #FFFFFF;
+    --soft-text-primary: #050505;
+    --soft-text-secondary: #65676B;
+    --soft-border: #E4E6EB;
+    --soft-hover: #F2F3F5;
+    --soft-active: #E4E6EB;
+  }
+
+  .soft-theme.dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    
+    --card: 217.2 32.6% 17.5%;
+    --card-foreground: 210 40% 98%;
+    
+    --popover: 217.2 32.6% 17.5%;
+    --popover-foreground: 210 40% 98%;
+    
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
+    
+    /* Dark mode soft UI colors */
+    --soft-bg-primary: #18191A;
+    --soft-bg-secondary: #242526;
+    --soft-text-primary: #E4E6EB;
+    --soft-text-secondary: #B0B3B8;
+    --soft-border: #3E4042;
+    --soft-hover: #3A3B3C;
+    --soft-active: #404142;
+  }
 }
 
 /* Global page layout */
@@ -85,4 +172,34 @@
 /* Agencs style button */
 .agencs-btn {
   @apply inline-flex items-center justify-center px-8 py-3 bg-black text-white dark:bg-white dark:text-black font-medium text-base transition-colors duration-300 hover:bg-gray-800 dark:hover:bg-gray-200;
+}
+
+/* Soft UI Components */
+.soft-theme .card {
+  @apply rounded-xl shadow-sm border border-[var(--soft-border)] bg-[var(--soft-bg-secondary)];
+}
+
+.soft-theme .button {
+  @apply rounded-full font-medium;
+}
+
+.soft-theme .input, 
+.soft-theme .textarea, 
+.soft-theme .select {
+  @apply rounded-lg border-[var(--soft-border)] bg-[var(--soft-bg-secondary)];
+}
+
+/* Soft UI Glassmorphism */
+.soft-theme .glass {
+  @apply bg-white/70 dark:bg-black/70 backdrop-blur-md border border-white/20 dark:border-white/10;
+}
+
+/* Soft UI Navigation */
+.soft-theme .nav-item {
+  @apply rounded-lg hover:bg-[var(--soft-hover)] active:bg-[var(--soft-active)];
+}
+
+/* Soft UI Badge */
+.soft-theme .badge {
+  @apply rounded-full text-xs px-2 py-0.5;
 }

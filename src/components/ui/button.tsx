@@ -3,9 +3,10 @@ import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
+import { useSoftTheme } from "@/contexts/SoftThemeContext"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-none border border-transparent text-base font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 active:scale-[0.98]",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap border border-transparent text-base font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 active:scale-[0.98]",
   {
     variants: {
       variant: {
@@ -15,6 +16,13 @@ const buttonVariants = cva(
         secondary: "bg-gray-200 text-black hover:bg-gray-300 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700",
         ghost: "hover:bg-gray-100 text-black dark:text-white dark:hover:bg-white/10",
         link: "text-black dark:text-white underline-offset-4 hover:underline p-0 h-auto",
+        
+        // New soft UI variants
+        soft: "bg-[var(--meta-blue)] text-white hover:bg-[var(--meta-blue)]/90",
+        "soft-outline": "border border-[var(--soft-border)] bg-transparent text-[var(--soft-text-primary)] hover:bg-[var(--soft-hover)]",
+        "soft-secondary": "bg-[var(--soft-bg-secondary)] text-[var(--soft-text-primary)] hover:bg-[var(--soft-hover)]",
+        "soft-ghost": "hover:bg-[var(--soft-hover)] text-[var(--soft-text-primary)]",
+        "soft-destructive": "bg-red-500 text-white hover:bg-red-600",
         
         // Forest Stream variants
         forest: "bg-forest text-white hover:bg-forest/90 dark:bg-forest dark:text-white dark:hover:bg-forest/80",
@@ -63,10 +71,28 @@ export interface ButtonProps
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
+    const { softTheme } = useSoftTheme();
+    const isSoft = softTheme === 'soft';
+    
+    // Apply soft variants when soft theme is active
+    let softVariant = variant;
+    if (isSoft && !variant?.toString().startsWith('soft')) {
+      if (variant === 'default') softVariant = 'soft';
+      if (variant === 'outline') softVariant = 'soft-outline';
+      if (variant === 'secondary') softVariant = 'soft-secondary';
+      if (variant === 'ghost') softVariant = 'soft-ghost';
+      if (variant === 'destructive') softVariant = 'soft-destructive';
+    }
+    
+    // Apply soft sizing and rounded corners
+    const softSize = isSoft && size !== 'icon' && size !== 'pill' && size !== 'pill-lg' 
+      ? 'pill' 
+      : size;
+    
     const Comp = asChild ? Slot : "button"
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
+        className={cn(buttonVariants({ variant: softVariant, size: softSize, className }))}
         ref={ref}
         {...props}
       />

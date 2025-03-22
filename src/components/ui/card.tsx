@@ -1,21 +1,27 @@
 
 import * as React from "react"
-
+import { useSoftTheme } from "@/contexts/SoftThemeContext"
 import { cn } from "@/lib/utils"
 
 const Card = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(
-      "rounded-lg border bg-card text-card-foreground shadow-sm z-cards",
-      className
-    )}
-    {...props}
-  />
-))
+>(({ className, ...props }, ref) => {
+  const { softTheme } = useSoftTheme();
+  const isSoft = softTheme === 'soft';
+  
+  return (
+    <div
+      ref={ref}
+      className={cn(
+        "rounded-lg border bg-card text-card-foreground shadow-sm",
+        isSoft && "rounded-xl shadow border-[var(--soft-border)] bg-[var(--soft-bg-secondary)]",
+        className
+      )}
+      {...props}
+    />
+  )
+})
 Card.displayName = "Card"
 
 const CardHeader = React.forwardRef<
@@ -33,35 +39,50 @@ CardHeader.displayName = "CardHeader"
 const CardTitle = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLHeadingElement>
->(({ className, ...props }, ref) => (
-  <h3
-    ref={ref}
-    className={cn(
-      "text-2xl font-semibold leading-none tracking-tight z-text",
-      className
-    )}
-    {...props}
-  />
-))
+>(({ className, ...props }, ref) => {
+  const { softTheme } = useSoftTheme();
+  const isSoft = softTheme === 'soft';
+  
+  return (
+    <h3
+      ref={ref}
+      className={cn(
+        "text-2xl font-semibold leading-none tracking-tight", 
+        isSoft && "text-[var(--soft-text-primary)]",
+        className
+      )}
+      {...props}
+    />
+  )
+})
 CardTitle.displayName = "CardTitle"
 
 const CardDescription = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => (
-  <p
-    ref={ref}
-    className={cn("text-sm text-muted-foreground z-text", className)}
-    {...props}
-  />
-))
+>(({ className, ...props }, ref) => {
+  const { softTheme } = useSoftTheme();
+  const isSoft = softTheme === 'soft';
+  
+  return (
+    <p
+      ref={ref}
+      className={cn(
+        "text-sm text-muted-foreground",
+        isSoft && "text-[var(--soft-text-secondary)]",
+        className
+      )}
+      {...props}
+    />
+  )
+})
 CardDescription.displayName = "CardDescription"
 
 const CardContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("p-6 pt-0 z-content", className)} {...props} />
+  <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />
 ))
 CardContent.displayName = "CardContent"
 
@@ -71,7 +92,7 @@ const CardFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex items-center p-6 pt-0 z-content", className)}
+    className={cn("flex items-center p-6 pt-0", className)}
     {...props}
   />
 ))
