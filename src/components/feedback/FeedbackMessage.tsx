@@ -71,10 +71,7 @@ export function FeedbackMessage({
   return (
     <AnimatePresence>
       <motion.div
-        initial={motionConfig.initial}
-        animate={motionConfig.animate}
-        exit={motionConfig.exit}
-        transition={motionConfig.transition}
+        {...motionConfig}
         className={cn(feedbackVariants({ variant, hasAction: !!action, className }))}
         {...props}
       >

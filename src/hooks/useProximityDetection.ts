@@ -172,7 +172,7 @@ export function useProximityDetection({
           toast({
             title: 'Permission Denied',
             description: 'Bluetooth access is required for proximity detection',
-            variant: 'destructive'
+            variant: "destructive"
           });
         } else {
           console.error('Bluetooth scanning error:', error);
@@ -234,7 +234,7 @@ export function useProximityDetection({
           toast({
             title: 'Permission Denied',
             description: 'NFC access is required for proximity detection',
-            variant: 'destructive'
+            variant: "destructive"
           });
         } else {
           console.error('NFC scanning error:', error);
@@ -258,7 +258,6 @@ export function useProximityDetection({
         toast({
           title: 'Synced Device Detection',
           description: `Found ${device.name} while offline`,
-          variant: 'info'
         });
       });
       

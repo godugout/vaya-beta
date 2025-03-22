@@ -127,7 +127,6 @@ export function useMultiRegionSync({
       toast({
         title: 'Region Synchronized',
         description: `Data successfully synchronized to ${region} region`,
-        variant: 'success'
       });
     } catch (error) {
       console.error(`Error syncing to region ${region}:`, error);
@@ -144,7 +143,7 @@ export function useMultiRegionSync({
       toast({
         title: 'Sync Failed',
         description: `Failed to synchronize data to ${region} region`,
-        variant: 'destructive'
+        variant: "destructive"
       });
     } finally {
       setIsSyncing(false);
@@ -167,7 +166,6 @@ export function useMultiRegionSync({
       toast({
         title: 'All Regions Synchronized',
         description: 'Data successfully synchronized to all regions',
-        variant: 'success'
       });
     } finally {
       setIsSyncing(false);
@@ -183,7 +181,7 @@ export function useMultiRegionSync({
       toast({
         title: 'No Available Regions',
         description: 'All regions are currently offline. Please try again later.',
-        variant: 'destructive'
+        variant: "destructive"
       });
       return primaryRegion;
     }
@@ -199,7 +197,7 @@ export function useMultiRegionSync({
       toast({
         title: 'Region Failover',
         description: `Primary region is unavailable. Using ${bestRegion} instead.`,
-        variant: 'warning'
+        variant: "destructive"
       });
       
       setPrimaryRegionStatus('degraded');
@@ -226,7 +224,7 @@ export function useMultiRegionSync({
     toast({
       title: 'Region Outage',
       description: `${region} region is currently experiencing issues`,
-      variant: 'destructive'
+      variant: "destructive"
     });
   };
   
@@ -247,7 +245,6 @@ export function useMultiRegionSync({
     toast({
       title: 'Region Recovered',
       description: `${region} region is back online`,
-      variant: 'success'
     });
     
     // Auto-sync recovered region
