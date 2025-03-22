@@ -25,12 +25,19 @@ export const storyTextVariants = cva(
         normal: "leading-normal",
         relaxed: "leading-relaxed",
         loose: "leading-loose"
+      },
+      textColor: {
+        default: "text-gray-900 dark:text-gray-100",
+        muted: "text-gray-600 dark:text-gray-400",
+        accent: "text-vaya-coral dark:text-vaya-coral-light",
+        subtle: "text-gray-500 dark:text-gray-500"
       }
     },
     defaultVariants: {
       language: "english",
       size: "md",
-      leading: "relaxed"
+      leading: "relaxed",
+      textColor: "default"
     }
   }
 );
@@ -41,14 +48,15 @@ export interface StoryTextProps
   language?: "english" | "gujarati" | "hindi" | "sanskrit";
   size?: "xs" | "sm" | "md" | "lg" | "xl";
   leading?: "tight" | "normal" | "relaxed" | "loose";
+  textColor?: "default" | "muted" | "accent" | "subtle";
 }
 
 const StoryText = forwardRef<HTMLParagraphElement, StoryTextProps>(
-  ({ className, size = "md", leading = "relaxed", language = "english", children, ...props }, ref) => {
+  ({ className, size = "md", leading = "relaxed", language = "english", textColor = "default", children, ...props }, ref) => {
     return (
       <p
         ref={ref}
-        className={cn(storyTextVariants({ size, leading, language }), className)}
+        className={cn(storyTextVariants({ size, leading, language, textColor }), className)}
         {...props}
       >
         {children}

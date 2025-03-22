@@ -10,16 +10,17 @@ export interface StoryQuoteProps
   language?: "english" | "gujarati" | "hindi" | "sanskrit";
   size?: "xs" | "sm" | "md" | "lg" | "xl";
   leading?: "tight" | "normal" | "relaxed" | "loose";
+  textColor?: "default" | "muted" | "accent" | "subtle";
 }
 
 const StoryQuote = forwardRef<HTMLQuoteElement, StoryQuoteProps>(
-  ({ className, size = "md", leading = "relaxed", language = "english", children, ...props }, ref) => {
+  ({ className, size = "md", leading = "relaxed", language = "english", textColor = "default", children, ...props }, ref) => {
     return (
       <blockquote
         ref={ref}
         className={cn(
           "italic pl-4 border-l-4 border-autumn my-4",
-          storyTextVariants({ size, leading, language }),
+          storyTextVariants({ size, leading, language, textColor }),
           className
         )}
         {...props}
