@@ -1,20 +1,5 @@
 
-@import './accessibility.css';
-@import './ambalal-theme.css';
-@import './backgrounds.css';
-@import './breadcrumbs.css';
-@import './buttons.css';
-@import './cards.css';
-@import './cosmic-effects.css';
-@import './dark-mode.css';
-@import './desktop-nav.css';
-@import './dispatch-theme.css';
-@import './forms.css';
-@import './mobile-nav.css';
-@import './placeholders.css';
-@import './space-vault.css';
-@import './temple-transitions.css';
-@import './transitions.css';
-@import './view-switchers.css';
-@import './voice-nav.css';
+/* Import all component styles */
+@import './elevation.css';
+@import './typography.css';
 @import './gujarati-content.css';

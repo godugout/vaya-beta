@@ -1,0 +1,76 @@
+
+/* Elevation utility classes for standardized shadows */
+
+/* Level 1: Subtle, for hover states, subtle cards */
+.elevation-1 {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  z-index: 1;
+}
+
+/* Level 2: Cards, buttons, most components */
+.elevation-2 {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.15), 0 2px 4px rgba(0,0,0,0.12);
+  z-index: 2;
+}
+
+/* Level 3: Dropdown menus, navigation drawers */
+.elevation-3 {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15), 0 3px 6px rgba(0,0,0,0.10);
+  z-index: 3;
+}
+
+/* Level 4: Modals, dialogs */
+.elevation-4 {
+  box-shadow: 0 15px 25px rgba(0,0,0,0.15), 0 5px 10px rgba(0,0,0,0.05);
+  z-index: 4;
+}
+
+/* Level 5: Toasts, notifications, highest elements */
+.elevation-5 {
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  z-index: 5;
+}
+
+/* Dark mode variants with adjusted opacity for better contrast */
+.dark .elevation-1 {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.25), 0 1px 2px rgba(0,0,0,0.4);
+}
+
+.dark .elevation-2 {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.3), 0 2px 4px rgba(0,0,0,0.25);
+}
+
+.dark .elevation-3 {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3), 0 3px 6px rgba(0,0,0,0.2);
+}
+
+.dark .elevation-4 {
+  box-shadow: 0 15px 25px rgba(0,0,0,0.3), 0 5px 10px rgba(0,0,0,0.15);
+}
+
+.dark .elevation-5 {
+  box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+}
+
+/* Hover elevation variants */
+.hover-elevation-1:hover {
+  box-shadow: 0 2px 4px rgba(0,0,0,0.16), 0 2px 3px rgba(0,0,0,0.23);
+  transition: box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.hover-elevation-2:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.18), 0 3px 6px rgba(0,0,0,0.16);
+  transition: box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.hover-elevation-3:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.18), 0 10px 10px rgba(0,0,0,0.15);
+  transition: box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Active state elevation reductions */
+.active-elevation-reduce:active {
+  box-shadow: 0 1px 2px rgba(0,0,0,0.12), 0 1px 1px rgba(0,0,0,0.14);
+  transform: translateY(1px);
+  transition: all 0.1s cubic-bezier(0.25, 0.8, 0.25, 1);
+}

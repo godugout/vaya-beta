@@ -25,6 +25,29 @@ module.exports = {
         hindi: ['Baloo Bhai 2', 'sans-serif'],
       },
       colors: {
+        // Brand colors per specification
+        'vaya-coral': {
+          DEFAULT: '#FF7675', // Primary coral
+          light: '#FFA8A7',
+          dark: '#D15A59'
+        },
+        'vaya-purple': {
+          DEFAULT: '#6C5CE7', // Secondary purple
+          light: '#A195F7',
+          dark: '#4A3BBF'
+        },
+        'vaya-green': {
+          DEFAULT: '#4CD137', // Tertiary green
+          light: '#7EE76C',
+          dark: '#35A220'
+        },
+        'vaya-magenta': {
+          DEFAULT: '#D946EF',
+          light: '#E67AF7',
+          dark: '#B224CD'
+        },
+        
+        // Legacy lovable colors maintained for compatibility
         'lovable-coral': '#FF7675',
         'lovable-purple': '#6C5CE7',
         'lovable-green': '#4CD137',
