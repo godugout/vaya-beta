@@ -10,6 +10,7 @@ import { IconLibrary } from '@/components/design-system/IconLibrary';
 import { ThemeCustomizer } from '@/components/design-system/ThemeCustomizer';
 import { AccessibilityGuidelines } from '@/components/design-system/AccessibilityGuidelines';
 import { DesignSystemShowcase } from '@/components/design-system/DesignSystemShowcase';
+import { StoryShowcase } from '@/components/design-system/StoryShowcase';
 
 export default function DesignSystem() {
   return (
@@ -21,6 +22,7 @@ export default function DesignSystem() {
         <Route path="typography" element={<Typography />} />
         <Route path="spacing" element={<SpacingGuide />} />
         <Route path="components" element={<ComponentsShowcase />} />
+        <Route path="stories" element={<StoryShowcase />} />
         <Route path="icons" element={<IconLibrary />} />
         <Route path="accessibility" element={<AccessibilityGuidelines />} />
       </Routes>
