@@ -1,87 +1,113 @@
 
 import React from 'react';
-import { cn } from '@/lib/utils';
-
-type GlyphSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+import { motion } from 'framer-motion';
 
 interface JamnabenCircularGlyphProps {
-  size?: GlyphSize;
+  size?: 'sm' | 'md' | 'lg' | 'xl';
   className?: string;
-  animated?: boolean;
 }
 
 export const JamnabenCircularGlyph: React.FC<JamnabenCircularGlyphProps> = ({
   size = 'md',
-  className,
-  animated = false
+  className = '',
 }) => {
-  const sizeClasses: Record<GlyphSize, string> = {
-    xs: 'w-6 h-6',
-    sm: 'w-8 h-8',
-    md: 'w-12 h-12',
-    lg: 'w-16 h-16',
-    xl: 'w-24 h-24'
+  // Define sizes
+  const sizeMap = {
+    sm: { width: 48, height: 48, strokeWidth: 1.5 },
+    md: { width: 72, height: 72, strokeWidth: 2 },
+    lg: { width: 96, height: 96, strokeWidth: 2.5 },
+    xl: { width: 144, height: 144, strokeWidth: 3 },
   };
-
-  const animationClass = animated ? 'animate-spin-slow' : '';
-
+  
+  const { width, height, strokeWidth } = sizeMap[size];
+  
+  // Animation for gentle glow
+  const glowVariants = {
+    initial: { opacity: 0.2 },
+    animate: { 
+      opacity: [0.2, 0.5, 0.2],
+      transition: { 
+        duration: 4,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }
+    }
+  };
+  
   return (
-    <svg 
-      viewBox="0 0 100 100" 
-      className={cn(sizeClasses[size], animationClass, className)}
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      {/* Outer Circle */}
-      <circle 
-        cx="50" 
-        cy="50" 
-        r="45" 
+    <div className={`relative inline-block ${className}`}>
+      <svg 
+        width={width} 
+        height={height} 
+        viewBox="0 0 144 144" 
         fill="none" 
-        stroke="currentColor" 
-        strokeWidth="2"
-        className="opacity-80"
-      />
-      
-      {/* Middle Circle */}
-      <circle 
-        cx="50" 
-        cy="50" 
-        r="35" 
-        fill="none" 
-        stroke="currentColor" 
-        strokeWidth="1.5"
-        className="opacity-60"
-      />
-      
-      {/* Inner Circle */}
-      <circle 
-        cx="50" 
-        cy="50" 
-        r="25" 
-        fill="none" 
-        stroke="currentColor" 
-        strokeWidth="1"
-        className="opacity-40"
-      />
-      
-      {/* Four primary dots */}
-      <circle cx="50" cy="5" r="3" fill="currentColor" />
-      <circle cx="95" cy="50" r="3" fill="currentColor" />
-      <circle cx="50" cy="95" r="3" fill="currentColor" />
-      <circle cx="5" cy="50" r="3" fill="currentColor" />
-      
-      {/* Eight secondary dots */}
-      <circle cx="75" cy="15" r="2" fill="currentColor" className="opacity-80" />
-      <circle cx="85" cy="25" r="2" fill="currentColor" className="opacity-80" />
-      <circle cx="85" cy="75" r="2" fill="currentColor" className="opacity-80" />
-      <circle cx="75" cy="85" r="2" fill="currentColor" className="opacity-80" />
-      <circle cx="25" cy="85" r="2" fill="currentColor" className="opacity-80" />
-      <circle cx="15" cy="75" r="2" fill="currentColor" className="opacity-80" />
-      <circle cx="15" cy="25" r="2" fill="currentColor" className="opacity-80" />
-      <circle cx="25" cy="15" r="2" fill="currentColor" className="opacity-80" />
-      
-      {/* Center Point */}
-      <circle cx="50" cy="50" r="4" fill="currentColor" />
-    </svg>
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        {/* Center glow */}
+        <motion.circle
+          cx="72"
+          cy="72"
+          r="40"
+          fill="currentColor"
+          fillOpacity="0.1"
+          variants={glowVariants}
+          initial="initial"
+          animate="animate"
+        />
+        
+        {/* Circular trunk forming circumference */}
+        <motion.circle
+          cx="72"
+          cy="72"
+          r="54"
+          stroke="currentColor"
+          strokeWidth={strokeWidth}
+          fill="none"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 2, ease: "easeInOut" }}
+        />
+        
+        {/* Trunk continuing upward */}
+        <motion.path
+          d="M72 18V72"
+          stroke="currentColor"
+          strokeWidth={strokeWidth}
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+        />
+        
+        {/* Bottom branches (longest) */}
+        <motion.path
+          d="M72 42 L52 34 M72 42 L92 34"
+          stroke="currentColor"
+          strokeWidth={strokeWidth}
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 1.2, delay: 0.2, ease: "easeOut" }}
+        />
+        
+        {/* Middle branches */}
+        <motion.path
+          d="M72 36 L57 30 M72 36 L87 30"
+          stroke="currentColor"
+          strokeWidth={strokeWidth}
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 1.2, delay: 0.4, ease: "easeOut" }}
+        />
+        
+        {/* Top branches (shortest) */}
+        <motion.path
+          d="M72 30 L62 26 M72 30 L82 26"
+          stroke="currentColor"
+          strokeWidth={strokeWidth}
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 1.2, delay: 0.6, ease: "easeOut" }}
+        />
+      </svg>
+    </div>
   );
 };

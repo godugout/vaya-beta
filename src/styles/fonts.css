@@ -64,3 +64,29 @@
   font-feature-settings: "liga", "kern";
   text-rendering: optimizeLegibility;
 }
+
+/* Bilingual text container */
+.bilingual-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .bilingual-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+}
+
+.gujarati-text {
+  font-family: var(--font-gujarati);
+}
+
+.sanskrit-text {
+  font-family: var(--font-sanskrit);
+}
+
+.hindi-text {
+  font-family: var(--font-hindi);
+}
