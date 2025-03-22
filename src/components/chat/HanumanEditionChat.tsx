@@ -8,7 +8,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FamilyContextForm } from "./FamilyContextForm";
 import { HanumanBanner } from "./HanumanBanner";
-import { HanumanEditionSettings } from "./HanumanEditionSettings";
+import HanumanEditionSettings from "./HanumanEditionSettings";
 import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
 import PromptCategories from "./PromptCategories";
@@ -18,6 +18,7 @@ export function HanumanEditionChat() {
   const [activeTab, setActiveTab] = useState("chat");
   const { messages, input, setInput, handleSend, handleMorePrompts, familyContext, saveFamilyContext } = useChat();
   const { isSpanish, setLanguagePreference } = useLanguage();
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   const handlePromptSelect = (prompt: string) => {
     setInput(prompt);
@@ -31,13 +32,17 @@ export function HanumanEditionChat() {
     saveFamilyContext(context);
     setActiveTab("chat");
   };
+  
+  const handleSettingsClick = () => {
+    setSettingsOpen(true);
+  };
 
   return (
     <Card className="h-[80vh] max-h-[80vh] flex flex-col">
       <CardHeader className="px-4 py-2 flex-none">
         <div className="flex justify-between items-center">
           <CardTitle className="flex items-center text-xl">
-            <HanumanBanner />
+            <HanumanBanner onFamilySettingsClick={() => setActiveTab("profile")} />
           </CardTitle>
           <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1">
             <TabsList className="grid w-full grid-cols-3">

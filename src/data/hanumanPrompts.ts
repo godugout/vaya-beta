@@ -1,5 +1,5 @@
 
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { 
   Pin, Calendar, Cake, Heart, Camera, Family, 
   Map, School, Briefcase, Sparkles, Music 
@@ -65,7 +65,7 @@ export const hanumanPromptCategories: HanumanPromptCategory[] = [
     icon: <Camera className="h-4 w-4" />,
     prompts: [
       'Tell me about an old family photograph.',
-      'What's the story behind this picture?',
+      'What\'s the story behind this picture?',
       'Describe a photograph you wish you had taken.'
     ]
   },
@@ -88,7 +88,7 @@ export const hanumanPromptCategories: HanumanPromptCategory[] = [
     prompts: [
       'Tell me about where you grew up.',
       'What place holds special meaning for you?',
-      'Describe a place you've lived that changed you.'
+      'Describe a place you\'ve lived that changed you.'
     ]
   },
   {
@@ -119,7 +119,7 @@ export const hanumanPromptCategories: HanumanPromptCategory[] = [
     description: 'Life lessons and advice',
     icon: <Sparkles className="h-4 w-4" />,
     prompts: [
-      'What's the best advice you've ever received?',
+      'What\'s the best advice you\'ve ever received?',
       'What would you tell your younger self?',
       'What life lessons would you like to pass on?'
     ]
