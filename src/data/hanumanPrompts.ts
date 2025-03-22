@@ -22,7 +22,7 @@ export const hanumanPromptCategories: HanumanPromptCategory[] = [
     prompts: [
       'Tell me about your favorite childhood toy.',
       'What was your favorite game to play as a child?',
-      'Describe your childhood home.',
+      'Describe your childhood home.'
     ]
   },
   {
@@ -33,7 +33,7 @@ export const hanumanPromptCategories: HanumanPromptCategory[] = [
     prompts: [
       'Share a memory from an important family celebration.',
       'Tell me about a holiday tradition your family keeps.',
-      'Describe a memorable family vacation.',
+      'Describe a memorable family vacation.'
     ]
   },
   {
@@ -44,7 +44,7 @@ export const hanumanPromptCategories: HanumanPromptCategory[] = [
     prompts: [
       'What was one of your proudest moments?',
       'Tell me about a significant transition in your life.',
-      'Describe an important decision you made.',
+      'Describe an important decision you made.'
     ]
   },
   {
@@ -55,7 +55,7 @@ export const hanumanPromptCategories: HanumanPromptCategory[] = [
     prompts: [
       'How did you meet your spouse or partner?',
       'Tell me about a friendship that has meant a lot to you.',
-      'Who has been a mentor in your life?',
+      'Who has been a mentor in your life?'
     ]
   },
   {
@@ -66,7 +66,7 @@ export const hanumanPromptCategories: HanumanPromptCategory[] = [
     prompts: [
       'Tell me about an old family photograph.',
       'What's the story behind this picture?',
-      'Describe a photograph you wish you had taken.',
+      'Describe a photograph you wish you had taken.'
     ]
   },
   {
@@ -77,7 +77,7 @@ export const hanumanPromptCategories: HanumanPromptCategory[] = [
     prompts: [
       'What stories did your grandparents tell about their lives?',
       'Tell me about a family heirloom and its history.',
-      'What do you know about where our family came from?',
+      'What do you know about where our family came from?'
     ]
   },
   {
@@ -88,7 +88,7 @@ export const hanumanPromptCategories: HanumanPromptCategory[] = [
     prompts: [
       'Tell me about where you grew up.',
       'What place holds special meaning for you?',
-      'Describe a place you've lived that changed you.',
+      'Describe a place you've lived that changed you.'
     ]
   },
   {
@@ -99,7 +99,7 @@ export const hanumanPromptCategories: HanumanPromptCategory[] = [
     prompts: [
       'Who was your favorite teacher and why?',
       'Tell me about a lesson that stayed with you.',
-      'What was school like for you?',
+      'What was school like for you?'
     ]
   },
   {
@@ -110,7 +110,7 @@ export const hanumanPromptCategories: HanumanPromptCategory[] = [
     prompts: [
       'What was your first job?',
       'Tell me about your career path.',
-      'What work achievements are you most proud of?',
+      'What work achievements are you most proud of?'
     ]
   },
   {
@@ -121,7 +121,7 @@ export const hanumanPromptCategories: HanumanPromptCategory[] = [
     prompts: [
       'What's the best advice you've ever received?',
       'What would you tell your younger self?',
-      'What life lessons would you like to pass on?',
+      'What life lessons would you like to pass on?'
     ]
   },
   {
@@ -132,7 +132,7 @@ export const hanumanPromptCategories: HanumanPromptCategory[] = [
     prompts: [
       'What family traditions are most important to you?',
       'Tell me about a food tradition in our family.',
-      'What cultural practices have you maintained?',
+      'What cultural practices have you maintained?'
     ]
   }
 ];
