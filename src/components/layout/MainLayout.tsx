@@ -24,10 +24,13 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
       path: location.pathname,
       search: location.search,
       title: document.title
+    }).catch(error => {
+      console.error("Failed to track activity:", error);
+      // Silently fail as this isn't critical functionality
     });
   }, [location.pathname, location.search, trackActivity]);
 
-  // Apply the cosmic theme class to body
+  // Apply the theme class to body
   useEffect(() => {
     document.body.classList.add('star-bg', 'nebula-effect');
     
@@ -42,13 +45,13 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
   
   return (
     <div className={`flex flex-col min-h-screen ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
-      {/* Fixed header area with cosmic theme - position fixed */}
+      {/* Fixed header area with cosmic theme */}
       <div className="cosmic-nav fixed top-0 left-0 right-0 z-[100]">
         <MainNav />
       </div>
       
       {/* Content area with proper spacing to avoid overlap with fixed header */}
-      <main className={`flex-grow mt-48 sm:mt-40 relative z-content container mx-auto px-4 ${className}`}>
+      <main className={`flex-grow mt-48 sm:mt-40 pt-6 relative z-content container mx-auto px-4 ${className}`}>
         <ErrorBoundary>
           {children}
         </ErrorBoundary>

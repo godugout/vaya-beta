@@ -26,7 +26,14 @@ const NavItem = ({ href, icon, children, active }: NavItemProps) => (
 
 export const DesignSystemLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const location = useLocation();
-  const currentPath = location.pathname.split('/').pop() || '';
+  const path = location.pathname;
+  
+  const isActive = (route: string) => {
+    if (route === '/design-system' && path === '/design-system') {
+      return true;
+    }
+    return path.includes(route) && route !== '/design-system';
+  };
   
   return (
     <div className="min-h-screen bg-white dark:bg-dark-background text-black dark:text-dark-text-primary flex">
@@ -41,49 +48,63 @@ export const DesignSystemLayout: React.FC<{ children: React.ReactNode }> = ({ ch
           <NavItem 
             href="/design-system" 
             icon={<Palette size={18} />} 
-            active={currentPath === 'design-system'}
+            active={isActive('/design-system')}
+          >
+            Overview
+          </NavItem>
+          <NavItem 
+            href="/design-system/customizer" 
+            icon={<Palette size={18} />} 
+            active={isActive('/design-system/customizer')}
           >
             Theme Customizer
           </NavItem>
           <NavItem 
             href="/design-system/colors" 
             icon={<Palette size={18} />} 
-            active={currentPath === 'colors'}
+            active={isActive('/design-system/colors')}
           >
             Color Palette
           </NavItem>
           <NavItem 
             href="/design-system/typography" 
             icon={<Type size={18} />} 
-            active={currentPath === 'typography'}
+            active={isActive('/design-system/typography')}
           >
             Typography
           </NavItem>
           <NavItem 
             href="/design-system/spacing" 
             icon={<Layout size={18} />} 
-            active={currentPath === 'spacing'}
+            active={isActive('/design-system/spacing')}
           >
             Spacing & Grid
           </NavItem>
           <NavItem 
             href="/design-system/components" 
             icon={<Component size={18} />} 
-            active={currentPath === 'components'}
+            active={isActive('/design-system/components')}
           >
             Components
           </NavItem>
           <NavItem 
+            href="/design-system/stories" 
+            icon={<BookIcon size={18} />} 
+            active={isActive('/design-system/stories')}
+          >
+            Story Showcase
+          </NavItem>
+          <NavItem 
             href="/design-system/icons" 
             icon={<FileCode size={18} />} 
-            active={currentPath === 'icons'}
+            active={isActive('/design-system/icons')}
           >
             Icon Library
           </NavItem>
           <NavItem 
             href="/design-system/accessibility" 
             icon={<CircleUser size={18} />} 
-            active={currentPath === 'accessibility'}
+            active={isActive('/design-system/accessibility')}
           >
             Accessibility
           </NavItem>
