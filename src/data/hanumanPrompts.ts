@@ -1,5 +1,5 @@
 
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { 
   Pin, Calendar, Cake, Heart, Camera, Family, 
   Map, School, Briefcase, Sparkles, Music 
@@ -12,7 +12,7 @@ export interface HanumanPromptCategory {
   description_en: string;
   description_es: string;
   colorKey: string;
-  icon: ReactNode;
+  icon: React.ReactNode;
   prompts?: string[];
 }
 

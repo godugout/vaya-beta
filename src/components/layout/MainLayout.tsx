@@ -9,6 +9,7 @@ import { useActivityTracking, ActivityTypes } from '@/hooks/useActivityTracking'
 import { useTheme } from '@/contexts/ThemeContext';
 import { useSoftTheme } from '@/contexts/SoftThemeContext';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
+import { Rocket } from 'lucide-react';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -21,6 +22,7 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
   const { theme } = useTheme();
   const { softTheme } = useSoftTheme();
   const isSoftTheme = softTheme === 'soft';
+  const isNasaTheme = document.body.classList.contains('nasa-theme');
   
   // Track page views
   React.useEffect(() => {
@@ -47,17 +49,74 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
     };
   }, [theme]);
   
+  // Toggle NASA theme function
+  const toggleNasaTheme = () => {
+    if (isNasaTheme) {
+      document.body.classList.remove('nasa-theme', 'cosmic-bg');
+      const starsContainer = document.querySelector('.stars-container');
+      if (starsContainer) {
+        document.body.removeChild(starsContainer);
+      }
+    } else {
+      document.body.classList.add('nasa-theme', 'cosmic-bg');
+      
+      // Create stars background
+      const createStars = () => {
+        const starsContainer = document.createElement('div');
+        starsContainer.className = 'stars-container';
+        starsContainer.style.position = 'fixed';
+        starsContainer.style.top = '0';
+        starsContainer.style.left = '0';
+        starsContainer.style.width = '100%';
+        starsContainer.style.height = '100%';
+        starsContainer.style.zIndex = '-1';
+        starsContainer.style.overflow = 'hidden';
+        
+        for (let i = 0; i < 100; i++) {
+          const star = document.createElement('div');
+          star.className = 'star';
+          star.style.left = `${Math.random() * 100}%`;
+          star.style.top = `${Math.random() * 100}%`;
+          starsContainer.appendChild(star);
+        }
+        
+        document.body.appendChild(starsContainer);
+      };
+      
+      createStars();
+    }
+  };
+  
   return (
     <div className={`flex flex-col min-h-screen ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
       {/* Fixed header area with cosmic theme */}
-      <div className={`cosmic-nav fixed top-0 left-0 right-0 z-[100] ${isSoftTheme ? 'bg-[var(--soft-bg-primary)]' : ''}`}>
+      <div className={`cosmic-nav fixed top-0 left-0 right-0 z-[100] ${isSoftTheme ? 'bg-[var(--soft-bg-primary)]' : ''} ${isNasaTheme ? 'space-glass blue-glow' : ''}`}>
         <MainNav />
       </div>
       
       {/* Theme toggle controls */}
-      <div className="fixed top-20 right-4 z-[101]">
+      <div className="fixed top-20 right-4 z-[101] flex items-center">
         <ThemeToggle showSoftToggle={true} />
+        
+        {/* NASA theme toggle button */}
+        <button 
+          onClick={toggleNasaTheme}
+          className={`ml-2 p-2 rounded-full transition-colors ${isNasaTheme ? 'bg-nasa-blue text-white' : 'bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-200'}`}
+          title={isNasaTheme ? "Disable NASA Theme" : "Enable NASA Theme"}
+        >
+          <Rocket className="h-5 w-5" />
+        </button>
       </div>
+      
+      {/* Mission timer for NASA theme */}
+      {isNasaTheme && (
+        <div className="fixed top-20 left-4 z-[101] font-mono text-sm text-space-light-blue">
+          <div className="terminal-text p-2">
+            <div>MISSION TIME: {new Date().toLocaleTimeString()}</div>
+            <div>STATUS: ONLINE</div>
+          </div>
+        </div>
+      )}
       
       {/* Content area with proper spacing to avoid overlap with fixed header */}
       <main className={`flex-grow mt-48 sm:mt-40 pt-6 relative z-content container mx-auto px-4 ${className} ${isSoftTheme ? 'bg-[var(--soft-bg-primary)] text-[var(--soft-text-primary)]' : ''}`}>
