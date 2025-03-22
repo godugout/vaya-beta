@@ -7,6 +7,7 @@ import { ElevationShowcase } from './elevation/ElevationShowcase';
 import { ColorSystemShowcase } from './colors/ColorSystemShowcase';
 import { ButtonSystemShowcase } from './buttons/ButtonSystemShowcase';
 import { ResponsiveGridShowcase } from './grid/ResponsiveGridShowcase';
+import { PoetryExample } from './story/PoetryExample';
 
 export const StoryShowcase: React.FC = () => {
   return (
@@ -20,6 +21,10 @@ export const StoryShowcase: React.FC = () => {
         <EnglishStoryExample />
         <MultilingualStoryExample />
       </Grid>
+      
+      <div className="mb-12">
+        <PoetryExample />
+      </div>
       
       <ElevationShowcase />
       <ColorSystemShowcase />

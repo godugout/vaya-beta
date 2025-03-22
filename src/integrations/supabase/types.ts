@@ -9,6 +9,74 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      cultural_events: {
+        Row: {
+          created_at: string | null
+          created_by: string | null
+          description: string | null
+          event_date: string | null
+          id: string
+          recurring: boolean | null
+          significance: string | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          event_date?: string | null
+          id?: string
+          recurring?: boolean | null
+          significance?: string | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          event_date?: string | null
+          id?: string
+          recurring?: boolean | null
+          significance?: string | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      cultural_notes: {
+        Row: {
+          created_at: string | null
+          id: string
+          member_id: string | null
+          note: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          member_id?: string | null
+          note: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          member_id?: string | null
+          note?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cultural_notes_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "family_members"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       families: {
         Row: {
           created_at: string | null
@@ -68,25 +136,81 @@ export type Database = {
           },
         ]
       }
+      family_media: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string
+          media_type: string
+          member_id: string | null
+          metadata: Json | null
+          title: string
+          updated_at: string | null
+          uploaded_by: string | null
+          url: string
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          media_type: string
+          member_id?: string | null
+          metadata?: Json | null
+          title: string
+          updated_at?: string | null
+          uploaded_by?: string | null
+          url: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          media_type?: string
+          member_id?: string | null
+          metadata?: Json | null
+          title?: string
+          updated_at?: string | null
+          uploaded_by?: string | null
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "family_media_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "family_members"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       family_members: {
         Row: {
           created_at: string | null
+          cultural_significance: string | null
           family_id: string | null
+          generation_level: number | null
           id: string
+          life_story: string | null
           role: string
           user_id: string | null
         }
         Insert: {
           created_at?: string | null
+          cultural_significance?: string | null
           family_id?: string | null
+          generation_level?: number | null
           id?: string
+          life_story?: string | null
           role?: string
           user_id?: string | null
         }
         Update: {
           created_at?: string | null
+          cultural_significance?: string | null
           family_id?: string | null
+          generation_level?: number | null
           id?: string
+          life_story?: string | null
           role?: string
           user_id?: string | null
         }
@@ -256,6 +380,35 @@ export type Database = {
         }
         Relationships: []
       }
+      member_interests: {
+        Row: {
+          created_at: string | null
+          id: string
+          interest: string
+          member_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          interest: string
+          member_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          interest?: string
+          member_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "member_interests_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "family_members"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       photos: {
         Row: {
           caption: string | null
@@ -384,10 +537,13 @@ export type Database = {
           audio_url: string
           author_id: string | null
           created_at: string | null
+          cultural_prompt_id: string | null
           description: string | null
           duration: number | null
           family_id: string | null
           id: string
+          is_featured: boolean | null
+          story_type: string | null
           title: string
           updated_at: string | null
         }
@@ -395,10 +551,13 @@ export type Database = {
           audio_url: string
           author_id?: string | null
           created_at?: string | null
+          cultural_prompt_id?: string | null
           description?: string | null
           duration?: number | null
           family_id?: string | null
           id?: string
+          is_featured?: boolean | null
+          story_type?: string | null
           title: string
           updated_at?: string | null
         }
@@ -406,10 +565,13 @@ export type Database = {
           audio_url?: string
           author_id?: string | null
           created_at?: string | null
+          cultural_prompt_id?: string | null
           description?: string | null
           duration?: number | null
           family_id?: string | null
           id?: string
+          is_featured?: boolean | null
+          story_type?: string | null
           title?: string
           updated_at?: string | null
         }
@@ -426,6 +588,35 @@ export type Database = {
             columns: ["family_id"]
             isOneToOne: false
             referencedRelation: "families"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      story_tags: {
+        Row: {
+          created_at: string | null
+          id: string
+          story_id: string | null
+          tag: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          story_id?: string | null
+          tag: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          story_id?: string | null
+          tag?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "story_tags_story_id_fkey"
+            columns: ["story_id"]
+            isOneToOne: false
+            referencedRelation: "stories"
             referencedColumns: ["id"]
           },
         ]
