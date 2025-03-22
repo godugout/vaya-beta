@@ -4,41 +4,75 @@ import { cn } from '@/lib/utils';
 
 interface ButtonPulseEffectProps {
   isActive: boolean;
-  isReduced: boolean;
-  size: string;
+  isReduced?: boolean;
+  size?: string;
+  color?: string;
 }
 
-export const ButtonPulseEffect = ({ isActive, isReduced, size }: ButtonPulseEffectProps) => {
-  // Skip animation if reduced motion is preferred
-  if (isReduced) {
-    return null;
-  }
+export const ButtonPulseEffect = ({ 
+  isActive, 
+  isReduced = false, 
+  size = 'h-16 w-16', 
+  color = 'rgba(255, 118, 117, 0.3)' 
+}: ButtonPulseEffectProps) => {
+  if (!isActive) return null;
   
-  // Define animation variants
-  const pulseVariants = {
-    inactive: {
-      scale: 1,
-      opacity: 0,
-    },
-    active: {
-      scale: [1, 1.5, 1],
-      opacity: [0.7, 0, 0.7],
-      transition: {
-        repeat: Infinity,
-        duration: 1.5,
-      },
-    },
-  };
+  // Reduced motion alternative
+  if (isReduced) {
+    return (
+      <div 
+        className={cn(
+          "absolute rounded-full",
+          size
+        )}
+        style={{ 
+          backgroundColor: color,
+          opacity: 0.5
+        }}
+      />
+    );
+  }
 
   return (
-    <motion.div
-      className={cn(
-        'absolute rounded-full bg-red-500 opacity-70',
-        size
-      )}
-      variants={pulseVariants}
-      initial="inactive"
-      animate={isActive ? 'active' : 'inactive'}
-    />
+    <>
+      {/* First pulse ring */}
+      <motion.div
+        className={cn(
+          "absolute rounded-full",
+          size
+        )}
+        initial={{ opacity: 0, scale: 1 }}
+        animate={{ 
+          opacity: [0, 0.5, 0], 
+          scale: [1, 1.8, 2.2] 
+        }}
+        transition={{ 
+          duration: 2, 
+          repeat: Infinity,
+          repeatType: "loop"
+        }}
+        style={{ backgroundColor: color }}
+      />
+      
+      {/* Second pulse ring (slightly delayed) */}
+      <motion.div
+        className={cn(
+          "absolute rounded-full",
+          size
+        )}
+        initial={{ opacity: 0, scale: 1 }}
+        animate={{ 
+          opacity: [0, 0.5, 0], 
+          scale: [1, 1.8, 2.2] 
+        }}
+        transition={{ 
+          duration: 2, 
+          repeat: Infinity, 
+          repeatType: "loop",
+          delay: 0.6 
+        }}
+        style={{ backgroundColor: color }}
+      />
+    </>
   );
 };

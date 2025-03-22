@@ -1,0 +1,94 @@
+
+/* Sacred Theme - Based on Indian traditional colors and elements */
+.sacred-theme {
+  /* Base Colors */
+  --background: 38 52% 97%;
+  --foreground: 34 35% 20%;
+
+  --card: 38 52% 97%;
+  --card-foreground: 34 35% 20%;
+  
+  --popover: 38 52% 97%;
+  --popover-foreground: 34 35% 20%;
+  
+  /* Primary Saffron from Indian Flag */
+  --primary: 30 100% 60%;
+  --primary-foreground: 0 0% 100%;
+  
+  /* Sacred Green for Earth */
+  --secondary: 142 90% 28%;
+  --secondary-foreground: 0 0% 100%;
+  
+  /* Muted Clay Earth Tones */
+  --muted: 32 40% 88%; 
+  --muted-foreground: 34 35% 35%;
+  
+  /* Accent using Sacred Teal */
+  --accent: 173 85% 33%;
+  --accent-foreground: 0 0% 100%;
+  
+  /* Red for Warnings/Destructive */
+  --destructive: 0 70% 50%;
+  --destructive-foreground: 0 0% 100%;
+  
+  /* Subtle Earth-tone Borders */
+  --border: 32 30% 85%;
+  --input: 32 30% 85%;
+  --ring: 30 100% 60%;
+  
+  /* Rounded Corners */
+  --radius: 0.75rem;
+  
+  /* Special Sacred Colors */
+  --sacred-accent-gold: #F4C430;
+  --sacred-accent-turmeric: #CD8032;
+  --sacred-accent-terracotta: #A75D5D;
+  --sacred-accent-lotus: #E8A49C;
+  
+  /* Background Elements */
+  --sacred-background-pattern: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D2BF6E' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Dark Sacred Theme */
+.dark.sacred-theme {
+  /* Base Colors - Deep night sky */
+  --background: 235 30% 12%;
+  --foreground: 32 40% 88%;
+
+  --card: 235 30% 15%;
+  --card-foreground: 32 40% 88%;
+  
+  --popover: 235 30% 15%;
+  --popover-foreground: 32 40% 88%;
+  
+  /* Deep Saffron */
+  --primary: 30 90% 50%;
+  --primary-foreground: 0 0% 100%;
+  
+  /* Deep Sacred Green */
+  --secondary: 142 70% 20%;
+  --secondary-foreground: 0 0% 100%;
+  
+  /* Muted Mystical Tones */
+  --muted: 235 20% 25%; 
+  --muted-foreground: 32 30% 75%;
+  
+  /* Accent using Sacred Teal */
+  --accent: 173 65% 25%;
+  --accent-foreground: 0 0% 100%;
+  
+  /* Red for Warnings/Destructive */
+  --destructive: 0 70% 40%;
+  --destructive-foreground: 0 0% 100%;
+  
+  /* Subtle Earth-tone Borders */
+  --border: 235 15% 25%;
+  --input: 235 15% 25%;
+  --ring: 30 90% 50%;
+  
+  /* Special Sacred Colors - Dark Mode */
+  --sacred-accent-gold: #D4A82A;
+  --sacred-accent-turmeric: #A35D28;
+  --sacred-accent-terracotta: #8A4D4D;
+  --sacred-accent-lotus: #BA7D76;
+}

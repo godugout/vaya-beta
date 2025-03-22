@@ -1,87 +1,75 @@
 
-import React, { Children } from 'react';
+import React, { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { useAnimation } from './AnimationProvider';
-import { cn } from '@/lib/utils';
+
+type AnimationType = 'fade' | 'slide' | 'scale';
 
 interface StaggeredContainerProps {
-  children: React.ReactNode;
-  className?: string;
+  children: ReactNode;
+  animation?: AnimationType;
   staggerDelay?: number;
-  animation?: 'fade' | 'slide-up' | 'slide-down' | 'scale';
-  duration?: number;
-  containerDelay?: number;
+  className?: string;
 }
 
 export const StaggeredContainer: React.FC<StaggeredContainerProps> = ({
   children,
-  className,
-  staggerDelay = 0.1,
   animation = 'fade',
-  duration,
-  containerDelay = 0,
+  staggerDelay = 0.1,
+  className = ''
 }) => {
-  const { isReduced, duration: durationPresets } = useAnimation();
-  const childArray = Children.toArray(children);
-
-  // Skip animation if reduced motion is preferred
+  const { isReduced } = useAnimation();
+  
   if (isReduced) {
     return <div className={className}>{children}</div>;
   }
-
-  // Define animation variants based on the animation prop
-  const getVariants = () => {
-    const variants = {
-      hidden: {},
-      visible: {
-        transition: {
-          staggerChildren: staggerDelay,
-          delayChildren: containerDelay,
-        },
-      },
-    };
-
-    // Child animation variants
-    const itemVariants = {
-      fade: {
-        hidden: { opacity: 0 },
-        visible: { opacity: 1 },
-      },
-      'slide-up': {
-        hidden: { opacity: 0, y: 20 },
-        visible: { opacity: 1, y: 0 },
-      },
-      'slide-down': {
-        hidden: { opacity: 0, y: -20 },
-        visible: { opacity: 1, y: 0 },
-      },
-      scale: {
-        hidden: { opacity: 0, scale: 0.9 },
-        visible: { opacity: 1, scale: 1 },
-      },
-    };
-
-    return {
-      container: variants,
-      item: itemVariants[animation],
-    };
+  
+  // Define animation variants based on type
+  const getAnimationVariants = () => {
+    switch (animation) {
+      case 'slide':
+        return {
+          hidden: { opacity: 0, x: -20 },
+          visible: { opacity: 1, x: 0 }
+        };
+      case 'scale':
+        return {
+          hidden: { opacity: 0, scale: 0.9 },
+          visible: { opacity: 1, scale: 1 }
+        };
+      case 'fade':
+      default:
+        return {
+          hidden: { opacity: 0, y: 20 },
+          visible: { opacity: 1, y: 0 }
+        };
+    }
   };
-
-  const { container: containerVariants, item: itemVariants } = getVariants();
-
+  
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: staggerDelay
+      }
+    }
+  };
+  
   return (
     <motion.div
-      className={cn(className)}
+      className={className}
       initial="hidden"
       animate="visible"
       variants={containerVariants}
     >
-      {childArray.map((child, index) => (
+      {React.Children.map(children, (child, index) => (
         <motion.div
           key={index}
-          variants={itemVariants}
-          transition={{
-            duration: duration || durationPresets.standard / 1000,
+          variants={getAnimationVariants()}
+          transition={{ 
+            duration: 0.5, 
+            ease: [0.23, 1, 0.32, 1]
           }}
         >
           {child}
