@@ -8,6 +8,7 @@ import { LanguageProvider } from '@/contexts/LanguageContext';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { LoadingIndicator } from '@/components/animation/LoadingIndicator';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
+import { AnimationProvider } from '@/components/animation/AnimationProvider';
 
 // Lazy load components to improve initial load time
 const Home = lazy(() => import('@/pages/Home'));
@@ -40,38 +41,40 @@ const App = () => {
   return (
     <ThemeProvider>
       <LanguageProvider>
-        <div className={`app ${theme}`}>
-          <ErrorBoundary>
-            <Suspense fallback={<LoadingIndicator />}>
-              <Routes>
-                <Route path="/" element={<MainLayout><Outlet /></MainLayout>}>
-                  <Route index element={<Home />} />
-                  <Route path="auth" element={<Auth />} />
-                  <Route path="families" element={<Families />} />
-                  <Route path="families/create" element={<CreateFamily />} />
-                  <Route path="families/:familyId" element={<FamilyDetail />} />
-                  <Route path="media" element={<MediaLibrary />} />
-                  <Route path="media-enhanced" element={<MediaLibraryEnhanced />} />
-                  <Route path="hanuman" element={<HanumanEdition />} />
-                  <Route path="memories" element={<MemoryLane />} />
-                  <Route path="memories/:memoryId" element={<MemoryPost />} />
-                  <Route path="stories" element={<ShareStories />} />
-                  <Route path="profile" element={<Profile />} />
-                  <Route path="settings" element={<Settings />} />
-                  <Route path="story-showcase" element={<StoryShowcase />} />
-                  <Route path="components" element={<ComponentsShowcase />} />
-                  <Route path="design" element={<DesignSystem />} />
-                  <Route path="admin" element={<Admin />}>
-                    <Route path="users" element={<AdminUsers />} />
-                    <Route path="media" element={<AdminMedia />} />
+        <AnimationProvider>
+          <div className={`app ${theme}`}>
+            <ErrorBoundary>
+              <Suspense fallback={<LoadingIndicator />}>
+                <Routes>
+                  <Route path="/" element={<MainLayout><Outlet /></MainLayout>}>
+                    <Route index element={<Home />} />
+                    <Route path="auth" element={<Auth />} />
+                    <Route path="families" element={<Families />} />
+                    <Route path="families/create" element={<CreateFamily />} />
+                    <Route path="families/:familyId" element={<FamilyDetail />} />
+                    <Route path="media" element={<MediaLibrary />} />
+                    <Route path="media-enhanced" element={<MediaLibraryEnhanced />} />
+                    <Route path="hanuman" element={<HanumanEdition />} />
+                    <Route path="memories" element={<MemoryLane />} />
+                    <Route path="memories/:memoryId" element={<MemoryPost />} />
+                    <Route path="stories" element={<ShareStories />} />
+                    <Route path="profile" element={<Profile />} />
+                    <Route path="settings" element={<Settings />} />
+                    <Route path="story-showcase" element={<StoryShowcase />} />
+                    <Route path="components" element={<ComponentsShowcase />} />
+                    <Route path="design" element={<DesignSystem />} />
+                    <Route path="admin" element={<Admin />}>
+                      <Route path="users" element={<AdminUsers />} />
+                      <Route path="media" element={<AdminMedia />} />
+                    </Route>
+                    <Route path="*" element={<NotFound />} />
                   </Route>
-                  <Route path="*" element={<NotFound />} />
-                </Route>
-              </Routes>
-            </Suspense>
-          </ErrorBoundary>
-          <Toaster position="top-center" />
-        </div>
+                </Routes>
+              </Suspense>
+            </ErrorBoundary>
+            <Toaster position="top-center" />
+          </div>
+        </AnimationProvider>
       </LanguageProvider>
     </ThemeProvider>
   );
