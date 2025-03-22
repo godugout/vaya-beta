@@ -20,6 +20,7 @@
   color: var(--color-text-dark);
 }
 
+/* Simplified image backgrounds */
 .bg-forest-stream {
   background-image: url('/lovable-uploads/cd5eb0a6-71c2-43a8-a8c6-0a9e222958ab.png');
   background-size: cover;
@@ -36,6 +37,7 @@
   background-color: #f4f4f4;
 }
 
+/* Simple gradients */
 .bg-gradient-clean {
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
@@ -49,7 +51,7 @@
   background: linear-gradient(135deg, rgba(255, 200, 97, 0.15) 0%, rgba(255, 117, 26, 0.15) 100%);
 }
 
-/* Content background with subtle patterns */
+/* Basic pattern */
 .bg-dots {
   background-image: radial-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px);
   background-size: 20px 20px;

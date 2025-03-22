@@ -38,12 +38,6 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
     document.body.classList.remove('light', 'dark', 'star-bg', 'nebula-effect', 'nasa-theme', 'cosmic-bg');
     document.body.classList.add(theme, 'hanuman-theme');
     
-    // Remove any existing stars container
-    const starsContainer = document.querySelector('.stars-container');
-    if (starsContainer) {
-      document.body.removeChild(starsContainer);
-    }
-    
     return () => {
       document.body.classList.remove('light', 'dark', 'hanuman-theme');
     };
@@ -51,24 +45,23 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
   
   return (
     <div className={`flex flex-col min-h-screen ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
-      {/* Fixed header area */}
-      <div className={`fixed top-0 left-0 right-0 z-[100] ${isSoftTheme ? 'bg-[var(--soft-bg-primary)]' : 'bg-background/80 backdrop-blur-md'}`}>
-        <MainNav />
+      {/* Simple background with Hanuman image */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="bg-hanuman-bg opacity-5 dark:opacity-10 absolute inset-0 bg-no-repeat bg-cover bg-center"></div>
       </div>
       
+      {/* Header area */}
+      <header className={`sticky top-0 ${isSoftTheme ? 'bg-[var(--soft-bg-primary)]' : 'bg-background/95 backdrop-blur-sm'}`}>
+        <MainNav />
+      </header>
+      
       {/* Theme toggle controls */}
-      <div className="fixed top-20 right-4 z-[101]">
+      <div className="fixed top-20 right-4">
         <ThemeToggle />
       </div>
       
-      {/* Background overlay with Hanuman image */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute inset-0 bg-hanuman-bg bg-no-repeat bg-cover bg-center opacity-10 dark:opacity-15"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background/80"></div>
-      </div>
-      
       {/* Content area with proper spacing */}
-      <main className={`flex-grow mt-32 pt-4 relative z-content container mx-auto px-4 ${className} ${isSoftTheme ? 'bg-[var(--soft-bg-primary)] text-[var(--soft-text-primary)]' : ''}`}>
+      <main className={`flex-grow pt-8 container mx-auto px-4 ${className} ${isSoftTheme ? 'bg-[var(--soft-bg-primary)] text-[var(--soft-text-primary)]' : ''}`}>
         <ErrorBoundary>
           {children}
         </ErrorBoundary>

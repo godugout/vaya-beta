@@ -16,7 +16,7 @@
 .hanuman-theme.light {
   --page-bg: var(--hanuman-bg-light);
   --content-bg: rgba(255, 255, 255, 0.8);
-  --card-bg: rgba(255, 255, 255, 0.9);
+  --card-bg: #FFFFFF;
   --text-primary: #2D1600;
   --text-secondary: #5D4A2E;
   --border-color: rgba(255, 126, 0, 0.2);
@@ -28,8 +28,8 @@
 /* Dark theme specifics */
 .hanuman-theme.dark {
   --page-bg: var(--hanuman-bg-dark);
-  --content-bg: rgba(26, 15, 0, 0.8);
-  --card-bg: rgba(30, 20, 5, 0.9);
+  --content-bg: #1A0F00;
+  --card-bg: #261500;
   --text-primary: #FFF1DE;
   --text-secondary: #FFD6A5;
   --border-color: rgba(255, 126, 0, 0.4);
@@ -39,27 +39,23 @@
 }
 
 /* Common styles for both themes */
-.hanuman-theme .card,
-.hanuman-theme .button-primary {
+.hanuman-theme .card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   transition: var(--theme-transition);
-  box-shadow: 0 4px 20px rgba(255, 126, 0, 0.1);
+  overflow: hidden;
+}
+
+.hanuman-theme .card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
 }
 
 .hanuman-theme .section-title {
   color: var(--hanuman-primary);
   font-weight: 700;
-}
-
-.hanuman-theme .card {
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.hanuman-theme .card:hover {
-  box-shadow: 0 10px 30px rgba(255, 126, 0, 0.15);
-  transform: translateY(-5px);
 }
 
 /* Buttons */
