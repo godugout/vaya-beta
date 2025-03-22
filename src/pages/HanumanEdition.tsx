@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,7 +10,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useFamilyContextManagement } from "@/hooks/useFamilyContextManagement";
 import { usePromptManager } from "@/components/chat/hooks/usePromptManager";
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
-import { Message } from "@/components/chat/types";
+import { Message, PromptItem } from "@/components/chat/hooks/types";
 import SuggestedPrompts from "@/components/narra/SuggestedPrompts";
 
 const initialMessages: Message[] = [
@@ -19,26 +20,32 @@ const initialMessages: Message[] = [
   },
 ];
 
-const suggestedPrompts = [
+// Add category to each prompt item to match the PromptItem type
+const suggestedPrompts: PromptItem[] = [
   {
     id: "prompt-1",
     content: "Tell me about your childhood.",
+    category: "personal"
   },
   {
     id: "prompt-2",
     content: "What are some of your favorite family traditions?",
+    category: "family"
   },
   {
     id: "prompt-3",
     content: "What is your favorite memory?",
+    category: "personal"
   },
   {
     id: "prompt-4",
     content: "Tell me about a time you overcame a challenge.",
+    category: "personal"
   },
   {
     id: "prompt-5",
     content: "What are some of the most important lessons you've learned in life?",
+    category: "wisdom"
   },
 ];
 
@@ -58,7 +65,7 @@ const HanumanEdition = () => {
     startListening,
     stopListening,
     hasRecognitionSupport,
-  } = useSpeechRecognition(isSpanish ? "es-ES" : "en-US");
+  } = useSpeechRecognition();
 
   // Speech recognition event handlers
   const handleStartListening = () => {
@@ -167,7 +174,7 @@ const HanumanEdition = () => {
         )}
       </div>
 
-      <SuggestedPrompts prompts={suggestedPrompts} onSelect={handlePromptSelect} />
+      <SuggestedPrompts prompts={suggestedPrompts} onSelect={handlePromptSelect} isSpanish={isSpanish} />
 
       <div className="p-4">
         <form onSubmit={handleSubmit} className="relative">

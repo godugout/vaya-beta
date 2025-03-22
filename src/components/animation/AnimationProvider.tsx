@@ -1,24 +1,28 @@
 
 import React, { createContext, useState, useContext, useEffect } from 'react';
+import { AnimationContextType, AnimationPreference, AnimationDurations, AnimationEasings } from '@/types/animation';
 
-export type AnimationPreference = 'enabled' | 'reduced' | 'disabled';
+const defaultDurations: AnimationDurations = {
+  fast: 200,
+  standard: 400,
+  slow: 600
+};
 
-export interface AnimationContextType {
-  isEnabled: boolean;
-  isReduced: boolean;
-  preference: AnimationPreference;
-  setPreference: (pref: AnimationPreference) => void;
-  duration: number;
-  easing: string;
-}
+const defaultEasings: AnimationEasings = {
+  ease: 'ease-out',
+  linear: 'linear',
+  elastic: 'cubic-bezier(0.68, -0.6, 0.32, 1.6)',
+  bounce: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+  standard: 'ease-in-out'
+};
 
 const defaultContext: AnimationContextType = {
   isEnabled: true,
   isReduced: false,
   preference: 'enabled',
   setPreference: () => {},
-  duration: 0.4,
-  easing: 'ease-in-out',
+  duration: defaultDurations,
+  easing: defaultEasings,
 };
 
 const AnimationContext = createContext<AnimationContextType>(defaultContext);
@@ -55,17 +59,13 @@ export const AnimationProvider: React.FC<{ children: React.ReactNode }> = ({
     localStorage.setItem('animation-preference', preference);
   }, [preference]);
   
-  // Calculate animation duration based on preference
-  const duration = isReduced ? 0.2 : preference === 'disabled' ? 0 : 0.4;
-  const easing = isReduced ? 'ease-out' : 'ease-in-out';
-  
   const value = {
     isEnabled,
     isReduced,
     preference,
     setPreference,
-    duration,
-    easing,
+    duration: defaultDurations,
+    easing: defaultEasings,
   };
   
   return (

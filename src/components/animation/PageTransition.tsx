@@ -14,7 +14,7 @@ export const PageTransition: React.FC<PageTransitionProps> = ({
   location,
   mode = 'fade',
 }) => {
-  const { isReduced, duration: durationPresets, easing } = useAnimation();
+  const { isReduced, duration, easing } = useAnimation();
 
   // Skip animation if reduced motion is preferred or mode is none
   if (isReduced || mode === 'none') {
@@ -57,7 +57,7 @@ export const PageTransition: React.FC<PageTransitionProps> = ({
         exit="exit"
         variants={variants}
         transition={{
-          duration: durationPresets.standard / 1000,
+          duration: duration.standard / 1000,
           ease: easing.standard,
         }}
       >

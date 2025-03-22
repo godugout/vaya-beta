@@ -1,6 +1,6 @@
 
-// Temporary stub for the missing hook
-export const useSpeechRecognition = () => {
+// Enhanced speech recognition hook
+export const useSpeechRecognition = (language?: string) => {
   return {
     transcript: '',
     listening: false,
@@ -8,6 +8,7 @@ export const useSpeechRecognition = () => {
     stopListening: () => {},
     resetTranscript: () => {},
     browserSupportsSpeechRecognition: true,
+    hasRecognitionSupport: true, // Add the missing property
   };
 };
 

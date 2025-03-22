@@ -68,6 +68,13 @@ export interface UseAnimationSystemProps {
   animationPreset?: string;
 }
 
+// Preset bounce easings for different contexts
+const bounceEasings = {
+  standard: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+  subtle: 'cubic-bezier(0.25, 1.25, 0.5, 1)',
+  elaborate: 'cubic-bezier(0.5, 2, 0.75, 0.8)'
+};
+
 /**
  * Unified animation system with consistent timing and easing functions
  * Supports wedding-specific cultural adaptations
@@ -127,9 +134,9 @@ export const useAnimationSystem = ({
       backOut: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
       backInOut: 'cubic-bezier(0.68, -0.6, 0.32, 1.6)',
       anticipate: 'cubic-bezier(0.38, -0.4, 0.88, 0.65)',
-      bounceIn: baseEasing.bounce,
-      bounceOut: baseEasing.bounce,
-      bounceInOut: baseEasing.bounce
+      bounceIn: bounceEasings.standard,
+      bounceOut: bounceEasings.standard,
+      bounceInOut: bounceEasings.standard
     };
     
     return easingMap[easingType];

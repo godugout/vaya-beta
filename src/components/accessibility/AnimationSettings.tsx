@@ -8,12 +8,12 @@ import { useAnimation } from '@/components/animation/AnimationProvider';
 import { AnimationPreference } from '@/types/animation';
 
 export const AnimationSettings = () => {
-  const { animationPreference, setAnimationPreference } = useAnimation();
-  const [selectedPreference, setSelectedPreference] = useState<AnimationPreference>(animationPreference);
+  const { preference, setPreference } = useAnimation();
+  const [selectedPreference, setSelectedPreference] = useState<AnimationPreference>(preference);
 
   const handleSave = () => {
-    setAnimationPreference(selectedPreference);
-    localStorage.setItem('animationPreference', selectedPreference);
+    setPreference(selectedPreference);
+    localStorage.setItem('animation-preference', selectedPreference);
   };
 
   return (
@@ -31,9 +31,9 @@ export const AnimationSettings = () => {
           className="space-y-4"
         >
           <div className="flex items-start space-x-3">
-            <RadioGroupItem id="full" value="full" />
+            <RadioGroupItem id="enabled" value="enabled" />
             <div className="grid gap-1.5">
-              <Label htmlFor="full" className="font-medium">
+              <Label htmlFor="enabled" className="font-medium">
                 Full Animations
               </Label>
               <p className="text-sm text-muted-foreground">
@@ -50,6 +50,18 @@ export const AnimationSettings = () => {
               </Label>
               <p className="text-sm text-muted-foreground">
                 Simplify and reduce the speed of animations
+              </p>
+            </div>
+          </div>
+          
+          <div className="flex items-start space-x-3">
+            <RadioGroupItem id="disabled" value="disabled" />
+            <div className="grid gap-1.5">
+              <Label htmlFor="disabled" className="font-medium">
+                Disable Animations
+              </Label>
+              <p className="text-sm text-muted-foreground">
+                Turn off all non-essential animations
               </p>
             </div>
           </div>

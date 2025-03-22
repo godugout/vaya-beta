@@ -3,7 +3,7 @@
 
 export type AnimationDuration = 'fast' | 'standard' | 'slow';
 export type AnimationEasing = 'ease' | 'linear' | 'elastic' | 'bounce' | 'standard';
-export type AnimationPreference = 'full' | 'reduced';
+export type AnimationPreference = 'enabled' | 'reduced' | 'disabled';
 
 // Extend durations and easings
 export interface AnimationDurations {
@@ -18,4 +18,14 @@ export interface AnimationEasings {
   elastic: string;
   bounce: string;
   standard: string;
+}
+
+// Animation context type for provider
+export interface AnimationContextType {
+  isEnabled: boolean;
+  isReduced: boolean;
+  preference: AnimationPreference;
+  setPreference: (pref: AnimationPreference) => void;
+  duration: AnimationDurations;
+  easing: AnimationEasings;
 }
