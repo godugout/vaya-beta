@@ -1,60 +1,53 @@
 
-import { useState } from "react";
-import {
-  Popover,
-  PopoverContent,
-} from "@/components/ui/popover";
-import { useLanguage } from "@/contexts/LanguageContext";
-import { useCategoryPrompts } from "@/hooks/useCategoryPrompts";
-import CategoryButton from "./CategoryButton";
-import PromptList from "./PromptList";
-import { getCategoryColorClasses } from "./CategoryButton";
+import React from 'react';
+import { promptCategories } from '@/data/hanumanPrompts';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { Badge } from '@/components/ui/badge';
+import { PromptCategory } from '@/components/chat/hooks/types';
 
 interface PromptCategoriesProps {
-  onPromptSelect: (prompt: string) => void;
-  isSpanish?: boolean;
-  edition?: string;
+  onSelectCategory: (categoryId: string) => void;
+  selectedCategory: string;
 }
 
-const PromptCategories = ({ onPromptSelect, isSpanish = false, edition = "hanuman" }: PromptCategoriesProps) => {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const { categories, categoryPrompts } = useCategoryPrompts(edition);
-  const { isSpanish: appLanguageIsSpanish } = useLanguage();
-  
-  const currentIsSpanish = isSpanish || appLanguageIsSpanish;
+const PromptCategories: React.FC<PromptCategoriesProps> = ({
+  onSelectCategory,
+  selectedCategory,
+}) => {
+  const { language } = useLanguage();
+  const isSpanish = language === 'es';
+
+  // Add an "All" category at the beginning
+  const allCategories: PromptCategory[] = [
+    {
+      id: 'all',
+      name: { en: 'All Topics', es: 'Todos los Temas' },
+      icon: null,
+      description: {
+        en: 'View prompts from all categories',
+        es: 'Ver temas de todas las categorías'
+      }
+    },
+    ...promptCategories,
+  ];
 
   return (
-    <div className="space-y-4 p-4">
+    <div className="prompt-categories mb-6">
+      <h3 className="font-medium text-sm mb-2 text-muted-foreground">
+        {isSpanish ? 'Categorías' : 'Categories'}
+      </h3>
       <div className="flex flex-wrap gap-2">
-        {categories.map((category) => {
-          const colors = getCategoryColorClasses(category.colorKey);
-          const categoryPromptsList = categoryPrompts[category.id] || [];
-          
-          return (
-            <Popover key={category.id}>
-              <CategoryButton
-                id={category.id}
-                name={currentIsSpanish ? category.name_es : category.name_en}
-                icon={category.icon}
-                colorKey={category.colorKey}
-                selectedCategory={selectedCategory}
-                onSelect={setSelectedCategory}
-              />
-              <PopoverContent 
-                className="w-80 p-2 bg-white shadow-lg rounded-xl"
-                style={{ borderColor: colors.border }}
-                sideOffset={5}
-              >
-                <PromptList
-                  prompts={categoryPromptsList}
-                  isSpanish={currentIsSpanish}
-                  colorClasses={colors}
-                  onPromptSelect={onPromptSelect}
-                />
-              </PopoverContent>
-            </Popover>
-          );
-        })}
+        {allCategories.map((category) => (
+          <Badge
+            key={category.id}
+            variant={category.id === selectedCategory ? 'default' : 'outline'}
+            className="cursor-pointer py-1 px-3"
+            onClick={() => onSelectCategory(category.id)}
+          >
+            {category.icon && <span className="mr-1">{category.icon}</span>}
+            {isSpanish ? category.name.es : category.name.en}
+          </Badge>
+        ))}
       </div>
     </div>
   );

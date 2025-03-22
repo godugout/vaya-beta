@@ -1,0 +1,30 @@
+
+/* Soft UI Components */
+.soft-theme .card {
+  @apply rounded-xl shadow-sm border border-[var(--soft-border)] bg-[var(--soft-bg-secondary)];
+}
+
+.soft-theme .button {
+  @apply rounded-full font-medium;
+}
+
+.soft-theme .input, 
+.soft-theme .textarea, 
+.soft-theme .select {
+  @apply rounded-lg border-[var(--soft-border)] bg-[var(--soft-bg-secondary)];
+}
+
+/* Soft UI Glassmorphism */
+.soft-theme .glass {
+  @apply bg-white/70 dark:bg-black/70 backdrop-blur-md border border-white/20 dark:border-white/10;
+}
+
+/* Soft UI Navigation */
+.soft-theme .nav-item {
+  @apply rounded-lg hover:bg-[var(--soft-hover)] active:bg-[var(--soft-active)];
+}
+
+/* Soft UI Badge */
+.soft-theme .badge {
+  @apply rounded-full text-xs px-2 py-0.5;
+}
