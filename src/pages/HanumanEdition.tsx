@@ -7,7 +7,7 @@ import { useHanumanChat } from "@/hooks/useHanumanChat";
 import ChatMessages from "@/components/hanuman/ChatMessages";
 import ChatInputArea from "@/components/hanuman/ChatInputArea";
 import { motion } from "framer-motion";
-import { Flame, Sun, FlowerLotus } from "lucide-react";
+import { Flame, Sun, Flower } from "lucide-react";
 
 // Enhanced suggested prompts with categories
 const suggestedPrompts: HanumanPromptItem[] = [
@@ -72,7 +72,7 @@ const HanumanEdition = () => {
             <Sun className="text-hanuman-accent w-32 h-32" />
           </div>
           <div className="absolute top-0 right-1/4 transform translate-x-1/2">
-            <FlowerLotus className="text-hanuman-primary w-32 h-32" />
+            <Flower className="text-hanuman-primary w-32 h-32" />
           </div>
         </div>
 
