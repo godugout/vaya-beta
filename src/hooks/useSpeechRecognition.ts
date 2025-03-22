@@ -8,7 +8,7 @@ export const useSpeechRecognition = (language?: string) => {
     stopListening: () => {},
     resetTranscript: () => {},
     browserSupportsSpeechRecognition: true,
-    hasRecognitionSupport: true, // Add the missing property
+    hasRecognitionSupport: true, // Added the missing property
   };
 };
 

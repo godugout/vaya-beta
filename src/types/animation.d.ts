@@ -28,4 +28,6 @@ export interface AnimationContextType {
   setPreference: (pref: AnimationPreference) => void;
   duration: AnimationDurations;
   easing: AnimationEasings;
+  animationPreference?: AnimationPreference;
+  setAnimationPreference?: (pref: AnimationPreference) => void;
 }

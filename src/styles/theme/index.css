@@ -1,6 +1,7 @@
 
 @import './space-theme.css';
 @import './sacred-theme.css';
+@import './hanuman-theme.css';
 
 :root {
   /* Core ui components */
@@ -49,6 +50,12 @@
   --ui-orange-bright: #D64845;
   --ui-purple: #6C5CE7;
   --ui-purple-bright: #4A3DBD;
+  
+  /* Hanuman theme colors */
+  --hanuman-orange: #FF7E00;
+  --hanuman-red: #C62828;
+  --hanuman-saffron: #F9A825;
+  --hanuman-gold: #FFD700;
   
   /* Dark Mode Colors for Audio Player */
   --dark-background-elevated: #2D3250;

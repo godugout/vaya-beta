@@ -1,0 +1,115 @@
+
+/* Hanuman Theme Styles */
+.hanuman-theme {
+  /* Base colors */
+  --hanuman-primary: #FF7E00;  /* Orange */
+  --hanuman-secondary: #C62828; /* Red */
+  --hanuman-accent: #FFD700;   /* Gold */
+  --hanuman-bg-light: #FFF9F0; /* Light cream */
+  --hanuman-bg-dark: #1A0F00;  /* Deep brown */
+  
+  /* Theme transitions */
+  --theme-transition: all 0.3s ease;
+}
+
+/* Light theme specifics */
+.hanuman-theme.light {
+  --page-bg: var(--hanuman-bg-light);
+  --content-bg: rgba(255, 255, 255, 0.8);
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --text-primary: #2D1600;
+  --text-secondary: #5D4A2E;
+  --border-color: rgba(255, 126, 0, 0.2);
+  
+  background-color: var(--page-bg);
+  color: var(--text-primary);
+}
+
+/* Dark theme specifics */
+.hanuman-theme.dark {
+  --page-bg: var(--hanuman-bg-dark);
+  --content-bg: rgba(26, 15, 0, 0.8);
+  --card-bg: rgba(30, 20, 5, 0.9);
+  --text-primary: #FFF1DE;
+  --text-secondary: #FFD6A5;
+  --border-color: rgba(255, 126, 0, 0.4);
+  
+  background-color: var(--page-bg);
+  color: var(--text-primary);
+}
+
+/* Common styles for both themes */
+.hanuman-theme .card,
+.hanuman-theme .button-primary {
+  transition: var(--theme-transition);
+  box-shadow: 0 4px 20px rgba(255, 126, 0, 0.1);
+}
+
+.hanuman-theme .section-title {
+  color: var(--hanuman-primary);
+  font-weight: 700;
+}
+
+.hanuman-theme .card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.hanuman-theme .card:hover {
+  box-shadow: 0 10px 30px rgba(255, 126, 0, 0.15);
+  transform: translateY(-5px);
+}
+
+/* Buttons */
+.hanuman-theme .button-primary {
+  background-color: var(--hanuman-primary);
+  color: white;
+  border: none;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.hanuman-theme .button-primary:hover {
+  background-color: #FF9933; /* Lighter orange */
+  transform: translateY(-2px);
+}
+
+.hanuman-theme .button-secondary {
+  background-color: transparent;
+  color: var(--hanuman-primary);
+  border: 2px solid var(--hanuman-primary);
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.hanuman-theme .button-secondary:hover {
+  background-color: rgba(255, 126, 0, 0.1);
+}
+
+/* Navigation styles */
+.hanuman-theme .nav-link {
+  color: var(--text-primary);
+  font-weight: 500;
+  transition: var(--theme-transition);
+}
+
+.hanuman-theme .nav-link:hover {
+  color: var(--hanuman-primary);
+}
+
+.hanuman-theme .nav-link.active {
+  color: var(--hanuman-primary);
+  font-weight: 700;
+}
+
+/* Footer styles */
+.hanuman-theme footer {
+  background-color: var(--content-bg);
+  border-top: 1px solid var(--border-color);
+}

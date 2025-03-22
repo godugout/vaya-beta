@@ -1,4 +1,3 @@
-
 import { type Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
 
@@ -43,6 +42,16 @@ export default {
           tertiary: '#94A3B8',    // Tertiary/muted text
           accent: '#7CB7FF',      // Accent text
           highlight: '#FFD700',   // Highlighted text
+        },
+        
+        // Hanuman theme colors
+        hanuman: {
+          orange: "#FF7E00",
+          red: "#C62828",
+          saffron: "#F9A825",
+          gold: "#FFD700",
+          light: "#FFF9F0",
+          dark: "#1A0F00",
         },
         
         border: "hsl(var(--border))",
@@ -109,6 +118,8 @@ export default {
         'blue-nebula': 'linear-gradient(135deg, #0A4ECA 0%, #7CB7FF 100%)',
         'mars-atmosphere': 'linear-gradient(135deg, #E4263B 0%, #FF7E47 100%)',
         'solar-flare': 'linear-gradient(135deg, #FFD700 0%, #FF7E47 100%)',
+        'hanuman-bg': "url('/hanuman-bg.png')",
+        'hanuman-gradient': 'linear-gradient(135deg, rgba(255, 126, 0, 0.1) 0%, rgba(198, 40, 40, 0.1) 100%)',
       },
     },
   },
