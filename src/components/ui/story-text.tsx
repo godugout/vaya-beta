@@ -147,8 +147,8 @@ const StorySectionTitle = forwardRef<HTMLHeadingElement, StoryHeadingProps>(
 
 StorySectionTitle.displayName = "StorySectionTitle";
 
-// Add StoryQuote component
-const StoryQuote = forwardRef<HTMLQuoteElement, StoryTextProps>(
+// StoryQuote component
+const StoryQuote = forwardRef<HTMLQuoteElement, React.HTMLAttributes<HTMLQuoteElement> & { language?: "english" | "gujarati" | "hindi"; size?: "xs" | "sm" | "md" | "lg" | "xl"; leading?: "tight" | "normal" | "relaxed" | "loose"; }>(
   ({ className, size = "md", leading = "relaxed", language = "english", children, ...props }, ref) => {
     return (
       <blockquote
@@ -168,7 +168,7 @@ const StoryQuote = forwardRef<HTMLQuoteElement, StoryTextProps>(
 
 StoryQuote.displayName = "StoryQuote";
 
-// Add StoryDivider component
+// StoryDivider component
 const StoryDivider = forwardRef<HTMLHRElement, React.HTMLAttributes<HTMLHRElement>>(
   ({ className, ...props }, ref) => {
     return (
@@ -183,11 +183,11 @@ const StoryDivider = forwardRef<HTMLHRElement, React.HTMLAttributes<HTMLHRElemen
 
 StoryDivider.displayName = "StoryDivider";
 
-// Add StoryCitation component
-const StoryCitation = forwardRef<HTMLElement, StoryTextProps>(
-  ({ className, size = "xs", children, ...props }, ref) => {
+// StoryCitation component
+const StoryCitation = forwardRef<HTMLElement, Omit<StoryTextProps, 'as'> & { as?: React.ElementType }>(
+  ({ className, size = "xs", children, as: Component = "cite", ...props }, ref) => {
     return (
-      <cite
+      <Component
         ref={ref}
         className={cn(
           "text-muted-foreground italic", 
@@ -197,7 +197,7 @@ const StoryCitation = forwardRef<HTMLElement, StoryTextProps>(
         {...props}
       >
         {children}
-      </cite>
+      </Component>
     );
   }
 );
