@@ -69,42 +69,139 @@ const StoryText = forwardRef<HTMLParagraphElement, StoryTextProps>(
 
 StoryText.displayName = "StoryText";
 
-const StoryHeading = forwardRef<HTMLHeadingElement, React.HTMLAttributes<HTMLHeadingElement>>(
-  ({ className, children, ...props }, ref) => {
+interface StoryHeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
+  level?: 1 | 2 | 3 | 4 | 5 | 6;
+  size?: "sm" | "md" | "lg" | "xl";
+  language?: "english" | "gujarati" | "hindi";
+}
+
+const StoryHeading = forwardRef<HTMLHeadingElement, StoryHeadingProps>(
+  ({ className, level = 2, size = "lg", language = "english", children, ...props }, ref) => {
+    const sizeClasses = {
+      sm: "text-lg",
+      md: "text-xl",
+      lg: "text-2xl",
+      xl: "text-3xl",
+    };
+    
+    const languageClasses = {
+      english: "font-story",
+      gujarati: "font-gujarati gujarati-content",
+      hindi: "font-hindi hindi-content"
+    };
+    
+    const Heading = `h${level}` as keyof JSX.IntrinsicElements;
+    
     return (
-      <h2
+      <Heading
         ref={ref}
         className={cn(
-          "font-story font-semibold tracking-tight text-2xl mb-4",
+          "font-semibold tracking-tight mb-4",
+          sizeClasses[size],
+          languageClasses[language],
           className
         )}
         {...props}
       >
         {children}
-      </h2>
+      </Heading>
     );
   }
 );
 
 StoryHeading.displayName = "StoryHeading";
 
-const StorySectionTitle = forwardRef<HTMLHeadingElement, React.HTMLAttributes<HTMLHeadingElement>>(
-  ({ className, children, ...props }, ref) => {
+const StorySectionTitle = forwardRef<HTMLHeadingElement, StoryHeadingProps>(
+  ({ className, level = 3, size = "md", language = "english", children, ...props }, ref) => {
+    const sizeClasses = {
+      sm: "text-base",
+      md: "text-xl",
+      lg: "text-2xl",
+      xl: "text-3xl",
+    };
+    
+    const languageClasses = {
+      english: "font-story",
+      gujarati: "font-gujarati gujarati-content",
+      hindi: "font-hindi hindi-content"
+    };
+    
+    const Heading = `h${level}` as keyof JSX.IntrinsicElements;
+    
     return (
-      <h3
+      <Heading
         ref={ref}
         className={cn(
-          "font-story font-medium tracking-tight text-xl mb-3",
+          "font-medium tracking-tight mb-3",
+          sizeClasses[size],
+          languageClasses[language],
           className
         )}
         {...props}
       >
         {children}
-      </h3>
+      </Heading>
     );
   }
 );
 
 StorySectionTitle.displayName = "StorySectionTitle";
 
-export { StoryText, StoryHeading, StorySectionTitle };
+// Add StoryQuote component
+const StoryQuote = forwardRef<HTMLQuoteElement, StoryTextProps>(
+  ({ className, size = "md", leading = "relaxed", language = "english", children, ...props }, ref) => {
+    return (
+      <blockquote
+        ref={ref}
+        className={cn(
+          "italic pl-4 border-l-4 border-autumn my-4",
+          storyTextVariants({ size, leading, language }),
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </blockquote>
+    );
+  }
+);
+
+StoryQuote.displayName = "StoryQuote";
+
+// Add StoryDivider component
+const StoryDivider = forwardRef<HTMLHRElement, React.HTMLAttributes<HTMLHRElement>>(
+  ({ className, ...props }, ref) => {
+    return (
+      <hr
+        ref={ref}
+        className={cn("my-6 border-t border-gray-200 dark:border-gray-700", className)}
+        {...props}
+      />
+    );
+  }
+);
+
+StoryDivider.displayName = "StoryDivider";
+
+// Add StoryCitation component
+const StoryCitation = forwardRef<HTMLElement, StoryTextProps>(
+  ({ className, size = "xs", children, ...props }, ref) => {
+    return (
+      <cite
+        ref={ref}
+        className={cn(
+          "text-muted-foreground italic", 
+          storyTextVariants({ size }),
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </cite>
+    );
+  }
+);
+
+StoryCitation.displayName = "StoryCitation";
+
+export { StoryText, StoryHeading, StorySectionTitle, StoryQuote, StoryDivider, StoryCitation };

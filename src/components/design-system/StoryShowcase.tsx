@@ -21,7 +21,7 @@ export const StoryShowcase: React.FC = () => {
             <CardDescription>Using Georgia for traditional storytelling</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <StoryHeading level={2} size="lg">The Old Family Farm</StoryHeading>
+            <StoryHeading size="lg">The Old Family Farm</StoryHeading>
             
             <StoryText>
               I remember the first time I visited my grandfather's farm in Gujarat. The mango trees were heavy with fruit, and the air was filled with the scent of jasmine and spices from grandmother's kitchen.
@@ -31,7 +31,7 @@ export const StoryShowcase: React.FC = () => {
               "Those were the days when time moved more slowly. We would spend hours sitting under the banyan tree, listening to grandfather's stories of his childhood."
             </StoryQuote>
             
-            <StoryText size="sm" color="muted">
+            <StoryText size="sm" textColor="muted">
               The old stone well still stands at the center of what used to be our family land. Sometimes I can still hear the sounds of the brass bucket hitting the water when I close my eyes.
             </StoryText>
             
@@ -60,7 +60,7 @@ export const StoryShowcase: React.FC = () => {
             <CardDescription>Gujarati and Hindi typography</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <StoryHeading level={2} size="lg" language="gujarati">પરિવારની વાર્તાઓ</StoryHeading>
+            <StoryHeading size="lg" language="gujarati">પરિવારની વાર્તાઓ</StoryHeading>
             
             <StoryText language="gujarati">
               અમારા પરિવારની વાર્તાઓ પેઢી દર પેઢી આગળ વધતી રહી છે. દરેક કહાની આપણા સંસ્કૃતિક વારસાનો એક ભાગ છે જે આપણી ઓળખને આકાર આપે છે.
@@ -68,7 +68,7 @@ export const StoryShowcase: React.FC = () => {
             
             <StoryDivider />
             
-            <StoryHeading level={2} size="lg" language="hindi">परिवार की कहानियाँ</StoryHeading>
+            <StoryHeading size="lg" language="hindi">परिवार की कहानियाँ</StoryHeading>
             
             <StoryText language="hindi">
               हमारे परिवार की कहानियाँ पीढ़ी दर पीढ़ी आगे बढ़ती रही हैं। हर कहानी हमारी सांस्कृतिक विरासत का एक हिस्सा है जो हमारी पहचान को आकार देती है।
