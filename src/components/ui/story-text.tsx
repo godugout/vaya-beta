@@ -69,12 +69,14 @@ const StoryText = forwardRef<HTMLParagraphElement, StoryTextProps>(
 
 StoryText.displayName = "StoryText";
 
+// Fix the interface for StoryHeadingProps
 interface StoryHeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
   level?: 1 | 2 | 3 | 4 | 5 | 6;
   size?: "sm" | "md" | "lg" | "xl";
   language?: "english" | "gujarati" | "hindi";
 }
 
+// Fix the typing for StoryHeading
 const StoryHeading = forwardRef<HTMLHeadingElement, StoryHeadingProps>(
   ({ className, level = 2, size = "lg", language = "english", children, ...props }, ref) => {
     const sizeClasses = {
@@ -90,10 +92,11 @@ const StoryHeading = forwardRef<HTMLHeadingElement, StoryHeadingProps>(
       hindi: "font-hindi hindi-content"
     };
     
-    const Tag = `h${level}` as keyof JSX.IntrinsicElements;
+    // Create the component dynamically with proper typing
+    const TagName = `h${level}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
     
     return (
-      <Tag
+      <TagName
         ref={ref}
         className={cn(
           "font-semibold tracking-tight mb-4",
@@ -104,13 +107,14 @@ const StoryHeading = forwardRef<HTMLHeadingElement, StoryHeadingProps>(
         {...props}
       >
         {children}
-      </Tag>
+      </TagName>
     );
   }
 );
 
 StoryHeading.displayName = "StoryHeading";
 
+// Fix the typing for StorySectionTitle
 const StorySectionTitle = forwardRef<HTMLHeadingElement, StoryHeadingProps>(
   ({ className, level = 3, size = "md", language = "english", children, ...props }, ref) => {
     const sizeClasses = {
@@ -126,10 +130,11 @@ const StorySectionTitle = forwardRef<HTMLHeadingElement, StoryHeadingProps>(
       hindi: "font-hindi hindi-content"
     };
     
-    const Tag = `h${level}` as keyof JSX.IntrinsicElements;
+    // Create the component dynamically with proper typing
+    const TagName = `h${level}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
     
     return (
-      <Tag
+      <TagName
         ref={ref}
         className={cn(
           "font-medium tracking-tight mb-3",
@@ -140,15 +145,21 @@ const StorySectionTitle = forwardRef<HTMLHeadingElement, StoryHeadingProps>(
         {...props}
       >
         {children}
-      </Tag>
+      </TagName>
     );
   }
 );
 
 StorySectionTitle.displayName = "StorySectionTitle";
 
-// StoryQuote component
-const StoryQuote = forwardRef<HTMLQuoteElement, React.HTMLAttributes<HTMLQuoteElement> & { language?: "english" | "gujarati" | "hindi"; size?: "xs" | "sm" | "md" | "lg" | "xl"; leading?: "tight" | "normal" | "relaxed" | "loose"; }>(
+// StoryQuote component with fixed typing
+interface StoryQuoteProps extends React.HTMLAttributes<HTMLQuoteElement> {
+  language?: "english" | "gujarati" | "hindi";
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
+  leading?: "tight" | "normal" | "relaxed" | "loose";
+}
+
+const StoryQuote = forwardRef<HTMLQuoteElement, StoryQuoteProps>(
   ({ className, size = "md", leading = "relaxed", language = "english", children, ...props }, ref) => {
     return (
       <blockquote
@@ -168,7 +179,7 @@ const StoryQuote = forwardRef<HTMLQuoteElement, React.HTMLAttributes<HTMLQuoteEl
 
 StoryQuote.displayName = "StoryQuote";
 
-// StoryDivider component
+// StoryDivider component with fixed typing
 const StoryDivider = forwardRef<HTMLHRElement, React.HTMLAttributes<HTMLHRElement>>(
   ({ className, ...props }, ref) => {
     return (
@@ -183,8 +194,12 @@ const StoryDivider = forwardRef<HTMLHRElement, React.HTMLAttributes<HTMLHRElemen
 
 StoryDivider.displayName = "StoryDivider";
 
-// StoryCitation component
-const StoryCitation = forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement> & { size?: "xs" | "sm" | "md" | "lg" | "xl" }>(
+// StoryCitation component with fixed typing
+interface StoryCitationProps extends React.HTMLAttributes<HTMLElement> {
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
+}
+
+const StoryCitation = forwardRef<HTMLElement, StoryCitationProps>(
   ({ className, size = "xs", children, ...props }, ref) => {
     return (
       <cite
