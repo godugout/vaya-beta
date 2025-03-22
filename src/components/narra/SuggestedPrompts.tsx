@@ -1,8 +1,11 @@
 
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { SuggestedPrompt } from "./types";
 import { NarraStoryPrompt } from "./NarraStoryPrompt";
-import { Pin, History, MessagesSquare, FileText } from "lucide-react";
+import { Pin, History, MessagesSquare, FileText, Bookmark, Globe, Users, Heart, Star, Quote } from "lucide-react";
+import { useEffect, useState } from "react";
+import { hanumanPromptCategories, hanumanPrompts } from "@/data/hanumanPrompts";
+import { personalizePrompt } from "@/utils/promptPersonalization";
+import { useFamilyContextManagement } from "@/hooks/useFamilyContextManagement";
 
 interface SuggestedPromptsProps {
   isSpanish: boolean;
@@ -10,67 +13,37 @@ interface SuggestedPromptsProps {
 }
 
 export const SuggestedPrompts = ({ isSpanish, onPromptSelect }: SuggestedPromptsProps) => {
-  const suggestedPrompts: SuggestedPrompt[] = [
-    {
-      id: "traditions",
-      promptEn: "Tell me about a family tradition that's special to you.",
-      promptEs: "Cuéntame sobre una tradición familiar que sea especial para ti.",
-      icon: <Bookmark className="h-4 w-4" />
-    },
-    {
-      id: "memories",
-      promptEn: "What's your earliest childhood memory?",
-      promptEs: "¿Cuál es tu primer recuerdo de la infancia?",
-      icon: <History className="h-4 w-4" />
-    },
-    {
-      id: "recipes",
-      promptEn: "Is there a family recipe that has been passed down through generations?",
-      promptEs: "¿Hay alguna receta familiar que se haya transmitido de generación en generación?",
-      icon: <FileText className="h-4 w-4" />
-    },
-    {
-      id: "lessons",
-      promptEn: "What's the most important lesson your parents taught you?",
-      promptEs: "¿Cuál es la lección más importante que te enseñaron tus padres?",
-      icon: <MessagesSquare className="h-4 w-4" />
-    }
-  ];
+  const { familyContext } = useFamilyContextManagement();
+  const [localizedPrompts, setLocalizedPrompts] = useState<{[key: string]: string[]}>({});
+  
+  // Initialize prompt categories based on the Hanuman prompt categories
+  const promptCategories = hanumanPromptCategories.slice(0, 4).map(category => ({
+    id: category.id,
+    titleEn: category.name_en,
+    titleEs: category.name_es,
+    descriptionEn: category.description_en,
+    descriptionEs: category.description_es,
+    icon: category.icon
+  }));
 
-  const promptCategories = [
-    {
-      id: "traditions",
-      titleEn: "Family Traditions",
-      titleEs: "Tradiciones Familiares",
-      descriptionEn: "Share stories about special traditions",
-      descriptionEs: "Comparte historias sobre tradiciones especiales",
-      icon: <Pin className="h-4 w-4 text-lovable-teal" />
-    },
-    {
-      id: "childhood",
-      titleEn: "Childhood Memories",
-      titleEs: "Recuerdos de la Infancia",
-      descriptionEn: "Reflect on special moments",
-      descriptionEs: "Reflexiona sobre momentos especiales",
-      icon: <History className="h-4 w-4 text-lovable-magenta" />
-    },
-    {
-      id: "lessons",
-      titleEn: "Life Lessons",
-      titleEs: "Lecciones de Vida",
-      descriptionEn: "Share wisdom and teachings",
-      descriptionEs: "Comparte sabiduría y enseñanzas",
-      icon: <MessagesSquare className="h-4 w-4 text-lovable-blue" />
-    },
-    {
-      id: "stories",
-      titleEn: "Family Stories",
-      titleEs: "Historias Familiares",
-      descriptionEn: "Recount passed-down stories",
-      descriptionEs: "Relata historias transmitidas",
-      icon: <FileText className="h-4 w-4 text-lovable-teal" />
-    }
-  ];
+  useEffect(() => {
+    // Group and personalize prompts by category
+    const groupedPrompts: {[key: string]: string[]} = {};
+    
+    hanumanPromptCategories.forEach(category => {
+      const categoryPrompts = hanumanPrompts
+        .filter(prompt => prompt.category_id === category.id)
+        .slice(0, 3) // Limit to 3 prompts per category
+        .map(prompt => {
+          const promptText = isSpanish ? prompt.prompt_es : prompt.prompt_en;
+          return personalizePrompt(promptText, familyContext);
+        });
+        
+      groupedPrompts[category.id] = categoryPrompts;
+    });
+    
+    setLocalizedPrompts(groupedPrompts);
+  }, [isSpanish, familyContext]);
 
   return (
     <div className="max-w-3xl mx-auto">
@@ -88,13 +61,10 @@ export const SuggestedPrompts = ({ isSpanish, onPromptSelect }: SuggestedPrompts
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
-                {[1, 2, 3].map((i) => (
+                {localizedPrompts[category.id]?.map((promptText, i) => (
                   <NarraStoryPrompt
-                    key={i}
-                    prompt={isSpanish
-                      ? `¿Cuál es una tradición familiar que continúas practicando hasta hoy?`
-                      : `What's a family tradition you continue to practice today?`
-                    }
+                    key={`${category.id}-${i}`}
+                    prompt={promptText}
                     onClick={onPromptSelect}
                   />
                 ))}
@@ -106,5 +76,3 @@ export const SuggestedPrompts = ({ isSpanish, onPromptSelect }: SuggestedPrompts
     </div>
   );
 };
-
-import { Bookmark } from "lucide-react";
