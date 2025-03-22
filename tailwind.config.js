@@ -1,4 +1,3 @@
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
@@ -45,6 +44,33 @@ module.exports = {
           DEFAULT: '#D946EF',
           light: '#E67AF7',
           dark: '#B224CD'
+        },
+        
+        // Add Hanuman theme colors
+        'hanuman-primary': {
+          DEFAULT: '#FF7E00', // Orange
+          light: '#FF9933',
+          dark: '#E65C00',
+        },
+        'hanuman-secondary': {
+          DEFAULT: '#C62828', // Red
+          light: '#D84545',
+          dark: '#A61B1B',
+        },
+        'hanuman-accent': {
+          DEFAULT: '#FFD700', // Gold
+          light: '#FFE347',
+          dark: '#CCA700',
+        },
+        'hanuman-bg': {
+          light: '#FFF9F0', // Light cream
+          DEFAULT: '#FFF9F0',
+          dark: '#1A0F00', // Deep brown
+        },
+        'hanuman-text': {
+          primary: '#2D1600',
+          secondary: '#5D4A2E',
+          light: '#FFF1DE',
         },
         
         // Legacy lovable colors maintained for compatibility
@@ -112,12 +138,23 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: 0 },
         },
+        "gentle-pulse": {
+          "0%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.05)" },
+          "100%": { transform: "scale(1)" },
+        },
+        "float": {
+          "0%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-8px)" },
+          "100%": { transform: "translateY(0px)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "gentle-pulse": "gentle-pulse 2s infinite ease-in-out",
+        "float": "float 3s ease-in-out infinite",
       },
-      // Implement an 8px grid system
       spacing: {
         0: '0',
         1: '8px',
@@ -131,7 +168,6 @@ module.exports = {
         9: '72px',
         10: '80px',
       },
-      // Elevation system
       boxShadow: {
         'elevation-1': '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
         'elevation-2': '0 3px 6px rgba(0,0,0,0.15), 0 2px 4px rgba(0,0,0,0.12)',

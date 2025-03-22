@@ -13,7 +13,7 @@
 }
 
 /* Light theme specifics */
-.hanuman-theme.light {
+.hanuman-theme:not(.dark) {
   --page-bg: var(--hanuman-bg-light);
   --content-bg: rgba(255, 255, 255, 0.8);
   --card-bg: #FFFFFF;
@@ -52,6 +52,12 @@
   font-weight: 700;
 }
 
+/* Sacred Pattern Background */
+.bg-pattern-subtle {
+  background-color: var(--page-bg);
+  background-size: 60px 60px;
+}
+
 /* Buttons */
 .hanuman-theme .button-primary {
   background-color: var(--hanuman-primary);
@@ -61,6 +67,7 @@
   border-radius: 0.5rem;
   font-weight: 600;
   cursor: pointer;
+  transition: var(--theme-transition);
 }
 
 .hanuman-theme .button-primary:hover {
@@ -76,6 +83,7 @@
   border-radius: 0.5rem;
   font-weight: 600;
   cursor: pointer;
+  transition: var(--theme-transition);
 }
 
 .hanuman-theme .button-secondary:hover {
@@ -102,4 +110,61 @@
 .hanuman-theme footer {
   background-color: var(--content-bg);
   border-top: 1px solid var(--border-color);
+}
+
+/* Avatar styles */
+.hanuman-theme .avatar-hanuman {
+  border: 2px solid var(--hanuman-primary);
+}
+
+/* Message styles */
+.hanuman-theme .message-user {
+  background-color: var(--hanuman-primary);
+  color: white;
+}
+
+.hanuman-theme .message-assistant {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+}
+
+/* Input styles */
+.hanuman-theme .input-hanuman {
+  border-color: var(--hanuman-primary);
+  transition: var(--theme-transition);
+}
+
+.hanuman-theme .input-hanuman:focus {
+  border-color: var(--hanuman-accent);
+  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
+}
+
+/* Animation effects */
+@keyframes gentle-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.hanuman-theme .pulse-effect {
+  animation: gentle-pulse 2s infinite ease-in-out;
+}
+
+/* Hanuman specific UI elements */
+.hanuman-theme .sacred-border {
+  border: 1px solid var(--hanuman-accent);
+  border-radius: 4px;
+  padding: 2px 8px;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 126, 0, 0.1) 100%);
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .hanuman-theme .section-title {
+    font-size: 1.5rem;
+  }
+  
+  .hanuman-theme .card {
+    padding: 0.75rem;
+  }
 }

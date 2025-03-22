@@ -50,6 +50,7 @@ const ChatInputArea: React.FC<ChatInputAreaProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (input.trim() === '') return;
     await onSubmit(input);
     resetTranscript();
   };
@@ -61,13 +62,13 @@ const ChatInputArea: React.FC<ChatInputAreaProps> = ({
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          className="pr-12 border-hanuman-primary/30 focus:border-hanuman-primary focus:ring-hanuman-primary/20"
+          className="pr-12 border-hanuman-primary/30 focus:border-hanuman-primary focus:ring-hanuman-primary/20 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
           placeholder={t("Type your message...")}
         />
         <Button
           type="submit"
-          className="absolute right-1 top-1 rounded-full bg-hanuman-primary hover:bg-hanuman-primary/90"
-          disabled={isLoading}
+          className="absolute right-1 top-1 rounded-full bg-hanuman-primary hover:bg-hanuman-primary/90 transition-colors"
+          disabled={isLoading || !input.trim()}
         >
           {isLoading ? 
             <Loader2 className="h-4 w-4 animate-spin" /> : 
@@ -76,18 +77,19 @@ const ChatInputArea: React.FC<ChatInputAreaProps> = ({
         </Button>
       </form>
 
-      {hasRecognitionSupport ? (
-        <div className="flex justify-center mt-2">
+      <div className="mt-3 flex flex-col sm:flex-row justify-center gap-2">
+        {hasRecognitionSupport && (
           <motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            className="w-full sm:w-auto"
           >
             <Button
               variant="outline"
               onClick={listening ? handleStopListening : handleStartListening}
               disabled={isLoading}
-              className={`border-hanuman-primary/30 hover:bg-hanuman-primary/10 ${
-                listening ? 'bg-hanuman-primary/10 text-hanuman-primary' : ''
+              className={`w-full sm:w-auto border-hanuman-primary/30 hover:bg-hanuman-primary/10 dark:hover:bg-hanuman-primary/20 ${
+                listening ? 'bg-hanuman-primary/10 text-hanuman-primary dark:bg-hanuman-primary/20' : ''
               }`}
             >
               {listening ? (
@@ -103,22 +105,17 @@ const ChatInputArea: React.FC<ChatInputAreaProps> = ({
               )}
             </Button>
           </motion.div>
-        </div>
-      ) : (
-        <p className="text-center mt-2 text-sm text-gray-500">
-          {t("Speech recognition not supported in this browser.")}
-        </p>
-      )}
+        )}
 
-      <div className="flex justify-center mt-4">
         <motion.div
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          className="w-full sm:w-auto"
         >
           <Button
             variant="secondary"
             onClick={onMorePrompts}
-            className="bg-hanuman-accent/20 text-hanuman-secondary hover:bg-hanuman-accent/30"
+            className="w-full sm:w-auto bg-hanuman-accent/20 text-hanuman-secondary hover:bg-hanuman-accent/30 dark:bg-hanuman-accent/10 dark:hover:bg-hanuman-accent/20 dark:text-hanuman-accent"
           >
             <Sparkles className="mr-2 h-4 w-4 text-hanuman-accent" />
             {t("More Prompts")}
