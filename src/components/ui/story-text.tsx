@@ -90,10 +90,10 @@ const StoryHeading = forwardRef<HTMLHeadingElement, StoryHeadingProps>(
       hindi: "font-hindi hindi-content"
     };
     
-    const Heading = `h${level}` as keyof JSX.IntrinsicElements;
+    const Tag = `h${level}` as keyof JSX.IntrinsicElements;
     
     return (
-      <Heading
+      <Tag
         ref={ref}
         className={cn(
           "font-semibold tracking-tight mb-4",
@@ -104,7 +104,7 @@ const StoryHeading = forwardRef<HTMLHeadingElement, StoryHeadingProps>(
         {...props}
       >
         {children}
-      </Heading>
+      </Tag>
     );
   }
 );
@@ -126,10 +126,10 @@ const StorySectionTitle = forwardRef<HTMLHeadingElement, StoryHeadingProps>(
       hindi: "font-hindi hindi-content"
     };
     
-    const Heading = `h${level}` as keyof JSX.IntrinsicElements;
+    const Tag = `h${level}` as keyof JSX.IntrinsicElements;
     
     return (
-      <Heading
+      <Tag
         ref={ref}
         className={cn(
           "font-medium tracking-tight mb-3",
@@ -140,7 +140,7 @@ const StorySectionTitle = forwardRef<HTMLHeadingElement, StoryHeadingProps>(
         {...props}
       >
         {children}
-      </Heading>
+      </Tag>
     );
   }
 );
