@@ -23,11 +23,10 @@ export function QRCodeScanner({ onScan, onError, onClose }: QRCodeScannerProps) 
   useEffect(() => {
     let stream: MediaStream | null = null;
     let animationFrameId: number | null = null;
-    let worker: Worker | null = null;
     
     const initializeScanner = async () => {
       // First, check if BarcodeDetector API is available
-      if ('BarcodeDetector' in window) {
+      if ('BarcodeDetector' in window && window.BarcodeDetector) {
         try {
           const barcodeDetector = new window.BarcodeDetector({
             formats: ['qr_code']
@@ -185,9 +184,6 @@ export function QRCodeScanner({ onScan, onError, onClose }: QRCodeScannerProps) 
       }
       if (stream) {
         stream.getTracks().forEach(track => track.stop());
-      }
-      if (worker) {
-        worker.terminate();
       }
     };
   }, [scanning, scanComplete, onScan, onError, toast]);

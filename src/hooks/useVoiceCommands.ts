@@ -15,7 +15,7 @@ interface VoiceCommand {
 export function useVoiceCommands(enabled: boolean = false) {
   const [isListening, setIsListening] = useState(false);
   const [transcript, setTranscript] = useState('');
-  const [recognition, setRecognition] = useState<any>(null);
+  const [recognition, setRecognition] = useState<SpeechRecognition | null>(null);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -125,8 +125,8 @@ export function useVoiceCommands(enabled: boolean = false) {
   const startListening = useCallback(() => {
     if (!enabled) return;
     
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
+    const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognitionAPI) {
       toast({ 
         title: 'Speech Recognition Not Available', 
         description: 'Your browser does not support voice commands. Try using Chrome or Edge.',
@@ -136,7 +136,7 @@ export function useVoiceCommands(enabled: boolean = false) {
     }
     
     try {
-      const recognitionInstance = new SpeechRecognition();
+      const recognitionInstance = new SpeechRecognitionAPI();
       recognitionInstance.continuous = true;
       recognitionInstance.interimResults = true;
       recognitionInstance.lang = 'en-US';

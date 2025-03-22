@@ -37,7 +37,7 @@ export function useProximityDetection({
 
   // Scan for nearby Bluetooth devices
   const scanForDevices = useCallback(async () => {
-    if (!enabled || !isBluetoothSupported) return;
+    if (!enabled || !isBluetoothSupported || !navigator.bluetooth) return;
 
     try {
       setIsScanning(true);
@@ -156,7 +156,7 @@ export function useProximityDetection({
     }
     
     // Also scan for Bluetooth periodically
-    if (isBluetoothSupported) {
+    if (isBluetoothSupported && navigator.bluetooth) {
       // Initial scan
       scanForDevices();
       
