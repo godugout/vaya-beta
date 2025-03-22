@@ -9,7 +9,7 @@ import { useActivityTracking, ActivityTypes } from '@/hooks/useActivityTracking'
 import { useTheme } from '@/contexts/ThemeContext';
 import { useSoftTheme } from '@/contexts/SoftThemeContext';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
-import { Rocket } from 'lucide-react';
+import { Rocket, Clock } from 'lucide-react';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -32,7 +32,6 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
       title: document.title
     }).catch(error => {
       console.error("Failed to track activity:", error);
-      // Silently fail as this isn't critical functionality
     });
   }, [location.pathname, location.search, trackActivity]);
 
@@ -40,7 +39,6 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
   useEffect(() => {
     document.body.classList.add('star-bg', 'nebula-effect');
     
-    // Apply theme class to body
     document.body.classList.remove('light', 'dark');
     document.body.classList.add(theme);
     
@@ -87,6 +85,17 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
     }
   };
   
+  // Calculate current mission time
+  const [missionTime, setMissionTime] = React.useState(new Date().toLocaleTimeString());
+  
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setMissionTime(new Date().toLocaleTimeString());
+    }, 1000);
+    
+    return () => clearInterval(timer);
+  }, []);
+  
   return (
     <div className={`flex flex-col min-h-screen ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
       {/* Fixed header area with cosmic theme */}
@@ -94,32 +103,39 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
         <MainNav />
       </div>
       
-      {/* Theme toggle controls */}
-      <div className="fixed top-20 right-4 z-[101] flex items-center">
-        <ThemeToggle showSoftToggle={true} />
-        
-        {/* NASA theme toggle button */}
-        <button 
-          onClick={toggleNasaTheme}
-          className={`ml-2 p-2 rounded-full transition-colors ${isNasaTheme ? 'bg-nasa-blue text-white' : 'bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-200'}`}
-          title={isNasaTheme ? "Disable NASA Theme" : "Enable NASA Theme"}
-        >
-          <Rocket className="h-5 w-5" />
-        </button>
+      {/* Theme toggle controls - simplified and positioned better */}
+      <div className="fixed top-20 right-4 z-[101]">
+        <div className="flex items-center space-x-2">
+          <ThemeToggle />
+          
+          <button 
+            onClick={toggleNasaTheme}
+            className={`p-2 rounded-full transition-colors ${isNasaTheme ? 'bg-nasa-blue text-white' : 'bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-200'}`}
+            title={isNasaTheme ? "Disable NASA Theme" : "Enable NASA Theme"}
+          >
+            <Rocket className="h-5 w-5" />
+          </button>
+        </div>
       </div>
       
       {/* Mission timer for NASA theme */}
       {isNasaTheme && (
         <div className="fixed top-20 left-4 z-[101] font-mono text-sm text-space-light-blue">
           <div className="terminal-text p-2">
-            <div>MISSION TIME: {new Date().toLocaleTimeString()}</div>
-            <div>STATUS: ONLINE</div>
+            <div className="flex items-center space-x-2">
+              <Clock className="h-4 w-4" />
+              <span>MISSION TIME: {missionTime}</span>
+            </div>
+            <div className="flex items-center space-x-2 mt-1">
+              <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse"></div>
+              <span>STATUS: ONLINE</span>
+            </div>
           </div>
         </div>
       )}
       
-      {/* Content area with proper spacing to avoid overlap with fixed header */}
-      <main className={`flex-grow mt-48 sm:mt-40 pt-6 relative z-content container mx-auto px-4 ${className} ${isSoftTheme ? 'bg-[var(--soft-bg-primary)] text-[var(--soft-text-primary)]' : ''}`}>
+      {/* Content area with proper spacing */}
+      <main className={`flex-grow mt-32 pt-4 relative z-content container mx-auto px-4 ${className} ${isSoftTheme ? 'bg-[var(--soft-bg-primary)] text-[var(--soft-text-primary)]' : ''}`}>
         <ErrorBoundary>
           {children}
         </ErrorBoundary>

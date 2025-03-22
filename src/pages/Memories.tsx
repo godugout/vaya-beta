@@ -1,51 +1,16 @@
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import MemoryFeedLayout from '@/components/memory/MemoryFeedLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Rocket, Star, Orbit } from 'lucide-react';
 
 export default function Memories() {
-  // Add NASA theme to body when component mounts
-  useEffect(() => {
-    document.body.classList.add('nasa-theme', 'cosmic-bg');
-    
-    // Generate stars
-    const createStars = () => {
-      const starsContainer = document.createElement('div');
-      starsContainer.className = 'stars-container';
-      starsContainer.style.position = 'fixed';
-      starsContainer.style.top = '0';
-      starsContainer.style.left = '0';
-      starsContainer.style.width = '100%';
-      starsContainer.style.height = '100%';
-      starsContainer.style.zIndex = '-1';
-      starsContainer.style.overflow = 'hidden';
-      
-      for (let i = 0; i < 100; i++) {
-        const star = document.createElement('div');
-        star.className = 'star';
-        star.style.left = `${Math.random() * 100}%`;
-        star.style.top = `${Math.random() * 100}%`;
-        starsContainer.appendChild(star);
-      }
-      
-      document.body.appendChild(starsContainer);
-    };
-    
-    createStars();
-    
-    return () => {
-      document.body.classList.remove('nasa-theme', 'cosmic-bg');
-      const starsContainer = document.querySelector('.stars-container');
-      if (starsContainer) {
-        document.body.removeChild(starsContainer);
-      }
-    };
-  }, []);
+  // NASA theme is now managed by the MainLayout component
+  // This component focuses just on the Memories content
 
   return (
-    <div className="max-w-4xl mx-auto py-8">
-      <Card className="space-glass mb-8 overflow-hidden border-space-indigo">
+    <div className="max-w-4xl mx-auto py-6">
+      <Card className="space-glass mb-6 overflow-hidden border-space-indigo">
         <div className="absolute inset-0 opacity-20 pointer-events-none">
           {/* Subtle cosmic background elements */}
           <div className="absolute top-0 left-0 w-full h-full">
