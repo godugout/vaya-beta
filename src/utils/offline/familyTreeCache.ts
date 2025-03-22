@@ -1,4 +1,3 @@
-
 import localforage from 'localforage';
 import { FamilyGraph, FamilyNode, FamilyEdge } from '@/utils/graphDb/familyGraphTypes';
 import { offlineManager } from './offlineManager';
@@ -99,7 +98,6 @@ class FamilyTreeCacheService {
       const newNode: FamilyNode = {
         id: nodeId,
         type: node.type || 'person',
-        position: node.position,
         data: node.data,
       };
       

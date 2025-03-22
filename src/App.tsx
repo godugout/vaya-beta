@@ -1,6 +1,6 @@
 
 import React, { Suspense, lazy } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import { Toaster } from '@/components/ui/sonner';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 import { useTheme } from '@/contexts/ThemeContext';
@@ -24,7 +24,7 @@ const HanumanEdition = lazy(() => import('@/pages/HanumanEdition'));
 const Profile = lazy(() => import('@/pages/Profile'));
 const Settings = lazy(() => import('@/pages/Settings'));
 const StoryShowcase = lazy(() => import('@/components/design-system/StoryShowcase'));
-const ComponentsShowcase = lazy(() => import('@/components/design-system/ComponentsShowcase').then(m => ({ default: m })));
+const ComponentsShowcase = lazy(() => import('@/components/design-system/ComponentsShowcase'));
 const DesignSystem = lazy(() => import('@/pages/DesignSystem'));
 
 // Admin components are a good candidate for code splitting
@@ -43,7 +43,7 @@ function App() {
         <ErrorBoundary>
           <Suspense fallback={<LoadingIndicator />}>
             <Routes>
-              <Route path="/" element={<MainLayout />}>
+              <Route path="/" element={<MainLayout><Outlet /></MainLayout>}>
                 <Route index element={<Home />} />
                 <Route path="auth" element={<Auth />} />
                 <Route path="families" element={<Families />} />
