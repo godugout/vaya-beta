@@ -8,6 +8,23 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Core brand colors from the style guide
+        primary: "#FF7675",
+        secondary: "#6C5CE7",
+        accent: "#4CD137",
+        
+        // Gray scale
+        black: "#000000",
+        white: "#FFFFFF",
+        "gray-100": "#F9F9F9",
+        "gray-200": "#F3F3F3",
+        "gray-300": "#EDEDED",
+        "gray-400": "#DDDDDD",
+        "gray-500": "#AAAAAA",
+        "gray-600": "#888888",
+        "gray-700": "#555555",
+        "gray-800": "#333333",
+        
         // Sacred Colors
         sacred: {
           primary: {
@@ -109,12 +126,17 @@ export default {
         
         // Hanuman theme colors
         hanuman: {
-          orange: "#FF7E00",
-          red: "#C62828",
+          primary: "#FF7E00",
+          secondary: "#C62828",
+          accent: "#FFD700",
+          purple: "#6C5CE7",
+          green: "#4CD137",
           saffron: "#F9A825",
           gold: "#FFD700",
           light: "#FFF9F0",
           dark: "#1A0F00",
+          "bg-light": "#FFF9F0", 
+          "bg-dark": "#1A0F00",
         },
         
         border: "hsl(var(--border))",
@@ -122,11 +144,11 @@ export default {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        primary: {
+        "primary-brand": {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
         },
-        secondary: {
+        "secondary-brand": {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
         },
@@ -138,7 +160,7 @@ export default {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
         },
-        accent: {
+        "accent-brand": {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
         },
@@ -154,7 +176,7 @@ export default {
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
         heading: ["Mukta Vaani", "Montserrat", "sans-serif"],
-        body: ["Inter", "sans-serif"],
+        body: ["Inter", "Manrope", "sans-serif"],
         story: ["Georgia", "serif"],
         gujarati: ["Mukta Vaani", "sans-serif"],
       },
@@ -172,14 +194,31 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: 0 },
         },
+        "gentle-pulse": {
+          "0%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.05)" },
+          "100%": { transform: "scale(1)" },
+        },
+        "fade-in": {
+          from: { opacity: "0", transform: "translateY(10px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+        "fade-out": {
+          from: { opacity: "1", transform: "translateY(0)" },
+          to: { opacity: "0", transform: "translateY(10px)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "gentle-pulse": "gentle-pulse 2s infinite ease-in-out",
+        "fade-in": "fade-in 0.5s ease-out forwards",
+        "fade-out": "fade-out 0.5s ease-out forwards",
       },
       backgroundImage: {
         'hanuman-bg': "url('/lovable-uploads/e972aa49-7146-43ba-a1e8-b6e0b5f975d5.png')",
         'hanuman-gradient': 'linear-gradient(135deg, rgba(255, 126, 0, 0.1) 0%, rgba(198, 40, 40, 0.1) 100%)',
+        'chakra-pattern': "url(\"data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg stroke='%23FFD700' stroke-width='1' stroke-opacity='0.1'%3E%3Ccircle cx='40' cy='40' r='36'/%3E%3Ccircle cx='40' cy='40' r='28'/%3E%3Ccircle cx='40' cy='40' r='20'/%3E%3Cpath d='M40 4 L40 76 M4 40 L76 40 M11.7 11.7 L68.3 68.3 M11.7 68.3 L68.3 11.7'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
       },
     },
   },

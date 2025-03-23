@@ -1,15 +1,64 @@
 
 /* Hanuman Theme Styles */
+:root {
+  /* Colors from design guide */
+  --color-primary: #FF7675;   /* Warm coral/orange */
+  --color-secondary: #6C5CE7; /* Deep purple */
+  --color-accent: #4CD137;    /* Bright green accent */
+  
+  /* Gray scale */
+  --color-black: #000000;
+  --color-white: #FFFFFF;
+  --color-gray-100: #F9F9F9;
+  --color-gray-200: #F3F3F3;
+  --color-gray-300: #EDEDED;
+  --color-gray-400: #DDDDDD;
+  --color-gray-500: #AAAAAA;
+  --color-gray-600: #888888;
+  --color-gray-700: #555555;
+  --color-gray-800: #333333;
+  
+  /* Typography */
+  --font-family-base: "Inter", "Manrope", sans-serif;
+  --font-size-h1: 2.25rem; /* ~36px */
+  --font-size-h2: 1.875rem; /* 30px */
+  --font-size-h3: 1.5rem; /* 24px */
+  --font-size-h4: 1.25rem; /* 20px */
+  --font-size-body: 1rem; /* 16px */
+  --font-size-small: 0.875rem; /*14px*/
+  --font-size-caption: 0.75rem; /*12px*/
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  /* Spacing scale */
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 24px;
+  --spacing-6: 32px;
+  --spacing-7: 40px;
+  --spacing-8: 48px;
+}
+
 .hanuman-theme {
   /* Base colors */
   --hanuman-primary: #FF7E00;  /* Orange */
   --hanuman-secondary: #C62828; /* Red */
   --hanuman-accent: #FFD700;   /* Gold */
+  --hanuman-purple: #6C5CE7;   /* Purple accent */
+  --hanuman-green: #4CD137;    /* Green accent */
   --hanuman-bg-light: #FFF9F0; /* Light cream */
   --hanuman-bg-dark: #1A0F00;  /* Deep brown */
   
   /* Theme transitions */
   --theme-transition: all 0.3s ease;
+  
+  /* Font family overrides */
+  font-family: var(--font-family-base);
 }
 
 /* Light theme specifics */
@@ -63,31 +112,57 @@
   background-color: var(--hanuman-primary);
   color: white;
   border: none;
-  padding: 0.5rem 1.5rem;
-  border-radius: 0.5rem;
+  padding: var(--spacing-3) var(--spacing-5);
+  border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
   transition: var(--theme-transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2);
 }
 
 .hanuman-theme .button-primary:hover {
   background-color: #FF9933; /* Lighter orange */
   transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .hanuman-theme .button-secondary {
   background-color: transparent;
   color: var(--hanuman-primary);
   border: 2px solid var(--hanuman-primary);
-  padding: 0.5rem 1.5rem;
-  border-radius: 0.5rem;
+  padding: var(--spacing-3) var(--spacing-5);
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--theme-transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2);
+}
+
+.hanuman-theme .button-secondary:hover {
+  background-color: rgba(255, 126, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.hanuman-theme .button-accent {
+  background-color: var(--hanuman-purple);
+  color: white;
+  border: none;
+  padding: var(--spacing-3) var(--spacing-5);
+  border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
   transition: var(--theme-transition);
 }
 
-.hanuman-theme .button-secondary:hover {
-  background-color: rgba(255, 126, 0, 0.1);
+.hanuman-theme .button-accent:hover {
+  background-color: #5a4bd5; /* Slightly darker purple */
+  transform: translateY(-2px);
 }
 
 /* Navigation styles */
@@ -130,40 +205,130 @@
 
 /* Input styles */
 .hanuman-theme .input-hanuman {
-  border-color: var(--hanuman-primary);
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: var(--spacing-3) var(--spacing-4);
+  color: var(--text-primary);
+  width: 100%;
+  font-size: var(--font-size-body);
   transition: var(--theme-transition);
 }
 
 .hanuman-theme .input-hanuman:focus {
   border-color: var(--hanuman-accent);
   box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
+  outline: none;
+}
+
+/* Column layout for the chat interface */
+.hanuman-theme .three-column-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr 320px;
+  gap: var(--spacing-4);
+  height: calc(100vh - 160px);
+  max-height: 900px;
 }
 
 /* Chat container specific styles */
 .hanuman-theme .chat-container {
-  height: 75vh;
   display: flex;
   flex-direction: column;
   border-radius: 0.75rem;
   overflow: hidden;
+  background-color: var(--card-bg);
+  height: 100%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.hanuman-theme .chat-column {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.hanuman-theme .chat-header {
+  padding: var(--spacing-4);
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--card-bg);
+}
+
+.hanuman-theme .chat-body {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: var(--spacing-4);
+  background-color: var(--page-bg);
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg stroke='%23FF7A00' stroke-width='1' stroke-opacity='0.05'%3E%3Cpath d='M30 10 L50 45 L10 45 Z M15 25 L45 25 M12.5 35 L47.5 35'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.hanuman-theme .chat-footer {
+  padding: var(--spacing-4);
+  border-top: 1px solid var(--border-color);
+  background-color: var(--card-bg);
+}
+
+.hanuman-theme .side-column {
+  background-color: var(--card-bg);
+  border-radius: 0.75rem;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.hanuman-theme .side-column-header {
+  padding: var(--spacing-4);
+  border-bottom: 1px solid var(--border-color);
+  font-weight: var(--font-weight-semibold);
+}
+
+.hanuman-theme .side-column-body {
+  padding: var(--spacing-4);
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.hanuman-theme .side-column-footer {
+  padding: var(--spacing-3) var(--spacing-4);
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+  font-size: var(--font-size-small);
+  color: var(--text-secondary);
 }
 
 /* Specific height adjustments for different viewport sizes */
-@media (min-height: 800px) {
-  .hanuman-theme .chat-container {
-    height: 70vh;
+@media (max-width: 1200px) {
+  .hanuman-theme .three-column-layout {
+    grid-template-columns: 240px 1fr 280px;
   }
 }
 
-@media (min-height: 1000px) {
-  .hanuman-theme .chat-container {
-    height: 75vh;
+@media (max-width: 992px) {
+  .hanuman-theme .three-column-layout {
+    grid-template-columns: 200px 1fr 240px;
   }
 }
 
-@media (max-height: 700px) {
-  .hanuman-theme .chat-container {
-    height: 65vh;
+@media (max-width: 768px) {
+  .hanuman-theme .three-column-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+  }
+  
+  .hanuman-theme .side-column {
+    height: auto;
+  }
+  
+  .hanuman-theme .left-column {
+    display: none;
+  }
+  
+  .hanuman-theme .right-column {
+    display: none;
+  }
+  
+  .hanuman-theme .mobile-nav {
+    display: flex;
   }
 }
 
@@ -178,12 +343,57 @@
   animation: gentle-pulse 2s infinite ease-in-out;
 }
 
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hanuman-theme .fade-in {
+  animation: fade-in 0.5s ease-out forwards;
+}
+
 /* Hanuman specific UI elements */
 .hanuman-theme .sacred-border {
   border: 1px solid var(--hanuman-accent);
   border-radius: 4px;
   padding: 2px 8px;
   background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 126, 0, 0.1) 100%);
+}
+
+.hanuman-theme .hanuman-decorative-border {
+  position: relative;
+}
+
+.hanuman-theme .hanuman-decorative-border::before,
+.hanuman-theme .hanuman-decorative-border::after {
+  content: '';
+  position: absolute;
+  height: 10px;
+  width: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='10' viewBox='0 0 40 10' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 5 L40 5 M5 0 L5 10 M10 2 L10 8 M15 0 L15 10 M20 3 L20 7 M25 1 L25 9 M30 0 L30 10 M35 2 L35 8' stroke='%23FF7E00' stroke-width='1' stroke-opacity='0.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+}
+
+.hanuman-theme .hanuman-decorative-border::before {
+  top: -10px;
+  left: 10px;
+}
+
+.hanuman-theme .hanuman-decorative-border::after {
+  bottom: -10px;
+  right: 10px;
+  transform: rotate(180deg);
+}
+
+/* Backdrop Pattern */
+.hanuman-theme .backdrop-pattern {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg stroke='%23FF7A00' stroke-width='1'%3E%3Ccircle cx='40' cy='40' r='36'/%3E%3Ccircle cx='40' cy='40' r='28'/%3E%3Ccircle cx='40' cy='40' r='20'/%3E%3Cpath d='M40 4 L40 76 M4 40 L76 40 M11.7 11.7 L68.3 68.3 M11.7 68.3 L68.3 11.7'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-size: 80px 80px;
 }
 
 /* Responsive adjustments */
@@ -194,5 +404,16 @@
   
   .hanuman-theme .card {
     padding: 0.75rem;
+  }
+  
+  .hanuman-theme .button-primary,
+  .hanuman-theme .button-secondary,
+  .hanuman-theme .button-accent {
+    padding: var(--spacing-2) var(--spacing-4);
+    font-size: var(--font-size-small);
+  }
+  
+  .hanuman-theme .input-hanuman {
+    padding: var(--spacing-2) var(--spacing-3);
   }
 }

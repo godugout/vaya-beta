@@ -1,13 +1,18 @@
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { HanumanPromptItem } from "@/types/hanuman";
 import SuggestedPrompts from "@/components/narra/SuggestedPrompts";
 import { useHanumanChat } from "@/hooks/useHanumanChat";
 import ChatMessages from "@/components/hanuman/ChatMessages";
 import ChatInputArea from "@/components/hanuman/ChatInputArea";
+import HanumanSidebar from "@/components/hanuman/HanumanSidebar";
+import HanumanResources from "@/components/hanuman/HanumanResources";
 import { motion } from "framer-motion";
-import { Flame, Sun, Flower } from "lucide-react";
+import { Flame, Lotus, Menu, Moon, Sun } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useTheme } from "@/contexts/ThemeContext";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 // Enhanced suggested prompts with categories
 const suggestedPrompts: HanumanPromptItem[] = [
@@ -36,10 +41,29 @@ const suggestedPrompts: HanumanPromptItem[] = [
     content: "What are some of the most important lessons you've learned in life?",
     category: "wisdom"
   },
+  {
+    id: "prompt-6",
+    content: "How has your spiritual journey shaped your life?",
+    category: "sacred"
+  },
+  {
+    id: "prompt-7",
+    content: "What historical events had the biggest impact on your family?",
+    category: "history"
+  },
+  {
+    id: "prompt-8",
+    content: "What values do you hope to pass on to future generations?",
+    category: "wisdom"
+  },
 ];
 
 const HanumanEdition = () => {
-  const { isSpanish } = useLanguage();
+  const { isSpanish, setLanguagePreference } = useLanguage();
+  const { theme, setTheme } = useTheme();
+  const [activeCategory, setActiveCategory] = useState("personal");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
   const {
     messages,
     input,
@@ -58,6 +82,19 @@ const HanumanEdition = () => {
     };
   }, []);
 
+  // Filter prompts by active category
+  const filteredPrompts = suggestedPrompts.filter(
+    prompt => prompt.category === activeCategory
+  );
+
+  const toggleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
+
+  const toggleLanguage = () => {
+    setLanguagePreference(isSpanish ? 'en' : 'es');
+  };
+
   return (
     <motion.div 
       initial={{ opacity: 0 }}
@@ -65,73 +102,176 @@ const HanumanEdition = () => {
       transition={{ duration: 0.5 }}
       className="flex flex-col min-h-screen bg-gradient-to-b from-hanuman-bg-light to-white dark:from-hanuman-bg-dark dark:to-gray-900"
     >
+      {/* Background decorative pattern */}
+      <div className="backdrop-pattern"></div>
+      
       {/* Header with decorative elements */}
-      <header className="text-center py-6 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10 pointer-events-none">
-          <div className="absolute top-0 left-1/4 transform -translate-x-1/2">
-            <Sun className="text-hanuman-accent w-32 h-32" />
+      <header className="py-4 px-6 md:px-10 relative border-b border-hanuman-primary/10 backdrop-blur-md bg-white/60 dark:bg-gray-900/60">
+        <div className="container mx-auto flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="md:hidden" 
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              <Menu />
+            </Button>
+            
+            <div className="hidden md:flex items-center gap-3">
+              <div className="h-12 w-12 bg-hanuman-primary/10 rounded-full flex items-center justify-center">
+                <Lotus className="text-hanuman-primary h-6 w-6" />
+              </div>
+              <div>
+                <h1 className="text-xl font-bold">
+                  {isSpanish ? "Edición Hanuman" : "Hanuman Edition"}
+                </h1>
+                <p className="text-xs text-hanuman-secondary">
+                  {isSpanish ? "Sabiduría ancestral" : "Ancient wisdom"}
+                </p>
+              </div>
+            </div>
           </div>
-          <div className="absolute top-0 right-1/4 transform translate-x-1/2">
-            <Flower className="text-hanuman-primary w-32 h-32" />
+          
+          <div className="flex items-center gap-2">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={toggleLanguage}
+              className="rounded-full"
+            >
+              <span className="font-medium text-sm">{isSpanish ? "EN" : "ES"}</span>
+            </Button>
+            
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={toggleTheme}
+              className="rounded-full text-hanuman-primary"
+            >
+              {theme === 'light' ? <Moon /> : <Sun />}
+            </Button>
+            
+            <Avatar className="h-8 w-8">
+              <AvatarImage src="/assets/hanuman-avatar.png" alt="User avatar" />
+              <AvatarFallback className="bg-hanuman-purple text-white">U</AvatarFallback>
+            </Avatar>
           </div>
         </div>
-
-        <motion.h1 
-          className="text-3xl md:text-4xl font-bold text-hanuman-primary relative z-10"
-          initial={{ y: -20 }}
-          animate={{ y: 0 }}
-          transition={{ delay: 0.2, type: "spring", stiffness: 100 }}
-        >
-          {isSpanish ? "Edición Hanuman" : "Hanuman Edition"}
-        </motion.h1>
-        <motion.p 
-          className="text-hanuman-secondary mt-2 max-w-2xl mx-auto"
-          initial={{ y: -10, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.3 }}
-        >
-          {isSpanish 
-            ? "Conversaciones sagradas para preservar la historia de tu familia" 
-            : "Sacred conversations to preserve your family's history"}
-        </motion.p>
       </header>
 
-      {/* Main content area */}
-      <main className="flex-grow container mx-auto max-w-5xl px-4 pb-12">
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl overflow-hidden border border-hanuman-primary/20">
-          <div className="chat-container flex flex-col h-[75vh]">
-            {/* Chat messages area - increased height */}
-            <ChatMessages messages={messages} isLoading={isLoading} />
-            
-            {/* Suggested prompts */}
-            <div className="border-t border-gray-200 dark:border-gray-700 p-4 bg-gray-50 dark:bg-gray-900">
-              <SuggestedPrompts 
-                prompts={suggestedPrompts} 
-                onSelect={handlePromptSelect} 
-                isSpanish={isSpanish} 
+      {/* Main content area with three-column layout */}
+      <main className="flex-grow container mx-auto px-4 py-6 md:px-10 md:py-8">
+        <div className="three-column-layout">
+          {/* Left column - Categories */}
+          <div className="left-column">
+            <HanumanSidebar 
+              onCategorySelect={setActiveCategory} 
+              activeCategory={activeCategory} 
+            />
+          </div>
+          
+          {/* Middle column - Chat */}
+          <div className="chat-column">
+            <div className="chat-container">
+              <div className="chat-header">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <h2 className="text-lg font-medium hanuman-decorative-border inline-block pb-1">
+                      {isSpanish ? "Conversación Sagrada" : "Sacred Conversation"}
+                    </h2>
+                    <p className="text-xs text-gray-500 mt-1">
+                      {isSpanish 
+                        ? "Preserva tus memorias familiares para las futuras generaciones" 
+                        : "Preserve your family memories for future generations"}
+                    </p>
+                  </div>
+                  <div className="sacred-border text-xs font-medium">
+                    {activeCategory === "personal" && (isSpanish ? "Personal" : "Personal")}
+                    {activeCategory === "family" && (isSpanish ? "Familia" : "Family")}
+                    {activeCategory === "wisdom" && (isSpanish ? "Sabiduría" : "Wisdom")}
+                    {activeCategory === "history" && (isSpanish ? "Historia" : "History")}
+                    {activeCategory === "sacred" && (isSpanish ? "Sagrado" : "Sacred")}
+                  </div>
+                </div>
+                
+                <div className="mt-4">
+                  <SuggestedPrompts 
+                    prompts={filteredPrompts} 
+                    onSelect={handlePromptSelect} 
+                    isSpanish={isSpanish} 
+                  />
+                </div>
+              </div>
+              
+              <ChatMessages messages={messages} isLoading={isLoading} />
+              
+              <ChatInputArea
+                input={input}
+                setInput={setInput}
+                isLoading={isLoading}
+                onSubmit={handleSubmit}
+                onMorePrompts={handleMorePrompts}
               />
             </div>
-            
-            {/* Chat input area */}
-            <ChatInputArea
-              input={input}
-              setInput={setInput}
-              isLoading={isLoading}
-              onSubmit={handleSubmit}
-              onMorePrompts={handleMorePrompts}
-            />
+          </div>
+          
+          {/* Right column - Resources */}
+          <div className="right-column">
+            <HanumanResources />
           </div>
         </div>
       </main>
 
       {/* Footer with attribution */}
-      <footer className="py-4 text-center text-sm text-gray-500 dark:text-gray-400">
+      <footer className="py-4 text-center text-sm text-gray-500 dark:text-gray-400 border-t border-hanuman-primary/10">
         <p>
           {isSpanish 
             ? "Inspirado por las enseñanzas y la sabiduría de Hanuman" 
             : "Inspired by the teachings and wisdom of Hanuman"}
         </p>
       </footer>
+      
+      {/* Mobile menu overlay - only visible on small screens */}
+      {isMobileMenuOpen && (
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 md:hidden"
+          onClick={() => setIsMobileMenuOpen(false)}
+        >
+          <motion.div
+            initial={{ x: -300 }}
+            animate={{ x: 0 }}
+            exit={{ x: -300 }}
+            className="w-3/4 max-w-xs h-full bg-white dark:bg-gray-900 p-4"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-gray-800">
+              <div className="h-10 w-10 bg-hanuman-primary/10 rounded-full flex items-center justify-center">
+                <Lotus className="text-hanuman-primary h-5 w-5" />
+              </div>
+              <div>
+                <h1 className="text-lg font-bold">
+                  {isSpanish ? "Edición Hanuman" : "Hanuman Edition"}
+                </h1>
+                <p className="text-xs text-hanuman-secondary">
+                  {isSpanish ? "Sabiduría ancestral" : "Ancient wisdom"}
+                </p>
+              </div>
+            </div>
+            
+            <HanumanSidebar 
+              onCategorySelect={(category) => {
+                setActiveCategory(category);
+                setIsMobileMenuOpen(false);
+              }} 
+              activeCategory={activeCategory} 
+            />
+          </motion.div>
+        </motion.div>
+      )}
     </motion.div>
   );
 };

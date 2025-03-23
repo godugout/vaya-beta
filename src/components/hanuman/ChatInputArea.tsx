@@ -1,17 +1,16 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { Send, Mic, Plus, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Send, Loader2, Mic, Sparkles } from "lucide-react";
-import { useLanguage } from "@/contexts/LanguageContext";
-import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
+import { Textarea } from "@/components/ui/textarea";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface ChatInputAreaProps {
   input: string;
   setInput: (input: string) => void;
   isLoading: boolean;
-  onSubmit: (input: string) => Promise<void>;
+  onSubmit: (e: React.FormEvent) => void;
   onMorePrompts: () => void;
 }
 
@@ -20,108 +19,83 @@ const ChatInputArea: React.FC<ChatInputAreaProps> = ({
   setInput,
   isLoading,
   onSubmit,
-  onMorePrompts,
+  onMorePrompts
 }) => {
-  const { t } = useLanguage();
-  const {
-    transcript,
-    resetTranscript,
-    listening,
-    startListening,
-    stopListening,
-    hasRecognitionSupport,
-  } = useSpeechRecognition();
+  const { isSpanish } = useLanguage();
+  const [isRecording, setIsRecording] = useState(false);
 
-  // Speech recognition event handlers
-  const handleStartListening = () => {
-    startListening();
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInput(e.target.value);
   };
 
-  const handleStopListening = () => {
-    stopListening();
-  };
-
-  // Update input with speech recognition transcript
-  useEffect(() => {
-    if (transcript) {
-      setInput(transcript);
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      if (!isLoading && input.trim()) {
+        onSubmit(e as unknown as React.FormEvent);
+      }
     }
-  }, [transcript, setInput]);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (input.trim() === '') return;
-    await onSubmit(input);
-    resetTranscript();
   };
 
   return (
-    <div className="p-4 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
-      <form onSubmit={handleSubmit} className="relative">
-        <Input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          className="pr-12 border-hanuman-primary/30 focus:border-hanuman-primary focus:ring-hanuman-primary/20 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
-          placeholder={t("Type your message...")}
-        />
-        <Button
-          type="submit"
-          className="absolute right-1 top-1 rounded-full bg-hanuman-primary hover:bg-hanuman-primary/90 transition-colors"
-          disabled={isLoading || !input.trim()}
-        >
-          {isLoading ? 
-            <Loader2 className="h-4 w-4 animate-spin" /> : 
-            <Send className="h-4 w-4" />
-          }
-        </Button>
-      </form>
-
-      <div className="mt-3 flex flex-col sm:flex-row justify-center gap-2">
-        {hasRecognitionSupport && (
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="w-full sm:w-auto"
+    <div className="chat-footer">
+      <form onSubmit={onSubmit} className="space-y-3">
+        <div className="relative">
+          <Textarea
+            placeholder={isSpanish ? "Escribe tu mensaje..." : "Type your message..."}
+            value={input}
+            onChange={handleInputChange}
+            onKeyDown={handleKeyPress}
+            className="input-hanuman resize-none pr-20"
+            rows={3}
+            disabled={isLoading}
+          />
+          
+          <motion.div 
+            className="absolute bottom-3 right-3 flex gap-2"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.2 }}
           >
             <Button
-              variant="outline"
-              onClick={listening ? handleStopListening : handleStartListening}
+              type="button"
+              size="icon"
+              variant="ghost"
+              className="rounded-full h-8 w-8 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700"
+              onClick={() => setIsRecording(!isRecording)}
               disabled={isLoading}
-              className={`w-full sm:w-auto border-hanuman-primary/30 hover:bg-hanuman-primary/10 dark:hover:bg-hanuman-primary/20 ${
-                listening ? 'bg-hanuman-primary/10 text-hanuman-primary dark:bg-hanuman-primary/20' : ''
-              }`}
             >
-              {listening ? (
-                <>
-                  {t("Stop Listening")}
-                  <Mic className="ml-2 h-4 w-4 text-hanuman-primary animate-pulse" />
-                </>
-              ) : (
-                <>
-                  {t("Start Listening")}
-                  <Mic className="ml-2 h-4 w-4" />
-                </>
-              )}
+              <Mic size={16} className={isRecording ? "text-hanuman-primary" : ""} />
+            </Button>
+            
+            <Button
+              type="submit"
+              size="icon"
+              className="rounded-full h-8 w-8 bg-hanuman-primary hover:bg-hanuman-primary/90 text-white"
+              disabled={isLoading || !input.trim()}
+            >
+              <Send size={16} />
             </Button>
           </motion.div>
-        )}
-
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="w-full sm:w-auto"
-        >
+        </div>
+        
+        <div className="flex justify-between items-center">
           <Button
-            variant="secondary"
+            type="button"
+            variant="ghost"
+            size="sm"
+            className="text-xs flex items-center gap-1 text-gray-500 hover:text-hanuman-primary"
             onClick={onMorePrompts}
-            className="w-full sm:w-auto bg-hanuman-accent/20 text-hanuman-secondary hover:bg-hanuman-accent/30 dark:bg-hanuman-accent/10 dark:hover:bg-hanuman-accent/20 dark:text-hanuman-accent"
           >
-            <Sparkles className="mr-2 h-4 w-4 text-hanuman-accent" />
-            {t("More Prompts")}
+            <Sparkles size={14} />
+            <span>{isSpanish ? "Más ideas" : "More ideas"}</span>
           </Button>
-        </motion.div>
-      </div>
+          
+          <div className="text-xs text-gray-500">
+            {isSpanish ? "Powered by Hanuman Edition" : "Powered by Hanuman Edition"}
+          </div>
+        </div>
+      </form>
     </div>
   );
 };
