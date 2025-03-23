@@ -30,7 +30,7 @@
   overflow: hidden;
 }
 
-/* Chat layout container */
+/* Chat layout container - updated for 2-column layout */
 .hanuman-chat-layout {
   display: grid;
   gap: 1rem;
@@ -86,6 +86,40 @@
 
 .hanuman-sidebar-panel:hover {
   box-shadow: 0 0 20px rgba(255, 126, 0, 0.1);
+}
+
+/* Resources section styling */
+.hanuman-resources-section {
+  margin-top: 2rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: rgba(18, 14, 18, 0.3);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 126, 0, 0.1);
+}
+
+.hanuman-resources-tabs {
+  display: flex;
+  border-bottom: 1px solid rgba(255, 126, 0, 0.1);
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1));
+}
+
+.hanuman-resources-tab {
+  padding: 0.75rem 1.25rem;
+  color: var(--hanuman-text-secondary);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.hanuman-resources-tab[data-active="true"] {
+  color: var(--hanuman-gold);
+  border-bottom: 2px solid var(--hanuman-primary);
+  background: rgba(255, 126, 0, 0.1);
+}
+
+.hanuman-resources-content {
+  padding: 1.5rem;
 }
 
 /* Background styles */
@@ -215,7 +249,7 @@
   scrollbar-track-color: transparent;
 }
 
-/* Responsive layout adjustments */
+/* Responsive layout adjustments - updated for 2-column layout */
 @media (max-width: 640px) {
   .hanuman-chat-layout {
     grid-template-columns: 1fr;
@@ -230,7 +264,7 @@
 
 @media (min-width: 1025px) {
   .hanuman-chat-layout {
-    grid-template-columns: 280px 1fr 280px;
+    grid-template-columns: 320px 1fr;
   }
 }
 
@@ -258,4 +292,50 @@
   flex: 1;
   background: linear-gradient(to right, rgba(255, 126, 0, 0.3), transparent);
   margin-left: 0.5rem;
+}
+
+/* Resources tab styling */
+.hanuman-resource-card {
+  border-radius: 0.75rem;
+  background: rgba(18, 14, 18, 0.5);
+  border: 1px solid rgba(255, 126, 0, 0.1);
+  padding: 1rem;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.hanuman-resource-card:hover {
+  border-color: rgba(255, 126, 0, 0.3);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 10px rgba(255, 126, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.hanuman-resource-title {
+  color: var(--hanuman-gold);
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hanuman-resource-description {
+  color: var(--hanuman-text-secondary);
+  font-size: 0.875rem;
+  margin-bottom: 0.75rem;
+}
+
+.hanuman-resource-link {
+  color: var(--hanuman-orange);
+  font-size: 0.875rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  transition: all 0.2s ease;
+}
+
+.hanuman-resource-link:hover {
+  color: var(--hanuman-gold);
+  text-decoration: underline;
 }

@@ -14,7 +14,7 @@ export const HanumanChatLayout: React.FC<HanumanChatLayoutProps> = ({ children }
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {children}
       </div>
     </motion.div>

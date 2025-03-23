@@ -5,8 +5,8 @@ import HanumanTopNav from "@/components/navigation/HanumanTopNav";
 import EnhancedHanumanBackground from "@/components/hanuman/EnhancedHanumanBackground";
 import { EnhancedHanumanChat } from "@/components/hanuman/EnhancedHanumanChat";
 import HanumanSidebar from "@/components/hanuman/HanumanSidebar";
-import HanumanResourcesSidebar from "@/components/hanuman/HanumanResourcesSidebar";
 import { HanumanSidebarCategory } from "@/types/hanuman";
+import { HanumanResourcesTabs } from "@/components/hanuman/HanumanResourcesTabs";
 
 const HanumanEdition: React.FC = () => {
   // Sample categories for the sidebar
@@ -26,8 +26,9 @@ const HanumanEdition: React.FC = () => {
       <HanumanTopNav />
       
       <div className="container max-w-7xl mx-auto py-10 pb-4 px-4 relative z-10 mt-16 flex-1 flex flex-col">
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 relative z-10 flex-1">
-          {/* Left Sidebar */}
+        {/* Main 2-column layout */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 relative z-10 flex-1">
+          {/* Left Sidebar - 1/3 width */}
           <div className="md:col-span-1">
             <HanumanSidebar 
               categories={categories} 
@@ -36,15 +37,15 @@ const HanumanEdition: React.FC = () => {
             />
           </div>
           
-          {/* Main Chat Area */}
+          {/* Main Chat Area - 2/3 width */}
           <div className="md:col-span-2">
             <EnhancedHanumanChat activeCategory={activeCategory} />
           </div>
-          
-          {/* Right Sidebar */}
-          <div className="hidden lg:block">
-            <HanumanResourcesSidebar />
-          </div>
+        </div>
+        
+        {/* Full-width Resources Tabs Section */}
+        <div className="mt-8 relative z-10">
+          <HanumanResourcesTabs />
         </div>
       </div>
     </div>
