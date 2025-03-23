@@ -1,12 +1,13 @@
 
 import React, { useEffect } from 'react';
-import { MainNav } from '@/components/MainNav';
+import { HanumanTopNav } from '@/components/navigation/HanumanTopNav';
 import Footer from '@/components/Footer';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { Toaster } from "@/components/ui/toaster";
 import { useLocation } from 'react-router-dom';
 import { useActivityTracking, ActivityTypes } from '@/hooks/useActivityTracking';
 import { useSoftTheme } from '@/contexts/SoftThemeContext';
+import { useSupabaseAuth } from '@/hooks/useSupabaseAuth';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -17,6 +18,7 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
   const location = useLocation();
   const { trackActivity } = useActivityTracking();
   const { softTheme } = useSoftTheme();
+  const { user, signOut } = useSupabaseAuth();
   const isSoftTheme = softTheme === 'soft';
   
   // Track page views
@@ -29,6 +31,15 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
       console.error("Failed to track activity:", error);
     });
   }, [location.pathname, location.search, trackActivity]);
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      window.location.href = '/';
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
 
   // Apply the dark theme class to body
   useEffect(() => {
@@ -62,13 +73,15 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
         />
       </div>
       
-      {/* Header area */}
-      <header className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm">
-        <MainNav />
-      </header>
+      {/* Main navigation */}
+      <HanumanTopNav 
+        user={user} 
+        handleSignOut={handleSignOut} 
+        isSimplifiedView={isSoftTheme}
+      />
       
-      {/* Content area */}
-      <main className={`flex-grow pt-8 ${className}`}>
+      {/* Content area - add padding-top to account for fixed header */}
+      <main className={`flex-grow pt-24 ${className}`}>
         <ErrorBoundary>
           {children}
         </ErrorBoundary>
