@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { HanumanPromptItem } from "@/types/hanuman";
@@ -9,12 +8,11 @@ import ChatInputArea from "@/components/hanuman/ChatInputArea";
 import HanumanSidebar from "@/components/hanuman/HanumanSidebar";
 import HanumanResources from "@/components/hanuman/HanumanResources";
 import { motion } from "framer-motion";
-import { Flame, Lotus, Menu, Moon, Sun } from "lucide-react";
+import { Flame, Flower, Menu, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/contexts/ThemeContext";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-// Enhanced suggested prompts with categories
 const suggestedPrompts: HanumanPromptItem[] = [
   {
     id: "prompt-1",
@@ -74,7 +72,6 @@ const HanumanEdition = () => {
     handleMorePrompts
   } = useHanumanChat();
 
-  // Apply Hanuman theme when component mounts
   useEffect(() => {
     document.body.classList.add('hanuman-theme');
     return () => {
@@ -82,7 +79,6 @@ const HanumanEdition = () => {
     };
   }, []);
 
-  // Filter prompts by active category
   const filteredPrompts = suggestedPrompts.filter(
     prompt => prompt.category === activeCategory
   );
@@ -102,10 +98,8 @@ const HanumanEdition = () => {
       transition={{ duration: 0.5 }}
       className="flex flex-col min-h-screen bg-gradient-to-b from-hanuman-bg-light to-white dark:from-hanuman-bg-dark dark:to-gray-900"
     >
-      {/* Background decorative pattern */}
       <div className="backdrop-pattern"></div>
       
-      {/* Header with decorative elements */}
       <header className="py-4 px-6 md:px-10 relative border-b border-hanuman-primary/10 backdrop-blur-md bg-white/60 dark:bg-gray-900/60">
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex items-center gap-3">
@@ -120,7 +114,7 @@ const HanumanEdition = () => {
             
             <div className="hidden md:flex items-center gap-3">
               <div className="h-12 w-12 bg-hanuman-primary/10 rounded-full flex items-center justify-center">
-                <Lotus className="text-hanuman-primary h-6 w-6" />
+                <Flower className="text-hanuman-primary h-6 w-6" />
               </div>
               <div>
                 <h1 className="text-xl font-bold">
@@ -160,10 +154,8 @@ const HanumanEdition = () => {
         </div>
       </header>
 
-      {/* Main content area with three-column layout */}
       <main className="flex-grow container mx-auto px-4 py-6 md:px-10 md:py-8">
         <div className="three-column-layout">
-          {/* Left column - Categories */}
           <div className="left-column">
             <HanumanSidebar 
               onCategorySelect={setActiveCategory} 
@@ -171,7 +163,6 @@ const HanumanEdition = () => {
             />
           </div>
           
-          {/* Middle column - Chat */}
           <div className="chat-column">
             <div className="chat-container">
               <div className="chat-header">
@@ -216,14 +207,12 @@ const HanumanEdition = () => {
             </div>
           </div>
           
-          {/* Right column - Resources */}
           <div className="right-column">
             <HanumanResources />
           </div>
         </div>
       </main>
 
-      {/* Footer with attribution */}
       <footer className="py-4 text-center text-sm text-gray-500 dark:text-gray-400 border-t border-hanuman-primary/10">
         <p>
           {isSpanish 
@@ -232,7 +221,6 @@ const HanumanEdition = () => {
         </p>
       </footer>
       
-      {/* Mobile menu overlay - only visible on small screens */}
       {isMobileMenuOpen && (
         <motion.div 
           initial={{ opacity: 0 }}
@@ -250,7 +238,7 @@ const HanumanEdition = () => {
           >
             <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-gray-800">
               <div className="h-10 w-10 bg-hanuman-primary/10 rounded-full flex items-center justify-center">
-                <Lotus className="text-hanuman-primary h-5 w-5" />
+                <Flower className="text-hanuman-primary h-5 w-5" />
               </div>
               <div>
                 <h1 className="text-lg font-bold">

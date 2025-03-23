@@ -24,3 +24,13 @@ export interface HanumanResource {
   icon: React.ElementType;
   link?: string;
 }
+
+export interface HanumanChatHook {
+  messages: HanumanMessage[];
+  input: string;
+  setInput: (input: string) => void;
+  isLoading: boolean;
+  handleSubmit: (input: string) => void;
+  handlePromptSelect: (prompt: string) => void;
+  handleMorePrompts: () => void;
+}

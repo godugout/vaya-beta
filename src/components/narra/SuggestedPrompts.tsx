@@ -22,9 +22,9 @@ const SuggestedPrompts = ({
   
   // Use a set of default prompts if none are provided
   const defaultPrompts: HanumanPromptItem[] = [
-    { id: "1", content: isSpanish ? "Cuéntame sobre tu familia" : "Tell me about your family", category: "general" },
-    { id: "2", content: isSpanish ? "¿Cuál es tu recuerdo favorito?" : "What is your favorite memory?", category: "general" },
-    { id: "3", content: isSpanish ? "¿Cómo celebras las tradiciones familiares?" : "How do you celebrate family traditions?", category: "general" },
+    { id: "1", content: isSpanish ? "Cuéntame sobre tu familia" : "Tell me about your family", category: "personal" },
+    { id: "2", content: isSpanish ? "¿Cuál es tu recuerdo favorito?" : "What is your favorite memory?", category: "personal" },
+    { id: "3", content: isSpanish ? "¿Cómo celebras las tradiciones familiares?" : "How do you celebrate family traditions?", category: "family" },
   ];
   
   const displayPrompts = prompts.length > 0 ? prompts : defaultPrompts;

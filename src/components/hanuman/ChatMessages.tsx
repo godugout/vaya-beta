@@ -2,7 +2,7 @@
 import React, { useRef, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Lotus, Loader2 } from "lucide-react";
+import { Flower, Loader2 } from "lucide-react";
 import { HanumanMessage } from "@/types/hanuman";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -41,7 +41,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ messages, isLoading }) => {
                 <Avatar className="h-14 w-14 border-2 border-hanuman-primary/40">
                   <AvatarImage src="/assets/hanuman-avatar.png" alt="Hanuman" />
                   <AvatarFallback className="bg-hanuman-primary text-white">
-                    <Lotus size={24} />
+                    <Flower size={24} />
                   </AvatarFallback>
                 </Avatar>
               </div>
