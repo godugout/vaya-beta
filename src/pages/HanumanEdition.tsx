@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { HanumanPromptItem } from "@/types/hanuman";
@@ -142,7 +143,7 @@ const HanumanEdition = () => {
             </Card>
           </GridItem>
           
-          <GridItem colSpan={isMobile ? 12 : isTablet ? 8 : 6} className="flex flex-col">
+          <GridItem colSpan={isMobile ? 12 : isTablet ? 6 : 6} className="flex flex-col">
             <Card className="h-full bg-black/30 backdrop-blur-md border-none shadow-xl shadow-hanuman-gold/5 flex flex-col overflow-hidden">
               <div className="p-4 border-b border-hanuman-saffron/20">
                 <div className="flex justify-between items-center">
@@ -202,7 +203,7 @@ const HanumanEdition = () => {
             </Card>
           </GridItem>
           
-          <GridItem colSpan={isMobile ? 12 : isTablet ? 4 : 3} className={`${(isDesktop || isRightSidebarOpen) ? 'block' : 'hidden'}`}>
+          <GridItem colSpan={isMobile ? 12 : isTablet ? 2 : 3} className={`${(isDesktop || isRightSidebarOpen) ? 'block' : 'hidden'}`}>
             <Card className="h-full bg-black/30 backdrop-blur-md border-none shadow-xl shadow-hanuman-gold/5 overflow-hidden">
               <div className="h-full p-4">
                 <HanumanResources />
