@@ -1,178 +1,117 @@
 
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { BookOpen, Calendar, LucideIcon, Star, Sparkles, ExternalLink, Link } from "lucide-react";
+import { BookOpen, Info, Link, Users } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface ResourceItem {
-  id: string;
+  title: string;
+  description: string;
   icon: React.ReactNode;
-  titleEn: string;
-  titleEs: string;
-  descriptionEn: string;
-  descriptionEs: string;
+  tag?: string;
 }
 
-interface EventItem {
-  id: string;
-  titleEn: string;
-  titleEs: string;
-  date: string;
-  descriptionEn: string;
-  descriptionEs: string;
-}
-
-interface HanumanResourcesSidebarProps {
-  isSpanish: boolean;
-}
-
-const HanumanResourcesSidebar: React.FC<HanumanResourcesSidebarProps> = ({
-  isSpanish
-}) => {
+const HanumanResourcesSidebar: React.FC = () => {
   const resources: ResourceItem[] = [
     {
-      id: "resource-1",
-      icon: <BookOpen className="h-5 w-5" />,
-      titleEn: "Storytelling Guide",
-      titleEs: "Guía de Narración",
-      descriptionEn: "Tips for sharing your memories effectively",
-      descriptionEs: "Consejos para compartir tus memorias efectivamente"
+      title: "Family Tree Guide",
+      description: "Learn how to map your family relationships and discover your roots.",
+      icon: <Users className="h-4 w-4 text-hanuman-gold" />,
+      tag: "Guide"
     },
     {
-      id: "resource-2",
-      icon: <Sparkles className="h-5 w-5" />,
-      titleEn: "Effective Questions",
-      titleEs: "Preguntas Efectivas",
-      descriptionEn: "How to ask questions that reveal meaningful stories",
-      descriptionEs: "Cómo hacer preguntas que revelen historias significativas"
-    }
-  ];
-  
-  const events: EventItem[] = [
+      title: "Storytelling Tips",
+      description: "Helpful prompts to bring out meaningful family stories.",
+      icon: <BookOpen className="h-4 w-4 text-hanuman-gold" />,
+      tag: "Tips"
+    },
     {
-      id: "event-1",
-      titleEn: "Harvest Festival",
-      titleEs: "Festival de la Cosecha",
-      date: "October 15",
-      descriptionEn: "Annual celebration of harvest and traditions",
-      descriptionEs: "Celebración anual de la cosecha y tradiciones"
+      title: "Cultural Context",
+      description: "Understand the historical and cultural background of your heritage.",
+      icon: <Info className="h-4 w-4 text-hanuman-gold" />,
+      tag: "Info"
+    },
+    {
+      title: "Connect Recordings",
+      description: "Learn how to link voice stories to your family tree.",
+      icon: <Link className="h-4 w-4 text-hanuman-gold" />,
+      tag: "Tutorial"
     }
-  ];
-  
-  const inspirationItems = [
-    { id: "stories", iconEn: "Stories", iconEs: "Historias" },
-    { id: "photos", iconEn: "Photos", iconEs: "Fotos" },
-    { id: "music", iconEn: "Music", iconEs: "Música" }
   ];
 
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 }
+  };
+
   return (
-    <div className="space-y-4">
-      {/* Resources Card */}
-      <Card className="hanuman-card">
-        <CardHeader className="pb-2 border-b border-hanuman-gold/10">
-          <CardTitle className="flex items-center text-hanuman-gold text-lg">
-            <BookOpen className="h-5 w-5 mr-2 text-hanuman-orange" />
-            {isSpanish ? "Recursos" : "Resources"}
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="py-3 px-3">
-          <div className="space-y-3">
-            {resources.map((resource) => (
-              <div key={resource.id} className="hanuman-resource-card p-3 rounded-lg">
-                <div className="flex items-start gap-3">
-                  <div className="p-2 rounded-md bg-hanuman-orange/10">
-                    {resource.icon}
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-white/90">
-                      {isSpanish ? resource.titleEs : resource.titleEn}
+    <Card className="bg-black/30 backdrop-blur-sm border-hanuman-orange/20 overflow-hidden">
+      <CardHeader className="bg-gradient-to-r from-black/40 via-hanuman-orange/10 to-black/40 border-b border-hanuman-orange/20 p-4">
+        <CardTitle className="text-hanuman-gold text-lg flex items-center">
+          <span className="mr-2">✨</span> Resources
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="p-4">
+        <motion.div 
+          className="space-y-4"
+          variants={container}
+          initial="hidden"
+          animate="show"
+        >
+          {resources.map((resource, index) => (
+            <motion.div 
+              key={index}
+              variants={item}
+              className="hanuman-resource-card transition-all duration-300 hover:bg-hanuman-orange/15 cursor-pointer"
+            >
+              <div className="flex items-start gap-3">
+                <div className="mt-1 p-2 rounded-full bg-hanuman-orange/10 border border-hanuman-orange/20">
+                  {resource.icon}
+                </div>
+                <div>
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-medium text-hanuman-gold text-sm">
+                      {resource.title}
                     </h3>
-                    <p className="text-xs text-white/70 mt-1">
-                      {isSpanish ? resource.descriptionEs : resource.descriptionEn}
-                    </p>
-                    <Button 
-                      variant="ghost" 
-                      size="sm" 
-                      className="px-0 py-1 h-auto mt-2 text-xs text-hanuman-orange hover:text-hanuman-gold hover:bg-transparent"
-                    >
-                      {isSpanish ? "Ver Guía" : "View Guide"}
-                      <ExternalLink className="h-3 w-3 ml-1" />
-                    </Button>
+                    {resource.tag && (
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-hanuman-orange/20 text-white/70">
+                        {resource.tag}
+                      </span>
+                    )}
                   </div>
+                  <p className="text-xs text-white/70 mt-1">
+                    {resource.description}
+                  </p>
                 </div>
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-      
-      {/* Upcoming Events Card */}
-      <Card className="hanuman-card">
-        <CardHeader className="pb-2 border-b border-hanuman-gold/10">
-          <CardTitle className="flex items-center text-hanuman-gold text-lg">
-            <Calendar className="h-5 w-5 mr-2 text-hanuman-orange" />
-            {isSpanish ? "Próximos Eventos" : "Upcoming Events"}
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="py-3 px-3">
-          <div className="space-y-3">
-            {events.map((event) => (
-              <div key={event.id} className="hanuman-resource-card p-3 rounded-lg">
-                <div className="flex items-start gap-3">
-                  <div className="p-2 rounded-md bg-hanuman-orange/10">
-                    <Calendar className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-white/90">
-                      {isSpanish ? event.titleEs : event.titleEn}
-                    </h3>
-                    <p className="text-xs text-white/70 mt-1">
-                      {event.date}
-                    </p>
-                    <p className="text-xs text-white/70 mt-1">
-                      {isSpanish ? event.descriptionEs : event.descriptionEn}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-      
-      {/* Inspiration Card */}
-      <Card className="hanuman-card">
-        <CardHeader className="pb-2 border-b border-hanuman-gold/10">
-          <CardTitle className="flex items-center text-hanuman-gold text-lg">
-            <Star className="h-5 w-5 mr-2 text-hanuman-orange" />
-            {isSpanish ? "Inspiración" : "Inspiration"}
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="py-3 px-3">
-          <div className="grid grid-cols-2 gap-3">
-            <div className="col-span-2 flex justify-center mb-2">
-              <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-hanuman-orange/20">
-                <img
-                  src="/lovable-uploads/5b62d353-1780-4d72-8790-0ba3b7d85e21.png"
-                  alt="Hanuman"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
-            
-            {inspirationItems.map((item) => (
-              <Button
-                key={item.id}
-                variant="outline"
-                className="border-hanuman-orange/20 bg-white/5 hover:bg-hanuman-orange/10 hover:border-hanuman-orange/30"
-              >
-                {isSpanish ? item.iconEs : item.iconEn}
-              </Button>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+            </motion.div>
+          ))}
+        </motion.div>
+        
+        {/* Call to action */}
+        <div className="mt-6 p-3 rounded-lg bg-gradient-to-br from-hanuman-purple/20 to-hanuman-orange/20 border border-hanuman-purple/30">
+          <h4 className="text-sm font-medium text-hanuman-gold mb-1">
+            Create Family Memory Capsule
+          </h4>
+          <p className="text-xs text-white/70 mb-2">
+            Preserve your stories for future generations in a secure digital time capsule.
+          </p>
+          <button className="text-xs py-1.5 px-3 rounded-md bg-hanuman-purple/80 hover:bg-hanuman-purple text-white w-full transition-colors">
+            Start a Memory Capsule
+          </button>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 
