@@ -6,12 +6,14 @@ export default function CreateFamily() {
     <div className="relative min-h-screen">
       {/* Background image - fixed and faded with overlay */}
       <div className="fixed inset-0 z-0">
-        <img 
-          src="/lovable-uploads/20d8e559-f25c-417f-83be-9e9a6ce2e2c4.png" 
-          alt="Family background" 
-          className="w-full h-full object-cover opacity-30"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/30"></div>
+        <div className="w-full h-full overflow-hidden relative">
+          <img 
+            src="/lovable-uploads/20d8e559-f25c-417f-83be-9e9a6ce2e2c4.png" 
+            alt="Family background" 
+            className="w-full h-full object-cover opacity-30 md:object-contain md:object-bottom"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/30"></div>
+        </div>
       </div>
       
       {/* Content */}
