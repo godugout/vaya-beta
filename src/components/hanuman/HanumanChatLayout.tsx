@@ -58,8 +58,8 @@ const HanumanChatLayout: React.FC<HanumanChatLayoutProps> = ({
   return (
     <div className="w-[90%] mx-auto">
       <Grid cols={12} gap={4} className="min-h-[70vh]">
-        {/* Left sidebar - narrower on desktop */}
-        <GridItem colSpan={isMobile ? 12 : isTablet ? 3 : 2} className={isMobileMenuOpen || !isMobile ? 'block' : 'hidden'}>
+        {/* Left sidebar */}
+        <GridItem colSpan={isMobile ? 12 : 3} className={isMobileMenuOpen || !isMobile ? 'block' : 'hidden'}>
           <Card className="h-full bg-black/30 backdrop-blur-md border-none shadow-xl shadow-hanuman-saffron/5 overflow-hidden">
             <div className="h-full p-3">
               <HanumanSidebar 
@@ -73,8 +73,8 @@ const HanumanChatLayout: React.FC<HanumanChatLayoutProps> = ({
           </Card>
         </GridItem>
         
-        {/* Center content - wider proportion */}
-        <GridItem colSpan={isMobile ? 12 : isTablet ? 7 : 8} className="flex flex-col">
+        {/* Center content - wider on desktop */}
+        <GridItem colSpan={isMobile ? 12 : 6} className="flex flex-col">
           <Card className="h-full bg-black/30 backdrop-blur-md border-none shadow-xl shadow-hanuman-gold/5 flex flex-col overflow-hidden">
             <ChatHeader 
               toggleLanguage={toggleLanguage}
@@ -101,8 +101,8 @@ const HanumanChatLayout: React.FC<HanumanChatLayoutProps> = ({
           </Card>
         </GridItem>
         
-        {/* Right sidebar - narrower on desktop */}
-        <GridItem colSpan={isMobile ? 12 : isTablet ? 2 : 2} className={`${(isDesktop || isRightSidebarOpen) ? 'block' : 'hidden'}`}>
+        {/* Right sidebar */}
+        <GridItem colSpan={isMobile ? 12 : 3} className={`${(isDesktop || isRightSidebarOpen) ? 'block' : 'hidden'}`}>
           <Card className="h-full bg-black/30 backdrop-blur-md border-none shadow-xl shadow-hanuman-gold/5 overflow-hidden">
             <div className="h-full p-3">
               <HanumanResources />
