@@ -1,11 +1,13 @@
 
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useCallback } from "react";
 import { HanumanMessage, HanumanChatHook } from "@/types/hanuman";
+import { useFamilyContextManagement } from "@/hooks/useFamilyContextManagement";
 
 export const useHanumanChat = (): HanumanChatHook => {
   const [messages, setMessages] = useState<HanumanMessage[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const { familyContext } = useFamilyContextManagement();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -26,7 +28,7 @@ export const useHanumanChat = (): HanumanChatHook => {
     setTimeout(() => {
       const aiResponse: HanumanMessage = {
         role: "assistant",
-        content: getAIResponse(input)
+        content: getAIResponse(input, familyContext)
       };
       
       setMessages(prev => [...prev, aiResponse]);
@@ -43,8 +45,9 @@ export const useHanumanChat = (): HanumanChatHook => {
     console.log("Fetch more prompts");
   };
 
-  // Simple AI response simulation
-  const getAIResponse = (userInput: string): string => {
+  // Enhanced AI response simulation with family context awareness
+  const getAIResponse = (userInput: string, context: any): string => {
+    // Base responses
     const responses = [
       "That's a fascinating perspective. Can you elaborate more on that?",
       "Your family history is valuable. What other memories would you like to share?",
@@ -58,6 +61,33 @@ export const useHanumanChat = (): HanumanChatHook => {
       "I appreciate you sharing this. Would you like to explore more about this topic?"
     ];
     
+    // Personalized responses based on family context if available
+    if (context) {
+      // Check if the input contains any family elder names
+      if (context.familyElders && context.familyElders.length > 0) {
+        for (const elder of context.familyElders) {
+          if (userInput.toLowerCase().includes(elder.toLowerCase())) {
+            return `Thank you for sharing about ${elder}. Family elders hold so much wisdom. What's a special memory you have with them?`;
+          }
+        }
+      }
+      
+      // Check if input contains any family traditions
+      if (context.traditions && context.traditions.length > 0) {
+        for (const tradition of context.traditions) {
+          if (userInput.toLowerCase().includes(tradition.toLowerCase())) {
+            return `${tradition} sounds like a meaningful tradition. How has it evolved over the years in your family?`;
+          }
+        }
+      }
+      
+      // Cultural identity-specific response
+      if (context.culturalIdentity && userInput.toLowerCase().includes(context.culturalIdentity.toLowerCase())) {
+        return `Your ${context.culturalIdentity} heritage is rich with history. What aspects of this cultural identity are most important to you and your family?`;
+      }
+    }
+    
+    // Default to random response if no personalization matches
     return responses[Math.floor(Math.random() * responses.length)];
   };
 

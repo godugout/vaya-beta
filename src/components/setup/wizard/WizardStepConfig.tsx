@@ -5,7 +5,8 @@ import {
   FamilyCreationStep,
   MediaUploadStep,
   AudioRecordingStep,
-  ShareInviteStep
+  ShareInviteStep,
+  FamilyContextStep
 } from "./WizardSteps";
 
 export interface WizardStep {
@@ -19,6 +20,7 @@ interface WizardStepConfigProps {
   onMediaUploaded: () => void;
   onAudioRecorded: (data: { audioUrl?: string; transcription?: string }) => void;
   onCopyLink: () => void;
+  onFamilyContextSaved: (contextData: any) => void;
 }
 
 export const useWizardSteps = ({
@@ -27,6 +29,7 @@ export const useWizardSteps = ({
   onMediaUploaded,
   onAudioRecorded,
   onCopyLink,
+  onFamilyContextSaved,
 }: WizardStepConfigProps): WizardStep[] => {
   const { familyId, inviteLink, linkCopied } = wizardState;
 
@@ -34,6 +37,10 @@ export const useWizardSteps = ({
     {
       label: "Create your family",
       content: <FamilyCreationStep onFamilyCreated={onFamilyCreated} />
+    },
+    {
+      label: "Family Context",
+      content: <FamilyContextStep onContextSaved={onFamilyContextSaved} />
     },
     {
       label: "Upload photos",

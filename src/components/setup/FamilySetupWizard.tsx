@@ -13,6 +13,7 @@ export function FamilySetupWizard() {
     handleBack,
     handleMediaUploaded,
     handleAudioRecorded,
+    handleFamilyContextSaved,
     handleCopyLink,
     handleComplete,
   } = useWizardState();
@@ -22,6 +23,7 @@ export function FamilySetupWizard() {
     onFamilyCreated: handleFamilyCreated,
     onMediaUploaded: handleMediaUploaded,
     onAudioRecorded: handleAudioRecorded,
+    onFamilyContextSaved: handleFamilyContextSaved,
     onCopyLink: handleCopyLink,
   });
 

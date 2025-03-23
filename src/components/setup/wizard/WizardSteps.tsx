@@ -4,6 +4,7 @@ import { InitialSetupForm } from "../InitialSetupForm";
 import { MediaGallery } from "@/components/media/MediaGallery";
 import { MediaUpload } from "@/components/media/MediaUpload";
 import VoiceRecordingExperience from "@/components/voice-recording/VoiceRecordingExperience";
+import { FamilyContextForm } from "@/components/chat/FamilyContextForm";
 import { CopyIcon, CheckIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
@@ -17,6 +18,19 @@ export const FamilyCreationStep: React.FC<FamilyCreationStepProps> = ({ onFamily
     <div className="space-y-4">
       <p className="text-gray-600">Start by creating your family space and setting up the "hanuman" secret word.</p>
       <InitialSetupForm onSubmit={onFamilyCreated} defaultSecretWord="hanuman" />
+    </div>
+  );
+};
+
+interface FamilyContextStepProps {
+  onContextSaved: (contextData: any) => void;
+}
+
+export const FamilyContextStep: React.FC<FamilyContextStepProps> = ({ onContextSaved }) => {
+  return (
+    <div className="space-y-4">
+      <p className="text-gray-600">Tell us about your family context to help personalize your experience.</p>
+      <FamilyContextForm onSave={onContextSaved} edition="hanuman" />
     </div>
   );
 };
