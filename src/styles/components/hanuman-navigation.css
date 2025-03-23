@@ -18,7 +18,7 @@
   background-color: var(--nav-bg-solid);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--nav-border);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2), var(--nav-glow);
 }
 
 .hanuman-nav-transparent {
@@ -56,6 +56,7 @@
   font-size: 0.875rem;
   font-weight: 500;
   transition: all 0.2s ease;
+  position: relative;
 }
 
 .hanuman-nav-link:hover {
@@ -68,10 +69,22 @@
   color: var(--nav-active-text);
 }
 
+.hanuman-nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 25%;
+  width: 50%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--hanuman-saffron), transparent);
+  border-radius: 1px;
+}
+
 /* Mobile menu styles */
 .hanuman-mobile-menu {
   background-color: rgba(0, 0, 0, 0.95);
   border-right: 1px solid var(--nav-border);
+  box-shadow: var(--nav-glow);
 }
 
 .hanuman-mobile-link {
@@ -102,13 +115,43 @@
   }
 }
 
+@keyframes navGlowPulse {
+  0%, 100% {
+    text-shadow: 0 0 5px rgba(255, 126, 0, 0.5);
+  }
+  50% {
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+  }
+}
+
 .hanuman-nav-item {
   animation: navFadeIn 0.3s ease-out forwards;
   animation-delay: calc(var(--item-index) * 0.05s);
   opacity: 0;
 }
 
+.hanuman-nav-glow {
+  animation: navGlowPulse 3s ease-in-out infinite;
+}
+
 /* Nav shadow with custom glow */
 .hanuman-nav-shadow {
   box-shadow: var(--nav-glow);
+}
+
+/* Cosmic nav decoration */
+.hanuman-nav-cosmic-decoration {
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background-image: 
+    radial-gradient(1px 1px at 10% 50%, rgba(255, 126, 0, 0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 30% 50%, rgba(255, 215, 0, 0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 50% 50%, rgba(46, 125, 50, 0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 70% 50%, rgba(255, 126, 0, 0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 50%, rgba(255, 215, 0, 0.4) 0%, transparent 100%);
+  opacity: 0.6;
+  pointer-events: none;
 }

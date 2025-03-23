@@ -92,202 +92,113 @@ const HanumanEdition = () => {
   };
 
   return (
-    <motion.div 
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="flex flex-col h-screen bg-gradient-to-b from-hanuman-bg-dark to-gray-900 overflow-hidden"
-    >
-      <div className="backdrop-pattern"></div>
-      
-      <header className="py-3 px-4 md:px-6 relative border-b border-hanuman-primary/10 backdrop-blur-md bg-gray-900/60 z-10">
-        <div className="container mx-auto flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className="md:hidden" 
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
-              <Menu />
-            </Button>
-            
-            <div className="flex items-center gap-3">
-              <div className="h-10 w-10 bg-hanuman-primary/10 rounded-full flex items-center justify-center">
-                <Flower className="text-hanuman-primary h-5 w-5" />
-              </div>
-              <div>
-                <h1 className="text-lg font-bold md:text-xl">
-                  {isSpanish ? "Edición Hanuman" : "Hanuman Edition"}
-                </h1>
-                <p className="text-xs text-hanuman-secondary hidden md:block">
-                  {isSpanish ? "Sabiduría ancestral" : "Ancient wisdom"}
-                </p>
-              </div>
-            </div>
-          </div>
-          
-          <div className="flex items-center gap-2">
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              onClick={toggleLanguage}
-              className="rounded-full"
-            >
-              <span className="font-medium text-sm">{isSpanish ? "EN" : "ES"}</span>
-            </Button>
-            
-            {!isMobile && (
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setIsRightSidebarOpen(!isRightSidebarOpen)}
-                className="rounded-full"
-              >
-                <Avatar className="h-8 w-8">
-                  <AvatarImage src="/assets/hanuman-avatar.png" alt="User avatar" />
-                  <AvatarFallback className="bg-hanuman-purple text-white">U</AvatarFallback>
-                </Avatar>
-              </Button>
-            )}
-          </div>
+    <div className="relative min-h-screen">
+      <div className="fixed inset-0 z-0">
+        <div className="w-full h-full overflow-hidden relative">
+          <img 
+            src="/lovable-uploads/dbfde90d-4253-4295-b1e9-e9bb049cd9cd.png" 
+            alt="Hanuman background" 
+            className="w-full h-full object-cover opacity-30 md:object-cover md:object-top scale-110"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/30"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-hanuman-primary/20 via-hanuman-cosmic-blue/15 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-tr from-hanuman-saffron/20 via-transparent to-transparent"></div>
+          <div className="absolute top-0 left-0 w-full h-1/3 bg-gradient-to-b from-black/40 to-transparent"></div>
+          <div className="absolute bottom-0 left-0 w-full h-1/4 bg-gradient-to-t from-hanuman-saffron/30 to-transparent"></div>
+          <div className="absolute left-0 top-0 w-1/4 h-full bg-gradient-to-r from-hanuman-saffron/30 to-transparent"></div>
+          <div className="absolute right-0 top-0 w-1/4 h-full bg-gradient-to-l from-hanuman-saffron/30 to-transparent"></div>
+          <div className="absolute top-0 left-0 w-1/3 h-1/3 bg-gradient-to-br from-hanuman-cosmic-purple/40 to-transparent rounded-full blur-3xl"></div>
+          <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-bl from-hanuman-saffron/30 to-transparent rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-to-tr from-hanuman-saffron/30 to-transparent rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-gradient-to-tl from-hanuman-cosmic-blue/30 to-transparent rounded-full blur-3xl"></div>
         </div>
-      </header>
-
-      <main className="flex-grow flex overflow-hidden">
-        {/* Left Sidebar */}
-        <aside className={`${isMobile ? (isMobileMenuOpen ? 'block' : 'hidden') : 'block'} 
-          ${isMobile ? 'fixed inset-0 z-50 bg-black/60 backdrop-blur-sm' : 'w-64 md:w-72 border-r border-hanuman-primary/10'}`}>
+      </div>
+      
+      <div className="container mx-auto py-6 md:py-12 px-4 relative z-10">
+        <div className="backdrop-blur-sm bg-gradient-to-br from-hanuman-orange/20 via-hanuman-saffron/10 to-hanuman-cosmic-blue/15 rounded-3xl shadow-[0_0_40px_rgba(255,126,0,0.15)] p-4 md:p-8 overflow-hidden border-none">
+          <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-hanuman-orange/10 blur-3xl rounded-full transform translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
+          <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-hanuman-cosmic-blue/10 blur-3xl rounded-full transform -translate-x-1/3 translate-y-1/3 pointer-events-none"></div>
+          <div className="absolute -bottom-32 -right-32 w-64 h-64 bg-hanuman-gold/10 blur-3xl rounded-full pointer-events-none"></div>
           
-          {isMobile ? (
-            <motion.div
-              initial={{ x: -300 }}
-              animate={{ x: 0 }}
-              exit={{ x: -300 }}
-              className="w-3/4 max-w-xs h-full bg-white dark:bg-gray-900 p-4 overflow-y-auto"
-              onClick={e => e.stopPropagation()}
-            >
-              <div className="flex items-center justify-between mb-6 pb-3 border-b border-gray-200 dark:border-gray-800">
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 bg-hanuman-primary/10 rounded-full flex items-center justify-center">
-                    <Flower className="text-hanuman-primary h-5 w-5" />
-                  </div>
-                  <div className="text-left">
-                    <h1 className="text-lg font-bold">
-                      {isSpanish ? "Edición Hanuman" : "Hanuman Edition"}
-                    </h1>
-                    <p className="text-xs text-hanuman-secondary">
-                      {isSpanish ? "Sabiduría ancestral" : "Ancient wisdom"}
-                    </p>
-                  </div>
-                </div>
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <Menu />
-                </Button>
-              </div>
-              
-              <HanumanSidebar 
-                onCategorySelect={(category) => {
-                  setActiveCategory(category);
-                  if (isMobile) setIsMobileMenuOpen(false);
-                }} 
-                activeCategory={activeCategory} 
-              />
-            </motion.div>
-          ) : (
-            <div className="h-full p-4 overflow-y-auto bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm">
-              <HanumanSidebar 
-                onCategorySelect={setActiveCategory} 
-                activeCategory={activeCategory} 
-              />
+          <h1 className="text-3xl font-bold text-center mb-6 bg-clip-text text-transparent bg-gradient-to-r from-hanuman-gold to-hanuman-saffron relative z-10">
+            {isSpanish ? "Edición Hanuman" : "Hanuman Edition"}
+          </h1>
+          <p className="text-white/80 text-center mb-8 max-w-xl mx-auto">
+            {isSpanish 
+              ? "Sabiduría ancestral para preservar tus historias familiares" 
+              : "Ancient wisdom to preserve your family stories"}
+          </p>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div className={`lg:col-span-3 ${isMobileMenuOpen || !isMobile ? 'block' : 'hidden'}`}>
+              <Card className="bg-black/40 backdrop-blur-md border-hanuman-saffron/20 p-4">
+                <HanumanSidebar 
+                  onCategorySelect={(category) => {
+                    setActiveCategory(category);
+                    if (isMobile) setIsMobileMenuOpen(false);
+                  }} 
+                  activeCategory={activeCategory} 
+                />
+              </Card>
             </div>
-          )}
-        </aside>
-        
-        {/* Main Content */}
-        <div className="flex-1 flex flex-col overflow-hidden">
-          <div className="flex-1 flex flex-col md:flex-row h-full">
-            {/* Chat Area */}
-            <div className="flex-1 flex flex-col min-w-0 h-full">
-              <div className="p-4 border-b border-hanuman-primary/10">
-                <div className="flex justify-between items-center mb-3">
-                  <div>
-                    <h2 className="text-lg font-medium hanuman-decorative-border inline-block pb-1">
+            
+            <div className="lg:col-span-6 flex flex-col">
+              <Card className="bg-black/40 backdrop-blur-md border-hanuman-saffron/20 flex-1 flex flex-col overflow-hidden">
+                <div className="p-4 border-b border-hanuman-saffron/20">
+                  <div className="flex justify-between items-center">
+                    <Button 
+                      variant="ghost" 
+                      size="icon"
+                      className="lg:hidden text-hanuman-gold"
+                      onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                    >
+                      <Menu className="h-5 w-5" />
+                    </Button>
+                    
+                    <h2 className="text-xl font-medium text-hanuman-gold">
                       {isSpanish ? "Conversación Sagrada" : "Sacred Conversation"}
                     </h2>
-                    <p className="text-xs text-gray-500 mt-1">
-                      {isSpanish 
-                        ? "Preserva tus memorias familiares para las futuras generaciones" 
-                        : "Preserve your family memories for future generations"}
-                    </p>
-                  </div>
-                  <div className="sacred-border text-xs font-medium">
-                    {activeCategory === "personal" && (isSpanish ? "Personal" : "Personal")}
-                    {activeCategory === "family" && (isSpanish ? "Familia" : "Family")}
-                    {activeCategory === "wisdom" && (isSpanish ? "Sabiduría" : "Wisdom")}
-                    {activeCategory === "history" && (isSpanish ? "Historia" : "History")}
-                    {activeCategory === "sacred" && (isSpanish ? "Sagrado" : "Sacred")}
+                    
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      onClick={toggleLanguage}
+                      className="text-hanuman-gold"
+                    >
+                      {isSpanish ? "EN" : "ES"}
+                    </Button>
                   </div>
                 </div>
                 
-                {(isMobile || isTablet) && (
-                  <div className="mt-3">
-                    <SuggestedPrompts 
-                      prompts={filteredPrompts} 
-                      onSelect={handlePromptSelect} 
-                      isSpanish={isSpanish} 
-                    />
-                  </div>
-                )}
-              </div>
-              
-              <div className="flex-1 flex flex-col overflow-hidden">
                 <ChatMessages messages={messages} isLoading={isLoading} />
                 
-                <ChatInputArea
-                  input={input}
-                  setInput={setInput}
-                  isLoading={isLoading}
-                  onSubmit={handleSubmit}
-                  onMorePrompts={handleMorePrompts}
-                />
-              </div>
+                <div className="mt-auto p-4 border-t border-hanuman-saffron/20">
+                  <SuggestedPrompts 
+                    prompts={filteredPrompts.slice(0, 3)} 
+                    onSelect={handlePromptSelect} 
+                    isSpanish={isSpanish} 
+                  />
+                  
+                  <ChatInputArea
+                    input={input}
+                    setInput={setInput}
+                    isLoading={isLoading}
+                    onSubmit={handleSubmit}
+                    onMorePrompts={handleMorePrompts}
+                  />
+                </div>
+              </Card>
             </div>
             
-            {/* Right Sidebar/Resources (visible on desktop or when opened) */}
-            {(isDesktop || (isTablet && isRightSidebarOpen)) && (
-              <div className="md:w-80 md:border-l md:border-hanuman-primary/10 p-4 overflow-y-auto bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm">
-                {!isMobile && !isTablet && (
-                  <div className="mb-6">
-                    <SuggestedPrompts 
-                      prompts={filteredPrompts} 
-                      onSelect={handlePromptSelect} 
-                      isSpanish={isSpanish} 
-                    />
-                  </div>
-                )}
-                
-                <div className="mt-6">
-                  <HanumanResources />
-                </div>
-              </div>
-            )}
+            <div className={`lg:col-span-3 ${(isDesktop || isRightSidebarOpen) ? 'block' : 'hidden'}`}>
+              <Card className="bg-black/40 backdrop-blur-md border-hanuman-saffron/20 p-4">
+                <HanumanResources />
+              </Card>
+            </div>
           </div>
         </div>
-      </main>
-
-      <footer className="py-3 text-center text-xs text-gray-500 dark:text-gray-400 border-t border-hanuman-primary/10">
-        <p>
-          {isSpanish 
-            ? "Inspirado por las enseñanzas y la sabiduría de Hanuman" 
-            : "Inspired by the teachings and wisdom of Hanuman"}
-        </p>
-      </footer>
-    </motion.div>
+      </div>
+    </div>
   );
 };
 
