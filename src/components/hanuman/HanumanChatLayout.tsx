@@ -7,7 +7,7 @@ import HanumanResources from "@/components/hanuman/HanumanResources";
 import ChatHeader from "@/components/hanuman/ChatHeader";
 import ChatMessages from "@/components/hanuman/ChatMessages";
 import ChatInputArea from "@/components/hanuman/ChatInputArea";
-import SuggestedPrompts from "@/components/narra/SuggestedPrompts";
+import SuggestedPrompts from "@/components/hanuman/SuggestedPrompts";
 import { HanumanPromptItem } from "@/types/hanuman";
 import { useBreakpoints } from "@/hooks/use-media-query";
 
@@ -56,16 +56,16 @@ const HanumanChatLayout: React.FC<HanumanChatLayoutProps> = ({
   const toggleRightSidebar = () => setIsRightSidebarOpen(!isRightSidebarOpen);
   
   return (
-    <div className="container mx-auto px-4 md:px-6">
-      <Grid cols={12} gap={4} className="min-h-[calc(100vh-120px)]">
+    <div className="hanuman-container">
+      <Grid cols={12} gap={4} className="min-h-[calc(100vh-130px)]">
         {/* Left sidebar - Story categories and prompts */}
         <GridItem 
-          colSpan={isMobile ? 12 : isTablet ? 4 : 3} 
+          colSpan={isMobile ? 12 : 3} 
           className={isMobileMenuOpen || !isMobile ? 'block' : 'hidden'}
         >
           <FlexBox direction="column" className="h-full gap-4">
             {/* Categories */}
-            <Card className="bg-black/30 backdrop-blur-md border-none shadow-xl shadow-hanuman-saffron/5 overflow-hidden flex-1">
+            <Card className="hanuman-card flex-1">
               <div className="h-full p-3">
                 <HanumanSidebar 
                   onCategorySelect={(category) => {
@@ -78,7 +78,7 @@ const HanumanChatLayout: React.FC<HanumanChatLayoutProps> = ({
             </Card>
             
             {/* Suggested Prompts */}
-            <Card className="bg-black/30 backdrop-blur-md border-none shadow-xl shadow-hanuman-saffron/5 overflow-hidden">
+            <Card className="hanuman-card">
               <div className="p-3">
                 <SuggestedPrompts 
                   prompts={filteredPrompts.slice(0, 3)} 
@@ -91,10 +91,10 @@ const HanumanChatLayout: React.FC<HanumanChatLayoutProps> = ({
         
         {/* Center content - Chat interface */}
         <GridItem 
-          colSpan={isMobile ? 12 : isTablet ? 8 : 6} 
+          colSpan={isMobile ? 12 : isTablet && isRightSidebarOpen ? 5 : isTablet ? 9 : 6} 
           className="flex flex-col"
         >
-          <Card className="h-full bg-black/30 backdrop-blur-md border-none shadow-xl shadow-hanuman-gold/5 flex flex-col overflow-hidden">
+          <Card className="hanuman-card h-full flex flex-col">
             <ChatHeader 
               toggleLanguage={toggleLanguage}
               toggleMobileMenu={toggleMobileMenu}
@@ -117,10 +117,10 @@ const HanumanChatLayout: React.FC<HanumanChatLayoutProps> = ({
         
         {/* Right sidebar - Resources and contextual info */}
         <GridItem 
-          colSpan={isMobile ? 12 : 3} 
+          colSpan={isMobile ? 12 : isTablet ? 3 : 3} 
           className={`${(isDesktop || isRightSidebarOpen) ? 'block' : 'hidden'}`}
         >
-          <Card className="h-full bg-black/30 backdrop-blur-md border-none shadow-xl shadow-hanuman-gold/5 overflow-hidden">
+          <Card className="hanuman-card h-full">
             <div className="h-full p-3">
               <HanumanResources />
             </div>

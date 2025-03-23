@@ -1,0 +1,135 @@
+
+/* Hanuman Theme - Layout Styles */
+
+/* Container for Hanuman sections */
+.hanuman-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .hanuman-container {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hanuman-container {
+    padding: 0 2rem;
+  }
+}
+
+/* Chat layout container */
+.hanuman-chat-layout {
+  display: grid;
+  gap: 1rem;
+  min-height: calc(100vh - 150px);
+}
+
+/* Card with hanuman theme styling */
+.hanuman-card {
+  background: rgba(18, 14, 18, 0.3);
+  backdrop-filter: blur(10px);
+  border: none; 
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 8px rgba(255, 126, 0, 0.1);
+  overflow: hidden;
+}
+
+.hanuman-card-primary {
+  border-left: 2px solid var(--hanuman-primary);
+}
+
+.hanuman-card-gold {
+  border-left: 2px solid var(--hanuman-gold);
+}
+
+.hanuman-card-saffron {
+  border-left: 2px solid var(--hanuman-saffron);
+}
+
+/* Flex column layout with gap */
+.hanuman-flex-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
+}
+
+/* Sidebar panel */
+.hanuman-sidebar-panel {
+  background: rgba(18, 14, 18, 0.4);
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+/* Background styles */
+.bg-hanuman-bg {
+  background-color: var(--hanuman-dark);
+  background-image: 
+    radial-gradient(1px 1px at 20% 30%, rgba(255, 215, 0, 0.15) 0%, transparent 100%),
+    radial-gradient(1px 1px at 40% 70%, rgba(255, 126, 0, 0.1) 0%, transparent 100%),
+    radial-gradient(1px 1px at 60% 50%, rgba(46, 125, 50, 0.1) 0%, transparent 100%),
+    radial-gradient(1px 1px at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 100%);
+  background-size: 120px 120px, 150px 150px, 180px 180px, 200px 200px;
+  background-attachment: fixed;
+}
+
+/* Panel header styles */
+.hanuman-panel-header {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(255, 126, 0, 0.1);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.hanuman-panel-header h3 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--hanuman-text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Panel content styles */
+.hanuman-panel-content {
+  padding: 0.75rem;
+}
+
+/* Enhanced scroll areas */
+.hanuman-scroll-area {
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.hanuman-scroll-area::-webkit-scrollbar {
+  width: 6px;
+}
+
+.hanuman-scroll-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.hanuman-scroll-area::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 126, 0, 0.2);
+  border-radius: 3px;
+}
+
+/* Responsive layout adjustments */
+@media (max-width: 640px) {
+  .hanuman-chat-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .hanuman-chat-layout {
+    grid-template-columns: 320px 1fr;
+  }
+}
+
+@media (min-width: 1025px) {
+  .hanuman-chat-layout {
+    grid-template-columns: 280px 1fr 280px;
+  }
+}
