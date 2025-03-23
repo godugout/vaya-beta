@@ -1,60 +1,24 @@
 
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Steps, Step, StepLabel, StepContent } from "@/components/ui/stepper";
-import { useWizardState } from "./wizard/useWizardState";
-import { useWizardSteps } from "./wizard/WizardStepConfig";
-import { WizardNavigation } from "./wizard/WizardNavigation";
+import { InitialSetupForm } from "./InitialSetupForm";
+import { VayaCard } from "@/components/ui/vaya-card";
 
 export function FamilySetupWizard() {
-  const {
-    state,
-    handleFamilyCreated,
-    handleNext,
-    handleBack,
-    handleMediaUploaded,
-    handleAudioRecorded,
-    handleFamilyContextSaved,
-    handleCopyLink,
-    handleComplete,
-  } = useWizardState();
-
-  const steps = useWizardSteps({
-    wizardState: state,
-    onFamilyCreated: handleFamilyCreated,
-    onMediaUploaded: handleMediaUploaded,
-    onAudioRecorded: handleAudioRecorded,
-    onFamilyContextSaved: handleFamilyContextSaved,
-    onCopyLink: handleCopyLink,
-  });
-
   return (
-    <div className="container mx-auto max-w-4xl p-4">
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-2xl">Family Setup Wizard</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Steps activeStep={state.activeStep} orientation="vertical">
-            {steps.map((step, index) => (
-              <Step key={index}>
-                <StepLabel>{step.label}</StepLabel>
-                <StepContent>
-                  <div className="py-4">{step.content}</div>
-                </StepContent>
-              </Step>
-            ))}
-          </Steps>
-        </CardContent>
-        <CardFooter>
-          <WizardNavigation
-            activeStep={state.activeStep}
-            stepsLength={steps.length}
-            handleBack={handleBack}
-            handleNext={handleNext}
-            handleComplete={handleComplete}
-          />
-        </CardFooter>
-      </Card>
+    <div className="space-y-8">
+      <VayaCard 
+        variant="purple" 
+        elevation={4} 
+        padding="lg" 
+        className="backdrop-blur-md bg-gradient-to-br from-purple-900/30 via-indigo-900/20 to-blue-900/30 border-none shadow-[0_8px_30px_rgba(139,92,246,0.2)] overflow-hidden"
+      >
+        <div className="relative z-10">
+          <InitialSetupForm showCard={false} />
+        </div>
+        
+        {/* Cosmic decorative elements */}
+        <div className="absolute top-0 right-0 w-32 h-32 bg-purple-400/10 blur-2xl rounded-full"></div>
+        <div className="absolute bottom-0 left-0 w-24 h-24 bg-blue-400/10 blur-2xl rounded-full"></div>
+      </VayaCard>
     </div>
   );
 }
