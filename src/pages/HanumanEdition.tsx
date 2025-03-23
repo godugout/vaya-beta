@@ -81,8 +81,8 @@ const HanumanEdition = () => {
     <div className="relative min-h-screen">
       <HanumanBackground />
       
-      <div className="py-6 md:py-8 relative z-10">
-        <div className="w-[90%] mx-auto mb-6">
+      <div className="relative z-10">
+        <div className="container mx-auto px-4 md:px-6 py-6">
           <HanumanHeader toggleLanguage={toggleLanguage} />
         </div>
         
