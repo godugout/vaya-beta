@@ -115,6 +115,57 @@
   border-radius: 3px;
 }
 
+/* Story Bar Specific Styles */
+.hanuman-story-bar {
+  border-top: 1px solid rgba(255, 126, 0, 0.2);
+  background: linear-gradient(to bottom, 
+    rgba(185, 85, 0, 0.1), 
+    rgba(185, 85, 0, 0.05)
+  );
+  backdrop-filter: blur(8px);
+  box-shadow: 0 -4px 15px rgba(255, 126, 0, 0.1);
+}
+
+.hanuman-story-bar-input {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 165, 0, 0.2);
+  color: white;
+}
+
+.hanuman-story-bar-input:focus {
+  border-color: rgba(255, 215, 0, 0.4);
+  box-shadow: 0 0 0 2px rgba(255, 126, 0, 0.2);
+}
+
+.hanuman-story-bar-button {
+  background: linear-gradient(to right, 
+    rgba(255, 126, 0, 0.8), 
+    rgba(255, 215, 0, 0.8)
+  );
+  color: white;
+  border-radius: 9999px;
+}
+
+.hanuman-story-bar-button:hover {
+  background: linear-gradient(to right, 
+    rgba(255, 126, 0, 1), 
+    rgba(255, 215, 0, 1)
+  );
+}
+
+/* Scrollbar for prompts */
+.scrollbar-thin {
+  scrollbar-width: thin;
+}
+
+.scrollbar-thumb-hanuman-orange\/20 {
+  scrollbar-color: rgba(255, 126, 0, 0.2) transparent;
+}
+
+.scrollbar-track-transparent {
+  scrollbar-track-color: transparent;
+}
+
 /* Responsive layout adjustments */
 @media (max-width: 640px) {
   .hanuman-chat-layout {
