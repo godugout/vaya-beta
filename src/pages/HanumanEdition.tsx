@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { HanumanPromptItem } from "@/types/hanuman";
 import { useHanumanChat } from "@/hooks/useHanumanChat";
-import { Container } from "@/components/ui/grid-layout";
 import HanumanBackground from "@/components/hanuman/HanumanBackground";
 import HanumanHeader from "@/components/hanuman/HanumanHeader";
 import HanumanChatLayout from "@/components/hanuman/HanumanChatLayout";
@@ -82,8 +81,10 @@ const HanumanEdition = () => {
     <div className="relative min-h-screen">
       <HanumanBackground />
       
-      <Container maxWidth="2xl" className="py-6 md:py-12 relative z-10">
-        <HanumanHeader toggleLanguage={toggleLanguage} />
+      <div className="py-6 md:py-8 relative z-10">
+        <div className="w-[90%] mx-auto mb-6">
+          <HanumanHeader toggleLanguage={toggleLanguage} />
+        </div>
         
         <HanumanChatLayout 
           messages={messages}
@@ -102,7 +103,7 @@ const HanumanEdition = () => {
           isRightSidebarOpen={isRightSidebarOpen}
           setIsRightSidebarOpen={setIsRightSidebarOpen}
         />
-      </Container>
+      </div>
     </div>
   );
 };

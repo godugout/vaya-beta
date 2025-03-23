@@ -56,56 +56,61 @@ const HanumanChatLayout: React.FC<HanumanChatLayoutProps> = ({
   const toggleRightSidebar = () => setIsRightSidebarOpen(!isRightSidebarOpen);
   
   return (
-    <Grid cols={12} gap={6} className="min-h-[70vh]">
-      <GridItem colSpan={isMobile ? 12 : isTablet ? 4 : 3} className={isMobileMenuOpen || !isMobile ? 'block' : 'hidden'}>
-        <Card className="h-full bg-black/30 backdrop-blur-md border-none shadow-xl shadow-hanuman-saffron/5 overflow-hidden">
-          <div className="h-full p-4">
-            <HanumanSidebar 
-              onCategorySelect={(category) => {
-                onCategorySelect(category);
-                if (isMobile) setIsMobileMenuOpen(false);
-              }} 
-              activeCategory={activeCategory} 
-            />
-          </div>
-        </Card>
-      </GridItem>
-      
-      <GridItem colSpan={isMobile ? 12 : isTablet ? 6 : 6} className="flex flex-col">
-        <Card className="h-full bg-black/30 backdrop-blur-md border-none shadow-xl shadow-hanuman-gold/5 flex flex-col overflow-hidden">
-          <ChatHeader 
-            toggleLanguage={toggleLanguage}
-            toggleMobileMenu={toggleMobileMenu}
-            toggleRightSidebar={toggleRightSidebar}
-          />
-          
-          <ChatMessages messages={messages} isLoading={isLoading} />
-          
-          <div className="mt-auto p-4 border-t border-hanuman-saffron/20">
-            <SuggestedPrompts 
-              prompts={filteredPrompts.slice(0, 3)} 
-              onSelect={handlePromptSelect} 
+    <div className="w-[90%] mx-auto">
+      <Grid cols={12} gap={4} className="min-h-[70vh]">
+        {/* Left sidebar - narrower on desktop */}
+        <GridItem colSpan={isMobile ? 12 : isTablet ? 3 : 2} className={isMobileMenuOpen || !isMobile ? 'block' : 'hidden'}>
+          <Card className="h-full bg-black/30 backdrop-blur-md border-none shadow-xl shadow-hanuman-saffron/5 overflow-hidden">
+            <div className="h-full p-3">
+              <HanumanSidebar 
+                onCategorySelect={(category) => {
+                  onCategorySelect(category);
+                  if (isMobile) setIsMobileMenuOpen(false);
+                }} 
+                activeCategory={activeCategory} 
+              />
+            </div>
+          </Card>
+        </GridItem>
+        
+        {/* Center content - wider proportion */}
+        <GridItem colSpan={isMobile ? 12 : isTablet ? 7 : 8} className="flex flex-col">
+          <Card className="h-full bg-black/30 backdrop-blur-md border-none shadow-xl shadow-hanuman-gold/5 flex flex-col overflow-hidden">
+            <ChatHeader 
+              toggleLanguage={toggleLanguage}
+              toggleMobileMenu={toggleMobileMenu}
+              toggleRightSidebar={toggleRightSidebar}
             />
             
-            <ChatInputArea
-              input={input}
-              setInput={setInput}
-              isLoading={isLoading}
-              onSubmit={handleSubmit}
-              onMorePrompts={handleMorePrompts}
-            />
-          </div>
-        </Card>
-      </GridItem>
-      
-      <GridItem colSpan={isMobile ? 12 : isTablet ? 2 : 3} className={`${(isDesktop || isRightSidebarOpen) ? 'block' : 'hidden'}`}>
-        <Card className="h-full bg-black/30 backdrop-blur-md border-none shadow-xl shadow-hanuman-gold/5 overflow-hidden">
-          <div className="h-full p-4">
-            <HanumanResources />
-          </div>
-        </Card>
-      </GridItem>
-    </Grid>
+            <ChatMessages messages={messages} isLoading={isLoading} />
+            
+            <div className="mt-auto p-4 border-t border-hanuman-saffron/20">
+              <SuggestedPrompts 
+                prompts={filteredPrompts.slice(0, 3)} 
+                onSelect={handlePromptSelect} 
+              />
+              
+              <ChatInputArea
+                input={input}
+                setInput={setInput}
+                isLoading={isLoading}
+                onSubmit={handleSubmit}
+                onMorePrompts={handleMorePrompts}
+              />
+            </div>
+          </Card>
+        </GridItem>
+        
+        {/* Right sidebar - narrower on desktop */}
+        <GridItem colSpan={isMobile ? 12 : isTablet ? 2 : 2} className={`${(isDesktop || isRightSidebarOpen) ? 'block' : 'hidden'}`}>
+          <Card className="h-full bg-black/30 backdrop-blur-md border-none shadow-xl shadow-hanuman-gold/5 overflow-hidden">
+            <div className="h-full p-3">
+              <HanumanResources />
+            </div>
+          </Card>
+        </GridItem>
+      </Grid>
+    </div>
   );
 };
 
