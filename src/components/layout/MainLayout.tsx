@@ -8,6 +8,7 @@ import { useLocation } from 'react-router-dom';
 import { useActivityTracking, ActivityTypes } from '@/hooks/useActivityTracking';
 import { useSoftTheme } from '@/contexts/SoftThemeContext';
 import { useSupabaseAuth } from '@/hooks/useSupabaseAuth';
+import EnhancedHanumanBackground from '@/components/hanuman/EnhancedHanumanBackground';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -64,29 +65,7 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
       {/* Cosmic background with Hanuman image for Hanuman pages */}
       <div className="fixed inset-0 pointer-events-none">
         {isHanumanPage ? (
-          <>
-            <div className="bg-hanuman-bg absolute inset-0 bg-no-repeat bg-cover bg-center opacity-15"></div>
-            <div className="absolute inset-0 bg-dots bg-repeat opacity-5"></div>
-            
-            {/* Enhanced star field for Hanuman theme */}
-            <div className="absolute inset-0" 
-              style={{ 
-                backgroundImage: `radial-gradient(1px 1px at 10% 10%, rgba(255, 255, 255, 0.15) 0%, transparent 100%),
-                                  radial-gradient(1px 1px at 30% 30%, rgba(255, 255, 255, 0.15) 0%, transparent 100%),
-                                  radial-gradient(1px 1px at 50% 70%, rgba(255, 255, 255, 0.15) 0%, transparent 100%),
-                                  radial-gradient(1px 1px at 70% 40%, rgba(255, 215, 0, 0.1) 0%, transparent 100%),
-                                  radial-gradient(1px 1px at 90% 90%, rgba(255, 126, 0, 0.1) 0%, transparent 100%)`,
-                backgroundSize: '100px 100px, 120px 120px, 170px 170px, 150px 150px, 200px 200px',
-                backgroundAttachment: 'fixed'
-              }}
-            />
-            
-            {/* Cosmic dust and nebula effects for Hanuman pages */}
-            <div className="absolute inset-0 opacity-20">
-              <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-hanuman-cosmic-purple/10 via-transparent to-transparent"></div>
-              <div className="absolute bottom-0 left-0 w-full h-full bg-gradient-to-tr from-hanuman-orange/10 via-transparent to-transparent"></div>
-            </div>
-          </>
+          <EnhancedHanumanBackground />
         ) : (
           <>
             <div className="absolute inset-0 bg-dots bg-repeat opacity-5"></div>
