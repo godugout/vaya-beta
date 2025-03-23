@@ -25,16 +25,18 @@ const HanumanEdition: React.FC = () => {
       <EnhancedHanumanBackground />
       <HanumanTopNav />
       
-      <div className="container max-w-7xl mx-auto py-10 pb-4 px-4 relative z-10 mt-16 flex-1 flex flex-col">
+      <div className="container max-w-7xl mx-auto py-6 pb-4 px-4 relative z-10 mt-16 flex-1 flex flex-col">
         {/* Main 2-column layout */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 relative z-10 flex-1">
-          {/* Left Sidebar - 1/3 width */}
+          {/* Left Sidebar - 1/3 width with glassmorphism effect */}
           <div className="md:col-span-1">
-            <HanumanSidebar 
-              categories={categories} 
-              activeCategory={activeCategory} 
-              onCategorySelect={setActiveCategory} 
-            />
+            <div className="bg-gradient-to-br from-amber-900/20 via-amber-800/10 to-green-900/15 backdrop-blur-sm rounded-2xl border border-hanuman-orange/20 shadow-[0_0_30px_rgba(255,126,0,0.15)] h-full overflow-hidden">
+              <HanumanSidebar 
+                categories={categories} 
+                activeCategory={activeCategory} 
+                onCategorySelect={setActiveCategory} 
+              />
+            </div>
           </div>
           
           {/* Main Chat Area - 2/3 width */}

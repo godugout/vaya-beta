@@ -1,176 +1,126 @@
 
 /* Hanuman Theme - Card Styles */
 
-/* Cards and containers */
-.hanuman-theme .card,
-.hanuman-theme .container-elevation {
-  background: var(--card-bg);
-  border: var(--card-border);
-  box-shadow: var(--card-shadow);
-  backdrop-filter: blur(10px);
-  border-radius: 0.75rem;
+/* Standard card styling */
+.hanuman-card {
+  background: rgba(18, 14, 18, 0.4);
+  backdrop-filter: blur(12px);
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 126, 0, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 126, 0, 0.15);
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.3s ease;
 }
 
-.hanuman-theme .card:hover,
-.hanuman-theme .container-elevation:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 126, 0, 0.2);
+.hanuman-card:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 126, 0, 0.2);
+  border-color: rgba(255, 126, 0, 0.2);
 }
 
-/* Enhanced sacred borders */
-.hanuman-decorative-border {
-  position: relative;
-}
-
-.hanuman-decorative-border::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: var(--hanuman-gradient-orange);
-  border-radius: 1px;
-}
-
-/* Card with subtle hover glow */
+/* Card with glow effect */
 .hanuman-glow-card {
   background: rgba(18, 14, 18, 0.4);
+  backdrop-filter: blur(12px);
   border-radius: 1rem;
   border: 1px solid rgba(255, 126, 0, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 126, 0, 0.15);
   overflow: hidden;
   transition: all 0.3s ease;
 }
 
 .hanuman-glow-card:hover {
-  box-shadow: 0 0 30px rgba(255, 126, 0, 0.2);
-  border-color: rgba(255, 126, 0, 0.3);
-}
-
-/* Feature card with icon */
-.hanuman-feature-card {
-  display: flex;
-  flex-direction: column;
-  padding: 1.5rem;
-  background: linear-gradient(135deg, rgba(18, 14, 18, 0.7) 0%, rgba(28, 24, 28, 0.6) 100%);
-  border-radius: 1rem;
-  border: 1px solid rgba(255, 126, 0, 0.1);
-  transition: all 0.3s ease;
-}
-
-.hanuman-feature-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 126, 0, 0.2);
-  border-color: rgba(255, 126, 0, 0.2);
-}
-
-.hanuman-feature-card-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, rgba(255, 126, 0, 0.2) 0%, rgba(255, 215, 0, 0.1) 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1rem;
-  color: var(--hanuman-gold);
-}
-
-/* Memory cards */
-.hanuman-memory-card {
-  position: relative;
-  border-radius: 1rem;
-  overflow: hidden;
-  background: rgba(18, 14, 18, 0.5);
-  border: 1px solid rgba(255, 126, 0, 0.1);
-  transition: all 0.3s ease;
-}
-
-.hanuman-memory-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 126, 0, 0.2);
-}
-
-.hanuman-memory-card-image {
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  width: 100%;
-}
-
-.hanuman-memory-card-gradient {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 50%;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
-  pointer-events: none;
-}
-
-.hanuman-memory-card-content {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 1.5rem;
-  color: white;
-  z-index: 2;
-}
-
-/* Story card */
-.hanuman-story-card {
-  background: linear-gradient(135deg, rgba(18, 14, 18, 0.7) 0%, rgba(28, 24, 28, 0.6) 100%);
-  border-radius: 1rem;
-  border: 1px solid rgba(255, 126, 0, 0.1);
-  padding: 1.5rem;
-  transition: all 0.3s ease;
-}
-
-.hanuman-story-card:hover {
-  border-color: rgba(255, 126, 0, 0.3);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 126, 0, 0.2);
-}
-
-.hanuman-story-card-header {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.hanuman-story-card-avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: 9999px;
-  overflow: hidden;
-  border: 2px solid rgba(255, 126, 0, 0.3);
-}
-
-/* Stats card */
-.hanuman-stats-card {
-  background: rgba(18, 14, 18, 0.4);
-  border-radius: 0.75rem;
-  padding: 1.25rem;
-  border: 1px solid rgba(255, 126, 0, 0.1);
-  transition: all 0.3s ease;
-}
-
-.hanuman-stats-card:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 25px rgba(255, 215, 0, 0.25);
+  border-color: rgba(255, 215, 0, 0.3);
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2), 0 0 10px rgba(255, 126, 0, 0.1);
 }
 
-.hanuman-stats-value {
-  font-size: 2rem;
-  font-weight: 700;
+/* Fancy link styling */
+.hanuman-fancy-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
   color: var(--hanuman-gold);
-  line-height: 1;
-  margin-bottom: 0.5rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
 }
 
-.hanuman-stats-label {
-  font-size: 0.875rem;
-  color: var(--hanuman-text-secondary);
+.hanuman-fancy-link:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background: linear-gradient(to right, var(--hanuman-orange), var(--hanuman-gold));
+  transform-origin: bottom right;
+  transition: transform 0.3s ease-out;
+}
+
+.hanuman-fancy-link:hover {
+  color: var(--hanuman-gold);
+}
+
+.hanuman-fancy-link:hover:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+/* Chat bubble styling */
+.hanuman-chat-bubble-user {
+  background: linear-gradient(135deg, var(--hanuman-primary) 0%, var(--hanuman-saffron) 100%);
+  border-radius: 18px 18px 0 18px;
+  padding: 16px;
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  max-width: 80%;
+  margin-left: auto;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+}
+
+.hanuman-chat-bubble-assistant {
+  background: rgba(18, 14, 18, 0.6);
+  backdrop-filter: blur(10px);
+  border-radius: 18px 18px 18px 0;
+  padding: 16px; 
+  color: var(--hanuman-text-primary);
+  border-left: 1px solid var(--hanuman-orange);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  max-width: 80%;
+  position: relative;
+}
+
+/* Glass effect card */
+.hanuman-glass-card {
+  background: rgba(18, 14, 18, 0.4);
+  backdrop-filter: blur(16px);
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 126, 0, 0.1);
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(255, 126, 0, 0.05),
+    0 0 30px rgba(255, 126, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Dark glass effect */
+.hanuman-dark-glass {
+  background: rgba(10, 8, 10, 0.7);
+  backdrop-filter: blur(16px);
+  border-radius: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Content background for tabs and panels */
+.hanuman-content-bg {
+  background: linear-gradient(135deg, 
+    rgba(18, 14, 18, 0.8) 0%, 
+    rgba(28, 24, 28, 0.7) 100%
+  );
+  backdrop-filter: blur(12px);
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 126, 0, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
