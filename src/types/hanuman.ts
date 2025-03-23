@@ -19,3 +19,10 @@ export interface HanumanChatHook {
   handlePromptSelect: (prompt: string) => void;
   handleMorePrompts: () => void;
 }
+
+export interface HanumanSidebarCategory {
+  id: string;
+  name: string;
+  icon?: string;
+  description?: string;
+}
