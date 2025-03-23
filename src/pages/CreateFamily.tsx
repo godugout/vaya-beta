@@ -12,7 +12,24 @@ export default function CreateFamily() {
             alt="Family background" 
             className="w-full h-full object-cover opacity-30 md:object-contain md:object-bottom"
           />
+          {/* Multiple gradient overlays to blend the image with the background */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/30"></div>
+          
+          {/* Soft radial gradients to extend the image feel */}
+          <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-blue-900/15 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-tr from-indigo-900/20 via-transparent to-transparent"></div>
+          
+          {/* Edge blending elements */}
+          <div className="absolute top-0 left-0 w-full h-1/3 bg-gradient-to-b from-black/40 to-transparent"></div>
+          <div className="absolute bottom-0 left-0 w-full h-1/4 bg-gradient-to-t from-purple-900/30 to-transparent"></div>
+          <div className="absolute left-0 top-0 w-1/4 h-full bg-gradient-to-r from-indigo-900/30 to-transparent"></div>
+          <div className="absolute right-0 top-0 w-1/4 h-full bg-gradient-to-l from-purple-900/30 to-transparent"></div>
+          
+          {/* Corner blend elements */}
+          <div className="absolute top-0 left-0 w-1/3 h-1/3 bg-gradient-to-br from-slate-900/40 to-transparent rounded-full blur-3xl"></div>
+          <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-bl from-indigo-900/30 to-transparent rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-to-tr from-purple-900/30 to-transparent rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-gradient-to-tl from-blue-900/30 to-transparent rounded-full blur-3xl"></div>
         </div>
       </div>
       
