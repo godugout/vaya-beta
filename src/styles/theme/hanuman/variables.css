@@ -1,0 +1,53 @@
+
+/* Hanuman Theme - Variables */
+
+:root, .dark, .hanuman-theme {
+  /* Cosmic theme with Hanuman influences */
+  --hanuman-dark: #0E0D12;
+  --hanuman-bg-dark: #120E12;
+  --hanuman-gold: #FFD700;
+  --hanuman-orange: #FF7E00;
+  --hanuman-red: #C62828;
+  --hanuman-saffron: #F9A825;
+  --hanuman-cosmic-blue: #1A237E;
+  --hanuman-cosmic-purple: #4A148C;
+  --hanuman-green: #2E7D32;
+  
+  /* Text colors */
+  --hanuman-text-primary: rgba(255, 255, 255, 0.95);
+  --hanuman-text-secondary: rgba(255, 255, 255, 0.7);
+  --hanuman-text-accent: #FFD700;
+  
+  /* Gradients */
+  --hanuman-gradient-orange: linear-gradient(135deg, #FF7E00 0%, #F9A825 100%);
+  --hanuman-gradient-cosmic: linear-gradient(135deg, #1A237E 0%, #4A148C 100%);
+  --hanuman-gradient-gold: linear-gradient(135deg, #FFD700 0%, #FFC107 100%);
+  --hanuman-gradient-green: linear-gradient(135deg, #2E7D32 0%, #81C784 100%);
+  
+  /* Shadows */
+  --hanuman-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --hanuman-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --hanuman-shadow-gold: 0 0 12px rgba(255, 215, 0, 0.15);
+  --hanuman-glow-orange: 0 0 20px rgba(255, 126, 0, 0.3);
+  --hanuman-glow-green: 0 0 20px rgba(46, 125, 50, 0.3);
+
+  /* Update global theme variables */
+  --background: var(--hanuman-dark);
+  --foreground: var(--hanuman-text-primary);
+  --card: var(--hanuman-bg-dark);
+  --card-foreground: var(--hanuman-text-primary);
+  --primary: var(--hanuman-orange);
+  --primary-foreground: white;
+  --secondary: var(--hanuman-cosmic-blue);
+  --secondary-foreground: white;
+  --accent: var(--hanuman-gold);
+  --accent-foreground: black;
+  --muted: rgba(255, 255, 255, 0.1);
+  --muted-foreground: var(--hanuman-text-secondary);
+  --border: rgba(255, 255, 255, 0.1);
+  
+  /* Card styling */
+  --card-bg: rgba(18, 14, 18, 0.5);
+  --card-border: transparent;
+  --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}

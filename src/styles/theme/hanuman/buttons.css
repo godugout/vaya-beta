@@ -1,0 +1,28 @@
+
+/* Hanuman Theme - Button Styles */
+
+/* Buttons */
+.hanuman-theme .button {
+  transition: all 0.2s ease;
+}
+
+.hanuman-theme .button-primary {
+  background: var(--hanuman-gradient-orange);
+  color: white;
+  box-shadow: var(--hanuman-shadow-sm);
+}
+
+.hanuman-theme .button-primary:hover {
+  box-shadow: var(--hanuman-shadow-gold);
+  transform: translateY(-1px);
+}
+
+.hanuman-theme .button-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--hanuman-text-primary);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.hanuman-theme .button-secondary:hover {
+  background: rgba(255, 215, 0, 0.15);
+}

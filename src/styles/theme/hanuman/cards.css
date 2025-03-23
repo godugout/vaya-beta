@@ -1,0 +1,35 @@
+
+/* Hanuman Theme - Card Styles */
+
+/* Cards and containers */
+.hanuman-theme .card,
+.hanuman-theme .container-elevation {
+  background: var(--card-bg);
+  border: var(--card-border);
+  box-shadow: var(--card-shadow);
+  backdrop-filter: blur(10px);
+}
+
+/* Enhanced sacred borders */
+.hanuman-decorative-border {
+  position: relative;
+}
+
+.hanuman-decorative-border::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--hanuman-gradient-orange);
+  border-radius: 1px;
+}
+
+/* Card styling enhancements */
+.hanuman-theme .ui-card {
+  background: rgba(18, 14, 18, 0.5);
+  border: none;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+}

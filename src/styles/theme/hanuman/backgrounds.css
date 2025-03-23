@@ -1,0 +1,26 @@
+
+/* Hanuman Theme - Background Styles */
+
+/* Navigation-specific styles for Hanuman theme */
+.hanuman-theme .top-nav {
+  background: rgba(18, 14, 18, 0.3);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+}
+
+.hanuman-theme .top-nav.scrolled {
+  background: rgba(18, 14, 18, 0.8);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+/* Grid and layout enhancements */
+.hanuman-theme .grid-container {
+  gap: 1.5rem;
+}
+
+.hanuman-theme .sidebar-container {
+  background: rgba(18, 14, 18, 0.5);
+  border: none;
+  backdrop-filter: blur(10px);
+}

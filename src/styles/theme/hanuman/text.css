@@ -1,0 +1,42 @@
+
+/* Hanuman Theme - Text Styles */
+
+/* Text styles */
+.hanuman-theme h1, 
+.hanuman-theme h2,
+.hanuman-theme h3,
+.hanuman-theme h4 {
+  color: var(--hanuman-text-primary);
+}
+
+.hanuman-theme .text-accent {
+  color: var(--hanuman-text-accent);
+}
+
+/* Cosmic glow elements */
+.hanuman-glow-text {
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.hanuman-gold-gradient-text {
+  background: var(--hanuman-gradient-gold);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hanuman-theme .cosmic-border {
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  box-shadow: 0 0 15px rgba(255, 126, 0, 0.15);
+}
+
+/* Links */
+.hanuman-theme a {
+  color: var(--hanuman-orange);
+  transition: all 0.2s ease;
+}
+
+.hanuman-theme a:hover {
+  color: var(--hanuman-gold);
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.2);
+}

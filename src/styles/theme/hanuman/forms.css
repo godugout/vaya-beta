@@ -1,0 +1,23 @@
+
+/* Hanuman Theme - Form Styles */
+
+/* Form elements */
+.hanuman-theme input,
+.hanuman-theme select,
+.hanuman-theme textarea {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--hanuman-text-primary);
+}
+
+.hanuman-theme input:focus,
+.hanuman-theme select:focus,
+.hanuman-theme textarea:focus {
+  border-color: rgba(255, 215, 0, 0.3);
+  box-shadow: 0 0 0 1px rgba(255, 215, 0, 0.1);
+}
+
+.hanuman-theme input::placeholder,
+.hanuman-theme textarea::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
