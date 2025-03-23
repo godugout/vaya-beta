@@ -30,7 +30,7 @@ export interface HanumanChatHook {
   input: string;
   setInput: (input: string) => void;
   isLoading: boolean;
-  handleSubmit: (input: string) => void;
+  handleSubmit: (e: React.FormEvent) => void;
   handlePromptSelect: (prompt: string) => void;
   handleMorePrompts: () => void;
 }

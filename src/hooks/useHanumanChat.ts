@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useFamilyContextManagement } from "@/hooks/useFamilyContextManagement";
@@ -22,10 +22,11 @@ export const useHanumanChat = (): HanumanChatHook => {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (inputText: string) => {
-    if (!inputText.trim()) return;
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!input.trim()) return;
 
-    const userMessage: HanumanMessage = { role: "user", content: inputText };
+    const userMessage: HanumanMessage = { role: "user", content: input };
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setIsLoading(true);
@@ -36,7 +37,7 @@ export const useHanumanChat = (): HanumanChatHook => {
 
       const assistantResponse: HanumanMessage = {
         role: "assistant",
-        content: `This is a simulated response to: ${inputText}. I am using the family context: ${JSON.stringify(
+        content: `This is a simulated response to: ${input}. I am using the family context: ${JSON.stringify(
           familyContext
         )}`,
       };

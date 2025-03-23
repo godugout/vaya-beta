@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, FormEvent } from "react";
 import { Send, Mic, Plus, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -10,7 +10,7 @@ interface ChatInputAreaProps {
   input: string;
   setInput: (input: string) => void;
   isLoading: boolean;
-  onSubmit: (e: React.FormEvent) => void;
+  onSubmit: (e: FormEvent) => void;
   onMorePrompts: () => void;
 }
 
@@ -32,7 +32,7 @@ const ChatInputArea: React.FC<ChatInputAreaProps> = ({
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       if (!isLoading && input.trim()) {
-        onSubmit(e as unknown as React.FormEvent);
+        onSubmit(e as unknown as FormEvent);
       }
     }
   };
