@@ -1,5 +1,5 @@
 
-/* Hanuman Theme - Main file */
+/* Hanuman Theme - Main import file */
 
 /* Import all Hanuman theme modules */
 @import './hanuman/variables.css';
@@ -13,3 +13,4 @@
 @import './hanuman/accessibility.css';
 @import './hanuman/animations.css';
 @import './hanuman/layout.css';
+@import './hanuman/theme.css';

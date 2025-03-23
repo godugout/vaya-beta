@@ -28,6 +28,11 @@
   --hanuman-panel-bg: rgba(18, 14, 18, 0.5);
   --hanuman-input-bg: rgba(255, 255, 255, 0.05);
   --hanuman-border-color: rgba(255, 126, 0, 0.2);
+  
+  /* Text colors */
+  --hanuman-text-primary: rgba(255, 255, 255, 0.9);
+  --hanuman-text-secondary: rgba(255, 255, 255, 0.7);
+  --hanuman-text-muted: rgba(255, 255, 255, 0.5);
 }
 
 /* Glow effects */
