@@ -2,7 +2,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { ThemeToggle } from './theme/ThemeToggle';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 interface MainNavProps extends React.HTMLAttributes<HTMLDivElement> {}
@@ -76,10 +75,6 @@ export function MainNav({ className, ...props }: MainNavProps) {
               Hanuman
             </Link>
           </nav>
-        </div>
-        
-        <div className="flex items-center gap-2">
-          <ThemeToggle />
         </div>
       </div>
     </div>

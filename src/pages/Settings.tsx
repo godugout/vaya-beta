@@ -1,8 +1,6 @@
-
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ThemeToggle } from '@/components/theme/ThemeToggle';
 import { LanguageSelector } from '@/components/nav/LanguageSelector';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
@@ -81,18 +79,6 @@ const Settings = () => {
               <CardContent className="space-y-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <Label htmlFor="theme-toggle" className="font-medium text-base">Theme Mode</Label>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Choose between light and dark mode
-                    </p>
-                  </div>
-                  <ThemeToggle />
-                </div>
-                
-                <AnimationSettings />
-                
-                <div className="flex items-center justify-between">
-                  <div>
                     <Label htmlFor="simplified-toggle" className="font-medium text-base">Simplified View</Label>
                     <p className="text-sm text-gray-500 dark:text-gray-400">
                       Larger text and controls for easier viewing
@@ -104,6 +90,8 @@ const Settings = () => {
                     onCheckedChange={toggleSimplifiedView}
                   />
                 </div>
+                
+                <AnimationSettings />
               </CardContent>
             </Card>
           </TabsContent>

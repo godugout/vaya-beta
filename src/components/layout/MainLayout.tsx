@@ -6,9 +6,7 @@ import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { Toaster } from "@/components/ui/toaster";
 import { useLocation } from 'react-router-dom';
 import { useActivityTracking, ActivityTypes } from '@/hooks/useActivityTracking';
-import { useTheme } from '@/contexts/ThemeContext';
 import { useSoftTheme } from '@/contexts/SoftThemeContext';
-import { ThemeToggle } from '@/components/theme/ThemeToggle';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -18,7 +16,6 @@ interface MainLayoutProps {
 export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
   const location = useLocation();
   const { trackActivity } = useActivityTracking();
-  const { theme } = useTheme();
   const { softTheme } = useSoftTheme();
   const isSoftTheme = softTheme === 'soft';
   
@@ -33,32 +30,42 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
     });
   }, [location.pathname, location.search, trackActivity]);
 
-  // Apply the theme class to body
+  // Apply the dark theme class to body
   useEffect(() => {
-    document.body.classList.remove('light', 'dark');
-    document.body.classList.add(theme, 'hanuman-theme');
+    document.body.classList.remove('light');
+    document.body.classList.add('dark', 'hanuman-theme');
     
     return () => {
       document.body.classList.remove('light', 'dark', 'hanuman-theme');
+      document.body.classList.add('dark');
     };
-  }, [theme]);
+  }, []);
   
   return (
-    <div className={`flex flex-col min-h-screen ${theme === 'dark' ? 'bg-hanuman-dark text-white' : 'bg-hanuman-light text-black'}`}>
-      {/* Simple background with Hanuman image */}
+    <div className="flex flex-col min-h-screen bg-hanuman-dark text-white">
+      {/* Cosmic background with Hanuman image */}
       <div className="fixed inset-0 pointer-events-none">
-        <div className="bg-hanuman-bg absolute inset-0 bg-no-repeat bg-cover bg-center opacity-5 dark:opacity-10"></div>
+        <div className="bg-hanuman-bg absolute inset-0 bg-no-repeat bg-cover bg-center opacity-10"></div>
+        <div className="absolute inset-0 bg-dots bg-repeat opacity-5"></div>
+        
+        {/* Subtle star-like dots for cosmic feel */}
+        <div className="absolute inset-0" 
+          style={{ 
+            backgroundImage: `radial-gradient(1px 1px at 10% 10%, rgba(255, 255, 255, 0.15) 0%, transparent 100%),
+                              radial-gradient(1px 1px at 30% 30%, rgba(255, 255, 255, 0.15) 0%, transparent 100%),
+                              radial-gradient(1px 1px at 50% 70%, rgba(255, 255, 255, 0.15) 0%, transparent 100%),
+                              radial-gradient(1px 1px at 70% 40%, rgba(255, 255, 255, 0.15) 0%, transparent 100%),
+                              radial-gradient(1px 1px at 90% 90%, rgba(255, 255, 255, 0.15) 0%, transparent 100%)`,
+            backgroundSize: '100px 100px, 120px 120px, 170px 170px, 150px 150px, 200px 200px',
+            backgroundAttachment: 'fixed'
+          }}
+        />
       </div>
       
       {/* Header area */}
       <header className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm">
         <MainNav />
       </header>
-      
-      {/* Theme toggle controls */}
-      <div className="fixed top-20 right-4 z-10">
-        <ThemeToggle />
-      </div>
       
       {/* Content area */}
       <main className={`flex-grow pt-8 ${className}`}>

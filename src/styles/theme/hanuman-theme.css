@@ -1,391 +1,201 @@
 
-/* Hanuman Theme Styles */
-:root {
-  /* Colors from design guide */
-  --color-primary: #FF7675;   /* Warm coral/orange */
-  --color-secondary: #6C5CE7; /* Deep purple */
-  --color-accent: #4CD137;    /* Bright green accent */
-  
-  /* Gray scale */
-  --color-black: #000000;
-  --color-white: #FFFFFF;
-  --color-gray-100: #F9F9F9;
-  --color-gray-200: #F3F3F3;
-  --color-gray-300: #EDEDED;
-  --color-gray-400: #DDDDDD;
-  --color-gray-500: #AAAAAA;
-  --color-gray-600: #888888;
-  --color-gray-700: #555555;
-  --color-gray-800: #333333;
-  
-  /* Typography */
-  --font-family-base: "Inter", "Manrope", sans-serif;
-  --font-size-h1: 2.25rem; /* ~36px */
-  --font-size-h2: 1.875rem; /* 30px */
-  --font-size-h3: 1.5rem; /* 24px */
-  --font-size-h4: 1.25rem; /* 20px */
-  --font-size-body: 1rem; /* 16px */
-  --font-size-small: 0.875rem; /*14px*/
-  --font-size-caption: 0.75rem; /*12px*/
+/* Hanuman Theme - Cosmic Dark Mode */
 
-  --font-weight-regular: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
+:root, .dark, .hanuman-theme {
+  /* Cosmic theme with Hanuman influences */
+  --hanuman-dark: #0E0D12;
+  --hanuman-bg-dark: #120E12;
+  --hanuman-gold: #FFD700;
+  --hanuman-orange: #FF7E00;
+  --hanuman-red: #C62828;
+  --hanuman-saffron: #F9A825;
+  --hanuman-cosmic-blue: #1A237E;
+  --hanuman-cosmic-purple: #4A148C;
   
-  /* Spacing scale */
-  --spacing-1: 4px;
-  --spacing-2: 8px;
-  --spacing-3: 12px;
-  --spacing-4: 16px;
-  --spacing-5: 24px;
-  --spacing-6: 32px;
-  --spacing-7: 40px;
-  --spacing-8: 48px;
+  /* Text colors */
+  --hanuman-text-primary: rgba(255, 255, 255, 0.95);
+  --hanuman-text-secondary: rgba(255, 255, 255, 0.7);
+  --hanuman-text-accent: #FFD700;
+  
+  /* Gradients */
+  --hanuman-gradient-orange: linear-gradient(135deg, #FF7E00 0%, #F9A825 100%);
+  --hanuman-gradient-cosmic: linear-gradient(135deg, #1A237E 0%, #4A148C 100%);
+  
+  /* Shadows */
+  --hanuman-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --hanuman-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --hanuman-shadow-gold: 0 0 12px rgba(255, 215, 0, 0.15);
+
+  /* Update global theme variables */
+  --background: var(--hanuman-dark);
+  --foreground: var(--hanuman-text-primary);
+  --card: var(--hanuman-bg-dark);
+  --card-foreground: var(--hanuman-text-primary);
+  --primary: var(--hanuman-orange);
+  --primary-foreground: white;
+  --secondary: var(--hanuman-cosmic-blue);
+  --secondary-foreground: white;
+  --accent: var(--hanuman-gold);
+  --accent-foreground: black;
+  --muted: rgba(255, 255, 255, 0.1);
+  --muted-foreground: var(--hanuman-text-secondary);
+  --border: rgba(255, 255, 255, 0.1);
 }
 
-.hanuman-theme {
-  /* Base colors */
-  --hanuman-primary: #FF7E00;  /* Orange */
-  --hanuman-secondary: #C62828; /* Red */
-  --hanuman-accent: #FFD700;   /* Gold */
-  --hanuman-purple: #6C5CE7;   /* Purple accent */
-  --hanuman-green: #4CD137;    /* Green accent */
-  --hanuman-bg-light: #FFF9F0; /* Light cream */
-  --hanuman-bg-dark: #1A0F00;  /* Deep brown */
-  
-  /* Theme transitions */
-  --theme-transition: all 0.3s ease;
-  
-  /* Font family overrides */
-  font-family: var(--font-family-base);
+/* Cosmic background effects */
+.hanuman-theme body {
+  background-color: var(--hanuman-dark);
+  background-image: 
+    radial-gradient(1px 1px at 20% 30%, rgba(255, 215, 0, 0.15) 0%, transparent 100%),
+    radial-gradient(1px 1px at 40% 70%, rgba(255, 126, 0, 0.1) 0%, transparent 100%),
+    radial-gradient(1px 1px at 60% 50%, rgba(198, 40, 40, 0.1) 0%, transparent 100%),
+    radial-gradient(1px 1px at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 100%);
+  background-size: 120px 120px, 150px 150px, 180px 180px, 200px 200px;
+  background-attachment: fixed;
+  color: var(--hanuman-text-primary);
 }
 
-/* Light theme specifics */
-.hanuman-theme:not(.dark) {
-  --page-bg: var(--hanuman-bg-light);
-  --content-bg: rgba(255, 255, 255, 0.8);
-  --card-bg: #FFFFFF;
-  --text-primary: #2D1600;
-  --text-secondary: #5D4A2E;
-  --border-color: rgba(255, 126, 0, 0.2);
-  
-  background-color: var(--page-bg);
-  color: var(--text-primary);
-}
-
-/* Dark theme specifics */
-.hanuman-theme.dark {
-  --page-bg: var(--hanuman-bg-dark);
-  --content-bg: #1A0F00;
-  --card-bg: #261500;
-  --text-primary: #FFF1DE;
-  --text-secondary: #FFD6A5;
-  --border-color: rgba(255, 126, 0, 0.4);
-  
-  background-color: var(--page-bg);
-  color: var(--text-primary);
-}
-
-/* Common styles for both themes */
-.hanuman-theme .card {
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  transition: var(--theme-transition);
-}
-
-.hanuman-theme .section-title {
-  color: var(--hanuman-primary);
-  font-weight: 700;
-}
-
-/* Sacred Pattern Background */
-.bg-pattern-subtle {
-  background-color: var(--page-bg);
-  background-size: 60px 60px;
+/* Cards and containers */
+.hanuman-theme .card,
+.hanuman-theme .container-elevation {
+  background: rgba(18, 14, 18, 0.7);
+  border: 1px solid rgba(255, 215, 0, 0.1);
+  box-shadow: var(--hanuman-shadow-sm);
+  backdrop-filter: blur(10px);
 }
 
 /* Buttons */
+.hanuman-theme .button {
+  transition: all 0.2s ease;
+}
+
 .hanuman-theme .button-primary {
-  background-color: var(--hanuman-primary);
+  background: var(--hanuman-gradient-orange);
   color: white;
-  border: none;
-  padding: var(--spacing-3) var(--spacing-5);
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: var(--theme-transition);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--spacing-2);
+  box-shadow: var(--hanuman-shadow-sm);
 }
 
 .hanuman-theme .button-primary:hover {
-  background-color: #FF9933; /* Lighter orange */
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--hanuman-shadow-gold);
+  transform: translateY(-1px);
 }
 
 .hanuman-theme .button-secondary {
-  background-color: transparent;
-  color: var(--hanuman-primary);
-  border: 2px solid var(--hanuman-primary);
-  padding: var(--spacing-3) var(--spacing-5);
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: var(--theme-transition);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--spacing-2);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--hanuman-text-primary);
+  border: 1px solid rgba(255, 215, 0, 0.2);
 }
 
 .hanuman-theme .button-secondary:hover {
-  background-color: rgba(255, 126, 0, 0.1);
-  transform: translateY(-2px);
+  background: rgba(255, 215, 0, 0.15);
 }
 
-.hanuman-theme .button-accent {
-  background-color: var(--hanuman-purple);
-  color: white;
-  border: none;
-  padding: var(--spacing-3) var(--spacing-5);
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: var(--theme-transition);
+/* Text styles */
+.hanuman-theme h1, 
+.hanuman-theme h2,
+.hanuman-theme h3,
+.hanuman-theme h4 {
+  color: var(--hanuman-text-primary);
 }
 
-.hanuman-theme .button-accent:hover {
-  background-color: #5a4bd5; /* Slightly darker purple */
-  transform: translateY(-2px);
+.hanuman-theme .text-accent {
+  color: var(--hanuman-text-accent);
 }
 
-/* Navigation styles */
+/* Form elements */
+.hanuman-theme input,
+.hanuman-theme select,
+.hanuman-theme textarea {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--hanuman-text-primary);
+}
+
+.hanuman-theme input:focus,
+.hanuman-theme select:focus,
+.hanuman-theme textarea:focus {
+  border-color: rgba(255, 215, 0, 0.3);
+  box-shadow: 0 0 0 1px rgba(255, 215, 0, 0.1);
+}
+
+.hanuman-theme input::placeholder,
+.hanuman-theme textarea::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* Links */
+.hanuman-theme a {
+  color: var(--hanuman-orange);
+  transition: all 0.2s ease;
+}
+
+.hanuman-theme a:hover {
+  color: var(--hanuman-gold);
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.2);
+}
+
+/* Custom scrollbar */
+.hanuman-theme ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.hanuman-theme ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.hanuman-theme ::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 215, 0, 0.15);
+  border-radius: 4px;
+}
+
+.hanuman-theme ::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 215, 0, 0.25);
+}
+
+/* Wizard steps */
+.hanuman-theme .wizard-step {
+  background: rgba(18, 14, 18, 0.7);
+  border: 1px solid rgba(255, 215, 0, 0.1);
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+}
+
+.hanuman-theme .wizard-step.active {
+  border-color: rgba(255, 215, 0, 0.3);
+  box-shadow: var(--hanuman-shadow-gold);
+}
+
+/* Progress indicators */
+.hanuman-theme .progress-step {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: all 0.2s ease;
+}
+
+.hanuman-theme .progress-step.active {
+  background: var(--hanuman-gold);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+}
+
+/* Navigation */
 .hanuman-theme .nav-link {
-  color: var(--text-primary);
-  font-weight: 500;
-  transition: var(--theme-transition);
+  color: var(--hanuman-text-secondary);
+  transition: all 0.2s ease;
 }
 
 .hanuman-theme .nav-link:hover {
-  color: var(--hanuman-primary);
+  color: var(--hanuman-text-primary);
 }
 
 .hanuman-theme .nav-link.active {
-  color: var(--hanuman-primary);
-  font-weight: 700;
+  color: var(--hanuman-gold);
 }
 
-/* Footer styles */
-.hanuman-theme footer {
-  background-color: var(--content-bg);
-  border-top: 1px solid var(--border-color);
-}
-
-/* Avatar styles */
-.hanuman-theme .avatar-hanuman {
-  border: 2px solid var(--hanuman-primary);
-}
-
-/* Message styles */
-.hanuman-theme .message-user {
-  background-color: var(--hanuman-primary);
-  color: white;
-}
-
-.hanuman-theme .message-assistant {
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
-}
-
-/* Input styles */
-.hanuman-theme .input-hanuman {
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: var(--spacing-3) var(--spacing-4);
-  color: var(--text-primary);
-  width: 100%;
-  font-size: var(--font-size-body);
-  transition: var(--theme-transition);
-}
-
-.hanuman-theme .input-hanuman:focus {
-  border-color: var(--hanuman-accent);
-  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
-  outline: none;
-}
-
-/* Chat container specific styles */
-.hanuman-theme .chat-body {
-  flex-grow: 1;
-  overflow-y: auto;
-  padding: var(--spacing-4);
-  background-color: var(--page-bg);
-  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg stroke='%23FF7A00' stroke-width='1' stroke-opacity='0.05'%3E%3Cpath d='M30 10 L50 45 L10 45 Z M15 25 L45 25 M12.5 35 L47.5 35'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-}
-
-.hanuman-theme .chat-footer {
-  border-top: 1px solid var(--border-color);
-  background-color: var(--card-bg);
-}
-
-/* Hanuman specific UI elements */
-.hanuman-theme .sacred-border {
-  border: 1px solid var(--hanuman-accent);
-  border-radius: 4px;
-  padding: 2px 8px;
-  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 126, 0, 0.1) 100%);
-}
-
-.hanuman-theme .hanuman-decorative-border {
-  position: relative;
-}
-
-.hanuman-theme .hanuman-decorative-border::before,
-.hanuman-theme .hanuman-decorative-border::after {
-  content: '';
-  position: absolute;
-  height: 10px;
-  width: 40px;
-  background-image: url("data:image/svg+xml,%3Csvg width='40' height='10' viewBox='0 0 40 10' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 5 L40 5 M5 0 L5 10 M10 2 L10 8 M15 0 L15 10 M20 3 L20 7 M25 1 L25 9 M30 0 L30 10 M35 2 L35 8' stroke='%23FF7E00' stroke-width='1' stroke-opacity='0.5'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-}
-
-.hanuman-theme .hanuman-decorative-border::before {
-  top: -10px;
-  left: 10px;
-}
-
-.hanuman-theme .hanuman-decorative-border::after {
-  bottom: -10px;
-  right: 10px;
-  transform: rotate(180deg);
-}
-
-/* Backdrop Pattern */
-.hanuman-theme .backdrop-pattern {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
-  opacity: 0.03;
-  background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg stroke='%23FF7A00' stroke-width='1'%3E%3Ccircle cx='40' cy='40' r='36'/%3E%3Ccircle cx='40' cy='40' r='28'/%3E%3Ccircle cx='40' cy='40' r='20'/%3E%3Cpath d='M40 4 L40 76 M4 40 L76 40 M11.7 11.7 L68.3 68.3 M11.7 68.3 L68.3 11.7'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  background-size: 80px 80px;
-}
-
-/* Animation effects */
-@keyframes gentle-pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
-}
-
-.hanuman-theme .pulse-effect {
-  animation: gentle-pulse 2s infinite ease-in-out;
-}
-
-@keyframes fade-in {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.hanuman-theme .fade-in {
-  animation: fade-in 0.5s ease-out forwards;
-}
-
-/* 2-Column Layout for desktop */
-@media (min-width: 1024px) {
-  .hanuman-theme main {
-    display: flex;
-    height: calc(100vh - 64px - 41px); /* Subtract header and footer height */
-  }
-  
-  .hanuman-theme .left-column {
-    width: 280px;
-    flex-shrink: 0;
-    border-right: 1px solid var(--border-color);
-    height: 100%;
-    overflow-y: auto;
-  }
-  
-  .hanuman-theme .chat-column {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-width: 0; /* Allow the flex item to shrink below its content size */
-  }
-  
-  .hanuman-theme .right-column {
-    width: 320px;
-    flex-shrink: 0;
-    border-left: 1px solid var(--border-color);
-    height: 100%;
-    overflow-y: auto;
-  }
-  
-  .hanuman-theme .chat-container {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-  
-  .hanuman-theme .chat-header {
-    padding: 1rem;
-    border-bottom: 1px solid var(--border-color);
-  }
-  
-  .hanuman-theme .chat-body {
-    flex: 1;
-    overflow-y: auto;
-  }
-  
-  .hanuman-theme .chat-footer {
-    padding: 1rem;
-    border-top: 1px solid var(--border-color);
-  }
-}
-
-/* Responsive adjustments */
-@media (max-width: 1023px) {
-  .hanuman-theme .three-column-layout {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .hanuman-theme .left-column,
-  .hanuman-theme .right-column {
-    width: 100%;
-  }
-  
-  .hanuman-theme .chat-column {
-    flex: 1;
-    margin: 1rem 0;
-  }
-}
-
-@media (max-width: 640px) {
-  .hanuman-theme .section-title {
-    font-size: 1.5rem;
-  }
-  
-  .hanuman-theme .card {
-    padding: 0.75rem;
-  }
-  
-  .hanuman-theme .button-primary,
-  .hanuman-theme .button-secondary,
-  .hanuman-theme .button-accent {
-    padding: var(--spacing-2) var(--spacing-4);
-    font-size: var(--font-size-small);
-  }
-  
-  .hanuman-theme .input-hanuman {
-    padding: var(--spacing-2) var(--spacing-3);
-  }
+/* Focus states for accessibility */
+.hanuman-theme :focus-visible {
+  outline: 2px solid var(--hanuman-gold);
+  outline-offset: 2px;
 }

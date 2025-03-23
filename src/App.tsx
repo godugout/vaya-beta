@@ -1,9 +1,7 @@
-
 import React, { Suspense, lazy } from 'react';
 import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import { Toaster } from '@/components/ui/sonner';
 import { ThemeProvider } from '@/contexts/ThemeContext';
-import { useTheme } from '@/contexts/ThemeContext';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { LoadingIndicator } from '@/components/animation/LoadingIndicator';
@@ -26,23 +24,19 @@ const ShareStories = lazy(() => import('@/pages/ShareStories'));
 const Profile = lazy(() => import('@/pages/Profile'));
 const Settings = lazy(() => import('@/pages/Settings'));
 const StoryShowcase = lazy(() => import('@/components/design-system/StoryShowcase'));
-// Import directly without expecting a default export
 const ComponentsShowcase = lazy(() => import('@/components/design-system/ComponentsShowcase').then(module => ({ default: module.ComponentsShowcase })));
 const DesignSystem = lazy(() => import('@/pages/DesignSystem'));
 
-// Admin components are a good candidate for code splitting
 const Admin = lazy(() => import('@/pages/Admin'));
 const AdminUsers = lazy(() => import('@/pages/AdminUsers'));
 const AdminMedia = lazy(() => import('@/pages/AdminMedia'));
 
 const App = () => {
-  const { theme } = useTheme();
-  
   return (
     <ThemeProvider>
       <LanguageProvider>
         <AnimationProvider>
-          <div className={`app ${theme}`}>
+          <div className="app dark">
             <ErrorBoundary>
               <Suspense fallback={<LoadingIndicator />}>
                 <Routes>
