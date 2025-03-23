@@ -1,12 +1,20 @@
 
 import React, { useEffect, useState } from "react";
+import { MainLayout } from "@/components/layout/MainLayout";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { HanumanPromptItem } from "@/types/hanuman";
 import { useHanumanChat } from "@/hooks/useHanumanChat";
+import { HanumanTopNav } from "@/components/navigation/HanumanTopNav";
+import { FadeIn } from "@/components/animation/FadeIn";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Flame, ChevronRight, BookOpen, Star, Calendar, Sparkles } from "lucide-react";
 import HanumanBackground from "@/components/hanuman/HanumanBackground";
-import HanumanHeader from "@/components/hanuman/HanumanHeader";
-import HanumanChatLayout from "@/components/hanuman/HanumanChatLayout";
+import HanumanCategoriesSidebar from "@/components/hanuman/HanumanCategoriesSidebar";
+import HanumanChat from "@/components/hanuman/HanumanChat";
+import HanumanResourcesSidebar from "@/components/hanuman/HanumanResourcesSidebar";
 
+// Updated suggested prompts with categories
 const suggestedPrompts: HanumanPromptItem[] = [
   {
     id: "prompt-1",
@@ -53,8 +61,7 @@ const suggestedPrompts: HanumanPromptItem[] = [
 const HanumanEdition = () => {
   const { isSpanish, setLanguagePreference } = useLanguage();
   const [activeCategory, setActiveCategory] = useState("personal");
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(false);
+  const [showResources, setShowResources] = useState(true);
   
   const {
     messages,
@@ -81,28 +88,70 @@ const HanumanEdition = () => {
     <div className="relative min-h-screen bg-hanuman-bg">
       <HanumanBackground />
       
-      <div className="relative z-10">
-        <div className="hanuman-container py-6">
-          <HanumanHeader toggleLanguage={toggleLanguage} />
+      {/* Top navigation */}
+      <HanumanTopNav />
+      
+      <div className="relative z-10 pt-20 pb-12">
+        {/* Hero Section */}
+        <div className="container mx-auto px-4 mb-8 text-center">
+          <FadeIn className="flex flex-col items-center justify-center">
+            <div className="inline-flex items-center justify-center bg-hanuman-orange/10 p-3 rounded-full mb-4">
+              <Flame className="h-8 w-8 text-hanuman-orange" />
+            </div>
+            
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center bg-clip-text text-transparent bg-gradient-to-r from-hanuman-gold to-hanuman-saffron hanuman-text-glow">
+              {isSpanish ? "Edición Hanuman" : "Hanuman Edition"}
+            </h1>
+            
+            <p className="text-xl text-white/80 max-w-2xl mx-auto mb-6">
+              {isSpanish 
+                ? "Sabiduría ancestral para preservar tus historias familiares" 
+                : "Ancient wisdom to preserve your family stories"}
+            </p>
+            
+            <Button 
+              onClick={toggleLanguage} 
+              variant="outline"
+              className="bg-hanuman-gold/10 border-hanuman-gold/20 text-hanuman-gold hover:bg-hanuman-gold/20"
+            >
+              {isSpanish ? "Switch to English" : "Cambiar a Español"}
+            </Button>
+          </FadeIn>
         </div>
         
-        <HanumanChatLayout 
-          messages={messages}
-          input={input}
-          setInput={setInput}
-          isLoading={isLoading}
-          handleSubmit={handleSubmit}
-          handlePromptSelect={handlePromptSelect}
-          handleMorePrompts={handleMorePrompts}
-          activeCategory={activeCategory}
-          onCategorySelect={setActiveCategory}
-          suggestedPrompts={suggestedPrompts}
-          toggleLanguage={toggleLanguage}
-          isMobileMenuOpen={isMobileMenuOpen}
-          setIsMobileMenuOpen={setIsMobileMenuOpen}
-          isRightSidebarOpen={isRightSidebarOpen}
-          setIsRightSidebarOpen={setIsRightSidebarOpen}
-        />
+        {/* Main Three-Column Layout */}
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            {/* Left Sidebar - Categories */}
+            <div className="lg:col-span-3">
+              <HanumanCategoriesSidebar 
+                activeCategory={activeCategory}
+                setActiveCategory={setActiveCategory}
+                suggestedPrompts={suggestedPrompts.filter(p => p.category === activeCategory).slice(0, 3)}
+                onPromptSelect={handlePromptSelect}
+                isSpanish={isSpanish}
+              />
+            </div>
+            
+            {/* Middle - Chat Interface */}
+            <div className="lg:col-span-6">
+              <HanumanChat 
+                messages={messages}
+                input={input}
+                setInput={setInput}
+                isLoading={isLoading}
+                handleSubmit={handleSubmit}
+                handleMorePrompts={handleMorePrompts}
+                isSpanish={isSpanish}
+              />
+            </div>
+            
+            {/* Right Sidebar - Resources */}
+            <div className="lg:col-span-3">
+              <HanumanResourcesSidebar isSpanish={isSpanish} />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

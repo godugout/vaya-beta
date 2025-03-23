@@ -1,77 +1,94 @@
-import React, { Suspense, lazy } from 'react';
-import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
-import { Toaster } from '@/components/ui/sonner';
-import { ThemeProvider } from '@/contexts/ThemeContext';
-import { LanguageProvider } from '@/contexts/LanguageContext';
+import React, { useEffect, useState } from 'react';
+import {
+  createBrowserRouter,
+  RouterProvider,
+  useNavigate,
+} from 'react-router-dom';
+import { useAuth } from './contexts/AuthContext';
+import { useProfile } from './contexts/ProfileContext';
 import { MainLayout } from '@/components/layout/MainLayout';
-import { LoadingIndicator } from '@/components/animation/LoadingIndicator';
-import { ErrorBoundary } from '@/components/ErrorBoundary';
-import { AnimationProvider } from '@/components/animation/AnimationProvider';
+import LandingPage from '@/pages/LandingPage';
+import SignUp from '@/pages/SignUp';
+import SignIn from '@/pages/SignIn';
+import Profile from '@/pages/Profile';
+import EditProfile from '@/pages/EditProfile';
+import Profiles from '@/pages/Profiles';
+import Memories from '@/pages/Memories';
+import Families from '@/pages/Families';
+import CreateFamily from '@/pages/CreateFamily';
+import ShareStoriesPage from '@/pages/ShareStories';
+import Sacred from '@/pages/Sacred';
+import HanumanEdition from '@/pages/HanumanEdition';
 
-// Lazy load components to improve initial load time
-const Home = lazy(() => import('@/pages/Home'));
-const Auth = lazy(() => import('@/pages/Auth'));
-const Families = lazy(() => import('@/pages/Families'));
-const CreateFamily = lazy(() => import('@/pages/CreateFamily'));
-const FamilyDetail = lazy(() => import('@/pages/FamilyDetail'));
-const MediaLibrary = lazy(() => import('@/pages/MediaLibrary'));
-const MediaLibraryEnhanced = lazy(() => import('@/pages/MediaLibraryEnhanced'));
-const NotFound = lazy(() => import('@/pages/NotFound'));
-const HanumanEdition = lazy(() => import('@/pages/HanumanEdition'));
-const MemoryLane = lazy(() => import('@/pages/MemoryLane'));
-const MemoryPost = lazy(() => import('@/pages/MemoryPost'));
-const ShareStories = lazy(() => import('@/pages/ShareStories'));
-const Profile = lazy(() => import('@/pages/Profile'));
-const Settings = lazy(() => import('@/pages/Settings'));
-const StoryShowcase = lazy(() => import('@/components/design-system/StoryShowcase'));
-const ComponentsShowcase = lazy(() => import('@/components/design-system/ComponentsShowcase').then(module => ({ default: module.ComponentsShowcase })));
-const DesignSystem = lazy(() => import('@/pages/DesignSystem'));
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <LandingPage />,
+  },
+  {
+    path: '/signup',
+    element: <SignUp />,
+  },
+  {
+    path: '/signin',
+    element: <SignIn />,
+  },
+  {
+    path: '/profile',
+    element: <Profile />,
+  },
+  {
+    path: '/edit-profile',
+    element: <EditProfile />,
+  },
+  {
+    path: '/profiles',
+    element: <Profiles />,
+  },
+  {
+    path: '/memories',
+    element: <Memories />,
+  },
+  {
+    path: '/families',
+    element: <Families />,
+  },
+  {
+    path: '/create-family',
+    element: <CreateFamily />,
+  },
+  {
+    path: '/stories',
+    element: <ShareStoriesPage />,
+  },
+  {
+    path: '/sacred',
+    element: <Sacred />,
+  },
+  {
+    path: '/hanuman',
+    element: <HanumanEdition />,
+  },
+]);
 
-const Admin = lazy(() => import('@/pages/Admin'));
-const AdminUsers = lazy(() => import('@/pages/AdminUsers'));
-const AdminMedia = lazy(() => import('@/pages/AdminMedia'));
+function App() {
+  const { authLoading } = useAuth();
+  const { profileLoading } = useProfile();
 
-const App = () => {
+  // Show loading indicator while auth state is being determined
+  if (authLoading || profileLoading) {
+    return (
+      <MainLayout>
+        <div className="flex items-center justify-center h-full">
+          <span className="loading loading-ring loading-lg"></span>
+        </div>
+      </MainLayout>
+    );
+  }
+
   return (
-    <ThemeProvider>
-      <LanguageProvider>
-        <AnimationProvider>
-          <div className="app dark">
-            <ErrorBoundary>
-              <Suspense fallback={<LoadingIndicator />}>
-                <Routes>
-                  <Route path="/" element={<MainLayout><Outlet /></MainLayout>}>
-                    <Route index element={<Home />} />
-                    <Route path="auth" element={<Auth />} />
-                    <Route path="families" element={<Families />} />
-                    <Route path="create-family" element={<CreateFamily />} />
-                    <Route path="family/:familyId" element={<FamilyDetail />} />
-                    <Route path="media" element={<MediaLibrary />} />
-                    <Route path="media-enhanced" element={<MediaLibraryEnhanced />} />
-                    <Route path="hanuman" element={<HanumanEdition />} />
-                    <Route path="memories" element={<MemoryLane />} />
-                    <Route path="memories/:memoryId" element={<MemoryPost />} />
-                    <Route path="stories" element={<ShareStories />} />
-                    <Route path="profile" element={<Profile />} />
-                    <Route path="settings" element={<Settings />} />
-                    <Route path="story-showcase" element={<StoryShowcase />} />
-                    <Route path="components" element={<ComponentsShowcase />} />
-                    <Route path="design" element={<DesignSystem />} />
-                    <Route path="admin" element={<Admin />}>
-                      <Route path="users" element={<AdminUsers />} />
-                      <Route path="media" element={<AdminMedia />} />
-                    </Route>
-                    <Route path="*" element={<NotFound />} />
-                  </Route>
-                </Routes>
-              </Suspense>
-            </ErrorBoundary>
-            <Toaster position="top-center" />
-          </div>
-        </AnimationProvider>
-      </LanguageProvider>
-    </ThemeProvider>
+    <RouterProvider router={router} />
   );
-};
+}
 
 export default App;
