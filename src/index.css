@@ -22,7 +22,7 @@
 @import './styles/theme/index.css';
 @import './styles/theme/dark.css';
 @import './styles/theme/dark-theme.css';
-@import './styles/theme/hanuman/theme.css'; /* Updated path to new Hanuman theme */
+@import './styles/theme/hanuman-theme.css'; /* Import the combined Hanuman theme */
 
 body {
   font-family: 'Inter', 'Manrope', sans-serif;

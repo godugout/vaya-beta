@@ -21,7 +21,14 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
   const { softTheme } = useSoftTheme();
   const { user, signOut } = useSupabaseAuth();
   const isSoftTheme = softTheme === 'soft';
-  const isHanumanPage = location.pathname.includes('hanuman');
+  
+  // Define paths that should use the Hanuman theme
+  const hanumanThemePaths = ['/hanuman', '/stories', '/share-stories', '/memories', '/memory-lane'];
+  
+  // Check if current path should use Hanuman theme
+  const useHanumanTheme = hanumanThemePaths.some(path => 
+    location.pathname === path || location.pathname.startsWith(`${path}/`)
+  );
   
   // Track page views
   React.useEffect(() => {
@@ -48,7 +55,7 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
     document.body.classList.remove('light');
     document.body.classList.add('dark');
     
-    if (isHanumanPage) {
+    if (useHanumanTheme) {
       document.body.classList.add('hanuman-theme');
     } else {
       document.body.classList.remove('hanuman-theme');
@@ -58,13 +65,13 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
       document.body.classList.remove('light', 'dark', 'hanuman-theme');
       document.body.classList.add('dark');
     };
-  }, [isHanumanPage]);
+  }, [useHanumanTheme]);
   
   return (
-    <div className={`flex flex-col min-h-screen ${isHanumanPage ? 'bg-hanuman-dark' : 'bg-black'} text-white`}>
-      {/* Cosmic background with Hanuman image for Hanuman pages */}
+    <div className={`flex flex-col min-h-screen ${useHanumanTheme ? 'bg-hanuman-dark' : 'bg-black'} text-white`}>
+      {/* Background elements */}
       <div className="fixed inset-0 pointer-events-none">
-        {isHanumanPage ? (
+        {useHanumanTheme ? (
           <EnhancedHanumanBackground />
         ) : (
           <>

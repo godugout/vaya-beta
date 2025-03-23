@@ -1,158 +1,58 @@
 
-/* Hanuman Theme Navigation Styles */
+/* Hanuman Navigation Styles */
 
 .hanuman-nav {
-  --nav-bg-transparent: transparent;
-  --nav-bg-solid: rgba(18, 14, 18, 0.85);
-  --nav-border: rgba(255, 126, 0, 0.2);
-  --nav-text: rgba(255, 255, 255, 0.9);
-  --nav-text-muted: rgba(255, 255, 255, 0.7);
-  --nav-active-bg: rgba(255, 126, 0, 0.2);
-  --nav-active-text: var(--hanuman-saffron);
-  --nav-hover-bg: rgba(255, 255, 255, 0.1);
-  --nav-glow: 0 4px 20px rgba(255, 126, 0, 0.3);
+  @apply fixed top-0 left-0 right-0 z-50 transition-all duration-300;
 }
 
-/* Scroll transition effects */
 .hanuman-nav-scrolled {
-  background-color: var(--nav-bg-solid);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--nav-border);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2), var(--nav-glow);
+  @apply bg-black/80 backdrop-blur-md border-b border-hanuman-saffron/20 py-2 shadow-lg;
 }
 
 .hanuman-nav-transparent {
-  background-color: var(--nav-bg-transparent);
+  @apply bg-transparent py-4;
 }
 
-/* Logo container */
 .hanuman-nav-logo {
-  position: relative;
-  overflow: hidden;
-  border-radius: 0.75rem;
-  background-color: rgba(0, 0, 0, 0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgba(255, 126, 0, 0.2);
+  @apply flex items-center gap-2 transition-transform;
 }
 
-.hanuman-nav-logo::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, rgba(255, 126, 0, 0.2) 0%, rgba(249, 168, 37, 0.1) 100%);
-  opacity: 0.6;
-  pointer-events: none;
+.hanuman-nav-logo-scrolled {
+  @apply scale-90;
 }
 
-/* Navigation Links */
-.hanuman-nav-link {
-  padding: 0.5rem 0.75rem;
-  border-radius: 0.375rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  position: relative;
+.hanuman-nav-logo-container {
+  @apply relative h-10 w-10 rounded-lg bg-black/60 flex items-center justify-center overflow-hidden border border-hanuman-primary/30;
 }
 
-.hanuman-nav-link:hover {
-  background-color: var(--nav-hover-bg);
-  transform: translateY(-2px);
-}
-
-.hanuman-nav-link.active {
-  background-color: var(--nav-active-bg);
-  color: var(--nav-active-text);
-}
-
-.hanuman-nav-link.active::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 25%;
-  width: 50%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--hanuman-saffron), transparent);
-  border-radius: 1px;
-}
-
-/* Mobile menu styles */
-.hanuman-mobile-menu {
-  background-color: rgba(18, 14, 18, 0.95);
-  border: none;
-  box-shadow: var(--nav-glow);
-  backdrop-filter: blur(12px);
-}
-
-.hanuman-mobile-link {
-  display: flex;
-  padding: 0.75rem 1rem;
-  border-radius: 0.375rem;
-  transition: all 0.2s ease;
-}
-
-.hanuman-mobile-link:hover {
-  background-color: var(--nav-hover-bg);
-}
-
-.hanuman-mobile-link.active {
-  background-color: var(--nav-active-bg);
-  color: var(--nav-active-text);
-}
-
-/* Animation states */
-@keyframes navFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes navGlowPulse {
-  0%, 100% {
-    text-shadow: 0 0 5px rgba(255, 126, 0, 0.5);
-  }
-  50% {
-    text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
-  }
+.hanuman-nav-logo-glow {
+  @apply absolute inset-0 bg-gradient-to-tr from-hanuman-primary/20 to-hanuman-saffron/10 opacity-60;
 }
 
 .hanuman-nav-item {
-  animation: navFadeIn 0.3s ease-out forwards;
-  animation-delay: calc(var(--item-index) * 0.05s);
-  opacity: 0;
+  @apply px-3 py-2 text-sm font-medium rounded-md transition-colors;
 }
 
-.hanuman-nav-glow {
-  animation: navGlowPulse 3s ease-in-out infinite;
+.hanuman-nav-item-active {
+  @apply bg-hanuman-primary/20 text-hanuman-saffron;
 }
 
-/* Nav shadow with custom glow */
-.hanuman-nav-shadow {
-  box-shadow: var(--nav-glow);
+.hanuman-nav-item-inactive {
+  @apply text-white/70 hover:text-white hover:bg-white/10;
 }
 
-/* Cosmic nav decoration */
-.hanuman-nav-cosmic-decoration {
-  position: absolute;
-  bottom: -10px;
-  left: 0;
-  right: 0;
-  height: 10px;
-  background-image: 
-    radial-gradient(1px 1px at 10% 50%, rgba(255, 126, 0, 0.4) 0%, transparent 100%),
-    radial-gradient(1px 1px at 30% 50%, rgba(255, 215, 0, 0.3) 0%, transparent 100%),
-    radial-gradient(1px 1px at 50% 50%, rgba(46, 125, 50, 0.3) 0%, transparent 100%),
-    radial-gradient(1px 1px at 70% 50%, rgba(255, 126, 0, 0.3) 0%, transparent 100%),
-    radial-gradient(1px 1px at 90% 50%, rgba(255, 215, 0, 0.4) 0%, transparent 100%);
-  opacity: 0.6;
-  pointer-events: none;
+.hanuman-mobile-menu {
+  @apply bg-black/95 text-white border-r border-hanuman-saffron/20;
+}
+
+.hanuman-mobile-menu-item {
+  @apply px-4 py-3 rounded-md transition-colors;
+}
+
+.hanuman-mobile-menu-item-active {
+  @apply bg-hanuman-primary/20 text-hanuman-saffron;
+}
+
+.hanuman-mobile-menu-item-inactive {
+  @apply hover:bg-white/10 text-white/80 hover:text-white;
 }
