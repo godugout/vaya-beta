@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Moon, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -20,6 +19,18 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
 }) => {
   const { theme, toggleTheme } = useTheme();
   
+  // Since we're locked in dark mode, let's return null or remove this component
+  // This is the simplest approach without breaking the API
+  
+  // Alternative: Return just the SoftThemeToggle if that's requested
+  if (showSoftToggle) {
+    return <SoftThemeToggle variant={variant} className={className} />;
+  }
+  
+  // Otherwise return null - component effectively disabled
+  return null;
+  
+  /* Original code commented out as we don't need theme toggle anymore
   if (variant === 'switch') {
     return (
       <div className={cn("flex items-center gap-4", className)}>
@@ -91,4 +102,5 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
       )}
     </div>
   );
+  */
 };

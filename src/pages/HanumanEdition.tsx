@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { HanumanPromptItem } from "@/types/hanuman";
@@ -9,7 +8,7 @@ import ChatInputArea from "@/components/hanuman/ChatInputArea";
 import HanumanSidebar from "@/components/hanuman/HanumanSidebar";
 import HanumanResources from "@/components/hanuman/HanumanResources";
 import { motion } from "framer-motion";
-import { Flower, Menu, Moon, Sun } from "lucide-react";
+import { Flower, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/contexts/ThemeContext";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -61,7 +60,7 @@ const suggestedPrompts: HanumanPromptItem[] = [
 
 const HanumanEdition = () => {
   const { isSpanish, setLanguagePreference } = useLanguage();
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
   const [activeCategory, setActiveCategory] = useState("personal");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(false);
@@ -88,10 +87,6 @@ const HanumanEdition = () => {
     prompt => prompt.category === activeCategory
   );
 
-  const toggleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
-  };
-
   const toggleLanguage = () => {
     setLanguagePreference(isSpanish ? 'en' : 'es');
   };
@@ -101,11 +96,11 @@ const HanumanEdition = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="flex flex-col h-screen bg-gradient-to-b from-hanuman-bg-light to-white dark:from-hanuman-bg-dark dark:to-gray-900 overflow-hidden"
+      className="flex flex-col h-screen bg-gradient-to-b from-hanuman-bg-dark to-gray-900 overflow-hidden"
     >
       <div className="backdrop-pattern"></div>
       
-      <header className="py-3 px-4 md:px-6 relative border-b border-hanuman-primary/10 backdrop-blur-md bg-white/60 dark:bg-gray-900/60 z-10">
+      <header className="py-3 px-4 md:px-6 relative border-b border-hanuman-primary/10 backdrop-blur-md bg-gray-900/60 z-10">
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex items-center gap-3">
             <Button 
@@ -140,15 +135,6 @@ const HanumanEdition = () => {
               className="rounded-full"
             >
               <span className="font-medium text-sm">{isSpanish ? "EN" : "ES"}</span>
-            </Button>
-            
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              onClick={toggleTheme}
-              className="rounded-full text-hanuman-primary"
-            >
-              {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
             </Button>
             
             {!isMobile && (
