@@ -47,7 +47,7 @@ const SuggestedPrompts = ({
         {promptsToShow.map((prompt) => (
           <Card 
             key={prompt.id} 
-            className="hover:bg-muted/50 transition-colors cursor-pointer border-hanuman-primary/10 hover:border-hanuman-primary/30"
+            className="hover:bg-muted/50 transition-colors cursor-pointer border-hanuman-primary/10 hover:border-hanuman-primary/30 hanuman-glow"
             onClick={() => handleSelect(prompt.content)}
           >
             <CardContent className="p-2.5">
@@ -70,21 +70,21 @@ const SuggestedPrompts = ({
         </Button>
       )}
       
-      <div className="pt-3 border-t mt-4 border-gray-200 dark:border-gray-700">
-        <h4 className="text-xs font-medium mb-2">
+      <div className="pt-3 border-t mt-4 border-gray-200 dark:border-gray-700/20">
+        <h4 className="text-xs font-medium mb-2 text-hanuman-text-secondary">
           {isSpanish ? "Categorías" : "Categories"}
         </h4>
         <div className="flex flex-wrap gap-1.5">
-          <Button variant="outline" size="sm" className="text-xs py-1 h-auto">
+          <Button variant="outline" size="sm" className="text-xs py-1 h-auto bg-hanuman-bg-dark/40 border-hanuman-gold/20 text-hanuman-gold/90 hover:bg-hanuman-gold/10">
             {isSpanish ? "Familia" : "Family"}
           </Button>
-          <Button variant="outline" size="sm" className="text-xs py-1 h-auto">
+          <Button variant="outline" size="sm" className="text-xs py-1 h-auto bg-hanuman-bg-dark/40 border-hanuman-orange/20 text-hanuman-orange/90 hover:bg-hanuman-orange/10">
             {isSpanish ? "Tradiciones" : "Traditions"}
           </Button>
-          <Button variant="outline" size="sm" className="text-xs py-1 h-auto">
+          <Button variant="outline" size="sm" className="text-xs py-1 h-auto bg-hanuman-bg-dark/40 border-hanuman-cosmic-blue/20 text-hanuman-text-secondary hover:bg-hanuman-cosmic-blue/10">
             {isSpanish ? "Historia" : "History"}
           </Button>
-          <Button variant="outline" size="sm" className="text-xs py-1 h-auto">
+          <Button variant="outline" size="sm" className="text-xs py-1 h-auto bg-hanuman-bg-dark/40 border-hanuman-green/20 text-hanuman-green/90 hover:bg-hanuman-green/10">
             {isSpanish ? "Valores" : "Values"}
           </Button>
         </div>
