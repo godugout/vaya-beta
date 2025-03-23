@@ -45,6 +45,11 @@
   --muted: rgba(255, 255, 255, 0.1);
   --muted-foreground: var(--hanuman-text-secondary);
   --border: rgba(255, 255, 255, 0.1);
+  
+  /* Card styling */
+  --card-bg: rgba(18, 14, 18, 0.5);
+  --card-border: transparent;
+  --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
 }
 
 /* Cosmic background effects */
@@ -71,9 +76,9 @@
 /* Cards and containers */
 .hanuman-theme .card,
 .hanuman-theme .container-elevation {
-  background: rgba(18, 14, 18, 0.7);
-  border: 1px solid rgba(255, 215, 0, 0.1);
-  box-shadow: var(--hanuman-shadow-sm);
+  background: var(--card-bg);
+  border: var(--card-border);
+  box-shadow: var(--card-shadow);
   backdrop-filter: blur(10px);
 }
 
@@ -91,13 +96,6 @@
   height: 2px;
   background: var(--hanuman-gradient-orange);
   border-radius: 1px;
-}
-
-.sacred-border {
-  padding: 4px 10px;
-  border-radius: 12px;
-  background: rgba(255, 126, 0, 0.1);
-  border: 1px solid rgba(255, 215, 0, 0.2);
 }
 
 /* Buttons */
@@ -206,49 +204,40 @@
   background-color: rgba(255, 215, 0, 0.25);
 }
 
-/* Wizard steps */
-.hanuman-theme .wizard-step {
-  background: rgba(18, 14, 18, 0.7);
-  border: 1px solid rgba(255, 215, 0, 0.1);
-  border-radius: 1rem;
-  transition: all 0.3s ease;
-}
-
-.hanuman-theme .wizard-step.active {
-  border-color: rgba(255, 215, 0, 0.3);
-  box-shadow: var(--hanuman-shadow-gold);
-}
-
-/* Progress indicators */
-.hanuman-theme .progress-step {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
-  transition: all 0.2s ease;
-}
-
-.hanuman-theme .progress-step.active {
-  background: var(--hanuman-gold);
-  box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
-}
-
-/* Navigation */
-.hanuman-theme .nav-link {
-  color: var(--hanuman-text-secondary);
-  transition: all 0.2s ease;
-}
-
-.hanuman-theme .nav-link:hover {
-  color: var(--hanuman-text-primary);
-}
-
-.hanuman-theme .nav-link.active {
-  color: var(--hanuman-gold);
-}
-
 /* Focus states for accessibility */
 .hanuman-theme :focus-visible {
   outline: 2px solid var(--hanuman-gold);
   outline-offset: 2px;
+}
+
+/* Navigation-specific styles for Hanuman theme */
+.hanuman-theme .top-nav {
+  background: rgba(18, 14, 18, 0.3);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+}
+
+.hanuman-theme .top-nav.scrolled {
+  background: rgba(18, 14, 18, 0.8);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+/* Card styling enhancements */
+.hanuman-theme .ui-card {
+  background: rgba(18, 14, 18, 0.5);
+  border: none;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+/* Grid and layout enhancements */
+.hanuman-theme .grid-container {
+  gap: 1.5rem;
+}
+
+.hanuman-theme .sidebar-container {
+  background: rgba(18, 14, 18, 0.5);
+  border: none;
+  backdrop-filter: blur(10px);
 }

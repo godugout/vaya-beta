@@ -14,6 +14,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useBreakpoints } from "@/hooks/use-media-query";
 import { Card } from "@/components/ui/card";
+import { Container, Grid, GridItem } from "@/components/ui/grid-layout";
 
 const suggestedPrompts: HanumanPromptItem[] = [
   {
@@ -114,24 +115,22 @@ const HanumanEdition = () => {
         </div>
       </div>
       
-      <div className="container mx-auto py-6 md:py-12 px-4 relative z-10">
-        <div className="backdrop-blur-sm bg-gradient-to-br from-hanuman-orange/20 via-hanuman-saffron/10 to-hanuman-cosmic-blue/15 rounded-3xl shadow-[0_0_40px_rgba(255,126,0,0.15)] p-4 md:p-8 overflow-hidden border-none">
-          <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-hanuman-orange/10 blur-3xl rounded-full transform translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
-          <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-hanuman-cosmic-blue/10 blur-3xl rounded-full transform -translate-x-1/3 translate-y-1/3 pointer-events-none"></div>
-          <div className="absolute -bottom-32 -right-32 w-64 h-64 bg-hanuman-gold/10 blur-3xl rounded-full pointer-events-none"></div>
-          
-          <h1 className="text-3xl font-bold text-center mb-6 bg-clip-text text-transparent bg-gradient-to-r from-hanuman-gold to-hanuman-saffron relative z-10">
+      <Container maxWidth="2xl" className="py-6 md:py-12 relative z-10">
+        <div className="mb-8 text-center">
+          <h1 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-hanuman-gold to-hanuman-saffron">
             {isSpanish ? "Edición Hanuman" : "Hanuman Edition"}
           </h1>
-          <p className="text-white/80 text-center mb-8 max-w-xl mx-auto">
+          <p className="text-white/80 mt-2 max-w-2xl mx-auto">
             {isSpanish 
               ? "Sabiduría ancestral para preservar tus historias familiares" 
               : "Ancient wisdom to preserve your family stories"}
           </p>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <div className={`lg:col-span-3 ${isMobileMenuOpen || !isMobile ? 'block' : 'hidden'}`}>
-              <Card className="bg-black/40 backdrop-blur-md border-hanuman-saffron/20 p-4">
+        </div>
+        
+        <Grid cols={12} gap={6} className="min-h-[70vh]">
+          <GridItem colSpan={isMobile ? 12 : isTablet ? 4 : 3} className={isMobileMenuOpen || !isMobile ? 'block' : 'hidden'}>
+            <Card className="h-full bg-black/30 backdrop-blur-md border-none shadow-xl shadow-hanuman-saffron/5 overflow-hidden">
+              <div className="h-full p-4">
                 <HanumanSidebar 
                   onCategorySelect={(category) => {
                     setActiveCategory(category);
@@ -139,25 +138,37 @@ const HanumanEdition = () => {
                   }} 
                   activeCategory={activeCategory} 
                 />
-              </Card>
-            </div>
-            
-            <div className="lg:col-span-6 flex flex-col">
-              <Card className="bg-black/40 backdrop-blur-md border-hanuman-saffron/20 flex-1 flex flex-col overflow-hidden">
-                <div className="p-4 border-b border-hanuman-saffron/20">
-                  <div className="flex justify-between items-center">
+              </div>
+            </Card>
+          </GridItem>
+          
+          <GridItem colSpan={isMobile ? 12 : isTablet ? 8 : 6} className="flex flex-col">
+            <Card className="h-full bg-black/30 backdrop-blur-md border-none shadow-xl shadow-hanuman-gold/5 flex flex-col overflow-hidden">
+              <div className="p-4 border-b border-hanuman-saffron/20">
+                <div className="flex justify-between items-center">
+                  <Button 
+                    variant="ghost" 
+                    size="icon"
+                    className="lg:hidden text-hanuman-gold"
+                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                  >
+                    <Menu className="h-5 w-5" />
+                  </Button>
+                  
+                  <h2 className="text-xl font-medium text-hanuman-gold flex items-center">
+                    <span className="hidden sm:inline">{isSpanish ? "Conversación Sagrada" : "Sacred Conversation"}</span>
+                    <span className="sm:hidden">{isSpanish ? "Chat" : "Chat"}</span>
+                  </h2>
+                  
+                  <div className="flex items-center gap-2">
                     <Button 
                       variant="ghost" 
                       size="icon"
-                      className="lg:hidden text-hanuman-gold"
-                      onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                      className="md:hidden text-hanuman-gold"
+                      onClick={() => setIsRightSidebarOpen(!isRightSidebarOpen)}
                     >
-                      <Menu className="h-5 w-5" />
+                      <Flower className="h-5 w-5" />
                     </Button>
-                    
-                    <h2 className="text-xl font-medium text-hanuman-gold">
-                      {isSpanish ? "Conversación Sagrada" : "Sacred Conversation"}
-                    </h2>
                     
                     <Button 
                       variant="ghost" 
@@ -169,35 +180,37 @@ const HanumanEdition = () => {
                     </Button>
                   </div>
                 </div>
+              </div>
+              
+              <ChatMessages messages={messages} isLoading={isLoading} />
+              
+              <div className="mt-auto p-4 border-t border-hanuman-saffron/20">
+                <SuggestedPrompts 
+                  prompts={filteredPrompts.slice(0, 3)} 
+                  onSelect={handlePromptSelect} 
+                  isSpanish={isSpanish} 
+                />
                 
-                <ChatMessages messages={messages} isLoading={isLoading} />
-                
-                <div className="mt-auto p-4 border-t border-hanuman-saffron/20">
-                  <SuggestedPrompts 
-                    prompts={filteredPrompts.slice(0, 3)} 
-                    onSelect={handlePromptSelect} 
-                    isSpanish={isSpanish} 
-                  />
-                  
-                  <ChatInputArea
-                    input={input}
-                    setInput={setInput}
-                    isLoading={isLoading}
-                    onSubmit={handleSubmit}
-                    onMorePrompts={handleMorePrompts}
-                  />
-                </div>
-              </Card>
-            </div>
-            
-            <div className={`lg:col-span-3 ${(isDesktop || isRightSidebarOpen) ? 'block' : 'hidden'}`}>
-              <Card className="bg-black/40 backdrop-blur-md border-hanuman-saffron/20 p-4">
+                <ChatInputArea
+                  input={input}
+                  setInput={setInput}
+                  isLoading={isLoading}
+                  onSubmit={handleSubmit}
+                  onMorePrompts={handleMorePrompts}
+                />
+              </div>
+            </Card>
+          </GridItem>
+          
+          <GridItem colSpan={isMobile ? 12 : isTablet ? 4 : 3} className={`${(isDesktop || isRightSidebarOpen) ? 'block' : 'hidden'}`}>
+            <Card className="h-full bg-black/30 backdrop-blur-md border-none shadow-xl shadow-hanuman-gold/5 overflow-hidden">
+              <div className="h-full p-4">
                 <HanumanResources />
-              </Card>
-            </div>
-          </div>
-        </div>
-      </div>
+              </div>
+            </Card>
+          </GridItem>
+        </Grid>
+      </Container>
     </div>
   );
 };

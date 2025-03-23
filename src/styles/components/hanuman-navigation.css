@@ -3,7 +3,7 @@
 
 .hanuman-nav {
   --nav-bg-transparent: transparent;
-  --nav-bg-solid: rgba(0, 0, 0, 0.8);
+  --nav-bg-solid: rgba(18, 14, 18, 0.85);
   --nav-border: rgba(255, 126, 0, 0.2);
   --nav-text: rgba(255, 255, 255, 0.9);
   --nav-text-muted: rgba(255, 255, 255, 0.7);
@@ -30,11 +30,11 @@
   position: relative;
   overflow: hidden;
   border-radius: 0.75rem;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255, 126, 0, 0.3);
+  border: 1px solid rgba(255, 126, 0, 0.2);
 }
 
 .hanuman-nav-logo::after {
@@ -82,9 +82,10 @@
 
 /* Mobile menu styles */
 .hanuman-mobile-menu {
-  background-color: rgba(0, 0, 0, 0.95);
-  border-right: 1px solid var(--nav-border);
+  background-color: rgba(18, 14, 18, 0.95);
+  border: none;
   box-shadow: var(--nav-glow);
+  backdrop-filter: blur(12px);
 }
 
 .hanuman-mobile-link {

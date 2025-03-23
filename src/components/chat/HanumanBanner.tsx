@@ -12,7 +12,7 @@ interface HanumanBannerProps {
 export const HanumanBanner: React.FC<HanumanBannerProps> = ({ onFamilySettingsClick }) => {
   return (
     <motion.div 
-      className="relative overflow-hidden rounded-lg bg-gradient-to-r from-hanuman-cosmic-blue to-hanuman-cosmic-purple p-6 mb-6"
+      className="relative overflow-hidden rounded-lg bg-gradient-to-r from-hanuman-cosmic-blue/40 to-hanuman-cosmic-purple/40 p-6 mb-6 backdrop-blur-sm border-none shadow-lg shadow-hanuman-gold/10"
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
@@ -40,7 +40,7 @@ export const HanumanBanner: React.FC<HanumanBannerProps> = ({ onFamilySettingsCl
         ))}
       </div>
       
-      <div className="absolute inset-0 bg-[url('/lovable-uploads/dbfde90d-4253-4295-b1e9-e9bb049cd9cd.png')] opacity-30" />
+      <div className="absolute inset-0 bg-[url('/lovable-uploads/dbfde90d-4253-4295-b1e9-e9bb049cd9cd.png')] opacity-20" />
       
       {/* Cosmic dust and nebula effects */}
       <div className="absolute inset-0">
