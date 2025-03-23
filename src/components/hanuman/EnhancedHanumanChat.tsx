@@ -129,9 +129,13 @@ export const EnhancedHanumanChat: React.FC<EnhancedHanumanChatProps> = ({ active
   };
 
   return (
-    <Card className="hanuman-chat-container bg-black/30 backdrop-blur-sm rounded-lg border border-hanuman-orange/20 h-[75vh] flex flex-col overflow-hidden">
+    <Card className="backdrop-blur-sm bg-gradient-to-br from-amber-900/20 via-amber-800/10 to-green-900/15 rounded-3xl shadow-[0_0_40px_rgba(255,126,0,0.15)] border-none overflow-hidden h-[75vh] flex flex-col relative">
+      {/* Decorative background elements */}
+      <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-hanuman-primary/10 blur-3xl rounded-full transform translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-hanuman-green/10 blur-3xl rounded-full transform -translate-x-1/3 translate-y-1/3 pointer-events-none"></div>
+      
       {/* Chat header with subtle shine effect */}
-      <div className="p-4 border-b border-hanuman-orange/20 bg-gradient-to-r from-black/40 via-hanuman-orange/10 to-black/40">
+      <div className="p-4 border-b border-hanuman-orange/20 bg-gradient-to-r from-black/40 via-hanuman-orange/10 to-black/40 relative z-10">
         <h2 className="text-lg font-semibold text-hanuman-gold flex items-center">
           <span className="mr-2">🕉️</span> 
           Family Stories Explorer
@@ -142,12 +146,12 @@ export const EnhancedHanumanChat: React.FC<EnhancedHanumanChatProps> = ({ active
       </div>
       
       {/* Chat message area */}
-      <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-4 space-y-4 relative z-10">
         <ChatMessages messages={messages} isLoading={isLoading} />
       </div>
       
       {/* Suggested prompts */}
-      <div className="px-4 py-2 border-t border-hanuman-orange/20 bg-black/20">
+      <div className="px-4 py-2 border-t border-hanuman-orange/20 bg-black/20 relative z-10">
         <p className="text-xs text-hanuman-gold mb-2">Suggested questions:</p>
         <div className="flex gap-2 overflow-x-auto pb-2">
           <AnimatePresence mode="sync">
@@ -174,9 +178,9 @@ export const EnhancedHanumanChat: React.FC<EnhancedHanumanChatProps> = ({ active
       </div>
       
       {/* Input area with recording visualization */}
-      <div className="border-t border-hanuman-orange/20 p-4 bg-black/40">
+      <div className="border-t border-hanuman-orange/20 p-4 bg-gradient-to-b from-black/40 to-black/20 relative z-10">
         {isRecording && (
-          <div className="mb-2 p-2 bg-hanuman-orange/10 rounded-lg">
+          <div className="mb-2 p-3 bg-gradient-to-r from-hanuman-primary/10 to-hanuman-saffron/10 rounded-xl border border-hanuman-orange/20">
             <div className="flex items-center justify-between">
               <div className="flex-1">
                 <div className="flex items-center gap-3">
@@ -231,14 +235,14 @@ export const EnhancedHanumanChat: React.FC<EnhancedHanumanChatProps> = ({ active
               <Button 
                 type="button"
                 onClick={toggleRecording}
-                className="bg-hanuman-purple/80 hover:bg-hanuman-purple text-white"
+                className="bg-gradient-to-r from-hanuman-purple/80 to-hanuman-cosmic-purple/80 hover:from-hanuman-purple hover:to-hanuman-cosmic-purple text-white"
               >
                 <Mic className="h-4 w-4" />
               </Button>
               
               <Button 
                 type="submit"
-                className="bg-hanuman-orange/80 hover:bg-hanuman-orange text-white"
+                className="bg-gradient-to-r from-hanuman-primary/80 to-hanuman-saffron/80 hover:from-hanuman-primary hover:to-hanuman-saffron text-white"
                 disabled={!input.trim()}
               >
                 <Send className="h-4 w-4" />

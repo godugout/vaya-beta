@@ -25,25 +25,32 @@ const HanumanEdition: React.FC = () => {
       <EnhancedHanumanBackground />
       <HanumanTopNav />
       
-      <div className="flex-1 container mx-auto px-4 py-8 mt-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {/* Left Sidebar */}
-          <div className="md:col-span-1 lg:col-span-1">
-            <HanumanSidebar 
-              categories={categories} 
-              activeCategory={activeCategory} 
-              onCategorySelect={setActiveCategory} 
-            />
-          </div>
+      <div className="container max-w-7xl mx-auto py-12 px-4 relative z-10 mt-16">
+        <div className="backdrop-blur-sm bg-gradient-to-br from-amber-900/20 via-amber-800/10 to-green-900/15 rounded-3xl shadow-[0_0_40px_rgba(255,126,0,0.15)] p-8 overflow-hidden border-none">
+          {/* Decorative cosmic elements */}
+          <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-hanuman-primary/10 blur-3xl rounded-full transform translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
+          <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-hanuman-green/10 blur-3xl rounded-full transform -translate-x-1/3 translate-y-1/3 pointer-events-none"></div>
+          <div className="absolute -bottom-32 -right-32 w-64 h-64 bg-hanuman-saffron/10 blur-3xl rounded-full pointer-events-none"></div>
           
-          {/* Main Chat Area */}
-          <div className="md:col-span-2 lg:col-span-2">
-            <EnhancedHanumanChat activeCategory={activeCategory} />
-          </div>
-          
-          {/* Right Sidebar */}
-          <div className="hidden lg:block lg:col-span-1">
-            <HanumanResourcesSidebar />
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 relative z-10">
+            {/* Left Sidebar */}
+            <div className="md:col-span-1 lg:col-span-1">
+              <HanumanSidebar 
+                categories={categories} 
+                activeCategory={activeCategory} 
+                onCategorySelect={setActiveCategory} 
+              />
+            </div>
+            
+            {/* Main Chat Area */}
+            <div className="md:col-span-2 lg:col-span-2">
+              <EnhancedHanumanChat activeCategory={activeCategory} />
+            </div>
+            
+            {/* Right Sidebar */}
+            <div className="hidden lg:block lg:col-span-1">
+              <HanumanResourcesSidebar />
+            </div>
           </div>
         </div>
       </div>
