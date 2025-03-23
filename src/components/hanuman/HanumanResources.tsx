@@ -1,120 +1,129 @@
 
 import React from "react";
-import { Bookmark, Download, ExternalLink, FileText, Flag, Info, Link, Share2 } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { motion } from "framer-motion";
+import { Book, BookOpen, Bookmark, FileText, Download, ExternalLink } from "lucide-react";
+import { HanumanResource } from "@/types/hanuman";
+import { Card, CardContent } from "@/components/ui/card";
 
-interface HanumanResource {
-  id: string;
-  title: string;
-  description: string;
-  icon: React.ElementType;
-  link?: string;
-}
-
-interface HanumanResourcesProps {
-  onResourceSelect?: (resource: HanumanResource) => void;
-}
-
-const HanumanResources: React.FC<HanumanResourcesProps> = ({ onResourceSelect }) => {
+const HanumanResources: React.FC = () => {
   const { isSpanish } = useLanguage();
   
   const resources: HanumanResource[] = [
     {
-      id: "guide",
-      title: isSpanish ? "Guía de Conversación" : "Conversation Guide",
-      description: isSpanish ? "Consejos para una conversación significativa" : "Tips for meaningful conversation",
-      icon: FileText,
-      link: "#guide"
+      id: "1",
+      title: isSpanish ? "Guía para Entrevistas Familiares" : "Family Interview Guide",
+      description: isSpanish ? "Preguntas para entrevistar a tus familiares" : "Questions to interview family members",
+      icon: Book,
+      link: "#"
     },
     {
-      id: "templates",
-      title: isSpanish ? "Plantillas" : "Templates",
-      description: isSpanish ? "Preguntas preparadas para momentos especiales" : "Prepared questions for special moments",
+      id: "2",
+      title: isSpanish ? "Técnicas de Narración" : "Storytelling Techniques",
+      description: isSpanish ? "Aprende a compartir historias de manera efectiva" : "Learn to share stories effectively",
+      icon: BookOpen,
+      link: "#"
+    },
+    {
+      id: "3",
+      title: isSpanish ? "Tradiciones Familiares Comunes" : "Common Family Traditions",
+      description: isSpanish ? "Ideas para preservar la herencia cultural" : "Ideas for preserving cultural heritage",
       icon: Bookmark,
-      link: "#templates"
+      link: "#"
     },
     {
-      id: "share",
-      title: isSpanish ? "Compartir" : "Share Story",
-      description: isSpanish ? "Comparte tu historia con la familia" : "Share your story with family",
-      icon: Share2,
-      link: "#share"
-    },
-    {
-      id: "export",
-      title: isSpanish ? "Exportar" : "Export",
-      description: isSpanish ? "Guarda esta conversación" : "Save this conversation",
-      icon: Download,
-      link: "#export"
+      id: "4",
+      title: isSpanish ? "Plantilla para árbol genealógico" : "Family Tree Template",
+      description: isSpanish ? "Documento para rastrear la historia familiar" : "Document to track family history",
+      icon: FileText,
+      link: "#"
     }
   ];
-
-  const handleClick = (resource: HanumanResource) => {
-    if (onResourceSelect) {
-      onResourceSelect(resource);
-    }
-  };
-
+  
   return (
-    <div className="side-column">
-      <div className="side-column-header flex items-center justify-between">
-        <span>{isSpanish ? "Recursos" : "Resources"}</span>
-        <Info size={16} className="text-gray-500" />
+    <div className="space-y-6">
+      <div>
+        <h2 className="text-lg font-semibold mb-4">
+          {isSpanish ? "Recursos para Historias" : "Storytelling Resources"}
+        </h2>
+        
+        <div className="space-y-3">
+          {resources.map((resource) => {
+            const ResourceIcon = resource.icon;
+            
+            return (
+              <Card 
+                key={resource.id}
+                className="border-hanuman-primary/10 hover:border-hanuman-primary/30 transition-all hover:bg-hanuman-primary/5"
+              >
+                <CardContent className="p-3">
+                  <div className="flex items-start gap-3">
+                    <div className="bg-hanuman-primary/10 rounded-full p-2 flex-shrink-0">
+                      <ResourceIcon className="h-4 w-4 text-hanuman-primary" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-sm font-medium truncate">{resource.title}</h3>
+                      <p className="text-xs text-gray-600 dark:text-gray-400 mt-1 line-clamp-2">{resource.description}</p>
+                    </div>
+                    <Button 
+                      size="icon" 
+                      variant="ghost" 
+                      className="h-8 w-8 flex-shrink-0 text-gray-500 hover:text-hanuman-primary"
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
       </div>
       
-      <div className="side-column-body space-y-4">
-        {resources.map((resource) => (
-          <motion.div
-            key={resource.id}
-            whileHover={{ y: -2 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => handleClick(resource)}
-            className="cursor-pointer"
-          >
-            <Card className="overflow-hidden">
-              <CardContent className="p-4">
-                <div className="flex gap-3">
-                  <div className="h-10 w-10 rounded-full bg-hanuman-primary/10 flex items-center justify-center">
-                    <resource.icon size={18} className="text-hanuman-primary" />
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-medium">{resource.title}</h4>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                      {resource.description}
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        ))}
+      <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
+        <h3 className="text-sm font-medium mb-3">
+          {isSpanish ? "Herramientas y Plantillas" : "Tools & Templates"}
+        </h3>
         
-        {/* Hanuman illustration card */}
-        <Card className="bg-gradient-to-br from-hanuman-bg-light to-white dark:from-hanuman-bg-dark dark:to-gray-900 overflow-hidden border border-hanuman-primary/20">
+        <Card className="bg-gradient-to-br from-hanuman-purple/10 to-hanuman-primary/5 border-hanuman-purple/20">
           <CardContent className="p-4">
-            <div className="text-center space-y-2">
-              <h4 className="text-sm font-medium text-hanuman-primary">
-                {isSpanish ? "Sabiduría de Hanuman" : "Hanuman's Wisdom"}
-              </h4>
-              <p className="text-xs">
-                {isSpanish 
-                  ? "La fuerza de Hanuman viene de su devoción y servicio." 
-                  : "Hanuman's strength comes from his devotion and service."}
-              </p>
-              <div className="h-24 flex items-center justify-center opacity-60">
-                <div className="bg-hanuman-bg bg-contain bg-center bg-no-repeat h-full w-full" />
-              </div>
-            </div>
+            <h4 className="text-sm font-medium mb-2 flex items-center gap-2">
+              <Download className="h-4 w-4 text-hanuman-purple" />
+              <span>{isSpanish ? "Kit de Historia Familiar" : "Family History Kit"}</span>
+            </h4>
+            <p className="text-xs text-gray-600 dark:text-gray-400 mb-3">
+              {isSpanish 
+                ? "Descarga estas plantillas para documentar tu historia familiar completa" 
+                : "Download these templates to document your complete family history"}
+            </p>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="w-full border-hanuman-purple/30 text-hanuman-purple hover:bg-hanuman-purple/10"
+            >
+              {isSpanish ? "Descargar Kit" : "Download Kit"}
+            </Button>
           </CardContent>
         </Card>
       </div>
       
-      <div className="side-column-footer">
-        <div className="flex justify-center items-center gap-1 text-xs">
-          <ExternalLink size={12} />
-          <span>{isSpanish ? "Más recursos" : "More resources"}</span>
+      <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
+        <h3 className="text-sm font-medium mb-3">
+          {isSpanish ? "Aprenda Más" : "Learn More"}
+        </h3>
+        
+        <div className="text-xs text-gray-600 dark:text-gray-400">
+          <p>{isSpanish 
+            ? "Explora cómo la documentación de historias familiares puede fortalecer los lazos entre generaciones" 
+            : "Explore how documenting family stories can strengthen bonds across generations"}
+          </p>
+          <Button 
+            variant="link" 
+            size="sm" 
+            className="p-0 h-auto text-xs text-hanuman-primary mt-2"
+          >
+            {isSpanish ? "Leer artículo completo" : "Read full article"} →
+          </Button>
         </div>
       </div>
     </div>

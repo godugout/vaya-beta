@@ -37,22 +37,22 @@ const SuggestedPrompts = ({
   };
   
   return (
-    <div className="space-y-4">
-      <div className="flex items-center gap-2 mb-4">
-        <Sparkles className="h-5 w-5 text-amber-500" />
-        <h3 className="text-lg font-medium">
-          {isSpanish ? "Ideas para compartir" : "Sharing Ideas"}
+    <div className="space-y-3">
+      <div className="flex items-center gap-2 mb-3">
+        <Sparkles className="h-4 w-4 text-amber-500" />
+        <h3 className="text-sm font-medium">
+          {isSpanish ? "Ideas para compartir" : "Conversation Starters"}
         </h3>
       </div>
       
-      <div className="grid gap-3">
+      <div className="grid gap-2">
         {promptsToShow.map((prompt) => (
           <Card 
             key={prompt.id} 
-            className="hover:bg-muted/50 transition-colors cursor-pointer"
+            className="hover:bg-muted/50 transition-colors cursor-pointer border-hanuman-primary/10 hover:border-hanuman-primary/30"
             onClick={() => handleSelect(prompt.content)}
           >
-            <CardContent className="p-3">
+            <CardContent className="p-2.5">
               <div className="font-medium text-sm">{prompt.content}</div>
             </CardContent>
           </Card>
@@ -64,7 +64,7 @@ const SuggestedPrompts = ({
           variant="ghost"
           size="sm"
           onClick={() => setExpanded(!expanded)}
-          className="w-full text-sm"
+          className="w-full text-xs hover:text-hanuman-primary hover:bg-hanuman-primary/5"
         >
           {expanded
             ? isSpanish ? "Mostrar menos" : "Show less"
@@ -72,21 +72,21 @@ const SuggestedPrompts = ({
         </Button>
       )}
       
-      <div className="pt-4 border-t mt-6">
-        <h4 className="text-sm font-medium mb-2">
+      <div className="pt-3 border-t mt-4 border-gray-200 dark:border-gray-700">
+        <h4 className="text-xs font-medium mb-2">
           {isSpanish ? "Categorías" : "Categories"}
         </h4>
-        <div className="flex flex-wrap gap-2">
-          <Button variant="outline" size="sm">
+        <div className="flex flex-wrap gap-1.5">
+          <Button variant="outline" size="sm" className="text-xs py-1 h-auto">
             {isSpanish ? "Familia" : "Family"}
           </Button>
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" className="text-xs py-1 h-auto">
             {isSpanish ? "Tradiciones" : "Traditions"}
           </Button>
-          <Button variant="outline" size="sm">
-            {isSpanish ? "Celebraciones" : "Celebrations"}
+          <Button variant="outline" size="sm" className="text-xs py-1 h-auto">
+            {isSpanish ? "Historia" : "History"}
           </Button>
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" className="text-xs py-1 h-auto">
             {isSpanish ? "Valores" : "Values"}
           </Button>
         </div>

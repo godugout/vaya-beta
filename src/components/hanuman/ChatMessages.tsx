@@ -26,7 +26,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ messages, isLoading }) => {
   return (
     <div
       ref={chatContainerRef}
-      className="chat-body"
+      className="chat-body flex-1 overflow-y-auto p-4 md:p-6"
     >
       {messages.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-full text-center p-6">
@@ -62,7 +62,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ messages, isLoading }) => {
           </motion.div>
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-4 max-w-4xl mx-auto">
           {messages.map((message, index) => (
             <motion.div
               key={index}
@@ -74,13 +74,13 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ messages, isLoading }) => {
               }`}
             >
               {message.role === "assistant" && (
-                <Avatar className="h-8 w-8 border-2 border-hanuman-primary/20 mt-1">
+                <Avatar className="h-8 w-8 border-2 border-hanuman-primary/20 mt-1 flex-shrink-0">
                   <AvatarImage src="/assets/hanuman-avatar.png" alt="Hanuman" />
                   <AvatarFallback className="bg-hanuman-primary text-white">H</AvatarFallback>
                 </Avatar>
               )}
               <div
-                className={`max-w-[80%] rounded-2xl p-4 shadow-sm ${
+                className={`max-w-[85%] md:max-w-[75%] rounded-2xl p-4 shadow-sm ${
                   message.role === "user"
                     ? "bg-hanuman-primary text-white"
                     : "bg-white dark:bg-gray-800 border border-hanuman-accent/20"
@@ -91,7 +91,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ messages, isLoading }) => {
                 </div>
               </div>
               {message.role === "user" && (
-                <Avatar className="h-8 w-8 bg-hanuman-purple/20 border-2 border-hanuman-purple/20 mt-1">
+                <Avatar className="h-8 w-8 bg-hanuman-purple/20 border-2 border-hanuman-purple/20 mt-1 flex-shrink-0">
                   <AvatarFallback className="text-hanuman-purple">
                     {isSpanish ? "U" : "Y"}  
                   </AvatarFallback>
@@ -106,9 +106,9 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ messages, isLoading }) => {
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="flex items-start gap-3 mt-4"
+          className="flex items-start gap-3 mt-4 max-w-4xl mx-auto"
         >
-          <Avatar className="h-8 w-8 border-2 border-hanuman-primary/20 mt-1">
+          <Avatar className="h-8 w-8 border-2 border-hanuman-primary/20 mt-1 flex-shrink-0">
             <AvatarImage src="/assets/hanuman-avatar.png" alt="Hanuman" />
             <AvatarFallback className="bg-hanuman-primary text-white">H</AvatarFallback>
           </Avatar>

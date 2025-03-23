@@ -1,4 +1,6 @@
 
+import React from "react";
+
 export interface HanumanMessage {
   role: 'user' | 'assistant';
   content: string;
@@ -34,3 +36,4 @@ export interface HanumanChatHook {
   handlePromptSelect: (prompt: string) => void;
   handleMorePrompts: () => void;
 }
+

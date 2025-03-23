@@ -1,6 +1,6 @@
 
 import React, { useState, FormEvent } from "react";
-import { Send, Mic, Plus, Sparkles } from "lucide-react";
+import { Send, Mic, Plus, Sparkles, Image } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { motion } from "framer-motion";
@@ -38,16 +38,16 @@ const ChatInputArea: React.FC<ChatInputAreaProps> = ({
   };
 
   return (
-    <div className="chat-footer">
-      <form onSubmit={onSubmit} className="space-y-3">
+    <div className="chat-footer p-4 bg-white/70 dark:bg-gray-900/70 backdrop-blur-md border-t border-hanuman-primary/10">
+      <form onSubmit={onSubmit} className="space-y-2 max-w-4xl mx-auto">
         <div className="relative">
           <Textarea
             placeholder={isSpanish ? "Escribe tu mensaje..." : "Type your message..."}
             value={input}
             onChange={handleInputChange}
             onKeyDown={handleKeyPress}
-            className="input-hanuman resize-none pr-20"
-            rows={3}
+            className="input-hanuman resize-none pr-24 min-h-[80px] md:min-h-[60px] bg-white/80 dark:bg-gray-800/80 border-hanuman-primary/20 focus:border-hanuman-primary"
+            rows={2}
             disabled={isLoading}
           />
           
@@ -61,25 +61,35 @@ const ChatInputArea: React.FC<ChatInputAreaProps> = ({
               type="button"
               size="icon"
               variant="ghost"
-              className="rounded-full h-8 w-8 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700"
+              className="rounded-full h-9 w-9 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700"
               onClick={() => setIsRecording(!isRecording)}
               disabled={isLoading}
             >
-              <Mic size={16} className={isRecording ? "text-hanuman-primary" : ""} />
+              <Mic size={18} className={isRecording ? "text-hanuman-primary" : ""} />
+            </Button>
+            
+            <Button
+              type="button"
+              size="icon"
+              variant="ghost"
+              className="rounded-full h-9 w-9 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700"
+              disabled={isLoading}
+            >
+              <Image size={18} />
             </Button>
             
             <Button
               type="submit"
               size="icon"
-              className="rounded-full h-8 w-8 bg-hanuman-primary hover:bg-hanuman-primary/90 text-white"
+              className="rounded-full h-9 w-9 bg-hanuman-primary hover:bg-hanuman-primary/90 text-white"
               disabled={isLoading || !input.trim()}
             >
-              <Send size={16} />
+              <Send size={18} />
             </Button>
           </motion.div>
         </div>
         
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center text-xs text-gray-500">
           <Button
             type="button"
             variant="ghost"
@@ -91,8 +101,8 @@ const ChatInputArea: React.FC<ChatInputAreaProps> = ({
             <span>{isSpanish ? "Más ideas" : "More ideas"}</span>
           </Button>
           
-          <div className="text-xs text-gray-500">
-            {isSpanish ? "Powered by Hanuman Edition" : "Powered by Hanuman Edition"}
+          <div className="text-xs">
+            {isSpanish ? "Hanuman Edition" : "Hanuman Edition"}
           </div>
         </div>
       </form>

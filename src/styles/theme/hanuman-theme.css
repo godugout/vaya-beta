@@ -221,38 +221,7 @@
   outline: none;
 }
 
-/* Column layout for the chat interface */
-.hanuman-theme .three-column-layout {
-  display: grid;
-  grid-template-columns: 280px 1fr 320px;
-  gap: var(--spacing-4);
-  height: calc(100vh - 160px);
-  max-height: 900px;
-}
-
 /* Chat container specific styles */
-.hanuman-theme .chat-container {
-  display: flex;
-  flex-direction: column;
-  border-radius: 0.75rem;
-  overflow: hidden;
-  background-color: var(--card-bg);
-  height: 100%;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-}
-
-.hanuman-theme .chat-column {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.hanuman-theme .chat-header {
-  padding: var(--spacing-4);
-  border-bottom: 1px solid var(--border-color);
-  background-color: var(--card-bg);
-}
-
 .hanuman-theme .chat-body {
   flex-grow: 1;
   overflow-y: auto;
@@ -262,94 +231,8 @@
 }
 
 .hanuman-theme .chat-footer {
-  padding: var(--spacing-4);
   border-top: 1px solid var(--border-color);
   background-color: var(--card-bg);
-}
-
-.hanuman-theme .side-column {
-  background-color: var(--card-bg);
-  border-radius: 0.75rem;
-  border: 1px solid var(--border-color);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-.hanuman-theme .side-column-header {
-  padding: var(--spacing-4);
-  border-bottom: 1px solid var(--border-color);
-  font-weight: var(--font-weight-semibold);
-}
-
-.hanuman-theme .side-column-body {
-  padding: var(--spacing-4);
-  flex-grow: 1;
-  overflow-y: auto;
-}
-
-.hanuman-theme .side-column-footer {
-  padding: var(--spacing-3) var(--spacing-4);
-  border-top: 1px solid var(--border-color);
-  text-align: center;
-  font-size: var(--font-size-small);
-  color: var(--text-secondary);
-}
-
-/* Specific height adjustments for different viewport sizes */
-@media (max-width: 1200px) {
-  .hanuman-theme .three-column-layout {
-    grid-template-columns: 240px 1fr 280px;
-  }
-}
-
-@media (max-width: 992px) {
-  .hanuman-theme .three-column-layout {
-    grid-template-columns: 200px 1fr 240px;
-  }
-}
-
-@media (max-width: 768px) {
-  .hanuman-theme .three-column-layout {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr auto;
-  }
-  
-  .hanuman-theme .side-column {
-    height: auto;
-  }
-  
-  .hanuman-theme .left-column {
-    display: none;
-  }
-  
-  .hanuman-theme .right-column {
-    display: none;
-  }
-  
-  .hanuman-theme .mobile-nav {
-    display: flex;
-  }
-}
-
-/* Animation effects */
-@keyframes gentle-pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
-}
-
-.hanuman-theme .pulse-effect {
-  animation: gentle-pulse 2s infinite ease-in-out;
-}
-
-@keyframes fade-in {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.hanuman-theme .fade-in {
-  animation: fade-in 0.5s ease-out forwards;
 }
 
 /* Hanuman specific UI elements */
@@ -396,7 +279,96 @@
   background-size: 80px 80px;
 }
 
+/* Animation effects */
+@keyframes gentle-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.hanuman-theme .pulse-effect {
+  animation: gentle-pulse 2s infinite ease-in-out;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hanuman-theme .fade-in {
+  animation: fade-in 0.5s ease-out forwards;
+}
+
+/* 2-Column Layout for desktop */
+@media (min-width: 1024px) {
+  .hanuman-theme main {
+    display: flex;
+    height: calc(100vh - 64px - 41px); /* Subtract header and footer height */
+  }
+  
+  .hanuman-theme .left-column {
+    width: 280px;
+    flex-shrink: 0;
+    border-right: 1px solid var(--border-color);
+    height: 100%;
+    overflow-y: auto;
+  }
+  
+  .hanuman-theme .chat-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0; /* Allow the flex item to shrink below its content size */
+  }
+  
+  .hanuman-theme .right-column {
+    width: 320px;
+    flex-shrink: 0;
+    border-left: 1px solid var(--border-color);
+    height: 100%;
+    overflow-y: auto;
+  }
+  
+  .hanuman-theme .chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .hanuman-theme .chat-header {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .hanuman-theme .chat-body {
+    flex: 1;
+    overflow-y: auto;
+  }
+  
+  .hanuman-theme .chat-footer {
+    padding: 1rem;
+    border-top: 1px solid var(--border-color);
+  }
+}
+
 /* Responsive adjustments */
+@media (max-width: 1023px) {
+  .hanuman-theme .three-column-layout {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .hanuman-theme .left-column,
+  .hanuman-theme .right-column {
+    width: 100%;
+  }
+  
+  .hanuman-theme .chat-column {
+    flex: 1;
+    margin: 1rem 0;
+  }
+}
+
 @media (max-width: 640px) {
   .hanuman-theme .section-title {
     font-size: 1.5rem;
