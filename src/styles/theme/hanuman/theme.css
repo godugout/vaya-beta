@@ -18,12 +18,13 @@
   --section-padding-y: 2rem;
   --section-padding-x: 1.5rem;
   
-  /* Glow effects */
-  --hanuman-text-glow: 0 0 8px rgba(255, 126, 0, 0.2);
-  --hanuman-card-glow: 0 8px 30px rgba(0, 0, 0, 0.3), 0 0 10px rgba(255, 126, 0, 0.1);
-  --hanuman-input-glow: 0 0 0 2px rgba(255, 126, 0, 0.2);
+  /* Enhanced glow effects */
+  --hanuman-text-glow: 0 0 10px rgba(255, 126, 0, 0.25);
+  --hanuman-card-glow: 0 8px 30px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 126, 0, 0.15);
+  --hanuman-input-glow: 0 0 0 2px rgba(255, 126, 0, 0.25);
+  --hanuman-button-glow: 0 0 20px rgba(255, 126, 0, 0.3);
   
-  /* Additional colors */
+  /* Rich background & card colors */
   --hanuman-card-bg: rgba(18, 14, 18, 0.4);
   --hanuman-panel-bg: rgba(18, 14, 18, 0.5);
   --hanuman-input-bg: rgba(255, 255, 255, 0.05);
@@ -33,6 +34,11 @@
   --hanuman-text-primary: rgba(255, 255, 255, 0.9);
   --hanuman-text-secondary: rgba(255, 255, 255, 0.7);
   --hanuman-text-muted: rgba(255, 255, 255, 0.5);
+  
+  /* Enhanced gradients */
+  --hanuman-gradient-primary: linear-gradient(135deg, rgba(255, 126, 0, 0.9) 0%, rgba(255, 215, 0, 0.8) 100%);
+  --hanuman-gradient-soft: linear-gradient(135deg, rgba(255, 126, 0, 0.15) 0%, rgba(255, 215, 0, 0.05) 100%);
+  --hanuman-gradient-card: linear-gradient(135deg, rgba(18, 14, 18, 0.85) 0%, rgba(28, 24, 28, 0.7) 100%);
 }
 
 /* Glow effects */
@@ -41,11 +47,28 @@
 }
 
 .hanuman-glow:hover {
-  box-shadow: 0 0 15px rgba(255, 126, 0, 0.2);
+  box-shadow: var(--hanuman-button-glow);
 }
 
 .hanuman-text-glow {
   text-shadow: var(--hanuman-text-glow);
+}
+
+/* Section styling */
+.hanuman-section {
+  padding: var(--section-padding-y) var(--section-padding-x);
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.hanuman-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--hanuman-gradient-soft);
+  opacity: 0.1;
+  z-index: -1;
 }
 
 /* Improved focus states for accessibility */
@@ -62,6 +85,12 @@
   backdrop-filter: blur(10px);
   border-radius: 0.75rem;
   overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.hanuman-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 126, 0, 0.2);
 }
 
 /* Form elements with hanuman styling */
@@ -70,6 +99,7 @@
   border: 1px solid var(--hanuman-border-color);
   color: var(--hanuman-text-primary);
   transition: all 0.2s ease;
+  border-radius: 0.75rem;
 }
 
 .hanuman-input:focus {
@@ -79,15 +109,17 @@
 
 /* Chat-specific styling */
 .hanuman-chat-bubble-user {
-  background: var(--hanuman-primary);
+  background: linear-gradient(135deg, rgba(255, 126, 0, 0.9) 0%, rgba(255, 165, 0, 0.8) 100%);
   color: white;
   border-radius: 1rem 1rem 0 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .hanuman-chat-bubble-assistant {
   background: var(--hanuman-card-bg);
   border: 1px solid var(--hanuman-border-color);
   border-radius: 1rem 1rem 1rem 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* Resource card styling */
@@ -101,4 +133,67 @@
 
 .hanuman-resource-card:hover {
   background: linear-gradient(135deg, rgba(255, 126, 0, 0.15) 0%, rgba(255, 215, 0, 0.1) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15), 0 0 5px rgba(255, 126, 0, 0.1);
+}
+
+/* Badge styling */
+.hanuman-badge {
+  background: linear-gradient(135deg, rgba(255, 126, 0, 0.8) 0%, rgba(255, 175, 0, 0.7) 100%);
+  color: white;
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Button styling */
+.hanuman-button {
+  background: var(--hanuman-gradient-primary);
+  color: white;
+  border: none;
+  border-radius: 9999px;
+  padding: 0.5rem 1.25rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.hanuman-button:hover {
+  box-shadow: var(--hanuman-button-glow);
+  transform: translateY(-1px);
+}
+
+/* Decorative elements */
+.hanuman-decorative-dots {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.3;
+  z-index: 0;
+  background-image: radial-gradient(circle at 10px 10px, rgba(255, 126, 0, 0.2) 2px, transparent 0);
+  background-size: 40px 40px;
+}
+
+/* Cosmic separator */
+.hanuman-cosmic-separator {
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255, 126, 0, 0.3), transparent);
+  margin: 1.5rem 0;
+  position: relative;
+}
+
+.hanuman-cosmic-separator::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 215, 0, 0.6);
+  box-shadow: 0 0 10px rgba(255, 126, 0, 0.5);
 }
