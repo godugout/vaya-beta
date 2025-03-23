@@ -121,7 +121,7 @@ export const Grid = React.forwardRef<HTMLDivElement, GridProps>(
 Grid.displayName = "Grid";
 
 interface GridItemProps extends React.HTMLAttributes<HTMLDivElement> {
-  colSpan?: 1 | 2 | 3 | 4 | 5 | 6 | 12;
+  colSpan?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
   rowSpan?: 1 | 2 | 3 | 4 | 5 | 6;
   colStart?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
   rowStart?: 1 | 2 | 3 | 4 | 5 | 6;
