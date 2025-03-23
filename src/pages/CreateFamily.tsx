@@ -10,7 +10,7 @@ export default function CreateFamily() {
           <img 
             src="/lovable-uploads/20d8e559-f25c-417f-83be-9e9a6ce2e2c4.png" 
             alt="Family background" 
-            className="w-full h-full object-cover opacity-30 md:object-contain md:object-bottom"
+            className="w-full h-full object-cover opacity-30 md:object-cover md:object-top scale-110"
           />
           {/* Multiple gradient overlays to blend the image with the background */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/30"></div>
