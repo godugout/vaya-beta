@@ -6,7 +6,7 @@ export function FamilySetupWizard() {
   return (
     <div className="space-y-8">
       <VayaCard 
-        variant="primary" 
+        variant="coral" 
         elevation={4} 
         padding="lg" 
         className="backdrop-blur-md bg-gradient-to-br from-hanuman-primary/30 via-amber-800/20 to-green-900/20 border-none shadow-[0_8px_30px_rgba(255,126,0,0.2)] overflow-hidden"
