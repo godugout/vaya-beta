@@ -113,47 +113,47 @@ export function InitialSetupForm({
   const formContent = (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="space-y-3">
-        <Label htmlFor="family-name" className="text-indigo-100 font-medium">Family Name</Label>
+        <Label htmlFor="family-name" className="text-amber-100 font-medium">Family Name</Label>
         <Input
           id="family-name"
           placeholder="e.g., The Smith Family"
           value={familyName}
           onChange={(e) => setFamilyName(e.target.value)}
           required
-          className="w-full shadow-[0_0_15px_rgba(139,92,246,0.15)]"
+          className="w-full shadow-[0_0_15px_rgba(255,126,0,0.15)]"
         />
       </div>
       
       <div className="space-y-3">
-        <Label htmlFor="family-description" className="text-indigo-100 font-medium">Description (Optional)</Label>
+        <Label htmlFor="family-description" className="text-amber-100 font-medium">Description (Optional)</Label>
         <Textarea
           id="family-description"
           placeholder="Tell us a bit about your family..."
           value={familyDescription}
           onChange={(e) => setFamilyDescription(e.target.value)}
           rows={3}
-          className="w-full min-h-[120px] rounded-xl border border-purple-500/20 bg-purple-900/10 text-white placeholder:text-white/40 focus-visible:ring-purple-500/50 shadow-[0_0_15px_rgba(139,92,246,0.15)]"
+          className="w-full min-h-[120px] rounded-xl border border-amber-500/20 bg-amber-900/10 text-white placeholder:text-white/40 focus-visible:ring-amber-500/50 shadow-[0_0_15px_rgba(255,126,0,0.15)]"
         />
       </div>
       
       <div className="space-y-3">
-        <Label htmlFor="secret-word" className="text-indigo-100 font-medium">Family Secret Word</Label>
+        <Label htmlFor="secret-word" className="text-amber-100 font-medium">Family Secret Word</Label>
         <Input
           id="secret-word"
           placeholder="Create a memorable word or phrase"
           value={secretWord}
           onChange={(e) => setSecretWord(e.target.value)}
           required
-          className="w-full shadow-[0_0_15px_rgba(139,92,246,0.15)]"
+          className="w-full shadow-[0_0_15px_rgba(255,126,0,0.15)]"
         />
-        <p className="text-xs text-indigo-200/70">
+        <p className="text-xs text-amber-200/70">
           This secret word will be used by family members to join. Choose something memorable that all family members would know.
         </p>
       </div>
       
       <Button
         type="submit"
-        className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white py-2 rounded-xl shadow-[0_4px_15px_rgba(139,92,246,0.3)] transition-all hover:shadow-[0_6px_20px_rgba(139,92,246,0.4)] hover:translate-y-[-1px]]"
+        className="w-full bg-gradient-to-r from-hanuman-primary to-hanuman-saffron hover:from-hanuman-primary/90 hover:to-hanuman-saffron/90 text-white py-2 rounded-xl shadow-[0_4px_15px_rgba(255,126,0,0.3)] transition-all hover:shadow-[0_6px_20px_rgba(255,126,0,0.4)] hover:translate-y-[-1px]]"
         disabled={loading}
       >
         {loading ? "Creating..." : "Create Family"}

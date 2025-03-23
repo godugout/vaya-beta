@@ -40,6 +40,21 @@
   background: linear-gradient(135deg, rgba(255, 200, 97, 0.15) 0%, rgba(255, 117, 26, 0.15) 100%);
 }
 
+.bg-hanuman-primary-gradient {
+  background: linear-gradient(135deg, var(--hanuman-primary) 0%, var(--hanuman-saffron) 100%);
+  color: white;
+}
+
+.bg-hanuman-accent-gradient {
+  background: linear-gradient(135deg, var(--hanuman-accent) 0%, var(--hanuman-saffron) 100%);
+  color: var(--text-primary);
+}
+
+.bg-hanuman-green-gradient {
+  background: linear-gradient(135deg, var(--hanuman-green) 0%, var(--hanuman-accent) 100%);
+  color: white;
+}
+
 /* Overlay effects */
 .bg-hanuman-overlay-light {
   background-color: rgba(255, 249, 240, 0.8);
@@ -73,6 +88,16 @@
   color: var(--text-primary);
 }
 
+.bg-hanuman-green {
+  background-color: var(--hanuman-green);
+  color: white;
+}
+
+.bg-hanuman-saffron {
+  background-color: var(--hanuman-saffron);
+  color: var(--text-primary);
+}
+
 .text-hanuman-primary {
   color: var(--hanuman-primary);
 }
@@ -85,6 +110,14 @@
   color: var(--hanuman-accent);
 }
 
+.text-hanuman-green {
+  color: var(--hanuman-green);
+}
+
+.text-hanuman-saffron {
+  color: var(--hanuman-saffron);
+}
+
 .border-hanuman-primary {
   border-color: var(--hanuman-primary);
 }
@@ -95,4 +128,12 @@
 
 .border-hanuman-accent {
   border-color: var(--hanuman-accent);
+}
+
+.border-hanuman-green {
+  border-color: var(--hanuman-green);
+}
+
+.border-hanuman-saffron {
+  border-color: var(--hanuman-saffron);
 }
