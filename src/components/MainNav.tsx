@@ -4,28 +4,12 @@ import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { ThemeToggle } from './theme/ThemeToggle';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { UserMenu } from './nav/UserMenu';
-import { GuestMenu } from './nav/GuestMenu';
-import { useSupabaseAuth } from '@/hooks/useSupabaseAuth';
 
 interface MainNavProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function MainNav({ className, ...props }: MainNavProps) {
   const { t } = useLanguage();
   const location = useLocation();
-  const { user, signOut } = useSupabaseAuth();
-  
-  const handleSignOut = async () => {
-    try {
-      await signOut();
-    } catch (error) {
-      console.error('Error signing out:', error);
-    }
-  };
-  
-  const navigate = (path: string) => {
-    window.location.href = path;
-  };
   
   const isActive = (path: string) => {
     return location.pathname === path;
@@ -59,10 +43,10 @@ export function MainNav({ className, ...props }: MainNavProps) {
               {t('memories')}
             </Link>
             <Link 
-              to="/family-setup" 
+              to="/create-family" 
               className={cn(
                 "px-3 py-2 text-sm font-medium rounded-md transition-colors",
-                isActive("/family-setup") 
+                isActive("/create-family") 
                   ? "text-autumn bg-white/10" 
                   : "text-white/70 hover:text-white hover:bg-white/10"
               )}
@@ -80,15 +64,22 @@ export function MainNav({ className, ...props }: MainNavProps) {
             >
               {t('stories')}
             </Link>
+            <Link 
+              to="/hanuman" 
+              className={cn(
+                "px-3 py-2 text-sm font-medium rounded-md transition-colors",
+                isActive("/hanuman") 
+                  ? "text-autumn bg-white/10" 
+                  : "text-white/70 hover:text-white hover:bg-white/10"
+              )}
+            >
+              Hanuman
+            </Link>
           </nav>
         </div>
         
         <div className="flex items-center gap-2">
-          {user ? (
-            <UserMenu user={user} handleSignOut={handleSignOut} navigate={navigate} />
-          ) : (
-            <GuestMenu navigate={navigate} />
-          )}
+          <ThemeToggle />
         </div>
       </div>
     </div>

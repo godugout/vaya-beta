@@ -50,8 +50,8 @@ const App = () => {
                     <Route index element={<Home />} />
                     <Route path="auth" element={<Auth />} />
                     <Route path="families" element={<Families />} />
-                    <Route path="families/create" element={<CreateFamily />} />
-                    <Route path="families/:familyId" element={<FamilyDetail />} />
+                    <Route path="create-family" element={<CreateFamily />} />
+                    <Route path="family/:familyId" element={<FamilyDetail />} />
                     <Route path="media" element={<MediaLibrary />} />
                     <Route path="media-enhanced" element={<MediaLibraryEnhanced />} />
                     <Route path="hanuman" element={<HanumanEdition />} />

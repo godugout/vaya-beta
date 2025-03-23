@@ -33,6 +33,7 @@ export const useWizardState = () => {
     
     // Create a secret word "hanuman" for this family if not already set
     try {
+      // We'll create a secret word even for guest users
       const { error } = await supabase
         .from("family_access_codes")
         .insert({
