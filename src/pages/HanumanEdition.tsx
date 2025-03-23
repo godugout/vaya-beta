@@ -1,7 +1,7 @@
 
 import React from 'react';
 import HanumanTopNav from "@/components/navigation/HanumanTopNav";
-import HanumanBackground from "@/components/hanuman/HanumanBackground";
+import EnhancedHanumanBackground from "@/components/hanuman/EnhancedHanumanBackground";
 import { EnhancedHanumanChat } from "@/components/hanuman/EnhancedHanumanChat";
 import HanumanSidebar from "@/components/hanuman/HanumanSidebar";
 import HanumanResourcesSidebar from "@/components/hanuman/HanumanResourcesSidebar";
@@ -22,10 +22,10 @@ const HanumanEdition: React.FC = () => {
 
   return (
     <div className="hanuman-theme min-h-screen flex flex-col bg-hanuman-dark text-white relative">
-      <HanumanBackground />
+      <EnhancedHanumanBackground />
       <HanumanTopNav />
       
-      <div className="flex-1 container mx-auto px-4 py-8">
+      <div className="flex-1 container mx-auto px-4 py-8 mt-16">
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {/* Left Sidebar */}
           <div className="md:col-span-1 lg:col-span-1">
@@ -45,14 +45,6 @@ const HanumanEdition: React.FC = () => {
           <div className="hidden lg:block lg:col-span-1">
             <HanumanResourcesSidebar />
           </div>
-        </div>
-      </div>
-      
-      {/* Mobile bottom resources (only visible on small screens) */}
-      <div className="lg:hidden px-4 py-4">
-        <div className="bg-black/20 backdrop-blur-sm rounded-lg p-4 border border-hanuman-orange/20">
-          <h3 className="text-sm font-semibold text-hanuman-gold mb-2">Resources</h3>
-          <p className="text-xs text-white/70">View more resources related to your conversation in landscape mode or on larger screens.</p>
         </div>
       </div>
     </div>
