@@ -6,6 +6,7 @@ import { Flame, HomeIcon, Landmark, Book, Heart, History, Users, Calendar } from
 import { HanumanSidebarCategory } from "@/types/hanuman";
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
+import SidebarCard from "./SidebarCard";
 
 interface HanumanSidebarProps {
   activeCategory: string;
@@ -89,14 +90,13 @@ const HanumanSidebar: React.FC<HanumanSidebarProps> = ({
   };
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-          <Flame className="text-hanuman-primary h-5 w-5" />
-          <span>{isSpanish ? "Categorías de Historia" : "Story Categories"}</span>
-        </h2>
-        
-        <div className="space-y-3">
+    <div className="space-y-4">
+      <SidebarCard 
+        title={isSpanish ? "Categorías de Historia" : "Story Categories"}
+        icon={<Flame className="h-5 w-5" />}
+        defaultExpanded={true}
+      >
+        <div className="space-y-2">
           {sidebarCategories.map((category) => {
             const isActive = activeCategory === category.id;
             const CategoryIcon = category.icon;
@@ -104,31 +104,31 @@ const HanumanSidebar: React.FC<HanumanSidebarProps> = ({
             return (
               <motion.div
                 key={category.id}
-                whileHover={{ x: 5 }}
+                whileHover={{ x: 3 }}
                 whileTap={{ scale: 0.98 }}
               >
                 <Button
                   variant={isActive ? "default" : "ghost"}
-                  className={`w-full justify-start text-left p-3 h-auto ${
+                  className={`w-full justify-start text-left p-2.5 h-auto ${
                     isActive 
                       ? "bg-hanuman-primary text-white" 
                       : "hover:bg-hanuman-primary/10"
                   }`}
                   onClick={() => onCategorySelect(category.id)}
                 >
-                  <div className="flex items-start gap-3">
-                    <div className={`rounded-full p-2 ${
+                  <div className="flex items-start gap-2">
+                    <div className={`rounded-full p-1.5 ${
                       isActive 
                         ? "bg-white/20" 
                         : "bg-hanuman-primary/10"
                     }`}>
-                      <CategoryIcon className={`h-4 w-4 ${
+                      <CategoryIcon className={`h-3.5 w-3.5 ${
                         isActive ? "text-white" : "text-hanuman-primary"
                       }`} />
                     </div>
                     <div className="flex flex-col items-start">
-                      <span className="font-medium">{getTranslatedName(category.id)}</span>
-                      <span className="text-xs opacity-80 mt-1">{getTranslatedDescription(category.id)}</span>
+                      <span className="font-medium text-sm">{getTranslatedName(category.id)}</span>
+                      <span className="text-xs opacity-80 mt-0.5 line-clamp-2">{getTranslatedDescription(category.id)}</span>
                     </div>
                   </div>
                 </Button>
@@ -136,15 +136,17 @@ const HanumanSidebar: React.FC<HanumanSidebarProps> = ({
             );
           })}
         </div>
-      </div>
+      </SidebarCard>
       
-      <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
-        <h3 className="text-sm font-medium mb-3">{isSpanish ? "Próximos Eventos" : "Upcoming Events"}</h3>
+      <SidebarCard 
+        title={isSpanish ? "Próximos Eventos" : "Upcoming Events"}
+        icon={<Calendar className="h-4 w-4" />}
+      >
         <Card className="bg-hanuman-primary/5 border-hanuman-primary/20">
           <CardContent className="p-3">
             <div className="flex items-start gap-3">
-              <div className="bg-hanuman-primary/10 rounded-full p-2">
-                <Calendar className="h-4 w-4 text-hanuman-primary" />
+              <div className="bg-hanuman-primary/10 rounded-full p-1.5">
+                <Calendar className="h-3.5 w-3.5 text-hanuman-primary" />
               </div>
               <div>
                 <h4 className="text-sm font-medium">{isSpanish ? "Festival de Cosecha" : "Harvest Festival"}</h4>
@@ -153,10 +155,12 @@ const HanumanSidebar: React.FC<HanumanSidebarProps> = ({
             </div>
           </CardContent>
         </Card>
-      </div>
+      </SidebarCard>
       
-      <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
-        <h3 className="text-sm font-medium mb-3">{isSpanish ? "Recursos" : "Resources"}</h3>
+      <SidebarCard 
+        title={isSpanish ? "Recursos" : "Resources"}
+        icon={<Heart className="h-4 w-4" />}
+      >
         <Card className="bg-gradient-to-br from-hanuman-primary/5 to-hanuman-accent/5 border-hanuman-primary/20">
           <CardContent className="p-3">
             <h4 className="text-sm font-medium mb-1 flex items-center gap-1">
@@ -170,7 +174,7 @@ const HanumanSidebar: React.FC<HanumanSidebarProps> = ({
             </p>
           </CardContent>
         </Card>
-      </div>
+      </SidebarCard>
     </div>
   );
 };

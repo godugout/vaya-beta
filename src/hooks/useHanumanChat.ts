@@ -1,60 +1,64 @@
 
-import { useState, useEffect, FormEvent } from "react";
-import { useToast } from "@/components/ui/use-toast";
-import { useLanguage } from "@/contexts/LanguageContext";
-import { useFamilyContextManagement } from "@/hooks/useFamilyContextManagement";
-import { usePromptManager } from "@/components/chat/hooks/usePromptManager";
+import { useState, FormEvent } from "react";
 import { HanumanMessage, HanumanChatHook } from "@/types/hanuman";
 
-const initialMessages: HanumanMessage[] = [
-  {
-    role: "assistant",
-    content: "Hello! I'm here to help you capture and share your family stories. What would you like to talk about today?",
-  },
-];
-
 export const useHanumanChat = (): HanumanChatHook => {
-  const { toast } = useToast();
-  const { isSpanish } = useLanguage();
-  const { familyContext } = useFamilyContextManagement();
-  const { handleMorePrompts } = usePromptManager();
-  const [messages, setMessages] = useState<HanumanMessage[]>(initialMessages);
+  const [messages, setMessages] = useState<HanumanMessage[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (!input.trim()) return;
-
-    const userMessage: HanumanMessage = { role: "user", content: input };
-    setMessages((prev) => [...prev, userMessage]);
-    setInput("");
+    
+    if (!input.trim() || isLoading) return;
+    
+    // Add user message
+    const userMessage: HanumanMessage = {
+      role: "user",
+      content: input
+    };
+    
+    setMessages(prev => [...prev, userMessage]);
     setIsLoading(true);
-
-    try {
-      // Simulate an API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      const assistantResponse: HanumanMessage = {
+    setInput("");
+    
+    // Simulate AI response after a delay
+    setTimeout(() => {
+      const aiResponse: HanumanMessage = {
         role: "assistant",
-        content: `This is a simulated response to: ${input}. I am using the family context: ${JSON.stringify(
-          familyContext
-        )}`,
+        content: getAIResponse(input)
       };
-      setMessages((prev) => [...prev, assistantResponse]);
-    } catch (error: any) {
-      toast({
-        title: "Something went wrong.",
-        description: error.message,
-        variant: "destructive",
-      });
-    } finally {
+      
+      setMessages(prev => [...prev, aiResponse]);
       setIsLoading(false);
-    }
+    }, 1500);
   };
 
   const handlePromptSelect = (prompt: string) => {
     setInput(prompt);
+  };
+
+  const handleMorePrompts = () => {
+    // This function would typically fetch more prompts from an API
+    console.log("Fetch more prompts");
+  };
+
+  // Simple AI response simulation
+  const getAIResponse = (userInput: string): string => {
+    const responses = [
+      "That's a fascinating perspective. Can you elaborate more on that?",
+      "Your family history is valuable. What other memories would you like to share?",
+      "I understand. That must have been a significant experience for you.",
+      "Thank you for sharing that story. It will be preserved for future generations.",
+      "What a wonderful tradition! How long has your family been practicing it?",
+      "That's meaningful. How did this experience shape your values?",
+      "I'd love to hear more about the context of when this happened.",
+      "It's important to document these memories. Is there anything else you'd like to add?",
+      "That's a beautiful memory. Who else was present during this event?",
+      "I appreciate you sharing this. Would you like to explore more about this topic?"
+    ];
+    
+    return responses[Math.floor(Math.random() * responses.length)];
   };
 
   return {
@@ -64,6 +68,8 @@ export const useHanumanChat = (): HanumanChatHook => {
     isLoading,
     handleSubmit,
     handlePromptSelect,
-    handleMorePrompts: () => handleMorePrompts(setMessages, isSpanish),
+    handleMorePrompts
   };
 };
+
+export default useHanumanChat;

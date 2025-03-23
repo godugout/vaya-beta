@@ -5,6 +5,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { Book, BookOpen, Bookmark, FileText, Download, ExternalLink } from "lucide-react";
 import { HanumanResource } from "@/types/hanuman";
 import { Card, CardContent } from "@/components/ui/card";
+import SidebarCard from "./SidebarCard";
 
 const HanumanResources: React.FC = () => {
   const { isSpanish } = useLanguage();
@@ -41,13 +42,12 @@ const HanumanResources: React.FC = () => {
   ];
   
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-lg font-semibold mb-4">
-          {isSpanish ? "Recursos para Historias" : "Storytelling Resources"}
-        </h2>
-        
-        <div className="space-y-3">
+    <div className="space-y-4">
+      <SidebarCard 
+        title={isSpanish ? "Recursos para Historias" : "Storytelling Resources"}
+        defaultExpanded={true}
+      >
+        <div className="space-y-2">
           {resources.map((resource) => {
             const ResourceIcon = resource.icon;
             
@@ -56,21 +56,21 @@ const HanumanResources: React.FC = () => {
                 key={resource.id}
                 className="border-hanuman-primary/10 hover:border-hanuman-primary/30 transition-all hover:bg-hanuman-primary/5"
               >
-                <CardContent className="p-3">
-                  <div className="flex items-start gap-3">
-                    <div className="bg-hanuman-primary/10 rounded-full p-2 flex-shrink-0">
-                      <ResourceIcon className="h-4 w-4 text-hanuman-primary" />
+                <CardContent className="p-2.5">
+                  <div className="flex items-start gap-2">
+                    <div className="bg-hanuman-primary/10 rounded-full p-1.5 flex-shrink-0">
+                      <ResourceIcon className="h-3.5 w-3.5 text-hanuman-primary" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <h3 className="text-sm font-medium truncate">{resource.title}</h3>
-                      <p className="text-xs text-gray-600 dark:text-gray-400 mt-1 line-clamp-2">{resource.description}</p>
+                      <p className="text-xs text-gray-600 dark:text-gray-400 mt-0.5 line-clamp-2">{resource.description}</p>
                     </div>
                     <Button 
                       size="icon" 
                       variant="ghost" 
-                      className="h-8 w-8 flex-shrink-0 text-gray-500 hover:text-hanuman-primary"
+                      className="h-7 w-7 flex-shrink-0 text-gray-500 hover:text-hanuman-primary"
                     >
-                      <ExternalLink className="h-4 w-4" />
+                      <ExternalLink className="h-3.5 w-3.5" />
                     </Button>
                   </div>
                 </CardContent>
@@ -78,17 +78,15 @@ const HanumanResources: React.FC = () => {
             );
           })}
         </div>
-      </div>
+      </SidebarCard>
       
-      <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
-        <h3 className="text-sm font-medium mb-3">
-          {isSpanish ? "Herramientas y Plantillas" : "Tools & Templates"}
-        </h3>
-        
+      <SidebarCard 
+        title={isSpanish ? "Herramientas y Plantillas" : "Tools & Templates"}
+      >
         <Card className="bg-gradient-to-br from-hanuman-purple/10 to-hanuman-primary/5 border-hanuman-purple/20">
-          <CardContent className="p-4">
+          <CardContent className="p-3">
             <h4 className="text-sm font-medium mb-2 flex items-center gap-2">
-              <Download className="h-4 w-4 text-hanuman-purple" />
+              <Download className="h-3.5 w-3.5 text-hanuman-purple" />
               <span>{isSpanish ? "Kit de Historia Familiar" : "Family History Kit"}</span>
             </h4>
             <p className="text-xs text-gray-600 dark:text-gray-400 mb-3">
@@ -105,13 +103,11 @@ const HanumanResources: React.FC = () => {
             </Button>
           </CardContent>
         </Card>
-      </div>
+      </SidebarCard>
       
-      <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
-        <h3 className="text-sm font-medium mb-3">
-          {isSpanish ? "Aprenda Más" : "Learn More"}
-        </h3>
-        
+      <SidebarCard 
+        title={isSpanish ? "Aprenda Más" : "Learn More"}
+      >
         <div className="text-xs text-gray-600 dark:text-gray-400">
           <p>{isSpanish 
             ? "Explora cómo la documentación de historias familiares puede fortalecer los lazos entre generaciones" 
@@ -125,7 +121,7 @@ const HanumanResources: React.FC = () => {
             {isSpanish ? "Leer artículo completo" : "Read full article"} →
           </Button>
         </div>
-      </div>
+      </SidebarCard>
     </div>
   );
 };

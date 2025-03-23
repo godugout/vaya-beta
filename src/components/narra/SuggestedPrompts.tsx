@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { HanumanPromptItem } from "@/types/hanuman";
 import { Sparkles } from "lucide-react";
+import SidebarCard from "@/components/hanuman/SidebarCard";
 
 export interface SuggestedPromptsProps {
   prompts?: HanumanPromptItem[];
@@ -37,14 +38,11 @@ const SuggestedPrompts = ({
   };
   
   return (
-    <div className="space-y-3">
-      <div className="flex items-center gap-2 mb-3">
-        <Sparkles className="h-4 w-4 text-amber-500" />
-        <h3 className="text-sm font-medium">
-          {isSpanish ? "Ideas para compartir" : "Conversation Starters"}
-        </h3>
-      </div>
-      
+    <SidebarCard 
+      title={isSpanish ? "Ideas para compartir" : "Conversation Starters"}
+      icon={<Sparkles className="h-4 w-4 text-amber-500" />}
+      defaultExpanded={true}
+    >
       <div className="grid gap-2">
         {promptsToShow.map((prompt) => (
           <Card 
@@ -64,7 +62,7 @@ const SuggestedPrompts = ({
           variant="ghost"
           size="sm"
           onClick={() => setExpanded(!expanded)}
-          className="w-full text-xs hover:text-hanuman-primary hover:bg-hanuman-primary/5"
+          className="w-full text-xs mt-2 hover:text-hanuman-primary hover:bg-hanuman-primary/5"
         >
           {expanded
             ? isSpanish ? "Mostrar menos" : "Show less"
@@ -91,7 +89,7 @@ const SuggestedPrompts = ({
           </Button>
         </div>
       </div>
-    </div>
+    </SidebarCard>
   );
 };
 
