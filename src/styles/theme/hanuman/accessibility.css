@@ -1,8 +1,85 @@
 
-/* Hanuman Theme - Accessibility Styles */
+/* Hanuman Theme - Accessibility Enhancements */
 
-/* Focus states for accessibility */
-.hanuman-theme :focus-visible {
-  outline: 2px solid var(--hanuman-gold);
+/* High contrast mode */
+.hanuman-theme.high-contrast {
+  --hanuman-text-primary: #ffffff;
+  --hanuman-text-secondary: #f0f0f0;
+  --card-bg: rgba(0, 0, 0, 0.85);
+  --card-border: 1px solid rgba(255, 215, 0, 0.5);
+  --card-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Larger text option */
+.hanuman-theme.large-text {
+  --font-size-base: 1.125rem; /* 18px */
+  --font-size-lg: 1.25rem;   /* 20px */
+  --font-size-xl: 1.5rem;    /* 24px */
+  --font-size-2xl: 1.875rem; /* 30px */
+  --font-size-3xl: 2.25rem;  /* 36px */
+}
+
+/* Simple mode for reduced cognitive load */
+.hanuman-theme.simple-mode .ui-card,
+.hanuman-theme.simple-mode .container-elevation {
+  background: rgba(18, 14, 18, 0.95);
+  border: 2px solid rgba(255, 215, 0, 0.5);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  backdrop-filter: none;
+}
+
+.hanuman-theme.simple-mode .decorative-element {
+  display: none;
+}
+
+/* Focus states */
+.hanuman-theme *:focus {
+  outline: 3px solid var(--hanuman-primary);
   outline-offset: 2px;
+}
+
+/* Voice interaction indicators */
+.hanuman-theme .voice-active {
+  animation: pulse-border 2s infinite;
+}
+
+@keyframes pulse-border {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 126, 0, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 126, 0, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 126, 0, 0);
+  }
+}
+
+/* Screen reader only content */
+.hanuman-theme .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Simplified navigation for cognitive accessibility */
+.hanuman-theme.simple-mode .navigation {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.hanuman-theme.simple-mode .navigation-button {
+  padding: 1rem;
+  font-size: 1.25rem;
+  text-align: center;
+  border-radius: 0.5rem;
+  background: var(--hanuman-gradient-orange);
+  color: white;
 }
