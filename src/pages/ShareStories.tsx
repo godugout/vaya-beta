@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { FadeIn } from '@/components/animation/FadeIn';
 import StoriesHeader from "@/components/stories/StoriesHeader";
@@ -9,17 +9,9 @@ import PatelFamilyEventsSection from "@/components/stories/PatelFamilyEventsSect
 import RecentFamilyStories from "@/components/stories/RecentFamilyStories";
 
 export default function ShareStoriesPage() {
-  // Add Hanuman theme class when the component mounts
-  useEffect(() => {
-    document.body.classList.add('hanuman-theme');
-    return () => {
-      document.body.classList.remove('hanuman-theme');
-    };
-  }, []);
-
   return (
     <MainLayout>
-      <div className="hanuman-container py-8">
+      <div className="container max-w-7xl mx-auto px-4 py-8">
         {/* Breadcrumb */}
         <StoriesHeader />
 

@@ -1,88 +1,77 @@
-
-import React from 'react';
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from 'react-router-dom';
+import React, { Suspense, lazy } from 'react';
+import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import { Toaster } from '@/components/ui/sonner';
+import { ThemeProvider } from '@/contexts/ThemeContext';
+import { LanguageProvider } from '@/contexts/LanguageContext';
 import { MainLayout } from '@/components/layout/MainLayout';
-import LandingPage from '@/pages/LandingPage';
-import Memories from '@/pages/Memories';
-import Families from '@/pages/Families';
-import CreateFamily from '@/pages/CreateFamily';
-import ShareStoriesPage from '@/pages/ShareStories';
-import HanumanEdition from '@/pages/HanumanEdition';
-import Auth from '@/pages/Auth';
+import { LoadingIndicator } from '@/components/animation/LoadingIndicator';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
+import { AnimationProvider } from '@/components/animation/AnimationProvider';
 
-// Create a simplified router with only available pages
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <LandingPage />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: '/auth',
-    element: <Auth />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: '/memories',
-    element: <Memories />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: '/families',
-    element: <Families />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: '/create-family',
-    element: <CreateFamily />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: '/stories',
-    element: <ShareStoriesPage />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: '/hanuman',
-    element: <HanumanEdition />,
-    errorElement: <ErrorPage />,
-  },
-]);
+// Lazy load components to improve initial load time
+const Home = lazy(() => import('@/pages/Home'));
+const Auth = lazy(() => import('@/pages/Auth'));
+const Families = lazy(() => import('@/pages/Families'));
+const CreateFamily = lazy(() => import('@/pages/CreateFamily'));
+const FamilyDetail = lazy(() => import('@/pages/FamilyDetail'));
+const MediaLibrary = lazy(() => import('@/pages/MediaLibrary'));
+const MediaLibraryEnhanced = lazy(() => import('@/pages/MediaLibraryEnhanced'));
+const NotFound = lazy(() => import('@/pages/NotFound'));
+const HanumanEdition = lazy(() => import('@/pages/HanumanEdition'));
+const MemoryLane = lazy(() => import('@/pages/MemoryLane'));
+const MemoryPost = lazy(() => import('@/pages/MemoryPost'));
+const ShareStories = lazy(() => import('@/pages/ShareStories'));
+const Profile = lazy(() => import('@/pages/Profile'));
+const Settings = lazy(() => import('@/pages/Settings'));
+const StoryShowcase = lazy(() => import('@/components/design-system/StoryShowcase'));
+const ComponentsShowcase = lazy(() => import('@/components/design-system/ComponentsShowcase').then(module => ({ default: module.ComponentsShowcase })));
+const DesignSystem = lazy(() => import('@/pages/DesignSystem'));
 
-// Custom error page component for route errors
-function ErrorPage() {
+const Admin = lazy(() => import('@/pages/Admin'));
+const AdminUsers = lazy(() => import('@/pages/AdminUsers'));
+const AdminMedia = lazy(() => import('@/pages/AdminMedia'));
+
+const App = () => {
   return (
-    <MainLayout>
-      <div className="container mx-auto px-4 py-16 text-center">
-        <div className="max-w-md mx-auto bg-black/30 backdrop-blur-sm rounded-xl p-8 border border-hanuman-orange/20 shadow-lg">
-          <h1 className="text-2xl font-bold text-hanuman-gold mb-4">
-            Something went wrong
-          </h1>
-          <p className="text-white/80 mb-6">
-            We apologize for the inconvenience. The page you're looking for might be unavailable or there was an error in loading it.
-          </p>
-          <a
-            href="/"
-            className="inline-block px-6 py-3 bg-hanuman-orange/80 hover:bg-hanuman-orange text-white rounded-lg transition-colors"
-          >
-            Return to Home
-          </a>
-        </div>
-      </div>
-    </MainLayout>
+    <ThemeProvider>
+      <LanguageProvider>
+        <AnimationProvider>
+          <div className="app dark">
+            <ErrorBoundary>
+              <Suspense fallback={<LoadingIndicator />}>
+                <Routes>
+                  <Route path="/" element={<MainLayout><Outlet /></MainLayout>}>
+                    <Route index element={<Home />} />
+                    <Route path="auth" element={<Auth />} />
+                    <Route path="families" element={<Families />} />
+                    <Route path="create-family" element={<CreateFamily />} />
+                    <Route path="family/:familyId" element={<FamilyDetail />} />
+                    <Route path="media" element={<MediaLibrary />} />
+                    <Route path="media-enhanced" element={<MediaLibraryEnhanced />} />
+                    <Route path="hanuman" element={<HanumanEdition />} />
+                    <Route path="memories" element={<MemoryLane />} />
+                    <Route path="memories/:memoryId" element={<MemoryPost />} />
+                    <Route path="stories" element={<ShareStories />} />
+                    <Route path="profile" element={<Profile />} />
+                    <Route path="settings" element={<Settings />} />
+                    <Route path="story-showcase" element={<StoryShowcase />} />
+                    <Route path="components" element={<ComponentsShowcase />} />
+                    <Route path="design" element={<DesignSystem />} />
+                    <Route path="admin" element={<Admin />}>
+                      <Route path="users" element={<AdminUsers />} />
+                      <Route path="media" element={<AdminMedia />} />
+                    </Route>
+                    <Route path="*" element={<NotFound />} />
+                  </Route>
+                </Routes>
+              </Suspense>
+            </ErrorBoundary>
+            <Toaster position="top-center" />
+          </div>
+        </AnimationProvider>
+      </LanguageProvider>
+    </ThemeProvider>
   );
-}
-
-function App() {
-  return (
-    <ErrorBoundary>
-      <RouterProvider router={router} />
-    </ErrorBoundary>
-  );
-}
+};
 
 export default App;

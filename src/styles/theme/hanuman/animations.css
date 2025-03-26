@@ -1,111 +1,151 @@
 
 /* Hanuman Theme - Animation Styles */
 
-/* Gentle pulsing for Hanuman elements */
-@keyframes hanuman-pulse {
-  0% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.05); opacity: 0.9; }
-  100% { transform: scale(1); opacity: 1; }
+/* Shimmer effect for sacred elements */
+.hanuman-shimmer {
+  position: relative;
+  overflow: hidden;
 }
 
-@keyframes hanuman-glow {
-  0% { box-shadow: 0 0 5px rgba(255, 126, 0, 0.5); }
-  50% { box-shadow: 0 0 15px rgba(255, 126, 0, 0.7); }
-  100% { box-shadow: 0 0 5px rgba(255, 126, 0, 0.5); }
+.hanuman-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg, 
+    transparent, 
+    rgba(255, 215, 0, 0.2), 
+    transparent
+  );
+  animation: hanuman-shimmer 3s infinite;
 }
 
 @keyframes hanuman-shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% { left: -100%; }
+  100% { left: 200%; }
+}
+
+/* Cosmic pulse for important UI elements */
+.hanuman-pulse {
+  animation: hanuman-pulse 3s infinite;
+}
+
+@keyframes hanuman-pulse {
+  0%, 100% { 
+    box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4);
+  }
+  50% { 
+    box-shadow: 0 0 10px 2px rgba(255, 215, 0, 0.6);
+  }
+}
+
+/* Sacred glow for hover states */
+.hanuman-glow {
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.hanuman-glow:hover {
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Floating animation for spiritual elements */
+.hanuman-float {
+  animation: hanuman-float 6s ease-in-out infinite;
 }
 
 @keyframes hanuman-float {
-  0% { transform: translateY(0px); }
+  0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
 }
 
-@keyframes hanuman-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+/* Subtle flame effect for icons */
+.hanuman-flame {
+  animation: hanuman-flame 4s ease-in-out infinite;
+  filter: drop-shadow(0 0 2px rgba(255, 126, 0, 0.3));
 }
 
-/* Sacred symbol pulsing animation */
-.hanuman-sacred-pulse {
-  animation: hanuman-pulse 3s infinite ease-in-out;
+@keyframes hanuman-flame {
+  0%, 100% { 
+    filter: drop-shadow(0 0 2px rgba(255, 126, 0, 0.3));
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    filter: drop-shadow(0 0 4px rgba(255, 126, 0, 0.5));
+    transform: scale(1.05) rotate(1deg);
+  }
+  75% {
+    filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.5));
+    transform: scale(1.05) rotate(-1deg);
+  }
 }
 
-/* Button and UI element glow effect */
-.hanuman-glow-effect {
-  animation: hanuman-glow 2s infinite ease-in-out;
+/* Sacred pattern reveal */
+.hanuman-reveal {
+  position: relative;
+  overflow: hidden;
 }
 
-/* Shimmer effect for loading states and highlights */
-.hanuman-shimmer-effect {
-  background: linear-gradient(
-    90deg,
-    rgba(255, 126, 0, 0) 0%,
-    rgba(255, 126, 0, 0.1) 50%,
-    rgba(255, 126, 0, 0) 100%
+.hanuman-reveal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg stroke='%23FFD700' stroke-width='0.5' stroke-opacity='0.15'%3E%3Cpath d='M30 5 L55 30 L30 55 L5 30 Z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-size: 60px 60px;
+  clip-path: inset(0 100% 0 0);
+  animation: hanuman-reveal 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+
+@keyframes hanuman-reveal {
+  0% { clip-path: inset(0 100% 0 0); }
+  100% { clip-path: inset(0 0 0 0); }
+}
+
+/* Sacred blessing entrance animation */
+.hanuman-blessing-enter {
+  animation: hanuman-blessing-enter 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes hanuman-blessing-enter {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Divine light rays animation */
+.hanuman-light-rays {
+  position: relative;
+  overflow: hidden;
+}
+
+.hanuman-light-rays::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 215, 0, 0.2) 0%,
+    transparent 70%
   );
-  background-size: 200% 100%;
-  animation: hanuman-shimmer 2s infinite linear;
-}
-
-/* Floating animation for elements */
-.hanuman-float {
-  animation: hanuman-float 6s infinite ease-in-out;
-}
-
-/* Spinning animation for loaders and icons */
-.hanuman-spin {
-  animation: hanuman-spin 2s infinite linear;
-}
-
-/* Entrance animations */
-.hanuman-fade-in {
-  animation: fadeIn 0.5s ease-out forwards;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.hanuman-slide-in {
-  animation: slideIn 0.5s ease-out forwards;
-}
-
-@keyframes slideIn {
-  from { opacity: 0; transform: translateX(-20px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-/* Staggered animation for lists */
-.hanuman-stagger-item {
   opacity: 0;
-  animation: staggerFadeIn 0.5s ease-out forwards;
+  animation: hanuman-light-rays 8s ease-in-out infinite;
 }
 
-@keyframes staggerFadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Apply animation delay to staggered items */
-.hanuman-stagger-item:nth-child(1) { animation-delay: 0.1s; }
-.hanuman-stagger-item:nth-child(2) { animation-delay: 0.2s; }
-.hanuman-stagger-item:nth-child(3) { animation-delay: 0.3s; }
-.hanuman-stagger-item:nth-child(4) { animation-delay: 0.4s; }
-.hanuman-stagger-item:nth-child(5) { animation-delay: 0.5s; }
-
-/* Waveform animation for voice recordings */
-@keyframes waveform {
-  0% { height: 10%; }
-  50% { height: 100%; }
-  100% { height: 10%; }
-}
-
-.hanuman-waveform-bar {
-  animation: waveform 1s ease-in-out infinite;
+@keyframes hanuman-light-rays {
+  0%, 100% { opacity: 0; transform: scale(0.5); }
+  50% { opacity: 1; transform: scale(1); }
 }

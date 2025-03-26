@@ -1,126 +1,35 @@
 
 /* Hanuman Theme - Card Styles */
 
-/* Standard card styling */
-.hanuman-card {
-  background: rgba(18, 14, 18, 0.4);
-  backdrop-filter: blur(12px);
-  border-radius: 1rem;
-  border: 1px solid rgba(255, 126, 0, 0.1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 126, 0, 0.15);
-  overflow: hidden;
-  transition: all 0.3s ease;
+/* Cards and containers */
+.hanuman-theme .card,
+.hanuman-theme .container-elevation {
+  background: var(--card-bg);
+  border: var(--card-border);
+  box-shadow: var(--card-shadow);
+  backdrop-filter: blur(10px);
 }
 
-.hanuman-card:hover {
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 126, 0, 0.2);
-  border-color: rgba(255, 126, 0, 0.2);
-}
-
-/* Card with glow effect */
-.hanuman-glow-card {
-  background: rgba(18, 14, 18, 0.4);
-  backdrop-filter: blur(12px);
-  border-radius: 1rem;
-  border: 1px solid rgba(255, 126, 0, 0.15);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 126, 0, 0.15);
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
-
-.hanuman-glow-card:hover {
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 25px rgba(255, 215, 0, 0.25);
-  border-color: rgba(255, 215, 0, 0.3);
-  transform: translateY(-2px);
-}
-
-/* Fancy link styling */
-.hanuman-fancy-link {
+/* Enhanced sacred borders */
+.hanuman-decorative-border {
   position: relative;
-  display: inline-flex;
-  align-items: center;
-  color: var(--hanuman-gold);
-  font-weight: 500;
-  transition: all 0.2s ease;
 }
 
-.hanuman-fancy-link:after {
+.hanuman-decorative-border::after {
   content: '';
   position: absolute;
-  width: 100%;
-  transform: scaleX(0);
-  height: 1px;
-  bottom: -2px;
+  bottom: -4px;
   left: 0;
-  background: linear-gradient(to right, var(--hanuman-orange), var(--hanuman-gold));
-  transform-origin: bottom right;
-  transition: transform 0.3s ease-out;
+  width: 100%;
+  height: 2px;
+  background: var(--hanuman-gradient-orange);
+  border-radius: 1px;
 }
 
-.hanuman-fancy-link:hover {
-  color: var(--hanuman-gold);
-}
-
-.hanuman-fancy-link:hover:after {
-  transform: scaleX(1);
-  transform-origin: bottom left;
-}
-
-/* Chat bubble styling */
-.hanuman-chat-bubble-user {
-  background: linear-gradient(135deg, var(--hanuman-primary) 0%, var(--hanuman-saffron) 100%);
-  border-radius: 18px 18px 0 18px;
-  padding: 16px;
-  color: white;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  max-width: 80%;
-  margin-left: auto;
-  border-right: 1px solid rgba(255, 255, 255, 0.2);
-  position: relative;
-}
-
-.hanuman-chat-bubble-assistant {
-  background: rgba(18, 14, 18, 0.6);
+/* Card styling enhancements */
+.hanuman-theme .ui-card {
+  background: rgba(18, 14, 18, 0.5);
+  border: none;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
-  border-radius: 18px 18px 18px 0;
-  padding: 16px; 
-  color: var(--hanuman-text-primary);
-  border-left: 1px solid var(--hanuman-orange);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-  max-width: 80%;
-  position: relative;
-}
-
-/* Glass effect card */
-.hanuman-glass-card {
-  background: rgba(18, 14, 18, 0.4);
-  backdrop-filter: blur(16px);
-  border-radius: 1rem;
-  border: 1px solid rgba(255, 126, 0, 0.1);
-  box-shadow: 
-    0 4px 20px rgba(0, 0, 0, 0.2),
-    0 0 0 1px rgba(255, 126, 0, 0.05),
-    0 0 30px rgba(255, 126, 0, 0.1);
-  overflow: hidden;
-}
-
-/* Dark glass effect */
-.hanuman-dark-glass {
-  background: rgba(10, 8, 10, 0.7);
-  backdrop-filter: blur(16px);
-  border-radius: 1rem;
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
-}
-
-/* Content background for tabs and panels */
-.hanuman-content-bg {
-  background: linear-gradient(135deg, 
-    rgba(18, 14, 18, 0.8) 0%, 
-    rgba(28, 24, 28, 0.7) 100%
-  );
-  backdrop-filter: blur(12px);
-  border-radius: 1rem;
-  border: 1px solid rgba(255, 126, 0, 0.1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }

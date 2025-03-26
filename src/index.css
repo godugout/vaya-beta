@@ -11,7 +11,7 @@
 /* Import our modular style files - new structure */
 @import './styles/variables/index.css';
 @import './styles/base/index.css';
-@import './styles/layout/index.css';
+@import './styles/layout/page-structure.css';
 @import './styles/components/index.css';
 @import './styles/utilities/index.css';
 @import './styles/animations/core-animations.css';
@@ -22,7 +22,7 @@
 @import './styles/theme/index.css';
 @import './styles/theme/dark.css';
 @import './styles/theme/dark-theme.css';
-@import './styles/theme/hanuman-theme.css'; /* Import the combined Hanuman theme */
+@import './styles/theme/hanuman-theme.css'; /* Explicitly include Hanuman theme */
 
 body {
   font-family: 'Inter', 'Manrope', sans-serif;

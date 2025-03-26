@@ -49,8 +49,22 @@ const EnhancedHanumanBackground: React.FC = () => {
 
   return (
     <div className="fixed inset-0 z-0 overflow-hidden">
-      {/* Base background color */}
-      <div className="absolute inset-0 bg-hanuman-dark bg-opacity-95"></div>
+      {/* Base background image with subtle glow */}
+      <div className="absolute inset-0">
+        <motion.div 
+          initial={{ opacity: 0 }} 
+          animate={{ opacity: 0.3 }}
+          transition={{ duration: 2 }}
+          className="w-full h-full"
+        >
+          <img 
+            src="/lovable-uploads/dbfde90d-4253-4295-b1e9-e9bb049cd9cd.png" 
+            alt="Hanuman background" 
+            className="w-full h-full object-cover md:object-cover md:object-top scale-110"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/40"></div>
+        </motion.div>
+      </div>
 
       {/* Stars and cosmic particles */}
       <div className="absolute inset-0">
