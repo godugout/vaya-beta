@@ -25,12 +25,11 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
   
   // Track page views
   React.useEffect(() => {
+    // Fixed: removed the .catch() call since trackActivity returns void
     trackActivity(ActivityTypes.PAGE_VIEW, {
       path: location.pathname,
       search: location.search,
       title: document.title
-    }).catch(error => {
-      console.error("Failed to track activity:", error);
     });
   }, [location.pathname, location.search, trackActivity]);
 
