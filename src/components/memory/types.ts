@@ -1,14 +1,15 @@
+
 export type BaseMemory = {
   id: string;
   type: string;
   content_url: string;
   created_at: string;
+  title?: string;
+  description?: string;
 };
 
 export type StoryMemory = BaseMemory & {
   type: "story";
-  title?: string;
-  description?: string;
   duration?: number;
 };
 

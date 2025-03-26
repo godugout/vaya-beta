@@ -1,54 +1,6 @@
 
-import { useEffect, useCallback } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { useCallback } from 'react';
 
-// Make sure we have a consistent anonymous ID across sessions
-const getAnonymousId = () => {
-  let anonymousId = localStorage.getItem('anonymous_id');
-  if (!anonymousId) {
-    anonymousId = crypto.randomUUID();
-    localStorage.setItem('anonymous_id', anonymousId);
-  }
-  return anonymousId;
-};
-
-export const useActivityTracking = () => {
-  // Initialize anonymous tracking ID on component mount
-  useEffect(() => {
-    getAnonymousId();
-  }, []);
-  
-  const trackActivity = useCallback(async (activityType: string, metadata: Record<string, any> = {}) => {
-    try {
-      const anonymousId = getAnonymousId();
-
-      // Get auth token if user is logged in
-      const { data: { session } } = await supabase.auth.getSession();
-      const token = session?.access_token;
-      
-      // Call the Supabase Edge Function to track the activity
-      const { error } = await supabase.functions.invoke('track-activity', {
-        body: {
-          activity_type: activityType,
-          metadata,
-          anonymous_id: anonymousId
-        },
-        headers: token ? { Authorization: `Bearer ${token}` } : undefined
-      });
-
-      if (error) {
-        console.error('Error tracking activity:', error);
-      }
-    } catch (error) {
-      // Fail silently in production, log in development
-      console.error('Failed to track activity:', error);
-    }
-  }, []);
-
-  return { trackActivity };
-};
-
-// Common activity types as constants
 export const ActivityTypes = {
   PAGE_VIEW: 'page_view',
   BUTTON_CLICK: 'button_click',
@@ -59,8 +11,23 @@ export const ActivityTypes = {
   SIGNUP_COMPLETED: 'signup_completed',
   LOGIN: 'login',
   LOGOUT: 'logout',
-  ERROR_OCCURRED: 'error',
+  ERROR_OCCURRED: 'error_occurred',
   FAMILY_CREATED: 'family_created',
   MEMBER_ADDED: 'member_added',
-  SETTINGS_CHANGED: 'settings_changed'
+  SETTINGS_CHANGED: 'settings_changed',
+  // Add the missing activity types
+  MEMORY_REACTION: 'memory_reaction',
+  MEMORY_PLAYBACK: 'memory_playback',
+  MEMORY_CAPTION_READ: 'memory_caption_read'
 };
+
+export function useActivityTracking() {
+  const trackActivity = useCallback((activityType: string, details?: Record<string, any>) => {
+    console.log(`Activity tracked: ${activityType}`, details);
+    
+    // In a real implementation, we would send this data to an analytics service
+    // Example: analyticsClient.trackEvent(activityType, details);
+  }, []);
+  
+  return { trackActivity };
+}

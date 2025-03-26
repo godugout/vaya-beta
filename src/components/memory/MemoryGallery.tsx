@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,7 +8,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { FadeIn } from '@/components/animation/FadeIn';
 import { StaggeredContainer } from '@/components/animation/StaggeredContainer';
 
-// Mock data for testing
+// Mock data for testing - updated to match our type definitions
 const mockMemories: MemoryType[] = [
   {
     id: '1',

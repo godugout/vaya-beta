@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ThumbsUp, Heart, HelpCircle, ChevronLeft, ChevronRight, Volume2 } from 'lucide-react';
+import { ThumbsUp, Heart, HelpCircle, ChevronLeft, ChevronRight, Volume2, Mic, Loader } from 'lucide-react';
 import { useToast } from "@/components/ui/use-toast";
 import { useActivityTracking } from "@/hooks/useActivityTracking";
 import { ActivityTypes } from "@/hooks/useActivityTracking";
