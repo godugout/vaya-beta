@@ -82,7 +82,7 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
         ) : isHanumanPage ? (
           <EnhancedHanumanBackground />
         ) : (
-          <>
+          <div>
             <div className="absolute inset-0 bg-dots bg-repeat opacity-5"></div>
             
             {/* Subtle star-like dots for cosmic feel */}
@@ -97,7 +97,7 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
                 backgroundAttachment: 'fixed'
               }}
             />
-          </>
+          </div>
         )}
       </div>
       
