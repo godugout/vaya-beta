@@ -17,6 +17,8 @@
 @import './styles/animations/core-animations.css';
 @import './styles/components/buttons.css';
 @import './styles/components/soft-theme-components.css';
+@import './styles/components/voice-nav.css';
+@import './styles/components/transitions.css';
 @import './styles/theme/core-variables.css';
 @import './styles/theme/soft-theme.css';
 @import './styles/theme/index.css';
@@ -24,6 +26,7 @@
 @import './styles/theme/dark-theme.css';
 @import './styles/theme/hanuman-theme.css'; /* Explicitly include Hanuman theme */
 @import './styles/theme/premium-theme.css'; /* Add premium theme */
+@import './styles/theme/accessibility.css'; /* Add accessibility styles */
 
 body {
   font-family: 'Inter', 'Manrope', sans-serif;
