@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useWeddingMode } from '@/components/wedding-mode/WeddingModeProvider';
@@ -93,10 +94,29 @@ export const UserJourneyProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const [showWeddingTransition, setShowWeddingTransition] = useState(false);
   const [isNewUser, setIsNewUser] = useState(true);
   
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { isActive: isWeddingModeActive } = useWeddingMode();
-  const { userExperienceLevel } = useVoiceInteraction();
+  // These hooks will be used only when the component is mounted inside a Router
+  let pathname = '/';
+  let navigate = (path: string) => {
+    console.warn('Navigation attempted outside Router context. Path:', path);
+    window.location.href = path; // Fallback
+  };
+
+  // Get the Router context if available
+  try {
+    const location = useLocation();
+    pathname = location.pathname;
+    navigate = useNavigate();
+  } catch (error) {
+    console.warn('Router context not available. Some features may be limited.');
+  }
+  
+  // Get WeddingMode status safely
+  const weddingModeContext = useWeddingMode();
+  const isWeddingModeActive = weddingModeContext?.isActive || false;
+  
+  // Get user experience level safely
+  const voiceInteractionContext = useVoiceInteraction();
+  const userExperienceLevel = voiceInteractionContext?.userExperienceLevel || 'intermediate';
 
   // If wedding mode is active, set the appropriate pathway
   useEffect(() => {

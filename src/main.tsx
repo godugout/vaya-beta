@@ -10,7 +10,6 @@ import { SoftThemeProvider } from "@/contexts/SoftThemeContext"
 import { PremiumThemeProvider } from "@/contexts/PremiumThemeContext"
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { VoiceInteractionProvider } from '@/contexts/VoiceInteractionContext'
-import { UserJourneyProvider } from '@/contexts/UserJourneyContext'
 
 // Create a client
 const queryClient = new QueryClient()
@@ -23,11 +22,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           <LanguageProvider>
             <AnimationProvider>
               <VoiceInteractionProvider>
-                <UserJourneyProvider>
-                  <QueryClientProvider client={queryClient}>
-                    <App />
-                  </QueryClientProvider>
-                </UserJourneyProvider>
+                <QueryClientProvider client={queryClient}>
+                  <App />
+                </QueryClientProvider>
               </VoiceInteractionProvider>
             </AnimationProvider>
           </LanguageProvider>
