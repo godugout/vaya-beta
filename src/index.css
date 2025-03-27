@@ -23,6 +23,7 @@
 @import './styles/theme/dark.css';
 @import './styles/theme/dark-theme.css';
 @import './styles/theme/hanuman-theme.css'; /* Explicitly include Hanuman theme */
+@import './styles/theme/premium-theme.css'; /* Add premium theme */
 
 body {
   font-family: 'Inter', 'Manrope', sans-serif;
