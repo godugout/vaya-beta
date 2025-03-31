@@ -23,7 +23,12 @@ export function RadarRings({ themeSecondary }: RadarRingsProps) {
           }}
           initial={{ opacity: 0.2 }}
           animate={{ opacity: [0.2, 0.3, 0.2] }}
-          transition={{ duration: 4, repeat: Infinity, delay: ring * 0.5 }}
+          transition={{ 
+            duration: 4, 
+            repeat: Infinity, 
+            delay: ring * 0.5,
+            ease: "easeInOut" // Changed from potential "ease-in-out" to "easeInOut"
+          }}
         />
       ))}
     </>

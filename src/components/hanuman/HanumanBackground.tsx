@@ -30,7 +30,7 @@ const HanumanBackground: React.FC = () => {
             transition={{
               repeat: Infinity,
               duration: 3 + Math.random() * 5,
-              ease: "easeInOut",
+              ease: "easeInOut", // Changed from "ease-in-out" to "easeInOut"
             }}
           />
         ))}

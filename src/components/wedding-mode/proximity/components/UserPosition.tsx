@@ -13,7 +13,11 @@ export function UserPosition({ themeAccent }: UserPositionProps) {
     <motion.div 
       className="z-10 rounded-full bg-white shadow-md w-16 h-16 flex items-center justify-center border-2 border-gray-200"
       animate={{ scale: [1, 1.05, 1] }}
-      transition={{ duration: 2, repeat: Infinity }}
+      transition={{ 
+        duration: 2, 
+        repeat: Infinity,
+        ease: "easeInOut" // Changed from potential "ease-in-out" to "easeInOut"
+      }}
     >
       <UserRound size={30} className={themeAccent} />
     </motion.div>

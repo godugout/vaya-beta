@@ -152,7 +152,7 @@ export const useAnimationSystem = ({
     // Base transition config
     const transition = {
       duration: finalDuration,
-      ease: finalEasing,
+      ease: finalPreset.easing, // Use valid Framer Motion easing
       delay: finalPreset.delay || 0,
       repeat: finalPreset.repeat || 0,
       repeatType: finalPreset.repeatType || 'loop'

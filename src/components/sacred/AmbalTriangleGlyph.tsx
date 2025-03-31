@@ -37,13 +37,13 @@ export const AmbalTriangleGlyph: React.FC<AmbalTriangleGlyphProps> = ({
         pathLength: { 
           repeat: Infinity, 
           duration: 3, 
-          ease: "easeInOut",
+          ease: "easeInOut", // Changed from "ease-in-out" to "easeInOut"
           delay: i * 0.4, // Stagger the animations
         },
         opacity: { 
           repeat: Infinity, 
           duration: 3, 
-          ease: "easeInOut",
+          ease: "easeInOut", // Changed from "ease-in-out" to "easeInOut"
           delay: i * 0.4,
         }
       }
@@ -77,7 +77,7 @@ export const AmbalTriangleGlyph: React.FC<AmbalTriangleGlyphProps> = ({
         fill="none"
         initial={{ pathLength: 0 }}
         animate={{ pathLength: 1 }}
-        transition={{ duration: 1.5, ease: "easeInOut" }}
+        transition={{ duration: 1.5, ease: "easeInOut" }} // Changed from "ease-in-out" to "easeInOut"
       />
       
       {/* Three horizontal lines */}

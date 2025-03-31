@@ -15,7 +15,7 @@ export const HanumanBanner: React.FC<HanumanBannerProps> = ({ onFamilySettingsCl
       className="relative overflow-hidden rounded-lg bg-gradient-to-r from-hanuman-cosmic-blue/40 to-hanuman-cosmic-purple/40 p-6 mb-6 backdrop-blur-sm border-none shadow-lg shadow-hanuman-gold/10"
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
+      transition={{ duration: 0.5, ease: "easeOut" }} // Changed from potential "ease-out" to "easeOut"
     >
       {/* Galaxy background simulation */}
       <div className="absolute inset-0">
@@ -35,6 +35,7 @@ export const HanumanBanner: React.FC<HanumanBannerProps> = ({ onFamilySettingsCl
               duration: 3 + Math.random() * 3,
               repeat: Infinity,
               delay: Math.random() * 2,
+              ease: "easeInOut" // Changed from potential "ease-in-out" to "easeInOut"
             }}
           />
         ))}
@@ -52,7 +53,7 @@ export const HanumanBanner: React.FC<HanumanBannerProps> = ({ onFamilySettingsCl
         <div className="flex items-center">
           <motion.div
             whileHover={{ rotate: 360 }}
-            transition={{ duration: 1 }}
+            transition={{ duration: 1, ease: "easeInOut" }} // Added explicit easing
             className="mr-4"
           >
             <JamnabenCircularGlyph size="md" className="text-hanuman-gold" />
@@ -63,7 +64,11 @@ export const HanumanBanner: React.FC<HanumanBannerProps> = ({ onFamilySettingsCl
               Hanuman Edition
               <motion.div
                 animate={{ rotate: [0, 15, 0, -15, 0] }}
-                transition={{ duration: 3, repeat: Infinity }}
+                transition={{ 
+                  duration: 3, 
+                  repeat: Infinity,
+                  ease: "easeInOut" // Changed from potential "ease-in-out" to "easeInOut"
+                }}
                 className="ml-2"
               >
                 <Star className="h-5 w-5 text-hanuman-gold fill-hanuman-gold" />

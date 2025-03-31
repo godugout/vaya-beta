@@ -1,68 +1,55 @@
 
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useAnimation } from './AnimationProvider';
+import { motion } from 'framer-motion';
 
 interface PageTransitionProps {
   children: React.ReactNode;
   location: string;
-  mode?: 'fade' | 'slide' | 'scale' | 'none';
+  mode?: 'fade' | 'slide' | 'scale';
 }
 
 export const PageTransition: React.FC<PageTransitionProps> = ({
   children,
   location,
-  mode = 'fade',
+  mode = 'fade'
 }) => {
-  const { isReduced, duration, easing } = useAnimation();
-
-  // Skip animation if reduced motion is preferred or mode is none
-  if (isReduced || mode === 'none') {
-    return <>{children}</>;
-  }
-
-  // Define variants based on transition mode
   const getVariants = () => {
     switch (mode) {
       case 'slide':
         return {
-          initial: { opacity: 0, x: 20 },
-          animate: { opacity: 1, x: 0 },
-          exit: { opacity: 0, x: -20 },
+          initial: { x: 15, opacity: 0 },
+          animate: { x: 0, opacity: 1 },
+          exit: { x: -15, opacity: 0 }
         };
       case 'scale':
         return {
-          initial: { opacity: 0, scale: 0.95 },
-          animate: { opacity: 1, scale: 1 },
-          exit: { opacity: 0, scale: 1.05 },
+          initial: { scale: 0.95, opacity: 0 },
+          animate: { scale: 1, opacity: 1 },
+          exit: { scale: 1.05, opacity: 0 }
         };
       case 'fade':
       default:
         return {
           initial: { opacity: 0 },
           animate: { opacity: 1 },
-          exit: { opacity: 0 },
+          exit: { opacity: 0 }
         };
     }
   };
 
-  const variants = getVariants();
-
   return (
-    <AnimatePresence mode="wait">
-      <motion.div
-        key={location}
-        initial="initial"
-        animate="animate"
-        exit="exit"
-        variants={variants}
-        transition={{
-          duration: duration.standard / 1000,
-          ease: easing.standard,
-        }}
-      >
-        {children}
-      </motion.div>
-    </AnimatePresence>
+    <motion.div
+      key={location}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      variants={getVariants()}
+      transition={{
+        duration: 0.3,
+        ease: "easeOut" // Changed from potential "ease-out" to "easeOut"
+      }}
+    >
+      {children}
+    </motion.div>
   );
 };
