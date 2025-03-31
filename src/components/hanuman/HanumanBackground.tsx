@@ -1,28 +1,45 @@
 
-import React from "react";
-import { motion } from "framer-motion";
+import React from 'react';
+import { motion } from 'framer-motion';
 
 const HanumanBackground: React.FC = () => {
   return (
-    <div className="fixed inset-0 z-0">
-      <div className="w-full h-full overflow-hidden relative">
-        <img 
-          src="/lovable-uploads/dbfde90d-4253-4295-b1e9-e9bb049cd9cd.png" 
-          alt="Hanuman background" 
-          className="w-full h-full object-cover opacity-30 md:object-cover md:object-top scale-110"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/30"></div>
-        <div className="absolute inset-0 bg-gradient-to-br from-hanuman-primary/20 via-hanuman-cosmic-blue/15 to-transparent"></div>
-        <div className="absolute inset-0 bg-gradient-to-tr from-hanuman-saffron/20 via-transparent to-transparent"></div>
-        <div className="absolute top-0 left-0 w-full h-1/3 bg-gradient-to-b from-black/40 to-transparent"></div>
-        <div className="absolute bottom-0 left-0 w-full h-1/4 bg-gradient-to-t from-hanuman-saffron/30 to-transparent"></div>
-        <div className="absolute left-0 top-0 w-1/4 h-full bg-gradient-to-r from-hanuman-saffron/30 to-transparent"></div>
-        <div className="absolute right-0 top-0 w-1/4 h-full bg-gradient-to-l from-hanuman-saffron/30 to-transparent"></div>
-        <div className="absolute top-0 left-0 w-1/3 h-1/3 bg-gradient-to-br from-hanuman-cosmic-purple/40 to-transparent rounded-full blur-3xl"></div>
-        <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-bl from-hanuman-saffron/30 to-transparent rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-to-tr from-hanuman-saffron/30 to-transparent rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-gradient-to-tl from-hanuman-cosmic-blue/30 to-transparent rounded-full blur-3xl"></div>
+    <div className="fixed inset-0 z-0 overflow-hidden">
+      {/* Dark cosmic background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-hanuman-dark to-hanuman-bg-dark"></div>
+      
+      {/* Subtle sacred pattern overlay */}
+      <div className="absolute inset-0 opacity-5 pointer-events-none backdrop-pattern"></div>
+      
+      {/* Animated stars */}
+      <div className="absolute inset-0">
+        {[...Array(50)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full bg-white"
+            style={{
+              height: Math.random() * 2 + 1,
+              width: Math.random() * 2 + 1,
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              opacity: [0.1, 0.5, 0.1],
+              scale: [1, 1.5, 1],
+            }}
+            transition={{
+              repeat: Infinity,
+              duration: 3 + Math.random() * 5,
+              ease: "easeInOut",
+            }}
+          />
+        ))}
       </div>
+      
+      {/* Cosmic light effects */}
+      <div className="absolute top-0 left-[20%] w-[30%] h-[20%] bg-hanuman-gold/5 blur-[100px] rounded-full"></div>
+      <div className="absolute bottom-0 right-[10%] w-[40%] h-[30%] bg-hanuman-orange/5 blur-[100px] rounded-full"></div>
+      <div className="absolute top-[30%] right-[5%] w-[15%] h-[20%] bg-hanuman-green/5 blur-[80px] rounded-full"></div>
     </div>
   );
 };

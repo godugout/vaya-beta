@@ -1,5 +1,5 @@
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Home from "./pages/Home";
 import Family from "./pages/Family";
 import ShareStoriesPage from "./pages/ShareStories";
@@ -12,34 +12,35 @@ import { AppLayout } from "./components/layout/AppLayout";
 // Create the router with AppLayout as the root wrapper
 const router = createBrowserRouter([
   {
+    path: "/",
     element: <AppLayout />,
     children: [
       {
-        path: "/",
+        index: true,
         element: <Home />,
       },
       {
-        path: "/family/:id",
+        path: "family/:id",
         element: <Family />,
       },
       {
-        path: "/share-stories",
+        path: "share-stories",
         element: <ShareStoriesPage />,
       },
       {
-        path: "/sacred-voice-experience",
+        path: "sacred-voice-experience",
         element: <SacredVoiceExperience />,
       },
       {
-        path: "/hanuman",
+        path: "hanuman",
         element: <HanumanEdition />,
       },
       {
-        path: "/create-family",
+        path: "create-family",
         element: <CreateFamily />,
       },
       {
-        path: "/memories",
+        path: "memories",
         element: <Memories />,
       },
     ],

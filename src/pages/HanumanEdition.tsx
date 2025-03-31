@@ -1,11 +1,14 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { HanumanPromptItem } from "@/types/hanuman";
 import { useHanumanChat } from "@/hooks/useHanumanChat";
 import HanumanBackground from "@/components/hanuman/HanumanBackground";
 import HanumanHeader from "@/components/hanuman/HanumanHeader";
 import HanumanChatLayout from "@/components/hanuman/HanumanChatLayout";
+import { useUserJourney } from "@/contexts/UserJourneyContext";
+import { PageTransition } from "@/components/animation/PageTransition";
+import { useLocation } from "react-router-dom";
 
 const suggestedPrompts: HanumanPromptItem[] = [
   {
@@ -52,9 +55,11 @@ const suggestedPrompts: HanumanPromptItem[] = [
 
 const HanumanEdition = () => {
   const { isSpanish, setLanguagePreference } = useLanguage();
-  const [activeCategory, setActiveCategory] = useState("personal");
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = React.useState("personal");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  const [isRightSidebarOpen, setIsRightSidebarOpen] = React.useState(false);
+  const { selectedPathway } = useUserJourney();
+  const location = useLocation();
   
   const {
     messages,
@@ -67,11 +72,11 @@ const HanumanEdition = () => {
   } = useHanumanChat();
 
   useEffect(() => {
-    document.body.classList.add('hanuman-theme');
-    return () => {
-      document.body.classList.remove('hanuman-theme');
-    };
-  }, []);
+    // Set the path in the user journey if it exists
+    if (selectedPathway !== "elder-storyteller") {
+      // This would be handled by UserJourneyContext but we're setting it here for explicitness
+    }
+  }, [selectedPathway]);
 
   const toggleLanguage = () => {
     setLanguagePreference(isSpanish ? 'en' : 'es');
