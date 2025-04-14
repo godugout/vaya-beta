@@ -15,11 +15,9 @@ export interface UserStory {
 
 export const storyService = {
   async getStories(includeMedia = false): Promise<UserStory[]> {
-    let query = supabase.from('user_stories').select(
-      includeMedia 
-        ? '*, media:media_id(*)'
-        : '*'
-    ).order('created_at', { ascending: false });
+    let query = supabase.from('user_stories')
+      .select(includeMedia ? 'id, title, content, media_id, is_public, created_at, updated_at, media:media_id(*)' : '*')
+      .order('created_at', { ascending: false });
     
     const { data, error } = await query;
     
@@ -33,11 +31,7 @@ export const storyService = {
   
   async getPublicStories(includeMedia = false): Promise<UserStory[]> {
     let query = supabase.from('user_stories')
-      .select(
-        includeMedia 
-          ? '*, media:media_id(*)'
-          : '*'
-      )
+      .select(includeMedia ? 'id, title, content, media_id, is_public, created_at, updated_at, media:media_id(*)' : '*')
       .eq('is_public', true)
       .order('created_at', { ascending: false });
     
@@ -54,11 +48,7 @@ export const storyService = {
   async getStoryById(id: string, includeMedia = false): Promise<UserStory> {
     const { data, error } = await supabase
       .from('user_stories')
-      .select(
-        includeMedia 
-          ? '*, media:media_id(*)'
-          : '*'
-      )
+      .select(includeMedia ? 'id, title, content, media_id, is_public, created_at, updated_at, media:media_id(*)' : '*')
       .eq('id', id)
       .single();
     
