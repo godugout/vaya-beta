@@ -10,7 +10,7 @@ import { FamilyContextForm } from "./FamilyContextForm";
 import { HanumanBanner } from "./HanumanBanner";
 import HanumanEditionSettings from "./HanumanEditionSettings";
 import ChatMessage from "./ChatMessage";
-import ChatInput from "./ChatInput";
+import { ChatInput } from "./ChatInput";
 import PromptCategories from "./PromptCategories";
 import { useLanguage } from "@/contexts/LanguageContext";
 

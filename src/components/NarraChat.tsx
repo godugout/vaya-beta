@@ -5,7 +5,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import VoiceRecorder from "./VoiceRecorder";
 import ChatMessage from "./chat/ChatMessage";
-import ChatInput from "./chat/ChatInput";
+import { ChatInput } from "./chat/ChatInput";
 import PromptCategories from "./chat/PromptCategories";
 import { useChat } from "./chat/useChat";
 import { useLanguage } from "@/contexts/LanguageContext";
