@@ -36,20 +36,20 @@ export const MobilePhoneMockup = ({ children }: MobilePhoneMockupProps) => {
           <div className={cn(
             "relative w-full max-w-md overflow-hidden transition-all duration-300",
             isApple ? [
-              "rounded-[3rem] bg-black p-4",
+              "rounded-[3.5rem] bg-black p-6", // Increased padding
               "before:content-[''] before:absolute before:top-0 before:left-1/2 before:-translate-x-1/2",
-              "before:w-28 before:h-7 before:bg-black before:rounded-b-3xl",
+              "before:w-36 before:h-8 before:bg-black before:rounded-b-3xl", // Adjusted notch
             ] : [
-              "rounded-[2rem] bg-black p-3",
+              "rounded-[2.5rem] bg-black p-5", // Increased padding
               "before:content-[''] before:absolute before:top-4 before:right-4",
-              "before:w-2 before:h-2 before:bg-gray-600 before:rounded-full",
+              "before:w-3 before:h-3 before:bg-gray-600 before:rounded-full",
             ]
           )}>
             {/* Phone Screen */}
             <div className={cn(
               "relative overflow-hidden bg-white w-full",
               "rounded-[2rem] shadow-inner",
-              "h-[calc(100vh-8rem)] max-h-[780px] min-h-[580px]"
+              "h-[calc(100vh-12rem)] max-h-[780px] min-h-[580px]" // Adjusted screen height and vertical padding
             )}>
               {children}
             </div>
