@@ -37,7 +37,7 @@ export const storyService = {
       // Transform the data to match the UserStory interface
       return (data || []).map(item => ({
         ...item,
-        media: item.media ? item.media as MediaFile : undefined
+        media: item.media ? (item.media as unknown as MediaFile) : undefined
       }));
     } else {
       const { data, error } = await query.select('*').order('created_at', { ascending: false });
@@ -74,7 +74,7 @@ export const storyService = {
       // Transform the data to match the UserStory interface
       return (data || []).map(item => ({
         ...item,
-        media: item.media ? item.media as MediaFile : undefined
+        media: item.media ? (item.media as unknown as MediaFile) : undefined
       }));
     } else {
       const { data, error } = await query.select('*').eq('is_public', true).order('created_at', { ascending: false });
@@ -111,7 +111,7 @@ export const storyService = {
       // Transform the data to match the UserStory interface
       return {
         ...data,
-        media: data.media ? data.media as MediaFile : undefined
+        media: data.media ? (data.media as unknown as MediaFile) : undefined
       };
     } else {
       const { data, error } = await query.select('*').eq('id', id).single();
