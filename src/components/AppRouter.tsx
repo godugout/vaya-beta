@@ -2,7 +2,12 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { SimpleLayout } from './layout/SimpleLayout';
+import { AidaLayout } from './layout/AidaLayout';
 import { HomePage } from '@/pages/HomePage';
+import { WelcomePage } from '@/pages/WelcomePage';
+import { OnboardingPage } from '@/pages/OnboardingPage';
+import { ChatPage } from '@/pages/ChatPage';
+import { MemoryJournalPage } from '@/pages/MemoryJournalPage';
 import { RecordStoryPage } from '@/pages/RecordStoryPage';
 import { ViewStoriesPage } from '@/pages/ViewStoriesPage';
 import { ProfilePage } from '@/pages/ProfilePage';
@@ -11,35 +16,51 @@ export const AppRouter = () => {
   return (
     <Routes>
       <Route 
+        path="/welcome" 
+        element={<WelcomePage />} 
+      />
+      <Route 
+        path="/onboarding" 
+        element={<OnboardingPage />} 
+      />
+      <Route 
         path="/" 
         element={
-          <SimpleLayout>
+          <AidaLayout>
             <HomePage />
-          </SimpleLayout>
+          </AidaLayout>
         } 
+      />
+      <Route 
+        path="/chat" 
+        element={<ChatPage />} 
+      />
+      <Route 
+        path="/memory-journal" 
+        element={<MemoryJournalPage />} 
       />
       <Route 
         path="/record" 
         element={
-          <SimpleLayout>
+          <AidaLayout>
             <RecordStoryPage />
-          </SimpleLayout>
+          </AidaLayout>
         } 
       />
       <Route 
         path="/stories" 
         element={
-          <SimpleLayout>
+          <AidaLayout>
             <ViewStoriesPage />
-          </SimpleLayout>
+          </AidaLayout>
         } 
       />
       <Route 
         path="/profile" 
         element={
-          <SimpleLayout>
+          <AidaLayout>
             <ProfilePage />
-          </SimpleLayout>
+          </AidaLayout>
         } 
       />
       <Route path="*" element={<Navigate to="/" replace />} />

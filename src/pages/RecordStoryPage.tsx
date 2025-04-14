@@ -1,8 +1,7 @@
 
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Mic, StopCircle, Send, ArrowLeft } from 'lucide-react';
+import { Mic, StopCircle, Send, ArrowLeft, Save } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export const RecordStoryPage = () => {
@@ -46,74 +45,65 @@ export const RecordStoryPage = () => {
             <ArrowLeft size={20} />
           </Button>
         </Link>
-        <h1 className="text-xl font-bold">Record Your Story</h1>
+        <h1 className="text-xl font-medium">Tell your story</h1>
       </div>
       
-      <Card>
-        <CardHeader>
-          <CardTitle>Tell us about a childhood memory</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="mb-4">
-            Record a story about a meaningful childhood memory. What made it special?
-          </p>
-          
-          <div className="border-t border-b border-gray-200 py-4 my-4">
-            {isRecording ? (
-              <div className="text-center">
-                <div className="mb-4 text-lg">Recording... {formatTime(recordedTime)}</div>
-                <div className="flex justify-center space-x-4">
-                  <Button 
-                    variant="outline" 
-                    size="lg" 
-                    className="rounded-full h-16 w-16 p-0 flex items-center justify-center"
-                    onClick={toggleRecording}
-                  >
-                    <StopCircle size={32} className="text-red-600" />
-                  </Button>
-                </div>
+      <div className="border border-[#EEEEEE] rounded-lg p-6">
+        <img 
+          src="/lovable-uploads/f0ede801-068f-43a9-85ba-16652b3ca7a8.png"
+          alt="Placeholder" 
+          className="w-16 h-16 mx-auto mb-4 opacity-50"
+        />
+        
+        <p className="text-center mb-6">
+          Jimmy would love to hear your story
+        </p>
+        
+        <div className="border-t border-b border-[#EEEEEE] py-6 my-4">
+          {isRecording ? (
+            <div className="text-center">
+              <div className="mb-4 text-lg">Recording... {formatTime(recordedTime)}</div>
+              <div className="flex justify-center space-x-4">
+                <Button 
+                  variant="outline" 
+                  size="lg" 
+                  className="rounded-full h-14 w-14 p-0 flex items-center justify-center"
+                  onClick={toggleRecording}
+                >
+                  <StopCircle size={28} className="text-red-600" />
+                </Button>
               </div>
-            ) : (
-              <div className="text-center">
-                <div className="mb-4">Tap the microphone to start recording</div>
-                <div className="flex justify-center space-x-4">
-                  <Button 
-                    variant="outline" 
-                    size="lg" 
-                    className="rounded-full h-16 w-16 p-0 flex items-center justify-center"
-                    onClick={toggleRecording}
-                  >
-                    <Mic size={32} />
-                  </Button>
-                </div>
-              </div>
-            )}
-          </div>
-          
-          <div className="mt-6">
-            <textarea
-              placeholder="Or type your story here..."
-              className="w-full p-3 border border-gray-300 rounded-md min-h-[100px]"
-            ></textarea>
-            
-            <div className="flex justify-end mt-4">
-              <Button>
-                <Send className="mr-2 h-4 w-4" />
-                Save Story
-              </Button>
             </div>
-          </div>
-        </CardContent>
-      </Card>
-      
-      <div className="mt-6">
-        <h3 className="font-medium mb-2">Recording Tips:</h3>
-        <ul className="list-disc pl-5 space-y-1 text-sm text-gray-600">
-          <li>Find a quiet place with minimal background noise</li>
-          <li>Speak clearly and at a normal pace</li>
-          <li>Share specific details that make your story unique</li>
-          <li>You can pause and resume recording if needed</li>
-        </ul>
+          ) : (
+            <div className="text-center">
+              <div className="mb-4">Tap to start recording</div>
+              <div className="flex justify-center space-x-4">
+                <Button 
+                  variant="outline" 
+                  size="lg" 
+                  className="rounded-full h-14 w-14 p-0 flex items-center justify-center"
+                  onClick={toggleRecording}
+                >
+                  <Mic size={28} />
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+        
+        <div className="space-y-4">
+          <button 
+            className="w-full py-3 bg-black text-white rounded-md"
+          >
+            Tell your story
+          </button>
+          
+          <button 
+            className="w-full py-3 border border-[#EEEEEE] rounded-md text-[#8A898C]"
+          >
+            Save for later
+          </button>
+        </div>
       </div>
     </div>
   );

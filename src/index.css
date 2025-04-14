@@ -5,6 +5,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import Aida theme */
+@import './styles/aida-theme.css';
+
 /* Base styles */
 body {
   font-family: 'Inter', sans-serif;
