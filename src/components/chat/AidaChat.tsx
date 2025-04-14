@@ -1,27 +1,24 @@
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Send, Mic, Paperclip, User, UserCircle2, Loader } from 'lucide-react';
 import { useVoiceRecorder } from '@/hooks/useVoiceRecorder';
 import { useAudioTranscription } from '@/hooks/useAudioTranscription';
 import { useToast } from '@/components/ui/use-toast';
 import AudioPreview from '@/components/audio/AudioPreview';
-
-interface Message {
-  id: string;
-  content: string;
-  sender: 'user' | 'assistant';
-  timestamp: Date;
-}
+import { chatMessageService, ChatMessage } from '@/services/chatMessageService';
+import { supabase } from '@/integrations/supabase/client';
 
 interface AidaChatProps {
-  initialMessages?: Message[];
+  initialMessages?: ChatMessage[];
 }
 
 export const AidaChat: React.FC<AidaChatProps> = ({ initialMessages = [] }) => {
-  const [messages, setMessages] = useState<Message[]>(initialMessages);
+  const [messages, setMessages] = useState<ChatMessage[]>(initialMessages);
   const [input, setInput] = useState('');
   const [isRecording, setIsRecording] = useState(false);
   const [isTranscribing, setIsTranscribing] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [conversationId, setConversationId] = useState<string | undefined>(undefined);
   const chatBodyRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
   
@@ -39,6 +36,53 @@ export const AidaChat: React.FC<AidaChatProps> = ({ initialMessages = [] }) => {
     transcribeAudio
   } = useAudioTranscription();
   
+  // Load messages from database on mount
+  useEffect(() => {
+    const loadMessages = async () => {
+      try {
+        const loadedMessages = await chatMessageService.getMessages(conversationId);
+        if (loadedMessages.length > 0) {
+          setMessages(loadedMessages);
+          // Use the conversation_id from the first message
+          if (loadedMessages[0].conversation_id) {
+            setConversationId(loadedMessages[0].conversation_id);
+          }
+        } else if (initialMessages.length > 0) {
+          // If no messages in DB but we have initial messages, save them
+          const newConversationId = crypto.randomUUID();
+          setConversationId(newConversationId);
+          
+          // Save initial messages to database
+          for (const message of initialMessages) {
+            await chatMessageService.addMessage({
+              ...message,
+              conversation_id: newConversationId
+            });
+          }
+          
+          setMessages(initialMessages);
+        }
+      } catch (error) {
+        console.error('Error loading messages:', error);
+        // Use initial messages as fallback
+        setMessages(initialMessages);
+      }
+    };
+    
+    // Check if user is authenticated
+    const checkAuth = async () => {
+      const { data } = await supabase.auth.getSession();
+      if (data.session) {
+        loadMessages();
+      } else {
+        // Not authenticated, use initial messages only
+        setMessages(initialMessages);
+      }
+    };
+    
+    checkAuth();
+  }, [initialMessages]);
+  
   // Scroll to bottom of chat when messages change
   const scrollToBottom = () => {
     if (chatBodyRef.current) {
@@ -47,12 +91,12 @@ export const AidaChat: React.FC<AidaChatProps> = ({ initialMessages = [] }) => {
   };
   
   // Scroll when messages change
-  React.useEffect(() => {
+  useEffect(() => {
     scrollToBottom();
   }, [messages]);
   
   // Handle voice recording state
-  React.useEffect(() => {
+  useEffect(() => {
     if (isRecording !== isRecordingActive) {
       if (isRecording) {
         startRecording();
@@ -67,7 +111,7 @@ export const AidaChat: React.FC<AidaChatProps> = ({ initialMessages = [] }) => {
   }, [isRecording, isRecordingActive, startRecording, stopRecording, toast]);
   
   // Handle transcription when recording stops
-  React.useEffect(() => {
+  useEffect(() => {
     const processAudio = async () => {
       if (audioBlob && !isRecordingActive && !transcription) {
         setIsTranscribing(true);
@@ -92,32 +136,100 @@ export const AidaChat: React.FC<AidaChatProps> = ({ initialMessages = [] }) => {
     processAudio();
   }, [audioBlob, isRecordingActive, transcription, transcribeAudio, toast]);
   
-  const handleSend = () => {
-    if (!input.trim() && !audioBlob) return;
+  const handleSend = async () => {
+    if ((!input.trim() && !audioBlob) || isSending) return;
     
-    // Add user message
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      content: input.trim() || "🎤 Voice message",
-      sender: 'user',
-      timestamp: new Date()
-    };
-    
-    setMessages([...messages, userMessage]);
-    setInput('');
-    setAudioBlob(null);
-    
-    // Simulate assistant response
-    setTimeout(() => {
-      const assistantMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        content: "I'm Aida, your memory companion. I'm here to help you capture and preserve stories.",
-        sender: 'assistant',
-        timestamp: new Date()
+    try {
+      setIsSending(true);
+      
+      // Create conversation ID if it doesn't exist
+      if (!conversationId) {
+        setConversationId(crypto.randomUUID());
+      }
+      
+      // Upload audio if exists
+      let audioUrl = '';
+      if (audioBlob) {
+        try {
+          const filePath = `chat-audio/${Date.now()}.webm`;
+          const { error: uploadError } = await supabase.storage
+            .from('media')
+            .upload(filePath, audioBlob);
+          
+          if (!uploadError) {
+            const { data } = supabase.storage
+              .from('media')
+              .getPublicUrl(filePath);
+            
+            audioUrl = data.publicUrl;
+          }
+        } catch (error) {
+          console.error('Error uploading audio:', error);
+        }
+      }
+      
+      // Add user message
+      const userMessage: ChatMessage = {
+        content: input.trim() || "🎤 Voice message",
+        sender: 'user',
+        conversation_id: conversationId,
+        metadata: audioUrl ? { audioUrl } : {}
       };
       
-      setMessages(prev => [...prev, assistantMessage]);
-    }, 1000);
+      // Add to UI immediately
+      setMessages(prev => [...prev, userMessage]);
+      setInput('');
+      setAudioBlob(null);
+      
+      // Save to database
+      const savedUserMessage = await chatMessageService.addMessage(userMessage);
+      
+      // Simulate assistant response
+      setMessages(prev => {
+        // Replace the temporary user message with the saved one
+        const updatedMessages = prev.map(msg => 
+          msg === userMessage ? savedUserMessage : msg
+        );
+        return updatedMessages;
+      });
+      
+      // Add assistant thinking indicator
+      const assistantThinking: ChatMessage = {
+        content: "Thinking...",
+        sender: 'assistant',
+        conversation_id: conversationId,
+        metadata: { isThinking: true }
+      };
+      
+      setMessages(prev => [...prev, assistantThinking]);
+      
+      // Simulate AI processing time
+      setTimeout(async () => {
+        // Generate assistant response
+        const assistantMessage: ChatMessage = {
+          content: "I'm Aida, your memory companion. I'm here to help you capture and preserve stories.",
+          sender: 'assistant',
+          conversation_id: conversationId
+        };
+        
+        // Save assistant response to database
+        const savedAssistantMessage = await chatMessageService.addMessage(assistantMessage);
+        
+        // Update UI with real message
+        setMessages(prev => prev.filter(msg => !msg.metadata?.isThinking).concat(savedAssistantMessage));
+        
+      }, 1500);
+      
+    } catch (error) {
+      console.error('Error sending message:', error);
+      toast({
+        title: 'Error sending message',
+        description: 'Failed to send message. Please try again.',
+        variant: 'destructive'
+      });
+    } finally {
+      setIsSending(false);
+    }
   };
   
   const toggleRecording = () => {
@@ -146,9 +258,9 @@ export const AidaChat: React.FC<AidaChatProps> = ({ initialMessages = [] }) => {
       
       <div className="aida-chat-body flex-1 overflow-y-auto" ref={chatBodyRef}>
         <div className="flex flex-col space-y-4 p-4">
-          {messages.map((message) => (
+          {messages.map((message, index) => (
             <div 
-              key={message.id} 
+              key={index} 
               className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               {message.sender === 'assistant' && (
@@ -160,10 +272,31 @@ export const AidaChat: React.FC<AidaChatProps> = ({ initialMessages = [] }) => {
                 <div 
                   className={`aida-bubble ${message.sender === 'user' ? 'aida-bubble-user' : 'aida-bubble-assistant'}`}
                 >
-                  {message.content}
+                  {message.metadata?.isThinking ? (
+                    <div className="flex items-center">
+                      <Loader size={16} className="animate-spin mr-2" />
+                      Thinking...
+                    </div>
+                  ) : (
+                    <>
+                      {message.content}
+                      {message.metadata?.audioUrl && (
+                        <div className="mt-2">
+                          <audio 
+                            src={message.metadata.audioUrl} 
+                            controls 
+                            className="w-full h-8"
+                          />
+                        </div>
+                      )}
+                    </>
+                  )}
                 </div>
                 <div className={`aida-message-time ${message.sender === 'user' ? 'text-right' : 'text-left'}`}>
-                  {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  {message.created_at 
+                    ? new Date(message.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                    : new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                  }
                 </div>
               </div>
               {message.sender === 'user' && (
@@ -213,14 +346,17 @@ export const AidaChat: React.FC<AidaChatProps> = ({ initialMessages = [] }) => {
                 handleSend();
               }
             }}
-            disabled={isRecording}
+            disabled={isRecording || isSending}
           />
           <button 
             className="absolute right-0 p-2 text-black"
             onClick={isRecording ? toggleRecording : handleSend}
+            disabled={isSending}
           >
             {isRecording ? (
               <div className="h-5 w-5 rounded-full bg-red-500 animate-pulse"></div>
+            ) : isSending ? (
+              <Loader size={20} className="animate-spin" />
             ) : (
               <Send size={20} />
             )}
@@ -230,7 +366,7 @@ export const AidaChat: React.FC<AidaChatProps> = ({ initialMessages = [] }) => {
           <button 
             className={`p-2 ${isRecording ? 'text-red-500' : ''}`}
             onClick={toggleRecording}
-            disabled={isTranscribing}
+            disabled={isTranscribing || isSending}
           >
             <Mic size={20} />
           </button>

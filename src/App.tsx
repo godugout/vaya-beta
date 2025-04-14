@@ -1,17 +1,18 @@
 
-import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from '@/components/ui/toaster';
-import { AppRouter } from '@/components/AppRouter';
+import { ChatPage } from '@/pages/ChatPage';
+import { StoriesPage } from '@/pages/StoriesPage';
 
 function App() {
   return (
-    <BrowserRouter>
-      <div className="app-container">
-        <AppRouter />
-        <Toaster />
-      </div>
-    </BrowserRouter>
+    <Router>
+      <Routes>
+        <Route path="/" element={<ChatPage />} />
+        <Route path="/stories" element={<StoriesPage />} />
+      </Routes>
+      <Toaster />
+    </Router>
   );
 }
 

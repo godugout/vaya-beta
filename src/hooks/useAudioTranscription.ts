@@ -1,6 +1,7 @@
 
 import { useState } from 'react';
 import { useToast } from '@/components/ui/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 interface UseAudioTranscriptionReturn {
   transcription: string | null;
@@ -35,7 +36,18 @@ export function useAudioTranscription(): UseAudioTranscriptionReturn {
       
       const base64Audio = await base64Promise;
       
-      // Call the transcription function using our existing transcribe-audio edge function
+      // Upload the audio to Supabase storage for persistence
+      const filePath = `transcriptions/${Date.now()}.webm`;
+      const { error: uploadError } = await supabase.storage
+        .from('media')
+        .upload(filePath, audioBlob);
+      
+      if (uploadError) {
+        console.warn('Failed to upload audio for future reference:', uploadError);
+        // Continue with transcription even if storage fails
+      }
+      
+      // Call the transcription API
       try {
         const response = await fetch('/api/transcribe', {
           method: 'POST',
@@ -55,7 +67,25 @@ export function useAudioTranscription(): UseAudioTranscriptionReturn {
           throw new Error('No transcription returned');
         }
         
+        // Save the transcription to state
         setTranscription(data.text);
+        
+        // Log the transcription activity
+        try {
+          await supabase
+            .from('user_activities')
+            .insert({
+              activity_type: 'audio_transcribed',
+              metadata: {
+                length: audioBlob.size,
+                transcription_length: data.text.length,
+                timestamp: new Date().toISOString()
+              }
+            });
+        } catch (logError) {
+          console.warn('Failed to log transcription activity:', logError);
+        }
+        
         return data.text;
       } catch (fetchError) {
         // Fallback to simulated transcription if API is not available
