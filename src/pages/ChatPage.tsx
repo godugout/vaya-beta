@@ -1,8 +1,4 @@
-
 import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowLeft, MoreVertical } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { ChatBubble } from '@/components/chat/messages/ChatBubble';
 import { ChatInput } from '@/components/chat/ChatInput';
 import { ChatHeader } from '@/components/chat/ChatHeader';
