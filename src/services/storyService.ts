@@ -18,7 +18,7 @@ export const storyService = {
     let query = supabase.from('user_stories');
     
     if (includeMedia) {
-      query = query.select(`
+      const { data, error } = await query.select(`
         id, 
         title, 
         content, 
@@ -27,26 +27,31 @@ export const storyService = {
         created_at, 
         updated_at,
         media:media_id (*)
-      `);
+      `).order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Error fetching stories:', error);
+        throw error;
+      }
+      
+      return data || [];
     } else {
-      query = query.select('*');
+      const { data, error } = await query.select('*').order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Error fetching stories:', error);
+        throw error;
+      }
+      
+      return data || [];
     }
-    
-    const { data, error } = await query.order('created_at', { ascending: false });
-    
-    if (error) {
-      console.error('Error fetching stories:', error);
-      throw error;
-    }
-    
-    return data || [];
   },
   
   async getPublicStories(includeMedia = false): Promise<UserStory[]> {
     let query = supabase.from('user_stories');
     
     if (includeMedia) {
-      query = query.select(`
+      const { data, error } = await query.select(`
         id, 
         title, 
         content, 
@@ -55,28 +60,31 @@ export const storyService = {
         created_at, 
         updated_at,
         media:media_id (*)
-      `);
+      `).eq('is_public', true).order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Error fetching public stories:', error);
+        throw error;
+      }
+      
+      return data || [];
     } else {
-      query = query.select('*');
+      const { data, error } = await query.select('*').eq('is_public', true).order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Error fetching public stories:', error);
+        throw error;
+      }
+      
+      return data || [];
     }
-    
-    query = query.eq('is_public', true);
-    
-    const { data, error } = await query.order('created_at', { ascending: false });
-    
-    if (error) {
-      console.error('Error fetching public stories:', error);
-      throw error;
-    }
-    
-    return data || [];
   },
   
   async getStoryById(id: string, includeMedia = false): Promise<UserStory> {
     let query = supabase.from('user_stories');
     
     if (includeMedia) {
-      query = query.select(`
+      const { data, error } = await query.select(`
         id, 
         title, 
         content, 
@@ -85,21 +93,24 @@ export const storyService = {
         created_at, 
         updated_at,
         media:media_id (*)
-      `);
+      `).eq('id', id).single();
+      
+      if (error) {
+        console.error('Error fetching story:', error);
+        throw error;
+      }
+      
+      return data;
     } else {
-      query = query.select('*');
+      const { data, error } = await query.select('*').eq('id', id).single();
+      
+      if (error) {
+        console.error('Error fetching story:', error);
+        throw error;
+      }
+      
+      return data;
     }
-    
-    const { data, error } = await query
-      .eq('id', id)
-      .single();
-    
-    if (error) {
-      console.error('Error fetching story:', error);
-      throw error;
-    }
-    
-    return data;
   },
   
   async createStory(story: UserStory): Promise<UserStory> {
