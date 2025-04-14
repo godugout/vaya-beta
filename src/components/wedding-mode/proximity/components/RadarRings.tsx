@@ -27,7 +27,7 @@ export function RadarRings({ themeSecondary }: RadarRingsProps) {
             duration: 4, 
             repeat: Infinity, 
             delay: ring * 0.5,
-            ease: "easeInOut" // Changed from potential "ease-in-out" to "easeInOut"
+            ease: "easeInOut"
           }}
         />
       ))}

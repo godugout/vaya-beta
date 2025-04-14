@@ -46,7 +46,7 @@ export const PageTransition: React.FC<PageTransitionProps> = ({
       variants={getVariants()}
       transition={{
         duration: 0.3,
-        ease: "easeOut" // Changed from potential "ease-out" to "easeOut"
+        ease: "easeOut"
       }}
     >
       {children}

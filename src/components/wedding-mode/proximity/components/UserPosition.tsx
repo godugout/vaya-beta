@@ -16,7 +16,7 @@ export function UserPosition({ themeAccent }: UserPositionProps) {
       transition={{ 
         duration: 2, 
         repeat: Infinity,
-        ease: "easeInOut" // Changed from potential "ease-in-out" to "easeInOut"
+        ease: "easeInOut"
       }}
     >
       <UserRound size={30} className={themeAccent} />

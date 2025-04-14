@@ -26,7 +26,7 @@ export function ProximityRing({ ringSize, ringClass, delay = 0 }: ProximityRingP
         duration: 4, 
         repeat: Infinity, 
         delay: delay,
-        ease: "easeInOut" // Changed from potential "ease-in-out" to "easeInOut"
+        ease: "easeInOut"
       }}
     />
   );
