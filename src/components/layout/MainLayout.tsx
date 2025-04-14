@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { HanumanTopNav } from '@/components/navigation/HanumanTopNav';
 import Footer from '@/components/Footer';
@@ -38,6 +39,7 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
   const isHanumanPage = location.pathname.includes('hanuman');
   const isSimplifiedMode = accessibilityMode === 'simplified';
   
+  // Track page views
   React.useEffect(() => {
     trackActivity(ActivityTypes.PAGE_VIEW, {
       path: location.pathname,
@@ -55,6 +57,7 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
     }
   };
 
+  // Apply theme classes
   useEffect(() => {
     document.body.classList.remove('light');
     document.body.classList.add('dark');
@@ -82,15 +85,13 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
       document.body.classList.add('dark');
     };
   }, [isHanumanPage, accessibilityMode, isSimplifiedMode]);
-  
-  const svgPattern = "data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E";
 
   return (
     <MobilePhoneMockup>
       <div className={cn(
-        "relative min-h-full",
-        isPremiumTheme ? 'premium-theme-bg' : isHanumanPage ? 'bg-hanuman-dark' : 'bg-black',
-        'text-white'
+        "relative h-full flex flex-col",
+        isPremiumTheme ? 'premium-theme-bg' : isHanumanPage ? 'bg-hanuman-dark' : 'bg-white',
+        isHanumanPage ? 'text-white' : 'text-black'
       )}>
         <VoiceFeedbackIndicator 
           status={isListening ? 'listening' : 'idle'}
@@ -106,7 +107,7 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
           isSimplifiedView={isSoftTheme || isSimplifiedMode}
         />
         
-        <main className={cn("flex-grow", isPremiumTheme ? 'premium-theme-content' : '', className)}>
+        <main className={cn("flex-1 overflow-auto", isPremiumTheme ? 'premium-theme-content' : '', className)}>
           <ErrorBoundary>
             {children}
           </ErrorBoundary>
