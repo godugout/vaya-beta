@@ -34,7 +34,11 @@ export const storyService = {
         throw error;
       }
       
-      return data || [];
+      // Transform the data to match the UserStory interface
+      return (data || []).map(item => ({
+        ...item,
+        media: item.media ? item.media as MediaFile : undefined
+      }));
     } else {
       const { data, error } = await query.select('*').order('created_at', { ascending: false });
       
@@ -67,7 +71,11 @@ export const storyService = {
         throw error;
       }
       
-      return data || [];
+      // Transform the data to match the UserStory interface
+      return (data || []).map(item => ({
+        ...item,
+        media: item.media ? item.media as MediaFile : undefined
+      }));
     } else {
       const { data, error } = await query.select('*').eq('is_public', true).order('created_at', { ascending: false });
       
@@ -100,7 +108,11 @@ export const storyService = {
         throw error;
       }
       
-      return data;
+      // Transform the data to match the UserStory interface
+      return {
+        ...data,
+        media: data.media ? data.media as MediaFile : undefined
+      };
     } else {
       const { data, error } = await query.select('*').eq('id', id).single();
       
