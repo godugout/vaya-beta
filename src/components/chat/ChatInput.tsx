@@ -1,60 +1,58 @@
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Send, Mic, MoreHorizontal } from "lucide-react";
+import { Paperclip, Mic, Send } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface ChatInputProps {
-  input: string;
-  setInput: (value: string) => void;
-  handleSend: (messageContent?: { content: string; attachments?: { type: "audio" | "image"; url: string }[] }, isSpanish?: boolean) => void;
-  handleMorePrompts: (isSpanish?: boolean) => void;
-  setIsRecording: (value: boolean) => void;
-  isSpanish: boolean;
+  value: string;
+  onChange: (value: string) => void;
+  onSubmit: () => void;
 }
 
-const ChatInput = ({
-  input,
-  setInput,
-  handleSend,
-  handleMorePrompts,
-  setIsRecording,
-  isSpanish,
-}: ChatInputProps) => {
+export const ChatInput = ({ value, onChange, onSubmit }: ChatInputProps) => {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      onSubmit();
+    }
+  };
+
   return (
-    <div className="space-y-2 px-4 py-3 border-t border-gray-100">
-      <div className="flex gap-2">
-        <Input
-          placeholder={isSpanish ? "Comparte tu historia..." : "Share your story..."}
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyPress={(e) => e.key === "Enter" && handleSend(undefined, isSpanish)}
-          className="flex-1 bg-greystone-ui-gray border-none text-greystone-green rounded-xl py-3 px-4"
-        />
-        <Button
-          onClick={() => handleSend(undefined, isSpanish)}
+    <div className="p-3 bg-white border-t border-gray-200">
+      <div className="flex items-center gap-2">
+        <Button 
+          variant="ghost" 
           size="icon"
-          className="bg-lovable-blue hover:bg-lovable-blue-bright text-white rounded-full"
+          className="text-gray-500"
         >
-          <Send className="h-4 w-4" />
+          <Paperclip size={20} />
         </Button>
-        <Button
-          onClick={() => setIsRecording(true)}
+        
+        <input
+          type="text"
+          placeholder="Type your message..."
+          className="flex-1 bg-gray-100 border-0 rounded-full py-2.5 px-4 focus:ring-2 focus:ring-indigo-500"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          onKeyPress={handleKeyPress}
+        />
+        
+        <Button 
+          variant="ghost" 
           size="icon"
-          className="bg-lovable-magenta hover:bg-lovable-magenta-bright text-white rounded-full"
+          className="text-gray-500"
         >
-          <Mic className="h-4 w-4" />
+          <Mic size={20} />
+        </Button>
+        
+        <Button 
+          size="icon" 
+          className="bg-indigo-500 hover:bg-indigo-600 text-white rounded-full"
+          onClick={onSubmit}
+          disabled={!value.trim()}
+        >
+          <Send size={18} />
         </Button>
       </div>
-      <Button
-        onClick={() => handleMorePrompts(isSpanish)}
-        variant="ghost"
-        className="w-full text-greystone-green-40 hover:text-greystone-green hover:bg-greystone-ui-gray text-sm"
-      >
-        <MoreHorizontal className="h-5 w-5 mr-2" />
-        {isSpanish ? "Más ideas para compartir" : "More ideas to share"}
-      </Button>
     </div>
   );
 };
-
-export default ChatInput;
