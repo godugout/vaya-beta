@@ -2,6 +2,8 @@
 import { useEffect, useRef, useCallback } from "react";
 import { StoryMemoryCard } from "./StoryMemoryCard";
 import { PhotoMemoryCard } from "./PhotoMemoryCard";
+import { VideoMemoryCard } from "./VideoMemoryCard";
+import { AudioMemoryCard } from "./AudioMemoryCard";
 import { useMemories } from "./useMemories";
 import { Memory } from "./types";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -108,7 +110,7 @@ const MemoryFeedLayout = () => {
             return null;
           }
           
-          // Handle memory type
+          // Render appropriate component based on memory type
           switch (memory.type) {
             case "story":
               return (
@@ -122,7 +124,20 @@ const MemoryFeedLayout = () => {
                   <PhotoMemoryCard memory={memory} isPlaceholder={true} />
                 </div>
               );
-            // Fallback for other types
+            case "video":
+              return (
+                <div key={memory.id} className="animate-fadeIn">
+                  {/* Fallback to PhotoMemoryCard for now */}
+                  <PhotoMemoryCard memory={memory as any} isPlaceholder={true} />
+                </div>
+              );
+            case "audio":
+              return (
+                <div key={memory.id} className="animate-fadeIn">
+                  {/* Fallback to StoryMemoryCard for now */}
+                  <StoryMemoryCard memory={memory as any} isPlaceholder={true} />
+                </div>
+              );
             default:
               console.warn(`Unsupported memory type: ${memory.type}`);
               return null;

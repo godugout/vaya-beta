@@ -31,3 +31,32 @@
   white-space: nowrap;
   border-width: 0;
 }
+
+/* Make sure elements have sufficient color contrast */
+.hanuman-theme .text-hanuman-text-secondary {
+  color: var(--hanuman-text-secondary);
+}
+
+/* Add base animation class for memory feed */
+.hanuman-theme .animate-fadeIn {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Error handling styles */
+.hanuman-theme .error-text {
+  color: #e53935;
+  font-weight: 500;
+}
+
+/* Loading indication */
+.hanuman-theme .loading-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}

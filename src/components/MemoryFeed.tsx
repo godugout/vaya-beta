@@ -2,7 +2,7 @@
 import { StoryMemoryCard } from "./memory/StoryMemoryCard";
 import { PhotoMemoryCard } from "./memory/PhotoMemoryCard";
 import { useMemories } from "./memory/useMemories";
-import { Memory } from "./memory/types";
+import { Memory, isPhotoMemory, isStoryMemory } from "./memory/types";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Info } from "lucide-react";
 
@@ -28,13 +28,16 @@ const MemoryFeed = () => {
         </AlertDescription>
       </Alert>
       
-      {memories.map((memory: Memory) => (
-        memory.type === "story" ? (
-          <StoryMemoryCard key={memory.id} memory={memory} isPlaceholder={true} />
-        ) : (
-          <PhotoMemoryCard key={memory.id} memory={memory} isPlaceholder={true} />
-        )
-      ))}
+      {memories.map((memory: Memory) => {
+        if (isStoryMemory(memory)) {
+          return <StoryMemoryCard key={memory.id} memory={memory} isPlaceholder={true} />;
+        } else if (isPhotoMemory(memory)) {
+          return <PhotoMemoryCard key={memory.id} memory={memory} isPlaceholder={true} />;
+        } else {
+          // Fallback for other types (video, audio)
+          return null;
+        }
+      })}
     </div>
   );
 };

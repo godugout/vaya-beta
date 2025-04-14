@@ -34,3 +34,20 @@ export type AudioMemory = BaseMemory & {
 };
 
 export type Memory = StoryMemory | PhotoMemory | VideoMemory | AudioMemory;
+
+// Type guards for safer type checking
+export const isStoryMemory = (memory: Memory): memory is StoryMemory => {
+  return memory.type === "story";
+};
+
+export const isPhotoMemory = (memory: Memory): memory is PhotoMemory => {
+  return memory.type === "photo";
+};
+
+export const isVideoMemory = (memory: Memory): memory is VideoMemory => {
+  return memory.type === "video";
+};
+
+export const isAudioMemory = (memory: Memory): memory is AudioMemory => {
+  return memory.type === "audio";
+};

@@ -1,134 +1,198 @@
 
-import { useParams, Link } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { ArrowLeft, MessageSquare, Share2, Bookmark } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { StoryMemoryCard } from "@/components/memory/StoryMemoryCard";
-import { PhotoMemoryCard } from "@/components/memory/PhotoMemoryCard";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Memory } from "@/components/memory/types";
+import React, { useEffect } from 'react';
+import { MainLayout } from '@/components/layout/MainLayout';
+import { useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { 
+  Memory, 
+  isPhotoMemory, 
+  isVideoMemory, 
+  isAudioMemory,
+  isStoryMemory 
+} from '@/components/memory/types';
 
-// Sample memories for development
-const sampleMemories: Record<string, Memory> = {
-  "1": {
-    id: "1",
-    type: "story",
-    content_url: "/path/to/sample-audio.mp3",
-    created_at: "2024-03-20T10:00:00Z",
-    title: "Abuela's Secret Gallo Pinto Recipe",
-    description: "My grandmother shares the story behind our family's traditional Costa Rican breakfast, passed down through generations. She reveals her secret ingredient that makes her gallo pinto special and talks about morning traditions in our family.",
-    duration: 180,
-  },
-  "2": {
-    id: "2",
-    type: "photo",
-    content_url: "https://images.unsplash.com/photo-1472396961693-142e6e269027",
-    created_at: "2024-03-19T15:30:00Z",
-    photo_url: "https://images.unsplash.com/photo-1472396961693-142e6e269027",
-    caption: "Family trip to Monteverde Cloud Forest - The kids were amazed by the wildlife!",
-  }
+const fetchMemory = async (id: string): Promise<Memory | null> => {
+  // This would normally fetch from an API, using sample data for now
+  const sampleMemories = [
+    {
+      id: "1",
+      type: "story",
+      content_url: "/path/to/sample-audio.mp3",
+      created_at: "2024-03-20T10:00:00Z",
+      title: "Abuela's Secret Gallo Pinto Recipe",
+      description: "My grandmother shares the story behind our family's traditional Costa Rican breakfast.",
+      duration: 180,
+    },
+    {
+      id: "2",
+      type: "photo",
+      content_url: "https://images.unsplash.com/photo-1472396961693-142e6e269027",
+      created_at: "2024-03-19T15:30:00Z",
+      photo_url: "https://images.unsplash.com/photo-1472396961693-142e6e269027",
+      caption: "Family trip to Monteverde Cloud Forest - The kids were amazed by the wildlife!",
+    },
+    {
+      id: "3",
+      type: "video",
+      content_url: "https://example.com/sample-video.mp4",
+      created_at: "2024-03-18T09:15:00Z",
+      video_url: "https://example.com/sample-video.mp4",
+      caption: "Family beach day",
+      duration: 120,
+    },
+    {
+      id: "4",
+      type: "audio",
+      content_url: "/path/to/sample-audio.mp3",
+      created_at: "2024-03-17T14:20:00Z",
+      audio_url: "/path/to/sample-audio.mp3",
+      transcript: "This is a transcript of the audio memory.",
+      duration: 240,
+    }
+  ];
+  
+  const memory = sampleMemories.find(m => m.id === id);
+  return memory as Memory || null;
 };
 
 const MemoryPost = () => {
-  const { id } = useParams();
-
-  const { data: memory, isLoading } = useQuery({
-    queryKey: ["memory", id],
-    queryFn: async () => {
-      // Simulate API call with a delay
-      await new Promise(resolve => setTimeout(resolve, 800));
-      
-      // Use sample data based on ID
-      const memoryData = sampleMemories[id || ""] || sampleMemories["1"];
-      if (!memoryData) throw new Error("Memory not found");
-      
-      return memoryData;
-    },
+  const { id } = useParams<{ id: string }>();
+  const { data: memory, isLoading, error } = useQuery({
+    queryKey: ['memory', id],
+    queryFn: () => fetchMemory(id || ''),
+    enabled: !!id
   });
+
+  // Add Hanuman theme class when the component mounts
+  useEffect(() => {
+    document.body.classList.add('hanuman-theme');
+    return () => {
+      document.body.classList.remove('hanuman-theme');
+    };
+  }, []);
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <div className="border-b bg-white">
-          <div className="container mx-auto px-4">
-            <div className="h-16 flex items-center">
-              <Skeleton className="h-8 w-32" />
-            </div>
+      <MainLayout>
+        <div className="hanuman-container py-10">
+          <div className="hanuman-card p-8 text-center">
+            <div className="animate-pulse">Loading memory...</div>
           </div>
         </div>
-        <div className="container mx-auto px-4 py-8">
-          <div className="max-w-3xl mx-auto">
-            <Skeleton className="h-96 w-full rounded-lg" />
-          </div>
-        </div>
-      </div>
+      </MainLayout>
     );
   }
 
-  if (!memory) {
+  if (error || !memory) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-semibold text-gray-900 mb-2">Memory not found</h1>
-          <p className="text-gray-600 mb-4">This memory might have been removed or you don't have access to it.</p>
-          <Link to="/memory-lane">
-            <Button variant="outline">Return to Memory Lane</Button>
-          </Link>
+      <MainLayout>
+        <div className="hanuman-container py-10">
+          <div className="hanuman-card p-8 text-center">
+            <h2 className="text-xl text-hanuman-text-primary mb-4">Memory Not Found</h2>
+            <p className="text-hanuman-text-secondary">
+              We couldn't find the memory you're looking for. It may have been removed or the link is incorrect.
+            </p>
+          </div>
         </div>
-      </div>
+      </MainLayout>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="border-b bg-white">
-        <div className="container mx-auto px-4">
-          <div className="h-16 flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Link
-                to="/memory-lane"
-                className="flex items-center text-gray-600 hover:text-gray-900"
-              >
-                <ArrowLeft className="h-5 w-5 mr-2" />
-                Back to Memory Lane
-              </Link>
+    <MainLayout>
+      <div className="hanuman-container py-10">
+        <div className="hanuman-card p-8">
+          {/* Dynamically render based on memory type */}
+          {isPhotoMemory(memory) && (
+            <div className="space-y-6">
+              <h1 className="text-2xl font-semibold text-hanuman-text-primary">Photo Memory</h1>
+              <div className="rounded-lg overflow-hidden">
+                <img 
+                  src={memory.photo_url || memory.content_url} 
+                  alt="Memory" 
+                  className="w-full object-cover"
+                />
+              </div>
+              {memory.caption && (
+                <p className="text-hanuman-text-primary">{memory.caption}</p>
+              )}
+              <div className="text-sm text-hanuman-text-secondary">
+                Captured on {new Date(memory.created_at).toLocaleDateString()}
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-gray-600 hover:text-gray-900"
-              >
-                <MessageSquare className="h-5 w-5" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-gray-600 hover:text-gray-900"
-              >
-                <Share2 className="h-5 w-5" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-gray-600 hover:text-gray-900"
-              >
-                <Bookmark className="h-5 w-5" />
-              </Button>
+          )}
+
+          {isVideoMemory(memory) && (
+            <div className="space-y-6">
+              <h1 className="text-2xl font-semibold text-hanuman-text-primary">Video Memory</h1>
+              <div className="rounded-lg overflow-hidden aspect-video bg-black">
+                <video 
+                  src={memory.video_url || memory.content_url}
+                  controls
+                  className="w-full h-full"
+                  poster={memory.video_url || memory.content_url}
+                >
+                  Your browser does not support video playback.
+                </video>
+              </div>
+              {memory.caption && (
+                <p className="text-hanuman-text-primary">{memory.caption}</p>
+              )}
+              <div className="text-sm text-hanuman-text-secondary">
+                Recorded on {new Date(memory.created_at).toLocaleDateString()}
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-3xl mx-auto">
-          {memory.type === "story" ? (
-            <StoryMemoryCard memory={memory} />
-          ) : (
-            <PhotoMemoryCard memory={memory} />
+          )}
+
+          {isAudioMemory(memory) && (
+            <div className="space-y-6">
+              <h1 className="text-2xl font-semibold text-hanuman-text-primary">Audio Memory</h1>
+              <div className="bg-hanuman-primary/10 p-4 rounded-lg">
+                <audio 
+                  src={memory.audio_url || memory.content_url}
+                  controls
+                  className="w-full"
+                >
+                  Your browser does not support audio playback.
+                </audio>
+              </div>
+              {memory.transcript && (
+                <div>
+                  <h3 className="text-lg font-medium text-hanuman-text-primary mb-2">Transcript</h3>
+                  <p className="text-hanuman-text-primary">{memory.transcript}</p>
+                </div>
+              )}
+              <div className="text-sm text-hanuman-text-secondary">
+                Recorded on {new Date(memory.created_at).toLocaleDateString()}
+              </div>
+            </div>
+          )}
+
+          {isStoryMemory(memory) && (
+            <div className="space-y-6">
+              <h1 className="text-2xl font-semibold text-hanuman-text-primary">
+                {memory.title || "Story Memory"}
+              </h1>
+              {memory.description && (
+                <p className="text-hanuman-text-primary">{memory.description}</p>
+              )}
+              <div className="bg-hanuman-primary/10 p-4 rounded-lg">
+                <audio 
+                  src={memory.content_url}
+                  controls
+                  className="w-full"
+                >
+                  Your browser does not support audio playback.
+                </audio>
+              </div>
+              <div className="text-sm text-hanuman-text-secondary">
+                Recorded on {new Date(memory.created_at).toLocaleDateString()}
+              </div>
+            </div>
           )}
         </div>
       </div>
-    </div>
+    </MainLayout>
   );
 };
 
