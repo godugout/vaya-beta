@@ -32,15 +32,15 @@ export const MobilePhoneMockup = ({ children }: MobilePhoneMockupProps) => {
         </div>
 
         {/* Phone mockup */}
-        <div className="flex-1 flex justify-center">
+        <div className="flex-1 flex justify-center py-12"> {/* Added vertical padding */}
           <div className={cn(
             "relative w-full max-w-md overflow-hidden transition-all duration-300",
             isApple ? [
-              "rounded-[3.5rem] bg-black p-6", // Increased padding
+              "rounded-[3.5rem] bg-black p-6",
               "before:content-[''] before:absolute before:top-0 before:left-1/2 before:-translate-x-1/2",
-              "before:w-36 before:h-8 before:bg-black before:rounded-b-3xl", // Adjusted notch
+              "before:w-36 before:h-8 before:bg-black before:rounded-b-3xl",
             ] : [
-              "rounded-[2.5rem] bg-black p-5", // Increased padding
+              "rounded-[2.5rem] bg-black p-5",
               "before:content-[''] before:absolute before:top-4 before:right-4",
               "before:w-3 before:h-3 before:bg-gray-600 before:rounded-full",
             ]
@@ -49,7 +49,7 @@ export const MobilePhoneMockup = ({ children }: MobilePhoneMockupProps) => {
             <div className={cn(
               "relative overflow-hidden bg-white w-full",
               "rounded-[2rem] shadow-inner",
-              "h-[calc(100vh-12rem)] max-h-[780px] min-h-[580px]" // Adjusted screen height and vertical padding
+              "h-[calc(100vh-16rem)] max-h-[700px] min-h-[600px]" // Adjusted height constraints
             )}>
               {children}
             </div>
@@ -74,3 +74,4 @@ export const MobilePhoneMockup = ({ children }: MobilePhoneMockupProps) => {
     </div>
   );
 };
+
