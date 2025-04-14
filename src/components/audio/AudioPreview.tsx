@@ -1,87 +1,68 @@
 
-import { useState, useRef, useEffect } from 'react';
-import { Play, Pause, Loader2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { useState, useEffect, useRef } from "react";
+import { Button } from "@/components/ui/button";
+import { Play, Pause } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface AudioPreviewProps {
   audioBlob: Blob;
-  className?: string;
   disabled?: boolean;
+  className?: string;
 }
 
-const AudioPreview = ({ audioBlob, className, disabled = false }: AudioPreviewProps) => {
+const AudioPreview = ({ audioBlob, disabled = false, className }: AudioPreviewProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const audioUrl = useRef<string | null>(null);
   
-  // Create audio element and URL when blob changes
   useEffect(() => {
-    if (!audioBlob) return;
+    // Create audio element and URL for the blob
+    const audioUrl = URL.createObjectURL(audioBlob);
+    const audio = new Audio(audioUrl);
     
-    setLoading(true);
-    
-    // Create object URL for the audio blob
-    audioUrl.current = URL.createObjectURL(audioBlob);
-    
-    // Create audio element
-    const audio = new Audio(audioUrl.current);
-    audioRef.current = audio;
-    
-    // Set up event handlers
     audio.addEventListener('loadedmetadata', () => {
       setDuration(audio.duration);
-      setLoading(false);
     });
     
     audio.addEventListener('timeupdate', () => {
+      setCurrentTime(audio.currentTime);
       setProgress((audio.currentTime / audio.duration) * 100);
     });
     
     audio.addEventListener('ended', () => {
       setIsPlaying(false);
+      setCurrentTime(0);
       setProgress(0);
-      audio.currentTime = 0;
     });
     
-    audio.addEventListener('error', (e) => {
-      console.error('Audio playback error:', e);
-      setLoading(false);
-    });
+    audioRef.current = audio;
     
+    // Cleanup
     return () => {
-      // Clean up
+      URL.revokeObjectURL(audioUrl);
       audio.pause();
       audio.src = '';
-      if (audioUrl.current) {
-        URL.revokeObjectURL(audioUrl.current);
-        audioUrl.current = null;
-      }
     };
   }, [audioBlob]);
   
-  // Toggle play/pause
   const togglePlayback = () => {
     if (!audioRef.current) return;
     
     if (isPlaying) {
       audioRef.current.pause();
-      setIsPlaying(false);
     } else {
-      audioRef.current.play()
-        .then(() => setIsPlaying(true))
-        .catch(err => console.error('Error playing audio:', err));
+      audioRef.current.play().catch(console.error);
     }
+    
+    setIsPlaying(!isPlaying);
   };
   
-  // Format time as MM:SS
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  const formatTime = (time: number): string => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
   
   return (
@@ -89,32 +70,29 @@ const AudioPreview = ({ audioBlob, className, disabled = false }: AudioPreviewPr
       <Button
         variant="outline"
         size="icon"
-        className="h-8 w-8 rounded-full flex-shrink-0"
+        disabled={disabled}
         onClick={togglePlayback}
-        disabled={loading || disabled}
+        className="h-8 w-8 rounded-full flex-shrink-0"
       >
-        {loading ? (
-          <Loader2 className="h-4 w-4 animate-spin" />
-        ) : isPlaying ? (
+        {isPlaying ? (
           <Pause className="h-4 w-4" />
         ) : (
-          <Play className="h-4 w-4 ml-0.5" />
+          <Play className="h-4 w-4" />
         )}
       </Button>
       
-      <div className="flex-1 space-y-1">
-        <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+      <div className="w-full space-y-1">
+        <div className="relative h-1.5 bg-gray-200 rounded-full overflow-hidden">
           <div 
-            className="h-full bg-gray-500 dark:bg-gray-400 rounded-full"
+            className="absolute h-full bg-vaya-secondary"
             style={{ width: `${progress}%` }}
           />
         </div>
-        {!loading && (
-          <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400">
-            <span>{formatTime((progress / 100) * duration)}</span>
-            <span>{formatTime(duration)}</span>
-          </div>
-        )}
+        
+        <div className="flex justify-between text-xs text-gray-500">
+          <span>{formatTime(currentTime)}</span>
+          <span>{formatTime(duration)}</span>
+        </div>
       </div>
     </div>
   );

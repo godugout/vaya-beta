@@ -22,12 +22,7 @@ export function ProximityRing({ ringSize, ringClass, delay = 0 }: ProximityRingP
       }}
       initial={{ opacity: 0.2 }}
       animate={{ opacity: [0.2, 0.3, 0.2] }}
-      transition={{ 
-        duration: 4, 
-        repeat: Infinity, 
-        delay: delay,
-        ease: "easeInOut"
-      }}
+      transition={{ duration: 4, repeat: Infinity, delay: delay }}
     />
   );
 }

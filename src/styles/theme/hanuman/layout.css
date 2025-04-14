@@ -1,0 +1,341 @@
+
+/* Hanuman Theme - Layout Styles */
+
+/* Container for Hanuman sections */
+.hanuman-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .hanuman-container {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hanuman-container {
+    padding: 0 2rem;
+  }
+}
+
+/* Page layout with cosmic background */
+.hanuman-page {
+  min-height: 100vh;
+  background-color: var(--hanuman-dark);
+  color: var(--hanuman-text-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Chat layout container - updated for 2-column layout */
+.hanuman-chat-layout {
+  display: grid;
+  gap: 1rem;
+  min-height: calc(100vh - 150px);
+}
+
+/* Card with hanuman theme styling */
+.hanuman-card {
+  background: rgba(18, 14, 18, 0.3);
+  backdrop-filter: blur(10px);
+  border: none; 
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 8px rgba(255, 126, 0, 0.1);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Card with custom left border accent */
+.hanuman-card-primary {
+  border-left: 2px solid var(--hanuman-primary);
+}
+
+.hanuman-card-gold {
+  border-left: 2px solid var(--hanuman-gold);
+}
+
+.hanuman-card-saffron {
+  border-left: 2px solid var(--hanuman-saffron);
+}
+
+/* Enhanced card header */
+.hanuman-card-header {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(255, 126, 0, 0.1);
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.3), rgba(255, 126, 0, 0.05), rgba(0, 0, 0, 0.3));
+}
+
+/* Flex column layout with gap */
+.hanuman-flex-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
+}
+
+/* Sidebar panel */
+.hanuman-sidebar-panel {
+  background: rgba(18, 14, 18, 0.4);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 126, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.hanuman-sidebar-panel:hover {
+  box-shadow: 0 0 20px rgba(255, 126, 0, 0.1);
+}
+
+/* Resources section styling */
+.hanuman-resources-section {
+  margin-top: 2rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: rgba(18, 14, 18, 0.3);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 126, 0, 0.1);
+}
+
+.hanuman-resources-tabs {
+  display: flex;
+  border-bottom: 1px solid rgba(255, 126, 0, 0.1);
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1));
+}
+
+.hanuman-resources-tab {
+  padding: 0.75rem 1.25rem;
+  color: var(--hanuman-text-secondary);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.hanuman-resources-tab[data-active="true"] {
+  color: var(--hanuman-gold);
+  border-bottom: 2px solid var(--hanuman-primary);
+  background: rgba(255, 126, 0, 0.1);
+}
+
+.hanuman-resources-content {
+  padding: 1.5rem;
+}
+
+/* Background styles */
+.bg-hanuman-bg {
+  background-color: var(--hanuman-dark);
+  background-image: 
+    radial-gradient(1px 1px at 20% 30%, rgba(255, 215, 0, 0.15) 0%, transparent 100%),
+    radial-gradient(1px 1px at 40% 70%, rgba(255, 126, 0, 0.1) 0%, transparent 100%),
+    radial-gradient(1px 1px at 60% 50%, rgba(46, 125, 50, 0.1) 0%, transparent 100%),
+    radial-gradient(1px 1px at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 100%);
+  background-size: 120px 120px, 150px 150px, 180px 180px, 200px 200px;
+  background-attachment: fixed;
+}
+
+/* Panel header styles */
+.hanuman-panel-header {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(255, 126, 0, 0.1);
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1));
+}
+
+.hanuman-panel-header h3 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--hanuman-text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Panel content styles */
+.hanuman-panel-content {
+  padding: 0.75rem;
+}
+
+/* Enhanced scroll areas */
+.hanuman-scroll-area {
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.hanuman-scroll-area::-webkit-scrollbar {
+  width: 6px;
+}
+
+.hanuman-scroll-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.hanuman-scroll-area::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 126, 0, 0.2);
+  border-radius: 3px;
+}
+
+/* Story Bar Specific Styles */
+.hanuman-story-bar {
+  border-top: 1px solid rgba(255, 126, 0, 0.2);
+  background: linear-gradient(to bottom, 
+    rgba(185, 85, 0, 0.1), 
+    rgba(185, 85, 0, 0.05)
+  );
+  backdrop-filter: blur(8px);
+  box-shadow: 0 -4px 15px rgba(255, 126, 0, 0.1);
+  padding: 0.75rem 1rem;
+}
+
+.hanuman-story-bar-input {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 165, 0, 0.2);
+  color: white;
+  border-radius: 9999px;
+  padding: 0.5rem 1rem;
+  transition: all 0.2s ease;
+}
+
+.hanuman-story-bar-input:focus {
+  border-color: rgba(255, 215, 0, 0.4);
+  box-shadow: 0 0 0 2px rgba(255, 126, 0, 0.2);
+}
+
+.hanuman-story-bar-button {
+  background: linear-gradient(to right, 
+    rgba(255, 126, 0, 0.8), 
+    rgba(255, 215, 0, 0.8)
+  );
+  color: white;
+  border-radius: 9999px;
+  padding: 0.5rem 1rem;
+  transition: all 0.2s ease;
+}
+
+.hanuman-story-bar-button:hover {
+  background: linear-gradient(to right, 
+    rgba(255, 126, 0, 1), 
+    rgba(255, 215, 0, 1)
+  );
+  box-shadow: 0 0 10px rgba(255, 126, 0, 0.3);
+}
+
+/* Main content area */
+.hanuman-main-content {
+  border-radius: 1rem;
+  background: rgba(18, 14, 18, 0.3);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 126, 0, 0.15);
+  overflow: hidden;
+  border: 1px solid rgba(255, 126, 0, 0.1);
+  position: relative;
+}
+
+/* Grid layouts with consistent spacing */
+.hanuman-grid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+/* Scrollbar for prompts */
+.scrollbar-thin {
+  scrollbar-width: thin;
+}
+
+.scrollbar-thumb-hanuman-orange\/20 {
+  scrollbar-color: rgba(255, 126, 0, 0.2) transparent;
+}
+
+.scrollbar-track-transparent {
+  scrollbar-track-color: transparent;
+}
+
+/* Responsive layout adjustments - updated for 2-column layout */
+@media (max-width: 640px) {
+  .hanuman-chat-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .hanuman-chat-layout {
+    grid-template-columns: 320px 1fr;
+  }
+}
+
+@media (min-width: 1025px) {
+  .hanuman-chat-layout {
+    grid-template-columns: 320px 1fr;
+  }
+}
+
+/* Glowing divider */
+.hanuman-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255, 126, 0, 0.3), transparent);
+  margin: 1rem 0;
+}
+
+/* Section title styling */
+.hanuman-section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--hanuman-text-primary);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hanuman-section-title::after {
+  content: '';
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(to right, rgba(255, 126, 0, 0.3), transparent);
+  margin-left: 0.5rem;
+}
+
+/* Resources tab styling */
+.hanuman-resource-card {
+  border-radius: 0.75rem;
+  background: rgba(18, 14, 18, 0.5);
+  border: 1px solid rgba(255, 126, 0, 0.1);
+  padding: 1rem;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.hanuman-resource-card:hover {
+  border-color: rgba(255, 126, 0, 0.3);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 10px rgba(255, 126, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.hanuman-resource-title {
+  color: var(--hanuman-gold);
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hanuman-resource-description {
+  color: var(--hanuman-text-secondary);
+  font-size: 0.875rem;
+  margin-bottom: 0.75rem;
+}
+
+.hanuman-resource-link {
+  color: var(--hanuman-orange);
+  font-size: 0.875rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  transition: all 0.2s ease;
+}
+
+.hanuman-resource-link:hover {
+  color: var(--hanuman-gold);
+  text-decoration: underline;
+}

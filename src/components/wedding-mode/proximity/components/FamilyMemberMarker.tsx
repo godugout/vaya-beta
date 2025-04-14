@@ -35,8 +35,7 @@ export function FamilyMemberMarker({ memberId, memberName, style }: FamilyMember
       transition={{ 
         duration: style.animPulse ? 2 : 0.5, 
         repeat: style.animPulse ? Infinity : 0,
-        delay: Math.random() * 0.5,
-        ease: "easeOut" // Changed from potential "ease-out" to "easeOut"
+        delay: Math.random() * 0.5
       }}
     >
       <div className="relative">
@@ -44,7 +43,7 @@ export function FamilyMemberMarker({ memberId, memberName, style }: FamilyMember
         <motion.div 
           className="absolute -bottom-4 whitespace-nowrap text-xs font-medium"
           animate={{ opacity: [0, 1] }}
-          transition={{ delay: 0.5, ease: "easeOut" }} // Added explicit easing
+          transition={{ delay: 0.5 }}
         >
           {memberName}
         </motion.div>

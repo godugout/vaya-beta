@@ -1,4 +1,5 @@
 
+import React, { useEffect } from "react";
 import { Helmet } from "react-helmet";
 import MemoryFeedLayout from "@/components/memory/MemoryFeedLayout";
 import AddMemoryButton from "@/components/memory/AddMemoryButton";
@@ -11,6 +12,14 @@ import { useNavigate } from "react-router-dom";
 const MemoryLane = () => {
   const navigate = useNavigate();
 
+  // Add Hanuman theme class when the component mounts
+  useEffect(() => {
+    document.body.classList.add('hanuman-theme');
+    return () => {
+      document.body.classList.remove('hanuman-theme');
+    };
+  }, []);
+
   return (
     <>
       <Helmet>
@@ -18,19 +27,19 @@ const MemoryLane = () => {
       </Helmet>
       
       <MainLayout>
-        <div className="container mx-auto px-4 py-6">
+        <div className="hanuman-container py-6">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
             <div className="lg:col-span-2">
               <div className="mb-8 flex items-center justify-between">
-                <h1 className="text-2xl font-outfit font-semibold text-space-text-primary">Our Memories</h1>
+                <h1 className="text-2xl font-outfit font-semibold text-hanuman-text-primary hanuman-text-glow">Our Memories</h1>
                 <ToggleGroup 
                   type="multiple" 
-                  className="hidden md:flex bg-space-ui-surface border-space-ui-border border rounded-lg p-1 shadow-sm"
+                  className="hidden md:flex bg-hanuman-card-bg border-hanuman-border-color border rounded-lg p-1 shadow-sm"
                 >
                   <ToggleGroupItem 
                     value="people" 
                     aria-label="Filter by people"
-                    className="data-[state=on]:bg-space-ui-accent/10 data-[state=on]:text-space-ui-accent"
+                    className="data-[state=on]:bg-hanuman-primary/10 data-[state=on]:text-hanuman-primary"
                   >
                     <User className="h-4 w-4 mr-2" />
                     <span className="hidden lg:inline">People</span>
@@ -38,7 +47,7 @@ const MemoryLane = () => {
                   <ToggleGroupItem 
                     value="topics" 
                     aria-label="Filter by topics"
-                    className="data-[state=on]:bg-space-ui-accent/10 data-[state=on]:text-space-ui-accent"
+                    className="data-[state=on]:bg-hanuman-primary/10 data-[state=on]:text-hanuman-primary"
                   >
                     <Tag className="h-4 w-4 mr-2" />
                     <span className="hidden lg:inline">Topics</span>
@@ -46,7 +55,7 @@ const MemoryLane = () => {
                   <ToggleGroupItem 
                     value="date" 
                     aria-label="Filter by date"
-                    className="data-[state=on]:bg-space-ui-accent/10 data-[state=on]:text-space-ui-accent"
+                    className="data-[state=on]:bg-hanuman-primary/10 data-[state=on]:text-hanuman-primary"
                   >
                     <Calendar className="h-4 w-4 mr-2" />
                     <span className="hidden lg:inline">Date</span>
@@ -54,7 +63,7 @@ const MemoryLane = () => {
                   <ToggleGroupItem 
                     value="bookmarks" 
                     aria-label="Show bookmarks"
-                    className="data-[state=on]:bg-space-ui-accent/10 data-[state=on]:text-space-ui-accent"
+                    className="data-[state=on]:bg-hanuman-primary/10 data-[state=on]:text-hanuman-primary"
                   >
                     <Bookmark className="h-4 w-4 mr-2" />
                     <span className="hidden lg:inline">Bookmarks</span>
@@ -65,11 +74,11 @@ const MemoryLane = () => {
             </div>
 
             <div className="hidden lg:block space-y-6">
-              <div className="bg-space-ui-surface rounded-lg shadow-sm p-6 border border-space-ui-border">
-                <h2 className="text-lg font-outfit font-semibold text-space-text-primary mb-4">
+              <div className="hanuman-card p-6">
+                <h2 className="text-lg font-outfit font-semibold text-hanuman-text-primary mb-4">
                   Coming Soon
                 </h2>
-                <p className="text-space-text-secondary">
+                <p className="text-hanuman-text-secondary">
                   Family highlights and upcoming events will appear here.
                 </p>
               </div>
@@ -78,11 +87,11 @@ const MemoryLane = () => {
         </div>
 
         {/* Mobile CTA Bar */}
-        <div className="md:hidden fixed bottom-16 left-0 right-0 p-4 bg-space-ui-surface border-t border-space-ui-border z-40">
+        <div className="md:hidden fixed bottom-16 left-0 right-0 p-4 bg-hanuman-card-bg border-t border-hanuman-border-color z-40">
           <div className="flex gap-2">
             <Button
               variant="outline"
-              className="flex-1 border-2 border-space-ui-accent hover:bg-space-ui-accent/10 text-space-ui-accent"
+              className="flex-1 border-2 border-hanuman-primary hover:bg-hanuman-primary/10 text-hanuman-primary"
               onClick={() => navigate("/narra")}
             >
               Ask Family

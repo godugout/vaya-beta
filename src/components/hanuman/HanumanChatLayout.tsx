@@ -1,117 +1,23 @@
 
 import React from "react";
-import { Card } from "@/components/ui/card";
-import { Grid, GridItem } from "@/components/ui/grid-layout";
-import HanumanSidebar from "@/components/hanuman/HanumanSidebar";
-import HanumanResources from "@/components/hanuman/HanumanResources";
-import ChatHeader from "@/components/hanuman/ChatHeader";
-import ChatMessages from "@/components/hanuman/ChatMessages";
-import ChatInputArea from "@/components/hanuman/ChatInputArea";
-import SuggestedPrompts from "@/components/narra/SuggestedPrompts";
-import { HanumanPromptItem } from "@/types/hanuman";
-import { useBreakpoints } from "@/hooks/use-media-query";
+import { motion } from "framer-motion";
 
 interface HanumanChatLayoutProps {
-  messages: any[];
-  input: string;
-  setInput: (input: string) => void;
-  isLoading: boolean;
-  handleSubmit: (e: React.FormEvent) => void;
-  handlePromptSelect: (prompt: string) => void;
-  handleMorePrompts: () => void;
-  activeCategory: string;
-  onCategorySelect: (category: string) => void;
-  suggestedPrompts: HanumanPromptItem[];
-  toggleLanguage: () => void;
-  isMobileMenuOpen: boolean;
-  setIsMobileMenuOpen: (isOpen: boolean) => void;
-  isRightSidebarOpen: boolean;
-  setIsRightSidebarOpen: (isOpen: boolean) => void;
+  children: React.ReactNode;
+  className?: string;
 }
 
-const HanumanChatLayout: React.FC<HanumanChatLayoutProps> = ({
-  messages,
-  input,
-  setInput,
-  isLoading,
-  handleSubmit,
-  handlePromptSelect,
-  handleMorePrompts,
-  activeCategory,
-  onCategorySelect,
-  suggestedPrompts,
-  toggleLanguage,
-  isMobileMenuOpen,
-  setIsMobileMenuOpen,
-  isRightSidebarOpen,
-  setIsRightSidebarOpen
-}) => {
-  const { isMobile, isTablet, isDesktop } = useBreakpoints();
-  
-  const filteredPrompts = suggestedPrompts.filter(
-    prompt => prompt.category === activeCategory
-  );
-  
-  const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
-  const toggleRightSidebar = () => setIsRightSidebarOpen(!isRightSidebarOpen);
-  
+export const HanumanChatLayout: React.FC<HanumanChatLayoutProps> = ({ children, className }) => {
   return (
-    <div className="w-[90%] mx-auto">
-      <Grid cols={12} gap={4} className="min-h-[70vh]">
-        {/* Left sidebar - narrower on desktop */}
-        <GridItem colSpan={isMobile ? 12 : isTablet ? 3 : 2} className={isMobileMenuOpen || !isMobile ? 'block' : 'hidden'}>
-          <Card className="h-full bg-black/30 backdrop-blur-md border-none shadow-xl shadow-hanuman-saffron/5 overflow-hidden">
-            <div className="h-full p-3">
-              <HanumanSidebar 
-                onCategorySelect={(category) => {
-                  onCategorySelect(category);
-                  if (isMobile) setIsMobileMenuOpen(false);
-                }} 
-                activeCategory={activeCategory} 
-              />
-            </div>
-          </Card>
-        </GridItem>
-        
-        {/* Center content - wider proportion */}
-        <GridItem colSpan={isMobile ? 12 : isTablet ? 7 : 8} className="flex flex-col">
-          <Card className="h-full bg-black/30 backdrop-blur-md border-none shadow-xl shadow-hanuman-gold/5 flex flex-col overflow-hidden">
-            <ChatHeader 
-              toggleLanguage={toggleLanguage}
-              toggleMobileMenu={toggleMobileMenu}
-              toggleRightSidebar={toggleRightSidebar}
-            />
-            
-            <ChatMessages messages={messages} isLoading={isLoading} />
-            
-            <div className="mt-auto p-4 border-t border-hanuman-saffron/20">
-              <SuggestedPrompts 
-                prompts={filteredPrompts.slice(0, 3)} 
-                onSelect={handlePromptSelect} 
-              />
-              
-              <ChatInputArea
-                input={input}
-                setInput={setInput}
-                isLoading={isLoading}
-                onSubmit={handleSubmit}
-                onMorePrompts={handleMorePrompts}
-              />
-            </div>
-          </Card>
-        </GridItem>
-        
-        {/* Right sidebar - narrower on desktop */}
-        <GridItem colSpan={isMobile ? 12 : isTablet ? 2 : 2} className={`${(isDesktop || isRightSidebarOpen) ? 'block' : 'hidden'}`}>
-          <Card className="h-full bg-black/30 backdrop-blur-md border-none shadow-xl shadow-hanuman-gold/5 overflow-hidden">
-            <div className="h-full p-3">
-              <HanumanResources />
-            </div>
-          </Card>
-        </GridItem>
-      </Grid>
-    </div>
+    <motion.div 
+      className={`hanuman-chat-layout my-4 flex flex-col h-full ${className || ""}`}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 flex-1">
+        {children}
+      </div>
+    </motion.div>
   );
 };
-
-export default HanumanChatLayout;

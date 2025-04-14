@@ -1,6 +1,5 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { useToast } from '@/components/ui/use-toast';
 
 interface UseVoiceRecorderReturn {
   isRecordingActive: boolean;
@@ -18,7 +17,6 @@ export function useVoiceRecorder(): UseVoiceRecorderReturn {
   const [recordingTime, setRecordingTime] = useState(0);
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
-  const { toast } = useToast();
   
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -61,25 +59,10 @@ export function useVoiceRecorder(): UseVoiceRecorderReturn {
       // Reset any previous recording state
       resetRecording();
       
-      // Request access to the microphone with optimal audio settings for voice
-      const stream = await navigator.mediaDevices.getUserMedia({ 
-        audio: {
-          echoCancellation: true,
-          noiseSuppression: true,
-          autoGainControl: true,
-          sampleRate: 44100, // High quality sample rate
-          channelCount: 1 // Mono for better speech recognition
-        } 
-      });
-      
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       streamRef.current = stream;
       
-      // Configure media recorder with high quality audio
-      const mediaRecorder = new MediaRecorder(stream, {
-        mimeType: 'audio/webm;codecs=opus', // Opus codec for better quality
-        audioBitsPerSecond: 128000 // 128kbps for good voice quality
-      });
-      
+      const mediaRecorder = new MediaRecorder(stream);
       mediaRecorderRef.current = mediaRecorder;
       
       mediaRecorder.ondataavailable = (e) => {
@@ -99,17 +82,6 @@ export function useVoiceRecorder(): UseVoiceRecorderReturn {
         chunksRef.current = [];
       };
       
-      // Set up a limit of 60 seconds for recording
-      setTimeout(() => {
-        if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
-          stopRecording();
-          toast({
-            title: "Recording stopped",
-            description: "Maximum recording time reached (60 seconds)",
-          });
-        }
-      }, 60000);
-      
       // Start recording
       mediaRecorder.start();
       setIsRecordingActive(true);
@@ -121,15 +93,10 @@ export function useVoiceRecorder(): UseVoiceRecorderReturn {
       
     } catch (error) {
       console.error('Error starting recording:', error);
-      toast({
-        title: "Recording failed",
-        description: "Could not access microphone. Please check your browser permissions.",
-        variant: "destructive"
-      });
       resetRecording();
       throw error;
     }
-  }, [resetRecording, toast]);
+  }, [resetRecording]);
   
   // Stop recording function
   const stopRecording = useCallback(() => {
@@ -145,12 +112,7 @@ export function useVoiceRecorder(): UseVoiceRecorderReturn {
     if (streamRef.current) {
       streamRef.current.getTracks().forEach(track => track.stop());
     }
-    
-    toast({
-      title: "Recording stopped",
-      description: `Recorded for ${recordingTime} seconds`,
-    });
-  }, [recordingTime, toast]);
+  }, []);
   
   // Clean up on unmount
   useEffect(() => {

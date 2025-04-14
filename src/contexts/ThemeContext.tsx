@@ -1,18 +1,20 @@
 
-import React, { createContext, useContext, useEffect } from 'react';
+import React, { createContext, useContext } from 'react';
 
 type Theme = 'dark';
 
 interface ThemeContextType {
   theme: Theme;
+  // We're adding this as a no-op function to satisfy components that expect it
   toggleTheme: () => void;
+  // Adding setTheme to satisfy components that expect it
   setTheme: (theme: Theme) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType>({
   theme: 'dark',
-  toggleTheme: () => {},
-  setTheme: () => {},
+  toggleTheme: () => {}, // No-op function
+  setTheme: () => {}, // No-op function
 });
 
 export const useTheme = () => useContext(ThemeContext);
@@ -26,19 +28,21 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const theme: Theme = 'dark';
 
   // Set dark mode on the document
-  useEffect(() => {
+  React.useEffect(() => {
     document.documentElement.classList.remove('light');
     document.documentElement.classList.add('dark');
     document.documentElement.style.colorScheme = 'dark';
   }, []);
 
-  // No-op functions to satisfy components expecting these functions
+  // Add no-op functions to satisfy components expecting these functions
   const toggleTheme = () => {
     console.log("Theme toggle attempted, but theme is fixed to dark mode");
+    // Do nothing as we're fixed in dark mode
   };
 
   const setTheme = (newTheme: Theme) => {
     console.log(`Theme change attempted to ${newTheme}, but theme is fixed to dark mode`);
+    // Do nothing as we're fixed in dark mode
   };
 
   const value = {
