@@ -101,15 +101,33 @@ const MemoryFeedLayout = () => {
       </div>
       
       <div className="space-y-4">
-        {memories.map((memory: Memory) => (
-          <div key={memory.id} className="animate-fadeIn">
-            {memory.type === "story" ? (
-              <StoryMemoryCard memory={memory} isPlaceholder={true} />
-            ) : (
-              <PhotoMemoryCard memory={memory} isPlaceholder={true} />
-            )}
-          </div>
-        ))}
+        {memories.map((memory: Memory) => {
+          // Safely check memory type before rendering
+          if (!memory || typeof memory !== 'object') {
+            console.error("Invalid memory object:", memory);
+            return null;
+          }
+          
+          // Handle memory type
+          switch (memory.type) {
+            case "story":
+              return (
+                <div key={memory.id} className="animate-fadeIn">
+                  <StoryMemoryCard memory={memory} isPlaceholder={true} />
+                </div>
+              );
+            case "photo":
+              return (
+                <div key={memory.id} className="animate-fadeIn">
+                  <PhotoMemoryCard memory={memory} isPlaceholder={true} />
+                </div>
+              );
+            // Fallback for other types
+            default:
+              console.warn(`Unsupported memory type: ${memory.type}`);
+              return null;
+          }
+        })}
       </div>
       
       {(hasNextPage || isFetchingNextPage) && (

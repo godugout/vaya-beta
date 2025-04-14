@@ -1,11 +1,19 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import MemoryFeedLayout from '@/components/memory/MemoryFeedLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Rocket, Star, Orbit } from 'lucide-react';
 import EnhancedHanumanBackground from "@/components/hanuman/EnhancedHanumanBackground";
 
 export default function Memories() {
+  // Add Hanuman theme class when the component mounts
+  useEffect(() => {
+    document.body.classList.add('hanuman-theme');
+    return () => {
+      document.body.classList.remove('hanuman-theme');
+    };
+  }, []);
+  
   return (
     <div className="hanuman-theme min-h-screen flex flex-col bg-hanuman-dark text-white relative">
       <EnhancedHanumanBackground />

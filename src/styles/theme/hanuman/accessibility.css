@@ -6,3 +6,28 @@
   outline: 2px solid var(--hanuman-gold);
   outline-offset: 2px;
 }
+
+/* High contrast mode adjustments */
+@media (prefers-contrast: more) {
+  .hanuman-theme {
+    --hanuman-gold: #ffcc00;
+    --hanuman-primary: #ff6600;
+  }
+  
+  .hanuman-theme .hanuman-card {
+    border-width: 2px;
+  }
+}
+
+/* Screen reader only content */
+.hanuman-theme .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
