@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 @tailwind base;
@@ -97,4 +98,50 @@ input:focus, textarea:focus, select:focus {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Mobile-friendly viewport optimizations */
+html, body, #root {
+  height: 100%;
+  overflow-x: hidden;
+  touch-action: manipulation;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Prevent content overflow */
+* {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Ensure proper sizing on touch devices */
+input, button, textarea, select {
+  font-size: 16px; /* Prevents iOS zoom on focus */
+}
+
+/* Enhance spacing in mobile chat UI */
+.chat-container {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.chat-message {
+  padding: 0.75rem 1rem;
+  border-radius: 1rem;
+  max-width: 85%;
+  word-break: break-word;
+}
+
+.chat-message.user {
+  align-self: flex-end;
+  background-color: #e1f5fe;
+  border-bottom-right-radius: 0.25rem;
+}
+
+.chat-message.assistant {
+  align-self: flex-start;
+  background-color: #f5f5f5;
+  border-bottom-left-radius: 0.25rem;
 }

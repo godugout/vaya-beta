@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { HanumanTopNav } from '@/components/navigation/HanumanTopNav';
 import Footer from '@/components/Footer';
@@ -107,7 +106,7 @@ export const MainLayout = ({ children, className = "" }: MainLayoutProps) => {
           isSimplifiedView={isSoftTheme || isSimplifiedMode}
         />
         
-        <main className={cn("flex-grow pt-24", isPremiumTheme ? 'premium-theme-content' : '', className)}>
+        <main className={cn("flex-grow", isPremiumTheme ? 'premium-theme-content' : '', className)}>
           <ErrorBoundary>
             {children}
           </ErrorBoundary>
