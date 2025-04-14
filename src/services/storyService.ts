@@ -23,9 +23,7 @@ export const storyService = {
       query = query.select('*');
     }
     
-    query = query.order('created_at', { ascending: false });
-    
-    const { data, error } = await query;
+    const { data, error } = await query.order('created_at', { ascending: false });
     
     if (error) {
       console.error('Error fetching stories:', error);
@@ -44,10 +42,9 @@ export const storyService = {
       query = query.select('*');
     }
     
-    query = query.eq('is_public', true)
-                 .order('created_at', { ascending: false });
-    
-    const { data, error } = await query;
+    const { data, error } = await query
+      .eq('is_public', true)
+      .order('created_at', { ascending: false });
     
     if (error) {
       console.error('Error fetching public stories:', error);
