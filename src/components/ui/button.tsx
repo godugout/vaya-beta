@@ -13,6 +13,13 @@ const buttonVariants = cva(
         secondary: "bg-gray-200 text-black hover:bg-gray-300",
         ghost: "hover:bg-gray-100 text-black",
         link: "text-black underline-offset-4 hover:underline",
+        // Add additional variants that are being used
+        destructive: "bg-red-500 text-white hover:bg-red-600",
+        purple: "bg-[#6C5CE7] hover:bg-[#6C5CE7]/90 text-white",
+        autumn: "bg-amber-500 text-white hover:bg-amber-600",
+        water: "bg-blue-500 text-white hover:bg-blue-600",
+        forest: "bg-green-600 text-white hover:bg-green-700",
+        capsules: "bg-purple-500 text-white hover:bg-purple-600",
       },
       size: {
         default: "h-9 px-4 py-2",
