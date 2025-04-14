@@ -15,9 +15,11 @@ export interface UserStory {
 
 export const storyService = {
   async getStories(includeMedia = false): Promise<UserStory[]> {
+    const selectQuery = includeMedia ? 'id, title, content, media_id, is_public, created_at, updated_at, media:media_id(*)' : '*';
+    
     const { data, error } = await supabase
       .from('user_stories')
-      .select(includeMedia ? `*, media(*)` : '*')
+      .select(selectQuery)
       .order('created_at', { ascending: false });
     
     if (error) {
@@ -29,9 +31,11 @@ export const storyService = {
   },
   
   async getPublicStories(includeMedia = false): Promise<UserStory[]> {
+    const selectQuery = includeMedia ? 'id, title, content, media_id, is_public, created_at, updated_at, media:media_id(*)' : '*';
+    
     const { data, error } = await supabase
       .from('user_stories')
-      .select(includeMedia ? `*, media(*)` : '*')
+      .select(selectQuery)
       .eq('is_public', true)
       .order('created_at', { ascending: false });
     
@@ -44,9 +48,11 @@ export const storyService = {
   },
   
   async getStoryById(id: string, includeMedia = false): Promise<UserStory> {
+    const selectQuery = includeMedia ? 'id, title, content, media_id, is_public, created_at, updated_at, media:media_id(*)' : '*';
+    
     const { data, error } = await supabase
       .from('user_stories')
-      .select(includeMedia ? `*, media(*)` : '*')
+      .select(selectQuery)
       .eq('id', id)
       .single();
     
