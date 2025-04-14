@@ -1,5 +1,5 @@
 
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useEffect } from 'react';
 
 type Theme = 'dark';
 
@@ -28,7 +28,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const theme: Theme = 'dark';
 
   // Set dark mode on the document
-  React.useEffect(() => {
+  useEffect(() => {
     document.documentElement.classList.remove('light');
     document.documentElement.classList.add('dark');
     document.documentElement.style.colorScheme = 'dark';
