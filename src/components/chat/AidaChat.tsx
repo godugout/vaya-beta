@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Send, Mic, Paperclip, ArrowUp } from 'lucide-react';
+import { Send, Mic, Paperclip, User, UserCircle2 } from 'lucide-react';
 
 interface Message {
   id: string;
@@ -48,6 +48,9 @@ export const AidaChat: React.FC<AidaChatProps> = ({ initialMessages = [] }) => {
     <div className="flex flex-col h-full">
       <div className="aida-chat-header">
         <div className="flex items-center">
+          <div className="mr-2">
+            <UserCircle2 size={24} />
+          </div>
           <div className="font-medium">Aida</div>
           <div className="text-xs text-[#8A898C] ml-2">Online</div>
         </div>
@@ -60,6 +63,11 @@ export const AidaChat: React.FC<AidaChatProps> = ({ initialMessages = [] }) => {
               key={message.id} 
               className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
             >
+              {message.sender === 'assistant' && (
+                <div className="mr-2 self-end">
+                  <UserCircle2 size={28} className="text-[#8A898C]" />
+                </div>
+              )}
               <div>
                 <div 
                   className={`aida-bubble ${message.sender === 'user' ? 'aida-bubble-user' : 'aida-bubble-assistant'}`}
@@ -70,6 +78,11 @@ export const AidaChat: React.FC<AidaChatProps> = ({ initialMessages = [] }) => {
                   {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </div>
               </div>
+              {message.sender === 'user' && (
+                <div className="ml-2 self-end">
+                  <User size={24} className="text-[#8A898C]" />
+                </div>
+              )}
             </div>
           ))}
         </div>

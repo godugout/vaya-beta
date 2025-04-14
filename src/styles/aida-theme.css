@@ -1,109 +1,135 @@
 
-/* Aida Theme - Based on mockups */
+/* AIDA Theme */
 
-:root {
-  /* Core colors */
-  --aida-background: #FFFFFF;
-  --aida-text: #000000;
-  --aida-text-secondary: #8A898C;
-  --aida-border: #EEEEEE;
-  --aida-bubble-bg: #F1F1F1;
-  --aida-accent: #000000;
-  
-  /* UI Elements */
-  --aida-button-bg: #000000;
-  --aida-button-text: #FFFFFF;
-  --aida-input-border: #EEEEEE;
-  --aida-divider: #F1F1F1;
+/* Layout */
+body {
+  font-family: 'Inter', sans-serif;
+  color: #222;
 }
 
-/* Chat bubbles */
-.aida-bubble {
-  @apply rounded-2xl px-4 py-3 my-1 max-w-[85%];
-}
-
-.aida-bubble-user {
-  @apply bg-black text-white self-end;
-}
-
-.aida-bubble-assistant {
-  @apply bg-[#F1F1F1] text-black self-start;
-}
-
-/* Aida buttons */
-.aida-button {
-  @apply bg-black text-white rounded-full px-6 py-3 font-medium text-sm;
-}
-
-.aida-button-outline {
-  @apply border border-black bg-white text-black rounded-full px-6 py-3 font-medium text-sm;
-}
-
-/* Aida input fields */
-.aida-input {
-  @apply border-0 border-b border-[#EEEEEE] focus:ring-0 focus:border-black px-0 py-2 bg-transparent;
-}
-
-/* Aida welcome screen */
 .aida-welcome {
-  @apply bg-black text-white flex flex-col justify-center items-center min-h-screen px-6 text-center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background-color: #222;
+  color: white;
 }
 
 .aida-logo {
-  @apply w-16 h-16 rounded-full bg-white flex items-center justify-center mb-6;
+  margin-bottom: 2rem;
 }
 
 .aida-welcome-title {
-  @apply text-2xl font-bold mb-2;
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
 }
 
 .aida-welcome-subtitle {
-  @apply text-lg mb-8;
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: 2rem;
+  line-height: 1.4;
 }
 
-/* Aida chat interface */
+/* Chat Components */
 .aida-chat-header {
-  @apply border-b border-[#EEEEEE] py-4 px-2 flex items-center;
+  padding: 1rem;
+  border-bottom: 1px solid #EAEAEA;
+  background-color: white;
 }
 
 .aida-chat-body {
-  @apply flex-1 overflow-y-auto py-4;
+  background-color: #F5F5F5;
 }
 
 .aida-chat-footer {
-  @apply border-t border-[#EEEEEE] py-3;
+  border-top: 1px solid #EAEAEA;
+  background-color: white;
 }
 
-.aida-avatar {
-  @apply w-8 h-8 rounded-full overflow-hidden;
+.aida-bubble {
+  padding: 0.75rem 1rem;
+  border-radius: 1.25rem;
+  max-width: 80%;
+  word-wrap: break-word;
+  margin-bottom: 0.25rem;
+}
+
+.aida-bubble-assistant {
+  background-color: white;
+  border: 1px solid #E5E5E5;
+  border-bottom-left-radius: 0;
+}
+
+.aida-bubble-user {
+  background-color: #222;
+  color: white;
+  border-bottom-right-radius: 0;
 }
 
 .aida-message-time {
-  @apply text-xs text-[#8A898C] mt-1;
+  font-size: 0.75rem;
+  color: #8A898C;
+  margin-bottom: 0.5rem;
 }
 
-/* Onboarding screens */
-.aida-onboarding-dot {
-  @apply h-2 w-2 rounded-full bg-gray-300 mx-1;
+.aida-input {
+  background-color: #F5F5F5;
+  border: none;
+  border-radius: 1.5rem;
+  padding: 0.75rem 1rem;
+  outline: none;
 }
 
-.aida-onboarding-dot-active {
-  @apply bg-black;
+/* Journal Components */
+.memory-journal-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-/* Memory journal UI */
-.aida-memory-header {
-  @apply py-3 px-4 flex items-center justify-between border-b border-[#EEEEEE];
+.memory-journal-header {
+  padding: 1rem;
+  border-bottom: 1px solid #EAEAEA;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
 }
 
-.aida-memory-title {
-  @apply text-lg font-medium;
+.memory-journal-question {
+  padding: 1.5rem 1rem;
+  font-size: 1.5rem;
+  font-weight: 500;
 }
 
-.aida-recorder-button {
-  @apply bg-black text-white w-full py-3 rounded-md flex items-center justify-center;
+.memory-journal-input {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
 }
 
-.aida-response-option {
-  @apply flex flex-col items-center justify-center bg-white border border-[#EEEEEE] rounded-md p-4;
+.memory-journal-textarea {
+  width: 100%;
+  height: 100%;
+  border: none;
+  resize: none;
+  outline: none;
+  padding: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  background-color: transparent;
+}
+
+.memory-journal-footer {
+  padding: 1rem;
+  border-top: 1px solid #EAEAEA;
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
 }
