@@ -48,17 +48,8 @@ export const AidaChat: React.FC<AidaChatProps> = ({ initialMessages = [] }) => {
     <div className="flex flex-col h-full">
       <div className="aida-chat-header">
         <div className="flex items-center">
-          <div className="aida-avatar mr-3">
-            <img 
-              src="/lovable-uploads/67907503-79a1-4eca-b22e-8d8393ad3c13.png" 
-              alt="Aida" 
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div>
-            <div className="font-medium">Aida</div>
-            <div className="text-xs text-[#8A898C]">Online</div>
-          </div>
+          <div className="font-medium">Aida</div>
+          <div className="text-xs text-[#8A898C] ml-2">Online</div>
         </div>
       </div>
       
@@ -69,16 +60,6 @@ export const AidaChat: React.FC<AidaChatProps> = ({ initialMessages = [] }) => {
               key={message.id} 
               className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
             >
-              {message.sender === 'assistant' && (
-                <div className="aida-avatar mr-2 self-end">
-                  <img 
-                    src="/lovable-uploads/67907503-79a1-4eca-b22e-8d8393ad3c13.png" 
-                    alt="Aida" 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              )}
-              
               <div>
                 <div 
                   className={`aida-bubble ${message.sender === 'user' ? 'aida-bubble-user' : 'aida-bubble-assistant'}`}
