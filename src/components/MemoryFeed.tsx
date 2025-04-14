@@ -1,8 +1,10 @@
 
 import { StoryMemoryCard } from "./memory/StoryMemoryCard";
 import { PhotoMemoryCard } from "./memory/PhotoMemoryCard";
+import { VideoMemoryCard } from "./memory/VideoMemoryCard";
+import { AudioMemoryCard } from "./memory/AudioMemoryCard";
 import { useMemories } from "./memory/useMemories";
-import { Memory, isPhotoMemory, isStoryMemory } from "./memory/types";
+import { Memory, isPhotoMemory, isStoryMemory, isVideoMemory, isAudioMemory } from "./memory/types";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Info } from "lucide-react";
 
@@ -33,8 +35,12 @@ const MemoryFeed = () => {
           return <StoryMemoryCard key={memory.id} memory={memory} isPlaceholder={true} />;
         } else if (isPhotoMemory(memory)) {
           return <PhotoMemoryCard key={memory.id} memory={memory} isPlaceholder={true} />;
+        } else if (isVideoMemory(memory)) {
+          return <VideoMemoryCard key={memory.id} memory={memory} isPlaceholder={true} />;
+        } else if (isAudioMemory(memory)) {
+          return <AudioMemoryCard key={memory.id} memory={memory} isPlaceholder={true} />;
         } else {
-          // Fallback for other types (video, audio)
+          console.warn("Unsupported memory type:", memory);
           return null;
         }
       })}

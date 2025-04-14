@@ -5,7 +5,7 @@ import { PhotoMemoryCard } from "./PhotoMemoryCard";
 import { VideoMemoryCard } from "./VideoMemoryCard";
 import { AudioMemoryCard } from "./AudioMemoryCard";
 import { useMemories } from "./useMemories";
-import { Memory } from "./types";
+import { Memory, isStoryMemory, isPhotoMemory, isVideoMemory, isAudioMemory } from "./types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useInView } from "framer-motion";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -103,44 +103,41 @@ const MemoryFeedLayout = () => {
       </div>
       
       <div className="space-y-4">
-        {memories.map((memory: Memory) => {
+        {memories.map((memory) => {
           // Safely check memory type before rendering
           if (!memory || typeof memory !== 'object') {
             console.error("Invalid memory object:", memory);
             return null;
           }
           
-          // Render appropriate component based on memory type
-          switch (memory.type) {
-            case "story":
-              return (
-                <div key={memory.id} className="animate-fadeIn">
-                  <StoryMemoryCard memory={memory} isPlaceholder={true} />
-                </div>
-              );
-            case "photo":
-              return (
-                <div key={memory.id} className="animate-fadeIn">
-                  <PhotoMemoryCard memory={memory} isPlaceholder={true} />
-                </div>
-              );
-            case "video":
-              return (
-                <div key={memory.id} className="animate-fadeIn">
-                  {/* Fallback to PhotoMemoryCard for now */}
-                  <PhotoMemoryCard memory={memory as any} isPlaceholder={true} />
-                </div>
-              );
-            case "audio":
-              return (
-                <div key={memory.id} className="animate-fadeIn">
-                  {/* Fallback to StoryMemoryCard for now */}
-                  <StoryMemoryCard memory={memory as any} isPlaceholder={true} />
-                </div>
-              );
-            default:
-              console.warn(`Unsupported memory type: ${memory.type}`);
-              return null;
+          // Render appropriate component based on memory type using type guards
+          if (isStoryMemory(memory)) {
+            return (
+              <div key={memory.id} className="animate-fadeIn">
+                <StoryMemoryCard memory={memory} isPlaceholder={true} />
+              </div>
+            );
+          } else if (isPhotoMemory(memory)) {
+            return (
+              <div key={memory.id} className="animate-fadeIn">
+                <PhotoMemoryCard memory={memory} isPlaceholder={true} />
+              </div>
+            );
+          } else if (isVideoMemory(memory)) {
+            return (
+              <div key={memory.id} className="animate-fadeIn">
+                <VideoMemoryCard memory={memory} isPlaceholder={true} />
+              </div>
+            );
+          } else if (isAudioMemory(memory)) {
+            return (
+              <div key={memory.id} className="animate-fadeIn">
+                <AudioMemoryCard memory={memory} isPlaceholder={true} />
+              </div>
+            );
+          } else {
+            console.warn(`Unsupported memory type:`, memory);
+            return null;
           }
         })}
       </div>
