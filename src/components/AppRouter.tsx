@@ -1,24 +1,48 @@
 
 import React from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
-import { AnimatePresence } from 'framer-motion';
-import StoryRecordingPage from '@/pages/StoryRecordingPage';
-import SacredVoiceExperience from '@/pages/SacredVoiceExperience';
-import DesignSystem from '@/pages/DesignSystem';
-import { PageTransition } from '@/components/animation/PageTransition';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { SimpleLayout } from './layout/SimpleLayout';
+import { HomePage } from '@/pages/HomePage';
+import { RecordStoryPage } from '@/pages/RecordStoryPage';
+import { ViewStoriesPage } from '@/pages/ViewStoriesPage';
+import { ProfilePage } from '@/pages/ProfilePage';
 
-export const AppRouter: React.FC = () => {
-  const location = useLocation();
-
+export const AppRouter = () => {
   return (
-    <AnimatePresence mode="wait">
-      <PageTransition location={location.pathname} mode="fade">
-        <Routes location={location}>
-          <Route path="/" element={<StoryRecordingPage />} />
-          <Route path="/sacred-voice" element={<SacredVoiceExperience />} />
-          <Route path="/design-system/*" element={<DesignSystem />} />
-        </Routes>
-      </PageTransition>
-    </AnimatePresence>
+    <Routes>
+      <Route 
+        path="/" 
+        element={
+          <SimpleLayout>
+            <HomePage />
+          </SimpleLayout>
+        } 
+      />
+      <Route 
+        path="/record" 
+        element={
+          <SimpleLayout>
+            <RecordStoryPage />
+          </SimpleLayout>
+        } 
+      />
+      <Route 
+        path="/stories" 
+        element={
+          <SimpleLayout>
+            <ViewStoriesPage />
+          </SimpleLayout>
+        } 
+      />
+      <Route 
+        path="/profile" 
+        element={
+          <SimpleLayout>
+            <ProfilePage />
+          </SimpleLayout>
+        } 
+      />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 };
