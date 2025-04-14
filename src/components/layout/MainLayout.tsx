@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { HanumanTopNav } from '@/components/navigation/HanumanTopNav';
 import Footer from '@/components/Footer';
@@ -15,8 +16,8 @@ import { useVoiceCommands } from '@/hooks/useVoiceCommands';
 import { WeddingModeTransition } from '@/components/wedding-mode/WeddingModeTransition';
 import { useUserJourney } from '@/contexts/UserJourneyContext';
 import { SimplifiedNavigation } from '@/components/accessibility/SimplifiedNavigation';
-import { MobilePhoneMockup } from '@/components/MobilePhoneMockup';
-import { cn } from '@/utils/cn';
+import { MobilePhoneMockup } from '@/components/layout/MobilePhoneMockup';
+import { cn } from '@/lib/utils';
 
 interface MainLayoutProps {
   children: React.ReactNode;
