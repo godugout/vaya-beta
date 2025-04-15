@@ -1,6 +1,5 @@
 
 import { Button } from "@/components/ui/button";
-import { Save } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface SaveMemoryButtonProps {
@@ -9,25 +8,29 @@ interface SaveMemoryButtonProps {
   isTranscribing: boolean;
 }
 
-const SaveMemoryButton = ({
-  handleSave,
-  isProcessing,
-  isTranscribing,
+const SaveMemoryButton = ({ 
+  handleSave, 
+  isProcessing, 
+  isTranscribing 
 }: SaveMemoryButtonProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
-      className="flex justify-center mt-4"
+      transition={{ duration: 0.3, delay: 0.2 }}
+      className="pt-4"
     >
       <Button
         onClick={handleSave}
+        className="w-full bg-lovable-magenta hover:bg-lovable-magenta-bright"
         disabled={isProcessing || isTranscribing}
-        className="bg-vaya-secondary hover:bg-vaya-secondary/90 text-white px-8"
       >
-        <Save className="mr-2 h-4 w-4" />
-        Save Your Memory
+        <motion.span
+          whileTap={{ scale: 0.97 }}
+          className="flex items-center"
+        >
+          Save Memory
+        </motion.span>
       </Button>
     </motion.div>
   );

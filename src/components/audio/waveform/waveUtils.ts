@@ -1,114 +1,107 @@
 /**
- * Utility functions for creating dynamic waveform visualizations
- * inspired by Vedic elements (water, fire, air)
+ * Helper function to generate a smooth wave path from amplitudes
  */
+export const generateWavePath = (amplitudes: number[]): string => {
+  const height = 100;
+  const middle = height / 2;
+  const width = 800;
+  const segmentWidth = width / (amplitudes.length - 1);
+  
+  let path = `M 0 ${middle}`;
+  
+  // First point
+  const firstY = middle - amplitudes[0] * 40;
+  path += ` C ${segmentWidth * 0.25} ${firstY}, ${segmentWidth * 0.75} ${firstY}, ${segmentWidth} ${middle - amplitudes[1] * 40}`;
+  
+  // Middle points with bezier curves for smoothness
+  for (let i = 1; i < amplitudes.length - 2; i++) {
+    const x = i * segmentWidth;
+    const y = middle - amplitudes[i] * 40;
+    const nextY = middle - amplitudes[i + 1] * 40;
+    
+    // Control points for the bezier curve
+    const cp1x = x + segmentWidth / 3;
+    const cp1y = y;
+    const cp2x = x + (2 * segmentWidth) / 3;
+    const cp2y = nextY;
+    const endX = x + segmentWidth;
+    const endY = nextY;
+    
+    path += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${endX} ${endY}`;
+  }
+  
+  // Last point
+  const lastIndex = amplitudes.length - 1;
+  const lastY = middle - amplitudes[lastIndex] * 40;
+  const beforeLastY = middle - amplitudes[lastIndex - 1] * 40;
+  path += ` C ${(lastIndex - 0.75) * segmentWidth} ${beforeLastY}, ${(lastIndex - 0.25) * segmentWidth} ${lastY}, ${lastIndex * segmentWidth} ${middle}`;
+  
+  return path;
+};
 
-// Generate smooth, fluid amplitudes (water-like)
+/**
+ * Creates random amplitude data for simulating live recording with
+ * enhanced dynamic response and natural patterns
+ */
 export const generateFluidAmplitudes = (
-  prevAmplitudes: number[],
-  intensity: number = 1
+  prevAmplitudes: number[], 
+  sensitivity: number = 1.5
 ): number[] => {
-  return prevAmplitudes.map((prev) => {
-    // Create smooth transitions between values (water-like effect)
-    const change = (Math.random() - 0.5) * 0.2 * intensity;
-    let newValue = prev + change;
+  // Implement improved "natural" waveform algorithm
+  return prevAmplitudes.map((amplitude, i) => {
+    // Get adjacent amplitudes with wrap-around
+    const prevIndex = i === 0 ? prevAmplitudes.length - 1 : i - 1;
+    const nextIndex = i === prevAmplitudes.length - 1 ? 0 : i + 1;
+    const prev = prevAmplitudes[prevIndex];
+    const next = prevAmplitudes[nextIndex];
     
-    // Keep values within bounds
-    newValue = Math.max(0.05, Math.min(0.8, newValue));
+    // Random change with slight neighbor influence for natural flow
+    const neighborInfluence = (prev + next) * 0.03;
     
-    return newValue;
+    // Add some randomness scaled by sensitivity
+    const randomChange = (Math.random() * 0.1 - 0.05) * sensitivity;
+    
+    // Create periodic patterns to simulate speech/audio rhythm
+    const periodicComponent = Math.sin(Date.now() / 500 + i / 5) * 0.03 * sensitivity;
+    
+    // Calculate new value using all components
+    const newValue = amplitude + randomChange + neighborInfluence + periodicComponent;
+    
+    // Keep within reasonable bounds
+    return Math.max(0.05, Math.min(0.95, newValue));
   });
 };
 
-// Generate more dynamic, rising amplitudes (flame-like)
-export const generateFlamingAmplitudes = (
-  prevAmplitudes: number[],
-  intensity: number = 1
-): number[] => {
-  return prevAmplitudes.map((prev, i) => {
-    // Create more vertical movement with occasional sharp peaks
-    const flameEffect = Math.random() < 0.2 ? 0.3 * intensity : 0.1;
-    const change = (Math.random() - 0.3) * flameEffect;
-    
-    // Central values tend to be higher (like flame center)
-    const centerInfluence = 0.1 * Math.abs(i - prevAmplitudes.length / 2) / (prevAmplitudes.length / 4);
-    
-    let newValue = prev + change + centerInfluence;
-    newValue = Math.max(0.05, Math.min(0.9, newValue));
-    
-    return newValue;
-  });
-};
-
-// Generate gentle, breeze-like amplitudes
-export const generateBreezeAmplitudes = (
-  prevAmplitudes: number[],
-  intensity: number = 1
-): number[] => {
-  return prevAmplitudes.map((prev) => {
-    // Create gentle, subtle movements
-    const change = (Math.random() - 0.5) * 0.08 * intensity;
-    let newValue = prev + change;
-    
-    // Keep values low for gentle breeze effect
-    newValue = Math.max(0.02, Math.min(0.4, newValue));
-    
-    return newValue;
-  });
-};
-
-// Analyze audio data to determine emotional state
-export const analyzeAudioEmotion = (audioData: Float32Array): 'calm' | 'passionate' | 'soft' => {
-  // A simplified version of emotion detection based on amplitude
-  const sum = audioData.reduce((acc, val) => acc + Math.abs(val), 0);
-  const average = sum / audioData.length;
-  
-  if (average > 0.4) return 'passionate';
-  if (average < 0.15) return 'soft';
-  return 'calm';
-};
-
-// Generate visualization data from audio analysis
-export const generateVisualizationFromAudio = (
+/**
+ * Process audio data for visualization with noise filtering
+ */
+export const processAudioData = (
   audioData: Uint8Array,
-  numPoints: number = 40
+  noiseFloor: number = 10,
+  sensitivity: number = 1.5
 ): number[] => {
-  // If we don't have enough data, return a flat line
-  if (!audioData || audioData.length === 0) {
-    return Array(numPoints).fill(0.1);
-  }
-  
-  const result: number[] = [];
-  const step = Math.floor(audioData.length / numPoints);
-  
-  // Sample points from the frequency data
-  for (let i = 0; i < numPoints; i++) {
-    const index = i * step;
-    if (index < audioData.length) {
-      // Convert to a value between 0.1 and 0.9
-      const normalizedValue = 0.1 + (audioData[index] / 255) * 0.8;
-      result.push(normalizedValue);
-    } else {
-      result.push(0.1);
-    }
-  }
-  
-  return result;
+  return Array.from(audioData).map(value => {
+    // Apply noise floor filtering
+    const normalizedValue = Math.max(0, value - noiseFloor) / (255 - noiseFloor);
+    
+    // Apply sensitivity scaling
+    const scaledValue = Math.pow(normalizedValue, 0.7) * sensitivity;
+    
+    // Keep within bounds
+    return Math.min(1, scaledValue);
+  });
 };
 
-// Smooth out amplitude transitions for a more pleasing visual
-export const smoothAmplitudes = (
+/**
+ * Smooth out waveform transitions for more pleasant visualization
+ */
+export const smoothWaveform = (
   currentAmplitudes: number[],
   targetAmplitudes: number[],
   smoothingFactor: number = 0.3
 ): number[] => {
-  if (currentAmplitudes.length !== targetAmplitudes.length) {
-    return targetAmplitudes;
-  }
-  
   return currentAmplitudes.map((current, i) => {
-    const target = targetAmplitudes[i];
-    // Linear interpolation between current and target
+    const target = targetAmplitudes[i] || current;
     return current + (target - current) * smoothingFactor;
   });
 };

@@ -1,164 +1,170 @@
 
 import { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
-import { FileUploadTab } from "./import/FileUploadTab";
-import { JsonInputTab } from "./import/JsonInputTab";
-import { ErrorDisplay } from "./import/ErrorDisplay";
-import { parseCSVFile, parseJSONFile, parseExcelFile } from "./import/importUtils";
-import { enrichFamilyData } from "./services/familyDataEnrichment";
-import { Sparkles } from "lucide-react";
+import { FileInput } from "./FileInput";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
+import { FileUp, Table, Upload } from "lucide-react";
 
-export interface ImportDataDialogProps {
+interface ImportDataDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onImportData: (data: any) => void;
 }
 
-export const ImportDataDialog = ({
-  open,
-  onOpenChange,
-  onImportData,
+export const ImportDataDialog = ({ 
+  open, 
+  onOpenChange, 
+  onImportData 
 }: ImportDataDialogProps) => {
+  const [importMethod, setImportMethod] = useState('file');
   const [file, setFile] = useState<File | null>(null);
   const [jsonData, setJsonData] = useState('');
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState('file');
-  const [enhanceWithAI, setEnhanceWithAI] = useState(false);
+  const [processing, setProcessing] = useState(false);
 
   const handleFileUpload = (selectedFile: File) => {
     setFile(selectedFile);
-    setError(null);
   };
 
   const handleImport = async () => {
-    setError(null);
-    setIsLoading(true);
+    setProcessing(true);
     
     try {
-      if (activeTab === 'file' && file) {
-        let data;
-        if (file.name.endsWith('.csv')) {
-          data = await parseCSVFile(file);
-        } else if (file.name.endsWith('.json')) {
-          data = await parseJSONFile(file);
-        } else if (file.name.endsWith('.xlsx') || file.name.endsWith('.xls')) {
-          data = await parseExcelFile(file);
-        } else {
-          throw new Error('Unsupported file format. Please upload a CSV, JSON, or Excel file.');
-        }
+      if (importMethod === 'file' && file) {
+        const reader = new FileReader();
         
-        // If AI enhancement is enabled, process the data with AI enrichment
-        if (enhanceWithAI && data.length > 0) {
+        reader.onload = (e) => {
           try {
-            data = await enrichFamilyData(data);
-          } catch (aiError) {
-            console.error('Error enriching data with AI:', aiError);
-            // Continue with original data if AI enhancement fails
+            // For CSV files
+            if (file.name.endsWith('.csv')) {
+              // Simple CSV parsing - in a real app, use a proper CSV parser
+              const text = e.target?.result as string;
+              const lines = text.split('\n');
+              const headers = lines[0].split(',');
+              
+              const data = lines.slice(1).map(line => {
+                const values = line.split(',');
+                return headers.reduce((obj, header, i) => {
+                  obj[header.trim()] = values[i]?.trim() || '';
+                  return obj;
+                }, {} as Record<string, string>);
+              });
+              
+              onImportData(data);
+            } 
+            // For JSON files
+            else if (file.name.endsWith('.json')) {
+              const jsonData = JSON.parse(e.target?.result as string);
+              onImportData(jsonData);
+            } 
+            // For Excel files - in a real app, you'd use a library like xlsx
+            else if (file.name.endsWith('.xlsx')) {
+              // Placeholder for Excel parsing - would use xlsx in production
+              alert('Excel parsing would be implemented in production');
+            }
+          } catch (error) {
+            console.error('Error parsing file:', error);
+            alert('Error parsing file. Please check the format.');
+          } finally {
+            setProcessing(false);
+            onOpenChange(false);
           }
-        }
+        };
         
-        onImportData(data);
-        onOpenChange(false);
-      } else if (activeTab === 'json' && jsonData.trim()) {
+        reader.onerror = () => {
+          alert('Error reading file');
+          setProcessing(false);
+        };
+        
+        if (file.name.endsWith('.csv') || file.name.endsWith('.json')) {
+          reader.readAsText(file);
+        } else {
+          reader.readAsArrayBuffer(file);
+        }
+      } else if (importMethod === 'json' && jsonData.trim()) {
         try {
           const data = JSON.parse(jsonData);
-          
-          // If AI enhancement is enabled
-          if (enhanceWithAI && (Array.isArray(data) ? data.length > 0 : data.nodes?.length > 0)) {
-            try {
-              const dataToEnrich = Array.isArray(data) ? data : data.nodes;
-              const enrichedData = await enrichFamilyData(dataToEnrich);
-              
-              if (Array.isArray(data)) {
-                onImportData(enrichedData);
-              } else {
-                // If the original data had a nodes/edges structure
-                onImportData({
-                  ...data,
-                  nodes: enrichedData
-                });
-              }
-            } catch (aiError) {
-              console.error('Error enriching data with AI:', aiError);
-              // Continue with original data if AI enhancement fails
-              onImportData(data);
-            }
-          } else {
-            onImportData(data);
-          }
-          
+          onImportData(data);
           onOpenChange(false);
-        } catch (e) {
-          throw new Error('Invalid JSON format. Please check your input.');
+        } catch (error) {
+          alert('Invalid JSON format');
+        } finally {
+          setProcessing(false);
         }
       } else {
-        throw new Error('Please upload a file or enter JSON data first.');
+        setProcessing(false);
       }
     } catch (error) {
       console.error('Import error:', error);
-      setError(error instanceof Error ? error.message : 'Unknown error occurred');
-    } finally {
-      setIsLoading(false);
+      setProcessing(false);
+      alert('An error occurred during import');
     }
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[600px]">
+      <DialogContent className="sm:max-w-[550px]">
         <DialogHeader>
-          <DialogTitle>Import Family Tree Data</DialogTitle>
+          <DialogTitle>Import Family Data</DialogTitle>
         </DialogHeader>
         
-        <Tabs defaultValue="file" value={activeTab} onValueChange={setActiveTab}>
+        <Tabs defaultValue="file" onValueChange={setImportMethod}>
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="file">Upload File</TabsTrigger>
-            <TabsTrigger value="json">Paste JSON</TabsTrigger>
+            <TabsTrigger value="file" className="flex items-center gap-2">
+              <FileUp className="h-4 w-4" />
+              <span>File Upload</span>
+            </TabsTrigger>
+            <TabsTrigger value="json" className="flex items-center gap-2">
+              <Table className="h-4 w-4" />
+              <span>Paste JSON</span>
+            </TabsTrigger>
           </TabsList>
           
-          <TabsContent value="file" className="py-4 space-y-4">
-            <FileUploadTab 
-              file={file} 
-              handleFileUpload={handleFileUpload} 
-            />
+          <TabsContent value="file" className="py-4">
+            <div className="space-y-4">
+              <FileInput onFileSelected={handleFileUpload} />
+              
+              {file && (
+                <div className="text-sm text-green-600 dark:text-green-400">
+                  File selected: {file.name}
+                </div>
+              )}
+              
+              <div className="text-sm text-gray-500 dark:text-gray-400">
+                <p>Supported formats:</p>
+                <ul className="list-disc list-inside ml-2">
+                  <li>CSV (.csv)</li>
+                  <li>JSON (.json)</li>
+                  <li>Excel (.xlsx) - Coming soon</li>
+                </ul>
+              </div>
+            </div>
           </TabsContent>
           
-          <TabsContent value="json" className="py-4 space-y-4">
-            <JsonInputTab 
-              jsonData={jsonData}
-              setJsonData={setJsonData}
-            />
+          <TabsContent value="json" className="py-4">
+            <div className="space-y-4">
+              <Textarea
+                placeholder={`Paste your JSON data here...\n{\n  "members": [\n    {"name": "John Doe", "role": "parent"},\n    {"name": "Jane Doe", "role": "parent"}\n  ]\n}`}
+                className="h-[200px] font-mono text-sm"
+                value={jsonData}
+                onChange={(e) => setJsonData(e.target.value)}
+              />
+            </div>
           </TabsContent>
         </Tabs>
         
-        <div className="flex items-center space-x-2 py-2">
-          <Switch
-            id="ai-enhance"
-            checked={enhanceWithAI}
-            onCheckedChange={setEnhanceWithAI}
-          />
-          <label
-            htmlFor="ai-enhance"
-            className="text-sm font-medium flex items-center gap-2 cursor-pointer"
-          >
-            <Sparkles className="h-4 w-4 text-amber-500" />
-            AI-enhance family data with cultural and historical context
-          </label>
-        </div>
-        
-        <ErrorDisplay error={error} />
-        
-        <div className="flex justify-end gap-2 mt-4">
+        <DialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
-          <Button onClick={handleImport} disabled={isLoading}>
-            {isLoading ? 'Importing...' : 'Import Data'}
+          <Button 
+            onClick={handleImport}
+            disabled={processing || (importMethod === 'file' && !file) || (importMethod === 'json' && !jsonData.trim())}
+          >
+            {processing ? 'Processing...' : 'Import Data'}
           </Button>
-        </div>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

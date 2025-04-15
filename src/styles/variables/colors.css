@@ -1,21 +1,18 @@
 
-/* Base variables with forest stream theme */
+/* Base variables with Agencs theme */
 :root {
-  /* Primary Agencs style black/white base */
+  /* Agencs color palette - minimalist black/white with subtle grays */
   --color-black: #000000;
   --color-white: #FFFFFF;
-  
-  /* Gray scale */
-  --color-gray-50: #F9FAFB;
-  --color-gray-100: #F3F4F6;
-  --color-gray-200: #E5E7EB;
-  --color-gray-300: #D1D5DB;
-  --color-gray-400: #9CA3AF;
-  --color-gray-500: #6B7280;
-  --color-gray-600: #4B5563;
-  --color-gray-700: #374151;
-  --color-gray-800: #1F2937;
-  --color-gray-900: #111827;
+  --color-gray-100: #F4F4F4;
+  --color-gray-200: #E5E5E5;
+  --color-gray-300: #C8C8C9;
+  --color-gray-400: #9F9EA1;
+  --color-gray-500: #8A898C;
+  --color-gray-600: #6F6E73;
+  --color-gray-700: #555459;
+  --color-gray-800: #403E43;
+  --color-gray-900: #221F26;
   
   /* Forest Stream color palette - from the digital painting */
   --color-sky: 134 202 233;       /* #86CAE9 - Sky blue */
@@ -34,24 +31,23 @@
   --color-ui-red: 217 72 67;       /* #D94843 - Added for warnings */
   
   /* UI Colors */
-  --color-ui-primary: var(--color-water);
-  --color-ui-secondary: var(--color-leaf);
-  --color-ui-accent: var(--color-autumn);
+  --color-ui-primary: var(--color-black);
+  --color-ui-secondary: var(--color-gray-800);
+  --color-ui-accent: var(--color-gray-900);
   --color-ui-error: #DC2626;
   --color-ui-success: #10B981;
   --color-ui-warning: #F59E0B;
   
   /* Text colors */
-  --color-text-dark: var(--color-gray-900);
-  --color-text-medium: var(--color-gray-700);
+  --color-text-dark: var(--color-black);
+  --color-text-medium: var(--color-gray-800);
   --color-text-light: var(--color-white);
-  --color-text-muted: var(--color-gray-500);
   
   /* Gradients */
-  --gradient-forest: linear-gradient(135deg, rgb(21, 71, 52) 0%, rgb(148, 193, 30) 100%);
-  --gradient-water: linear-gradient(135deg, rgb(68, 158, 186) 0%, rgb(134, 202, 233) 100%);
+  --gradient-fade: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 100%);
+  --gradient-sky-water: linear-gradient(to bottom, rgb(134, 202, 233) 0%, rgb(68, 158, 186) 100%);
   --gradient-autumn: linear-gradient(135deg, rgb(242, 153, 45) 0%, rgb(217, 72, 67) 100%);
-  --gradient-sky: linear-gradient(135deg, rgb(134, 202, 233) 0%, rgb(94, 172, 186) 100%);
+  --gradient-forest: linear-gradient(135deg, rgb(148, 193, 30) 0%, rgb(21, 71, 52) 100%);
   
   /* Card colors */
   --card-background: var(--color-white);
@@ -62,81 +58,22 @@
   --tree-node-background: var(--color-white);
   --tree-edge-color: var(--color-black);
   --tree-selected-color: #449EBA;
-  
-  /* ShadCN compatibility  */
-  --background: 0 0% 100%;
-  --foreground: 222.2 84% 4.9%;
-  --card: 0 0% 100%;
-  --card-foreground: 222.2 84% 4.9%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 222.2 84% 4.9%;
-  --primary: 196 52% 50%;
-  --primary-foreground: 210 40% 98%;
-  --secondary: 84 80% 44%;
-  --secondary-foreground: 222.2 47.4% 11.2%;
-  --muted: 210 40% 96.1%;
-  --muted-foreground: 215.4 16.3% 46.9%;
-  --accent: 36 90% 56%;
-  --accent-foreground: 222.2 47.4% 11.2%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 214.3 31.8% 91.4%;
-  --input: 214.3 31.8% 91.4%;
-  --ring: 196 52% 50%;
-  --radius: 0.5rem;
 }
 
 /* Dark theme variables */
 .dark {
-  --color-black: #FFFFFF;
-  --color-white: #0C2A20; /* Very dark forest green as background */
+  --color-ui-primary: var(--color-white);
+  --color-ui-secondary: var(--color-gray-200);
+  --color-ui-accent: var(--color-gray-100);
   
-  /* Forest Stream dark theme colors */
-  --color-sky: 68 122 153;         /* Darker sky blue */
-  --color-forest: 19 58 42;        /* Darker forest green */
-  --color-water: 45 104 122;       /* Darker stream water */
-  --color-mountain: 63 115 124;    /* Darker blue mountains */
-  --color-leaf: 98 129 20;         /* Darker leaf green */
-  --color-autumn: 184 116 34;      /* Darker autumn orange */
-  --color-sand: 126 114 96;        /* Darker sandy stone */
+  --color-text-dark: var(--color-white);
+  --color-text-medium: var(--color-gray-200);
+  --color-text-light: var(--color-black);
   
-  /* UI Colors for dark mode */
-  --color-ui-primary: #E5E9EC;
-  --color-ui-secondary: #94C11E;
-  --color-ui-accent: #F2992D;
+  --card-background: var(--color-gray-900);
+  --card-shadow: rgba(255, 255, 255, 0.05);
   
-  /* Text colors for dark mode */
-  --color-text-dark: #E5E9EC;
-  --color-text-medium: #A0AEC0;
-  --color-text-light: #0C2A20;
-  --color-text-muted: #718096;
-  
-  --card-background: #0C2A20;  /* Very dark forest green */
-  --card-shadow: rgba(0, 0, 0, 0.5);
-  
-  /* Tree colors for dark mode */
   --tree-node-border: var(--color-white);
   --tree-node-background: var(--color-black);
   --tree-edge-color: var(--color-white);
-  
-  /* ShadCN compatibility - dark mode */
-  --background: 180 40% 10%;
-  --foreground: 210 40% 98%;
-  --card: 180 40% 10%;
-  --card-foreground: 210 40% 98%;
-  --popover: 180 40% 10%;
-  --popover-foreground: 210 40% 98%;
-  --primary: 196 40% 40%;
-  --primary-foreground: 222.2 47.4% 11.2%;
-  --secondary: 84 70% 40%;
-  --secondary-foreground: 210 40% 98%;
-  --muted: 180 40% 15%;
-  --muted-foreground: 215 20% 65%;
-  --accent: 36 70% 50%;
-  --accent-foreground: 210 40% 98%;
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 180 40% 15%;
-  --input: 180 40% 15%;
-  --ring: 196 40% 40%;
 }

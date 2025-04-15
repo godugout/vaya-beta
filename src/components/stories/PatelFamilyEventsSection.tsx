@@ -1,95 +1,89 @@
 
-import React from 'react';
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from 'lucide-react';
-import { SearchInput } from '@/components/input/SearchInput';
-import { FadeIn } from '@/components/animation/FadeIn';
-import FamilyEventRow, { FamilyEvent } from './FamilyEventRow';
-import { 
-  Table, 
-  TableHeader, 
-  TableBody, 
-  TableHead, 
-  TableRow
-} from '@/components/ui/table';
+import { CapsuleScrollSection } from "@/components/capsule/sections/CapsuleScrollSection";
+import { CapsuleStatus } from "@/types/capsule";
+import { Calendar, Gift, Heart, Music, Star } from "lucide-react";
 
-const sampleEvents: FamilyEvent[] = [
+// Patel family cultural events data
+const patelFamilyEvents = [
   {
-    icon: '🎓',
-    name: 'Riya\'s Graduation',
-    description: 'Celebrating Riya\'s medical school graduation',
-    owner: 'AP',
-    status: 'upcoming',
-    date: '5/14/2025'
+    id: "capsule-1",
+    title: "Diwali Celebration",
+    description: "Annual family gathering for Diwali festival of lights",
+    colorKey: "memories",
+    icon: Gift,
+    metadata: {
+      creatorInitials: "NP",
+      itemCount: 24,
+      status: "upcoming" as CapsuleStatus,
+      date: "2024-10-31"
+    }
   },
   {
-    icon: '💍',
-    name: 'Amit & Priya\'s Wedding',
-    description: 'Family wedding celebration memories',
-    owner: 'MP',
-    status: 'locked',
-    date: '12/11/2024'
+    id: "capsule-2",
+    title: "Navratri Garba Night",
+    description: "Family dance celebration during Navratri",
+    colorKey: "stories",
+    icon: Music,
+    metadata: {
+      creatorInitials: "RP",
+      itemCount: 18,
+      status: "active" as CapsuleStatus,
+      date: "2024-10-03"
+    }
+  },
+  {
+    id: "capsule-3",
+    title: "Riya's Graduation",
+    description: "Celebrating Riya's medical school graduation",
+    colorKey: "capsules",
+    icon: Star,
+    metadata: {
+      creatorInitials: "AP",
+      itemCount: 12,
+      status: "upcoming" as CapsuleStatus,
+      date: "2025-05-15"
+    }
+  },
+  {
+    id: "capsule-4",
+    title: "Amit & Priya's Wedding",
+    description: "Family wedding celebration memories",
+    colorKey: "memories",
+    icon: Heart,
+    metadata: {
+      creatorInitials: "MP",
+      itemCount: 32,
+      status: "locked" as CapsuleStatus,
+      date: "2024-12-12"
+    }
+  },
+  {
+    id: "capsule-5",
+    title: "Raksha Bandhan",
+    description: "Brother-sister bond celebration",
+    colorKey: "stories",
+    icon: Calendar,
+    metadata: {
+      creatorInitials: "SP",
+      itemCount: 8,
+      status: "upcoming" as CapsuleStatus,
+      date: "2024-08-19"
+    }
   }
 ];
 
-export const PatelFamilyEventsSection = () => {
-  const handleViewEvent = (event: FamilyEvent) => {
-    console.log('View event:', event);
-    // Implementation for viewing the event details
-  };
+interface PatelFamilyEventsSectionProps {
+  className?: string;
+}
 
+const PatelFamilyEventsSection = ({ className }: PatelFamilyEventsSectionProps) => {
   return (
-    <FadeIn className="mt-16">
-      <h2 className="text-2xl font-bold mb-6">Family Events & Celebrations</h2>
-      
-      <div className="mb-6 flex flex-col md:flex-row justify-between gap-4">
-        <SearchInput 
-          placeholder="Search capsules..." 
-          className="max-w-xs"
-        />
-        
-        <div className="flex flex-wrap gap-2">
-          <Button variant="outline" className="border-gray-300 dark:border-gray-600">
-            Upcoming
-          </Button>
-          <Button variant="outline" className="border-gray-300 dark:border-gray-600">
-            Active
-          </Button>
-          <Button variant="outline" className="border-gray-300 dark:border-gray-600">
-            Locked
-          </Button>
-          <Button variant="outline" className="border-gray-300 dark:border-gray-600">
-            Revealed
-          </Button>
-        </div>
-      </div>
-      
-      <div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
-        <div className="overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead>Owner</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead className="w-10"></TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {sampleEvents.map((event, index) => (
-                <FamilyEventRow 
-                  key={index} 
-                  event={event} 
-                  onViewEvent={handleViewEvent}
-                />
-              ))}
-            </TableBody>
-          </Table>
-        </div>
-      </div>
-    </FadeIn>
+    <div className={className}>
+      <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
+        Patel Family Events & Celebrations
+      </h2>
+      <CapsuleScrollSection capsules={patelFamilyEvents} />
+    </div>
   );
 };
 

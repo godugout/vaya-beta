@@ -1,35 +1,32 @@
 
-import React from 'react';
 import { motion } from 'framer-motion';
-import { Mic, Square, Loader } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { Mic, Square, Loader2 } from 'lucide-react';
+import { RecordingState } from '../EnhancedRecordingButton';
 
 interface RecordingButtonIconProps {
-  state: 'idle' | 'recording' | 'processing';
-  iconSize?: string;
+  state: RecordingState;
+  iconSize: string;
 }
 
-export const RecordingButtonIcon: React.FC<RecordingButtonIconProps> = ({ 
-  state, 
-  iconSize = 'h-6 w-6' 
-}) => {
-  // Icon variants based on state
-  const icons = {
-    idle: <Mic className={cn(iconSize, "text-white")} />,
-    recording: <Square className={cn(iconSize, "text-white")} />,
-    processing: (
-      <motion.div
-        animate={{ rotate: 360 }}
-        transition={{
-          duration: 2,
-          repeat: Infinity,
-          ease: "linear"
-        }}
-      >
-        <Loader className={cn(iconSize, "text-white")} />
-      </motion.div>
-    )
-  };
-  
-  return icons[state];
+export const RecordingButtonIcon = ({ state, iconSize }: RecordingButtonIconProps) => {
+  switch (state) {
+    case 'idle':
+      return <Mic className={iconSize} />;
+      
+    case 'recording':
+      return <Square className={iconSize} />;
+      
+    case 'processing':
+      return (
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}
+        >
+          <Loader2 className={iconSize} />
+        </motion.div>
+      );
+      
+    default:
+      return <Mic className={iconSize} />;
+  }
 };

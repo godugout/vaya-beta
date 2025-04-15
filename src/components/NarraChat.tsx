@@ -69,7 +69,7 @@ const NarraChat = () => {
               input={input}
               setInput={setInput}
               handleSend={() => handleSend()}
-              handleMorePrompts={() => handleMorePrompts(isSpanish)}
+              handleMorePrompts={handleMorePrompts}
               setIsRecording={setIsRecording}
               isSpanish={isSpanish}
             />

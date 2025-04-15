@@ -32,19 +32,19 @@ export const StoryMemoryCard = ({ memory, isPlaceholder = true }: StoryMemoryCar
 
   return (
     <Link to={`/memory/${memory.id}`}>
-      <Card className={`hanuman-card hover:shadow-md transition-shadow duration-200 relative ${isPlaceholder ? 'opacity-90' : ''}`}>
+      <Card className={`bg-white hover:shadow-md transition-shadow duration-200 relative ${isPlaceholder ? 'opacity-70' : ''}`}>
         {isPlaceholder && (
           <Badge 
             variant="outline" 
-            className="absolute top-2 right-2 bg-hanuman-primary/5 text-hanuman-text-secondary text-xs border-hanuman-border-color"
+            className="absolute top-2 right-2 bg-gray-200 text-gray-700 text-xs border-gray-300"
           >
             Demo
           </Badge>
         )}
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <div className="space-y-1">
-            <h3 className="text-sm font-medium text-hanuman-text-primary">Audio Memory</h3>
-            <p className="text-sm text-hanuman-text-secondary">
+            <h3 className="text-sm font-medium">Audio Memory</h3>
+            <p className="text-sm text-gray-500">
               {new Date(memory.created_at).toLocaleDateString()}
             </p>
           </div>
@@ -56,7 +56,7 @@ export const StoryMemoryCard = ({ memory, isPlaceholder = true }: StoryMemoryCar
               togglePlayback();
             }}
             variant="outline"
-            className="w-full border-hanuman-border-color text-hanuman-primary hover:bg-hanuman-primary/10"
+            className="w-full border-vaya-secondary text-vaya-secondary hover:bg-vaya-secondary hover:text-white"
           >
             {isPlaying ? (
               <Pause className="mr-2 h-4 w-4" />

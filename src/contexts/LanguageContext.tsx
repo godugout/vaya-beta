@@ -1,221 +1,55 @@
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { useToast } from "@/components/ui/use-toast";
 
-// Expanded type to include more languages
-export type Language = 'en' | 'es' | 'gu' | 'hi' | 'sa';
-
-interface LanguageContextType {
-  language: Language;
-  setLanguage: (language: Language) => void;
-  t: (key: string) => string;
-  isCurrentLanguage: (lang: Language) => boolean;
-  setLanguagePreference: (language: Language) => void;
-  isSpanish: boolean; // Add this property for Spanish language check
-}
-
-// Expanded translation dictionary with more languages and keys
-const translations: Record<Language, Record<string, string>> = {
-  en: {
-    'home': 'Home',
-    'memories': 'Memories',
-    'family': 'Family',
-    'stories': 'Stories',
-    'settings': 'Settings',
-    'account': 'Account',
-    'welcome': 'Welcome to VayaSpace',
-    'menu': 'Menu',
-    'recording': 'Recording',
-    'voice': 'Voice',
-    'transcription': 'Transcription',
-    'save': 'Save',
-    'cancel': 'Cancel',
-    'edit': 'Edit',
-    'delete': 'Delete',
-    'loading': 'Loading...',
-    'retry': 'Retry',
-    'back': 'Back',
-    'next': 'Next',
-    'finish': 'Finish',
-  },
-  es: {
-    'home': 'Inicio',
-    'memories': 'Recuerdos',
-    'family': 'Familia',
-    'stories': 'Historias',
-    'settings': 'Configuración',
-    'account': 'Cuenta',
-    'welcome': 'Bienvenido a VayaSpace',
-    'menu': 'Menú',
-    'recording': 'Grabación',
-    'voice': 'Voz',
-    'transcription': 'Transcripción',
-    'save': 'Guardar',
-    'cancel': 'Cancelar',
-    'edit': 'Editar',
-    'delete': 'Eliminar',
-    'loading': 'Cargando...',
-    'retry': 'Reintentar',
-    'back': 'Atrás',
-    'next': 'Siguiente',
-    'finish': 'Finalizar',
-  },
-  gu: {
-    'home': 'ઘર',
-    'memories': 'યાદો',
-    'family': 'પરિવાર',
-    'stories': 'વાર્તાઓ',
-    'settings': 'સેટિંગ્સ',
-    'account': 'એકાઉન્ટ',
-    'welcome': 'વાયાસ્પેસમાં આપનું સ્વાગત છે',
-    'menu': 'મેનુ',
-    'recording': 'રેકોર્ડિંગ',
-    'voice': 'અવાજ',
-    'transcription': 'ટ્રાન્સક્રિપ્શન',
-    'save': 'સાચવો',
-    'cancel': 'રદ કરો',
-    'edit': 'ફેરફાર કરો',
-    'delete': 'કાઢી નાખો',
-    'loading': 'લોડ થઈ રહ્યું છે...',
-    'retry': 'ફરી પ્રયાસ કરો',
-    'back': 'પાછા',
-    'next': 'આગળ',
-    'finish': 'પૂર્ણ',
-  },
-  hi: {
-    'home': 'होम',
-    'memories': 'यादें',
-    'family': 'परिवार',
-    'stories': 'कहानियां',
-    'settings': 'सेटिंग्स',
-    'account': 'अकाउंट',
-    'welcome': 'वयास्पेस में आपका स्वागत है',
-    'menu': 'मेन्यू',
-    'recording': 'रिकॉर्डिंग',
-    'voice': 'आवाज़',
-    'transcription': 'ट्रांसक्रिप्शन',
-    'save': 'सहेजें',
-    'cancel': 'रद्द करें',
-    'edit': 'संपादित करें',
-    'delete': 'हटाएं',
-    'loading': 'लोड हो रहा है...',
-    'retry': 'पुनः प्रयास करें',
-    'back': 'वापस',
-    'next': 'आगे',
-    'finish': 'समाप्त',
-  },
-  sa: {
-    'home': 'गृहम्',
-    'memories': 'स्मृतयः',
-    'family': 'कुटुम्बम्',
-    'stories': 'कथाः',
-    'settings': 'समायोजनम्',
-    'account': 'खातम्',
-    'welcome': 'वयास्पेस् मध्ये स्वागतम्',
-    'menu': 'सूची',
-    'recording': 'ध्वनिमुद्रणम्',
-    'voice': 'ध्वनि',
-    'transcription': 'लिप्यन्तरणम्',
-    'save': 'संग्रहयतु',
-    'cancel': 'रद्दीकरोतु',
-    'edit': 'सम्पादयतु',
-    'delete': 'विलोपयतु',
-    'loading': 'आनयन् अस्ति...',
-    'retry': 'पुनः प्रयत्नं करोतु',
-    'back': 'पृष्ठम्',
-    'next': 'अग्रे',
-    'finish': 'समाप्तम्',
-  }
+type LanguageContextType = {
+  isSpanish: boolean;
+  setLanguagePreference: (language: string) => Promise<void>;
 };
 
-const LanguageContext = createContext<LanguageContextType>({
-  language: 'en',
-  setLanguage: () => {},
-  t: (key: string) => key,
-  isCurrentLanguage: () => false,
-  setLanguagePreference: () => {},
-  isSpanish: false, // Default value
-});
+const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-export const useLanguage = () => useContext(LanguageContext);
+export function LanguageProvider({ children }: { children: ReactNode }) {
+  const [isSpanish, setIsSpanish] = useState(false); // Default to English
+  const { toast } = useToast();
 
-export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Get initial language from localStorage or default to English
-  const getInitialLanguage = (): Language => {
-    if (typeof window === 'undefined') return 'en';
-    
-    const savedLanguage = localStorage.getItem('vaya-language');
-    if (savedLanguage && ['en', 'es', 'gu', 'hi', 'sa'].includes(savedLanguage)) {
-      return savedLanguage as Language;
+  // Simplified implementation that doesn't use Supabase
+  const setLanguagePreference = async (language: string) => {
+    try {
+      setIsSpanish(language === 'es');
+      
+      // Save to localStorage as fallback
+      localStorage.setItem('preferred_language', language);
+
+    } catch (error) {
+      console.error('Error updating language:', error);
+      toast({
+        title: "Error",
+        description: "Failed to update language preference",
+        variant: "destructive",
+      });
     }
-    
-    // Check browser language preference
-    const browserLang = navigator.language.substring(0, 2);
-    if (browserLang === 'es') return 'es';
-    if (browserLang === 'gu') return 'gu';
-    if (browserLang === 'hi') return 'hi';
-    if (browserLang === 'sa') return 'sa';
-    return 'en';
   };
 
-  const [language, setLanguage] = useState<Language>(getInitialLanguage);
-
-  // Helper function to check current language
-  const isCurrentLanguage = (lang: Language): boolean => {
-    return language === lang;
-  };
-
-  // Translation function with enhanced fallback behavior
-  const t = (key: string): string => {
-    // First try the requested language
-    if (translations[language][key]) {
-      return translations[language][key];
-    }
-    
-    // Fall back to English if translation not found
-    if (language !== 'en' && translations['en'][key]) {
-      console.warn(`Translation missing for key "${key}" in "${language}", falling back to English`);
-      return translations['en'][key];
-    }
-    
-    // Return the key itself as last resort
-    return key;
-  };
-
-  // Update localStorage when language changes
+  // Load from localStorage on mount
   useEffect(() => {
-    localStorage.setItem('vaya-language', language);
-    
-    // Set the document language for accessibility
-    document.documentElement.lang = language;
-    
-    // Configure RTL support for languages that require it (not needed for current languages)
-    // if (['ar', 'he'].includes(language)) {
-    //   document.documentElement.dir = 'rtl';
-    // } else {
-    //   document.documentElement.dir = 'ltr';
-    // }
-  }, [language]);
-
-  // Alias for setLanguage for compatibility with existing components
-  const setLanguagePreference = (lang: Language) => {
-    setLanguage(lang);
-  };
-
-  // Compute isSpanish value based on current language
-  const isSpanish = language === 'es';
-
-  const value = {
-    language,
-    setLanguage,
-    t,
-    isCurrentLanguage,
-    setLanguagePreference,
-    isSpanish // Add this to the context value
-  };
+    const savedLanguage = localStorage.getItem('preferred_language');
+    if (savedLanguage) {
+      setIsSpanish(savedLanguage === 'es');
+    }
+  }, []);
 
   return (
-    <LanguageContext.Provider value={value}>
+    <LanguageContext.Provider value={{ isSpanish, setLanguagePreference }}>
       {children}
     </LanguageContext.Provider>
   );
-};
+}
+
+export function useLanguage() {
+  const context = useContext(LanguageContext);
+  if (context === undefined) {
+    throw new Error('useLanguage must be used within a LanguageProvider');
+  }
+  return context;
+}

@@ -3,9 +3,6 @@ import { colors } from './colors';
 import { typography } from './typography';
 import { animation } from './animation';
 import { spacing, borderRadius, shadows, zIndex } from './spacing';
-import { spaceVaultColors } from './colors/space-vault';
-import { sacredColors } from './colors/sacred';
-import { dispatchColors } from './colors/dispatch';
 
 // Export the entire theme
 export const theme = {
@@ -18,7 +15,7 @@ export const theme = {
   zIndex,
 };
 
-// Export individual theme components
+// Export individual components for direct access
 export {
   colors,
   typography,
@@ -26,47 +23,5 @@ export {
   spacing,
   borderRadius,
   shadows,
-  zIndex,
-  // Theme-specific exports
-  spaceVaultColors,
-  sacredColors,
-  dispatchColors
+  zIndex
 };
-
-// Create theme-specific bundles
-export const themeAnjaneya = {
-  name: 'anjaneya',
-  colors: spaceVaultColors,
-  typography: {
-    fontFamily: {
-      heading: "'Space Grotesk', sans-serif",
-      body: "'Inter', sans-serif",
-      mono: "'JetBrains Mono', monospace",
-    }
-  }
-};
-
-export const themeAmbalal = {
-  name: 'ambalal',
-  colors: sacredColors,
-  typography: {
-    fontFamily: {
-      heading: "'Mukta Vaani', sans-serif",
-      body: "'Inter', sans-serif",
-      mono: "'JetBrains Mono', monospace",
-    }
-  }
-};
-
-export const themeDispatch = {
-  name: 'dispatch',
-  colors: dispatchColors,
-  typography: {
-    fontFamily: {
-      heading: "'Inter Tight', sans-serif",
-      body: "'Inter', sans-serif",
-      mono: "'JetBrains Mono', monospace",
-    }
-  }
-};
-

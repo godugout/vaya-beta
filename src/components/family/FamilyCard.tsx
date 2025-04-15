@@ -16,16 +16,13 @@ interface FamilyMember {
   };
 }
 
-// Updated Family interface to align with the component props
-interface Family {
-  id: string;
-  name: string;
-  description: string | null;
-  members: FamilyMember[];
-}
-
 interface FamilyCardProps {
-  family: Family;
+  family: {
+    id: string;
+    name: string;
+    description: string | null;
+    members: FamilyMember[];
+  };
   onFamilySelected: (familyId: string) => void;
   onFamilyUpdated: () => void;
 }

@@ -1,142 +1,59 @@
 
-import { type Config } from "tailwindcss";
+import type { Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
 
 export default {
   darkMode: ["class"],
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: [
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
+  prefix: "",
   theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
     extend: {
       colors: {
-        // Core brand colors from the style guide
-        primary: "#FF7675",
-        secondary: "#6C5CE7",
-        accent: "#4CD137",
+        // Colors from forest stream illustration
+        sky: "rgb(var(--color-sky) / <alpha-value>)",
+        forest: "rgb(var(--color-forest) / <alpha-value>)",
+        water: "rgb(var(--color-water) / <alpha-value>)",
+        mountain: "rgb(var(--color-mountain) / <alpha-value>)",
+        leaf: "rgb(var(--color-leaf) / <alpha-value>)",
+        autumn: "rgb(var(--color-autumn) / <alpha-value>)",
+        sand: "rgb(var(--color-sand) / <alpha-value>)",
         
-        // Gray scale
-        black: "#000000",
-        white: "#FFFFFF",
-        "gray-100": "#F9F9F9",
-        "gray-200": "#F3F3F3",
-        "gray-300": "#EDEDED",
-        "gray-400": "#DDDDDD",
-        "gray-500": "#AAAAAA",
-        "gray-600": "#888888",
-        "gray-700": "#555555",
-        "gray-800": "#333333",
+        // UI colors from frog character designs
+        "ui-orange": "rgb(var(--color-ui-orange) / <alpha-value>)",
+        "ui-green": "rgb(var(--color-ui-green) / <alpha-value>)",
+        "ui-purple": "rgb(var(--color-ui-purple) / <alpha-value>)",
+        "ui-teal": "rgb(var(--color-ui-teal) / <alpha-value>)",
+        "ui-red": "rgb(var(--color-ui-red) / <alpha-value>)",
         
-        // Sacred Colors
-        sacred: {
-          primary: {
-            saffron: {
-              DEFAULT: "#FF7A00",
-              50: "#FFF0E6",
-              100: "#FFE1CC",
-              200: "#FFC499",
-              300: "#FFA766",
-              400: "#FF8B33",
-              500: "#FF7A00",
-              600: "#CC6200",
-              700: "#994900",
-              800: "#663100",
-              900: "#331800",
-            },
-            teal: {
-              DEFAULT: "#1E9C95",
-              50: "#E6F7F6",
-              100: "#CCEEED",
-              200: "#99DDDB",
-              300: "#66CBC8",
-              400: "#33BAB6",
-              500: "#1E9C95",
-              600: "#187D77",
-              700: "#125E59",
-              800: "#0C3E3C",
-              900: "#061F1E",
-            },
-            yellow: {
-              DEFAULT: "#FFDD59",
-              50: "#FFFBEE",
-              100: "#FFF7DD",
-              200: "#FFEFBB",
-              300: "#FFE799",
-              400: "#FFE278",
-              500: "#FFDD59",
-              600: "#CCB147",
-              700: "#998535",
-              800: "#665823",
-              900: "#332C12",
-            },
-            green: {
-              DEFAULT: "#2ECC71",
-              50: "#EAF9F1",
-              100: "#D5F3E2",
-              200: "#ABE7C6",
-              300: "#82DBA9",
-              400: "#58CF8D",
-              500: "#2ECC71",
-              600: "#25A35A",
-              700: "#1C7B44",
-              800: "#13522D",
-              900: "#092916",
-            },
-          },
-          earth: {
-            brown: {
-              DEFAULT: "#8D6E63",
-              light: "#A18579",
-              dark: "#725850",
-            },
-            gray: {
-              DEFAULT: "#7F8C8D",
-              light: "#95A5A6",
-              dark: "#6C7A7B",
-            },
-            terracotta: {
-              DEFAULT: "#E74C3C",
-              light: "#EC7063",
-              dark: "#C0392B",
-            },
-            forest: {
-              DEFAULT: "#1E392A",
-              light: "#2D5741",
-              dark: "#122218",
-            },
-          },
-          neutral: {
-            parchment: "#F5EFE6",
-            sandstone: "#E6D7B9",
-            charcoal: "#2D3436",
-          },
-        },
-
-        space: {
-          black: '#0B0E17',      // Deep space black
-          darkBlue: '#1A2033',   // Dark space blue
-          indigo: '#2D3250',     // Space indigo
-          blue: '#0A4ECA',       // NASA blue
-          lightBlue: '#7CB7FF',  // Light accent blue
-          purple: '#6C63FF',     // Cosmic purple
-          violet: '#A78BFA',     // Nebula violet 
-          red: '#E4263B',        // Mission critical red (NASA)
-          orange: '#FF7E47',     // Mars orange
-          gold: '#FFD700',       // Star gold
-          silver: '#E2E8F0',     // Spacecraft silver
+        // Dark mode specific colors
+        "dark-background": {
+          DEFAULT: "#0C2A20",
+          surface: "#133830",
+          elevated: "#1B4A40",
+          inset: "#0A211A",
+          orange: "#331F17",
+          red: "#2C1517",
+          green: "#192D1D",
+          purple: "#261E36",
         },
         
-        // Hanuman theme colors
-        hanuman: {
-          primary: "#FF7E00",
-          secondary: "#C62828",
-          accent: "#FFD700",
-          purple: "#6C5CE7",
-          green: "#4CD137",
-          saffron: "#F9A825",
-          gold: "#FFD700",
-          light: "#FFF9F0",
-          dark: "#1A0F00",
-          "bg-light": "#FFF9F0", 
-          "bg-dark": "#1A0F00",
+        "dark-text": {
+          primary: "#F8F9FA",
+          secondary: "#A0AEC0",
+          tertiary: "#718096",
+          highlight: "#94C11E",
         },
         
         border: "hsl(var(--border))",
@@ -144,11 +61,11 @@ export default {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        "primary-brand": {
+        primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
         },
-        "secondary-brand": {
+        secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
         },
@@ -160,7 +77,7 @@ export default {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
         },
-        "accent-brand": {
+        accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
         },
@@ -174,51 +91,61 @@ export default {
         },
       },
       fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
-        heading: ["Mukta Vaani", "Montserrat", "sans-serif"],
-        body: ["Inter", "Manrope", "sans-serif"],
-        story: ["Georgia", "serif"],
-        gujarati: ["Mukta Vaani", "sans-serif"],
+        sans: ["var(--font-body)", ...fontFamily.sans],
+        heading: ["var(--font-heading)", ...fontFamily.sans],
+        accent: ["var(--font-accent)", ...fontFamily.sans],
       },
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-      },
-      keyframes: {
-        "accordion-down": {
-          from: { height: 0 },
-          to: { height: "var(--radix-accordion-content-height)" },
-        },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: 0 },
-        },
-        "gentle-pulse": {
-          "0%": { transform: "scale(1)" },
-          "50%": { transform: "scale(1.05)" },
-          "100%": { transform: "scale(1)" },
-        },
-        "fade-in": {
-          from: { opacity: "0", transform: "translateY(10px)" },
-          to: { opacity: "1", transform: "translateY(0)" },
-        },
-        "fade-out": {
-          from: { opacity: "1", transform: "translateY(0)" },
-          to: { opacity: "0", transform: "translateY(10px)" },
-        },
-      },
-      animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
-        "gentle-pulse": "gentle-pulse 2s infinite ease-in-out",
-        "fade-in": "fade-in 0.5s ease-out forwards",
-        "fade-out": "fade-out 0.5s ease-out forwards",
+        lg: "var(--radius-lg)",
+        md: "var(--radius-md)",
+        sm: "var(--radius-sm)",
       },
       backgroundImage: {
-        'hanuman-bg': "url('/lovable-uploads/e972aa49-7146-43ba-a1e8-b6e0b5f975d5.png')",
-        'hanuman-gradient': 'linear-gradient(135deg, rgba(255, 126, 0, 0.1) 0%, rgba(198, 40, 40, 0.1) 100%)',
-        'chakra-pattern': "url(\"data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg stroke='%23FFD700' stroke-width='1' stroke-opacity='0.1'%3E%3Ccircle cx='40' cy='40' r='36'/%3E%3Ccircle cx='40' cy='40' r='28'/%3E%3Ccircle cx='40' cy='40' r='20'/%3E%3Cpath d='M40 4 L40 76 M4 40 L76 40 M11.7 11.7 L68.3 68.3 M11.7 68.3 L68.3 11.7'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+        "forest-stream": "url('/lovable-uploads/bc413ab4-a49c-4baa-8d14-e2f0d6b00ac5.png')",
+        "gradient-coral": "linear-gradient(135deg, #FF7675 0%, #FFA05A 100%)",
+        "gradient-purple": "linear-gradient(135deg, #6C5CE7 0%, #8F84EB 100%)",
+        "gradient-forest": "linear-gradient(135deg, #154734 0%, #94C11E 100%)",
+        "gradient-water": "linear-gradient(135deg, #449EBA 0%, #86CAE9 100%)",
+        "gradient-autumn": "linear-gradient(135deg, #F2992D 0%, #D94843 100%)",
+      },
+      animation: {
+        "wave-pattern": "wavePattern 50s linear infinite",
+        float: "float 6s ease-in-out infinite",
+        pulse: "pulse 2s ease-in-out infinite",
+        wave: "wave 2.5s linear infinite",
+      },
+      keyframes: {
+        wavePattern: {
+          "0%": { backgroundPosition: "0% 0%" },
+          "100%": { backgroundPosition: "100% 100%" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
+        pulse: {
+          "0%, 100%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.05)" },
+        },
+        wave: {
+          "0%": { transform: "rotate(0deg)" },
+          "10%": { transform: "rotate(14deg)" },
+          "20%": { transform: "rotate(-8deg)" },
+          "30%": { transform: "rotate(14deg)" },
+          "40%": { transform: "rotate(-4deg)" },
+          "50%": { transform: "rotate(10deg)" },
+          "60%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(0deg)" },
+        },
+      },
+      zIndex: {
+        "nav": "100",
+        "content": "20",
+        "patterns": "10",
+        "cards": "30",
+        "text": "40",
+        "overlay": "50",
+        "floating": "60",
       },
     },
   },

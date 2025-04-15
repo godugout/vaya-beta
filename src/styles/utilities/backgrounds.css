@@ -1,139 +1,35 @@
 
-/* Hanuman Theme Backgrounds */
-.bg-hanuman-orange {
-  background-color: var(--hanuman-primary);
+/* Background styles - simplified */
+.bg-forest {
+  background-color: var(--color-forest);
   color: white;
 }
 
-.bg-hanuman-red {
-  background-color: var(--hanuman-secondary);
+.bg-water {
+  background-color: var(--color-water);
   color: white;
 }
 
-.bg-hanuman-gold {
-  background-color: var(--hanuman-accent);
-  color: var(--text-primary);
+.bg-sky {
+  background-color: var(--color-sky);
+  color: var(--color-text-dark);
 }
 
-.bg-hanuman-light {
-  background-color: var(--hanuman-bg-light);
-  color: var(--text-primary);
+.bg-sand {
+  background-color: var(--color-sand);
+  color: var(--color-text-dark);
 }
 
-.bg-hanuman-dark {
-  background-color: var(--hanuman-bg-dark);
-  color: white;
+.bg-forest-stream {
+  background-image: url('/lovable-uploads/cd5eb0a6-71c2-43a8-a8c6-0a9e222958ab.png');
+  background-size: cover;
+  background-position: center;
 }
 
-/* Image backgrounds */
-.bg-hanuman-pattern {
-  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg stroke='%23FF7A00' stroke-width='1' stroke-opacity='0.05'%3E%3Cpath d='M30 10 L50 45 L10 45 Z M15 25 L45 25 M12.5 35 L47.5 35'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  background-size: 60px 60px;
+.bg-light-gray {
+  background-color: #f4f4f4;
 }
 
-/* Gradients */
-.bg-hanuman-gradient {
-  background: linear-gradient(135deg, rgba(255, 165, 0, 0.1) 0%, rgba(255, 69, 0, 0.1) 100%);
-}
-
-.bg-orange-saffron-gradient {
-  background: linear-gradient(135deg, rgba(255, 200, 97, 0.15) 0%, rgba(255, 117, 26, 0.15) 100%);
-}
-
-.bg-hanuman-primary-gradient {
-  background: linear-gradient(135deg, var(--hanuman-primary) 0%, var(--hanuman-saffron) 100%);
-  color: white;
-}
-
-.bg-hanuman-accent-gradient {
-  background: linear-gradient(135deg, var(--hanuman-accent) 0%, var(--hanuman-saffron) 100%);
-  color: var(--text-primary);
-}
-
-.bg-hanuman-green-gradient {
-  background: linear-gradient(135deg, var(--hanuman-green) 0%, var(--hanuman-accent) 100%);
-  color: white;
-}
-
-/* Overlay effects */
-.bg-hanuman-overlay-light {
-  background-color: rgba(255, 249, 240, 0.8);
-  backdrop-filter: blur(4px);
-}
-
-.bg-hanuman-overlay-dark {
-  background-color: rgba(26, 15, 0, 0.8);
-  backdrop-filter: blur(4px);
-}
-
-/* Chakra patterns */
-.bg-chakra-pattern {
-  background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg stroke='%23FFD700' stroke-width='1' stroke-opacity='0.1'%3E%3Ccircle cx='40' cy='40' r='36'/%3E%3Ccircle cx='40' cy='40' r='28'/%3E%3Ccircle cx='40' cy='40' r='20'/%3E%3Cpath d='M40 4 L40 76 M4 40 L76 40 M11.7 11.7 L68.3 68.3 M11.7 68.3 L68.3 11.7'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  background-size: 80px 80px;
-}
-
-/* Add Hanuman theme colors to tailwind palette */
-.bg-hanuman-primary {
-  background-color: var(--hanuman-primary);
-  color: white;
-}
-
-.bg-hanuman-secondary {
-  background-color: var(--hanuman-secondary);
-  color: white;
-}
-
-.bg-hanuman-accent {
-  background-color: var(--hanuman-accent);
-  color: var(--text-primary);
-}
-
-.bg-hanuman-green {
-  background-color: var(--hanuman-green);
-  color: white;
-}
-
-.bg-hanuman-saffron {
-  background-color: var(--hanuman-saffron);
-  color: var(--text-primary);
-}
-
-.text-hanuman-primary {
-  color: var(--hanuman-primary);
-}
-
-.text-hanuman-secondary {
-  color: var(--hanuman-secondary);
-}
-
-.text-hanuman-accent {
-  color: var(--hanuman-accent);
-}
-
-.text-hanuman-green {
-  color: var(--hanuman-green);
-}
-
-.text-hanuman-saffron {
-  color: var(--hanuman-saffron);
-}
-
-.border-hanuman-primary {
-  border-color: var(--hanuman-primary);
-}
-
-.border-hanuman-secondary {
-  border-color: var(--hanuman-secondary);
-}
-
-.border-hanuman-accent {
-  border-color: var(--hanuman-accent);
-}
-
-.border-hanuman-green {
-  border-color: var(--hanuman-green);
-}
-
-.border-hanuman-saffron {
-  border-color: var(--hanuman-saffron);
+.bg-gradient-clean {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }

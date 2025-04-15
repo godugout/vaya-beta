@@ -1,71 +1,52 @@
 
-// New enhanced Lovable color palette file
-
+// Lovable logo colors
 export const lovableColors = {
-  // Primary brand colors
+  // Vibrant coral/orange - primary brand color
   coral: {
-    DEFAULT: '#FF7675', // Primary coral
-    light: '#FFA8A7',
-    dark: '#D15A59'
+    bright: "#FF8E8D",
+    DEFAULT: "#FF7675",
+    light: "#FFACAB",
   },
+  // Rich purple - primary UI color
   purple: {
-    DEFAULT: '#6C5CE7', // Secondary purple
-    light: '#A195F7',
-    dark: '#4A3BBF'
+    bright: "#8F84EB",
+    DEFAULT: "#6C5CE7",
+    light: "#A29BFE",
   },
-  green: {
-    DEFAULT: '#4CD137', // Tertiary accent
-    light: '#7EE76C',
-    dark: '#35A220'
+  // Royal blue
+  blue: {
+    bright: "#5C85E6",
+    DEFAULT: "#4169E1",
+    light: "#74B9FF",
   },
-  magenta: {
-    DEFAULT: '#D946EF',
-    light: '#E67AF7',
-    dark: '#B224CD'
+  // Turquoise
+  teal: {
+    bright: "#33E5E2",
+    DEFAULT: "#00CEC9",
+    light: "#55EFC4",
   },
-  
-  // UI colors with improved contrast
-  ui: {
-    coral: '#FF7675',
-    purple: '#6C5CE7',
-    green: '#4CD137',
-    magenta: '#D946EF',
-    blue: '#45AAF2',
-    red: '#FF6B6B',
-    yellow: '#FFA502',
-    teal: '#2ED1C5'
+  // Sky blue
+  skyblue: {
+    bright: "#5DB7FF",
+    DEFAULT: "#87CEFA",
+    light: "#B0DFFF",
   },
-  
-  // Gradients using the brand colors
-  gradients: {
-    coral: 'linear-gradient(135deg, #FF7675 0%, #FFA8A7 100%)',
-    purple: 'linear-gradient(135deg, #6C5CE7 0%, #A195F7 100%)',
-    green: 'linear-gradient(135deg, #4CD137 0%, #7EE76C 100%)',
-    magenta: 'linear-gradient(135deg, #D946EF 0%, #E67AF7 100%)',
-    mixed: 'linear-gradient(135deg, #FF7675 0%, #6C5CE7 100%)',
+  // Warm orange
+  orange: {
+    bright: "#FFA75A",
+    DEFAULT: "#FF9F43",
+    light: "#FFBE7A",
   },
-  
-  // Functional colors
-  success: '#4CD137',
-  warning: '#FFA502',
-  error: '#FF6B6B',
-  info: '#45AAF2',
-  
-  // Background colors
-  background: {
-    light: '#FFFFFF',
-    offWhite: '#F8F9FA',
-    gray: '#F1F2F6',
-    dark: '#1A1F2C',
-    darkBg: '#12151E',
+  // Pastel yellow
+  yellow: {
+    bright: "#FFF0C4",
+    DEFAULT: "#FFEAA7",
+    light: "#FFF5D1",
   },
-  
-  // Text colors
-  text: {
-    primary: '#1A202C',
-    secondary: '#4A5568',
-    tertiary: '#718096',
-    light: '#FFFFFF',
-    lightSecondary: 'rgba(255, 255, 255, 0.7)',
-  }
+  // Deep indigo
+  indigo: {
+    bright: "#454C4E",
+    DEFAULT: "#2D3436",
+    light: "#636E72",
+  },
 };

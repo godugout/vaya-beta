@@ -2,16 +2,12 @@
 import { useEffect, useRef, useCallback } from "react";
 import { StoryMemoryCard } from "./StoryMemoryCard";
 import { PhotoMemoryCard } from "./PhotoMemoryCard";
-import { VideoMemoryCard } from "./VideoMemoryCard";
-import { AudioMemoryCard } from "./AudioMemoryCard";
 import { useMemories } from "./useMemories";
-import { Memory, isStoryMemory, isPhotoMemory, isVideoMemory, isAudioMemory } from "./types";
+import { Memory } from "./types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useInView } from "framer-motion";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Info, Plus, Camera, Mic } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Info } from "lucide-react";
 
 const MemoryFeedLayout = () => {
   const {
@@ -39,17 +35,17 @@ const MemoryFeedLayout = () => {
 
   if (isLoading) {
     return (
-      <div className="space-y-4">
+      <div className="space-y-6">
         {[1, 2, 3].map((i) => (
-          <div key={i} className="hanuman-card p-4 space-y-4">
+          <div key={i} className="bg-white rounded-lg shadow-sm p-4 space-y-4">
             <div className="flex items-center space-x-4">
-              <Skeleton className="h-12 w-12 rounded-full bg-hanuman-primary/30" />
+              <Skeleton className="h-12 w-12 rounded-full" />
               <div className="space-y-2">
-                <Skeleton className="h-4 w-32 bg-hanuman-primary/30" />
-                <Skeleton className="h-3 w-24 bg-hanuman-primary/30" />
+                <Skeleton className="h-4 w-32" />
+                <Skeleton className="h-3 w-24" />
               </div>
             </div>
-            <Skeleton className="h-48 w-full rounded-lg bg-hanuman-primary/30" />
+            <Skeleton className="h-48 w-full rounded-lg" />
           </div>
         ))}
       </div>
@@ -60,107 +56,56 @@ const MemoryFeedLayout = () => {
 
   if (!memories.length) {
     return (
-      <div className="text-center py-8 hanuman-card">
-        <div className="mx-auto w-24 h-24 bg-hanuman-primary/20 rounded-full flex items-center justify-center mb-4">
-          <Plus className="w-12 h-12 text-hanuman-primary" />
+      <div className="text-center py-12 bg-white rounded-lg shadow-sm">
+        <div className="mx-auto w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+          <svg
+            className="w-12 h-12 text-gray-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+            />
+          </svg>
         </div>
-        <h3 className="text-lg font-semibold text-hanuman-text-primary mb-2">No memories recorded</h3>
-        <p className="text-hanuman-text-secondary mb-6">Begin documenting your family's memories</p>
-        <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <Button className="bg-hanuman-primary hover:bg-hanuman-orange/80 flex items-center gap-2">
-            <Camera className="h-4 w-4" />
-            <span>Add Photo Memory</span>
-          </Button>
-          <Button variant="outline" className="border-hanuman-border-color text-hanuman-text-primary flex items-center gap-2 hover:bg-hanuman-primary/10">
-            <Mic className="h-4 w-4" />
-            <span>Record Audio Log</span>
-          </Button>
-        </div>
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No memories yet</h3>
+        <p className="text-gray-500 mb-6">Start capturing your family's precious moments</p>
       </div>
     );
   }
 
   return (
-    <div>
-      <Alert variant="default" className="bg-hanuman-primary/10 border-hanuman-primary/20 mb-4">
-        <AlertDescription className="flex items-center text-sm text-hanuman-text-secondary">
-          <Info className="h-4 w-4 mr-2 text-hanuman-gold" />
-          Demonstration data below. Your actual memory logs will appear here once recorded.
+    <div className="space-y-6">
+      <Alert variant="default" className="bg-gray-100 border-gray-200 mb-4">
+        <AlertDescription className="flex items-center text-sm text-gray-600">
+          <Info className="h-4 w-4 mr-2" />
+          The content below is demo data. Connect to a real database for your actual memories.
         </AlertDescription>
       </Alert>
       
-      <div className="flex justify-end mb-4">
-        <div className="flex gap-2">
-          <Button variant="outline" size="sm" className="border-hanuman-border-color text-hanuman-text-primary flex items-center gap-1 hover:bg-hanuman-primary/10">
-            <Camera className="h-3.5 w-3.5" />
-            <span>Photo Log</span>
-          </Button>
-          <Button size="sm" className="bg-hanuman-primary hover:bg-hanuman-orange/80 flex items-center gap-1">
-            <Mic className="h-3.5 w-3.5" />
-            <span>Record</span>
-          </Button>
+      {memories.map((memory: Memory) => (
+        <div key={memory.id} className="animate-fadeIn">
+          {memory.type === "story" ? (
+            <StoryMemoryCard memory={memory} isPlaceholder={true} />
+          ) : (
+            <PhotoMemoryCard memory={memory} isPlaceholder={true} />
+          )}
         </div>
-      </div>
-      
-      <div className="space-y-4">
-        {memories.map((memory) => {
-          // Safely check memory type before rendering
-          if (!memory || typeof memory !== 'object') {
-            console.error("Invalid memory object:", memory);
-            return null;
-          }
-          
-          // Render appropriate component based on memory type using type guards
-          if (isStoryMemory(memory)) {
-            return (
-              <div key={memory.id} className="animate-fadeIn">
-                <StoryMemoryCard memory={memory} isPlaceholder={true} />
-              </div>
-            );
-          } else if (isPhotoMemory(memory)) {
-            return (
-              <div key={memory.id} className="animate-fadeIn">
-                <PhotoMemoryCard memory={memory} isPlaceholder={true} />
-              </div>
-            );
-          } else if (isVideoMemory(memory)) {
-            return (
-              <div key={memory.id} className="animate-fadeIn">
-                <VideoMemoryCard memory={memory} isPlaceholder={true} />
-              </div>
-            );
-          } else if (isAudioMemory(memory)) {
-            return (
-              <div key={memory.id} className="animate-fadeIn">
-                <AudioMemoryCard memory={memory} isPlaceholder={true} />
-              </div>
-            );
-          } else {
-            console.warn(`Unsupported memory type:`, memory);
-            return null;
-          }
-        })}
-      </div>
+      ))}
       
       {(hasNextPage || isFetchingNextPage) && (
-        <div ref={loadMoreRef} className="py-4 text-center">
+        <div ref={loadMoreRef} className="py-4">
           {isFetchingNextPage && (
-            <div className="inline-flex items-center text-hanuman-gold">
-              <div className="animate-pulse mr-2">●</div>
-              Loading additional memory logs...
+            <div className="flex justify-center">
+              <div className="animate-pulse text-gray-400">Loading more memories...</div>
             </div>
           )}
         </div>
       )}
-      
-      <div className="text-center border-t border-hanuman-border-color pt-6 mt-6">
-        <p className="text-sm text-hanuman-text-secondary mb-4">Explore more Hanuman memory preservation features</p>
-        <Link to="/hanuman">
-          <Button variant="outline" size="sm" className="border-hanuman-border-color text-hanuman-text-primary hover:bg-hanuman-primary/10">
-            Hanuman Edition
-          </Button>
-        </Link>
-      </div>
     </div>
   );
 };

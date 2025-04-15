@@ -1,78 +1,48 @@
 
-import { useState, useEffect } from 'react';
+import { useState } from "react";
 
-interface UseAudioPlaybackReturn {
-  isPlaying: boolean;
-  togglePlayback: () => void;
-  setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-export function useAudioPlayback(audioBlob: Blob | null): UseAudioPlaybackReturn {
+export const useAudioPlayback = (audioBlob: Blob | null) => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null);
   
-  // Create or update audio element when blob changes
-  useEffect(() => {
-    if (!audioBlob) {
-      setAudioElement(null);
-      return;
-    }
+  const startPlayback = () => {
+    if (!audioBlob) return;
     
     const url = URL.createObjectURL(audioBlob);
     const audio = new Audio(url);
     
-    audio.addEventListener('ended', () => {
+    audio.onended = () => {
       setIsPlaying(false);
-    });
-    
-    setAudioElement(audio);
-    
-    return () => {
       URL.revokeObjectURL(url);
-      audio.pause();
-      audio.src = '';
     };
-  }, [audioBlob]);
-  
-  // Control audio playback
-  const togglePlayback = () => {
-    if (!audioElement) return;
     
-    if (isPlaying) {
-      audioElement.pause();
-      setIsPlaying(false);
-    } else {
-      audioElement.play()
-        .then(() => setIsPlaying(true))
-        .catch(error => {
-          console.error('Error playing audio:', error);
-          setIsPlaying(false);
-        });
+    audio.play();
+    setIsPlaying(true);
+    
+    // Haptic feedback if supported
+    if (navigator.vibrate) {
+      navigator.vibrate(50);
     }
   };
-  
-  // Update playback state when audio changes
-  useEffect(() => {
-    if (!audioElement) return;
+
+  const stopPlayback = () => {
+    setIsPlaying(false);
+  };
+
+  const togglePlayback = () => {
+    if (!audioBlob) return;
     
-    const handlePlay = () => setIsPlaying(true);
-    const handlePause = () => setIsPlaying(false);
-    const handleEnded = () => setIsPlaying(false);
-    
-    audioElement.addEventListener('play', handlePlay);
-    audioElement.addEventListener('pause', handlePause);
-    audioElement.addEventListener('ended', handleEnded);
-    
-    return () => {
-      audioElement.removeEventListener('play', handlePlay);
-      audioElement.removeEventListener('pause', handlePause);
-      audioElement.removeEventListener('ended', handleEnded);
-    };
-  }, [audioElement]);
-  
+    if (isPlaying) {
+      stopPlayback();
+    } else {
+      startPlayback();
+    }
+  };
+
   return {
     isPlaying,
     togglePlayback,
+    startPlayback,
+    stopPlayback,
     setIsPlaying
   };
-}
+};

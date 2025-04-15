@@ -1,82 +1,140 @@
 
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { cn } from '@/lib/utils';
-import { useLanguage } from '@/contexts/LanguageContext';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { User } from "@supabase/supabase-js";
+import { DesktopNav } from "./nav/DesktopNav";
+import { MobileTopNav } from "./nav/MobileTopNav";
+import { MobileBottomNav } from "./nav/MobileBottomNav";
+import { BreadcrumbNav } from "./nav/BreadcrumbNav";
+import { VoiceNavigationIndicator } from "./nav/VoiceNavigationIndicator";
+import { useToast } from "@/components/ui/use-toast";
 
-interface MainNavProps extends React.HTMLAttributes<HTMLDivElement> {}
+export function MainNav() {
+  const navigate = useNavigate();
+  const [user, setUser] = useState<User | null>(null);
+  const [isSimplifiedView, setIsSimplifiedView] = useState(false);
+  const [isVoiceActive, setIsVoiceActive] = useState(false);
+  const { toast } = useToast();
 
-export function MainNav({ className, ...props }: MainNavProps) {
-  const { t } = useLanguage();
-  const location = useLocation();
-  
-  const isActive = (path: string) => {
-    return location.pathname === path;
+  // Get simplified view preference from localStorage
+  useEffect(() => {
+    const savedPreference = localStorage.getItem('simplifiedView');
+    if (savedPreference) {
+      setIsSimplifiedView(savedPreference === 'true');
+    }
+  }, []);
+
+  // Save simplified view preference to localStorage
+  const toggleSimplifiedView = () => {
+    const newValue = !isSimplifiedView;
+    setIsSimplifiedView(newValue);
+    localStorage.setItem('simplifiedView', String(newValue));
+    
+    toast({
+      title: newValue ? "Simplified View Enabled" : "Standard View Enabled",
+      description: newValue 
+        ? "Larger text and touch targets for easier navigation." 
+        : "Standard navigation view restored.",
+    });
   };
-  
+
+  const toggleVoiceNavigation = () => {
+    setIsVoiceActive(prev => !prev);
+    
+    if (!isVoiceActive) {
+      toast({
+        title: "Voice Navigation Active",
+        description: "Try saying 'Go to Home' or 'Record Story'",
+      });
+    } else {
+      toast({
+        title: "Voice Navigation Disabled",
+        description: "Voice commands have been turned off.",
+      });
+    }
+  };
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+      
+      // Show welcome toast when user signs in
+      if (_event === 'SIGNED_IN') {
+        const fullName = session?.user?.user_metadata?.full_name || 'User';
+        toast({
+          title: `Welcome, ${fullName}!`,
+          description: "You have successfully signed in.",
+        });
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [toast]);
+
+  const handleSignOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      toast({
+        title: "Error signing out",
+        description: error.message,
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    toast({
+      title: "Signed out",
+      description: "You have been successfully signed out.",
+    });
+    navigate("/auth");
+  };
+
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-black/80 border-b border-white/10">
-      <div className="container flex items-center justify-between h-16">
-        <div className="flex items-center gap-6">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="relative h-10 w-10 rounded-lg bg-black flex items-center justify-center overflow-hidden">
-              <img 
-                src="/lovable-uploads/2a8faf45-bcfa-46d2-8314-ee4fd404aa94.png" 
-                alt="Vaya Logo" 
-                className="h-7 w-7 object-contain"
-              />
-            </div>
-            <span className="font-heading font-bold text-xl text-white">Vaya</span>
-          </Link>
-          
-          <nav className="hidden md:flex gap-1">
-            <Link 
-              to="/memories" 
-              className={cn(
-                "px-3 py-2 text-sm font-medium rounded-md transition-colors",
-                isActive("/memories") 
-                  ? "text-autumn bg-white/10" 
-                  : "text-white/70 hover:text-white hover:bg-white/10"
-              )}
-            >
-              {t('memories')}
-            </Link>
-            <Link 
-              to="/create-family" 
-              className={cn(
-                "px-3 py-2 text-sm font-medium rounded-md transition-colors",
-                isActive("/create-family") 
-                  ? "text-autumn bg-white/10" 
-                  : "text-white/70 hover:text-white hover:bg-white/10"
-              )}
-            >
-              {t('family')}
-            </Link>
-            <Link 
-              to="/stories" 
-              className={cn(
-                "px-3 py-2 text-sm font-medium rounded-md transition-colors",
-                isActive("/stories") 
-                  ? "text-autumn bg-white/10" 
-                  : "text-white/70 hover:text-white hover:bg-white/10"
-              )}
-            >
-              {t('stories')}
-            </Link>
-            <Link 
-              to="/hanuman" 
-              className={cn(
-                "px-3 py-2 text-sm font-medium rounded-md transition-colors",
-                isActive("/hanuman") 
-                  ? "text-autumn bg-white/10" 
-                  : "text-white/70 hover:text-white hover:bg-white/10"
-              )}
-            >
-              Hanuman
-            </Link>
-          </nav>
-        </div>
+    <>
+      {/* Fixed positioning for header */}
+      <header className="fixed top-0 left-0 right-0 z-[100] bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 shadow-sm">
+        <DesktopNav 
+          user={user} 
+          handleSignOut={handleSignOut} 
+          navigate={navigate} 
+          isSimplifiedView={isSimplifiedView}
+          isVoiceActive={isVoiceActive}
+          onVoiceToggle={toggleVoiceNavigation}
+        />
+        <MobileTopNav 
+          user={user} 
+          handleSignOut={handleSignOut} 
+          navigate={navigate} 
+          isSimplifiedView={isSimplifiedView}
+          onSettingsToggle={toggleSimplifiedView}
+        />
+      </header>
+      
+      {/* Voice navigation indicator */}
+      <VoiceNavigationIndicator isActive={isVoiceActive} />
+      
+      <MobileBottomNav 
+        user={user} 
+        navigate={navigate} 
+        isSimplifiedView={isSimplifiedView}
+        isVoiceActive={isVoiceActive}
+        onVoiceToggle={toggleVoiceNavigation}
+      />
+      
+      {/* Breadcrumbs navigation */}
+      <div className={`mt-20 ${isVoiceActive ? 'pt-16' : ''}`}>
+        <BreadcrumbNav isSimplifiedView={isSimplifiedView} />
       </div>
-    </div>
+      
+      {/* Spacer for fixed header and breadcrumbs */}
+      <div className={`h-20 ${isVoiceActive ? 'h-36' : ''}`} /> 
+    </>
   );
 }

@@ -1,10 +1,8 @@
 
 import { StoryMemoryCard } from "./memory/StoryMemoryCard";
 import { PhotoMemoryCard } from "./memory/PhotoMemoryCard";
-import { VideoMemoryCard } from "./memory/VideoMemoryCard";
-import { AudioMemoryCard } from "./memory/AudioMemoryCard";
 import { useMemories } from "./memory/useMemories";
-import { Memory, isPhotoMemory, isStoryMemory, isVideoMemory, isAudioMemory } from "./memory/types";
+import { Memory } from "./memory/types";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Info } from "lucide-react";
 
@@ -30,20 +28,13 @@ const MemoryFeed = () => {
         </AlertDescription>
       </Alert>
       
-      {memories.map((memory: Memory) => {
-        if (isStoryMemory(memory)) {
-          return <StoryMemoryCard key={memory.id} memory={memory} isPlaceholder={true} />;
-        } else if (isPhotoMemory(memory)) {
-          return <PhotoMemoryCard key={memory.id} memory={memory} isPlaceholder={true} />;
-        } else if (isVideoMemory(memory)) {
-          return <VideoMemoryCard key={memory.id} memory={memory} isPlaceholder={true} />;
-        } else if (isAudioMemory(memory)) {
-          return <AudioMemoryCard key={memory.id} memory={memory} isPlaceholder={true} />;
-        } else {
-          console.warn("Unsupported memory type:", memory);
-          return null;
-        }
-      })}
+      {memories.map((memory: Memory) => (
+        memory.type === "story" ? (
+          <StoryMemoryCard key={memory.id} memory={memory} isPlaceholder={true} />
+        ) : (
+          <PhotoMemoryCard key={memory.id} memory={memory} isPlaceholder={true} />
+        )
+      ))}
     </div>
   );
 };

@@ -26,37 +26,36 @@ export const BasePill = ({
 
   const colors = {
     memories: {
-      outline: "border-transparent dark:border-transparent",
-      bg: "bg-black/20 dark:bg-white/5"
+      outline: "border-black dark:border-white",
+      bg: "bg-black/5 dark:bg-white/10"
     },
     stories: {
-      outline: "border-transparent dark:border-transparent",
-      bg: "bg-black/20 dark:bg-white/5"
+      outline: "border-black dark:border-white",
+      bg: "bg-black/5 dark:bg-white/10"
     },
     capsules: {
-      outline: "border-transparent dark:border-transparent", 
-      bg: "bg-black/20 dark:bg-white/5"
+      outline: "border-black dark:border-white", 
+      bg: "bg-black/5 dark:bg-white/10"
     },
     narra: {
-      outline: "border-transparent dark:border-transparent",
-      bg: "bg-black/20 dark:bg-white/5"
+      outline: "border-black dark:border-white",
+      bg: "bg-black/5 dark:bg-white/10"
     },
     default: {
-      outline: "border-transparent dark:border-transparent",
-      bg: "bg-black/20 dark:bg-white/5"
+      outline: "border-black dark:border-white",
+      bg: "bg-black/5 dark:bg-white/10"
     }
   };
 
   const pillBaseClasses = cn(
     "relative overflow-hidden",
     "min-h-[100px] w-[400px]",
-    "border border-transparent",
-    isDetailed ? "bg-black/20 dark:bg-white/5" : "bg-black/10 dark:bg-black/30",
+    "border border-black dark:border-white",
+    isDetailed ? "bg-black/5 dark:bg-white/10" : "bg-white dark:bg-black",
     isDark ? 
-      "shadow-[0_4px_12px_-2px_rgba(0,0,0,0.3)]" :
-      "shadow-[0_4px_12px_-2px_rgba(0,0,0,0.1)]",
+      "shadow-[0_4px_12px_-2px_rgba(0,0,0,0.2)]" :
+      "shadow-[0_4px_12px_-2px_rgba(0,0,0,0.06)]",
     "transition-all duration-300 group",
-    "backdrop-blur-sm",
     className
   );
 
@@ -66,7 +65,7 @@ export const BasePill = ({
         <div 
           className={cn(
             "absolute inset-0 transition-opacity duration-300",
-            `bg-black/10 dark:bg-white/5`,
+            `bg-black/5 dark:bg-white/10`,
             isHovered ? "opacity-100" : "opacity-0"
           )}
         />

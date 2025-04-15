@@ -130,7 +130,7 @@ export default function Families() {
           </div>
         )}
         
-        {activeView === 'timeline' && <FamilyTimelineView familyId={selectedFamilyId || ''} />}
+        {activeView === 'timeline' && <FamilyTimelineView />}
       </div>
     </div>
   );

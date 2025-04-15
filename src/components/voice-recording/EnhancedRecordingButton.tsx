@@ -1,8 +1,10 @@
 
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
+import { ButtonPulseEffect } from './button/ButtonPulseEffect';
+import { RecordingButtonIcon } from './button/RecordingButtonIcon';
 import { motion } from 'framer-motion';
-import { Mic, StopCircle, Loader } from 'lucide-react';
+import { useAnimation } from '@/components/animation/AnimationProvider';
 
 export type RecordingState = 'idle' | 'recording' | 'processing';
 
@@ -21,6 +23,9 @@ export const EnhancedRecordingButton = ({
   size = 'md',
   className,
 }: EnhancedRecordingButtonProps) => {
+  const { isReduced } = useAnimation();
+  
+  // Size configurations
   const sizeConfig = {
     sm: { container: 'h-12 w-12', icon: 'h-4 w-4' },
     md: { container: 'h-16 w-16', icon: 'h-6 w-6' },
@@ -29,59 +34,49 @@ export const EnhancedRecordingButton = ({
 
   return (
     <div className="relative flex items-center justify-center">
-      {/* Pulse effect when recording */}
-      {state === 'recording' && (
-        <motion.div
-          className={cn(
-            'absolute rounded-full',
-            sizeConfig[size].container
-          )}
-          animate={{
-            scale: [1, 1.5, 1],
-            opacity: [0.7, 0.2, 0.7],
-            borderWidth: ['0px', '3px', '0px'],
-            borderColor: ['rgba(255,0,0,0.5)', 'rgba(255,0,0,0.2)', 'rgba(255,0,0,0.5)']
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-      )}
-      
+      {/* Pulse effect */}
+      <ButtonPulseEffect 
+        isActive={state === 'recording'} 
+        isReduced={isReduced}
+        size={sizeConfig[size].container}
+      />
+
       {/* Main button */}
-      <motion.button
-        className={cn(
-          'rounded-full flex items-center justify-center text-white',
-          sizeConfig[size].container,
-          {
-            'bg-gradient-to-r from-hanuman-cosmic-purple to-hanuman-cosmic-blue': state === 'idle',
-            'bg-red-500': state === 'recording',
-            'bg-amber-500': state === 'processing'
-          },
-          disabled && 'opacity-70 cursor-not-allowed',
-          className
-        )}
+      <motion.div
+        className="relative"
         whileTap={{ scale: 0.95 }}
-        onClick={onClick}
-        disabled={disabled || state === 'processing'}
+        transition={{ type: 'spring', stiffness: 500, damping: 30 }}
       >
-        {state === 'idle' && (
-          <Mic className={sizeConfig[size].icon} />
-        )}
-        {state === 'recording' && (
-          <StopCircle className={sizeConfig[size].icon} />
-        )}
-        {state === 'processing' && (
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-          >
-            <Loader className={sizeConfig[size].icon} />
-          </motion.div>
-        )}
-      </motion.button>
+        <motion.button
+          className={cn(
+            'rounded-full flex items-center justify-center text-white',
+            sizeConfig[size].container,
+            disabled && 'opacity-70 cursor-not-allowed',
+            className
+          )}
+          initial={{ backgroundColor: 'rgb(108, 92, 231)' }}
+          animate={{
+            backgroundColor: 
+              state === 'recording' 
+                ? 'rgb(255, 118, 117)' 
+                : state === 'processing' 
+                  ? 'rgb(253, 121, 168)' 
+                  : 'rgb(108, 92, 231)',
+          }}
+          onClick={onClick}
+          disabled={disabled || state === 'processing'}
+          transition={{
+            type: 'spring',
+            stiffness: 500,
+            damping: 30,
+          }}
+        >
+          <RecordingButtonIcon 
+            state={state} 
+            iconSize={sizeConfig[size].icon} 
+          />
+        </motion.button>
+      </motion.div>
     </div>
   );
 };

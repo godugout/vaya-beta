@@ -1,68 +1,30 @@
 
-import React from 'react';
-import { Volume2, Mic } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { cn } from '@/lib/utils';
+import React from "react";
 
 interface VoiceNavigationIndicatorProps {
   isActive: boolean;
 }
 
-export const VoiceNavigationIndicator: React.FC<VoiceNavigationIndicatorProps> = ({
-  isActive
-}) => {
+export const VoiceNavigationIndicator = ({ isActive }: VoiceNavigationIndicatorProps) => {
   if (!isActive) return null;
   
   return (
-    <AnimatePresence>
-      {isActive && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
-          className={cn(
-            "fixed top-20 left-0 right-0 z-50 mx-auto max-w-md p-3",
-            "bg-black/70 backdrop-blur-md border border-white/10 rounded-lg text-white",
-            "animate-pulse shadow-lg"
-          )}
-        >
-          <div className="flex items-center">
-            <div className={cn(
-              "flex items-center justify-center w-10 h-10 mr-3 rounded-full",
-              "bg-autumn text-black"
-            )}>
-              <motion.div
-                animate={{
-                  scale: [1, 1.2, 1],
-                }}
-                transition={{
-                  duration: 1.5,
-                  repeat: Infinity,
-                  repeatType: "reverse"
-                }}
-              >
-                <Volume2 className="h-5 w-5" />
-              </motion.div>
-            </div>
-            
-            <div>
-              <h4 className="font-medium text-white">Voice Navigation Active</h4>
-              <p className="text-xs text-gray-300">
-                Try saying "Open Stories" or "Show Family Tree"
-              </p>
-            </div>
+    <div className="fixed top-20 left-0 right-0 z-20 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 p-3">
+      <div className="container max-w-7xl">
+        <div className="flex items-center bg-gray-50 dark:bg-gray-800 p-3 rounded-lg animate-pulse">
+          <div className="h-10 w-10 bg-ui-orange rounded-full flex items-center justify-center text-white mr-3">
+            <span className="sr-only">Voice Active</span>
+            <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none">
+              <path d="M12 15C13.6569 15 15 13.6569 15 12V6C15 4.34315 13.6569 3 12 3C10.3431 3 9 4.34315 9 6V12C9 13.6569 10.3431 15 12 15Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M19 10V12C19 15.866 15.866 19 12 19M12 19C8.13401 19 5 15.866 5 12V10M12 19V22M8 22H16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </div>
-          
-          <div className="mt-2 text-xs flex items-center justify-between">
-            <span className="text-gray-400">Sanskrit commands available</span>
-            <span className="flex items-center text-autumn">
-              <Mic className="h-3 w-3 mr-1" />
-              Listening...
-            </span>
+          <div>
+            <p className="font-medium">Listening for commands...</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Try "Go to Home" or "Record Story"</p>
           </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+        </div>
+      </div>
+    </div>
   );
 };

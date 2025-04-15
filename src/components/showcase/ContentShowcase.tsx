@@ -83,41 +83,35 @@ export const ContentShowcase = () => {
         <h2 className="text-2xl font-semibold mb-6">Memory Capsule Cards</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <MemoryCapsuleCard
-            capsule={{
-              id: "1",
-              title: "Family Reunion 2025",
-              description: "A collection of photos, stories, and mementos from our 2023 reunion, to be opened at our next reunion.",
-              createdAt: "2023-07-15",
-              revealDate: "2025-07-15",
-              status: "locked",
-              contributors: [
-                { name: "Jay Patel" },
-                { name: "Priya Patel" },
-                { name: "Raj Patel" }
-              ],
-              contentType: "mixed",
-              contentCount: 15
-            }}
+            id="1"
+            title="Family Reunion 2025"
+            description="A collection of photos, stories, and mementos from our 2023 reunion, to be opened at our next reunion."
+            createdAt="2023-07-15"
+            unlocksAt="2025-07-15"
+            isLocked={true}
+            contributors={[
+              { name: "Jay Patel" },
+              { name: "Priya Patel" },
+              { name: "Raj Patel" }
+            ]}
+            itemCount={15}
             onOpen={() => {}}
           />
           
           <MemoryCapsuleCard
-            capsule={{
-              id: "2",
-              title: "Grandparents' Anniversary",
-              description: "Memories and wishes collected for their 50th anniversary celebration.",
-              createdAt: "2023-04-10",
-              revealDate: "2023-06-10",
-              status: "unlocked",
-              contributors: [
-                { name: "Maya Patel" },
-                { name: "Arjun Patel" },
-                { name: "Kiran Patel" },
-                { name: "Neha Patel" }
-              ],
-              contentType: "mixed",
-              contentCount: 8
-            }}
+            id="2"
+            title="Grandparents' Anniversary"
+            description="Memories and wishes collected for their 50th anniversary celebration."
+            createdAt="2023-04-10"
+            unlocksAt="2023-06-10"
+            isLocked={false}
+            contributors={[
+              { name: "Maya Patel" },
+              { name: "Arjun Patel" },
+              { name: "Kiran Patel" },
+              { name: "Neha Patel" }
+            ]}
+            itemCount={8}
             onOpen={() => {}}
           />
         </div>

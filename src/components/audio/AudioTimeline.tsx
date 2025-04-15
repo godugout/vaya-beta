@@ -1,6 +1,6 @@
 
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
 
 interface AudioTimelineProps {
   audioBlob: Blob | null;
@@ -8,71 +8,109 @@ interface AudioTimelineProps {
 }
 
 const AudioTimeline = ({ audioBlob, isPlaying }: AudioTimelineProps) => {
-  const [duration, setDuration] = useState<number>(0);
-  const [currentTime, setCurrentTime] = useState<number>(0);
-  const [progress, setProgress] = useState<number>(0);
-  const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null);
-  
+  const [progress, setProgress] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const intervalRef = useRef<number | null>(null);
+
   useEffect(() => {
-    if (!audioBlob) return;
-    
-    const url = URL.createObjectURL(audioBlob);
-    const audio = new Audio(url);
-    
-    audio.addEventListener('loadedmetadata', () => {
-      setDuration(audio.duration);
-    });
-    
-    audio.addEventListener('timeupdate', () => {
-      setCurrentTime(audio.currentTime);
-      setProgress((audio.currentTime / audio.duration) * 100);
-    });
-    
-    audio.addEventListener('ended', () => {
-      setCurrentTime(0);
-      setProgress(0);
-    });
-    
-    setAudioElement(audio);
+    if (audioBlob) {
+      const audioUrl = URL.createObjectURL(audioBlob);
+      const audio = new Audio(audioUrl);
+      audioRef.current = audio;
+      
+      audio.addEventListener('loadedmetadata', () => {
+        setDuration(audio.duration);
+      });
+      
+      return () => {
+        URL.revokeObjectURL(audioUrl);
+        audio.remove();
+      };
+    }
+  }, [audioBlob]);
+
+  useEffect(() => {
+    if (isPlaying && audioRef.current) {
+      intervalRef.current = window.setInterval(() => {
+        if (audioRef.current) {
+          setProgress(audioRef.current.currentTime / audioRef.current.duration * 100);
+        }
+      }, 100);
+    } else {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    }
     
     return () => {
-      URL.revokeObjectURL(url);
-      audio.pause();
-      audio.src = '';
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
     };
-  }, [audioBlob]);
-  
-  // Control playback based on isPlaying prop
-  useEffect(() => {
-    if (!audioElement) return;
-    
-    if (isPlaying) {
-      audioElement.play().catch(console.error);
-    } else {
-      audioElement.pause();
-    }
-  }, [isPlaying, audioElement]);
-  
-  const formatTime = (time: number): string => {
+  }, [isPlaying]);
+
+  const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
-  
+
   return (
-    <div className="w-full space-y-2">
-      <div className="relative h-2 bg-gray-200 rounded overflow-hidden">
+    <div className="w-full space-y-1">
+      <div className="h-3 bg-dark-background-elevated rounded-full overflow-hidden backdrop-blur-sm relative">
+        {/* Organic background effect */}
+        <div className="absolute inset-0 bg-gradient-to-r from-dark-background-elevated to-dark-background-purple backdrop-blur-sm" />
+        
+        {/* Organic progress indicator with brand colors */}
         <motion.div 
-          className="absolute h-full bg-vaya-secondary"
+          className="h-full relative overflow-hidden"
           style={{ width: `${progress}%` }}
-          initial={{ width: 0 }}
-          animate={{ width: `${progress}%` }}
-          transition={{ duration: 0.1 }}
-        />
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-[#6C5CE7] to-[#FF7675]" />
+          
+          {/* Animated wave effect on top of progress bar */}
+          <svg className="absolute inset-0" width="100%" height="100%" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#6C5CE7" stopOpacity="0.9" />
+                <stop offset="50%" stopColor="#74B9FF" stopOpacity="0.9" />
+                <stop offset="100%" stopColor="#FF7675" stopOpacity="0.9" />
+              </linearGradient>
+            </defs>
+            
+            <motion.path
+              d="M0,8 Q5,5 10,8 T20,8 T30,8 T40,8 T50,8"
+              fill="url(#progressGradient)"
+              animate={{
+                d: [
+                  "M0,8 Q5,5 10,8 T20,8 T30,8 T40,8 T50,8",
+                  "M0,8 Q5,11 10,8 T20,8 T30,8 T40,8 T50,8",
+                  "M0,8 Q5,5 10,8 T20,8 T30,8 T40,8 T50,8"
+                ]
+              }}
+              transition={{
+                repeat: Infinity,
+                duration: 2,
+                ease: "easeInOut"
+              }}
+            />
+          </svg>
+        </motion.div>
+        
+        {/* Animated dot at the end of progress */}
+        {progress > 0 && (
+          <motion.div 
+            className="absolute top-0 w-3 h-3 rounded-full bg-[#FF7675] shadow-lg shadow-[#FF7675]/30 -ml-1.5"
+            style={{ left: `${progress}%` }}
+            animate={{ scale: [1, 1.2, 1] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+          />
+        )}
       </div>
       
-      <div className="flex justify-between text-xs text-gray-500">
-        <span>{formatTime(currentTime)}</span>
+      <div className="flex justify-between text-xs text-dark-text-secondary font-medium">
+        <span>{formatTime(duration * (progress / 100))}</span>
         <span>{formatTime(duration)}</span>
       </div>
     </div>

@@ -2,19 +2,19 @@
 import { ReactNode } from "react";
 
 export interface FamilyLogoIconOption {
-  icon: ReactNode;
+  icon: JSX.Element;
   name: string;
   background?: string;
-  customIcon?: boolean;
+}
+
+export interface FamilyLogo {
+  icon: string;
+  color: string;
+  background: string;
 }
 
 export interface LogoCustomizerProps {
   familyId?: string;
-  initialLogo?: {
-    icon: string;
-    color: string;
-    background: string;
-    isCustomIcon?: boolean;
-  };
-  onLogoChange?: (logo: any) => void;
+  initialLogo?: FamilyLogo;
+  onLogoChange?: (logo: FamilyLogo) => void;
 }

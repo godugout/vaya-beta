@@ -1,119 +1,108 @@
 
-import React from 'react';
+import { useState } from "react";
 import { User } from "@supabase/supabase-js";
-import {
+import { 
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuTrigger,
+  DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { useTheme } from "next-themes";
+import { 
+  User as UserIcon, 
+  Settings, 
+  LogOut, 
+  Moon, 
+  Sun, 
+  Phone,
+  Palette
+} from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { LogOut, Settings, User as UserIcon, Book, Sparkles } from "lucide-react";
-import { motion } from 'framer-motion';
 
 interface UserMenuProps {
-  user: User;
+  user: User | null;
   handleSignOut: () => Promise<void>;
   navigate: (path: string) => void;
 }
 
-export const UserMenu: React.FC<UserMenuProps> = ({ user, handleSignOut, navigate }) => {
-  const userInitials = (() => {
-    const fullName = user?.user_metadata?.full_name || '';
-    const names = fullName.split(' ');
-    if (names.length >= 2) {
-      return `${names[0][0]}${names[names.length - 1][0]}`.toUpperCase();
-    }
-    return fullName ? fullName[0].toUpperCase() : 'U';
-  })();
+export const UserMenu = ({ user, handleSignOut, navigate }: UserMenuProps) => {
+  const { theme, setTheme } = useTheme();
+  const [open, setOpen] = useState(false);
+  
+  if (!user) return null;
+  
+  const userInitials = user.user_metadata?.full_name
+    ? user.user_metadata.full_name.substring(0, 2).toUpperCase()
+    : user.email 
+      ? user.email.substring(0, 2).toUpperCase() 
+      : "VA";
+  
+  const userDisplayName = user.user_metadata?.full_name || "User";
+  const userEmail = user.email || "user@example.com";
 
   return (
-    <DropdownMenu>
+    <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-9 w-9 rounded-full" asChild>
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="cursor-pointer"
-          >
-            <Avatar className="h-9 w-9 border-2 border-autumn/20 bg-black/50 backdrop-blur">
-              <AvatarImage 
-                src={user?.user_metadata?.avatar_url} 
-                alt={user?.user_metadata?.full_name || 'User'}
-              />
-              <AvatarFallback className="bg-autumn/10 text-autumn">
-                {userInitials}
-              </AvatarFallback>
-            </Avatar>
-            <motion.span
-              className="absolute -bottom-1 -right-1 h-3 w-3 rounded-full border-2 border-background bg-green-500"
-              animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.7, 1, 0.7]
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                repeatType: "reverse"
-              }}
-            />
-          </motion.div>
+        <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+          <Avatar className="h-10 w-10 border-2 border-ui-teal">
+            <AvatarImage src={user.user_metadata?.avatar_url} />
+            <AvatarFallback className="bg-ui-green text-white">
+              {userInitials}
+            </AvatarFallback>
+          </Avatar>
         </Button>
       </DropdownMenuTrigger>
-      
-      <DropdownMenuContent className="w-56 bg-black/80 backdrop-blur-md border-white/10 text-white" align="end" forceMount>
-        <DropdownMenuLabel className="font-normal">
+      <DropdownMenuContent align="end" className="w-56">
+        <DropdownMenuLabel>
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium">{user?.user_metadata?.full_name || 'User'}</p>
-            <p className="text-xs text-muted-foreground truncate">{user?.email}</p>
+            <p className="text-sm font-medium">{userDisplayName}</p>
+            <p className="text-xs text-muted-foreground">{userEmail}</p>
           </div>
         </DropdownMenuLabel>
-        
-        <DropdownMenuSeparator className="bg-white/10" />
-        
-        <DropdownMenuItem 
-          className="cursor-pointer hover:bg-white/10"
-          onClick={() => navigate('/profile')}
-        >
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={() => navigate('/profile')}>
           <UserIcon className="mr-2 h-4 w-4" />
           <span>Profile</span>
         </DropdownMenuItem>
-        
-        <DropdownMenuItem 
-          className="cursor-pointer hover:bg-white/10"
-          onClick={() => navigate('/settings')}
-        >
+        <DropdownMenuItem onClick={() => navigate('/account')}>
           <Settings className="mr-2 h-4 w-4" />
-          <span>Settings</span>
+          <span>Account</span>
         </DropdownMenuItem>
-        
-        <DropdownMenuItem 
-          className="cursor-pointer hover:bg-white/10"
-          onClick={() => navigate('/family-stories')}
-        >
-          <Book className="mr-2 h-4 w-4" />
-          <span>My Stories</span>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
+          {theme === 'dark' ? (
+            <>
+              <Sun className="mr-2 h-4 w-4" />
+              <span>Light Mode</span>
+            </>
+          ) : (
+            <>
+              <Moon className="mr-2 h-4 w-4" />
+              <span>Dark Mode</span>
+            </>
+          )}
         </DropdownMenuItem>
-        
-        <DropdownMenuItem 
-          className="cursor-pointer hover:bg-white/10"
-          onClick={() => navigate('/hanuman-edition')}
-        >
-          <Sparkles className="mr-2 h-4 w-4" />
-          <span>Hanuman Edition</span>
+        <DropdownMenuItem onClick={() => navigate('/theme')}>
+          <Palette className="mr-2 h-4 w-4" />
+          <span>Theme Settings</span>
         </DropdownMenuItem>
-        
-        <DropdownMenuSeparator className="bg-white/10" />
-        
+        <DropdownMenuItem onClick={() => window.open('tel:+1234567890')}>
+          <Phone className="mr-2 h-4 w-4" />
+          <span>Contact Support</span>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
         <DropdownMenuItem 
-          className="cursor-pointer text-red-400 hover:text-red-300 hover:bg-red-500/10"
-          onClick={handleSignOut}
+          onClick={async () => {
+            setOpen(false);
+            await handleSignOut();
+          }}
+          className="text-red-500 dark:text-red-400 focus:text-red-500 dark:focus:text-red-400"
         >
           <LogOut className="mr-2 h-4 w-4" />
-          <span>Log out</span>
+          <span>Sign Out</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

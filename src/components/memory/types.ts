@@ -1,4 +1,3 @@
-
 export type BaseMemory = {
   id: string;
   type: string;
@@ -19,35 +18,4 @@ export type PhotoMemory = BaseMemory & {
   caption?: string;
 };
 
-export type VideoMemory = BaseMemory & {
-  type: "video";
-  video_url?: string;
-  caption?: string;
-  duration?: number;
-};
-
-export type AudioMemory = BaseMemory & {
-  type: "audio";
-  audio_url?: string;
-  transcript?: string;
-  duration?: number;
-};
-
-export type Memory = StoryMemory | PhotoMemory | VideoMemory | AudioMemory;
-
-// Type guards for safer type checking
-export const isStoryMemory = (memory: Memory): memory is StoryMemory => {
-  return memory.type === "story";
-};
-
-export const isPhotoMemory = (memory: Memory): memory is PhotoMemory => {
-  return memory.type === "photo";
-};
-
-export const isVideoMemory = (memory: Memory): memory is VideoMemory => {
-  return memory.type === "video";
-};
-
-export const isAudioMemory = (memory: Memory): memory is AudioMemory => {
-  return memory.type === "audio";
-};
+export type Memory = StoryMemory | PhotoMemory;

@@ -1,6 +1,15 @@
 
-/* Import all component styles */
-@import './elevation.css';
-@import './typography.css';
-@import './gujarati-content.css';
-@import './hanuman-navigation.css';
+/* Re-export all component styles */
+@import './buttons.css';
+@import './cards.css';
+@import './forms.css';
+@import './desktop-nav.css';
+@import './mobile-nav.css';
+@import './breadcrumbs.css';
+@import './voice-nav.css';
+@import './view-switchers.css';
+@import './accessibility.css';
+@import './transitions.css';
+@import './backgrounds.css';
+@import './placeholders.css';
+@import './dark-mode.css';

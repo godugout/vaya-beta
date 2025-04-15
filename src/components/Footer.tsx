@@ -1,49 +1,60 @@
 
 import { Link } from "react-router-dom";
 import { LanguageSelector } from "./nav/LanguageSelector";
-import { ExternalLink, Github } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#0a0a0c] text-gray-400 mt-auto relative z-content py-8">
-      <div className="container mx-auto px-4">
-        {/* Centered Logo */}
-        <div className="text-center mb-6">
+    <footer className="bg-[#F1F1F1] dark:bg-dark-background-surface text-vaya-gray-800 dark:text-dark-text-secondary mt-auto relative z-content">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        {/* Centered Logo and Description */}
+        <div className="text-center mb-12">
           <Link 
             to="/" 
-            className="inline-flex flex-col items-center gap-2"
+            className="inline-flex items-center gap-0.5 justify-center relative group"
           >
             <img 
-              src="/lovable-uploads/2a8faf45-bcfa-46d2-8314-ee4fd404aa94.png" 
+              src="/lovable-uploads/ef40fff0-4da4-4937-af3d-c2276b1d2588.png"
               alt="Vaya Logo" 
-              className="h-10 w-10 object-contain"
+              className="h-24 w-24 grayscale opacity-90 transition-all duration-300 group-hover:grayscale-0 group-hover:opacity-100 filter drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)]"
             />
-            <span className="text-xl font-heading font-bold text-white">Vaya</span>
+            <span 
+              className="font-outfit font-bold text-4xl sm:text-5xl text-vaya-gray-600 dark:text-dark-text-primary opacity-90 transition-all duration-300 group-hover:opacity-100 -ml-3"
+              style={{
+                textShadow: '1px 1px 2px rgba(255,255,255,1), -1px -1px 2px rgba(0,0,0,0.1)',
+              }}
+            >
+              Vaya<sup className="opacity-75 transition-all duration-300 group-hover:text-vaya-home text-2xl sm:text-3xl font-semibold -ml-0.5">ᵅ</sup>
+            </span>
           </Link>
-          <p className="mt-3 text-sm leading-6 max-w-lg mx-auto text-gray-500">
-            Connecting generations through shared memories and stories. 
-            Your family's legacy, preserved digitally.
+          <p className="mt-6 text-xl sm:text-2xl leading-8 text-vaya-gray-600 dark:text-dark-text-secondary max-w-2xl mx-auto">
+            Connecting generations through shared memories and stories. Your family's legacy, preserved digitally.
           </p>
         </div>
-        
-        {/* Links */}
-        <div className="border-t border-gray-800 pt-6">
-          <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 mb-4 text-sm">
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">About</a>
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">Privacy</a>
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">Terms</a>
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">Support</a>
-            <LanguageSelector />
+        {/* Border separator */}
+        <div className="border-t border-vaya-gray-200 dark:border-dark-border pt-8">
+          {/* Links and Language Selector in the same row */}
+          <div className="flex flex-wrap items-center justify-center sm:justify-between gap-x-8 gap-y-4">
+            <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
+              <a href="#" className="text-lg sm:text-xl leading-7 text-vaya-gray-600 dark:text-dark-text-secondary hover:text-vaya-capsules dark:hover:text-dark-accent-purple hover:underline transition-colors">
+                About Allusion Ink
+              </a>
+              <a href="#" className="text-lg sm:text-xl leading-7 text-vaya-gray-600 dark:text-dark-text-secondary hover:text-vaya-capsules dark:hover:text-dark-accent-purple hover:underline transition-colors">
+                Contact
+              </a>
+              <a href="#" className="text-lg sm:text-xl leading-7 text-vaya-gray-600 dark:text-dark-text-secondary hover:text-vaya-capsules dark:hover:text-dark-accent-purple hover:underline transition-colors">
+                Privacy Policy
+              </a>
+              <a href="#" className="text-lg sm:text-xl leading-7 text-vaya-gray-600 dark:text-dark-text-secondary hover:text-vaya-capsules dark:hover:text-dark-accent-purple hover:underline transition-colors">
+                Terms of Use
+              </a>
+              <LanguageSelector />
+            </div>
           </div>
 
-          {/* Copyright */}
-          <div className="flex items-center justify-center gap-4 text-xs text-gray-600">
-            <p>&copy; {new Date().getFullYear()} Allusion Ink</p>
-            <a href="https://github.com/" className="flex items-center gap-1 hover:text-gray-400 transition-colors">
-              <Github size={14} />
-              <span>GitHub</span>
-            </a>
-          </div>
+          {/* Copyright line */}
+          <p className="text-lg text-center text-vaya-gray-500 dark:text-dark-text-tertiary mt-8">
+            &copy; {new Date().getFullYear()} Allusion Ink. All rights reserved. Building memories that last generations.
+          </p>
         </div>
       </div>
     </footer>

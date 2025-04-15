@@ -9,20 +9,16 @@ import { ComponentsShowcase } from '@/components/design-system/ComponentsShowcas
 import { IconLibrary } from '@/components/design-system/IconLibrary';
 import { ThemeCustomizer } from '@/components/design-system/ThemeCustomizer';
 import { AccessibilityGuidelines } from '@/components/design-system/AccessibilityGuidelines';
-import { DesignSystemShowcase } from '@/components/design-system/DesignSystemShowcase';
-import { StoryShowcase } from '@/components/design-system/StoryShowcase';
 
 export default function DesignSystem() {
   return (
     <DesignSystemLayout>
       <Routes>
-        <Route index element={<DesignSystemShowcase />} />
-        <Route path="customizer" element={<ThemeCustomizer />} />
+        <Route index element={<ThemeCustomizer />} />
         <Route path="colors" element={<ColorPalette />} />
         <Route path="typography" element={<Typography />} />
         <Route path="spacing" element={<SpacingGuide />} />
         <Route path="components" element={<ComponentsShowcase />} />
-        <Route path="stories" element={<StoryShowcase />} />
         <Route path="icons" element={<IconLibrary />} />
         <Route path="accessibility" element={<AccessibilityGuidelines />} />
       </Routes>

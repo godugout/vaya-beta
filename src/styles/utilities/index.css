@@ -1,14 +1,5 @@
 
+/* Re-export all utilities */
+@import './animations.css';
 @import './backgrounds.css';
 @import './patterns.css';
-@import '../patterns/sacred-patterns.css';
-@import './typography.css';
-@import './animations.css';
-@import './buttons.css';
-@import './containers.css';
-@import './inputs.css';
-@import './layout.css';
-@import '../components/cosmic-effects.css';
-@import '../components/temple-transitions.css';
-@import '../components/forms.css';
-@import '../components/hanuman-navigation.css';

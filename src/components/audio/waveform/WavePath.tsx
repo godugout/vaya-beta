@@ -1,5 +1,6 @@
 
-import React from 'react';
+import React, { useMemo } from "react";
+import { motion } from "framer-motion";
 
 interface WavePathProps {
   amplitudes: number[];
@@ -10,72 +11,88 @@ interface WavePathProps {
 
 const WavePath: React.FC<WavePathProps> = ({ 
   amplitudes, 
-  isRecording, 
+  isRecording,
   lineWidth = 2,
-  color = "#FF7A00"
+  color = "#FF7675" // Primary coral
 }) => {
-  // Default to a flat line if not recording
-  const effectiveAmplitudes = isRecording 
-    ? amplitudes 
-    : amplitudes.map(() => 0.1);
-  
-  // Vertical center point
-  const centerY = 50;
-  
-  // Create a smooth path from the amplitudes
-  const createWavePath = (amps: number[]) => {
-    if (amps.length === 0) return '';
+  // Generate an SVG path from amplitudes
+  const path = useMemo(() => {
+    const height = 100;
+    const width = 800;
+    const middle = height / 2;
     
-    const width = 100 / (amps.length - 1);
-    let path = `M 0,${centerY}`;
+    // Calculate segment width based on number of amplitudes
+    const segmentWidth = width / (amplitudes.length - 1);
     
-    amps.forEach((amp, i) => {
-      const x = i * width;
-      const y = centerY - (amp * 40); // Scale amplitude to pixels
-      path += ` L ${x},${y}`;
+    // Start path at the middle left
+    let d = `M 0 ${middle}`;
+    
+    // Generate smooth Bezier curves between points
+    amplitudes.forEach((amplitude, i) => {
+      if (i === 0) return; // Skip first point as it's already in the starting point
+      
+      const x = i * segmentWidth;
+      const prevX = (i - 1) * segmentWidth;
+      
+      // Calculate y positions with amplification for visibility
+      const y = middle - amplitudes[i] * 40;
+      const prevY = middle - amplitudes[i - 1] * 40;
+      
+      // Control points for the Bezier curve (1/3 and 2/3 points between x values)
+      const cp1x = prevX + segmentWidth / 3;
+      const cp1y = prevY;
+      const cp2x = prevX + 2 * segmentWidth / 3;
+      const cp2y = y;
+      
+      // Add cubic Bezier curve command
+      d += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${x} ${y}`;
     });
     
-    // Mirror the wave below the center
-    for (let i = amps.length - 1; i >= 0; i--) {
-      const x = i * width;
-      const y = centerY + (amps[i] * 40); // Mirror below center
-      path += ` L ${x},${y}`;
-    }
-    
-    // Close the path
-    path += ' Z';
-    return path;
-  };
-  
-  const wavePath = createWavePath(effectiveAmplitudes);
-  
+    return d;
+  }, [amplitudes]);
+
   return (
-    <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
-      {/* Fill with a gradient */}
-      <defs>
-        <linearGradient id="waveGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor={color} stopOpacity="0.3" />
-          <stop offset="50%" stopColor={color} stopOpacity="0.1" />
-          <stop offset="100%" stopColor={color} stopOpacity="0.3" />
-        </linearGradient>
-      </defs>
-      
-      {/* Wave path with gradient fill */}
-      <path 
-        d={wavePath} 
-        fill="url(#waveGradient)" 
-        strokeLinejoin="round"
-      />
-      
-      {/* Stroke to outline the wave */}
-      <path 
-        d={wavePath} 
-        fill="none" 
+    <motion.svg
+      width="100%"
+      height="100%"
+      viewBox="0 0 800 100"
+      preserveAspectRatio="none"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
+      <motion.path
+        d={path}
+        fill="none"
         stroke={color}
-        strokeWidth={lineWidth} 
+        strokeWidth={lineWidth}
+        strokeLinecap="round"
         strokeLinejoin="round"
+        initial={{ pathLength: 0 }}
+        animate={{
+          pathLength: 1,
+          stroke: isRecording ? color : "#9CA3AF", // Dimmer color when not recording
+        }}
+        transition={{ duration: 0.5 }}
       />
-    </svg>
+      
+      {/* Add subtle glow effect for active recording */}
+      {isRecording && (
+        <motion.path
+          d={path}
+          fill="none"
+          stroke={color}
+          strokeWidth={lineWidth / 2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeOpacity={0.5}
+          filter="blur(4px)"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 0.5 }}
+        />
+      )}
+    </motion.svg>
   );
 };
 

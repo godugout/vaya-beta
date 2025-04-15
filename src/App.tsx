@@ -1,87 +1,42 @@
 
-import React from 'react';
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from 'react-router-dom';
-import { MainLayout } from '@/components/layout/MainLayout';
-import LandingPage from '@/pages/LandingPage';
-import Memories from '@/pages/Memories';
-import Families from '@/pages/Families';
-import CreateFamily from '@/pages/CreateFamily';
-import ShareStoriesPage from '@/pages/ShareStories';
-import HanumanEdition from '@/pages/HanumanEdition';
-import Auth from '@/pages/Auth';
-import { ErrorBoundary } from '@/components/ErrorBoundary';
-
-// Create a simplified router with only available pages
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <LandingPage />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: '/auth',
-    element: <Auth />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: '/memories',
-    element: <Memories />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: '/families',
-    element: <Families />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: '/create-family',
-    element: <CreateFamily />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: '/stories',
-    element: <ShareStoriesPage />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: '/hanuman',
-    element: <HanumanEdition />,
-    errorElement: <ErrorPage />,
-  },
-]);
-
-// Custom error page component for route errors
-function ErrorPage() {
-  return (
-    <MainLayout>
-      <div className="container mx-auto px-4 py-16 text-center">
-        <div className="max-w-md mx-auto bg-black/30 backdrop-blur-sm rounded-xl p-8 border border-hanuman-orange/20 shadow-lg">
-          <h1 className="text-2xl font-bold text-hanuman-gold mb-4">
-            Something went wrong
-          </h1>
-          <p className="text-white/80 mb-6">
-            We apologize for the inconvenience. The page you're looking for might be unavailable or there was an error in loading it.
-          </p>
-          <a
-            href="/"
-            className="inline-block px-6 py-3 bg-hanuman-orange/80 hover:bg-hanuman-orange text-white rounded-lg transition-colors"
-          >
-            Return to Home
-          </a>
-        </div>
-      </div>
-    </MainLayout>
-  );
-}
+import { Routes, Route } from 'react-router-dom';
+import Index from './pages/Index';
+import Auth from './pages/Auth';
+import MemoryLane from './pages/MemoryLane';
+import ShareStories from './pages/ShareStories';
+import FamilyCapsules from './pages/FamilyCapsules';
+import Profile from './pages/Profile';
+import Account from './pages/Account';
+import Families from './pages/Families';
+import SetupAdmin from './pages/SetupAdmin';
+import CreateFamily from './pages/CreateFamily';
+import ComponentsDemo from './pages/ComponentsDemo';
+import ComponentsShowcase from './pages/ComponentsShowcase';
+import WeddingModeShowcase from './components/wedding-mode/WeddingModeShowcase';
+import DesignSystem from './pages/DesignSystem';
+import { Toaster } from './components/ui/toaster';
 
 function App() {
   return (
-    <ErrorBoundary>
-      <RouterProvider router={router} />
-    </ErrorBoundary>
+    <>
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/auth" element={<Auth />} />
+        <Route path="/memory-lane" element={<MemoryLane />} />
+        <Route path="/share-stories" element={<ShareStories />} />
+        <Route path="/family-capsules" element={<FamilyCapsules />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/account" element={<Account />} />
+        <Route path="/families" element={<Families />} />
+        <Route path="/setup-admin" element={<SetupAdmin />} />
+        <Route path="/create-family" element={<CreateFamily />} />
+        <Route path="/components-demo" element={<ComponentsDemo />} />
+        <Route path="/components" element={<ComponentsShowcase />} />
+        <Route path="/wedding-mode" element={<WeddingModeShowcase />} />
+        <Route path="/design-system/*" element={<DesignSystem />} />
+      </Routes>
+      <Toaster />
+    </>
   );
 }
 

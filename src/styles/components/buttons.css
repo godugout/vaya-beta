@@ -1,5 +1,80 @@
 
-/* Agencs style button */
-.agencs-btn {
-  @apply inline-flex items-center justify-center px-8 py-3 bg-black text-white dark:bg-white dark:text-black font-medium text-base transition-colors duration-300 hover:bg-gray-800 dark:hover:bg-gray-200;
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background-color: var(--color-autumn);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-autumn-dark, #E55A59);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background-color: var(--color-water);
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-mountain);
+  transform: translateY(-2px);
+}
+
+.btn-forest {
+  background-color: var(--color-forest);
+  color: white;
+}
+
+.btn-forest:hover {
+  background-color: var(--color-leaf);
+  transform: translateY(-2px);
+}
+
+.btn-sky {
+  background-color: var(--color-sky);
+  color: white;
+}
+
+.btn-sky:hover {
+  background-color: var(--color-sky-light, #7DCAED);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 2px solid var(--color-autumn);
+  color: var(--color-autumn);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-autumn);
+  color: white;
+}
+
+.btn-outline-forest {
+  background-color: transparent;
+  border: 2px solid var(--color-forest);
+  color: var(--color-forest);
+}
+
+.btn-outline-forest:hover {
+  background-color: var(--color-forest);
+  color: white;
+}
+
+.btn-round {
+  border-radius: var(--radius-full);
+  width: 48px;
+  height: 48px;
+  padding: 0;
 }

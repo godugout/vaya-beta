@@ -12,8 +12,8 @@ import { useToast } from "@/components/ui/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const languages = [
-  { code: 'en' as const, name: 'English', flag: '🇺🇸' },
-  { code: 'es' as const, name: 'Español', flag: '🇪🇸' },
+  { code: 'en', name: 'English', flag: '🇺🇸' },
+  { code: 'es', name: 'Español', flag: '🇪🇸' },
 ];
 
 export const LanguageSelector = () => {
@@ -22,7 +22,7 @@ export const LanguageSelector = () => {
   const { isSpanish, setLanguagePreference } = useLanguage();
   const currentLanguage = isSpanish ? 'es' : 'en';
 
-  const handleLanguageChange = async (languageCode: 'en' | 'es') => {
+  const handleLanguageChange = async (languageCode: string) => {
     try {
       // Call the language change function without actually updating the database
       await setLanguagePreference(languageCode);

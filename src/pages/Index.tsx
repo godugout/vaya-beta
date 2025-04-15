@@ -1,101 +1,108 @@
 
-import React from 'react';
-import { MainLayout } from '@/components/layout/MainLayout';
-import { HomeWelcomeSection } from '@/components/home/HomeWelcomeSection';
-import StoriesHeroSection from '@/components/stories/StoriesHeroSection';
-import { ContentShowcase } from '@/components/showcase/ContentShowcase';
-import { motion } from 'framer-motion';
-import { FadeIn } from '@/components/animation/FadeIn';
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Mic, Archive, Users } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { CreateFamilyWizard } from "@/components/family/CreateFamilyWizard";
+import { Features } from "@/components/home/Features";
+import { Testimonials } from "@/components/home/Testimonials";
+import { FAQ } from "@/components/home/FAQ";
+import { VoiceRecordingDemo } from "@/components/home/VoiceRecordingDemo";
+import { Link } from "react-router-dom";
+import { MainNav } from "@/components/MainNav";
 
 export default function Index() {
+  const [showCreateFamily, setShowCreateFamily] = useState(false);
+
   return (
-    <MainLayout>
-      {/* Hero Section */}
-      <HomeWelcomeSection />
+    <div className="page-container">
+      <MainNav />
       
-      {/* Stories Section */}
-      <FadeIn>
-        <section className="bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 py-24">
-          <div className="container mx-auto px-4">
-            <StoriesHeroSection />
-          </div>
-        </section>
-      </FadeIn>
-      
-      {/* Record Stories Section - Replacing DualPaneRecordingSection */}
-      <section className="bg-gray-50 dark:bg-gray-800 relative py-16">
-        <motion.div 
-          className="absolute inset-0 bg-dots opacity-[0.15] pointer-events-none"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.15 }}
-          transition={{ duration: 1 }}
-        />
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row gap-8">
-            <div className="md:w-1/2">
-              <h2 className="text-3xl font-bold mb-6 text-hanuman-orange">Record Your Stories</h2>
-              <p className="text-gray-600 dark:text-gray-300 mb-6">
-                Use our simple voice recording tools to preserve your family memories for generations to come.
-              </p>
-            </div>
-            <div className="md:w-1/2">
-              <div className="bg-white dark:bg-gray-700 rounded-lg shadow-sm p-6">
-                <p className="text-center text-gray-500 dark:text-gray-400">
-                  Voice recording features available after login
-                </p>
-              </div>
-            </div>
-          </div>
+      {/* Main Hero Section - Agencs Simplified Style */}
+      <section className="min-h-[90vh] flex items-center justify-center bg-white">
+        <div className="container mx-auto px-4 text-center staggered-fade-in">
+          <motion.h1 
+            className="text-5xl md:text-6xl lg:text-7xl font-medium mb-3"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            Preserve,
+          </motion.h1>
+          
+          <motion.h1 
+            className="text-5xl md:text-6xl lg:text-7xl font-medium mb-3"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            Connect,
+          </motion.h1>
+          
+          <motion.h1 
+            className="text-5xl md:text-6xl lg:text-7xl font-medium mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+          >
+            Remember.
+          </motion.h1>
+          
+          <motion.div
+            className="mt-10"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 1 }}
+          >
+            <Link to="/share-stories" className="agencs-btn">
+              Start Recording
+            </Link>
+          </motion.div>
         </div>
       </section>
       
-      {/* Content Showcase */}
-      <section className="py-24 bg-white dark:bg-gray-900">
-        <div className="container mx-auto px-4">
-          <ContentShowcase />
+      {/* Voice Recording Demo */}
+      <section className="py-20 px-4 bg-gray-50">
+        <div className="container mx-auto">
+          <h2 className="text-3xl md:text-4xl font-medium mb-10 text-center">Simple Voice Recording</h2>
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="w-full max-w-xl mx-auto bg-white rounded-xl shadow-sm p-6 relative z-10"
+          >
+            <VoiceRecordingDemo />
+          </motion.div>
         </div>
       </section>
       
-      {/* App Features Grid */}
-      <section className="bg-gradient-to-t from-autumn/5 to-transparent dark:from-leaf/5 dark:to-transparent py-24">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Family Capsules",
-                description: "Create digital time capsules filled with memories to be opened at special moments.",
-                icon: "🎁"
-              },
-              {
-                title: "Story Recording",
-                description: "Capture your family's oral history with high-quality voice recordings.",
-                icon: "🎙️"
-              },
-              {
-                title: "Memory Lane",
-                description: "A beautiful timeline of your family's most precious moments and stories.",
-                icon: "📸"
-              }
-            ].map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.2 }}
-                className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow"
-              >
-                <div className="text-4xl mb-4">{feature.icon}</div>
-                <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-gray-100">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300">
-                  {feature.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-    </MainLayout>
+      {/* Key Features */}
+      <div className="bg-gray-50">
+        <Features />
+      </div>
+      
+      {/* Testimonials */}
+      <Testimonials />
+      
+      {/* FAQ */}
+      <div className="bg-gray-50">
+        <FAQ />
+      </div>
+      
+      {/* Floating Action Button */}
+      <div className="fixed bottom-8 right-8 z-[50]">
+        <Button 
+          size="lg"
+          onClick={() => setShowCreateFamily(true)}
+          className="bg-black hover:bg-gray-800 text-white rounded-full shadow-sm"
+        >
+          <Users className="h-5 w-5 mr-2" />
+          Create Family
+        </Button>
+      </div>
+      
+      {/* Create Family Wizard */}
+      {showCreateFamily && <CreateFamilyWizard onOpenChange={setShowCreateFamily} open={showCreateFamily} />}
+    </div>
   );
-}
+};

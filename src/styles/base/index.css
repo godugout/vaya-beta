@@ -1,5 +1,5 @@
 
-/* Import all base styles */
+/* Re-export all base styles */
+@import './reset.css';
 @import './typography.css';
 @import './layout.css';
-@import './grid.css';

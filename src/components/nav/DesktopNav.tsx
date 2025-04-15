@@ -1,20 +1,13 @@
 
 import React from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { User } from "@supabase/supabase-js";
+import { NavButton } from "./NavButton";
 import { UserMenu } from "./UserMenu";
 import { GuestMenu } from "./GuestMenu";
+import { Home, Mic, Image, Archive, Users, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
-import { 
-  Home, 
-  Mic, 
-  Image, 
-  Archive, 
-  Users, 
-  Volume2
-} from "lucide-react";
 
 interface DesktopNavProps {
   user: User | null;
@@ -33,82 +26,59 @@ export const DesktopNav = ({
   isVoiceActive,
   onVoiceToggle
 }: DesktopNavProps) => {
-  const location = useLocation();
-  
-  const isActive = (path: string) => location.pathname === path;
-  
-  const mainNavItems = [
-    {
-      label: "Home",
-      path: "/",
-      icon: <Home size={20} />,
-    },
-    {
-      label: "Stories",
-      path: "/share-stories",
-      icon: <Mic size={20} />,
-    },
-    {
-      label: "Memories",
-      path: "/memory-lane",
-      icon: <Image size={20} />,
-    },
-    {
-      label: "Capsules",
-      path: "/family-capsules",
-      icon: <Archive size={20} />,
-    },
-    {
-      label: "Family",
-      path: "/families",
-      icon: <Users size={20} />,
-    },
-  ];
-
   return (
-    <div className="hidden md:block backdrop-blur-md bg-black/80 border-b border-white/10">
-      <div className="container mx-auto flex items-center justify-between h-16">
-        <div className="flex items-center gap-4">
-          <motion.button 
+    <div className="hidden md:block py-3 px-6">
+      <div className="flex items-center justify-between">
+        {/* Logo and main navigation */}
+        <div className="flex items-center gap-8">
+          <button 
             onClick={() => navigate('/')} 
             className="flex items-center gap-2"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
             aria-label="Go to homepage"
           >
-            <div className="relative h-10 w-10 rounded-lg bg-black flex items-center justify-center overflow-hidden">
-              <img 
-                src="/lovable-uploads/2a8faf45-bcfa-46d2-8314-ee4fd404aa94.png" 
-                alt="Vaya Logo" 
-                className="h-7 w-7 object-contain"
-              />
-            </div>
-            <span className="font-heading font-bold text-xl text-white">Vaya</span>
-          </motion.button>
+            <img src="/lovable-uploads/4425ec86-56fe-44c4-9f47-75e59d3cb287.png" alt="Vaya Logo" className="h-8" />
+            <span className="text-xl font-heading font-semibold text-forest dark:text-leaf">Vaya</span>
+          </button>
           
-          <nav className="flex gap-1 ml-6">
-            {mainNavItems.map((item) => (
-              <motion.button
-                key={item.path}
-                onClick={() => navigate(item.path)}
-                className={cn(
-                  "flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors",
-                  isActive(item.path) 
-                    ? "text-autumn bg-white/10" 
-                    : "text-white/70 hover:text-white hover:bg-white/10"
-                )}
-                whileHover={{ y: -1 }}
-                whileTap={{ y: 0 }}
-              >
-                {item.icon}
-                <span>{item.label}</span>
-              </motion.button>
-            ))}
+          <nav className="flex items-center gap-1">
+            <NavButton 
+              to="/" 
+              icon={<Home size={isSimplifiedView ? 20 : 16} />} 
+              label="Home" 
+              isSimplified={isSimplifiedView}
+            />
+            <NavButton 
+              to="/share-stories" 
+              icon={<Mic size={isSimplifiedView ? 20 : 16} />} 
+              label="Stories" 
+              isSimplified={isSimplifiedView}
+            />
+            <NavButton 
+              to="/memory-lane" 
+              icon={<Image size={isSimplifiedView ? 20 : 16} />} 
+              label="Memories" 
+              isSimplified={isSimplifiedView}
+            />
+            <NavButton 
+              to="/family-capsules" 
+              icon={<Archive size={isSimplifiedView ? 20 : 16} />} 
+              label="Capsules" 
+              isSimplified={isSimplifiedView}
+            />
+            {user && (
+              <NavButton 
+                to="/families" 
+                icon={<Users size={isSimplifiedView ? 20 : 16} />} 
+                label="Family" 
+                isSimplified={isSimplifiedView}
+              />
+            )}
           </nav>
         </div>
         
+        {/* Right side - user menu, accessibility controls */}
         <div className="flex items-center gap-2">
-          {/* Voice navigation toggle */}
+          {/* Voice control button */}
           <Button 
             variant="ghost" 
             size="icon" 
@@ -117,12 +87,13 @@ export const DesktopNav = ({
             aria-label="Toggle voice navigation"
             className={cn(
               "rounded-full transition-colors",
-              isVoiceActive 
-                ? "bg-autumn/10 border-autumn/30 text-autumn" 
-                : "text-white/70 hover:text-white hover:bg-white/10"
+              isVoiceActive && "bg-black/10 dark:bg-white/10"
             )}
           >
-            <Volume2 className="h-5 w-5" />
+            <Mic className={cn(
+              "h-5 w-5 transition-colors",
+              isVoiceActive ? "text-autumn" : "text-muted-foreground"
+            )} />
           </Button>
           
           {/* User menu */}

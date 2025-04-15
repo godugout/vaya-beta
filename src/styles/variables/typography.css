@@ -7,9 +7,6 @@
   --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, monospace;
   --font-story: 'Georgia', serif;
   --font-accent: 'Inter', system-ui, sans-serif;
-  --font-gujarati: 'Mukta Vaani', sans-serif;
-  --font-hindi: 'Hind Madurai', sans-serif;
-  --font-sanskrit: 'Hind Madurai', sans-serif; /* Using Hind Madurai as it has good Sanskrit support */
   
   /* Font sizes - based on 8px grid */
   --font-size-xs: 0.75rem; /* 12px */

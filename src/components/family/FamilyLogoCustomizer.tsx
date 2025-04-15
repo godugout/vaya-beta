@@ -19,9 +19,9 @@ export default function FamilyLogoCustomizer({
 }: LogoCustomizerProps) {
   const { toast } = useToast();
   const [logo, setLogo] = useState(initialLogo || {
-    icon: "Vaya Star", // Default to Vaya Star logo
-    color: "#F2992D", // Autumn orange as default color
-    background: "bg-black"
+    icon: "Tree",
+    color: "#6C5CE7",
+    background: "bg-vaya-accent-green/10"
   });
   const [customLogo, setCustomLogo] = useState<string | null>(null);
 
@@ -29,8 +29,7 @@ export default function FamilyLogoCustomizer({
     const newLogo = { 
       ...logo, 
       icon: option.name, 
-      background: option.background || "bg-vaya-gray-100",
-      isCustomIcon: option.customIcon
+      background: option.background || "bg-vaya-gray-100" 
     };
     setLogo(newLogo);
     
@@ -62,10 +61,10 @@ export default function FamilyLogoCustomizer({
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="text-lg font-semibold text-vaya-text-primary dark:text-white mb-3">
+        <h3 className="text-lg font-semibold text-vaya-text-primary mb-3">
           Family Logo
         </h3>
-        <p className="text-sm text-vaya-text-secondary dark:text-gray-300 mb-4">
+        <p className="text-sm text-vaya-text-secondary mb-4">
           Choose an icon or upload your own logo that represents your family.
         </p>
       </div>
@@ -90,7 +89,7 @@ export default function FamilyLogoCustomizer({
       <CustomLogoUpload onLogoUploaded={setCustomLogo} />
       
       <div className="flex justify-end pt-2">
-        <Button onClick={handleSaveLogo} className="bg-autumn hover:bg-autumn/90 text-white">
+        <Button onClick={handleSaveLogo}>
           Save Logo
         </Button>
       </div>
