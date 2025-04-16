@@ -19,7 +19,16 @@
 }
 
 .mobile-bottom-nav {
-  @apply fixed bottom-0 left-0 right-0 bg-background/80 backdrop-blur-sm border-t;
+  @apply fixed bottom-0 left-0 right-0 bg-background/80 backdrop-blur-sm border-t z-50;
+}
+
+/* Navigation Items */
+.nav-item {
+  @apply transition-colors relative;
+}
+
+.simplified-nav-item {
+  @apply text-base py-3 px-4 min-h-[44px];
 }
 
 /* Breadcrumb Navigation */
@@ -44,12 +53,6 @@
   min-height: var(--simplified-touch);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .nav-item {
-    @apply transition-none;
-  }
-}
-
 /* High Contrast Mode */
 @media (forced-colors: active) {
   .nav-container {
@@ -58,5 +61,12 @@
   
   .nav-item.active {
     @apply outline-2 outline-offset-2;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .nav-item {
+    @apply transition-none;
   }
 }

@@ -23,10 +23,13 @@ export const MobileTopNav = ({
   onSettingsToggle
 }: MobileTopNavProps) => {
   return (
-    <div className="md:hidden py-3 px-4 flex items-center justify-between">
+    <div className="mobile-top-nav">
       <button 
         onClick={() => navigate('/')} 
-        className="flex items-center gap-1"
+        className={cn(
+          "flex items-center gap-1",
+          isSimplifiedView && "scale-110"
+        )}
         aria-label="Go to homepage"
       >
         <img src="/lovable-uploads/4425ec86-56fe-44c4-9f47-75e59d3cb287.png" alt="Vaya Logo" className="h-7" />
@@ -38,10 +41,16 @@ export const MobileTopNav = ({
           variant="ghost" 
           size="icon" 
           onClick={onSettingsToggle}
-          className="rounded-full"
+          className={cn(
+            "rounded-full",
+            isSimplifiedView && "p-3"
+          )}
           aria-label={isSimplifiedView ? "Use standard view" : "Use simplified view"}
         >
-          <Settings className="h-5 w-5" />
+          <Settings className={cn(
+            "h-5 w-5",
+            isSimplifiedView && "h-6 w-6"
+          )} />
         </Button>
         
         {user ? (

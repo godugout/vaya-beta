@@ -50,11 +50,11 @@ export const MobileBottomNav = ({
   ];
 
   return (
-    <div className={cn(
-      "md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-[#1E293B] border-t border-gray-200 dark:border-gray-800 z-nav",
-      isSimplifiedView && "simplified-nav"
-    )}>
-      <div className="flex justify-around items-center h-16">
+    <div className="mobile-bottom-nav">
+      <div className={cn(
+        "flex justify-around items-center h-16",
+        isSimplifiedView && "h-20"
+      )}>
         {navItems.map((item) => {
           const isActive = location.pathname === item.path;
           
@@ -63,11 +63,13 @@ export const MobileBottomNav = ({
               key={item.name}
               to={item.path}
               className={cn(
-                "flex flex-col items-center justify-center w-full h-full transition-colors",
+                "nav-item flex flex-col items-center justify-center w-full h-full transition-colors",
                 isActive 
                   ? "text-ui-orange" 
-                  : "text-gray-600 dark:text-gray-400 hover:text-ui-orange dark:hover:text-ui-orange"
+                  : "text-gray-600 dark:text-gray-400 hover:text-ui-orange dark:hover:text-ui-orange",
+                isSimplifiedView && "simplified-nav-item"
               )}
+              aria-current={isActive ? "page" : undefined}
             >
               <item.icon 
                 className={cn(
@@ -93,13 +95,19 @@ export const MobileBottomNav = ({
           <button
             onClick={onVoiceToggle}
             className={cn(
-              "flex items-center justify-center h-12 w-12 rounded-full shadow-lg",
+              "flex items-center justify-center rounded-full shadow-lg",
+              isSimplifiedView ? "h-14 w-14" : "h-12 w-12",
               isVoiceActive 
                 ? "bg-ui-orange text-white animate-pulse" 
                 : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700"
             )}
+            aria-label={isVoiceActive ? "Disable voice navigation" : "Enable voice navigation"}
+            aria-pressed={isVoiceActive}
           >
-            <Volume2 className="h-6 w-6" />
+            <Volume2 className={cn(
+              "h-6 w-6",
+              isSimplifiedView && "h-7 w-7"
+            )} />
           </button>
         </div>
       )}
