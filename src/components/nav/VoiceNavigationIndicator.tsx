@@ -1,6 +1,7 @@
 
 import React from "react";
 import { Mic } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface VoiceNavigationIndicatorProps {
   isActive: boolean;
@@ -10,10 +11,10 @@ export const VoiceNavigationIndicator = ({ isActive }: VoiceNavigationIndicatorP
   if (!isActive) return null;
   
   return (
-    <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 px-4">
+    <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 px-4 animate-fade-in">
       <div className="bg-gray-900/80 dark:bg-gray-800/90 border border-gray-700 dark:border-gray-700 rounded-lg shadow-lg backdrop-blur-sm">
         <div className="flex items-center px-4 py-2">
-          <div className="h-7 w-7 bg-ui-orange rounded-full flex items-center justify-center text-white mr-3">
+          <div className="h-7 w-7 bg-ui-orange rounded-full flex items-center justify-center text-white mr-3 animate-pulse">
             <Mic className="h-3.5 w-3.5" />
           </div>
           <div className="flex flex-col">

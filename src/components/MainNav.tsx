@@ -1,38 +1,31 @@
 
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { User } from "@supabase/supabase-js";
-import { supabase } from "@/integrations/supabase/client";
+import { useLocation } from "react-router-dom";
+import { useMediaQuery } from "@/hooks/use-media-query";
+import { cn } from "@/lib/utils";
+import { useSimplifiedView } from "@/hooks/useSimplifiedView";
+import { useVoiceNavigation } from "@/hooks/useVoiceNavigation";
+import { useUserAuth } from "@/hooks/useUserAuth";
 import { DesktopNav } from "./nav/DesktopNav";
 import { MobileTopNav } from "./nav/MobileTopNav";
 import { MobileBottomNav } from "./nav/MobileBottomNav";
 import { BreadcrumbNav } from "./nav/BreadcrumbNav";
 import { VoiceNavigationIndicator } from "./nav/VoiceNavigationIndicator";
-import { useToast } from "@/components/ui/use-toast";
-import { cn } from "@/lib/utils";
-import { useMediaQuery } from "@/hooks/use-media-query";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { MinimizeButton } from "./nav/MinimizeButton";
+import { MinimizedHeader } from "./nav/MinimizedHeader";
+import { ContentSpacer } from "./nav/ContentSpacer";
 
 export function MainNav() {
-  const navigate = useNavigate();
   const location = useLocation();
-  const [user, setUser] = useState<User | null>(null);
-  const [isSimplifiedView, setIsSimplifiedView] = useState(false);
-  const [isVoiceActive, setIsVoiceActive] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const { toast } = useToast();
+  const { isSimplifiedView, toggleSimplifiedView } = useSimplifiedView();
+  const { isVoiceActive, toggleVoiceNavigation } = useVoiceNavigation();
+  const { user, handleSignOut } = useUserAuth();
   
   const isMobile = useMediaQuery("(max-width: 767px)");
   const isTablet = useMediaQuery("(min-width: 768px) and (max-width: 1023px)");
   const isDesktop = useMediaQuery("(min-width: 1024px)");
-
-  useEffect(() => {
-    const savedPreference = localStorage.getItem('simplifiedView');
-    if (savedPreference) {
-      setIsSimplifiedView(savedPreference === 'true');
-    }
-  }, []);
 
   // Handle scroll for sticky header behavior
   useEffect(() => {
@@ -45,75 +38,6 @@ export function MainNav() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const toggleSimplifiedView = () => {
-    const newValue = !isSimplifiedView;
-    setIsSimplifiedView(newValue);
-    localStorage.setItem('simplifiedView', String(newValue));
-    
-    toast({
-      title: newValue ? "Simplified View Enabled" : "Standard View Enabled",
-      description: newValue 
-        ? "Larger text and touch targets for easier navigation." 
-        : "Standard navigation view restored.",
-    });
-  };
-
-  const toggleVoiceNavigation = () => {
-    setIsVoiceActive(prev => !prev);
-    
-    if (!isVoiceActive) {
-      toast({
-        title: "Voice Navigation Active",
-        description: "Try saying 'Go to Home' or 'Record Story'",
-      });
-    } else {
-      toast({
-        title: "Voice Navigation Disabled",
-        description: "Voice commands have been turned off.",
-      });
-    }
-  };
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-    });
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-      
-      if (_event === 'SIGNED_IN') {
-        const fullName = session?.user?.user_metadata?.full_name || 'User';
-        toast({
-          title: `Welcome, ${fullName}!`,
-          description: "You have successfully signed in.",
-        });
-      }
-    });
-
-    return () => subscription.unsubscribe();
-  }, [toast]);
-
-  const handleSignOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      toast({
-        title: "Error signing out",
-        description: error.message,
-        variant: "destructive",
-      });
-      return;
-    }
-    
-    toast({
-      title: "Signed out",
-      description: "You have been successfully signed out.",
-    });
-    navigate("/auth");
-  };
-
   // Add a class to the body to help with styling based on the current page
   useEffect(() => {
     const path = location.pathname.split('/')[1] || 'index';
@@ -124,6 +48,9 @@ export function MainNav() {
     };
   }, [location]);
 
+  const toggleMinimized = () => setIsMinimized(prev => !prev);
+  const navigate = (path: string) => window.location.href = path;
+
   return (
     <>
       {/* Sticky Top Navigation */}
@@ -133,17 +60,10 @@ export function MainNav() {
         isMinimized ? "h-12" : "",
         isScrolled && "shadow-md bg-background/95"
       )}>
-        <button
-          onClick={() => setIsMinimized(prev => !prev)}
-          className="absolute top-2 right-2 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors z-50"
-          aria-label={isMinimized ? "Expand navigation" : "Minimize navigation"}
-        >
-          {isMinimized ? (
-            <ChevronDown className="h-4 w-4" />
-          ) : (
-            <ChevronUp className="h-4 w-4" />
-          )}
-        </button>
+        <MinimizeButton 
+          isMinimized={isMinimized} 
+          toggleMinimized={toggleMinimized} 
+        />
 
         {isDesktop && !isMinimized && (
           <DesktopNav 
@@ -156,15 +76,7 @@ export function MainNav() {
           />
         )}
         
-        {isMinimized && (
-          <div className="flex items-center h-12 px-4">
-            <img 
-              src="/lovable-uploads/4425ec86-56fe-44c4-9f47-75e59d3cb287.png" 
-              alt="Vaya Logo" 
-              className="h-6" 
-            />
-          </div>
-        )}
+        <MinimizedHeader isMinimized={isMinimized} />
         
         {(isMobile || isTablet) && !isMinimized && (
           <MobileTopNav 
@@ -184,11 +96,7 @@ export function MainNav() {
       </header>
       
       {/* Content spacing to prevent overlap with fixed headers */}
-      <div className={cn(
-        "h-20",
-        isMobile && "h-24",
-        isMinimized && "h-12"
-      )} />
+      <ContentSpacer isMinimized={isMinimized} isMobile={isMobile} />
       
       {/* Voice Navigation Indicator */}
       <VoiceNavigationIndicator isActive={isVoiceActive} />
