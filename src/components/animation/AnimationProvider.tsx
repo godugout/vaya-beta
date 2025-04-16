@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 type AnimationPreference = 'full' | 'reduced' | 'none';
@@ -25,11 +26,12 @@ const defaultDuration = {
   slow: 500
 };
 
+// Using explicit tuple types to ensure correct type checking
 const defaultEasing = {
-  standard: [0.4, 0, 0.2, 1],
-  bounce: [0.34, 1.56, 0.64, 1],
-  gentle: [0.4, 0.0, 0.2, 1],
-  elastic: [0.68, -0.6, 0.32, 1.6]
+  standard: [0.4, 0, 0.2, 1] as [number, number, number, number],
+  bounce: [0.34, 1.56, 0.64, 1] as [number, number, number, number],
+  gentle: [0.4, 0.0, 0.2, 1] as [number, number, number, number],
+  elastic: [0.68, -0.6, 0.32, 1.6] as [number, number, number, number]
 };
 
 const AnimationContext = createContext<AnimationContextType>({
