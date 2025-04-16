@@ -6,7 +6,7 @@ import { ColorPalette } from '@/components/design-system/ColorPalette';
 import { ColorScales } from '@/components/design-system/ColorScales';
 import { Typography } from '@/components/design-system/Typography';
 import { SpacingGuide } from '@/components/design-system/SpacingGuide';
-import { ComponentsShowcase } from '@/pages/ComponentsShowcase';
+import ComponentsShowcase from '@/pages/ComponentsShowcase';
 import { AccessibilityGuidelines } from '@/components/design-system/AccessibilityGuidelines';
 
 export default function DesignSystem() {
