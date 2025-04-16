@@ -1,4 +1,3 @@
-
 /* Animation keyframes */
 @keyframes float {
   0%, 100% {
@@ -111,6 +110,15 @@
   50% {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+@keyframes typewriter-cursor {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
   }
 }
 
@@ -412,6 +420,25 @@
   }
 }
 
+/* Typewriter animation styles */
+.typewriter {
+  display: inline-block;
+  position: relative;
+}
+
+.typewriter::after {
+  content: '|';
+  position: absolute;
+  right: -4px;
+  color: currentColor;
+  animation: typewriter-cursor 0.8s infinite;
+}
+
+.typewriter-container {
+  display: inline-flex;
+  min-height: 1.2em;
+}
+
 /* Apply reduced motion settings */
 @media (prefers-reduced-motion) {
   .animate-float,
@@ -470,4 +497,8 @@
 [data-motion="none"] * {
   transition: none !important;
   animation: none !important;
+}
+
+[data-motion="reduced"] .typewriter::after {
+  animation: none;
 }

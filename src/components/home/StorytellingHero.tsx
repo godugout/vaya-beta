@@ -4,8 +4,24 @@ import { FadeIn } from "@/components/animation/FadeIn";
 import { Button } from "@/components/ui/button";
 import { Heart, Mic } from "lucide-react";
 import { Link } from "react-router-dom";
+import TypewriterText from "@/components/animation/TypewriterText";
 
 export const StorytellingHero = () => {
+  const familyPhrases = [
+    "a Story to Tell",
+    "inside jokes",
+    "secret recipes",
+    "weird traditions",
+    "quirky nicknames",
+    "holiday dramas",
+    "photo-shy kids",
+    "dance moves",
+    "loud arguments",
+    "dinner-table debates",
+    "an embarrassing uncle",
+    "unbelievable tales"
+  ];
+
   return (
     <section className="min-h-[100vh] relative overflow-hidden flex items-center m-0 p-0">
       <div 
@@ -29,7 +45,12 @@ export const StorytellingHero = () => {
             >
               Every Family Has 
               <span className="block bg-gradient-to-r from-autumn to-orange-500 bg-clip-text text-transparent">
-                A Story to Tell
+                <TypewriterText 
+                  phrases={familyPhrases} 
+                  typingSpeed={100}
+                  deletingSpeed={80}
+                  pauseDuration={2500}
+                />
               </span>
             </motion.h1>
             
