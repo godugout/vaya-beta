@@ -16,20 +16,21 @@ export const FamilyTreeCompletion: React.FC<FamilyTreeCompletionProps> = ({
 }) => {
   const { theme } = useWeddingMode();
   
+  // Map wedding theme to button variants that match the expected types
   const themeStyles = {
     classic: {
       accent: 'text-autumn',
-      button: 'autumn' as const,
+      button: 'classic' as const, // Changed from 'autumn' to 'classic'
       border: 'border-autumn',
     },
     modern: {
       accent: 'text-water',
-      button: 'water' as const,
+      button: 'modern' as const, // Changed from 'water' to 'modern'
       border: 'border-water',
     },
     rustic: {
       accent: 'text-forest',
-      button: 'forest' as const,
+      button: 'rustic' as const, // Changed from 'forest' to 'rustic'
       border: 'border-forest',
     }
   };

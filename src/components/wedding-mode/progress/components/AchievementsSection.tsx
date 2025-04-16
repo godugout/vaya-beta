@@ -13,6 +13,18 @@ interface AchievementsSectionProps {
 }
 
 export const AchievementsSection = ({ theme, themeStyles }: AchievementsSectionProps) => {
+  // Map the wedding mode theme to a valid button variant
+  const getButtonVariant = (themeType: 'classic' | 'modern' | 'rustic') => {
+    switch (themeType) {
+      case 'classic': return 'autumn' as const;
+      case 'modern': return 'water' as const;
+      case 'rustic': return 'forest' as const;
+      default: return 'autumn' as const;
+    }
+  };
+
+  const buttonVariant = getButtonVariant(theme);
+
   return (
     <AnimatedContainer variant="fade" delay={0.4} className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border p-6">
       <h3 className="text-lg font-medium mb-4">Achievements</h3>
@@ -34,7 +46,7 @@ export const AchievementsSection = ({ theme, themeStyles }: AchievementsSectionP
           themeStyle={themeStyles}
         />
       </div>
-      <Button variant={themeStyles.button} className="w-full mt-4">
+      <Button variant={buttonVariant} className="w-full mt-4">
         Add Family Members
       </Button>
     </AnimatedContainer>
