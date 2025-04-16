@@ -12,9 +12,9 @@
 
 /* Desktop Navigation */
 .desktop-nav {
-  @apply hidden lg:flex items-center justify-between py-4;
+  @apply hidden lg:flex items-center justify-between py-6;
   transition: padding 0.3s ease;
-  height: 5rem;
+  height: 5.5rem; /* Increased height */
 }
 
 /* Mobile Navigation */
@@ -37,6 +37,18 @@
 /* Navigation Items */
 .nav-item {
   @apply transition-colors relative;
+}
+
+.nav-item-center {
+  @apply px-3 py-2 rounded-full text-sm font-medium transition-colors;
+}
+
+.nav-item-center.active {
+  @apply bg-accent/20 text-accent;
+}
+
+.nav-item-center:not(.active) {
+  @apply text-muted-foreground hover:text-foreground hover:bg-accent/10;
 }
 
 .simplified-nav-item {
@@ -104,6 +116,16 @@
   @apply py-0 inline-flex items-center ml-2;
 }
 
+/* Control buttons in minimized mode */
+.minimized-control-button {
+  @apply w-8 h-8 rounded-full flex items-center justify-center transition-colors;
+  @apply text-muted-foreground hover:text-foreground hover:bg-accent/10;
+}
+
+.minimized-control-button.active {
+  @apply bg-accent/20 text-accent;
+}
+
 /* Responsive Adjustments */
 @media (max-width: 767px) {
   .page-content:not([data-route="index"] .page-content) {
@@ -123,7 +145,7 @@
 
 @media (min-width: 1024px) {
   .nav-container:not(.h-12) {
-    height: 5rem; /* Full-size header on desktop when not minimized */
+    height: 5.5rem; /* Full-size header on desktop when not minimized */
   }
 }
 

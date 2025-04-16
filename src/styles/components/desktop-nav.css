@@ -1,7 +1,7 @@
 
 /* Desktop Navigation Styles */
 .desktop-nav {
-  @apply hidden lg:flex items-center justify-between py-4;
+  @apply hidden lg:flex items-center justify-between py-6; /* Increased padding */
 }
 
 /* Logo and Branding */
@@ -11,12 +11,12 @@
 
 /* Navigation Menu */
 .desktop-nav-items {
-  @apply flex items-center gap-3;
+  @apply flex items-center gap-4; /* Increased gap */
 }
 
 /* User Controls Area */
 .user-controls {
-  @apply flex items-center gap-3;
+  @apply flex items-center gap-4; /* Increased gap */
 }
 
 /* Voice Navigation Button */
@@ -25,12 +25,22 @@
 }
 
 .voice-control-button.active {
-  @apply bg-black/10 dark:bg-white/10;
+  @apply bg-accent/20 text-accent;
 }
 
 /* Avatar and user menu */
 .user-avatar-button {
   @apply relative rounded-full border-2 transition-colors;
+}
+
+/* Navigation items hover and active states */
+.nav-item {
+  @apply relative px-4 py-2 rounded-md transition-colors;
+  @apply hover:bg-accent/10 hover:text-foreground;
+}
+
+.nav-item.active {
+  @apply bg-accent/20 text-accent;
 }
 
 /* Responsive adjustments */

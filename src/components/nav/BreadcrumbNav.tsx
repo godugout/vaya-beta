@@ -14,9 +14,10 @@ import { cn } from "@/lib/utils";
 
 interface BreadcrumbNavProps {
   isSimplifiedView?: boolean;
+  isMinimized?: boolean;
 }
 
-export const BreadcrumbNav = ({ isSimplifiedView = false }: BreadcrumbNavProps) => {
+export const BreadcrumbNav = ({ isSimplifiedView = false, isMinimized = false }: BreadcrumbNavProps) => {
   const location = useLocation();
   const path = location.pathname;
   
@@ -27,16 +28,21 @@ export const BreadcrumbNav = ({ isSimplifiedView = false }: BreadcrumbNavProps) 
   if (pathSegments.length === 0) return null;
   
   return (
-    <div className="mt-0 pt-0">
+    <div className={cn("mt-0 pt-0", isMinimized && "ml-1")}>
       <Breadcrumb>
         <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink asChild>
-              <Link to="/">
-                <Home className={cn("h-4 w-4", isSimplifiedView && "h-5 w-5")} />
-              </Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
+          {!isMinimized && (
+            <>
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link to="/">
+                    <Home className={cn("h-4 w-4", isSimplifiedView && "h-5 w-5")} />
+                  </Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+            </>
+          )}
           
           {pathSegments.map((segment, index) => {
             const isLast = index === pathSegments.length - 1;
@@ -49,7 +55,7 @@ export const BreadcrumbNav = ({ isSimplifiedView = false }: BreadcrumbNavProps) 
             
             return (
               <React.Fragment key={segment}>
-                <BreadcrumbSeparator />
+                {index > 0 && <BreadcrumbSeparator />}
                 <BreadcrumbItem>
                   {isLast ? (
                     <BreadcrumbPage className={cn(

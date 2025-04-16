@@ -23,8 +23,8 @@ export const ContentSpacer = ({ isMinimized, isMobile }: ContentSpacerProps) => 
         height: isMinimized 
           ? "3rem" // 12px for minimized nav
           : isMobile 
-            ? "5rem" // 20px for mobile
-            : "6rem" // 24px for desktop
+            ? "6.5rem" // 26px for mobile (increased for breadcrumb)
+            : "7.5rem" // 30px for desktop (increased for breadcrumb)
       }}
     />
   );

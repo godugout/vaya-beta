@@ -24,20 +24,26 @@ export const DesktopNav = ({
   return (
     <div className="desktop-nav">
       <div className="container mx-auto flex items-center justify-between gap-4">
-        {/* Logo and main navigation */}
-        <div className="flex items-center gap-8">
+        {/* Left: Logo */}
+        <div className="flex-shrink-0">
           <LogoSection />
+        </div>
+        
+        {/* Center: Main navigation */}
+        <div className="flex-grow flex justify-center">
           <NavigationItems user={user} isSimplifiedView={isSimplifiedView} />
         </div>
         
-        {/* Right side controls */}
-        <UserControls 
-          user={user}
-          handleSignOut={handleSignOut}
-          navigate={navigate}
-          isVoiceActive={isVoiceActive}
-          onVoiceToggle={onVoiceToggle}
-        />
+        {/* Right: User controls */}
+        <div className="flex-shrink-0">
+          <UserControls 
+            user={user}
+            handleSignOut={handleSignOut}
+            navigate={navigate}
+            isVoiceActive={isVoiceActive}
+            onVoiceToggle={onVoiceToggle}
+          />
+        </div>
       </div>
     </div>
   );

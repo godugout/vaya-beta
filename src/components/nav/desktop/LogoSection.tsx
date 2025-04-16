@@ -7,7 +7,7 @@ export const LogoSection = () => {
   return (
     <button 
       onClick={() => navigate('/')} 
-      className="flex items-center gap-2"
+      className="flex items-center gap-2 py-2"
       aria-label="Go to homepage"
     >
       <img src="/lovable-uploads/4425ec86-56fe-44c4-9f47-75e59d3cb287.png" alt="Vaya Logo" className="h-9" />
