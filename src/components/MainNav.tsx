@@ -19,6 +19,7 @@ export function MainNav() {
   const location = useLocation();
   const [isMinimized, setIsMinimized] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isAtTop, setIsAtTop] = useState(true);
   const { isSimplifiedView, toggleSimplifiedView } = useSimplifiedView();
   const { isVoiceActive, toggleVoiceNavigation } = useVoiceNavigation();
   const { user, handleSignOut } = useUserAuth();
@@ -26,12 +27,15 @@ export function MainNav() {
   const isMobile = useMediaQuery("(max-width: 767px)");
   const isTablet = useMediaQuery("(min-width: 768px) and (max-width: 1023px)");
   const isDesktop = useMediaQuery("(min-width: 1024px)");
+  
+  const isHomePage = location.pathname === '/';
 
   // Handle scroll for sticky header behavior
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
       setIsScrolled(scrollPosition > 10);
+      setIsAtTop(scrollPosition < 5);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -55,10 +59,12 @@ export function MainNav() {
     <>
       {/* Sticky Top Navigation */}
       <header className={cn(
-        "nav-container transition-all duration-300 fixed top-0 left-0 right-0 z-[100]",
+        "nav-container fixed top-0 left-0 right-0 z-[100] transition-all duration-300",
         isSimplifiedView && "simplified-view",
         isMinimized ? "h-12" : "",
-        isScrolled && "shadow-md bg-background/95"
+        isScrolled && "shadow-md",
+        isHomePage && isAtTop ? "bg-transparent" : "bg-background/95 backdrop-blur-sm",
+        isHomePage && !isScrolled ? "border-b-0" : "border-b"
       )}>
         <MinimizeButton 
           isMinimized={isMinimized} 
@@ -88,7 +94,7 @@ export function MainNav() {
           />
         )}
         
-        {!isMinimized && (
+        {!isMinimized && !isHomePage && (
           <div className="px-4 sm:px-6 lg:px-8">
             <BreadcrumbNav isSimplifiedView={isSimplifiedView} />
           </div>
@@ -96,7 +102,9 @@ export function MainNav() {
       </header>
       
       {/* Content spacing to prevent overlap with fixed headers */}
-      <ContentSpacer isMinimized={isMinimized} isMobile={isMobile} />
+      {!isHomePage && (
+        <ContentSpacer isMinimized={isMinimized} isMobile={isMobile} />
+      )}
       
       {/* Voice Navigation Indicator */}
       <VoiceNavigationIndicator isActive={isVoiceActive} />

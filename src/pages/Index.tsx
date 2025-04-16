@@ -14,19 +14,19 @@ export default function Index() {
   const [showCreateFamily, setShowCreateFamily] = useState(false);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
-      {/* Hero section */}
-      <div className="relative bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen overflow-x-hidden bg-white dark:bg-gray-900">
+      {/* Hero section without any extra padding */}
+      <div id="hero" className="w-full">
         <StorytellingHero />
       </div>
       
       {/* Value proposition with better background */}
-      <div className="bg-gray-100 dark:bg-gray-800 shadow-inner">
+      <div id="features" className="w-full bg-gray-100 dark:bg-gray-800 shadow-inner">
         <ValueProposition />
       </div>
       
       {/* Voice recording section with gradient background */}
-      <section className="py-20 px-4 bg-gradient-to-b from-gray-200 to-white dark:from-gray-800 dark:to-gray-900 shadow-inner">
+      <section className="w-full py-20 px-4 sm:px-6 md:px-8 bg-gradient-to-b from-gray-200 to-white dark:from-gray-800 dark:to-gray-900 shadow-inner">
         <div className="container mx-auto">
           <h2 className="text-3xl md:text-4xl font-medium mb-10 text-center text-gray-800 dark:text-gray-100">
             Capture Memories with Your Voice
@@ -38,17 +38,17 @@ export default function Index() {
       </section>
       
       {/* Features section with proper background */}
-      <div className="bg-gray-100 dark:bg-gray-800">
+      <div className="w-full bg-gray-100 dark:bg-gray-800">
         <Features />
       </div>
       
       {/* Testimonials with better contrast */}
-      <div className="bg-gray-50 dark:bg-gray-900">
+      <div className="w-full bg-gray-50 dark:bg-gray-900">
         <Testimonials />
       </div>
       
       {/* FAQ with improved background */}
-      <div className="bg-gray-100 dark:bg-gray-800 shadow-inner">
+      <div className="w-full bg-gray-100 dark:bg-gray-800 shadow-inner">
         <FAQ />
       </div>
       

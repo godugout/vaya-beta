@@ -1,6 +1,6 @@
 
 import React from "react";
-import { cn } from "@/lib/utils";
+import { useLocation } from "react-router-dom";
 
 interface ContentSpacerProps {
   isMinimized: boolean;
@@ -8,11 +8,24 @@ interface ContentSpacerProps {
 }
 
 export const ContentSpacer = ({ isMinimized, isMobile }: ContentSpacerProps) => {
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
+
+  // Don't add spacing for the homepage
+  if (isHomePage) {
+    return null;
+  }
+
   return (
-    <div className={cn(
-      "h-20",
-      isMobile && "h-24",
-      isMinimized && "h-12"
-    )} />
+    <div 
+      className="w-full transition-height duration-300"
+      style={{
+        height: isMinimized 
+          ? "3rem" // 12px for minimized nav
+          : isMobile 
+            ? "4rem" // 16px for mobile
+            : "5rem" // 20px for desktop
+      }}
+    />
   );
 };

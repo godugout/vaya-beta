@@ -1,7 +1,8 @@
 
 /* Base Navigation Styles */
 .nav-container {
-  @apply w-full bg-background/80 backdrop-blur-sm border-b;
+  @apply w-full border-b;
+  transition: background-color 0.3s ease, height 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease, border-color 0.3s ease;
 }
 
 /* Minimized Navigation */
@@ -12,6 +13,7 @@
 /* Desktop Navigation */
 .desktop-nav {
   @apply hidden lg:flex items-center justify-between px-6 py-3;
+  transition: padding 0.3s ease;
 }
 
 /* Mobile Navigation */
@@ -21,11 +23,13 @@
 
 .mobile-top-nav {
   @apply flex items-center justify-between px-4 py-3 border-b;
+  transition: padding 0.3s ease, background-color 0.3s ease;
 }
 
 .mobile-bottom-nav {
   @apply bg-background/80 backdrop-blur-sm border-t;
   padding-bottom: env(safe-area-inset-bottom, 0);
+  transition: background-color 0.3s ease;
 }
 
 /* Navigation Items */
@@ -84,6 +88,15 @@
   @apply py-2 px-4;
 }
 
+/* Home page specific navigation */
+[data-route="index"] .nav-container:not(.scrolled) {
+  @apply bg-transparent border-transparent;
+}
+
+[data-route="index"] .nav-container.scrolled {
+  @apply bg-background/95 backdrop-blur-sm border-b border-border;
+}
+
 /* Responsive Adjustments */
 @media (max-width: 767px) {
   .page-content {
@@ -109,6 +122,10 @@
 
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
+  .nav-container, .desktop-nav, .mobile-top-nav {
+    transition: none !important;
+  }
+  
   .nav-item {
     @apply transition-none;
   }

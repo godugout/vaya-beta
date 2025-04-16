@@ -7,13 +7,18 @@ import { Link } from "react-router-dom";
 
 export const StorytellingHero = () => {
   return (
-    <section className="min-h-[90vh] relative overflow-hidden flex items-center">
+    <section className="min-h-[100vh] relative overflow-hidden flex items-center">
       <div 
-        className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1511895426328-dc8714191300?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjI5MjYyNjI5&dpr=2&h=1080')] bg-cover bg-center"
-        style={{ opacity: 0.15 }}
-      />
+        className="absolute inset-0 w-full h-full"
+      >
+        <div 
+          className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1511895426328-dc8714191300?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjI5MjYyNjI5&dpr=2&h=1080')] bg-cover bg-center"
+          style={{ opacity: 0.15 }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-100/80 to-white/60 dark:from-gray-900/80 dark:to-gray-800/60" />
+      </div>
       
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <FadeIn className="space-y-6">
             <motion.h1 
