@@ -4,7 +4,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
@@ -15,7 +14,7 @@ import {
   LogIn, 
   Moon, 
   Sun, 
-  Phone,
+  HelpCircle,
   Info
 } from "lucide-react";
 
@@ -30,44 +29,52 @@ export const GuestMenu = ({ navigate }: GuestMenuProps) => {
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="rounded-full">
-          <UserIcon className="h-5 w-5" />
+        <Button variant="outline" size="sm" className="rounded-full">
+          <UserIcon className="h-4 w-4 mr-2" />
+          <span className="hidden sm:inline">Sign In</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuLabel>
-          <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium">Guest</p>
-            <p className="text-xs text-muted-foreground">Sign in to access your account</p>
-          </div>
-        </DropdownMenuLabel>
+        <div className="p-2">
+          <DropdownMenuItem 
+            onClick={() => navigate('/auth')}
+            className="p-2 cursor-pointer"
+          >
+            <LogIn className="mr-3 h-4 w-4" />
+            <span>Sign In / Register</span>
+          </DropdownMenuItem>
+        </div>
+        
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => navigate('/auth')}>
-          <LogIn className="mr-2 h-4 w-4" />
-          <span>Sign In / Register</span>
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
-          {theme === 'dark' ? (
-            <>
-              <Sun className="mr-2 h-4 w-4" />
-              <span>Light Mode</span>
-            </>
-          ) : (
-            <>
-              <Moon className="mr-2 h-4 w-4" />
-              <span>Dark Mode</span>
-            </>
-          )}
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => window.open('/about', '_blank')}>
-          <Info className="mr-2 h-4 w-4" />
-          <span>About Us</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => window.open('tel:+1234567890')}>
-          <Phone className="mr-2 h-4 w-4" />
-          <span>Contact Support</span>
-        </DropdownMenuItem>
+        
+        <div className="p-2">
+          <DropdownMenuItem 
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            className="p-2 cursor-pointer"
+          >
+            {theme === 'dark' ? (
+              <>
+                <Sun className="mr-3 h-4 w-4" />
+                <span>Light Mode</span>
+              </>
+            ) : (
+              <>
+                <Moon className="mr-3 h-4 w-4" />
+                <span>Dark Mode</span>
+              </>
+            )}
+          </DropdownMenuItem>
+          
+          <DropdownMenuItem onClick={() => navigate('/about')} className="p-2 cursor-pointer">
+            <Info className="mr-3 h-4 w-4" />
+            <span>About Us</span>
+          </DropdownMenuItem>
+          
+          <DropdownMenuItem onClick={() => navigate('/help')} className="p-2 cursor-pointer">
+            <HelpCircle className="mr-3 h-4 w-4" />
+            <span>Help Center</span>
+          </DropdownMenuItem>
+        </div>
       </DropdownMenuContent>
     </DropdownMenu>
   );

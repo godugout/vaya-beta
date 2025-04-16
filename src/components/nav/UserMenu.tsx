@@ -18,9 +18,13 @@ import {
   Moon, 
   Sun, 
   Phone,
-  Palette
+  Palette,
+  HelpCircle,
+  Bookmark,
+  Archive
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { motion } from "framer-motion";
 
 interface UserMenuProps {
   user: User | null;
@@ -46,64 +50,96 @@ export const UserMenu = ({ user, handleSignOut, navigate }: UserMenuProps) => {
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-          <Avatar className="h-10 w-10 border-2 border-ui-teal">
+        <Button variant="ghost" className="relative h-10 w-10 rounded-full p-0 overflow-hidden">
+          <Avatar className="h-10 w-10 border-2 border-autumn">
             <AvatarImage src={user.user_metadata?.avatar_url} />
-            <AvatarFallback className="bg-ui-green text-white">
+            <AvatarFallback className="bg-autumn text-white">
               {userInitials}
             </AvatarFallback>
           </Avatar>
+          <motion.span 
+            className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-white dark:border-gray-900"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.2, delay: 0.1 }}
+          />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuLabel>
+      <DropdownMenuContent align="end" className="w-64">
+        <DropdownMenuLabel className="p-4 border-b">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium">{userDisplayName}</p>
+            <p className="text-base font-semibold">{userDisplayName}</p>
             <p className="text-xs text-muted-foreground">{userEmail}</p>
           </div>
         </DropdownMenuLabel>
+        
+        <div className="p-2">
+          <DropdownMenuItem onClick={() => navigate('/profile')} className="p-2 cursor-pointer">
+            <UserIcon className="mr-3 h-4 w-4" />
+            <span>Profile</span>
+          </DropdownMenuItem>
+          
+          <DropdownMenuItem onClick={() => navigate('/saved-stories')} className="p-2 cursor-pointer">
+            <Bookmark className="mr-3 h-4 w-4" />
+            <span>Saved Stories</span>
+          </DropdownMenuItem>
+          
+          <DropdownMenuItem onClick={() => navigate('/family-capsules')} className="p-2 cursor-pointer">
+            <Archive className="mr-3 h-4 w-4" />
+            <span>My Capsules</span>
+          </DropdownMenuItem>
+          
+          <DropdownMenuItem onClick={() => navigate('/account')} className="p-2 cursor-pointer">
+            <Settings className="mr-3 h-4 w-4" />
+            <span>Account Settings</span>
+          </DropdownMenuItem>
+        </div>
+        
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => navigate('/profile')}>
-          <UserIcon className="mr-2 h-4 w-4" />
-          <span>Profile</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => navigate('/account')}>
-          <Settings className="mr-2 h-4 w-4" />
-          <span>Account</span>
-        </DropdownMenuItem>
+        
+        <div className="p-2">
+          <DropdownMenuItem 
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            className="p-2 cursor-pointer"
+          >
+            {theme === 'dark' ? (
+              <>
+                <Sun className="mr-3 h-4 w-4" />
+                <span>Light Mode</span>
+              </>
+            ) : (
+              <>
+                <Moon className="mr-3 h-4 w-4" />
+                <span>Dark Mode</span>
+              </>
+            )}
+          </DropdownMenuItem>
+          
+          <DropdownMenuItem onClick={() => navigate('/theme')} className="p-2 cursor-pointer">
+            <Palette className="mr-3 h-4 w-4" />
+            <span>Theme Settings</span>
+          </DropdownMenuItem>
+          
+          <DropdownMenuItem onClick={() => navigate('/help')} className="p-2 cursor-pointer">
+            <HelpCircle className="mr-3 h-4 w-4" />
+            <span>Help & Support</span>
+          </DropdownMenuItem>
+        </div>
+        
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
-          {theme === 'dark' ? (
-            <>
-              <Sun className="mr-2 h-4 w-4" />
-              <span>Light Mode</span>
-            </>
-          ) : (
-            <>
-              <Moon className="mr-2 h-4 w-4" />
-              <span>Dark Mode</span>
-            </>
-          )}
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => navigate('/theme')}>
-          <Palette className="mr-2 h-4 w-4" />
-          <span>Theme Settings</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => window.open('tel:+1234567890')}>
-          <Phone className="mr-2 h-4 w-4" />
-          <span>Contact Support</span>
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem 
-          onClick={async () => {
-            setOpen(false);
-            await handleSignOut();
-          }}
-          className="text-red-500 dark:text-red-400 focus:text-red-500 dark:focus:text-red-400"
-        >
-          <LogOut className="mr-2 h-4 w-4" />
-          <span>Sign Out</span>
-        </DropdownMenuItem>
+        
+        <div className="p-2">
+          <DropdownMenuItem 
+            onClick={async () => {
+              setOpen(false);
+              await handleSignOut();
+            }}
+            className="p-2 cursor-pointer text-red-500 dark:text-red-400 focus:text-red-500 dark:focus:text-red-400"
+          >
+            <LogOut className="mr-3 h-4 w-4" />
+            <span>Sign Out</span>
+          </DropdownMenuItem>
+        </div>
       </DropdownMenuContent>
     </DropdownMenu>
   );

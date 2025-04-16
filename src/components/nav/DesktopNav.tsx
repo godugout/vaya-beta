@@ -23,7 +23,7 @@ export const DesktopNav = ({
 }: DesktopNavProps) => {
   return (
     <div className="desktop-nav">
-      <div className="flex items-center justify-between">
+      <div className="container mx-auto flex items-center justify-between gap-4">
         {/* Logo and main navigation */}
         <div className="flex items-center gap-8">
           <LogoSection />

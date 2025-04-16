@@ -12,8 +12,9 @@
 
 /* Desktop Navigation */
 .desktop-nav {
-  @apply hidden lg:flex items-center justify-between px-6 py-3;
+  @apply hidden lg:flex items-center justify-between py-3;
   transition: padding 0.3s ease;
+  height: 4rem;
 }
 
 /* Mobile Navigation */
@@ -24,6 +25,7 @@
 .mobile-top-nav {
   @apply flex items-center justify-between px-4 py-3;
   transition: padding 0.3s ease, background-color 0.3s ease;
+  height: 4rem;
 }
 
 .mobile-bottom-nav {
@@ -110,13 +112,13 @@
 
 @media (min-width: 768px) and (max-width: 1023px) {
   .nav-container:not(.h-12) {
-    height: 72px; /* Slightly taller header on tablets when not minimized */
+    height: 4rem; /* Slightly taller header on tablets when not minimized */
   }
 }
 
 @media (min-width: 1024px) {
   .nav-container:not(.h-12) {
-    height: 80px; /* Full-size header on desktop when not minimized */
+    height: 4rem; /* Full-size header on desktop when not minimized */
   }
 }
 

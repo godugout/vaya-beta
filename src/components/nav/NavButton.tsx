@@ -2,6 +2,7 @@
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
 
 interface NavButtonProps {
   to: string;
@@ -18,10 +19,9 @@ export const NavButton = ({ to, icon, label, isSimplified }: NavButtonProps) => 
     <Link
       to={to}
       className={cn(
-        "flex items-center gap-2 px-3 py-2 rounded-lg transition-colors",
+        "relative flex items-center gap-2 px-3 py-2 rounded-lg transition-colors",
         "hover:bg-black/5 dark:hover:bg-white/10",
-        isActive && "bg-black/5 dark:bg-white/10 text-forest dark:text-leaf",
-        !isActive && "text-gray-700 dark:text-gray-300"
+        isActive ? "bg-black/5 dark:bg-white/10" : "text-gray-700 dark:text-gray-300"
       )}
       aria-current={isActive ? "page" : undefined}
     >
@@ -31,7 +31,25 @@ export const NavButton = ({ to, icon, label, isSimplified }: NavButtonProps) => 
       )}>
         {icon}
       </span>
-      {!isSimplified && <span className="font-medium">{label}</span>}
+      
+      {!isSimplified && (
+        <span className={cn(
+          "font-medium",
+          isActive ? "text-foreground" : "text-muted-foreground"
+        )}>
+          {label}
+        </span>
+      )}
+      
+      {isActive && (
+        <motion.div 
+          className="absolute bottom-0 left-0 right-0 h-[2px] bg-autumn"
+          layoutId="nav-underline"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.2 }}
+        />
+      )}
     </Link>
   );
 };
