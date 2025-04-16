@@ -9,6 +9,7 @@ interface TypewriterTextProps {
   typingSpeed?: number;
   deletingSpeed?: number;
   pauseDuration?: number;
+  colorful?: boolean;
 }
 
 const TypewriterText: React.FC<TypewriterTextProps> = ({
@@ -16,12 +17,25 @@ const TypewriterText: React.FC<TypewriterTextProps> = ({
   className,
   typingSpeed = 150,
   deletingSpeed = 100,
-  pauseDuration = 2000
+  pauseDuration = 2000,
+  colorful = false
 }) => {
   const [displayText, setDisplayText] = useState('');
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
+
+  // Array of color classes for different phrases
+  const colorClasses = [
+    "text-autumn",
+    "text-leaf",
+    "text-water",
+    "text-ui-purple",
+    "bg-gradient-to-r from-autumn to-ui-orange bg-clip-text text-transparent",
+    "bg-gradient-to-r from-water to-mountain bg-clip-text text-transparent",
+    "bg-gradient-to-r from-ui-purple to-ui-orange bg-clip-text text-transparent",
+    "bg-gradient-to-r from-leaf to-forest bg-clip-text text-transparent"
+  ];
 
   useEffect(() => {
     if (phrases.length === 0) return;
@@ -59,9 +73,17 @@ const TypewriterText: React.FC<TypewriterTextProps> = ({
     return () => clearTimeout(timeout);
   }, [displayText, currentPhraseIndex, isTyping, isPaused, phrases, typingSpeed, deletingSpeed, pauseDuration]);
 
+  // Get current color class based on phrase index
+  const getCurrentColorClass = () => {
+    if (!colorful) return "";
+    return colorClasses[currentPhraseIndex % colorClasses.length];
+  };
+
   return (
     <span className={cn("relative inline-block", className)}>
-      {displayText}
+      <span className={getCurrentColorClass()}>
+        {displayText}
+      </span>
       <motion.span
         className="ml-0.5 inline-block w-0.5 h-6 bg-current"
         animate={{ opacity: [1, 0] }}

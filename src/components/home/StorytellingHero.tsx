@@ -44,12 +44,13 @@ export const StorytellingHero = () => {
               transition={{ duration: 0.6 }}
             >
               Every Family Has 
-              <span className="block bg-gradient-to-r from-autumn to-orange-500 bg-clip-text text-transparent">
+              <span className="block">
                 <TypewriterText 
                   phrases={familyPhrases} 
                   typingSpeed={100}
                   deletingSpeed={80}
                   pauseDuration={2500}
+                  colorful={true}
                 />
               </span>
             </motion.h1>
