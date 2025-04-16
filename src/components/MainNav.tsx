@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { User } from "@supabase/supabase-js";
@@ -11,20 +10,20 @@ import { VoiceNavigationIndicator } from "./nav/VoiceNavigationIndicator";
 import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 export function MainNav() {
   const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
   const [isSimplifiedView, setIsSimplifiedView] = useState(false);
   const [isVoiceActive, setIsVoiceActive] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
   const { toast } = useToast();
   
-  // Use media queries to determine viewport size
   const isMobile = useMediaQuery("(max-width: 767px)");
   const isTablet = useMediaQuery("(min-width: 768px) and (max-width: 1023px)");
   const isDesktop = useMediaQuery("(min-width: 1024px)");
 
-  // Get simplified view preference from localStorage
   useEffect(() => {
     const savedPreference = localStorage.getItem('simplifiedView');
     if (savedPreference) {
@@ -32,7 +31,6 @@ export function MainNav() {
     }
   }, []);
 
-  // Save simplified view preference to localStorage
   const toggleSimplifiedView = () => {
     const newValue = !isSimplifiedView;
     setIsSimplifiedView(newValue);
@@ -72,7 +70,6 @@ export function MainNav() {
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
       
-      // Show welcome toast when user signs in
       if (_event === 'SIGNED_IN') {
         const fullName = session?.user?.user_metadata?.full_name || 'User';
         toast({
@@ -105,13 +102,24 @@ export function MainNav() {
 
   return (
     <>
-      {/* Fixed header with blur effect */}
       <header className={cn(
-        "nav-container",
-        isSimplifiedView && "simplified-view"
+        "nav-container transition-all duration-300",
+        isSimplifiedView && "simplified-view",
+        isMinimized ? "h-12" : ""
       )}>
-        {/* Show desktop nav only on larger screens */}
-        {isDesktop && (
+        <button
+          onClick={() => setIsMinimized(prev => !prev)}
+          className="absolute top-2 right-2 p-2 rounded-full hover:bg-accent/50 transition-colors"
+          aria-label={isMinimized ? "Expand navigation" : "Minimize navigation"}
+        >
+          {isMinimized ? (
+            <ChevronDown className="h-4 w-4" />
+          ) : (
+            <ChevronUp className="h-4 w-4" />
+          )}
+        </button>
+
+        {isDesktop && !isMinimized && (
           <DesktopNav 
             user={user} 
             handleSignOut={handleSignOut} 
@@ -122,8 +130,17 @@ export function MainNav() {
           />
         )}
         
-        {/* Show mobile top nav only on mobile and tablet */}
-        {(isMobile || isTablet) && (
+        {isMinimized && (
+          <div className="flex items-center h-12 px-4">
+            <img 
+              src="/lovable-uploads/4425ec86-56fe-44c4-9f47-75e59d3cb287.png" 
+              alt="Vaya Logo" 
+              className="h-6" 
+            />
+          </div>
+        )}
+        
+        {(isMobile || isTablet) && !isMinimized && (
           <MobileTopNav 
             user={user} 
             handleSignOut={handleSignOut} 
@@ -134,11 +151,9 @@ export function MainNav() {
         )}
       </header>
       
-      {/* Voice navigation status - show on all devices */}
       {isVoiceActive && <VoiceNavigationIndicator isActive={isVoiceActive} />}
       
-      {/* Mobile bottom navigation - only on mobile and small tablets */}
-      {(isMobile || isTablet) && (
+      {(isMobile || isTablet) && !isMinimized && (
         <MobileBottomNav 
           user={user} 
           navigate={navigate}
@@ -148,21 +163,21 @@ export function MainNav() {
         />
       )}
       
-      {/* Breadcrumb navigation - show on all devices but style differently */}
       <div className={cn(
         "mt-20",
         isMobile && "mt-16",
         isVoiceActive && "pt-16",
+        isMinimized && "mt-12",
         isSimplifiedView && "simplified-view"
       )}>
         <BreadcrumbNav isSimplifiedView={isSimplifiedView} />
       </div>
       
-      {/* Spacer for fixed header - adjust based on device */}
       <div className={cn(
         "h-20",
         isMobile && "h-16",
-        isVoiceActive && "h-36"
+        isVoiceActive && "h-36",
+        isMinimized && "h-12"
       )} />
     </>
   );

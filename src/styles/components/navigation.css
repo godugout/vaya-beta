@@ -1,7 +1,11 @@
-
 /* Base Navigation Styles */
 .nav-container {
   @apply fixed w-full z-50 bg-background/80 backdrop-blur-sm border-b;
+}
+
+/* Minimized Navigation */
+.nav-container.h-12 {
+  @apply overflow-hidden;
 }
 
 /* Desktop Navigation */
@@ -63,8 +67,8 @@
 
 /* Responsive Adjustments */
 @media (max-width: 767px) {
-  .nav-container {
-    height: 64px; /* Smaller header on mobile */
+  .nav-container:not(.h-12) {
+    height: 64px; /* Smaller header on mobile when not minimized */
   }
   
   .mobile-bottom-nav {
@@ -73,14 +77,14 @@
 }
 
 @media (min-width: 768px) and (max-width: 1023px) {
-  .nav-container {
-    height: 72px; /* Slightly taller header on tablets */
+  .nav-container:not(.h-12) {
+    height: 72px; /* Slightly taller header on tablets when not minimized */
   }
 }
 
 @media (min-width: 1024px) {
-  .nav-container {
-    height: 80px; /* Full-size header on desktop */
+  .nav-container:not(.h-12) {
+    height: 80px; /* Full-size header on desktop when not minimized */
   }
 }
 
