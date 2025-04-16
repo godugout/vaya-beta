@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
 
@@ -89,6 +88,7 @@ export default {
         sans: ["var(--font-family-main)", ...fontFamily.sans],
         heading: ["var(--font-family-heading)", ...fontFamily.sans],
         mono: ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"],
+        'architects-daughter': ['Architects Daughter', 'cursive'],
       },
       borderRadius: {
         lg: "var(--radius-lg)",

@@ -51,7 +51,7 @@ export const StorytellingHero = () => {
         <div className="max-w-4xl mx-auto text-center">
           <FadeIn className="space-y-6">
             <motion.h1 
-              className="text-4xl sm:text-5xl md:text-7xl font-heading font-bold leading-tight"
+              className="text-3xl sm:text-4xl md:text-5xl font-heading font-bold leading-tight font-architects-daughter"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ 
