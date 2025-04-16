@@ -14,14 +14,14 @@ export const StorytellingHero = () => {
   
   // Shorter phrases list for mobile devices
   const familyPhrases = isMobile ? [
-    "a Story to Tell",
+    "a story to tell",
     "secret recipes",
     "weird traditions",
     "quirky nicknames",
     "holiday dramas",
     "unbelievable tales"
   ] : [
-    "a Story to Tell",
+    "a story to tell",
     "inside jokes",
     "secret recipes",
     "weird traditions",
@@ -59,7 +59,7 @@ export const StorytellingHero = () => {
                 ease: isReduced || isMobile ? "easeOut" : "easeInOut"
               }}
             >
-              Every Family Has 
+              Every family has 
               <span className="block">
                 <TypewriterText 
                   phrases={familyPhrases} 

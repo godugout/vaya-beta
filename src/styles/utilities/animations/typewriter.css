@@ -18,10 +18,11 @@
   min-height: 1.2em;
 }
 
-/* Cursor style variations */
+/* Enhanced cursor style variations */
 .typewriter-cursor-bar {
   width: 0.5rem;
   height: 1.5rem;
+  border-radius: 1px;
 }
 
 .typewriter-cursor-underscore {
@@ -29,11 +30,14 @@
   height: 0.125rem;
   align-self: flex-end;
   margin-bottom: 0.125rem;
+  border-radius: 1px;
 }
 
 .typewriter-cursor-block {
   width: 0.75rem;
   height: 1.5rem;
+  border-radius: 2px;
+  opacity: 0.8;
 }
 
 .typewriter-no-cursor {
@@ -76,4 +80,46 @@
       opacity: 0;
     }
   }
+}
+
+/* Enhanced typewriter text animations */
+@keyframes word-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes word-scale {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes word-fade {
+  0% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+.typewriter-word-enter {
+  animation: word-fade 0.5s ease forwards;
+}
+
+.typewriter-word-bold {
+  font-weight: 600;
+}
+
+.typewriter-word-italic {
+  font-style: italic;
+}
+
+.typewriter-word-underline {
+  text-decoration: underline;
+  text-decoration-color: rgba(var(--color-autumn), 0.3);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+/* Dark mode adjustments */
+.dark .typewriter-cursor-bar,
+.dark .typewriter-cursor-underscore,
+.dark .typewriter-cursor-block {
+  background-color: rgba(255, 255, 255, 0.8);
 }

@@ -36,16 +36,20 @@ const TypewriterText: React.FC<TypewriterTextProps> = ({
   const adjustedDeletingSpeed = (isReduced || isMobile) ? Math.max(deletingSpeed * 0.5, 20) : deletingSpeed;
   const adjustedPauseDuration = (isReduced || isMobile) ? Math.min(pauseDuration * 1.5, 3000) : pauseDuration;
 
-  // Array of color classes for different phrases
+  // Enhanced array of color classes and effects for different phrases
   const colorClasses = [
-    "text-autumn",
-    "text-leaf",
-    "text-water",
-    "text-ui-purple",
+    "text-autumn font-medium",
+    "text-leaf italic",
+    "text-water font-semibold",
+    "text-ui-purple font-bold",
     "bg-gradient-to-r from-autumn to-ui-orange bg-clip-text text-transparent",
-    "bg-gradient-to-r from-water to-mountain bg-clip-text text-transparent",
-    "bg-gradient-to-r from-ui-purple to-ui-orange bg-clip-text text-transparent",
-    "bg-gradient-to-r from-leaf to-forest bg-clip-text text-transparent"
+    "bg-gradient-to-r from-water to-mountain bg-clip-text text-transparent font-medium",
+    "bg-gradient-to-r from-ui-purple to-ui-orange bg-clip-text text-transparent italic",
+    "bg-gradient-to-br from-leaf to-forest bg-clip-text text-transparent",
+    "text-mountain underline decoration-wavy decoration-autumn/30 underline-offset-4",
+    "text-amber-500 font-bold",
+    "text-rose-500 font-medium",
+    "text-teal-500 italic"
   ];
 
   useEffect(() => {
@@ -93,7 +97,7 @@ const TypewriterText: React.FC<TypewriterTextProps> = ({
     return () => clearTimeout(timeout);
   }, [displayText, currentPhraseIndex, isTyping, isPaused, phrases, adjustedTypingSpeed, adjustedDeletingSpeed, adjustedPauseDuration, isReduced, isMobile, cursorStyle]);
 
-  // Get current color class based on phrase index
+  // Get current color class based on phrase index with animation variants
   const getCurrentColorClass = () => {
     if (!colorful) return "";
     return colorClasses[currentPhraseIndex % colorClasses.length];
@@ -108,9 +112,21 @@ const TypewriterText: React.FC<TypewriterTextProps> = ({
   // Determine if cursor should be shown based on motion preferences
   const shouldShowCursor = cursorStyle !== "none" && !(isReduced && isMobile);
 
+  // Add subtle entrance animation for each new word
+  const containerVariants = {
+    hidden: { opacity: 0.8, y: 5 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.3 } }
+  };
+
   return (
-    <span className={cn("relative inline-block", className)}>
-      <span className={getCurrentColorClass()}>
+    <motion.span 
+      className={cn("relative inline-block", className)}
+      key={currentPhraseIndex}
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+    >
+      <span className={cn("capitalize", getCurrentColorClass())}>
         {displayText}
       </span>
       {shouldShowCursor ? (
@@ -125,7 +141,7 @@ const TypewriterText: React.FC<TypewriterTextProps> = ({
           }}
         />
       ) : null}
-    </span>
+    </motion.span>
   );
 };
 
