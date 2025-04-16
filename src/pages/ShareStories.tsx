@@ -28,19 +28,19 @@ const ShareStories = () => {
   return (
     <PageTransition location="share-stories" mode="fade">
       <LanguageProvider>
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
           {/* Hero Section with Patel Family Capsules */}
-          <div className="bg-white py-12 border-b border-gray-100">
+          <div className="bg-white dark:bg-gray-800 py-12 border-b border-gray-100 dark:border-gray-700 shadow-sm">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex justify-between items-center mb-4">
-                <h1 className="text-3xl font-bold text-gray-900">
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
                   {preferredEdition === "hanuman" ? "Share Your Stories - Hanuman Edition" : "Share Your Stories"}
                 </h1>
                 <Button 
                   variant="outline" 
                   size="sm"
                   onClick={() => setShowOnboarding(true)}
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-2 bg-white dark:bg-gray-700"
                 >
                   <Settings className="w-4 h-4" />
                   <span>Family Settings</span>
@@ -55,10 +55,12 @@ const ShareStories = () => {
           </div>
           
           {/* Dual Pane Recording & Chat Interface */}
-          <DualPaneRecordingSection onMemorySaved={handleMemorySaved} />
+          <div className="bg-gray-50 dark:bg-gray-900 py-12">
+            <DualPaneRecordingSection onMemorySaved={handleMemorySaved} />
+          </div>
           
           {/* Stories Grid Section */}
-          <div className="bg-white">
+          <div className="bg-white dark:bg-gray-800">
             <RecentFamilyStories />
           </div>
           
