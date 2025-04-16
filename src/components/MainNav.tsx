@@ -20,6 +20,7 @@ export function MainNav() {
   const [isSimplifiedView, setIsSimplifiedView] = useState(false);
   const [isVoiceActive, setIsVoiceActive] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const { toast } = useToast();
   
   const isMobile = useMediaQuery("(max-width: 767px)");
@@ -31,6 +32,17 @@ export function MainNav() {
     if (savedPreference) {
       setIsSimplifiedView(savedPreference === 'true');
     }
+  }, []);
+
+  // Handle scroll for sticky header behavior
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      setIsScrolled(scrollPosition > 10);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const toggleSimplifiedView = () => {
@@ -114,14 +126,16 @@ export function MainNav() {
 
   return (
     <>
+      {/* Sticky Top Navigation */}
       <header className={cn(
-        "nav-container transition-all duration-300",
+        "nav-container transition-all duration-300 fixed top-0 left-0 right-0 z-[100]",
         isSimplifiedView && "simplified-view",
-        isMinimized ? "h-12" : ""
+        isMinimized ? "h-12" : "",
+        isScrolled && "shadow-md bg-background/95"
       )}>
         <button
           onClick={() => setIsMinimized(prev => !prev)}
-          className="absolute top-2 right-2 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          className="absolute top-2 right-2 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors z-50"
           aria-label={isMinimized ? "Expand navigation" : "Minimize navigation"}
         >
           {isMinimized ? (
@@ -169,9 +183,23 @@ export function MainNav() {
         )}
       </header>
       
-      {isVoiceActive && <VoiceNavigationIndicator isActive={isVoiceActive} />}
+      {/* Voice Indicator - placed below the header to avoid overlap */}
+      {isVoiceActive && (
+        <div className="fixed top-20 left-0 right-0 z-20 mt-16">
+          <VoiceNavigationIndicator isActive={isVoiceActive} />
+        </div>
+      )}
       
-      {(isMobile || isTablet) && !isMinimized && (
+      {/* Content spacing to prevent overlap with fixed headers */}
+      <div className={cn(
+        "h-20",
+        isMobile && "h-24",
+        isVoiceActive && "h-36",
+        isMinimized && "h-12"
+      )} />
+      
+      {/* Sticky Bottom Action Bar */}
+      {(isMobile || isTablet) && (
         <MobileBottomNav 
           user={user} 
           navigate={navigate}
@@ -180,13 +208,6 @@ export function MainNav() {
           onVoiceToggle={toggleVoiceNavigation}
         />
       )}
-      
-      <div className={cn(
-        "h-20",
-        isMobile && "h-16",
-        isVoiceActive && "h-36",
-        isMinimized && "h-12"
-      )} />
     </>
   );
 }

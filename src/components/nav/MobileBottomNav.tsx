@@ -1,7 +1,7 @@
 
 import { Link, useLocation } from "react-router-dom";
 import { User } from "@supabase/supabase-js";
-import { Home, Mic, Archive, Users, Menu, Volume2 } from "lucide-react";
+import { Home, Mic, Archive, Users, Menu, Volume2, Plus, Camera, Bookmark, MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface MobileBottomNavProps {
@@ -49,11 +49,37 @@ export const MobileBottomNav = ({
     }
   ];
 
+  // Actions for the bottom bar
+  const quickActions = [
+    {
+      name: "Add Memory",
+      action: () => navigate("/memory-lane?add=true"),
+      icon: Plus,
+      primary: true
+    },
+    {
+      name: "Voice",
+      action: onVoiceToggle,
+      icon: Volume2,
+      active: isVoiceActive
+    },
+    {
+      name: "Chat",
+      action: () => navigate("/share-stories?chat=true"),
+      icon: MessageCircle
+    },
+    {
+      name: "Capture",
+      action: () => navigate("/share-stories?mode=capture"),
+      icon: Camera
+    }
+  ];
+
   return (
-    <div className="mobile-bottom-nav">
+    <div className="mobile-bottom-nav fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-t border-gray-200 dark:border-gray-700 shadow-lg">
       <div className={cn(
-        "flex justify-around items-center h-16",
-        isSimplifiedView && "h-20"
+        "flex justify-around items-center",
+        isSimplifiedView ? "h-20" : "h-16"
       )}>
         {navItems.map((item) => {
           const isActive = location.pathname === item.path;
@@ -90,27 +116,36 @@ export const MobileBottomNav = ({
         })}
       </div>
       
-      {onVoiceToggle && (
-        <div className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2">
+      {/* Quick Action Bar */}
+      <div className="flex items-center justify-around py-2 px-4 border-t border-gray-200 dark:border-gray-700">
+        {quickActions.map((action) => (
           <button
-            onClick={onVoiceToggle}
+            key={action.name}
+            onClick={action.action}
             className={cn(
-              "flex items-center justify-center rounded-full shadow-lg",
-              isSimplifiedView ? "h-14 w-14" : "h-12 w-12",
-              isVoiceActive 
-                ? "bg-ui-orange text-white animate-pulse" 
-                : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700"
+              "flex flex-col items-center justify-center p-2 rounded-lg transition-colors",
+              action.active 
+                ? "text-ui-orange bg-ui-orange/10" 
+                : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800",
+              action.primary && "text-ui-orange"
             )}
-            aria-label={isVoiceActive ? "Disable voice navigation" : "Enable voice navigation"}
-            aria-pressed={isVoiceActive}
+            aria-label={action.name}
           >
-            <Volume2 className={cn(
-              "h-6 w-6",
-              isSimplifiedView && "h-7 w-7"
-            )} />
+            <action.icon 
+              className={cn(
+                "h-5 w-5 mb-1",
+                action.active && "animate-pulse",
+                isSimplifiedView && "h-6 w-6",
+                action.primary && "text-ui-orange"
+              )} 
+            />
+            <span className={cn(
+              "text-xs",
+              isSimplifiedView && "text-sm"
+            )}>{action.name}</span>
           </button>
-        </div>
-      )}
+        ))}
+      </div>
     </div>
   );
 };

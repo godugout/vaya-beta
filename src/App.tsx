@@ -1,5 +1,6 @@
 
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { MainNav } from './components/MainNav';
 import Index from './pages/Index';
 import Auth from './pages/Auth';
 import MemoryLane from './pages/MemoryLane';
@@ -19,21 +20,108 @@ import { Toaster } from './components/ui/toaster';
 function App() {
   return (
     <>
+      {/* Add MainNav to all routes except specific ones */}
       <Routes>
-        <Route path="/" element={<Index />} />
         <Route path="/auth" element={<Auth />} />
-        <Route path="/memory-lane" element={<MemoryLane />} />
-        <Route path="/share-stories" element={<ShareStories />} />
-        <Route path="/family-capsules" element={<FamilyCapsules />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/account" element={<Account />} />
-        <Route path="/families" element={<Families />} />
-        <Route path="/setup-admin" element={<SetupAdmin />} />
-        <Route path="/create-family" element={<CreateFamily />} />
-        <Route path="/components-demo" element={<ComponentsDemo />} />
-        <Route path="/components" element={<ComponentsShowcase />} />
-        <Route path="/wedding-mode" element={<WeddingModeShowcase />} />
         <Route path="/design-system/*" element={<DesignSystem />} />
+        
+        {/* All other routes have the MainNav */}
+        <Route path="/" element={
+          <>
+            <MainNav />
+            <div className="page-content">
+              <Index />
+            </div>
+          </>
+        } />
+        <Route path="/memory-lane" element={
+          <>
+            <MainNav />
+            <div className="page-content">
+              <MemoryLane />
+            </div>
+          </>
+        } />
+        <Route path="/share-stories" element={
+          <>
+            <MainNav />
+            <div className="page-content">
+              <ShareStories />
+            </div>
+          </>
+        } />
+        <Route path="/family-capsules" element={
+          <>
+            <MainNav />
+            <div className="page-content">
+              <FamilyCapsules />
+            </div>
+          </>
+        } />
+        <Route path="/profile" element={
+          <>
+            <MainNav />
+            <div className="page-content">
+              <Profile />
+            </div>
+          </>
+        } />
+        <Route path="/account" element={
+          <>
+            <MainNav />
+            <div className="page-content">
+              <Account />
+            </div>
+          </>
+        } />
+        <Route path="/families" element={
+          <>
+            <MainNav />
+            <div className="page-content">
+              <Families />
+            </div>
+          </>
+        } />
+        <Route path="/setup-admin" element={
+          <>
+            <MainNav />
+            <div className="page-content">
+              <SetupAdmin />
+            </div>
+          </>
+        } />
+        <Route path="/create-family" element={
+          <>
+            <MainNav />
+            <div className="page-content">
+              <CreateFamily />
+            </div>
+          </>
+        } />
+        <Route path="/components-demo" element={
+          <>
+            <MainNav />
+            <div className="page-content">
+              <ComponentsDemo />
+            </div>
+          </>
+        } />
+        <Route path="/components" element={
+          <>
+            <MainNav />
+            <div className="page-content">
+              <ComponentsShowcase />
+            </div>
+          </>
+        } />
+        <Route path="/wedding-mode" element={
+          <>
+            <MainNav />
+            <div className="page-content">
+              <WeddingModeShowcase />
+            </div>
+          </>
+        } />
       </Routes>
       <Toaster />
     </>

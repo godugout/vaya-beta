@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -41,7 +42,7 @@
     
     --radius: 1rem;
     
-    --page-padding-top: 4rem;
+    --page-padding-top: 5rem;
     --section-padding-y: 4rem;
     --section-padding-x: 1.5rem;
     --font-family-main: 'Inter Tight', sans-serif;
@@ -134,11 +135,11 @@
 }
 
 .page-content {
-  @apply pt-20 px-4 md:px-6 lg:px-8;
+  @apply pt-24 px-4 md:px-6 lg:px-8 pb-28 md:pb-6;
 }
 
 .nav-container {
-  @apply fixed w-full z-50 bg-background/95 backdrop-blur-sm border-b border-border;
+  @apply z-50 bg-background/95 backdrop-blur-sm border-b border-border;
   height: 4rem;
 }
 

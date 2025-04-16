@@ -9,8 +9,8 @@ export const VoiceNavigationIndicator = ({ isActive }: VoiceNavigationIndicatorP
   if (!isActive) return null;
   
   return (
-    <div className="fixed top-20 left-0 right-0 z-20 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 p-3">
-      <div className="container max-w-7xl">
+    <div className="container max-w-7xl mx-auto">
+      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 p-3 rounded-lg shadow-md">
         <div className="flex items-center bg-gray-50 dark:bg-gray-800 p-3 rounded-lg animate-pulse">
           <div className="h-10 w-10 bg-ui-orange rounded-full flex items-center justify-center text-white mr-3">
             <span className="sr-only">Voice Active</span>

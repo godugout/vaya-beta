@@ -1,5 +1,4 @@
 
-import { MainNav } from "@/components/MainNav";
 import { StorytellingHero } from "@/components/home/StorytellingHero";
 import { ValueProposition } from "@/components/home/ValueProposition";
 import { VoiceRecordingDemo } from "@/components/home/VoiceRecordingDemo";
@@ -15,9 +14,7 @@ export default function Index() {
   const [showCreateFamily, setShowCreateFamily] = useState(false);
 
   return (
-    <div className="page-container min-h-screen bg-white dark:bg-gray-900">
-      <MainNav />
-      
+    <div className="min-h-screen bg-white dark:bg-gray-900">
       {/* Hero section */}
       <div className="relative bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-800">
         <StorytellingHero />
@@ -56,7 +53,7 @@ export default function Index() {
       </div>
       
       {/* Floating Action Button */}
-      <div className="fixed bottom-8 right-8 z-[50]">
+      <div className="fixed bottom-28 md:bottom-8 right-8 z-[40]">
         <Button 
           size="lg"
           onClick={() => setShowCreateFamily(true)}

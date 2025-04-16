@@ -1,6 +1,7 @@
+
 /* Base Navigation Styles */
 .nav-container {
-  @apply fixed w-full z-50 bg-background/80 backdrop-blur-sm border-b;
+  @apply w-full bg-background/80 backdrop-blur-sm border-b;
 }
 
 /* Minimized Navigation */
@@ -23,7 +24,8 @@
 }
 
 .mobile-bottom-nav {
-  @apply fixed bottom-0 left-0 right-0 bg-background/80 backdrop-blur-sm border-t z-50;
+  @apply bg-background/80 backdrop-blur-sm border-t;
+  padding-bottom: env(safe-area-inset-bottom, 0);
 }
 
 /* Navigation Items */
@@ -65,14 +67,24 @@
   }
 }
 
+/* Task Bar at Bottom */
+.task-bar {
+  @apply fixed bottom-0 left-0 right-0 bg-background/90 backdrop-blur-md border-t z-50;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.task-bar-button {
+  @apply flex flex-col items-center justify-center p-2 transition-colors;
+}
+
 /* Responsive Adjustments */
 @media (max-width: 767px) {
-  .nav-container:not(.h-12) {
-    height: 64px; /* Smaller header on mobile when not minimized */
+  .page-content {
+    padding-bottom: 5rem; /* Provide space for the bottom nav */
   }
   
   .mobile-bottom-nav {
-    height: 60px; /* Comfortable tap targets */
+    height: auto; /* Allow height to be determined by content */
   }
 }
 
