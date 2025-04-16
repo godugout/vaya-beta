@@ -1,15 +1,10 @@
-
 import React from 'react';
 import { Check, Copy } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/components/ui/use-toast';
+import { ColorSwatch as ColorSwatchType } from './color/types';
 
-interface ColorSwatchProps {
-  color: string;
-  name: string;
-  hex?: string;
-  textClass?: string;
-}
+type ColorSwatchProps = ColorSwatchType;
 
 export const ColorSwatch: React.FC<ColorSwatchProps> = ({ 
   color, 

@@ -1,10 +1,10 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ColorSwatch } from './ColorSwatch';
 import { vayaColors } from '@/styles/theme/colors/vaya';
+import { ColorScale } from './color/types';
 
-const colorScales = [
+const colorScales: ColorScale[] = [
   {
     name: "Gray",
     colors: vayaColors.gray
