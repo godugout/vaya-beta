@@ -15,14 +15,14 @@ export default function Index() {
   const [showCreateFamily, setShowCreateFamily] = useState(false);
 
   return (
-    <div className="page-container">
+    <div className="page-container bg-white dark:bg-gray-900">
       <MainNav />
       <StorytellingHero />
       <ValueProposition />
       
-      <section className="py-20 px-4 bg-white dark:bg-gray-900">
+      <section className="py-20 px-4 bg-gradient-to-b from-white to-gray-50/50 dark:from-gray-900/80 dark:to-gray-900/50">
         <div className="container mx-auto">
-          <h2 className="text-3xl md:text-4xl font-medium mb-10 text-center">
+          <h2 className="text-3xl md:text-4xl font-medium mb-10 text-center text-gray-800 dark:text-gray-100">
             Capture Memories with Your Voice
           </h2>
           <div className="w-full max-w-xl mx-auto">
