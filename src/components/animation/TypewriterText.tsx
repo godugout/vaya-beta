@@ -10,6 +10,8 @@ interface TypewriterTextProps {
   deletingSpeed?: number;
   pauseDuration?: number;
   colorful?: boolean;
+  cursorStyle?: "bar" | "underscore" | "block" | "none";
+  cursorBlinkSpeed?: number;
 }
 
 const TypewriterText: React.FC<TypewriterTextProps> = ({
@@ -18,7 +20,9 @@ const TypewriterText: React.FC<TypewriterTextProps> = ({
   typingSpeed = 150,
   deletingSpeed = 100,
   pauseDuration = 2000,
-  colorful = false
+  colorful = false,
+  cursorStyle = "bar",
+  cursorBlinkSpeed = 800
 }) => {
   const [displayText, setDisplayText] = useState('');
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
@@ -79,16 +83,24 @@ const TypewriterText: React.FC<TypewriterTextProps> = ({
     return colorClasses[currentPhraseIndex % colorClasses.length];
   };
 
+  // Get cursor style class
+  const getCursorStyleClass = () => {
+    if (cursorStyle === "none") return "typewriter-no-cursor";
+    return `typewriter-cursor-${cursorStyle}`;
+  };
+
   return (
     <span className={cn("relative inline-block", className)}>
       <span className={getCurrentColorClass()}>
         {displayText}
       </span>
-      <motion.span
-        className="ml-0.5 inline-block w-0.5 h-6 bg-current"
-        animate={{ opacity: [1, 0] }}
-        transition={{ repeat: Infinity, duration: 0.8 }}
-      />
+      {cursorStyle === "none" ? null : (
+        <motion.span
+          className={cn("ml-0.5 inline-block bg-current", getCursorStyleClass())}
+          animate={{ opacity: [1, 0] }}
+          transition={{ repeat: Infinity, duration: cursorBlinkSpeed / 1000 }}
+        />
+      )}
     </span>
   );
 };

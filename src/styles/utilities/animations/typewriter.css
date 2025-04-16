@@ -17,3 +17,35 @@
   display: inline-flex;
   min-height: 1.2em;
 }
+
+/* Cursor style variations */
+.typewriter-cursor-bar {
+  width: 0.5rem;
+  height: 1.5rem;
+}
+
+.typewriter-cursor-underscore {
+  width: 0.75rem;
+  height: 0.125rem;
+  align-self: flex-end;
+  margin-bottom: 0.125rem;
+}
+
+.typewriter-cursor-block {
+  width: 0.75rem;
+  height: 1.5rem;
+}
+
+.typewriter-no-cursor {
+  display: none;
+}
+
+/* Cursor animation keyframes */
+@keyframes typewriter-cursor {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}

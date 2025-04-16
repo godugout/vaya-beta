@@ -51,6 +51,8 @@ export const StorytellingHero = () => {
                   deletingSpeed={80}
                   pauseDuration={2500}
                   colorful={true}
+                  cursorStyle="block"
+                  cursorBlinkSpeed={600}
                 />
               </span>
             </motion.h1>
