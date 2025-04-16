@@ -43,7 +43,7 @@ export const useWizardController = (onOpenChange: (open: boolean) => void) => {
         throw new Error("User not authenticated");
       }
 
-      // Create family
+      // Create family in the families table
       const { data: family, error: familyError } = await supabase
         .from("families")
         .insert({
@@ -55,7 +55,8 @@ export const useWizardController = (onOpenChange: (open: boolean) => void) => {
 
       if (familyError) throw familyError;
 
-      // Add current user as family admin
+      // Add current user as family member with admin role
+      // This assumes a table structure with family_id and user_id columns
       const { error: memberError } = await supabase
         .from("family_members")
         .insert({
@@ -64,7 +65,12 @@ export const useWizardController = (onOpenChange: (open: boolean) => void) => {
           role: "admin",
         });
 
-      if (memberError) throw memberError;
+      if (memberError) {
+        console.error("Error adding family member:", memberError);
+        // If we can't add the member, we should delete the family to avoid orphaned records
+        await supabase.from("families").delete().match({ id: family.id });
+        throw new Error("Failed to add you as a family member");
+      }
 
       toast({
         title: "Family created!",
