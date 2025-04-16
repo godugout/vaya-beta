@@ -17,12 +17,16 @@ import { useToast } from "@/components/ui/use-toast";
 import { FamilyTreeControlPanel } from './tree/FamilyTreeControlPanel';
 import { initialNodes, initialEdges } from './tree/initialFamilyTreeData';
 import { nodeTypes, edgeTypes } from './tree/familyTreeConfig';
+import { TreeUploadDialog } from './tree/TreeUploadDialog';
+import { UploadCloud } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export const FamilyTreeMain = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [reactFlowInstance, setReactFlowInstance] = useState<any>(null);
   const [isAddMemberOpen, setIsAddMemberOpen] = useState(false);
+  const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
   const { toast } = useToast();
 
   const onConnect = useCallback(
@@ -100,40 +104,95 @@ export const FamilyTreeMain = () => {
     }
   };
 
+  const handleTreeDataParsed = (data: any) => {
+    if (data.nodes && Array.isArray(data.nodes)) {
+      setNodes(data.nodes);
+    }
+    
+    if (data.edges && Array.isArray(data.edges)) {
+      setEdges(data.edges);
+    }
+    
+    // Fit view after loading new data
+    setTimeout(() => {
+      if (reactFlowInstance) {
+        reactFlowInstance.fitView();
+      }
+    }, 100);
+  };
+
+  const isEmptyTree = nodes.length === 0;
+
   return (
-    <div className="h-[calc(100vh-160px)] md:h-[calc(100vh-200px)] rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden bg-gray-50 dark:bg-gray-900 relative">
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
-        nodeTypes={nodeTypes}
-        edgeTypes={edgeTypes}
-        onInit={setReactFlowInstance}
-        fitView
-      >
-        <Controls showInteractive={false} className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-md" />
-        <MiniMap
-          nodeStrokeWidth={3}
-          zoomable
-          pannable
-          className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-md"
-        />
-        <Background color="#aaa" gap={16} />
-        
-        <Panel position="top-left" className="p-4">
-          <FamilyTreeControlPanel 
-            handleZoomIn={handleZoomIn}
-            handleZoomOut={handleZoomOut}
-            handleFitView={handleFitView}
-            isAddMemberOpen={isAddMemberOpen}
-            setIsAddMemberOpen={setIsAddMemberOpen}
-            handleAddMember={handleAddMember}
-            handleExportTree={handleExportTree}
+    <div className="h-[calc(100vh-160px)] md:h-[calc(100vh-200px)] rounded-lg border border-gray-700 shadow-sm overflow-hidden bg-gray-900 relative">
+      {isEmptyTree ? (
+        <div className="h-full flex flex-col items-center justify-center p-8">
+          <div className="bg-gray-800/50 p-8 rounded-xl border border-gray-700 max-w-md text-center">
+            <UploadCloud className="w-16 h-16 mx-auto mb-4 text-blue-400 opacity-70" />
+            <h3 className="text-xl font-semibold mb-2 text-white">Create Your Family Tree</h3>
+            <p className="text-gray-400 mb-6">
+              Upload a spreadsheet or JSON file to quickly create your family tree, or add members manually.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Button 
+                onClick={() => setIsUploadDialogOpen(true)}
+                className="bg-gradient-to-r from-blue-600 to-purple-600"
+                size="lg"
+              >
+                <UploadCloud className="w-4 h-4 mr-2" />
+                Upload File
+              </Button>
+              <Button 
+                onClick={() => setIsAddMemberOpen(true)}
+                variant="outline"
+                size="lg"
+              >
+                Add Manually
+              </Button>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+          nodeTypes={nodeTypes}
+          edgeTypes={edgeTypes}
+          onInit={setReactFlowInstance}
+          fitView
+        >
+          <Controls showInteractive={false} className="bg-gray-800 border border-gray-700 shadow-md" />
+          <MiniMap
+            nodeStrokeWidth={3}
+            zoomable
+            pannable
+            className="bg-gray-800 border border-gray-700 shadow-md"
           />
-        </Panel>
-      </ReactFlow>
+          <Background color="#444" gap={16} />
+          
+          <Panel position="top-left" className="p-4">
+            <FamilyTreeControlPanel 
+              handleZoomIn={handleZoomIn}
+              handleZoomOut={handleZoomOut}
+              handleFitView={handleFitView}
+              isAddMemberOpen={isAddMemberOpen}
+              setIsAddMemberOpen={setIsAddMemberOpen}
+              handleAddMember={handleAddMember}
+              handleExportTree={handleExportTree}
+              onOpenUploadDialog={() => setIsUploadDialogOpen(true)}
+            />
+          </Panel>
+        </ReactFlow>
+      )}
+      
+      <TreeUploadDialog
+        open={isUploadDialogOpen}
+        onOpenChange={setIsUploadDialogOpen}
+        onDataParsed={handleTreeDataParsed}
+      />
     </div>
   );
 };

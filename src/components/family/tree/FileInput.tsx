@@ -4,9 +4,15 @@ import { UploadCloud } from 'lucide-react';
 
 interface FileInputProps {
   onFileSelected: (file: File) => void;
+  acceptedFileTypes?: string;
+  className?: string;
 }
 
-export const FileInput = ({ onFileSelected }: FileInputProps) => {
+export const FileInput = ({ 
+  onFileSelected, 
+  acceptedFileTypes = ".csv,.json,.xlsx", 
+  className = ""
+}: FileInputProps) => {
   const [dragActive, setDragActive] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -45,8 +51,8 @@ export const FileInput = ({ onFileSelected }: FileInputProps) => {
   return (
     <div 
       className={`flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer transition-colors ${
-        dragActive ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20' : 'border-gray-300 dark:border-gray-700'
-      }`}
+        dragActive ? 'border-blue-500 bg-blue-50/10' : 'border-gray-600/40'
+      } ${className}`}
       onDragEnter={handleDrag}
       onDragLeave={handleDrag}
       onDragOver={handleDrag}
@@ -54,11 +60,11 @@ export const FileInput = ({ onFileSelected }: FileInputProps) => {
       onClick={onButtonClick}
     >
       <div className="flex flex-col items-center justify-center pt-5 pb-6">
-        <UploadCloud className="h-8 w-8 mb-2 text-gray-500 dark:text-gray-400" />
-        <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+        <UploadCloud className={`h-8 w-8 mb-2 ${dragActive ? 'text-blue-400' : 'text-gray-400'}`} />
+        <p className="mb-2 text-sm text-gray-300">
           <span className="font-semibold">Click to upload</span> or drag and drop
         </p>
-        <p className="text-xs text-gray-500 dark:text-gray-400">
+        <p className="text-xs text-gray-400">
           CSV, JSON, or Excel files
         </p>
       </div>
@@ -67,7 +73,7 @@ export const FileInput = ({ onFileSelected }: FileInputProps) => {
         id="dropzone-file"
         type="file"
         className="hidden"
-        accept=".csv,.json,.xlsx"
+        accept={acceptedFileTypes}
         onChange={handleChange}
       />
     </div>
