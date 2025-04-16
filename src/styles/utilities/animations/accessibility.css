@@ -39,6 +39,44 @@
   }
 }
 
+/* Mobile-specific reduced animations */
+@media (max-width: 768px) {
+  .animate-float,
+  .animate-pulse,
+  .animate-wave,
+  .animate-bounce {
+    animation-duration: 3s; /* Slower animations */
+    animation-timing-function: linear; /* Simpler timing function */
+  }
+  
+  .animate-ripple,
+  .animate-shine {
+    animation-duration: 2s;
+  }
+  
+  .character-happy,
+  .character-excited,
+  .character-thinking,
+  .character-surprised {
+    animation-duration: 1.5s;
+  }
+  
+  .hover-scale:hover,
+  .hover-lift:hover {
+    transform: scale(1.02); /* Reduce scale effect */
+  }
+  
+  .hover-glow:hover {
+    filter: drop-shadow(0 0 3px var(--color-ui-orange)); /* Reduce glow intensity */
+  }
+  
+  .animate-fade-in,
+  .animate-slide-in-right,
+  .animate-reveal {
+    animation-duration: 0.3s; /* Faster transitions */
+  }
+}
+
 [data-motion="reduced"] .animate-float,
 [data-motion="reduced"] .animate-pulse,
 [data-motion="reduced"] .animate-wave,
@@ -54,11 +92,32 @@
   animation: none;
 }
 
+/* Style for devices with reduced motion */
+[data-mobile-motion="reduced"] .animate-float,
+[data-mobile-motion="reduced"] .animate-pulse,
+[data-mobile-motion="reduced"] .animate-wave,
+[data-mobile-motion="reduced"] .animate-bounce,
+[data-mobile-motion="reduced"] .animate-shine,
+[data-mobile-motion="reduced"] .animate-ripple {
+  animation: none;
+}
+
+[data-mobile-motion="reduced"] .hover-scale:hover,
+[data-mobile-motion="reduced"] .hover-lift:hover,
+[data-mobile-motion="reduced"] .hover-glow:hover,
+[data-mobile-motion="reduced"] .hover-heartbeat:hover,
+[data-mobile-motion="reduced"] .hover-shake:hover {
+  transform: none;
+  filter: none;
+  animation: none;
+}
+
 [data-motion="none"] * {
   transition: none !important;
   animation: none !important;
 }
 
-[data-motion="reduced"] .typewriter::after {
+[data-motion="reduced"] .typewriter::after,
+[data-mobile-motion="reduced"] .typewriter::after {
   animation: none;
 }

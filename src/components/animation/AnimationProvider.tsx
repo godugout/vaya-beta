@@ -1,5 +1,6 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useMediaQuery } from '@/hooks/use-media-query';
 
 type AnimationPreference = 'full' | 'reduced' | 'none';
 
@@ -7,6 +8,7 @@ interface AnimationContextType {
   preference: AnimationPreference;
   setPreference: (pref: AnimationPreference) => void;
   isReduced: boolean;
+  isMobile: boolean;
   duration: {
     fast: number;
     standard: number;
@@ -38,6 +40,7 @@ const AnimationContext = createContext<AnimationContextType>({
   preference: 'full',
   setPreference: () => {},
   isReduced: false,
+  isMobile: false,
   duration: defaultDuration,
   easing: defaultEasing
 });
@@ -58,14 +61,23 @@ export const AnimationProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
   const [preference, setPreference] = useState<AnimationPreference>(getInitialPreference);
   const [isReduced, setIsReduced] = useState(false);
+  
+  // Use the media query hook to detect mobile screens
+  const isMobile = useMediaQuery('(max-width: 768px)');
 
   useEffect(() => {
     localStorage.setItem('vaya-animation-preference', preference);
     
-    setIsReduced(preference === 'reduced' || preference === 'none');
+    setIsReduced(preference === 'reduced' || preference === 'none' || isMobile);
     
+    // Set data attribute for CSS to recognize
     document.documentElement.setAttribute('data-motion', preference);
-  }, [preference]);
+    if (isMobile) {
+      document.documentElement.setAttribute('data-mobile-motion', 'reduced');
+    } else {
+      document.documentElement.removeAttribute('data-mobile-motion');
+    }
+  }, [preference, isMobile]);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -84,6 +96,7 @@ export const AnimationProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     preference,
     setPreference,
     isReduced,
+    isMobile,
     duration: defaultDuration,
     easing: defaultEasing
   };

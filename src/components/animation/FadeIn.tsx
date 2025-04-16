@@ -19,23 +19,31 @@ export const FadeIn: React.FC<FadeInProps> = ({
   direction = 'none',
   distance = 20,
 }) => {
-  const { isReduced, duration: durationPresets, easing } = useAnimation();
+  const { isReduced, isMobile, duration: durationPresets, easing } = useAnimation();
 
   // Skip animation if reduced motion is preferred
   if (isReduced) {
     return <div className={className}>{children}</div>;
   }
 
+  // Adjust distance for mobile
+  const mobileAdjustedDistance = isMobile ? Math.min(distance, 10) : distance;
+
   const getInitialPosition = () => {
+    if (isMobile) {
+      // Simplified animations for mobile
+      return direction === 'none' ? { opacity: 0 } : { opacity: 0, y: 10 };
+    }
+    
     switch (direction) {
       case 'up':
-        return { opacity: 0, y: distance };
+        return { opacity: 0, y: mobileAdjustedDistance };
       case 'down':
-        return { opacity: 0, y: -distance };
+        return { opacity: 0, y: -mobileAdjustedDistance };
       case 'left':
-        return { opacity: 0, x: distance };
+        return { opacity: 0, x: mobileAdjustedDistance };
       case 'right':
-        return { opacity: 0, x: -distance };
+        return { opacity: 0, x: -mobileAdjustedDistance };
       case 'none':
       default:
         return { opacity: 0 };
@@ -56,15 +64,20 @@ export const FadeIn: React.FC<FadeInProps> = ({
     }
   };
 
+  // Adjust animation duration for mobile
+  const adjustedDuration = isMobile
+    ? Math.min((duration || durationPresets.standard) * 0.7, 250) / 1000
+    : (duration || durationPresets.standard) / 1000;
+
   return (
     <motion.div
       className={className}
       initial={getInitialPosition()}
       animate={getFinalPosition()}
       transition={{
-        duration: duration || durationPresets.standard / 1000,
-        delay,
-        ease: easing.standard // Using the array format passed from context
+        duration: adjustedDuration,
+        delay: isMobile ? Math.min(delay * 0.5, 0.3) : delay,
+        ease: isMobile ? "easeOut" : easing.standard // Simpler easing for mobile
       }}
     >
       {children}
