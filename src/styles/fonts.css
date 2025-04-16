@@ -1,7 +1,22 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Georgia&family=Architects+Daughter&display=swap');
+/**
+ * Central Font Import Management
+ * 
+ * This file centralizes all font imports and declarations.
+ * It's structured to optimize loading performance with:
+ * - Core fonts (always loaded)
+ * - Extended fonts (loaded for specific features)
+ * - Self-hosted fonts (premium features)
+ */
 
-/* TT Hoves Pro font */
+/* Core fonts - Always loaded */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+/* Extended fonts - Used for specific features */
+@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Georgia&display=swap');
+
+/* TT Hoves Pro font - Self-hosted */
 @font-face {
   font-family: 'TT Hoves Pro';
   src: url('/fonts/TTHovesPro-Regular.woff2') format('woff2');
@@ -26,7 +41,7 @@
   font-display: swap;
 }
 
-/* Borna font */
+/* Borna font - Self-hosted */
 @font-face {
   font-family: 'Borna';
   src: url('/fonts/Borna-Regular.woff2') format('woff2');
@@ -57,4 +72,12 @@
   font-weight: 700;
   font-style: normal;
   font-display: swap;
+}
+
+/* Font loading optimization attributes */
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

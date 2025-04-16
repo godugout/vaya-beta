@@ -1,0 +1,311 @@
+
+/**
+ * Typography Utility Classes
+ * 
+ * Provides reusable CSS classes for typography across the application.
+ * These classes are generated from the font configuration in fonts.ts.
+ */
+
+/* Font family utility classes */
+.font-main {
+  font-family: var(--font-family-main);
+}
+
+.font-heading {
+  font-family: var(--font-family-heading);
+}
+
+.font-mono {
+  font-family: var(--font-family-mono);
+}
+
+.font-handwritten {
+  font-family: var(--font-family-architects-daughter);
+}
+
+.font-story {
+  font-family: var(--font-family-story);
+}
+
+/* Font weight utility classes */
+.font-light {
+  font-weight: var(--font-weight-light);
+}
+
+.font-normal {
+  font-weight: var(--font-weight-normal);
+}
+
+.font-medium {
+  font-weight: var(--font-weight-medium);
+}
+
+.font-semibold {
+  font-weight: var(--font-weight-semibold);
+}
+
+.font-bold {
+  font-weight: var(--font-weight-bold);
+}
+
+/* Text size utility classes */
+.text-xs {
+  font-size: var(--font-size-xs);
+  line-height: 1.25rem;
+}
+
+.text-sm {
+  font-size: var(--font-size-sm);
+  line-height: 1.5rem;
+}
+
+.text-base {
+  font-size: var(--font-size-base);
+  line-height: 1.5rem;
+}
+
+.text-lg {
+  font-size: var(--font-size-lg);
+  line-height: 1.75rem;
+}
+
+.text-xl {
+  font-size: var(--font-size-xl);
+  line-height: 2rem;
+}
+
+.text-2xl {
+  font-size: var(--font-size-2xl);
+  line-height: 2.25rem;
+}
+
+.text-3xl {
+  font-size: var(--font-size-3xl);
+  line-height: 2.5rem;
+}
+
+.text-4xl {
+  font-size: var(--font-size-4xl);
+  line-height: 2.75rem;
+}
+
+.text-5xl {
+  font-size: var(--font-size-5xl);
+  line-height: 3rem;
+}
+
+.text-6xl {
+  font-size: var(--font-size-6xl);
+  line-height: 3.75rem;
+}
+
+/* Line height utility classes */
+.leading-none {
+  line-height: var(--line-height-none);
+}
+
+.leading-tight {
+  line-height: var(--line-height-tight);
+}
+
+.leading-snug {
+  line-height: var(--line-height-snug);
+}
+
+.leading-normal {
+  line-height: var(--line-height-normal);
+}
+
+.leading-relaxed {
+  line-height: var(--line-height-relaxed);
+}
+
+.leading-loose {
+  line-height: var(--line-height-loose);
+}
+
+/* Letter spacing utility classes */
+.tracking-tighter {
+  letter-spacing: var(--letter-spacing-tighter);
+}
+
+.tracking-tight {
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.tracking-normal {
+  letter-spacing: var(--letter-spacing-normal);
+}
+
+.tracking-wide {
+  letter-spacing: var(--letter-spacing-wide);
+}
+
+.tracking-wider {
+  letter-spacing: var(--letter-spacing-wider);
+}
+
+.tracking-widest {
+  letter-spacing: var(--letter-spacing-widest);
+}
+
+/* Composite text style utility classes */
+.text-style-h1 {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-5xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.text-style-h2 {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.text-style-h3 {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.text-style-h4 {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+}
+
+.text-style-h5 {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+}
+
+.text-style-h6 {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+}
+
+.text-style-body-large {
+  font-family: var(--font-family-main);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-relaxed);
+}
+
+.text-style-body {
+  font-family: var(--font-family-main);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-relaxed);
+}
+
+.text-style-body-small {
+  font-family: var(--font-family-main);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+.text-style-button {
+  font-family: var(--font-family-main);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-none);
+}
+
+.text-style-caption {
+  font-family: var(--font-family-main);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+.text-style-label {
+  font-family: var(--font-family-main);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-tight);
+}
+
+.text-style-story {
+  font-family: var(--font-family-story);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-loose);
+}
+
+.text-style-handwritten {
+  font-family: var(--font-family-architects-daughter);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-relaxed);
+}
+
+.text-style-monospace {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+/* Responsive text size modifiers */
+@media (max-width: 640px) {
+  .sm\:text-style-h1 {
+    font-size: var(--font-size-4xl);
+  }
+  
+  .sm\:text-style-h2 {
+    font-size: var(--font-size-3xl);
+  }
+  
+  .sm\:text-style-h3 {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .sm\:text-style-h4 {
+    font-size: var(--font-size-xl);
+  }
+  
+  .sm\:text-style-h5 {
+    font-size: var(--font-size-lg);
+  }
+  
+  .sm\:text-style-h6 {
+    font-size: var(--font-size-base);
+  }
+}
+
+/* Ensure contrast and readability */
+.text-with-shadow {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.text-outline {
+  text-shadow: 
+    -1px -1px 0 rgba(0, 0, 0, 0.1),
+    1px -1px 0 rgba(0, 0, 0, 0.1),
+    -1px 1px 0 rgba(0, 0, 0, 0.1),
+    1px 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Accessibility & high contrast mode improvements */
+@media (forced-colors: active) {
+  .text-style-h1,
+  .text-style-h2,
+  .text-style-h3,
+  .text-style-h4,
+  .text-style-h5,
+  .text-style-h6 {
+    font-weight: bold;
+  }
+}
