@@ -79,7 +79,7 @@ export const FAQ = () => {
   };
 
   return (
-    <section className="py-20">
+    <section className="py-20 bg-gray-100 dark:bg-gray-800">
       <div className="container mx-auto px-4 max-w-3xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -96,7 +96,7 @@ export const FAQ = () => {
           </p>
         </motion.div>
 
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
+        <div className="bg-white dark:bg-gray-700 rounded-xl shadow-lg p-8">
           {faqItems.map((item, index) => (
             <FAQItem
               key={index}

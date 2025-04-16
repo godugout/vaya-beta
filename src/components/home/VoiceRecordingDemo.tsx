@@ -59,7 +59,7 @@ export const VoiceRecordingDemo = () => {
   };
   
   return (
-    <Card className="p-6 bg-white shadow-md rounded-2xl border border-gray-100">
+    <Card className="p-6 bg-white dark:bg-gray-800 shadow-md rounded-2xl border border-gray-200 dark:border-gray-700">
       <div className="space-y-6">
         {/* Waveform visualization */}
         <div className="h-20 flex items-center justify-center">
@@ -69,8 +69,8 @@ export const VoiceRecordingDemo = () => {
                 key={index}
                 className={`w-1.5 rounded-full ${
                   isRecording || isPlaying
-                    ? "bg-vaya-stories"
-                    : "bg-gray-300"
+                    ? "bg-autumn"
+                    : "bg-gray-300 dark:bg-gray-600"
                 }`}
                 style={{
                   height: `${amplitude * 100}%`,
@@ -92,7 +92,7 @@ export const VoiceRecordingDemo = () => {
         </div>
         
         {/* Timer display */}
-        <div className="text-center text-lg font-medium text-vaya-text-primary">
+        <div className="text-center text-lg font-medium text-gray-900 dark:text-gray-200">
           {formatTime(recordingTime)}
         </div>
         
@@ -103,7 +103,7 @@ export const VoiceRecordingDemo = () => {
               className={`rounded-full w-16 h-16 flex items-center justify-center p-0 ${
                 isRecording
                   ? "bg-red-500 hover:bg-red-600"
-                  : "bg-vaya-stories hover:bg-vaya-stories/90"
+                  : "bg-autumn hover:bg-autumn/90"
               }`}
               onClick={isRecording ? handleStopRecording : handleStartRecording}
             >
@@ -115,7 +115,7 @@ export const VoiceRecordingDemo = () => {
             </Button>
           ) : (
             <Button
-              className="rounded-full w-16 h-16 flex items-center justify-center p-0 bg-vaya-accent-turquoise hover:bg-vaya-accent-turquoise/90"
+              className="rounded-full w-16 h-16 flex items-center justify-center p-0 bg-water hover:bg-water/90"
               onClick={handlePlayback}
             >
               {isPlaying ? (
@@ -133,7 +133,7 @@ export const VoiceRecordingDemo = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="bg-gray-50 p-4 rounded-xl text-sm text-vaya-text-secondary font-story"
+            className="bg-gray-50 dark:bg-gray-700 p-4 rounded-xl text-sm text-gray-700 dark:text-gray-300 font-story"
           >
             <p className="italic">
               "I remember my grandmother's kitchen always smelled like cinnamon and fresh bread. Every Sunday, she would teach me the family recipes that had been passed down for generations..."

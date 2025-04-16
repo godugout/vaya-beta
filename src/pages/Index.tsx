@@ -15,11 +15,11 @@ export default function Index() {
   const [showCreateFamily, setShowCreateFamily] = useState(false);
 
   return (
-    <div className="page-container bg-gray-50 dark:bg-gray-900">
+    <div className="page-container min-h-screen bg-white dark:bg-gray-900">
       <MainNav />
       
       {/* Hero section */}
-      <div className="bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-800">
+      <div className="relative bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-800">
         <StorytellingHero />
       </div>
       
@@ -34,19 +34,19 @@ export default function Index() {
           <h2 className="text-3xl md:text-4xl font-medium mb-10 text-center text-gray-800 dark:text-gray-100">
             Capture Memories with Your Voice
           </h2>
-          <div className="w-full max-w-xl mx-auto bg-white/80 dark:bg-gray-800/50 p-6 rounded-xl shadow-lg">
+          <div className="w-full max-w-xl mx-auto">
             <VoiceRecordingDemo />
           </div>
         </div>
       </section>
       
       {/* Features section with proper background */}
-      <div className="bg-gradient-to-b from-gray-100 to-white dark:from-gray-800 dark:to-gray-900">
+      <div className="bg-gray-100 dark:bg-gray-800">
         <Features />
       </div>
       
       {/* Testimonials with better contrast */}
-      <div className="bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-800">
+      <div className="bg-gray-50 dark:bg-gray-900">
         <Testimonials />
       </div>
       

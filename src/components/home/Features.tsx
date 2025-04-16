@@ -17,15 +17,15 @@ const Feature = ({ icon, title, description, color, delay }: FeatureProps) => {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay }}
       viewport={{ once: true }}
-      className="flex flex-col items-start p-6 bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300"
+      className="flex flex-col items-start p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow duration-300"
     >
       <div className={`p-3 rounded-full mb-4 ${color}`}>
         {icon}
       </div>
-      <h3 className="text-xl font-heading font-semibold text-vaya-text-primary mb-2">
+      <h3 className="text-xl font-heading font-semibold text-gray-900 dark:text-white mb-2">
         {title}
       </h3>
-      <p className="text-vaya-text-secondary">
+      <p className="text-gray-700 dark:text-gray-300">
         {description}
       </p>
     </motion.div>
@@ -38,35 +38,35 @@ export const Features = () => {
       icon: <Mic className="h-6 w-6 text-white" />,
       title: "Voice-First Story Capture",
       description: "Record family stories with ease using our intuitive voice recording interface.",
-      color: "bg-vaya-stories",
+      color: "bg-autumn",
       delay: 0.1,
     },
     {
       icon: <Users className="h-6 w-6 text-white" />,
       title: "Family Tree Integration",
       description: "Organize stories within an interactive family tree that grows with your connections.",
-      color: "bg-vaya-home",
+      color: "bg-forest",
       delay: 0.2,
     },
     {
       icon: <Clock className="h-6 w-6 text-white" />,
       title: "Memory Capsules",
       description: "Create multimedia time capsules to preserve your most meaningful family moments.",
-      color: "bg-vaya-accent-turquoise",
+      color: "bg-water",
       delay: 0.3,
     },
     {
       icon: <Sparkles className="h-6 w-6 text-white" />,
       title: "AI Story Assistant",
       description: "Narra, our AI companion, helps you capture deeper and more meaningful stories.",
-      color: "bg-vaya-accent-yellow",
+      color: "bg-leaf",
       delay: 0.4,
     },
     {
       icon: <BookOpen className="h-6 w-6 text-white" />,
       title: "Wedding Event Mode",
       description: "Capture multiple generations of stories at once during special family gatherings.",
-      color: "bg-vaya-accent-coral",
+      color: "bg-sand",
       delay: 0.5,
     },
     {
@@ -79,7 +79,7 @@ export const Features = () => {
   ];
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 bg-gray-100 dark:bg-gray-900">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -88,10 +88,10 @@ export const Features = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-heading font-semibold text-vaya-text-primary mb-4">
+          <h2 className="text-3xl md:text-4xl font-heading font-semibold text-gray-900 dark:text-white mb-4">
             How Vaya Preserves Your Family Legacy
           </h2>
-          <p className="text-lg text-vaya-text-secondary max-w-2xl mx-auto">
+          <p className="text-lg text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
             Our platform combines voice recording, AI assistance, and thoughtful organization to keep your family stories alive for generations.
           </p>
         </motion.div>
