@@ -51,7 +51,7 @@ export const StorytellingHero = () => {
         <div className="max-w-4xl mx-auto text-center">
           <FadeIn className="space-y-6">
             <motion.h1 
-              className="text-3xl sm:text-4xl md:text-5xl font-heading font-bold leading-tight font-architects-daughter"
+              className="text-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ 
@@ -59,8 +59,8 @@ export const StorytellingHero = () => {
                 ease: isReduced || isMobile ? "easeOut" : "easeInOut"
               }}
             >
-              Every family has 
-              <span className="block">
+              <span className="text-xl sm:text-2xl font-architects-daughter block mb-4">Every family has</span>
+              <span className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight block mt-2">
                 <TypewriterText 
                   phrases={familyPhrases} 
                   typingSpeed={isMobile ? 80 : 100}
