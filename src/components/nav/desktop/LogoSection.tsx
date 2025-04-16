@@ -1,7 +1,7 @@
 
 import { useNavigate } from "react-router-dom";
 
-export const Logo = () => {
+export const LogoSection = () => {
   const navigate = useNavigate();
   
   return (

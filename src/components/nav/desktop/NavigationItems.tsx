@@ -3,12 +3,12 @@ import { User } from "@supabase/supabase-js";
 import { NavButton } from "../NavButton";
 import { Home, Mic, Image, Archive, Users } from "lucide-react";
 
-interface MainNavItemsProps {
+interface NavigationItemsProps {
   user: User | null;
   isSimplifiedView: boolean;
 }
 
-export const MainNavItems = ({ user, isSimplifiedView }: MainNavItemsProps) => {
+export const NavigationItems = ({ user, isSimplifiedView }: NavigationItemsProps) => {
   return (
     <nav className="flex items-center gap-1">
       <NavButton 

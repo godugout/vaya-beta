@@ -1,0 +1,47 @@
+
+/* Desktop Navigation Styles */
+.desktop-nav {
+  @apply hidden lg:flex items-center justify-between px-6 py-3;
+}
+
+/* Logo and Branding */
+.nav-logo {
+  @apply flex items-center gap-2 transition-opacity hover:opacity-90;
+}
+
+/* Navigation Menu */
+.desktop-nav-items {
+  @apply flex items-center gap-1;
+}
+
+/* User Controls Area */
+.user-controls {
+  @apply flex items-center gap-2;
+}
+
+/* Voice Navigation Button */
+.voice-control-button {
+  @apply rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring;
+}
+
+.voice-control-button.active {
+  @apply bg-black/10 dark:bg-white/10;
+}
+
+/* Avatar and user menu */
+.user-avatar-button {
+  @apply relative rounded-full border-2 transition-colors;
+}
+
+/* Responsive adjustments */
+@media (min-width: 1280px) {
+  .desktop-nav {
+    @apply px-8;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .desktop-nav * {
+    @apply transition-none;
+  }
+}

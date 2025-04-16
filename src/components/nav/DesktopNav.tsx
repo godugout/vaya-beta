@@ -1,8 +1,8 @@
 
 import { User } from "@supabase/supabase-js";
-import { Logo } from "./desktop/Logo";
-import { MainNavItems } from "./desktop/MainNavItems";
-import { RightControls } from "./desktop/RightControls";
+import { LogoSection } from "./desktop/LogoSection";
+import { NavigationItems } from "./desktop/NavigationItems";
+import { UserControls } from "./desktop/UserControls";
 
 interface DesktopNavProps {
   user: User | null;
@@ -26,12 +26,12 @@ export const DesktopNav = ({
       <div className="flex items-center justify-between">
         {/* Logo and main navigation */}
         <div className="flex items-center gap-8">
-          <Logo />
-          <MainNavItems user={user} isSimplifiedView={isSimplifiedView} />
+          <LogoSection />
+          <NavigationItems user={user} isSimplifiedView={isSimplifiedView} />
         </div>
         
         {/* Right side controls */}
-        <RightControls 
+        <UserControls 
           user={user}
           handleSignOut={handleSignOut}
           navigate={navigate}
