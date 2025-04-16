@@ -1,6 +1,6 @@
 
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -27,12 +27,14 @@ export const BreadcrumbNav = ({ isSimplifiedView = false }: BreadcrumbNavProps) 
   if (pathSegments.length === 0) return null;
   
   return (
-    <div className="container max-w-7xl py-3">
+    <div className="mt-2 pt-1">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbLink href="/">
-              <Home className={cn("h-4 w-4", isSimplifiedView && "h-5 w-5")} />
+            <BreadcrumbLink asChild>
+              <Link to="/">
+                <Home className={cn("h-4 w-4", isSimplifiedView && "h-5 w-5")} />
+              </Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           
@@ -57,13 +59,14 @@ export const BreadcrumbNav = ({ isSimplifiedView = false }: BreadcrumbNavProps) 
                       {formattedSegment}
                     </BreadcrumbPage>
                   ) : (
-                    <BreadcrumbLink 
-                      href={segmentPath}
+                    <BreadcrumbLink asChild
                       className={cn(
                         isSimplifiedView && "text-base"
                       )}
                     >
-                      {formattedSegment}
+                      <Link to={segmentPath}>
+                        {formattedSegment}
+                      </Link>
                     </BreadcrumbLink>
                   )}
                 </BreadcrumbItem>

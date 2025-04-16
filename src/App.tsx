@@ -15,12 +15,10 @@ import ComponentsShowcase from './pages/ComponentsShowcase';
 import WeddingModeShowcase from './components/wedding-mode/WeddingModeShowcase';
 import DesignSystem from './pages/DesignSystem';
 import { Toaster } from './components/ui/toaster';
-import { MainNav } from './components/MainNav';
 
 function App() {
   return (
     <>
-      <MainNav />
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/auth" element={<Auth />} />

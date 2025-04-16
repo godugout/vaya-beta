@@ -1,5 +1,6 @@
+
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 import { DesktopNav } from "./nav/DesktopNav";
@@ -14,6 +15,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 
 export function MainNav() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [user, setUser] = useState<User | null>(null);
   const [isSimplifiedView, setIsSimplifiedView] = useState(false);
   const [isVoiceActive, setIsVoiceActive] = useState(false);
@@ -100,6 +102,16 @@ export function MainNav() {
     navigate("/auth");
   };
 
+  // Add a class to the body to help with styling based on the current page
+  useEffect(() => {
+    const path = location.pathname.split('/')[1] || 'index';
+    document.body.setAttribute('data-route', path);
+    
+    return () => {
+      document.body.removeAttribute('data-route');
+    };
+  }, [location]);
+
   return (
     <>
       <header className={cn(
@@ -109,7 +121,7 @@ export function MainNav() {
       )}>
         <button
           onClick={() => setIsMinimized(prev => !prev)}
-          className="absolute top-2 right-2 p-2 rounded-full hover:bg-accent/50 transition-colors"
+          className="absolute top-2 right-2 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
           aria-label={isMinimized ? "Expand navigation" : "Minimize navigation"}
         >
           {isMinimized ? (
@@ -149,6 +161,12 @@ export function MainNav() {
             onSettingsToggle={toggleSimplifiedView}
           />
         )}
+        
+        {!isMinimized && (
+          <div className="px-4 sm:px-6 lg:px-8">
+            <BreadcrumbNav isSimplifiedView={isSimplifiedView} />
+          </div>
+        )}
       </header>
       
       {isVoiceActive && <VoiceNavigationIndicator isActive={isVoiceActive} />}
@@ -162,16 +180,6 @@ export function MainNav() {
           onVoiceToggle={toggleVoiceNavigation}
         />
       )}
-      
-      <div className={cn(
-        "mt-20",
-        isMobile && "mt-16",
-        isVoiceActive && "pt-16",
-        isMinimized && "mt-12",
-        isSimplifiedView && "simplified-view"
-      )}>
-        <BreadcrumbNav isSimplifiedView={isSimplifiedView} />
-      </div>
       
       <div className={cn(
         "h-20",

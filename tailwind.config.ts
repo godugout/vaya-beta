@@ -39,21 +39,16 @@ export default {
         
         // Dark mode specific colors
         "dark-background": {
-          DEFAULT: "#0C2A20",
-          surface: "#133830",
-          elevated: "#1B4A40",
-          inset: "#0A211A",
-          orange: "#331F17",
-          red: "#2C1517",
-          green: "#192D1D",
-          purple: "#261E36",
+          DEFAULT: "#121212",
+          surface: "#1e1e1e",
+          elevated: "#282828",
+          inset: "#0d0d0d",
         },
         
         "dark-text": {
-          primary: "#F8F9FA",
-          secondary: "#A0AEC0",
+          primary: "#ffffff",
+          secondary: "#a0aec0",
           tertiary: "#718096",
-          highlight: "#94C11E",
         },
         
         border: "hsl(var(--border))",
@@ -91,9 +86,9 @@ export default {
         },
       },
       fontFamily: {
-        sans: ["var(--font-body)", ...fontFamily.sans],
-        heading: ["var(--font-heading)", ...fontFamily.sans],
-        accent: ["var(--font-accent)", ...fontFamily.sans],
+        sans: ["var(--font-family-main)", ...fontFamily.sans],
+        heading: ["var(--font-family-heading)", ...fontFamily.sans],
+        mono: ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"],
       },
       borderRadius: {
         lg: "var(--radius-lg)",
@@ -104,9 +99,6 @@ export default {
         "forest-stream": "url('/lovable-uploads/bc413ab4-a49c-4baa-8d14-e2f0d6b00ac5.png')",
         "gradient-coral": "linear-gradient(135deg, #FF7675 0%, #FFA05A 100%)",
         "gradient-purple": "linear-gradient(135deg, #6C5CE7 0%, #8F84EB 100%)",
-        "gradient-forest": "linear-gradient(135deg, #154734 0%, #94C11E 100%)",
-        "gradient-water": "linear-gradient(135deg, #449EBA 0%, #86CAE9 100%)",
-        "gradient-autumn": "linear-gradient(135deg, #F2992D 0%, #D94843 100%)",
       },
       animation: {
         "wave-pattern": "wavePattern 50s linear infinite",

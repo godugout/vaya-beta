@@ -10,14 +10,36 @@
 @import './styles/utilities/index.css';
 @import './styles/theme/dark.css';
 
-@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap');
 
 @layer base {
   :root {
-    --page-padding-top: 8rem;
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 262.1 83.3% 57.8%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 220 14.3% 95.9%;
+    --secondary-foreground: 220.9 39.3% 11%;
+    --muted: 220 14.3% 95.9%;
+    --muted-foreground: 220 8.9% 46.1%;
+    --accent: 220 14.3% 95.9%;
+    --accent-foreground: 220.9 39.3% 11%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 262.1 83.3% 57.8%;
+    --radius: 0.5rem;
+    
+    --page-padding-top: 5rem;
     --section-padding-y: 8rem;
     --section-padding-x: 2rem;
     --font-family-main: 'Inter Tight', sans-serif;
+    --font-family-heading: 'Montserrat', sans-serif;
     
     /* Base radius values for better consistency */
     --radius-sm: 0.25rem;
@@ -31,8 +53,30 @@
     --transition-slow: 500ms;
   }
 
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 263.4 70% 50.4%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 215 27.9% 16.9%;
+    --secondary-foreground: 210 20% 98%;
+    --muted: 215 27.9% 16.9%;
+    --muted-foreground: 217.9 10.6% 64.9%;
+    --accent: 215 27.9% 16.9%;
+    --accent-foreground: 210 20% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 215 27.9% 16.9%;
+    --input: 215 27.9% 16.9%;
+    --ring: 263.4 70% 50.4%;
+  }
+
   body {
-    @apply bg-white text-black;
+    @apply bg-background text-foreground;
     font-family: var(--font-family-main);
     line-height: 1.5;
     text-rendering: optimizeLegibility;
@@ -40,33 +84,60 @@
     -moz-osx-font-smoothing: grayscale;
   }
   
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-family-heading);
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: 0.5em;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    @apply md:text-4xl lg:text-5xl;
+  }
+  
+  h2 {
+    font-size: 2rem;
+    @apply md:text-3xl lg:text-4xl;
+  }
+  
+  h3 {
+    font-size: 1.75rem;
+    @apply md:text-2xl lg:text-3xl;
+  }
+  
+  h4 {
+    font-size: 1.5rem;
+    @apply md:text-xl lg:text-2xl;
+  }
+  
   /* Improved focus styles for keyboard navigation */
   :focus-visible {
-    outline: 2px solid rgb(var(--color-water));
+    outline: 2px solid hsl(var(--primary));
     outline-offset: 2px;
   }
   
   /* Improved link styles */
   a {
-    @apply text-water hover:text-sky transition-colors duration-200;
+    @apply text-primary hover:text-primary/80 transition-colors duration-200;
     text-underline-offset: 0.2em;
   }
   
   /* Route-specific styling */
   [data-route="index"] {
-    --page-accent-color: #000;
+    --page-accent-color: hsl(var(--primary));
   }
   
   [data-route="family-capsules"] {
-    --page-accent-color: #000;
+    --page-accent-color: hsl(var(--primary));
   }
   
   [data-route="memory-lane"] {
-    --page-accent-color: #000;
+    --page-accent-color: hsl(var(--primary));
   }
   
   [data-route="share-stories"] {
-    --page-accent-color: #000;
+    --page-accent-color: hsl(var(--primary));
   }
 }
 
@@ -81,6 +152,23 @@
 
 .section-container {
   @apply py-[var(--section-padding-y)] px-[var(--section-padding-x)];
+}
+
+/* Navigation */
+.nav-container {
+  @apply fixed w-full z-50 bg-background/95 backdrop-blur-sm border-b;
+  height: 64px;
+}
+
+.nav-container.h-12 {
+  height: 48px;
+  @apply overflow-hidden;
+}
+
+@media (min-width: 1024px) {
+  .nav-container:not(.h-12) {
+    height: 72px;
+  }
 }
 
 /* Accessibility improvements */
@@ -100,7 +188,7 @@
   position: absolute;
   top: -40px;
   left: 0;
-  background: rgb(var(--color-water));
+  background: hsl(var(--primary));
   color: white;
   padding: 8px;
   z-index: 100;
@@ -109,34 +197,6 @@
 
 .skip-link:focus {
   top: 0;
-}
-
-/* Agencs-style Hero sections */
-.hero-section {
-  @apply relative min-h-[90vh] flex flex-col justify-center items-center bg-white dark:bg-black;
-}
-
-.hero-content {
-  @apply max-w-4xl mx-auto text-center relative z-10;
-}
-
-/* Agencs-style animations with reduced motion support */
-@media (prefers-reduced-motion: no-preference) {
-  .fadeIn {
-    animation: fadeIn 2s;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* Agencs-style staggered animations */
-  .staggered-items > *:nth-child(1) { animation-delay: 0.1s; }
-  .staggered-items > *:nth-child(2) { animation-delay: 0.3s; }
-  .staggered-items > *:nth-child(3) { animation-delay: 0.5s; }
-  .staggered-items > *:nth-child(4) { animation-delay: 0.7s; }
-  .staggered-items > *:nth-child(5) { animation-delay: 0.9s; }
 }
 
 /* Ensure animations don't run for users who prefer reduced motion */
@@ -149,7 +209,23 @@
   }
 }
 
-/* Agencs style button */
-.agencs-btn {
-  @apply inline-flex items-center justify-center px-8 py-3 bg-black text-white dark:bg-white dark:text-black font-medium text-base transition-colors duration-300 hover:bg-gray-800 dark:hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-water;
+/* Button styles */
+.btn {
+  @apply inline-flex items-center justify-center px-4 py-2 rounded-md text-sm font-medium transition-colors;
+}
+
+.btn-primary {
+  @apply bg-primary text-primary-foreground hover:bg-primary/90;
+}
+
+.btn-secondary {
+  @apply bg-secondary text-secondary-foreground hover:bg-secondary/80;
+}
+
+.btn-ghost {
+  @apply hover:bg-accent hover:text-accent-foreground;
+}
+
+.btn-link {
+  @apply text-primary underline-offset-4 hover:underline;
 }
