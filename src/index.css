@@ -18,11 +18,38 @@
     --section-padding-y: 8rem;
     --section-padding-x: 2rem;
     --font-family-main: 'Inter Tight', sans-serif;
+    
+    /* Base radius values for better consistency */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    
+    /* Interaction transition speeds */
+    --transition-fast: 150ms;
+    --transition-normal: 250ms;
+    --transition-slow: 500ms;
   }
 
   body {
     @apply bg-white text-black;
     font-family: var(--font-family-main);
+    line-height: 1.5;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Improved focus styles for keyboard navigation */
+  :focus-visible {
+    outline: 2px solid rgb(var(--color-water));
+    outline-offset: 2px;
+  }
+  
+  /* Improved link styles */
+  a {
+    @apply text-water hover:text-sky transition-colors duration-200;
+    text-underline-offset: 0.2em;
   }
   
   /* Route-specific styling */
@@ -56,6 +83,34 @@
   @apply py-[var(--section-padding-y)] px-[var(--section-padding-x)];
 }
 
+/* Accessibility improvements */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: rgb(var(--color-water));
+  color: white;
+  padding: 8px;
+  z-index: 100;
+  transition: top 0.2s;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
 /* Agencs-style Hero sections */
 .hero-section {
   @apply relative min-h-[90vh] flex flex-col justify-center items-center bg-white dark:bg-black;
@@ -65,24 +120,36 @@
   @apply max-w-4xl mx-auto text-center relative z-10;
 }
 
-/* Agencs-style animations */
-.fadeIn {
-  animation: fadeIn 2s;
+/* Agencs-style animations with reduced motion support */
+@media (prefers-reduced-motion: no-preference) {
+  .fadeIn {
+    animation: fadeIn 2s;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Agencs-style staggered animations */
+  .staggered-items > *:nth-child(1) { animation-delay: 0.1s; }
+  .staggered-items > *:nth-child(2) { animation-delay: 0.3s; }
+  .staggered-items > *:nth-child(3) { animation-delay: 0.5s; }
+  .staggered-items > *:nth-child(4) { animation-delay: 0.7s; }
+  .staggered-items > *:nth-child(5) { animation-delay: 0.9s; }
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+/* Ensure animations don't run for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
-
-/* Agencs-style staggered animations */
-.staggered-items > *:nth-child(1) { animation-delay: 0.1s; }
-.staggered-items > *:nth-child(2) { animation-delay: 0.3s; }
-.staggered-items > *:nth-child(3) { animation-delay: 0.5s; }
-.staggered-items > *:nth-child(4) { animation-delay: 0.7s; }
-.staggered-items > *:nth-child(5) { animation-delay: 0.9s; }
 
 /* Agencs style button */
 .agencs-btn {
-  @apply inline-flex items-center justify-center px-8 py-3 bg-black text-white dark:bg-white dark:text-black font-medium text-base transition-colors duration-300 hover:bg-gray-800 dark:hover:bg-gray-200;
+  @apply inline-flex items-center justify-center px-8 py-3 bg-black text-white dark:bg-white dark:text-black font-medium text-base transition-colors duration-300 hover:bg-gray-800 dark:hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-water;
 }

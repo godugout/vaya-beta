@@ -10,23 +10,23 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 4.5rem;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
   font-weight: 500;
   margin: 0.5rem 0;
 }
 
 h2 {
-  font-size: 3.5rem;
+  font-size: clamp(2rem, 4vw, 3.5rem);
   margin-bottom: 1.5rem;
 }
 
 h3 {
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 3vw, 2rem);
   margin-bottom: 1rem;
 }
 
 h4 {
-  font-size: 1.5rem;
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
   margin-bottom: 0.75rem;
 }
 
@@ -35,6 +35,17 @@ p {
   margin-bottom: 1.5rem;
   font-weight: 400;
   line-height: var(--line-height-normal);
+  max-width: 70ch; /* Improve readability by limiting line length */
+}
+
+/* Improve accessibility with better focus styles */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--color-ui-teal);
+  outline-offset: 2px;
 }
 
 /* Font family utility classes */
@@ -58,7 +69,7 @@ p {
   font-family: var(--font-accent);
 }
 
-/* Text size utility classes based on 8px grid */
+/* Text size utility classes with improved fluid sizing */
 .text-xs {
   font-size: var(--font-size-xs);
   line-height: 1.25rem; /* 20px */
@@ -99,6 +110,16 @@ p {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
+/* Improved contrast for light text on light backgrounds */
+.text-on-light {
+  color: var(--color-text-dark);
+}
+
+/* Improved contrast for dark text on dark backgrounds */
+.text-on-dark {
+  color: var(--color-text-light);
+}
+
 /* Story text specific styling */
 .story-text {
   font-family: var(--font-story);
@@ -114,35 +135,42 @@ p {
   margin-bottom: 1rem;
 }
 
+/* Accessible link styles */
+a {
+  color: var(--color-ui-teal);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+a:hover {
+  color: rgb(var(--color-water));
+  text-decoration-color: currentColor;
+}
+
 /* Responsive typography helpers */
 @media (max-width: 768px) {
-  h1 {
-    font-size: 3.5rem;
-  }
-  
-  h2 {
-    font-size: 2.5rem;
-  }
-  
-  h3 {
-    font-size: 1.75rem;
-  }
-  
-  h4 {
-    font-size: 1.25rem;
+  p {
+    max-width: 100%;
   }
 }
 
-@media (max-width: 480px) {
-  h1 {
-    font-size: 2.5rem;
+/* High contrast mode improvements */
+@media (forced-colors: active) {
+  a {
+    text-decoration: underline;
   }
   
-  h2 {
-    font-size: 2rem;
+  button, 
+  .button {
+    border: 2px solid transparent;
   }
   
-  h3 {
-    font-size: 1.5rem;
+  button:focus, 
+  .button:focus,
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: 2px solid CanvasText;
   }
 }

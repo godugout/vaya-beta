@@ -1,4 +1,5 @@
 
+// Re-export all color modules in a structured way
 import { brandColors } from './brand';
 import { featureColors } from './features';
 import { lovableColors } from './lovable';
@@ -8,15 +9,25 @@ import { vayaColors } from './vaya';
 import { darkModeColors } from './darkMode';
 import { forestStreamColors } from './forestStream';
 
-// Export the full colors object with the same structure as before
+// Export a structured color system
 export const colors = {
-  // Re-export all the color modules with the original structure
-  ...brandColors,
+  // Brand identity
+  brand: brandColors,
+  
+  // Feature-specific colors
   features: featureColors,
-  lovable: lovableColors,
-  greystone: greystoneColors,
-  shadcn: shadcnColors,
-  vaya: vayaColors,
+  
+  // Theme variations
+  themes: {
+    lovable: lovableColors,
+    greystone: greystoneColors,
+    forestStream: forestStreamColors,
+    vaya: vayaColors,
+  },
+  
+  // UI component colors
+  ui: shadcnColors,
+  
+  // Dark mode specific colors
   dark: darkModeColors,
-  forestStream: forestStreamColors
 };

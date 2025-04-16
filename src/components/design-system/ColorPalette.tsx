@@ -3,55 +3,15 @@ import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { cn } from '@/lib/utils';
 import { colors } from '@/styles/theme/colors';
 import { vayaColors } from '@/styles/theme/colors/vaya';
-import { Check, Copy } from 'lucide-react';
-import { useToast } from '@/components/ui/use-toast';
-
-interface ColorSwatchProps {
-  color: string;
-  name: string;
-  hex?: string;
-  textClass?: string;
-}
-
-const ColorSwatch: React.FC<ColorSwatchProps> = ({ color, name, hex, textClass = "text-white" }) => {
-  const { toast } = useToast();
-  const [copied, setCopied] = React.useState(false);
-  
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(hex || color);
-    setCopied(true);
-    
-    toast({
-      title: "Copied to clipboard",
-      description: `${name}: ${hex || color}`,
-    });
-    
-    setTimeout(() => setCopied(false), 2000);
-  };
-  
-  return (
-    <div 
-      className="relative group cursor-pointer rounded-md overflow-hidden transition-all hover:shadow-md"
-      onClick={copyToClipboard}
-      style={{ backgroundColor: color }}
-    >
-      <div className="p-6 h-24 flex flex-col justify-between">
-        <div className={cn("text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity", textClass)}>
-          {copied ? <Check size={18} /> : <Copy size={18} />}
-        </div>
-        <div className={cn("space-y-1", textClass)}>
-          <div className="text-sm font-medium">{name}</div>
-          <div className="text-xs opacity-90">{hex || color}</div>
-        </div>
-      </div>
-    </div>
-  );
-};
+import { ColorSwatch } from './ColorSwatch';
+import { useTheme } from 'next-themes';
 
 export const ColorPalette = () => {
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === 'dark';
+  
   return (
     <div className="space-y-8">
       <div>
@@ -85,7 +45,7 @@ export const ColorPalette = () => {
               color={vayaColors.accent.purple} 
               name="Accent Purple" 
               hex="#9b87f5" 
-              textClass="text-black" 
+              textClass={isDark ? "text-white" : "text-black"} 
             />
             <ColorSwatch 
               color={vayaColors.accent.turquoise} 
@@ -115,7 +75,7 @@ export const ColorPalette = () => {
               color={vayaColors.ui.warning} 
               name="Warning" 
               hex="#F59E0B" 
-              textClass="text-black" 
+              textClass={isDark ? "text-white" : "text-black"} 
             />
             <ColorSwatch 
               color={vayaColors.ui.error} 
@@ -157,13 +117,13 @@ export const ColorPalette = () => {
               color={vayaColors.text.tertiary} 
               name="Text Tertiary" 
               hex="#9CA3AF" 
-              textClass="text-black" 
+              textClass={isDark ? "text-white" : "text-black"} 
             />
             <ColorSwatch 
               color={vayaColors.text.inverse} 
               name="Text Inverse" 
               hex="#FFFFFF" 
-              textClass="text-black" 
+              textClass={isDark ? "text-white" : "text-black"} 
             />
           </div>
         </CardContent>
@@ -181,19 +141,19 @@ export const ColorPalette = () => {
               color={vayaColors.background.white} 
               name="Background White" 
               hex="#FFFFFF" 
-              textClass="text-black" 
+              textClass={isDark ? "text-white" : "text-black"} 
             />
             <ColorSwatch 
               color={vayaColors.background.light} 
               name="Background Light" 
               hex="#F9FAFB" 
-              textClass="text-black" 
+              textClass={isDark ? "text-white" : "text-black"} 
             />
             <ColorSwatch 
               color={vayaColors.background.subtle} 
               name="Background Subtle" 
               hex="#F3F4F6" 
-              textClass="text-black" 
+              textClass={isDark ? "text-white" : "text-black"} 
             />
             <ColorSwatch 
               color={vayaColors.background.dark} 
@@ -223,19 +183,19 @@ export const ColorPalette = () => {
               color={vayaColors.memories} 
               name="Memories" 
               hex="#FF7675" 
-              textClass="text-black" 
+              textClass={isDark ? "text-white" : "text-black"} 
             />
             <ColorSwatch 
               color={vayaColors.capsules} 
               name="Capsules" 
               hex="#38BDF8" 
-              textClass="text-black" 
+              textClass={isDark ? "text-white" : "text-black"} 
             />
             <ColorSwatch 
-              color="#0000" 
+              color={isDark ? "#111111" : "#F8F9FA"} 
               name="Chat Background" 
-              hex="#F8F9FA" 
-              textClass="text-black" 
+              hex={isDark ? "#111111" : "#F8F9FA"} 
+              textClass={isDark ? "text-white" : "text-black"} 
             />
           </div>
         </CardContent>
@@ -253,13 +213,13 @@ export const ColorPalette = () => {
               color={vayaColors.gray[100]} 
               name="Gray 100" 
               hex="#F3F4F6" 
-              textClass="text-black" 
+              textClass={isDark ? "text-white" : "text-black"} 
             />
             <ColorSwatch 
               color={vayaColors.gray[300]} 
               name="Gray 300" 
               hex="#D1D5DB" 
-              textClass="text-black" 
+              textClass={isDark ? "text-white" : "text-black"} 
             />
             <ColorSwatch 
               color={vayaColors.gray[500]} 
@@ -295,7 +255,7 @@ export const ColorPalette = () => {
               color="rgb(var(--color-sky))" 
               name="Sky" 
               hex="#86CAE9" 
-              textClass="text-black" 
+              textClass={isDark ? "text-white" : "text-black"} 
             />
             <ColorSwatch 
               color="rgb(var(--color-forest))" 
@@ -313,25 +273,25 @@ export const ColorPalette = () => {
               color="rgb(var(--color-leaf))" 
               name="Leaf" 
               hex="#94C11E" 
-              textClass="text-black" 
+              textClass={isDark ? "text-white" : "text-black"} 
             />
             <ColorSwatch 
               color="rgb(var(--color-autumn))" 
               name="Autumn" 
               hex="#F2992D" 
-              textClass="text-black" 
+              textClass={isDark ? "text-white" : "text-black"} 
             />
             <ColorSwatch 
               color="rgb(var(--color-mountain))" 
               name="Mountain" 
               hex="#5EACBA" 
-              textClass="text-black" 
+              textClass={isDark ? "text-white" : "text-black"} 
             />
             <ColorSwatch 
               color="rgb(var(--color-sand))" 
               name="Sand" 
               hex="#C4B295" 
-              textClass="text-black" 
+              textClass={isDark ? "text-white" : "text-black"} 
             />
             <ColorSwatch 
               color="rgb(var(--color-ui-purple))" 

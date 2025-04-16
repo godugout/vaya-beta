@@ -1,7 +1,7 @@
 
-/* Agencs Dark mode styling with Forest Stream influences */
+/* Forest Stream inspired dark mode styling */
 .dark {
-  /* Base Agencs dark theme */
+  /* Base color scheme for dark mode */
   --color-black: #FFFFFF;
   --color-white: #111111;
   --color-gray-100: #171717;
@@ -14,7 +14,7 @@
   --color-gray-800: #E5E5E5;
   --color-gray-900: #F5F5F5;
   
-  /* Forest Stream dark theme colors */
+  /* Forest Stream dark theme colors with RGB format for opacity control */
   --color-sky: 68 122 153;         /* Darker sky blue */
   --color-forest: 19 58 42;        /* Darker forest green */
   --color-water: 45 104 122;       /* Darker stream water */
@@ -23,21 +23,27 @@
   --color-autumn: 184 116 34;      /* Darker autumn orange */
   --color-sand: 126 114 96;        /* Darker sandy stone */
   
-  /* UI Colors for dark mode */
-  --color-ui-primary: #FFFFFF;
-  --color-ui-secondary: #E5E5E5;
-  --color-ui-accent: #F5F5F5;
+  /* Semantic UI Colors adjusted for dark mode */
+  --color-ui-error: #EF4444;
+  --color-ui-success: #34D399;
+  --color-ui-warning: #FBBF24;
+  --color-ui-info: #38BDF8;
   
   /* Text colors for dark mode */
   --color-text-dark: #FFFFFF;
   --color-text-medium: #E5E5E5;
   --color-text-light: #111111;
+  --color-text-muted: #A3A3A3;
   
+  /* Surface and elevation */
   --card-background: #0C2A20;  /* Very dark forest green */
   --card-shadow: rgba(0, 0, 0, 0.5);
+  
+  /* Improved color scheme for color-scheme property */
+  color-scheme: dark;
 }
 
-/* Ensure dark mode has proper background */
+/* Basic dark mode adjustments */
 .dark body {
   background-color: #0C2A20;  /* Very dark forest green */
   color: var(--color-text-dark);
@@ -57,13 +63,42 @@
                     linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
 }
 
-/* Dark mode cards */
-.dark .card {
+/* Dark mode cards and elevated surfaces */
+.dark .card, 
+.dark .elevated-surface {
   background-color: var(--card-background);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-/* Set dark mode as default for .dark class */
-.dark {
-  color-scheme: dark;
+/* Improve form controls in dark mode */
+.dark input, 
+.dark select, 
+.dark textarea {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--color-text-dark);
+}
+
+/* Improve focus states for dark mode */
+.dark :focus-visible {
+  outline-color: rgb(var(--color-water));
+}
+
+/* Custom scrollbars for dark mode */
+.dark ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
