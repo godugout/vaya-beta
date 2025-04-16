@@ -39,9 +39,9 @@ export const DesignSystemLayout: React.FC<{ children: React.ReactNode }> = ({ ch
         
         <nav className="space-y-1">
           <NavItem 
-            href="/design-system" 
+            href="/design-system/theme" 
             icon={<Palette size={18} />} 
-            active={currentPath === 'design-system'}
+            active={currentPath === 'theme'}
           >
             Theme Customizer
           </NavItem>
