@@ -25,8 +25,8 @@ const AudioControls = ({
     >
       <Button
         onClick={togglePlayback}
-        variant="purple"
-        className="rounded-full shadow-lg shadow-[#6C5CE7]/30 border border-white/10"
+        variant="outline"
+        className="rounded-full bg-blue-600 hover:bg-blue-700 text-white border-none shadow-lg h-12 w-12 p-0"
         size="icon"
         disabled={isProcessing}
       >
@@ -39,8 +39,8 @@ const AudioControls = ({
       
       <Button
         onClick={handleReset}
-        variant="ghost"
-        className="rounded-full bg-dark-background-elevated hover:bg-dark-background-surface text-white/70 border border-white/10"
+        variant="outline"
+        className="rounded-full bg-[#243040] hover:bg-[#2d3a4a] text-gray-300 border-[#2a3546] h-12 w-12 p-0"
         size="icon"
         disabled={isProcessing}
       >

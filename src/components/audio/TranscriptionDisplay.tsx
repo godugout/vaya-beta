@@ -12,10 +12,10 @@ const TranscriptionDisplay = ({ transcription }: TranscriptionDisplayProps) => {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 1 }}
-      className="relative rounded-xl border border-gray-200 p-6 bg-white shadow-sm"
+      transition={{ duration: 0.5 }}
+      className="relative rounded-lg border border-[#2a3546] p-5 bg-[#1a2332] text-white shadow-md"
     >
-      <p className="font-story italic text-gray-700 text-lg leading-relaxed">{transcription}</p>
+      <p className="italic text-gray-300 text-lg leading-relaxed">{transcription}</p>
     </motion.div>
   );
 };

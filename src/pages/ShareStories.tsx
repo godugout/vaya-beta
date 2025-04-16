@@ -1,14 +1,17 @@
 
 import { useState, useEffect } from "react";
 import { PageTransition } from "@/components/animation/PageTransition";
-import StoriesHeroSection from "@/components/stories/StoriesHeroSection";
-import PatelFamilyEventsSection from "@/components/stories/PatelFamilyEventsSection";
-import DualPaneRecordingSection from "@/components/stories/DualPaneRecordingSection";
-import RecentFamilyStories from "@/components/stories/RecentFamilyStories";
-import { HanumanEditionOnboarding } from "@/components/onboarding/HanumanEditionOnboarding";
 import { Button } from "@/components/ui/button";
-import { Settings } from "lucide-react";
+import { Settings, Search } from "lucide-react";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import { Input } from "@/components/ui/input";
+import { motion } from "framer-motion";
+import { Card, CardContent } from "@/components/ui/card";
+import { StaggeredContainer } from "@/components/animation/StaggeredContainer";
+import { FadeIn } from "@/components/animation/FadeIn";
+import VoiceRecordingExperience from "@/components/voice-recording/VoiceRecordingExperience";
+import { HanumanEditionOnboarding } from "@/components/onboarding/HanumanEditionOnboarding";
+import FamilyStoryCard from "@/components/stories/FamilyStoryCard";
 
 const ShareStories = () => {
   const [showOnboarding, setShowOnboarding] = useState(false);
@@ -25,43 +28,169 @@ const ShareStories = () => {
     // Here you would typically do something with the saved memory
   };
 
+  const recentStories = [
+    {
+      id: "1",
+      title: "Grandma's First Day in America",
+      description: "Maria shares the story of her grandmother's first day in America after immigrating in 1965.",
+      author: "Maria"
+    },
+    {
+      id: "2",
+      title: "Dad's College Adventures",
+      description: "James recorded his father's hilarious stories about his wild college years during the 1980s.",
+      author: "James"
+    },
+    {
+      id: "3",
+      title: "Our Wedding Day",
+      description: "David and Sarah recorded memories from their grandparents about their wedding day 60 years ago.",
+      author: "David"
+    }
+  ];
+
   return (
     <PageTransition location="share-stories" mode="fade">
       <LanguageProvider>
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-          {/* Hero Section with Patel Family Capsules */}
-          <div className="bg-white dark:bg-gray-800 py-12 border-b border-gray-100 dark:border-gray-700 shadow-sm">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="flex justify-between items-center mb-4">
-                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-                  {preferredEdition === "hanuman" ? "Share Your Stories - Hanuman Edition" : "Share Your Stories"}
+        <div className="min-h-screen bg-[#0e1520] text-white">
+          {/* Hero Section */}
+          <div className="w-full pt-16 pb-12 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto">
+              <div className="flex justify-between items-center mb-8">
+                <h1 className="text-3xl font-bold">
+                  Share Your Stories
                 </h1>
                 <Button 
                   variant="outline" 
                   size="sm"
                   onClick={() => setShowOnboarding(true)}
-                  className="flex items-center gap-2 bg-white dark:bg-gray-700"
+                  className="flex items-center gap-2 bg-[#1a2332] border-[#2a3546] text-white"
                 >
                   <Settings className="w-4 h-4" />
                   <span>Family Settings</span>
                 </Button>
               </div>
               
-              <StoriesHeroSection />
-              
-              {/* Patel Family Capsules Section */}
-              <PatelFamilyEventsSection className="mt-8" />
+              <div className="mt-16 mb-16 text-center max-w-3xl mx-auto">
+                <motion.h2
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                  className="text-4xl md:text-5xl font-bold mb-6"
+                >
+                  Your Family's Story Matters
+                </motion.h2>
+                <p className="text-lg text-gray-300 mb-8">
+                  Share and preserve your cherished memories with voice recordings, photos, and written stories 
+                  that will be treasured for generations.
+                </p>
+                <Button 
+                  size="lg" 
+                  className="bg-blue-600 hover:bg-blue-700 text-white"
+                >
+                  Start Recording
+                </Button>
+              </div>
             </div>
           </div>
           
-          {/* Dual Pane Recording & Chat Interface */}
-          <div className="bg-gray-50 dark:bg-gray-900 py-12">
-            <DualPaneRecordingSection onMemorySaved={handleMemorySaved} />
+          {/* Capsules Section */}
+          <div className="w-full py-8 px-4 sm:px-6 lg:px-8 bg-[#131c2c]">
+            <div className="max-w-7xl mx-auto">
+              <div className="mb-6">
+                <h2 className="text-2xl font-bold mb-4">Capsules</h2>
+                <div className="relative">
+                  <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                  <Input 
+                    placeholder="Search capsules..." 
+                    className="pl-10 bg-[#1a2332] border-[#2a3546] text-white w-full"
+                  />
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                {["Family Traditions", "Summer Vacation", "Holiday Memories", "Wedding Stories"].map((capsule, index) => (
+                  <Card key={index} className={`border-[#2a3546] ${
+                    index === 0 ? "bg-[#261d3e]" : 
+                    index === 1 ? "bg-[#1a2332]" : 
+                    index === 2 ? "bg-[#233824]" : 
+                    "bg-[#1a2332]"
+                  }`}>
+                    <CardContent className="flex items-center justify-between p-4">
+                      <div>
+                        <h3 className="font-medium">{capsule}</h3>
+                        <span className={`text-xs px-2 py-1 rounded-full ${
+                          index === 1 ? "bg-blue-500/20 text-blue-300" : 
+                          index === 2 ? "bg-yellow-500/20 text-yellow-300" : 
+                          index === 3 ? "bg-green-500/20 text-green-300" : 
+                          "bg-blue-500/20 text-blue-300"
+                        }`}>
+                          {index === 2 ? "locked" : "upcoming"}
+                        </span>
+                      </div>
+                      <div className={`h-10 w-10 rounded-full flex items-center justify-center ${
+                        index === 0 ? "bg-purple-500/20" : 
+                        index === 1 ? "bg-blue-500/20" : 
+                        index === 2 ? "bg-yellow-500/20" : 
+                        "bg-blue-500/20"
+                      }`}>
+                        <span className="text-lg">
+                          {index === 0 ? "👨‍👩‍👧‍👦" : 
+                           index === 1 ? "🌴" : 
+                           index === 2 ? "🔒" : 
+                           "💍"}
+                        </span>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
           </div>
           
-          {/* Stories Grid Section */}
-          <div className="bg-white dark:bg-gray-800">
-            <RecentFamilyStories />
+          {/* Recording Section */}
+          <div className="w-full py-12 px-4 sm:px-6 lg:px-8 bg-[#0e1520]">
+            <div className="max-w-7xl mx-auto">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div>
+                  <h2 className="text-2xl font-bold mb-6">Record Your Family Stories</h2>
+                  <div className="bg-[#131c2c] border border-[#2a3546] rounded-lg p-4">
+                    <VoiceRecordingExperience onMemorySaved={handleMemorySaved} />
+                  </div>
+                </div>
+                <div className="bg-white rounded-lg p-6 flex items-center justify-center">
+                  {/* Chat section or preview would go here */}
+                  <div className="text-center text-gray-500">
+                    <p className="mb-4">Share your story...</p>
+                    <div className="flex justify-center space-x-2">
+                      <Button variant="ghost" size="icon" className="text-gray-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="17 8 21 12 17 16"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                      </Button>
+                      <Button variant="ghost" size="icon" className="text-gray-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Recent Family Stories */}
+          <div className="w-full py-12 px-4 sm:px-6 lg:px-8 bg-[#131c2c]">
+            <div className="max-w-7xl mx-auto">
+              <h2 className="text-2xl font-bold mb-8">Recent Family Stories</h2>
+              <StaggeredContainer animation="fade" className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {recentStories.map((story) => (
+                  <FamilyStoryCard 
+                    key={story.id}
+                    title={story.title}
+                    description={story.description}
+                    author={story.author}
+                  />
+                ))}
+              </StaggeredContainer>
+            </div>
           </div>
           
           {/* Hanuman Edition Onboarding */}
