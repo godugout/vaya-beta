@@ -1,14 +1,13 @@
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
-import { User } from "@supabase/supabase-js";
 import { DesktopNav } from "./nav/DesktopNav";
 import { MobileTopNav } from "./nav/MobileTopNav";
 import { MobileBottomNav } from "./nav/MobileBottomNav";
 import { BreadcrumbNav } from "./nav/BreadcrumbNav";
 import { VoiceNavigationIndicator } from "./nav/VoiceNavigationIndicator";
 import { useToast } from "@/components/ui/use-toast";
+import { cn } from "@/lib/utils";
 
 export function MainNav() {
   const navigate = useNavigate();
@@ -98,12 +97,15 @@ export function MainNav() {
 
   return (
     <>
-      {/* Fixed positioning for header */}
-      <header className="fixed top-0 left-0 right-0 z-[100] bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 shadow-sm">
+      {/* Fixed header with blur effect */}
+      <header className={cn(
+        "nav-container",
+        isSimplifiedView && "simplified-view"
+      )}>
         <DesktopNav 
           user={user} 
           handleSignOut={handleSignOut} 
-          navigate={navigate} 
+          navigate={navigate}
           isSimplifiedView={isSimplifiedView}
           isVoiceActive={isVoiceActive}
           onVoiceToggle={toggleVoiceNavigation}
@@ -111,30 +113,38 @@ export function MainNav() {
         <MobileTopNav 
           user={user} 
           handleSignOut={handleSignOut} 
-          navigate={navigate} 
+          navigate={navigate}
           isSimplifiedView={isSimplifiedView}
           onSettingsToggle={toggleSimplifiedView}
         />
       </header>
       
-      {/* Voice navigation indicator */}
+      {/* Voice navigation status */}
       <VoiceNavigationIndicator isActive={isVoiceActive} />
       
+      {/* Mobile bottom navigation */}
       <MobileBottomNav 
         user={user} 
-        navigate={navigate} 
+        navigate={navigate}
         isSimplifiedView={isSimplifiedView}
         isVoiceActive={isVoiceActive}
         onVoiceToggle={toggleVoiceNavigation}
       />
       
-      {/* Breadcrumbs navigation */}
-      <div className={`mt-20 ${isVoiceActive ? 'pt-16' : ''}`}>
+      {/* Breadcrumb navigation */}
+      <div className={cn(
+        "mt-20",
+        isVoiceActive && "pt-16",
+        isSimplifiedView && "simplified-view"
+      )}>
         <BreadcrumbNav isSimplifiedView={isSimplifiedView} />
       </div>
       
-      {/* Spacer for fixed header and breadcrumbs */}
-      <div className={`h-20 ${isVoiceActive ? 'h-36' : ''}`} /> 
+      {/* Spacer for fixed header */}
+      <div className={cn(
+        "h-20",
+        isVoiceActive && "h-36"
+      )} />
     </>
   );
 }

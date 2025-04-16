@@ -1,0 +1,62 @@
+
+/* Base Navigation Styles */
+.nav-container {
+  @apply fixed w-full z-50 bg-background/80 backdrop-blur-sm border-b;
+}
+
+/* Desktop Navigation */
+.desktop-nav {
+  @apply hidden md:flex items-center justify-between px-6 py-3;
+}
+
+/* Mobile Navigation */
+.mobile-nav {
+  @apply md:hidden flex flex-col;
+}
+
+.mobile-top-nav {
+  @apply flex items-center justify-between px-4 py-3 border-b;
+}
+
+.mobile-bottom-nav {
+  @apply fixed bottom-0 left-0 right-0 bg-background/80 backdrop-blur-sm border-t;
+}
+
+/* Breadcrumb Navigation */
+.breadcrumb-container {
+  @apply container max-w-7xl py-3;
+}
+
+/* View Switcher */
+.view-switcher {
+  @apply inline-flex bg-muted/50 p-1 rounded-lg;
+}
+
+/* Accessibility Enhancements */
+.simplified-view {
+  --simplified-text: 1.125rem;
+  --simplified-spacing: 1rem;
+  --simplified-touch: 44px;
+}
+
+.simplified-view .nav-item {
+  @apply text-lg py-3 px-4;
+  min-height: var(--simplified-touch);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-item {
+    @apply transition-none;
+  }
+}
+
+/* High Contrast Mode */
+@media (forced-colors: active) {
+  .nav-container {
+    @apply border-b-2;
+  }
+  
+  .nav-item.active {
+    @apply outline-2 outline-offset-2;
+  }
+}
