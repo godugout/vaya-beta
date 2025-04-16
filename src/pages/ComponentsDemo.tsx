@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FamilyTreeMain } from "@/components/family/FamilyTreeMain";
@@ -6,14 +5,14 @@ import { FamilyMemberDetailCard } from "@/components/family/FamilyMemberDetailCa
 import { MemoryCapsuleCreator } from "@/components/capsule/MemoryCapsuleCreator";
 import { MemoryCapsuleTimeline } from "@/components/capsule/MemoryCapsuleTimeline";
 import { NarraConversation } from "@/components/narra/NarraConversation";
-import { FamilyStoryCard } from "@/components/stories/FamilyStoryCard";
+import FamilyStoryCard from "@/components/stories/FamilyStoryCard";
 import RecordingButton from "@/components/audio/RecordingButton";
 import TranscriptionDisplay from "@/components/audio/TranscriptionDisplay";
 import { AnimatedContainer } from "@/components/animation/AnimatedContainer";
 import { motion } from "framer-motion";
 import { 
   TreeDeciduous, 
-  TimeCapsule, 
+  Package, 
   Bot, 
   Sparkles,
   MessageSquare,
@@ -28,7 +27,6 @@ const ComponentsDemo = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [transcription, setTranscription] = useState<string | null>(null);
 
-  // Sample data
   const sampleStories = [
     {
       title: "Grandma's Apple Pie Recipe",
@@ -55,17 +53,14 @@ const ComponentsDemo = () => {
 
   const handleRecordingClick = () => {
     if (isRecording) {
-      // Stop recording
       setIsRecording(false);
       setIsProcessing(true);
       
-      // Simulate processing delay
       setTimeout(() => {
         setIsProcessing(false);
         setTranscription("This is a sample transcription of a recorded story about our family vacation to the Grand Canyon last summer. We had such an amazing time hiking and exploring the natural beauty of the canyon.");
       }, 2000);
     } else {
-      // Start recording
       setIsRecording(true);
       setTranscription(null);
     }
@@ -101,7 +96,7 @@ const ComponentsDemo = () => {
               value="memory-capsules"
               className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-purple-600 rounded-md"
             >
-              <TimeCapsule className="h-4 w-4 mr-2" />
+              <Package className="h-4 w-4 mr-2" />
               Memory Capsules
             </TabsTrigger>
             <TabsTrigger 
@@ -113,7 +108,6 @@ const ComponentsDemo = () => {
             </TabsTrigger>
           </TabsList>
           
-          {/* Family Tree Components Section */}
           <TabsContent value="family-tree" className="space-y-16">
             <AnimatedContainer variant="fade" className="relative">
               <div className="flex items-center mb-8">
@@ -127,7 +121,6 @@ const ComponentsDemo = () => {
               </div>
               
               <div className="space-y-12">
-                {/* Family Tree Visualization */}
                 <div className="space-y-4">
                   <div className="flex items-center">
                     <h3 className="text-2xl font-semibold text-blue-300">Family Tree Visualization</h3>
@@ -143,7 +136,6 @@ const ComponentsDemo = () => {
                   </div>
                 </div>
                 
-                {/* Family Member Detail Cards */}
                 <div className="space-y-4 mt-16">
                   <div className="flex items-center">
                     <h3 className="text-2xl font-semibold text-blue-300">Family Member Detail Cards</h3>
@@ -194,7 +186,6 @@ const ComponentsDemo = () => {
                   </div>
                 </div>
                 
-                {/* Family Stories Section */}
                 <div className="space-y-4 mt-16">
                   <div className="flex items-center">
                     <h3 className="text-2xl font-semibold text-blue-300">Family Stories</h3>
@@ -217,7 +208,6 @@ const ComponentsDemo = () => {
                   </div>
                 </div>
                 
-                {/* Recording Experience */}
                 <div className="space-y-4 mt-16">
                   <div className="flex items-center">
                     <h3 className="text-2xl font-semibold text-blue-300">Story Recording Experience</h3>
@@ -257,12 +247,11 @@ const ComponentsDemo = () => {
             </AnimatedContainer>
           </TabsContent>
           
-          {/* Memory Capsules Section */}
           <TabsContent value="memory-capsules" className="space-y-16">
             <AnimatedContainer variant="fade" className="relative">
               <div className="flex items-center mb-8">
                 <div className="h-10 w-10 rounded-full bg-purple-500/20 flex items-center justify-center mr-4">
-                  <TimeCapsule className="h-5 w-5 text-purple-400" />
+                  <Package className="h-5 w-5 text-purple-400" />
                 </div>
                 <div>
                   <h2 className="text-3xl font-bold">Memory Capsule Components</h2>
@@ -271,7 +260,6 @@ const ComponentsDemo = () => {
               </div>
               
               <div className="space-y-12">
-                {/* Memory Capsule Creator */}
                 <div className="space-y-4">
                   <div className="flex items-center">
                     <h3 className="text-2xl font-semibold text-purple-300">Memory Capsule Creator</h3>
@@ -285,7 +273,6 @@ const ComponentsDemo = () => {
                   </div>
                 </div>
                 
-                {/* Memory Capsule Timeline */}
                 <div className="space-y-4 mt-16">
                   <div className="flex items-center">
                     <h3 className="text-2xl font-semibold text-purple-300">Memory Capsule Timeline</h3>
@@ -305,7 +292,6 @@ const ComponentsDemo = () => {
             </AnimatedContainer>
           </TabsContent>
           
-          {/* Narra AI Assistant Section */}
           <TabsContent value="narra-assistant" className="space-y-16">
             <AnimatedContainer variant="fade" className="relative">
               <div className="flex items-center mb-8">
@@ -319,7 +305,6 @@ const ComponentsDemo = () => {
               </div>
               
               <div className="space-y-12">
-                {/* Narra Conversational Interface */}
                 <div className="space-y-4">
                   <div className="flex items-center">
                     <h3 className="text-2xl font-semibold text-green-300">Narra Conversational Interface</h3>
@@ -339,7 +324,6 @@ const ComponentsDemo = () => {
           </TabsContent>
         </Tabs>
         
-        {/* Component demo actions */}
         <div className="flex justify-center mt-20 pb-12">
           <div className="flex gap-4">
             <Button variant="outline" className="border-gray-700 text-gray-400 hover:text-white hover:bg-gray-800">
