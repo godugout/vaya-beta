@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { WizardStepProps } from "./types";
-import { Check, Photo, FileText, BookOpen, UserPlus, Plus, Box } from "lucide-react";
+import { Check, Image, FileText, BookOpen, UserPlus, Plus, Box } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
 
@@ -14,7 +14,7 @@ interface BoxItem {
 
 export const FamilyBoxItems = ({ formData }: WizardStepProps) => {
   const [items, setItems] = useState<BoxItem[]>([
-    { id: "photos", name: "Family Photos", icon: <Photo className="h-5 w-5" />, selected: false },
+    { id: "photos", name: "Family Photos", icon: <Image className="h-5 w-5" />, selected: false },
     { id: "stories", name: "Family Stories", icon: <FileText className="h-5 w-5" />, selected: false },
     { id: "history", name: "Family History", icon: <BookOpen className="h-5 w-5" />, selected: false },
     { id: "members", name: "Family Members", icon: <UserPlus className="h-5 w-5" />, selected: false },
