@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -7,6 +6,7 @@ import { colors } from '@/styles/theme/colors';
 import { vayaColors } from '@/styles/theme/colors/vaya';
 import { ColorSwatch } from './ColorSwatch';
 import { useTheme } from 'next-themes';
+import { ColorCombinations } from './ColorCombinations';
 
 export const ColorPalette = () => {
   const { resolvedTheme } = useTheme();
@@ -20,6 +20,8 @@ export const ColorPalette = () => {
           Vaya's color system is designed for accessibility and visual harmony
         </p>
       </div>
+      
+      <ColorCombinations />
       
       {/* Primary Brand Colors */}
       <Card>
