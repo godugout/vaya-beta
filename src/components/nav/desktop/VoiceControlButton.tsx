@@ -22,7 +22,7 @@ export const VoiceControlButton = ({ isActive, onToggle }: VoiceControlButtonPro
             aria-pressed={isActive}
             aria-label="Toggle voice navigation"
             className={cn(
-              "rounded-full transition-colors relative",
+              "rounded-full transition-colors relative h-10 w-10",
               isActive && "bg-black/10 dark:bg-white/10"
             )}
           >

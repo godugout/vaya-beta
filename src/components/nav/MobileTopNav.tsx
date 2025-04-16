@@ -33,7 +33,7 @@ export const MobileTopNav = ({
         <div className="flex items-center gap-2">
           <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden rounded-full">
+              <Button variant="ghost" size="icon" className="md:hidden rounded-full h-10 w-10">
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
@@ -89,7 +89,7 @@ export const MobileTopNav = ({
             )}
             aria-label="Go to homepage"
           >
-            <img src="/lovable-uploads/4425ec86-56fe-44c4-9f47-75e59d3cb287.png" alt="Vaya Logo" className="h-7" />
+            <img src="/lovable-uploads/4425ec86-56fe-44c4-9f47-75e59d3cb287.png" alt="Vaya Logo" className="h-8" />
             <span className="text-lg font-heading font-semibold text-forest dark:text-leaf">Vaya</span>
           </button>
         </div>
@@ -98,7 +98,7 @@ export const MobileTopNav = ({
           <Button 
             variant="ghost" 
             size="icon" 
-            className="rounded-full"
+            className="rounded-full h-10 w-10"
           >
             <Search className="h-5 w-5 text-muted-foreground" />
           </Button>
@@ -107,7 +107,7 @@ export const MobileTopNav = ({
             <Button 
               variant="ghost" 
               size="icon" 
-              className="rounded-full"
+              className="rounded-full h-10 w-10"
             >
               <Bell className="h-5 w-5 text-muted-foreground" />
             </Button>
@@ -118,7 +118,7 @@ export const MobileTopNav = ({
             size="icon" 
             onClick={onSettingsToggle}
             className={cn(
-              "rounded-full",
+              "rounded-full h-10 w-10",
               isSimplifiedView && "bg-black/5 dark:bg-white/10"
             )}
             aria-label={isSimplifiedView ? "Use standard view" : "Use simplified view"}

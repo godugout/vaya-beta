@@ -15,6 +15,7 @@ export const MinimizedHeader = ({ isMinimized }: MinimizedHeaderProps) => {
         alt="Vaya Logo" 
         className="h-6" 
       />
+      <span className="ml-2 text-sm font-heading font-medium text-forest dark:text-leaf">Vaya</span>
     </div>
   );
 };

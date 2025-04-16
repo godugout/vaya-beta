@@ -81,7 +81,12 @@ export function MainNav() {
           />
         )}
         
-        <MinimizedHeader isMinimized={isMinimized} />
+        {isMinimized && (
+          <div className="flex items-center h-12">
+            <MinimizedHeader isMinimized={isMinimized} />
+            <BreadcrumbNav isSimplifiedView={isSimplifiedView} />
+          </div>
+        )}
         
         {(isMobile || isTablet) && !isMinimized && (
           <MobileTopNav 
@@ -93,7 +98,7 @@ export function MainNav() {
           />
         )}
         
-        {!isMinimized && !isHomePage && (
+        {!isMinimized && !isHomePage && !isScrolled && (
           <div className="px-4 sm:px-6 lg:px-8">
             <BreadcrumbNav isSimplifiedView={isSimplifiedView} />
           </div>

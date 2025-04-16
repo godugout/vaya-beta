@@ -19,7 +19,7 @@ export const NavButton = ({ to, icon, label, isSimplified }: NavButtonProps) => 
     <Link
       to={to}
       className={cn(
-        "relative flex items-center gap-2 px-3 py-2 rounded-lg transition-colors",
+        "relative flex items-center gap-2 px-4 py-3 rounded-lg transition-colors",
         "hover:bg-black/5 dark:hover:bg-white/10",
         isActive ? "bg-black/5 dark:bg-white/10" : "text-gray-700 dark:text-gray-300"
       )}

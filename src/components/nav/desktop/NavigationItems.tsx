@@ -13,15 +13,15 @@ interface NavigationItemsProps {
 export const NavigationItems = ({ user, isSimplifiedView }: NavigationItemsProps) => {
   return (
     <nav className={cn(
-      "hidden md:flex items-center gap-1",
-      isSimplifiedView && "gap-2"
+      "hidden md:flex items-center gap-2",
+      isSimplifiedView && "gap-3"
     )}>
       <NavigationMenu>
-        <NavigationMenuList className="gap-1">
+        <NavigationMenuList className="gap-2">
           <NavigationMenuItem>
             <NavButton 
               to="/" 
-              icon={<Home size={isSimplifiedView ? 20 : 16} />} 
+              icon={<Home size={isSimplifiedView ? 20 : 18} />} 
               label="Home" 
               isSimplified={isSimplifiedView}
             />
@@ -30,7 +30,7 @@ export const NavigationItems = ({ user, isSimplifiedView }: NavigationItemsProps
           <NavigationMenuItem>
             <NavButton 
               to="/share-stories" 
-              icon={<Mic size={isSimplifiedView ? 20 : 16} />} 
+              icon={<Mic size={isSimplifiedView ? 20 : 18} />} 
               label="Stories" 
               isSimplified={isSimplifiedView}
             />
@@ -39,7 +39,7 @@ export const NavigationItems = ({ user, isSimplifiedView }: NavigationItemsProps
           <NavigationMenuItem>
             <NavButton 
               to="/memory-lane" 
-              icon={<Image size={isSimplifiedView ? 20 : 16} />} 
+              icon={<Image size={isSimplifiedView ? 20 : 18} />} 
               label="Memories" 
               isSimplified={isSimplifiedView}
             />
@@ -48,7 +48,7 @@ export const NavigationItems = ({ user, isSimplifiedView }: NavigationItemsProps
           <NavigationMenuItem>
             <NavButton 
               to="/family-capsules" 
-              icon={<Archive size={isSimplifiedView ? 20 : 16} />} 
+              icon={<Archive size={isSimplifiedView ? 20 : 18} />} 
               label="Capsules" 
               isSimplified={isSimplifiedView}
             />
@@ -58,7 +58,7 @@ export const NavigationItems = ({ user, isSimplifiedView }: NavigationItemsProps
             <NavigationMenuItem>
               <NavButton 
                 to="/families" 
-                icon={<Users size={isSimplifiedView ? 20 : 16} />} 
+                icon={<Users size={isSimplifiedView ? 20 : 18} />} 
                 label="Family" 
                 isSimplified={isSimplifiedView}
               />

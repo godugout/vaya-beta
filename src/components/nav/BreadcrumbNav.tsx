@@ -27,7 +27,7 @@ export const BreadcrumbNav = ({ isSimplifiedView = false }: BreadcrumbNavProps) 
   if (pathSegments.length === 0) return null;
   
   return (
-    <div className="mt-2 pt-1">
+    <div className="mt-0 pt-0">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>

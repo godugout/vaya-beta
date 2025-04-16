@@ -12,9 +12,9 @@
 
 /* Desktop Navigation */
 .desktop-nav {
-  @apply hidden lg:flex items-center justify-between py-3;
+  @apply hidden lg:flex items-center justify-between py-4;
   transition: padding 0.3s ease;
-  height: 4rem;
+  height: 5rem;
 }
 
 /* Mobile Navigation */
@@ -23,9 +23,9 @@
 }
 
 .mobile-top-nav {
-  @apply flex items-center justify-between px-4 py-3;
+  @apply flex items-center justify-between px-4 py-4;
   transition: padding 0.3s ease, background-color 0.3s ease;
-  height: 4rem;
+  height: 5rem;
 }
 
 .mobile-bottom-nav {
@@ -99,6 +99,11 @@
   @apply bg-background/95 backdrop-blur-sm;
 }
 
+/* Integrated breadcrumbs for minimized navigation */
+.nav-container.h-12 .breadcrumb-container {
+  @apply py-0 inline-flex items-center ml-2;
+}
+
 /* Responsive Adjustments */
 @media (max-width: 767px) {
   .page-content:not([data-route="index"] .page-content) {
@@ -112,13 +117,13 @@
 
 @media (min-width: 768px) and (max-width: 1023px) {
   .nav-container:not(.h-12) {
-    height: 4rem; /* Slightly taller header on tablets when not minimized */
+    height: 5rem; /* Slightly taller header on tablets when not minimized */
   }
 }
 
 @media (min-width: 1024px) {
   .nav-container:not(.h-12) {
-    height: 4rem; /* Full-size header on desktop when not minimized */
+    height: 5rem; /* Full-size header on desktop when not minimized */
   }
 }
 
