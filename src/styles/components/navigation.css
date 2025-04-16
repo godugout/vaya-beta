@@ -6,12 +6,12 @@
 
 /* Desktop Navigation */
 .desktop-nav {
-  @apply hidden md:flex items-center justify-between px-6 py-3;
+  @apply hidden lg:flex items-center justify-between px-6 py-3;
 }
 
 /* Mobile Navigation */
 .mobile-nav {
-  @apply md:hidden flex flex-col;
+  @apply lg:hidden flex flex-col;
 }
 
 .mobile-top-nav {
@@ -33,7 +33,9 @@
 
 /* Breadcrumb Navigation */
 .breadcrumb-container {
-  @apply container max-w-7xl py-3;
+  @apply container max-w-7xl;
+  @apply py-2 md:py-3; /* Adjust padding based on screen size */
+  @apply px-4 md:px-6; /* Adjust horizontal padding */
 }
 
 /* View Switcher */
@@ -48,11 +50,6 @@
   --simplified-touch: 44px;
 }
 
-.simplified-view .nav-item {
-  @apply text-lg py-3 px-4;
-  min-height: var(--simplified-touch);
-}
-
 /* High Contrast Mode */
 @media (forced-colors: active) {
   .nav-container {
@@ -61,6 +58,29 @@
   
   .nav-item.active {
     @apply outline-2 outline-offset-2;
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 767px) {
+  .nav-container {
+    height: 64px; /* Smaller header on mobile */
+  }
+  
+  .mobile-bottom-nav {
+    height: 60px; /* Comfortable tap targets */
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .nav-container {
+    height: 72px; /* Slightly taller header on tablets */
+  }
+}
+
+@media (min-width: 1024px) {
+  .nav-container {
+    height: 80px; /* Full-size header on desktop */
   }
 }
 

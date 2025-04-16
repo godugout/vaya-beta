@@ -10,6 +10,7 @@ import { BreadcrumbNav } from "./nav/BreadcrumbNav";
 import { VoiceNavigationIndicator } from "./nav/VoiceNavigationIndicator";
 import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 export function MainNav() {
   const navigate = useNavigate();
@@ -17,6 +18,11 @@ export function MainNav() {
   const [isSimplifiedView, setIsSimplifiedView] = useState(false);
   const [isVoiceActive, setIsVoiceActive] = useState(false);
   const { toast } = useToast();
+  
+  // Use media queries to determine viewport size
+  const isMobile = useMediaQuery("(max-width: 767px)");
+  const isTablet = useMediaQuery("(min-width: 768px) and (max-width: 1023px)");
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
 
   // Get simplified view preference from localStorage
   useEffect(() => {
@@ -104,47 +110,58 @@ export function MainNav() {
         "nav-container",
         isSimplifiedView && "simplified-view"
       )}>
-        <DesktopNav 
+        {/* Show desktop nav only on larger screens */}
+        {isDesktop && (
+          <DesktopNav 
+            user={user} 
+            handleSignOut={handleSignOut} 
+            navigate={navigate}
+            isSimplifiedView={isSimplifiedView}
+            isVoiceActive={isVoiceActive}
+            onVoiceToggle={toggleVoiceNavigation}
+          />
+        )}
+        
+        {/* Show mobile top nav only on mobile and tablet */}
+        {(isMobile || isTablet) && (
+          <MobileTopNav 
+            user={user} 
+            handleSignOut={handleSignOut} 
+            navigate={navigate}
+            isSimplifiedView={isSimplifiedView}
+            onSettingsToggle={toggleSimplifiedView}
+          />
+        )}
+      </header>
+      
+      {/* Voice navigation status - show on all devices */}
+      {isVoiceActive && <VoiceNavigationIndicator isActive={isVoiceActive} />}
+      
+      {/* Mobile bottom navigation - only on mobile and small tablets */}
+      {(isMobile || isTablet) && (
+        <MobileBottomNav 
           user={user} 
-          handleSignOut={handleSignOut} 
           navigate={navigate}
           isSimplifiedView={isSimplifiedView}
           isVoiceActive={isVoiceActive}
           onVoiceToggle={toggleVoiceNavigation}
         />
-        <MobileTopNav 
-          user={user} 
-          handleSignOut={handleSignOut} 
-          navigate={navigate}
-          isSimplifiedView={isSimplifiedView}
-          onSettingsToggle={toggleSimplifiedView}
-        />
-      </header>
+      )}
       
-      {/* Voice navigation status */}
-      <VoiceNavigationIndicator isActive={isVoiceActive} />
-      
-      {/* Mobile bottom navigation */}
-      <MobileBottomNav 
-        user={user} 
-        navigate={navigate}
-        isSimplifiedView={isSimplifiedView}
-        isVoiceActive={isVoiceActive}
-        onVoiceToggle={toggleVoiceNavigation}
-      />
-      
-      {/* Breadcrumb navigation */}
+      {/* Breadcrumb navigation - show on all devices but style differently */}
       <div className={cn(
         "mt-20",
+        isMobile && "mt-16",
         isVoiceActive && "pt-16",
         isSimplifiedView && "simplified-view"
       )}>
         <BreadcrumbNav isSimplifiedView={isSimplifiedView} />
       </div>
       
-      {/* Spacer for fixed header */}
+      {/* Spacer for fixed header - adjust based on device */}
       <div className={cn(
         "h-20",
+        isMobile && "h-16",
         isVoiceActive && "h-36"
       )} />
     </>
