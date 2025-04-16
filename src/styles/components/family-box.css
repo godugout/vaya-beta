@@ -1,0 +1,42 @@
+
+/* Family Box Styles */
+.family-box {
+  @apply rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden;
+}
+
+.family-box-header {
+  @apply p-4 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800;
+}
+
+.family-box-content {
+  @apply p-4;
+}
+
+.family-box-item {
+  @apply flex items-center gap-2 p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer;
+}
+
+.family-box-item.selected {
+  @apply bg-autumn/10 hover:bg-autumn/20;
+}
+
+.family-box-item-icon {
+  @apply text-autumn;
+}
+
+.family-box-item-text {
+  @apply text-sm font-medium;
+}
+
+/* Responsive adjustments */
+@media (min-width: 640px) {
+  .family-box-grid {
+    @apply grid grid-cols-2 gap-4;
+  }
+}
+
+@media (min-width: 1024px) {
+  .family-box-grid {
+    @apply grid-cols-3;
+  }
+}

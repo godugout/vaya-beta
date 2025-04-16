@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { FamilyFormData } from "./types";
+import { FamilyFormData, UserPreference } from "./types";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -19,6 +19,17 @@ export const useWizardController = (onOpenChange: (open: boolean) => void) => {
   };
 
   const handleNext = () => {
+    // Path selection validation
+    if (step === 2 && !formData.userPreference) {
+      toast({
+        title: "Path selection required",
+        description: "Please select a setup path to continue",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    // Family name validation
     if (step === 1 && !formData.name) {
       toast({
         title: "Family name required",
@@ -27,6 +38,7 @@ export const useWizardController = (onOpenChange: (open: boolean) => void) => {
       });
       return;
     }
+    
     setStep((prev) => prev + 1);
   };
 
@@ -56,7 +68,6 @@ export const useWizardController = (onOpenChange: (open: boolean) => void) => {
       if (familyError) throw familyError;
 
       // Add current user as family member with admin role
-      // This assumes a table structure with family_id and user_id columns
       const { error: memberError } = await supabase
         .from("family_members")
         .insert({
@@ -74,7 +85,9 @@ export const useWizardController = (onOpenChange: (open: boolean) => void) => {
 
       toast({
         title: "Family created!",
-        description: `You've successfully created ${formData.name}`,
+        description: formData.userPreference === "quick" 
+          ? `You've quickly created ${formData.name}. You can add more details later.` 
+          : `You've successfully created ${formData.name}`,
       });
 
       // Reset form and close dialog

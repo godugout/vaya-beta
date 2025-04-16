@@ -7,6 +7,9 @@ import { Step3Confirmation } from "./Step3Confirmation";
 import { useWizardController } from "./useWizardController";
 import { WizardControllerProps } from "./types";
 import { WizardNavigation } from "./WizardNavigation";
+import { PathSelector } from "./PathSelector";
+import { QuickCreatePath } from "./QuickCreatePath";
+import { FamilyBoxItems } from "./FamilyBoxItems";
 
 export const WizardContent = ({ open, onOpenChange }: WizardControllerProps) => {
   const {
@@ -19,29 +22,71 @@ export const WizardContent = ({ open, onOpenChange }: WizardControllerProps) => 
     handleSubmit,
   } = useWizardController(onOpenChange);
 
-  const steps = [
-    {
-      title: "Create Your Family",
-      content: <Step1FamilyInfo formData={formData} handleChange={handleChange} />,
-    },
-    {
-      title: "Invite Family Members",
-      content: <Step2InviteMembers formData={formData} handleChange={handleChange} />,
-    },
-    {
-      title: "Ready to Begin",
-      content: <Step3Confirmation formData={formData} handleChange={handleChange} />,
-    },
-  ];
+  // Generate steps based on user preference
+  const getSteps = () => {
+    // Initial steps common to both paths
+    const initialSteps = [
+      {
+        title: "Create Your Family",
+        description: "Start by naming your family space",
+        content: <Step1FamilyInfo formData={formData} handleChange={handleChange} />,
+      },
+      {
+        title: "Choose Setup Path",
+        description: "Select how you'd like to set up your family",
+        content: <PathSelector formData={formData} handleChange={handleChange} />,
+      },
+    ];
+
+    // If no preference selected yet, just show initial steps
+    if (!formData.userPreference) {
+      return initialSteps;
+    }
+
+    if (formData.userPreference === "quick") {
+      // Quick path
+      return [
+        ...initialSteps,
+        {
+          title: "Quick Family Setup",
+          description: "Create your family in one step",
+          content: <QuickCreatePath formData={formData} handleChange={handleChange} loading={loading} />,
+        }
+      ];
+    } else {
+      // Detailed path
+      return [
+        ...initialSteps,
+        {
+          title: "Family Box Items",
+          description: "Choose items to save for later",
+          content: <FamilyBoxItems formData={formData} handleChange={handleChange} />,
+        },
+        {
+          title: "Invite Family Members",
+          description: "Add members to your family space",
+          content: <Step2InviteMembers formData={formData} handleChange={handleChange} />,
+        },
+        {
+          title: "Ready to Begin",
+          description: "Review and create your family",
+          content: <Step3Confirmation formData={formData} handleChange={handleChange} />,
+        },
+      ];
+    }
+  };
+
+  const steps = getSteps();
+  const currentStep = steps[step - 1];
 
   return (
     <>
       <DialogHeader>
         <DialogTitle className="text-xl font-heading font-semibold text-vaya-text-primary">
-          {steps[step - 1].title}
+          {currentStep.title}
         </DialogTitle>
         <DialogDescription className="text-gray-500 dark:text-gray-400">
-          Create your family space to collect and share memories
+          {currentStep.description}
         </DialogDescription>
       </DialogHeader>
       
@@ -53,7 +98,7 @@ export const WizardContent = ({ open, onOpenChange }: WizardControllerProps) => 
           exit={{ opacity: 0, x: -20 }}
           transition={{ duration: 0.3 }}
         >
-          {steps[step - 1].content}
+          {currentStep.content}
         </motion.div>
       </AnimatePresence>
       
@@ -64,6 +109,7 @@ export const WizardContent = ({ open, onOpenChange }: WizardControllerProps) => 
         handleBack={handleBack}
         handleNext={handleNext}
         handleSubmit={handleSubmit}
+        shouldShowSubmit={formData.userPreference === "quick" ? step === 3 : step === steps.length}
       />
     </>
   );

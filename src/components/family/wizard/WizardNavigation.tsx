@@ -9,6 +9,7 @@ interface WizardNavigationProps {
   handleBack: () => void;
   handleNext: () => void;
   handleSubmit: () => void;
+  shouldShowSubmit?: boolean;
 }
 
 export const WizardNavigation = ({
@@ -18,10 +19,11 @@ export const WizardNavigation = ({
   handleBack,
   handleNext,
   handleSubmit,
+  shouldShowSubmit = false,
 }: WizardNavigationProps) => {
   return (
     <div className="flex justify-end gap-2 mt-6">
-      {step > 1 && step < totalSteps && (
+      {step > 1 && (
         <Button
           variant="outline"
           onClick={handleBack}
@@ -31,14 +33,14 @@ export const WizardNavigation = ({
         </Button>
       )}
       
-      {step < totalSteps - 1 && (
+      {!shouldShowSubmit && (
         <Button onClick={handleNext} disabled={loading} className="bg-ui-orange hover:bg-ui-orange/90 text-white">
           Next
           <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
       )}
       
-      {step === totalSteps - 1 && (
+      {shouldShowSubmit && (
         <Button
           onClick={handleSubmit}
           disabled={loading}

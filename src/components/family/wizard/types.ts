@@ -1,9 +1,12 @@
 
 import { Dispatch, SetStateAction } from "react";
 
+export type UserPreference = "quick" | "detailed";
+
 export interface FamilyFormData {
   name: string;
   description: string;
+  userPreference?: UserPreference;
 }
 
 export interface WizardStepProps {
