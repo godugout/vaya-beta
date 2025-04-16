@@ -1,15 +1,15 @@
 
 /* Hero section styles */
 .hero-fullbleed {
-  @apply w-full min-h-[100vh] flex items-center justify-center relative overflow-hidden;
+  @apply w-full min-h-[100vh] flex items-center justify-center relative overflow-hidden m-0 p-0;
 }
 
 .hero-background {
-  @apply absolute inset-0 w-full h-full;
+  @apply absolute inset-0 w-full h-full m-0 p-0;
 }
 
 .hero-overlay {
-  @apply absolute inset-0 bg-gradient-to-b from-white/80 to-white/40 dark:from-gray-900/80 dark:to-gray-900/40;
+  @apply absolute inset-0 bg-gradient-to-b from-white/80 to-white/40 dark:from-gray-900/80 dark:to-gray-900/40 m-0 p-0;
 }
 
 .hero-content {

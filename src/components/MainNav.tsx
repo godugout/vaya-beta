@@ -63,7 +63,7 @@ export function MainNav() {
         isSimplifiedView && "simplified-view",
         isMinimized ? "h-12" : "",
         isScrolled && "shadow-md",
-        isHomePage && isAtTop ? "bg-transparent" : "bg-background/95 backdrop-blur-sm",
+        isHomePage && isAtTop ? "bg-transparent border-transparent" : "bg-background/95 backdrop-blur-sm",
         isHomePage && !isScrolled ? "border-b-0" : "border-b"
       )}>
         <MinimizeButton 

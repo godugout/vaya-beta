@@ -1,4 +1,3 @@
-
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { MainNav } from './components/MainNav';
 import Index from './pages/Index';
@@ -25,15 +24,15 @@ function App() {
         <Route path="/auth" element={<Auth />} />
         <Route path="/design-system/*" element={<DesignSystem />} />
         
-        {/* All other routes have the MainNav */}
+        {/* Homepage - no page-content wrapper */}
         <Route path="/" element={
           <>
             <MainNav />
-            <div className="page-content">
-              <Index />
-            </div>
+            <Index />
           </>
         } />
+        
+        {/* All other routes have the MainNav and page-content */}
         <Route path="/memory-lane" element={
           <>
             <MainNav />

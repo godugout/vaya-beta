@@ -14,8 +14,8 @@ export default function Index() {
   const [showCreateFamily, setShowCreateFamily] = useState(false);
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-white dark:bg-gray-900">
-      {/* Hero section without any extra padding */}
+    <div className="min-h-screen overflow-x-hidden">
+      {/* Hero section without any margins or padding */}
       <div id="hero" className="w-full">
         <StorytellingHero />
       </div>

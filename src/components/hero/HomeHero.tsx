@@ -10,9 +10,9 @@ interface HomeHeroProps {
 
 const HomeHero = ({ isSpanish }: HomeHeroProps) => {
   return (
-    <div className="relative min-h-[100vh] w-full bg-white flex flex-col justify-center items-center overflow-hidden">
+    <div className="relative min-h-[100vh] w-full flex flex-col justify-center items-center overflow-hidden m-0 p-0">
       {/* Full-bleed background image with overlay */}
-      <div className="absolute inset-0 w-full h-full">
+      <div className="absolute inset-0 w-full h-full m-0 p-0">
         <div 
           className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1511895426328-dc8714191300?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjI5MjYyNjI5&dpr=2&h=1080')] bg-cover bg-center"
           style={{ opacity: 0.2 }}

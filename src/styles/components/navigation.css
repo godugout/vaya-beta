@@ -1,7 +1,7 @@
 
 /* Base Navigation Styles */
 .nav-container {
-  @apply w-full border-b;
+  @apply w-full;
   transition: background-color 0.3s ease, height 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease, border-color 0.3s ease;
 }
 
@@ -22,7 +22,7 @@
 }
 
 .mobile-top-nav {
-  @apply flex items-center justify-between px-4 py-3 border-b;
+  @apply flex items-center justify-between px-4 py-3;
   transition: padding 0.3s ease, background-color 0.3s ease;
 }
 
@@ -94,12 +94,12 @@
 }
 
 [data-route="index"] .nav-container.scrolled {
-  @apply bg-background/95 backdrop-blur-sm border-b border-border;
+  @apply bg-background/95 backdrop-blur-sm;
 }
 
 /* Responsive Adjustments */
 @media (max-width: 767px) {
-  .page-content {
+  .page-content:not([data-route="index"] .page-content) {
     padding-bottom: 5rem; /* Provide space for the bottom nav */
   }
   

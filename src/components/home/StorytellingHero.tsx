@@ -7,9 +7,9 @@ import { Link } from "react-router-dom";
 
 export const StorytellingHero = () => {
   return (
-    <section className="min-h-[100vh] relative overflow-hidden flex items-center">
+    <section className="min-h-[100vh] relative overflow-hidden flex items-center m-0 p-0">
       <div 
-        className="absolute inset-0 w-full h-full"
+        className="absolute inset-0 w-full h-full m-0 p-0"
       >
         <div 
           className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1511895426328-dc8714191300?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjI5MjYyNjI5&dpr=2&h=1080')] bg-cover bg-center"

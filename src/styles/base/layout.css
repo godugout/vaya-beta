@@ -35,12 +35,26 @@
   margin-top: var(--space-4);
 }
 
-/* Standard page padding */
+/* Standard page padding - NOT applied to homepage */
 .page-content {
   @apply pt-10 px-4 md:px-6 lg:px-8;
+}
+
+/* Remove padding/margin for homepage */
+[data-route="index"] .page-content,
+[data-route="index"] .container.full-bleed {
+  @apply p-0 m-0;
 }
   
 /* Section padding */
 .section-padding {
   @apply py-16 px-4 md:px-6 lg:px-8;
+}
+
+/* Full bleed container */
+.full-bleed {
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
 }

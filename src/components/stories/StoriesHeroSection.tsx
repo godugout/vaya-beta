@@ -4,10 +4,10 @@ import { FadeIn } from "@/components/animation/FadeIn";
 
 const StoriesHeroSection = () => {
   return (
-    <div className="relative w-full py-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <div className="relative w-full py-16 px-0 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-autumn/20 to-mountain/20 dark:from-gray-800 dark:to-gray-900" />
       <div className="absolute inset-0 bg-gradient-to-br from-gray-900/60 to-gray-800/40" />
-      <div className="relative max-w-3xl mx-auto text-center space-y-8 z-10">
+      <div className="relative max-w-3xl mx-auto text-center space-y-8 z-10 px-4">
         <FadeIn>
           <h2 className="text-4xl font-bold tracking-tight text-white sm:text-5xl drop-shadow-md">
             Your Family's Story Matters
