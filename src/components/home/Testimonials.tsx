@@ -17,19 +17,19 @@ const Testimonial = ({ quote, name, relationship, image, delay }: TestimonialPro
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay }}
       viewport={{ once: true }}
-      className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300"
+      className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-shadow duration-300"
     >
-      <Quote className="h-8 w-8 text-vaya-accent-yellow mb-4" />
-      <p className="text-lg font-story text-vaya-text-secondary mb-6 italic">
+      <Quote className="h-8 w-8 text-autumn mb-4" />
+      <p className="text-lg font-story text-gray-700 dark:text-gray-300 mb-6 italic">
         "{quote}"
       </p>
       <div className="flex items-center">
-        <div className="h-12 w-12 rounded-full overflow-hidden bg-gray-200 mr-4">
+        <div className="h-12 w-12 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-600 mr-4">
           <img src={image} alt={name} className="h-full w-full object-cover" />
         </div>
         <div>
-          <p className="font-heading font-semibold text-vaya-text-primary">{name}</p>
-          <p className="text-sm text-vaya-text-secondary">{relationship}</p>
+          <p className="font-heading font-semibold text-gray-900 dark:text-white">{name}</p>
+          <p className="text-sm text-gray-600 dark:text-gray-400">{relationship}</p>
         </div>
       </div>
     </motion.div>
@@ -62,8 +62,8 @@ export const Testimonials = () => {
   ];
 
   return (
-    <section className="py-20 bg-[#F8F5FF]">
-      <div className="container mx-auto px-4">
+    <section className="py-20 px-4">
+      <div className="container mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -71,10 +71,10 @@ export const Testimonials = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-heading font-semibold text-vaya-text-primary mb-4">
+          <h2 className="text-3xl md:text-4xl font-heading font-semibold text-gray-900 dark:text-white mb-4">
             Stories From Our Community
           </h2>
-          <p className="text-lg text-vaya-text-secondary max-w-2xl mx-auto">
+          <p className="text-lg text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
             See how families are using Vaya to capture and preserve their most meaningful memories.
           </p>
         </motion.div>

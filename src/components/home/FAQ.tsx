@@ -18,19 +18,19 @@ const FAQItem = ({ question, answer, isOpen, onClick, delay }: FAQItemProps) => 
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay }}
       viewport={{ once: true }}
-      className="border-b border-gray-200 py-5"
+      className="border-b border-gray-200 dark:border-gray-700 py-5"
     >
       <button
         onClick={onClick}
         className="flex justify-between items-center w-full text-left"
       >
-        <h3 className="text-xl font-heading font-medium text-vaya-text-primary">
+        <h3 className="text-xl font-heading font-medium text-gray-900 dark:text-white">
           {question}
         </h3>
         {isOpen ? (
-          <ChevronUp className="h-5 w-5 text-vaya-home" />
+          <ChevronUp className="h-5 w-5 text-autumn" />
         ) : (
-          <ChevronDown className="h-5 w-5 text-vaya-text-secondary" />
+          <ChevronDown className="h-5 w-5 text-gray-500 dark:text-gray-400" />
         )}
       </button>
       {isOpen && (
@@ -41,7 +41,7 @@ const FAQItem = ({ question, answer, isOpen, onClick, delay }: FAQItemProps) => 
           transition={{ duration: 0.3 }}
           className="mt-3"
         >
-          <p className="text-vaya-text-secondary">{answer}</p>
+          <p className="text-gray-700 dark:text-gray-300">{answer}</p>
         </motion.div>
       )}
     </motion.div>
@@ -79,7 +79,7 @@ export const FAQ = () => {
   };
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20">
       <div className="container mx-auto px-4 max-w-3xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -88,15 +88,15 @@ export const FAQ = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-heading font-semibold text-vaya-text-primary mb-4">
+          <h2 className="text-3xl md:text-4xl font-heading font-semibold text-gray-900 dark:text-white mb-4">
             Frequently Asked Questions
           </h2>
-          <p className="text-lg text-vaya-text-secondary">
+          <p className="text-lg text-gray-700 dark:text-gray-300">
             Everything you need to know about preserving your family's legacy with Vaya.
           </p>
         </motion.div>
 
-        <div>
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
           {faqItems.map((item, index) => (
             <FAQItem
               key={index}
