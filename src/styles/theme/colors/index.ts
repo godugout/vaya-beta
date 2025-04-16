@@ -8,6 +8,7 @@ import { shadcnColors } from './shadcn';
 import { vayaColors } from './vaya';
 import { darkModeColors } from './darkMode';
 import { forestStreamColors } from './forestStream';
+import { autumnColors } from './autumn';
 
 // Export a structured color system
 export const colors = {
@@ -23,6 +24,7 @@ export const colors = {
     greystone: greystoneColors,
     forestStream: forestStreamColors,
     vaya: vayaColors,
+    autumn: autumnColors,
   },
   
   // UI component colors
