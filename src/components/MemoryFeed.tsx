@@ -28,13 +28,14 @@ const MemoryFeed = () => {
         </AlertDescription>
       </Alert>
       
-      {memories.map((memory: Memory) => (
-        memory.type === "story" ? (
-          <StoryMemoryCard key={memory.id} memory={memory} isPlaceholder={true} />
-        ) : (
-          <PhotoMemoryCard key={memory.id} memory={memory} isPlaceholder={true} />
-        )
-      ))}
+      {memories.map((memory: Memory) => {
+        if (memory.type === "story") {
+          return <StoryMemoryCard key={memory.id} memory={memory} isPlaceholder={true} />;
+        } else if (memory.type === "photo") {
+          return <PhotoMemoryCard key={memory.id} memory={memory} isPlaceholder={true} />;
+        }
+        return null;
+      })}
     </div>
   );
 };
