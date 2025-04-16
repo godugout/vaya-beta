@@ -10,19 +10,28 @@ import { FadeIn } from "@/components/animation/FadeIn";
 interface AddMemoryModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  capsuleId?: string; // Add this optional prop
 }
 
-const AddMemoryModal = ({ open, onOpenChange }: AddMemoryModalProps) => {
+const AddMemoryModal = ({ open, onOpenChange, capsuleId }: AddMemoryModalProps) => {
   const [textMemory, setTextMemory] = useState("");
   
   const handleMemorySaved = (data: { audioUrl?: string; transcription?: string }) => {
     console.log("Memory recorded:", data);
+    // If capsuleId is provided, we can use it to associate the memory with a specific capsule
+    if (capsuleId) {
+      console.log("Associated with capsule:", capsuleId);
+    }
     onOpenChange(false);
   };
   
   const handleTextMemorySave = () => {
     if (textMemory.trim()) {
       console.log("Text memory saved:", textMemory);
+      // If capsuleId is provided, we can use it to associate the memory with a specific capsule
+      if (capsuleId) {
+        console.log("Associated with capsule:", capsuleId);
+      }
       onOpenChange(false);
     }
   };
@@ -31,7 +40,9 @@ const AddMemoryModal = ({ open, onOpenChange }: AddMemoryModalProps) => {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
-          <DialogTitle>Add New Memory</DialogTitle>
+          <DialogTitle>
+            {capsuleId ? "Add Memory to Capsule" : "Add New Memory"}
+          </DialogTitle>
         </DialogHeader>
         <Tabs defaultValue="voice" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
