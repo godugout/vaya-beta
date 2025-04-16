@@ -1,5 +1,5 @@
 
 /* Re-export all utilities */
-@import './animations.css';
+@import './animations/index.css';
 @import './backgrounds.css';
 @import './patterns.css';

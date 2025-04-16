@@ -1,0 +1,28 @@
+
+/* Focus/validation states */
+.input-focus-animation {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.input-focus-animation:focus-within {
+  border-color: var(--color-ui-orange);
+  box-shadow: 0 0 0 2px var(--color-ui-orange-25);
+  transform: translateY(-2px);
+}
+
+.input-error-animation {
+  animation: shake 0.4s ease-in-out;
+}
+
+.input-success-animation::after {
+  content: '';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  background-color: var(--color-ui-green);
+  border-radius: 50%;
+  animation: pulse 1s var(--vaya-easing-bounce);
+}

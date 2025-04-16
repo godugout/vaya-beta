@@ -1,0 +1,64 @@
+
+/* Apply reduced motion settings */
+@media (prefers-reduced-motion) {
+  .animate-float,
+  .animate-pulse,
+  .animate-wave,
+  .animate-bounce,
+  .animate-shine,
+  .animate-ripple,
+  .character-happy,
+  .character-excited,
+  .character-thinking,
+  .character-surprised,
+  .recording-pulse,
+  .success-pulse {
+    animation: none;
+  }
+  
+  .hover-scale:hover,
+  .hover-lift:hover,
+  .hover-glow:hover,
+  .hover-heartbeat:hover,
+  .hover-shake:hover {
+    transform: none;
+    filter: none;
+    animation: none;
+  }
+  
+  .btn-press:active {
+    transform: none;
+  }
+  
+  .animate-fade-in,
+  .animate-slide-in-right,
+  .animate-reveal,
+  .character-entry,
+  .character-exit {
+    animation-duration: 0.1s;
+  }
+}
+
+[data-motion="reduced"] .animate-float,
+[data-motion="reduced"] .animate-pulse,
+[data-motion="reduced"] .animate-wave,
+[data-motion="reduced"] .animate-bounce,
+[data-motion="reduced"] .animate-shine,
+[data-motion="reduced"] .animate-ripple,
+[data-motion="reduced"] .character-happy,
+[data-motion="reduced"] .character-excited,
+[data-motion="reduced"] .character-thinking,
+[data-motion="reduced"] .character-surprised,
+[data-motion="reduced"] .recording-pulse,
+[data-motion="reduced"] .success-pulse {
+  animation: none;
+}
+
+[data-motion="none"] * {
+  transition: none !important;
+  animation: none !important;
+}
+
+[data-motion="reduced"] .typewriter::after {
+  animation: none;
+}

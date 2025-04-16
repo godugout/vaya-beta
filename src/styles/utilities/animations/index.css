@@ -1,0 +1,11 @@
+
+/* Import all animation modules */
+@import './keyframes.css';
+@import './basic.css';
+@import './hover.css';
+@import './character.css';
+@import './input.css';
+@import './loading.css';
+@import './typewriter.css';
+@import './variables.css';
+@import './accessibility.css';

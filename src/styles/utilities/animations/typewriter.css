@@ -1,0 +1,19 @@
+
+/* Typewriter animation styles */
+.typewriter {
+  display: inline-block;
+  position: relative;
+}
+
+.typewriter::after {
+  content: '|';
+  position: absolute;
+  right: -4px;
+  color: currentColor;
+  animation: typewriter-cursor 0.8s infinite;
+}
+
+.typewriter-container {
+  display: inline-flex;
+  min-height: 1.2em;
+}

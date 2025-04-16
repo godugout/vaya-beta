@@ -1,0 +1,25 @@
+
+/* Character animation classes */
+.character-entry {
+  animation: fadeIn 0.6s var(--vaya-easing-bounce);
+}
+
+.character-exit {
+  animation: fadeIn 0.6s var(--vaya-easing-bounce) reverse;
+}
+
+.character-happy {
+  animation: bounce 1s var(--vaya-easing-bounce);
+}
+
+.character-excited {
+  animation: pulse 0.5s var(--vaya-easing-bounce) 3;
+}
+
+.character-thinking {
+  animation: float 3s ease-in-out infinite;
+}
+
+.character-surprised {
+  animation: pulse 0.3s var(--vaya-easing-bounce) 2;
+}

@@ -1,0 +1,29 @@
+
+/* Progress animations */
+.loading-bar {
+  width: 100%;
+  height: 4px;
+  background-color: #E2E8F0;
+  position: relative;
+  overflow: hidden;
+}
+
+.loading-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 30%;
+  background-color: var(--color-ui-orange);
+  animation: loadingBar 1.5s ease-in-out infinite;
+}
+
+/* Specific component animations */
+.recording-pulse {
+  animation: recordingPulse 1.5s infinite;
+}
+
+.success-pulse {
+  animation: successPulse 1.5s;
+}
