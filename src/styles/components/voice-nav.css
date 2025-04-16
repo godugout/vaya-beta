@@ -7,7 +7,6 @@
   background-color: var(--bg-subtle);
   border-radius: var(--radius-lg);
   margin-bottom: var(--space-4);
-  animation: pulse 2s infinite;
 }
 
 .voice-indicator-icon {
@@ -36,9 +35,35 @@
   color: var(--text-secondary);
 }
 
-/* Animation for Voice indicator */
-@keyframes pulse {
-  0% { opacity: 1; }
-  50% { opacity: 0.7; }
-  100% { opacity: 1; }
+/* Status badge for voice indicator */
+.status-badge {
+  display: inline-block;
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: 0.25rem;
+}
+
+.status-badge-listening {
+  background-color: rgba(239, 68, 68, 0.2);
+  color: rgb(239, 68, 68);
+}
+
+.status-badge-processing {
+  background-color: rgba(245, 158, 11, 0.2);
+  color: rgb(245, 158, 11);
+}
+
+.status-badge-ready {
+  background-color: rgba(16, 185, 129, 0.2);
+  color: rgb(16, 185, 129);
+}
+
+/* Remove pulsing animation for a more subtle approach */
+@media (prefers-reduced-motion) {
+  .status-badge {
+    transition: none;
+  }
 }
