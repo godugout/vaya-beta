@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 type AnimationPreference = 'full' | 'reduced' | 'none';
@@ -13,10 +12,10 @@ interface AnimationContextType {
     slow: number;
   };
   easing: {
-    standard: string;
-    bounce: string;
-    gentle: string;
-    elastic: string;
+    standard: [number, number, number, number];
+    bounce: [number, number, number, number];
+    gentle: [number, number, number, number];
+    elastic: [number, number, number, number];
   };
 }
 
@@ -27,10 +26,10 @@ const defaultDuration = {
 };
 
 const defaultEasing = {
-  standard: 'cubic-bezier(0.4, 0, 0.2, 1)',
-  bounce: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
-  gentle: 'cubic-bezier(0.4, 0.0, 0.2, 1)',
-  elastic: 'cubic-bezier(0.68, -0.6, 0.32, 1.6)'
+  standard: [0.4, 0, 0.2, 1],
+  bounce: [0.34, 1.56, 0.64, 1],
+  gentle: [0.4, 0.0, 0.2, 1],
+  elastic: [0.68, -0.6, 0.32, 1.6]
 };
 
 const AnimationContext = createContext<AnimationContextType>({
@@ -44,7 +43,6 @@ const AnimationContext = createContext<AnimationContextType>({
 export const useAnimation = () => useContext(AnimationContext);
 
 export const AnimationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Get initial preference from localStorage or system preference
   const getInitialPreference = (): AnimationPreference => {
     if (typeof window === 'undefined') return 'full';
     
@@ -60,22 +58,17 @@ export const AnimationProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const [isReduced, setIsReduced] = useState(false);
 
   useEffect(() => {
-    // Update localStorage when preference changes
     localStorage.setItem('vaya-animation-preference', preference);
     
-    // Update isReduced flag
     setIsReduced(preference === 'reduced' || preference === 'none');
     
-    // Apply a data attribute to the document for CSS targeting
     document.documentElement.setAttribute('data-motion', preference);
   }, [preference]);
 
-  // Listen for system preference changes
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     
     const handleChange = () => {
-      // Only auto-update if the user hasn't explicitly set a preference
       if (!localStorage.getItem('vaya-animation-preference')) {
         setPreference(mediaQuery.matches ? 'reduced' : 'full');
       }

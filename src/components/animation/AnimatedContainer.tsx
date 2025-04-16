@@ -133,7 +133,7 @@ export const AnimatedContainer: React.FC<AnimatedContainerProps & Omit<MotionPro
     transition: {
       duration: duration || durationPresets.standard / 1000,
       delay: delay,
-      ease: isContinuous ? "linear" : easing.standard
+      ease: isContinuous ? "linear" : easing.standard // Now using the array format passed from context
     },
     whileHover: whileHover,
     whileTap: whileTap,

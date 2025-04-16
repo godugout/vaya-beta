@@ -58,7 +58,7 @@ export const PageTransition: React.FC<PageTransitionProps> = ({
         variants={variants}
         transition={{
           duration: durationPresets.standard / 1000,
-          ease: easing.standard,
+          ease: easing.standard // Now using the array format passed from context
         }}
       >
         {children}

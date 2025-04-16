@@ -30,7 +30,7 @@ export const FadeIn: React.FC<FadeInProps> = ({
       transition={{
         duration: duration || durationPresets.standard / 1000,
         delay,
-        ease: easing.standard,
+        ease: easing.standard // Now using the array format passed from context
       }}
     >
       {children}
