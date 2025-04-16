@@ -77,6 +77,13 @@
   @apply flex flex-col items-center justify-center p-2 transition-colors;
 }
 
+/* Voice Navigation Toast */
+.voice-navigation-toast {
+  @apply fixed bottom-20 left-1/2 transform -translate-x-1/2 z-50;
+  @apply bg-gray-900/80 rounded-lg border border-gray-700 shadow-lg;
+  @apply py-2 px-4;
+}
+
 /* Responsive Adjustments */
 @media (max-width: 767px) {
   .page-content {

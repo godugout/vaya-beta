@@ -183,20 +183,15 @@ export function MainNav() {
         )}
       </header>
       
-      {/* Voice Indicator - placed below the header to avoid overlap */}
-      {isVoiceActive && (
-        <div className="fixed top-20 left-0 right-0 z-20 mt-16">
-          <VoiceNavigationIndicator isActive={isVoiceActive} />
-        </div>
-      )}
-      
       {/* Content spacing to prevent overlap with fixed headers */}
       <div className={cn(
         "h-20",
         isMobile && "h-24",
-        isVoiceActive && "h-36",
         isMinimized && "h-12"
       )} />
+      
+      {/* Voice Navigation Indicator */}
+      <VoiceNavigationIndicator isActive={isVoiceActive} />
       
       {/* Sticky Bottom Action Bar */}
       {(isMobile || isTablet) && (
