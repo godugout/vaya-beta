@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -6,6 +5,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { typography } from '@/styles/theme/typography';
+import { ColorContrastChecker } from './ColorContrastChecker';
 
 export const Typography = () => {
   const [fontFamily, setFontFamily] = React.useState('Inter Tight');
@@ -297,6 +297,9 @@ export const Typography = () => {
           </div>
         </CardContent>
       </Card>
+      
+      {/* Add Color Contrast Analysis */}
+      <ColorContrastChecker />
     </div>
   );
 };
