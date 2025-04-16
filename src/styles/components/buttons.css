@@ -1,3 +1,31 @@
+/* Warm, inviting button styles */
+.btn {
+  @apply inline-flex items-center justify-center gap-2;
+  @apply px-6 py-3 rounded-xl font-medium;
+  @apply transition-all duration-300;
+  @apply shadow-sm hover:shadow-md;
+  @apply transform hover:-translate-y-0.5;
+}
+
+.btn-primary {
+  @apply bg-primary text-primary-foreground;
+  @apply hover:bg-primary/90;
+}
+
+.btn-secondary {
+  @apply bg-secondary text-secondary-foreground;
+  @apply hover:bg-secondary/90;
+}
+
+.btn-outline {
+  @apply border-2 border-primary bg-transparent;
+  @apply text-primary hover:bg-primary hover:text-primary-foreground;
+}
+
+.btn-ghost {
+  @apply text-foreground hover:bg-secondary;
+  @apply shadow-none hover:shadow-none;
+}
 
 /* Buttons */
 .btn {

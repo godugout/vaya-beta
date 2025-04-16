@@ -1,4 +1,3 @@
-
 /* Card Components */
 .nature-card {
   background-color: var(--card-background);
@@ -112,4 +111,29 @@
 
 .stream-card:hover {
   transform: scale(1.02);
+}
+
+/* Warm, inviting card styles */
+.memory-card {
+  @apply relative overflow-hidden;
+  @apply bg-card text-card-foreground;
+  @apply rounded-xl border border-border;
+  @apply transition-all duration-300;
+  @apply hover:shadow-lg hover:-translate-y-1;
+}
+
+.photo-card {
+  @apply relative overflow-hidden;
+  @apply rounded-xl;
+  @apply transition-all duration-300;
+  @apply hover:shadow-xl hover:-translate-y-1;
+}
+
+.story-card {
+  @apply relative overflow-hidden;
+  @apply bg-gradient-to-br from-secondary to-background;
+  @apply rounded-xl border border-border;
+  @apply transition-all duration-300;
+  @apply p-6;
+  @apply hover:shadow-lg hover:-translate-y-1;
 }
