@@ -10,6 +10,9 @@ import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ContentAssociations } from "@/components/associations/ContentAssociations";
 import { AddContentAssociation } from "@/components/associations/AddContentAssociation";
+import { TagInput } from "@/components/tags/TagInput";
+import { useContentTags, useTagManagement } from "@/components/tags/hooks/useTagManagement";
+import { PopularTags } from "@/components/tags/PopularTags";
 
 export const StoryDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -18,7 +21,13 @@ export const StoryDetails = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   
   const story = data?.pages[0]?.story;
-  const tags = data?.pages[0]?.tags || [];
+  const storyTags = data?.pages[0]?.tags || [];
+  
+  // Get the tag management hooks
+  const { addTag, removeTag } = useTagManagement('story');
+  
+  // Get content tags with the new hook (for demo, but we could simply use the tags from story)
+  const { data: contentTags = [] } = useContentTags('story', id);
 
   const togglePlayback = () => {
     if (story?.audio_url) {
@@ -36,6 +45,16 @@ export const StoryDetails = () => {
       }
       setIsPlaying(!isPlaying);
     }
+  };
+
+  const handleAddTag = (tag: string) => {
+    if (id) {
+      addTag.mutate({ contentId: id, tag });
+    }
+  };
+
+  const handleRemoveTag = (tagId: string) => {
+    removeTag.mutate(tagId);
   };
 
   if (isLoading) {
@@ -90,15 +109,22 @@ export const StoryDetails = () => {
             </div>
           )}
           
-          {tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-6">
-              {tags.map(tag => (
-                <Badge key={tag.id} variant="outline" className="bg-gray-100">
-                  {tag.tag}
-                </Badge>
-              ))}
-            </div>
-          )}
+          <div className="mb-6">
+            <h3 className="text-sm font-medium mb-2">Tags</h3>
+            <TagInput
+              contentType="story"
+              contentId={story.id}
+              title={story.title}
+              description={story.description}
+              existingTags={storyTags}
+              onAddTag={handleAddTag}
+              onRemoveTag={handleRemoveTag}
+            />
+          </div>
+          
+          <div className="mb-6">
+            <PopularTags limit={8} />
+          </div>
           
           <div className="flex justify-end">
             <AddContentAssociation
