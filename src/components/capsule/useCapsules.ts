@@ -1,4 +1,3 @@
-
 import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { CapsuleData, Capsule } from "./types";
 import { supabase } from "@/integrations/supabase/client";
@@ -125,8 +124,9 @@ export const useCapsule = (id?: string) => {
         };
       }
     },
-    enabled: !!id,
+    getNextPageParam: () => null,
     initialPageParam: 0,
+    enabled: !!id,
   });
 };
 

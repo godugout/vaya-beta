@@ -7,7 +7,7 @@ import { useCapsules } from "@/components/capsule/useCapsules";
 import { CapsuleData } from "@/components/capsule/types";
 import { CapsuleStatus } from "@/types/capsule";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Plus, Package, Calendar, Gift } from "lucide-react";
 import { LoadingIndicator } from "@/components/animation/LoadingIndicator";
 
 const FamilyCapsules = () => {
@@ -27,6 +27,38 @@ const FamilyCapsules = () => {
   const handleCreateCapsule = () => {
     // Navigate to create capsule page
     navigate("/create-capsule");
+  };
+
+  // Helper function to get appropriate icon for capsule status
+  const getIconForStatus = (status: CapsuleStatus) => {
+    switch (status) {
+      case 'upcoming':
+        return Calendar;
+      case 'locked':
+        return Package;
+      case 'active':
+        return Gift;
+      case 'revealed':
+        return Gift;
+      default:
+        return Package;
+    }
+  };
+
+  // Helper function to get color key for capsule status
+  const getColorKeyForStatus = (status: CapsuleStatus) => {
+    switch (status) {
+      case 'upcoming':
+        return 'blue';
+      case 'locked':
+        return 'amber';
+      case 'active':
+        return 'green';
+      case 'revealed':
+        return 'purple';
+      default:
+        return 'blue';
+    }
   };
 
   return (
@@ -72,6 +104,8 @@ const FamilyCapsules = () => {
             capsules={allCapsules.map((capsule: CapsuleData) => ({
               ...capsule,
               link: `/capsule/${capsule.id}`,
+              icon: getIconForStatus(capsule.status as CapsuleStatus),
+              colorKey: getColorKeyForStatus(capsule.status as CapsuleStatus),
               metadata: {
                 creatorInitials: "FV", // This would need to be fetched from user profile
                 itemCount: capsule.itemCount || 0,

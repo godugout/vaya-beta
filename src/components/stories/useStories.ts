@@ -1,4 +1,3 @@
-
 import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Story } from "./types";
 import { supabase } from "@/integrations/supabase/client";
@@ -104,8 +103,9 @@ export const useStory = (id?: string) => {
         };
       }
     },
-    enabled: !!id,
+    getNextPageParam: () => null, // No pagination needed for single story
     initialPageParam: 0,
+    enabled: !!id,
   });
 };
 
