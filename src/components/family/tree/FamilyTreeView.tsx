@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { ReactFlow, MiniMap, Controls, Background, Panel } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
@@ -61,7 +62,7 @@ export const FamilyTreeView = ({
   onRemoveMember,
   onAddMembers,
 }: FamilyTreeViewProps) => {
-  const { isMobile } = useIsMobile();
+  const isMobile = useIsMobile();
   const [layoutType, setLayoutType] = useState<'vertical' | 'horizontal' | 'radial'>('vertical');
   const [filterOpen, setFilterOpen] = useState(false);
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
