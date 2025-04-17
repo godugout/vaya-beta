@@ -21,16 +21,17 @@ interface AddMemoryModalProps {
 const AddMemoryModal = ({ open, onOpenChange, capsuleId }: AddMemoryModalProps) => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
-  const [activeTab, setActiveTab] = useState<string>("text");
+  const [activeTab, setActiveTab] = useState<"text" | "photo" | "audio">("text");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [audioData, setAudioData] = useState<{ audioBlob: Blob, audioUrl: string } | null>(null);
+  
+  const [audioData, setAudioData] = useState<{ audioBlob: Blob; audioUrl: string } | null>(null);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const handleTabChange = (value: string) => {
-    setActiveTab(value);
+    setActiveTab(value as "text" | "photo" | "audio");
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -136,13 +137,15 @@ const AddMemoryModal = ({ open, onOpenChange, capsuleId }: AddMemoryModalProps) 
       }
 
       // Invalidate queries to refresh data
-      queryClient.invalidateQueries({ queryKey: ["memories"] });
-      
+      queryClient.invalidateQueries({
+        queryKey: ["memories"],
+      });
+
       toast({
         title: "Memory Saved",
         description: "Your memory has been saved successfully",
       });
-      
+
       onOpenChange(false);
     } catch (error) {
       console.error("Error saving memory:", error);
@@ -166,7 +169,11 @@ const AddMemoryModal = ({ open, onOpenChange, capsuleId }: AddMemoryModalProps) 
           </DialogDescription>
         </DialogHeader>
 
-        <Tabs defaultValue="text" value={activeTab} onValueChange={handleTabChange}>
+        <Tabs
+          defaultValue="text"
+          value={activeTab}
+          onValueChange={handleTabChange}
+        >
           <TabsList className="grid grid-cols-3 mb-4">
             <TabsTrigger value="text" className="flex items-center gap-2">
               <FileText className="h-4 w-4" />
@@ -263,8 +270,8 @@ const AddMemoryModal = ({ open, onOpenChange, capsuleId }: AddMemoryModalProps) 
               <div>
                 <Label>Voice Recording</Label>
                 <div className="border rounded-md p-4">
-                  <AudioRecorder 
-                    onRecordingComplete={handleAudioRecorded} 
+                  <AudioRecorder
+                    onRecordingComplete={handleAudioRecorded}
                     className="mx-auto"
                   />
                 </div>
@@ -288,7 +295,7 @@ const AddMemoryModal = ({ open, onOpenChange, capsuleId }: AddMemoryModalProps) 
               >
                 Cancel
               </Button>
-              <Button 
+              <Button
                 onClick={handleSubmit}
                 disabled={isSubmitting}
                 className="bg-forest hover:bg-forest/90"
