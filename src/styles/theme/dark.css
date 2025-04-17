@@ -102,3 +102,50 @@
 .dark ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.3);
 }
+
+/* Consistent button styles for dark mode */
+.dark .btn {
+  color: var(--color-text-dark);
+}
+
+.dark .btn-primary {
+  background-color: rgb(var(--color-forest));
+  border-color: rgb(var(--color-leaf));
+}
+
+/* Dark mode dialog and modal surfaces */
+.dark .dialog-content,
+.dark .modal-content {
+  background-color: #192D1D; /* Slightly lighter than card background for better layering */
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Dark mode consistent table styles */
+.dark table th {
+  background-color: rgba(0, 0, 0, 0.2);
+  color: var(--color-text-dark);
+}
+
+.dark table td {
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Dark mode tabs and navigation */
+.dark .tabs-list {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+.dark .tab-active {
+  background-color: rgb(var(--color-forest));
+  color: var(--color-text-dark);
+}
+
+/* Dark mode consistent link colors */
+.dark a:not([class]) {
+  color: rgb(var(--color-water));
+}
+
+.dark a:not([class]):hover {
+  color: rgb(var(--color-sky));
+}

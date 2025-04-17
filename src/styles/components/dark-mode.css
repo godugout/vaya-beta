@@ -1,45 +1,126 @@
 
-/* Dark mode styles */
-html {
-  color-scheme: dark;
-}
+/* Dark mode component-specific overrides */
 
-/* Set dark mode as default */
-:root {
-  color-scheme: dark;
-}
-
-/* Style adjustments for dark mode */
-body {
-  background-color: var(--color-gray-900);
-  color: var(--color-white);
-}
-
-.dark-mode-toggle {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-  padding: 0.5rem;
-  border-radius: var(--radius-md);
-  transition: background-color 0.2s ease-in-out;
-}
-
-.dark-mode-toggle:hover {
-  background-color: var(--color-gray-800);
-}
-
-/* Adjust card backgrounds for dark mode */
-.card {
+/* Card consistency */
+.dark .card,
+.dark .memory-card,
+.dark .story-card {
   background-color: var(--card-background);
-  border-color: var(--color-gray-800);
+  border-color: rgba(255, 255, 255, 0.05);
+  color: var(--color-text-dark);
 }
 
-/* Dark mode icons */
-.dark-mode-icon {
-  color: var(--color-yellow-400);
+/* Input field consistency */
+.dark .input,
+.dark .select,
+.dark .textarea {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--color-text-dark);
 }
 
-.light-mode-icon {
-  color: var(--color-gray-400);
+/* Button consistency */
+.dark .button-primary {
+  background-color: rgb(var(--color-forest));
+  color: white;
+}
+
+.dark .button-secondary {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+/* Navigation consistency */
+.dark .nav-container {
+  background-color: rgba(12, 42, 32, 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom-color: rgba(255, 255, 255, 0.05);
+}
+
+.dark .desktop-nav {
+  background-color: transparent;
+}
+
+.dark .mobile-nav {
+  background-color: var(--card-background);
+}
+
+/* Dialog and modal consistency */
+.dark .dialog,
+.dark .modal {
+  background-color: rgba(12, 42, 32, 0.95);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Family box consistency */
+.dark .family-box {
+  background-color: var(--card-background);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Form elements */
+.dark label {
+  color: var(--color-text-medium);
+}
+
+.dark .checkbox,
+.dark .radio {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Tabs styling */
+.dark .tabs {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark .tab[data-state="active"] {
+  border-color: rgb(var(--color-water));
+  color: rgb(var(--color-water));
+}
+
+/* Custom scrollbar for all components */
+.dark .scrollbar {
+  scrollbar-color: rgba(255, 255, 255, 0.2) rgba(0, 0, 0, 0.2);
+}
+
+.dark .scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.dark .scrollbar::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Dropdown menu styles */
+.dark .dropdown-menu {
+  background-color: #192D1D;
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.dark .dropdown-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Toast notifications */
+.dark .toast {
+  background-color: #192D1D;
+  border-color: rgba(255, 255, 255, 0.08);
+  color: var(--color-text-dark);
+}
+
+/* Share Stories page specific */
+.dark .story-editor {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark .story-prompt {
+  background-color: rgba(0, 0, 0, 0.15);
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+.dark .story-contribution {
+  background-color: rgba(19, 58, 42, 0.5);
+  border-color: rgba(255, 255, 255, 0.03);
 }

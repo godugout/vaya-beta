@@ -49,3 +49,12 @@
     transform: none !important;
   }
 }
+
+/* Dark mode specific logo adjustments */
+.dark .logo-container .logo-text {
+  color: var(--color-text-dark);
+}
+
+.dark .logo-container:hover .logo-text {
+  color: var(--color-leaf);
+}
