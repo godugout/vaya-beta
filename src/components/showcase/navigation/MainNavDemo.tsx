@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Home, Mic, Archive, User, Menu, Settings } from "lucide-react";
+import { VayaLogo } from "@/components/branding/VayaLogo";
 
 export const MainNavDemo = () => {
   const [activeNavOption, setActiveNavOption] = useState('home');
@@ -19,16 +20,7 @@ export const MainNavDemo = () => {
           <CardContent>
             <div className="bg-white dark:bg-[#1E293B] border border-gray-200 dark:border-gray-800 p-4 rounded-lg">
               <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <div className="h-8 w-8 text-ui-orange mr-2">
-                    <svg viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M10 15 Q 25 5, 40 15 T 70 15" stroke="currentColor" strokeWidth="3" fill="none" />
-                      <path d="M10 25 Q 25 15, 40 25 T 70 25" stroke="currentColor" strokeWidth="3" fill="none" />
-                      <path d="M10 35 Q 25 25, 40 35 T 70 35" stroke="currentColor" strokeWidth="3" fill="none" />
-                    </svg>
-                  </div>
-                  <span className="font-heading font-bold text-xl text-ui-orange">Vaya</span>
-                </div>
+                <VayaLogo size="md" color="primary" />
                 
                 <nav className="hidden md:flex space-x-1">
                   {['home', 'stories', 'capsules', 'families'].map((item) => (
@@ -78,16 +70,7 @@ export const MainNavDemo = () => {
           <CardContent>
             <div className="bg-white dark:bg-[#1E293B] border border-gray-200 dark:border-gray-800 p-4 rounded-lg">
               <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <div className="h-8 w-8 text-ui-orange mr-2">
-                    <svg viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M10 15 Q 25 5, 40 15 T 70 15" stroke="currentColor" strokeWidth="3" fill="none" />
-                      <path d="M10 25 Q 25 15, 40 25 T 70 25" stroke="currentColor" strokeWidth="3" fill="none" />
-                      <path d="M10 35 Q 25 25, 40 35 T 70 35" stroke="currentColor" strokeWidth="3" fill="none" />
-                    </svg>
-                  </div>
-                  <span className="font-heading font-bold text-xl text-ui-orange">Vaya</span>
-                </div>
+                <VayaLogo size="md" color="primary" />
                 
                 <div className="flex items-center gap-2">
                   <button 

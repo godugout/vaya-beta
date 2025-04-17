@@ -13,7 +13,7 @@ const Footer = () => {
             className="inline-flex items-center gap-0.5 justify-center relative group"
           >
             <img 
-              src="/lovable-uploads/ef40fff0-4da4-4937-af3d-c2276b1d2588.png"
+              src="/lovable-uploads/7a139c69-d8f3-4454-9eca-472016d74c47.png"
               alt="Vaya Logo" 
               className="h-24 w-24 grayscale opacity-90 transition-all duration-300 group-hover:grayscale-0 group-hover:opacity-100 filter drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)]"
             />
@@ -23,7 +23,7 @@ const Footer = () => {
                 textShadow: '1px 1px 2px rgba(255,255,255,1), -1px -1px 2px rgba(0,0,0,0.1)',
               }}
             >
-              Vaya<sup className="opacity-75 transition-all duration-300 group-hover:text-vaya-home text-2xl sm:text-3xl font-semibold -ml-0.5">ᵅ</sup>
+              VAYA<sup className="opacity-75 transition-all duration-300 group-hover:text-vaya-home text-2xl sm:text-3xl font-semibold -ml-0.5">ᵅ</sup>
             </span>
           </Link>
           <p className="mt-6 text-xl sm:text-2xl leading-8 text-vaya-gray-600 dark:text-dark-text-secondary max-w-2xl mx-auto">
