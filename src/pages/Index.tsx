@@ -28,7 +28,7 @@ export default function Index() {
       {/* Voice recording section with gradient background */}
       <section className="w-full py-20 px-4 sm:px-6 md:px-8 bg-gradient-to-b from-gray-200 to-white dark:from-gray-800 dark:to-gray-900 shadow-inner">
         <div className="container mx-auto">
-          <h2 className="text-3xl md:text-4xl font-medium mb-10 text-center text-gray-800 dark:text-gray-100">
+          <h2 className="text-3xl md:text-4xl font-medium mb-10 text-center text-gray-800 dark:text-gray-100 font-architects-daughter">
             Capture Memories with Your Voice
           </h2>
           <div className="w-full max-w-xl mx-auto">
