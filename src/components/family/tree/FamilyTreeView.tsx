@@ -1,29 +1,11 @@
+
 import { useEffect, useState } from 'react';
 import { ReactFlow, MiniMap, Controls, Background, Panel } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import FamilyMemberNode from './FamilyMemberNode';
-import SpouseEdge from './SpouseEdge';
-import ParentChildEdge from './ParentChildEdge';
-import FamilyTreeEdge from './FamilyTreeEdge';
-import { FamilyTreeControls } from './FamilyTreeControls';
-import { Button } from '@/components/ui/button';
-import { Filter, Layout, ZoomIn, User, Users, Laptop, Smartphone } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { Badge } from '@/components/ui/badge';
 import { FilterPanel } from './components/FilterPanel';
 import { LayoutSelector } from './components/LayoutSelector';
 import { FocusModeToggle } from './components/FocusModeToggle';
-
-const nodeTypes = {
-  familyMember: FamilyMemberNode,
-};
-
-const edgeTypes = {
-  spouse: SpouseEdge,
-  parentChild: ParentChildEdge,
-  familyConnection: FamilyTreeEdge,
-};
 
 interface FamilyTreeViewProps {
   nodes: any[];
