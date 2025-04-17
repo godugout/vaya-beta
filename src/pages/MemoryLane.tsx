@@ -8,7 +8,7 @@ import { Message } from "@/components/chat/types";
 import { useToast } from "@/components/ui/use-toast";
 import { useMemories } from "@/components/memory/useMemories";
 import MemoryFeedLayout from "@/components/memory/MemoryFeedLayout";
-import { Memory } from "@/components/memory/types";
+import { Memory, AudioMemory } from "@/components/memory/types";
 
 const MemoryLane = () => {
   const { toast } = useToast();
@@ -50,15 +50,17 @@ const MemoryLane = () => {
       setChatMessages(prev => [...prev, newMessage]);
       
       // Add to memories collection
-      addMemory({
+      const newMemory: AudioMemory = {
         id: crypto.randomUUID(),
         type: "audio",
+        content_url: data.audioUrl || "",
+        created_at: new Date().toISOString(),
         title: data.transcription ? data.transcription.slice(0, 50) + "..." : "Audio Memory",
-        content: data.transcription || "",
-        date: new Date().toISOString(),
-        media: data.audioUrl ? [{ type: "audio", url: data.audioUrl }] : [],
-        tags: ["audio", "memory"]
-      });
+        transcription: data.transcription || "",
+        duration: 0
+      };
+      
+      addMemory(newMemory);
       
       // Show success message
       toast({

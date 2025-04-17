@@ -2,6 +2,7 @@
 import { useEffect, useRef, useCallback } from "react";
 import { StoryMemoryCard } from "./StoryMemoryCard";
 import { PhotoMemoryCard } from "./PhotoMemoryCard";
+import { AudioMemoryCard } from "./AudioMemoryCard";
 import { Memory } from "./types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useInView } from "framer-motion";
@@ -125,10 +126,9 @@ const MemoryFeedLayout = ({
             <StoryMemoryCard memory={memory} isPlaceholder={true} />
           ) : memory.type === "photo" ? (
             <PhotoMemoryCard memory={memory} isPlaceholder={true} />
-          ) : (
-            // For audio memories, we can use StoryMemoryCard since the structure is similar
-            <StoryMemoryCard memory={{...memory, type: "story"}} isPlaceholder={true} />
-          )}
+          ) : memory.type === "audio" ? (
+            <AudioMemoryCard memory={memory} isPlaceholder={true} />
+          ) : null}
         </div>
       ))}
       

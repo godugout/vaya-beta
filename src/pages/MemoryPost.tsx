@@ -5,6 +5,7 @@ import { ArrowLeft, MessageSquare, Share2, Bookmark } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { StoryMemoryCard } from "@/components/memory/StoryMemoryCard";
 import { PhotoMemoryCard } from "@/components/memory/PhotoMemoryCard";
+import { AudioMemoryCard } from "@/components/memory/AudioMemoryCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Memory } from "@/components/memory/types";
 
@@ -26,6 +27,15 @@ const sampleMemories: Record<string, Memory> = {
     created_at: "2024-03-19T15:30:00Z",
     photo_url: "https://images.unsplash.com/photo-1472396961693-142e6e269027",
     caption: "Family trip to Monteverde Cloud Forest - The kids were amazed by the wildlife!",
+  },
+  "3": {
+    id: "3",
+    type: "audio",
+    content_url: "/path/to/sample-audio2.mp3",
+    created_at: "2024-03-18T09:15:00Z",
+    title: "Sounds of the Rainforest",
+    transcription: "I recorded these amazing sounds during our morning hike through the rainforest. You can hear the howler monkeys and tropical birds in the background.",
+    duration: 120,
   }
 };
 
@@ -123,9 +133,11 @@ const MemoryPost = () => {
         <div className="max-w-3xl mx-auto">
           {memory.type === "story" ? (
             <StoryMemoryCard memory={memory} />
-          ) : (
+          ) : memory.type === "photo" ? (
             <PhotoMemoryCard memory={memory} />
-          )}
+          ) : memory.type === "audio" ? (
+            <AudioMemoryCard memory={memory} />
+          ) : null}
         </div>
       </div>
     </div>
