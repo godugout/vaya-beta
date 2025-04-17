@@ -1,4 +1,3 @@
-
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, MessageSquare, Share2, Bookmark } from "lucide-react";
@@ -7,7 +6,7 @@ import { StoryMemoryCard } from "@/components/memory/StoryMemoryCard";
 import { PhotoMemoryCard } from "@/components/memory/PhotoMemoryCard";
 import { AudioMemoryCard } from "@/components/memory/AudioMemoryCard";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Memory, MemoryRecord } from "@/components/memory/types";
+import { Memory, MemoryRecord, StoryMemory, PhotoMemory, AudioMemory } from "@/components/memory/types";
 import { supabase } from "@/integrations/supabase/client";
 
 const convertToMemory = (record: MemoryRecord): Memory => {
@@ -27,21 +26,21 @@ const convertToMemory = (record: MemoryRecord): Memory => {
       type: 'photo',
       photo_url: record.content_url,
       caption: record.description,
-    };
+    } as PhotoMemory;
   } else if (record.memory_type === 'audio') {
     return {
       ...baseMemory,
       type: 'audio',
       content: record.description || '',
       duration: record.metadata?.duration || 0,
-    };
+    } as AudioMemory;
   } else {
     // Story type
     return {
       ...baseMemory,
       type: 'story',
       duration: record.metadata?.duration || 0,
-    };
+    } as StoryMemory;
   }
 };
 
@@ -142,11 +141,11 @@ const MemoryPost = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-3xl mx-auto">
           {memory.type === "story" ? (
-            <StoryMemoryCard memory={memory} />
+            <StoryMemoryCard memory={memory as StoryMemory} />
           ) : memory.type === "photo" ? (
-            <PhotoMemoryCard memory={memory as any} />
+            <PhotoMemoryCard memory={memory as PhotoMemory} />
           ) : memory.type === "audio" ? (
-            <AudioMemoryCard memory={memory as any} />
+            <AudioMemoryCard memory={memory as AudioMemory} />
           ) : null}
         </div>
       </div>

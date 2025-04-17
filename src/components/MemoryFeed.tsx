@@ -3,7 +3,7 @@ import { StoryMemoryCard } from "./memory/StoryMemoryCard";
 import { PhotoMemoryCard } from "./memory/PhotoMemoryCard";
 import { AudioMemoryCard } from "./memory/AudioMemoryCard";
 import { useMemories } from "./memory/useMemories";
-import { Memory } from "./memory/types";
+import { Memory, AudioMemory, PhotoMemory, StoryMemory } from "./memory/types";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Info } from "lucide-react";
 
@@ -31,11 +31,11 @@ const MemoryFeed = () => {
       
       {memories.map((memory: Memory) => {
         if (memory.type === "story") {
-          return <StoryMemoryCard key={memory.id} memory={memory} isPlaceholder={true} />;
+          return <StoryMemoryCard key={memory.id} memory={memory as StoryMemory} isPlaceholder={true} />;
         } else if (memory.type === "photo") {
-          return <PhotoMemoryCard key={memory.id} memory={memory} isPlaceholder={true} />;
+          return <PhotoMemoryCard key={memory.id} memory={memory as PhotoMemory} isPlaceholder={true} />;
         } else if (memory.type === "audio") {
-          return <AudioMemoryCard key={memory.id} memory={memory} isPlaceholder={true} />;
+          return <AudioMemoryCard key={memory.id} memory={memory as AudioMemory} isPlaceholder={true} />;
         }
         return null;
       })}

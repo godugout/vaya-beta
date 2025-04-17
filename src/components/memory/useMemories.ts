@@ -1,6 +1,6 @@
 
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { Memory, MemoryRecord } from "./types";
+import { Memory, MemoryRecord, StoryMemory, PhotoMemory, AudioMemory } from "./types";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -25,21 +25,21 @@ const convertToMemory = (record: MemoryRecord): Memory => {
       type: 'photo',
       photo_url: record.content_url,
       caption: record.description,
-    };
+    } as PhotoMemory;
   } else if (record.memory_type === 'audio') {
     return {
       ...baseMemory,
       type: 'audio',
       content: record.description || '',
       duration: record.metadata?.duration || 0,
-    };
+    } as AudioMemory;
   } else {
     // Story type
     return {
       ...baseMemory,
       type: 'story',
       duration: record.metadata?.duration || 0,
-    };
+    } as StoryMemory;
   }
 };
 
