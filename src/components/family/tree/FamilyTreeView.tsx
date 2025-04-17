@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { ReactFlow, MiniMap, Controls, Background, Panel } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
@@ -12,6 +11,9 @@ import { Filter, Layout, ZoomIn, User, Users, Laptop, Smartphone } from 'lucide-
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Badge } from '@/components/ui/badge';
+import { FilterPanel } from './components/FilterPanel';
+import { LayoutSelector } from './components/LayoutSelector';
+import { FocusModeToggle } from './components/FocusModeToggle';
 
 const nodeTypes = {
   familyMember: FamilyMemberNode,
@@ -86,20 +88,8 @@ export const FamilyTreeView = ({
     }
   }, [isMobile]);
   
-  const getLayoutClass = () => {
-    switch (layoutType) {
-      case 'horizontal':
-        return 'horizontal-tree';
-      case 'radial':
-        return 'radial-tree';
-      case 'vertical':
-      default:
-        return 'vertical-tree';
-    }
-  };
-  
   return (
-    <div className={`relative h-full ${getLayoutClass()}`}>
+    <div className={`relative h-full ${getLayoutClass(layoutType)}`}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -124,108 +114,29 @@ export const FamilyTreeView = ({
         />
         <Background color="#aaa" gap={16} />
         
-        <FamilyTreeControls 
-          onZoomIn={onZoomIn}
-          onZoomOut={onZoomOut}
-          onFitView={onFitView}
-          onAddMember={onAddMember}
-          onConnect={onOpenConnectDialog}
-          onRemoveConnection={onRemoveConnection}
-          onImport={onImport}
-          onShare={onShare}
-          onRemoveMember={onRemoveMember}
-          onAddMembers={onAddMembers}
-        />
-        
         <Panel position="top-right" className="flex flex-col gap-2">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-3 border border-gray-200 dark:border-gray-700">
-            <h3 className="text-sm font-semibold mb-2 flex items-center">
-              <Layout className="w-4 h-4 mr-1" /> Layout
-            </h3>
-            <div className="flex flex-col gap-2">
-              <Button 
-                size="sm" 
-                variant={layoutType === 'vertical' ? "default" : "outline"}
-                className="flex items-center justify-start"
-                onClick={() => setLayoutType('vertical')}
-              >
-                <Smartphone className="w-4 h-4 mr-2" />
-                Vertical
-              </Button>
-              <Button 
-                size="sm" 
-                variant={layoutType === 'horizontal' ? "default" : "outline"}
-                className="flex items-center justify-start"
-                onClick={() => setLayoutType('horizontal')}
-              >
-                <Laptop className="w-4 h-4 mr-2" />
-                Horizontal
-              </Button>
-              <Button 
-                size="sm" 
-                variant={layoutType === 'radial' ? "default" : "outline"}
-                className="flex items-center justify-start"
-                onClick={() => setLayoutType('radial')}
-              >
-                <Users className="w-4 h-4 mr-2" />
-                Radial
-              </Button>
-            </div>
-          </div>
-          
-          <Button 
-            variant={focusModeEnabled ? "default" : "outline"}
-            className="flex items-center justify-center gap-2"
-            onClick={toggleFocusMode}
-          >
-            <User className="w-4 h-4" />
-            {focusModeEnabled ? "Exit Focus Mode" : "Focus Mode"}
-          </Button>
-          
-          <Collapsible open={filterOpen} onOpenChange={setFilterOpen}>
-            <CollapsibleTrigger asChild>
-              <Button variant="outline" className="flex items-center justify-center gap-2 w-full">
-                <Filter className="w-4 h-4" />
-                Filters
-                {activeFilters.length > 0 && (
-                  <Badge variant="destructive" className="ml-2">{activeFilters.length}</Badge>
-                )}
-              </Button>
-            </CollapsibleTrigger>
-            <CollapsibleContent>
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-3 mt-2 border border-gray-200 dark:border-gray-700">
-                <h3 className="text-sm font-semibold mb-2">Filter By</h3>
-                <div className="space-y-2">
-                  <Button 
-                    size="sm" 
-                    variant={activeFilters.includes('stories') ? "default" : "outline"}
-                    className="w-full justify-start"
-                    onClick={() => toggleFilter('stories')}
-                  >
-                    Has Stories
-                  </Button>
-                  <Button 
-                    size="sm" 
-                    variant={activeFilters.includes('direct') ? "default" : "outline"}
-                    className="w-full justify-start"
-                    onClick={() => toggleFilter('direct')}
-                  >
-                    Direct Family
-                  </Button>
-                  <Button 
-                    size="sm" 
-                    variant={activeFilters.includes('recent') ? "default" : "outline"}
-                    className="w-full justify-start"
-                    onClick={() => toggleFilter('recent')}
-                  >
-                    Recently Added
-                  </Button>
-                </div>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
+          <LayoutSelector layoutType={layoutType} setLayoutType={setLayoutType} />
+          <FocusModeToggle focusModeEnabled={focusModeEnabled} toggleFocusMode={toggleFocusMode} />
+          <FilterPanel 
+            filterOpen={filterOpen}
+            setFilterOpen={setFilterOpen}
+            activeFilters={activeFilters}
+            toggleFilter={toggleFilter}
+          />
         </Panel>
       </ReactFlow>
     </div>
   );
+};
+
+const getLayoutClass = (layoutType: 'vertical' | 'horizontal' | 'radial') => {
+  switch (layoutType) {
+    case 'horizontal':
+      return 'horizontal-tree';
+    case 'radial':
+      return 'radial-tree';
+    case 'vertical':
+    default:
+      return 'vertical-tree';
+  }
 };
