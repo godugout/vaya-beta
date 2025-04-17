@@ -14,17 +14,17 @@ import ComponentsDemo from './pages/ComponentsDemo';
 import ComponentsShowcase from './pages/ComponentsShowcase';
 import WeddingModeShowcase from './components/wedding-mode/WeddingModeShowcase';
 import DesignSystem from './pages/DesignSystem';
+import TypographyDocs from './pages/TypographyDocs';
 import { Toaster } from './components/ui/toaster';
 
 function App() {
   return (
     <>
-      {/* Add MainNav to all routes except specific ones */}
       <Routes>
         <Route path="/auth" element={<Auth />} />
         <Route path="/design-system/*" element={<DesignSystem />} />
+        <Route path="/typography-docs" element={<TypographyDocs />} />
         
-        {/* Homepage - no page-content wrapper */}
         <Route path="/" element={
           <>
             <MainNav />
@@ -32,7 +32,6 @@ function App() {
           </>
         } />
         
-        {/* All other routes have the MainNav and page-content */}
         <Route path="/memory-lane" element={
           <>
             <MainNav />
