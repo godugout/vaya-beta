@@ -1,8 +1,10 @@
 
-import { useCallback } from 'react';
-import { Connection, Node } from '@xyflow/react';
+import { useRef, useCallback } from 'react';
+import { Node } from '@xyflow/react';
 
 export const useTreeInteractions = () => {
+  const reactFlowInstanceRef = useRef<any>(null);
+
   const handleNodeClick = useCallback((event: React.MouseEvent, node: Node) => {
     console.log('Node clicked:', node);
   }, []);
@@ -14,6 +16,6 @@ export const useTreeInteractions = () => {
   return {
     handleNodeClick,
     setReactFlowInstance,
+    reactFlowInstanceRef,
   };
 };
-

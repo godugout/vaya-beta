@@ -1,4 +1,5 @@
-import { FamilyTreeNode } from './FamilyTreeNode';
+
+import FamilyMemberNode from './FamilyMemberNode';
 import { FamilyTreeEdge } from './FamilyTreeEdge';
 
 export const nodeTypes = {

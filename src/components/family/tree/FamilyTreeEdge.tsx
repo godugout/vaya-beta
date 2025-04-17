@@ -1,4 +1,5 @@
 
+import React from 'react';
 import { BaseEdge, getSmoothStepPath } from '@xyflow/react';
 
 interface FamilyTreeEdgeProps {
@@ -13,7 +14,7 @@ interface FamilyTreeEdgeProps {
   data?: any;
 }
 
-export const FamilyTreeEdge = ({
+export const FamilyTreeEdge: React.FC<FamilyTreeEdgeProps> = ({
   id,
   sourceX,
   sourceY,
