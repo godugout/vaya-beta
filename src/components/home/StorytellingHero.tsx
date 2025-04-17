@@ -59,7 +59,9 @@ export const StorytellingHero = () => {
                 ease: isReduced || isMobile ? "easeOut" : "easeInOut"
               }}
             >
-              <span className="text-xl sm:text-2xl font-architects-daughter block mb-4">Every family has</span>
+              <span className="text-xl sm:text-2xl font-architects-daughter block mb-2 text-gray-800">
+                Every family has
+              </span>
               <span className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight block mt-2">
                 <TypewriterText 
                   phrases={familyPhrases} 
