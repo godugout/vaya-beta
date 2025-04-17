@@ -1,3 +1,4 @@
+
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -7,7 +8,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
-import { useAuth } from "@/hooks/use-auth";
+import { useUserAuth } from "@/hooks/useUserAuth";  // Updated import path
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Link } from "react-router-dom";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -15,11 +16,12 @@ import { LogOut } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 export const MainNav = () => {
-  const { isAuthenticated, user, logout } = useAuth();
+  const { user, handleSignOut } = useUserAuth();  // Updated to match the hook's exports
   const { toast } = useToast();
+  const isAuthenticated = !!user;  // Derive authentication status from user
 
   const handleLogout = async () => {
-    await logout();
+    await handleSignOut();  // Updated to use the correct function name
     toast({
       title: "Logged out",
       description: "You have been successfully logged out.",
