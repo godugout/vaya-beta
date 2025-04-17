@@ -1,3 +1,4 @@
+
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 
@@ -99,7 +100,7 @@ export const VayaLogo = ({
               className={cn(
                 "absolute top-0 left-0 transition-opacity duration-300",
                 logoClassName,
-                isHovered ? "opacity-100" : "opacity-0"
+                isHovered ? "opacity-100 animate-logo-spin animate-logo-shimmer" : "opacity-0",
               )}
             />
           )}

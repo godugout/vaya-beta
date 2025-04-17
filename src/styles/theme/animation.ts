@@ -141,6 +141,25 @@ export const animation = {
       "75%": { 
         transform: "scale(0.95, 1.05)" 
       }
+    },
+    "logo-spin": {
+      "0%": { 
+        transform: "rotate(0deg)" 
+      },
+      "100%": { 
+        transform: "rotate(360deg)" 
+      }
+    },
+    "logo-shimmer": {
+      "0%": { 
+        filter: "brightness(1) drop-shadow(0 0 0 rgba(255, 255, 255, 0.7))" 
+      },
+      "50%": { 
+        filter: "brightness(1.3) drop-shadow(0 0 5px rgba(255, 255, 255, 0.9))" 
+      },
+      "100%": { 
+        filter: "brightness(1) drop-shadow(0 0 0 rgba(255, 255, 255, 0.7))" 
+      }
     }
   },
   animation: {
@@ -165,7 +184,9 @@ export const animation = {
     reveal: "reveal 0.5s forwards cubic-bezier(0.16, 1, 0.3, 1)",
     sparkle: "sparkle 2s infinite",
     bubbleUp: "bubbleUp 0.6s forwards cubic-bezier(0.34, 1.56, 0.64, 1)",
-    jelly: "jelly 0.8s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94)"
+    jelly: "jelly 0.8s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+    "logo-spin": "logo-spin 8s linear infinite",
+    "logo-shimmer": "logo-shimmer 3s ease-in-out infinite"
   },
   duration: {
     fast: "200ms",

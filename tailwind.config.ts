@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
 
@@ -106,6 +105,8 @@ export default {
         float: "float 6s ease-in-out infinite",
         pulse: "pulse 2s ease-in-out infinite",
         wave: "wave 2.5s linear infinite",
+        "logo-spin": "logo-spin 8s linear infinite",
+        "logo-shimmer": "logo-shimmer 3s ease-in-out infinite"
       },
       keyframes: {
         wavePattern: {
@@ -130,6 +131,15 @@ export default {
           "60%": { transform: "rotate(0deg)" },
           "100%": { transform: "rotate(0deg)" },
         },
+        "logo-spin": {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" }
+        },
+        "logo-shimmer": {
+          "0%": { filter: "brightness(1) drop-shadow(0 0 0 rgba(255, 255, 255, 0.7))" },
+          "50%": { filter: "brightness(1.3) drop-shadow(0 0 5px rgba(255, 255, 255, 0.9))" },
+          "100%": { filter: "brightness(1) drop-shadow(0 0 0 rgba(255, 255, 255, 0.7))" }
+        }
       },
       zIndex: {
         "nav": "100",
