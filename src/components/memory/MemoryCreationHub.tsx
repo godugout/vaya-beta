@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { useRouter } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { 
   Mic, FileText, Image, Camera, 

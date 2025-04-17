@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
@@ -126,18 +125,15 @@ const FamilyMemoryGallery = ({ familyId, limit = 12, className = "" }: FamilyMem
     if (!audioUrl) return;
     
     if (currentlyPlaying === memoryId) {
-      // Already playing this audio, pause it
       if (audioElement) {
         audioElement.pause();
         setCurrentlyPlaying(null);
       }
     } else {
-      // Stop any currently playing audio
       if (audioElement) {
         audioElement.pause();
       }
       
-      // Play the new audio
       const audio = new Audio(audioUrl);
       audio.onended = () => setCurrentlyPlaying(null);
       audio.play().catch(err => console.error("Error playing audio:", err));
