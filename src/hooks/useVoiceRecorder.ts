@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from "react";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -147,6 +146,24 @@ export const useVoiceRecorder = (options: VoiceRecorderOptions = {}) => {
         const duration = (Date.now() - recordingStartTimeRef.current) / 1000;
         setState(prev => ({ ...prev, duration }));
       }, 100);
+      
+      // Start volume monitoring
+      const dataArray = new Uint8Array(analyser.frequencyBinCount);
+      const volumeMonitorInterval = setInterval(() => {
+        if (analyser) {
+          analyser.getByteFrequencyData(dataArray);
+          const average = dataArray.reduce((sum, value) => sum + value, 0) / dataArray.length;
+          const normalizedVolume = average / 255; // 0-1 range
+          setState(prev => ({ ...prev, volume: normalizedVolume }));
+        }
+      }, 100);
+      
+      // Clean up volume monitoring when recording stops
+      const originalStop = mediaRecorderRef.current.onstop;
+      mediaRecorderRef.current.onstop = () => {
+        if (originalStop) originalStop.call(mediaRecorderRef.current);
+        clearInterval(volumeMonitorInterval);
+      };
       
       // Start silence detection if enabled
       if (silenceDetection) {

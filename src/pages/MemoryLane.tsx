@@ -1,88 +1,96 @@
 
-import MemoryFeedLayout from "@/components/memory/MemoryFeedLayout";
-import AddMemoryButton from "@/components/memory/AddMemoryButton";
-import { Button } from "@/components/ui/button";
-import { MessageCircle, User, Tag, Calendar, Bookmark } from "lucide-react";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { useNavigate } from "react-router-dom";
-import { LanguageProvider } from "@/contexts/LanguageContext";
+import { useState } from "react";
+import { PageTransition } from "@/components/animation/PageTransition";
+import { useImmersiveRecording } from "@/hooks/useImmersiveRecording";
+import ImmersiveRecordingExperience from "@/components/immersive-recording/ImmersiveRecordingExperience";
+import ImmersiveRecordingButton from "@/components/immersive-recording/ImmersiveRecordingButton";
+import { Message } from "@/components/chat/types";
+import { useToast } from "@/components/ui/use-toast";
+import { useMemories } from "@/components/memory/useMemories";
+import { MemoryFeedLayout } from "@/components/memory/MemoryFeedLayout";
 
 const MemoryLane = () => {
-  const navigate = useNavigate();
+  const { toast } = useToast();
+  const { memories, addMemory } = useMemories();
+  const [chatMessages, setChatMessages] = useState<Message[]>([
+    {
+      role: "assistant",
+      content: "Welcome to Memory Lane. Share your memories and stories to preserve them for generations to come."
+    }
+  ]);
+  
+  const {
+    isImmersiveMode,
+    startImmersiveRecording,
+    stopImmersiveRecording,
+    handleRecordingComplete
+  } = useImmersiveRecording({
+    onSave: (data) => {
+      // Add to chat as a message
+      const newMessage: Message = {
+        role: "user",
+        content: data.transcription || "Audio memory",
+        attachments: data.audioUrl ? [{ type: "audio", url: data.audioUrl }] : undefined
+      };
+      
+      setChatMessages(prev => [...prev, newMessage]);
+      
+      // Add to memories collection
+      addMemory({
+        id: crypto.randomUUID(),
+        type: "audio",
+        title: data.transcription ? data.transcription.slice(0, 50) + "..." : "Audio Memory",
+        content: data.transcription || "",
+        date: new Date().toISOString(),
+        media: data.audioUrl ? [{ type: "audio", url: data.audioUrl }] : [],
+        tags: ["audio", "memory"]
+      });
+      
+      // Show success message
+      toast({
+        title: "Memory Saved",
+        description: "Your memory has been saved and transcribed.",
+      });
+    }
+  });
 
   return (
-    <LanguageProvider>
-      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
-        <div className="container mx-auto pt-4">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            <div className="lg:col-span-2">
-              <div className="mb-8 bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-                <h1 className="text-2xl font-outfit font-semibold text-gray-900 dark:text-white mb-4">Our Memories</h1>
-                <ToggleGroup 
-                  type="multiple" 
-                  className="hidden md:flex bg-gray-50 dark:bg-gray-700/50 border rounded-lg p-1 shadow-sm"
-                >
-                  <ToggleGroupItem 
-                    value="people" 
-                    aria-label="Filter by people"
-                    className="data-[state=on]:bg-autumn/10 data-[state=on]:text-autumn dark:data-[state=on]:bg-autumn/20"
-                  >
-                    <User className="h-4 w-4 mr-2" />
-                    <span className="hidden lg:inline">People</span>
-                  </ToggleGroupItem>
-                  <ToggleGroupItem 
-                    value="topics" 
-                    aria-label="Filter by topics"
-                    className="data-[state=on]:bg-autumn/10 data-[state=on]:text-autumn dark:data-[state=on]:bg-autumn/20"
-                  >
-                    <Tag className="h-4 w-4 mr-2" />
-                    <span className="hidden lg:inline">Topics</span>
-                  </ToggleGroupItem>
-                  <ToggleGroupItem 
-                    value="date" 
-                    aria-label="Filter by date"
-                    className="data-[state=on]:bg-autumn/10 data-[state=on]:text-autumn dark:data-[state=on]:bg-autumn/20"
-                  >
-                    <Calendar className="h-4 w-4 mr-2" />
-                    <span className="hidden lg:inline">Date</span>
-                  </ToggleGroupItem>
-                  <ToggleGroupItem 
-                    value="bookmarks" 
-                    aria-label="Show bookmarks"
-                    className="data-[state=on]:bg-autumn/10 data-[state=on]:text-autumn dark:data-[state=on]:bg-autumn/20"
-                  >
-                    <Bookmark className="h-4 w-4 mr-2" />
-                    <span className="hidden lg:inline">Bookmarks</span>
-                  </ToggleGroupItem>
-                </ToggleGroup>
-              </div>
-              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-                <MemoryFeedLayout />
-              </div>
+    <PageTransition location="memory-lane">
+      <div className="min-h-screen bg-background">
+        {/* Display immersive recording experience when active */}
+        {isImmersiveMode && (
+          <ImmersiveRecordingExperience
+            onComplete={handleRecordingComplete}
+            onCancel={stopImmersiveRecording}
+            guidanceText={[
+              "Share your memory or story...",
+              "Take your time to reflect...",
+              "Your voice creates your legacy...",
+              "Future generations will hear your story..."
+            ]}
+          />
+        )}
+        
+        {/* Regular Memory Lane content */}
+        <div className="container mx-auto py-8">
+          <div className="flex justify-between items-center mb-8">
+            <div>
+              <h1 className="text-3xl font-bold">Memory Lane</h1>
+              <p className="text-muted-foreground">Preserve and explore your family memories</p>
             </div>
-
-            <div className="hidden lg:block space-y-6">
-              <div className="bg-gradient-to-br from-autumn/5 to-water/5 dark:from-autumn/10 dark:to-water/10 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-gray-700 backdrop-blur-sm">
-                <h2 className="text-lg font-outfit font-semibold text-gray-900 dark:text-white mb-4">
-                  Coming Soon
-                </h2>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Family highlights and upcoming events will appear here.
-                </p>
-              </div>
-            </div>
+            
+            <ImmersiveRecordingButton 
+              onClick={startImmersiveRecording} 
+            />
           </div>
-        </div>
-
-        {/* Desktop Action Button */}
-        <div className="hidden md:block fixed bottom-8 right-8 z-40">
-          <AddMemoryButton 
-            size="lg"
-            className="shadow-lg"
+          
+          <MemoryFeedLayout 
+            memories={memories}
+            chatMessages={chatMessages}
           />
         </div>
       </div>
-    </LanguageProvider>
+    </PageTransition>
   );
 };
 
