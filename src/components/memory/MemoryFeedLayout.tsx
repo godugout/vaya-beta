@@ -123,8 +123,11 @@ const MemoryFeedLayout = ({
         <div key={memory.id} className="animate-fadeIn">
           {memory.type === "story" ? (
             <StoryMemoryCard memory={memory} isPlaceholder={true} />
-          ) : (
+          ) : memory.type === "photo" ? (
             <PhotoMemoryCard memory={memory} isPlaceholder={true} />
+          ) : (
+            // For audio memories, we can use StoryMemoryCard since the structure is similar
+            <StoryMemoryCard memory={{...memory, type: "story"}} isPlaceholder={true} />
           )}
         </div>
       ))}

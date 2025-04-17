@@ -6,10 +6,23 @@ import VoiceRecordingExperience from "@/components/voice-recording/VoiceRecordin
 import { useState } from "react";
 import { Leaf, Mic } from "lucide-react";
 import { motion } from "framer-motion";
+import { useMemories } from "@/components/memory/useMemories";
 
 const WildlifeCapsule = () => {
   const navigate = useNavigate();
   const [showRecordingExperience, setShowRecordingExperience] = useState(false);
+  
+  // Get wildlife memories data
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+  } = useMemories();
+
+  // Extract memories from all pages
+  const memories = data?.pages.flatMap((page) => page.memories) ?? [];
 
   const handleMemorySaved = (data: { audioUrl?: string; transcription?: string }) => {
     console.log("Memory saved:", data);
@@ -84,7 +97,14 @@ const WildlifeCapsule = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-6">
-                <MemoryFeedLayout />
+                <MemoryFeedLayout 
+                  memories={memories}
+                  chatMessages={[]}
+                  isLoading={isLoading}
+                  hasNextPage={hasNextPage || false}
+                  fetchNextPage={fetchNextPage}
+                  isFetchingNextPage={isFetchingNextPage}
+                />
               </CardContent>
             </Card>
           </motion.div>

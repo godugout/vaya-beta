@@ -1,18 +1,17 @@
 
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import MemoryCard from "./MemoryCard";
+import { StoryMemory } from "./types";
+import { CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Play, Pause } from "lucide-react";
+import { Clock, Play, Pause } from "lucide-react";
 import { useState, useRef } from "react";
-import { Memory } from "./types";
-import { Link } from "react-router-dom";
-import { Badge } from "@/components/ui/badge";
 
 interface StoryMemoryCardProps {
-  memory: Memory;
+  memory: StoryMemory;
   isPlaceholder?: boolean;
 }
 
-export const StoryMemoryCard = ({ memory, isPlaceholder = true }: StoryMemoryCardProps) => {
+export const StoryMemoryCard = ({ memory, isPlaceholder = false }: StoryMemoryCardProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -24,49 +23,50 @@ export const StoryMemoryCard = ({ memory, isPlaceholder = true }: StoryMemoryCar
 
     if (isPlaying) {
       audioRef.current.pause();
+      setIsPlaying(false);
     } else {
-      audioRef.current.play();
+      audioRef.current.play().catch(err => console.error("Audio playback error:", err));
+      setIsPlaying(true);
     }
-    setIsPlaying(!isPlaying);
   };
 
   return (
-    <Link to={`/memory/${memory.id}`}>
-      <Card className={`bg-white hover:shadow-md transition-shadow duration-200 relative ${isPlaceholder ? 'opacity-70' : ''}`}>
+    <MemoryCard>
+      <CardContent className="p-6">
         {isPlaceholder && (
-          <Badge 
-            variant="outline" 
-            className="absolute top-2 right-2 bg-gray-200 text-gray-700 text-xs border-gray-300"
-          >
+          <div className="bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded absolute top-2 right-2">
             Demo
-          </Badge>
-        )}
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <div className="space-y-1">
-            <h3 className="text-sm font-medium">Audio Memory</h3>
-            <p className="text-sm text-gray-500">
-              {new Date(memory.created_at).toLocaleDateString()}
-            </p>
           </div>
-        </CardHeader>
-        <CardContent>
-          <Button
-            onClick={(e) => {
-              e.preventDefault();
-              togglePlayback();
-            }}
-            variant="outline"
-            className="w-full border-vaya-secondary text-vaya-secondary hover:bg-vaya-secondary hover:text-white"
-          >
-            {isPlaying ? (
-              <Pause className="mr-2 h-4 w-4" />
-            ) : (
-              <Play className="mr-2 h-4 w-4" />
-            )}
-            {isPlaying ? "Pause" : "Play"} Story
-          </Button>
-        </CardContent>
-      </Card>
-    </Link>
+        )}
+        <div className="flex items-center text-sm text-gray-500 mb-2">
+          <Clock className="h-4 w-4 mr-1" />
+          <span>{new Date(memory.created_at).toLocaleDateString()}</span>
+        </div>
+        <h3 className="text-xl font-semibold mb-2">{memory.title || "Untitled Memory"}</h3>
+        <p className="text-gray-700 mb-4">{memory.description || ""}</p>
+        <div className="flex items-center space-x-2 text-sm text-gray-500">
+          <span>{memory.duration ? Math.floor(memory.duration / 60) : 0}m {memory.duration ? memory.duration % 60 : 0}s</span>
+        </div>
+      </CardContent>
+      <CardFooter className="bg-gray-50 px-6 py-4">
+        <Button
+          variant="outline"
+          className="w-full flex items-center justify-center"
+          onClick={togglePlayback}
+        >
+          {isPlaying ? (
+            <>
+              <Pause className="h-4 w-4 mr-2" />
+              Pause
+            </>
+          ) : (
+            <>
+              <Play className="h-4 w-4 mr-2" />
+              Play Recording
+            </>
+          )}
+        </Button>
+      </CardFooter>
+    </MemoryCard>
   );
 };
