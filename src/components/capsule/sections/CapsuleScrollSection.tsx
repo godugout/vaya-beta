@@ -5,6 +5,7 @@ import { Capsule } from "@/types/capsule";
 import { motion } from "framer-motion";
 import { LoadingIndicator } from "@/components/animation/LoadingIndicator";
 import { useInView } from "framer-motion";
+import { Link } from "react-router-dom";
 
 interface CapsuleScrollSectionProps {
   capsules: Capsule[];
@@ -58,12 +59,12 @@ export const CapsuleScrollSection = ({
                   <span>{new Date(capsule.metadata?.date).toLocaleDateString()}</span>
                   <span>{capsule.metadata?.itemCount} items</span>
                 </div>
-                <a 
-                  href={capsule.link} 
+                <Link 
+                  to={`/capsule/${capsule.id}`}
                   className="text-sm text-blue-600 hover:text-blue-800 hover:underline"
                 >
                   View Capsule →
-                </a>
+                </Link>
               </div>
             </Card>
           </motion.div>
