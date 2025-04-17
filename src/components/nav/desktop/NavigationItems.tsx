@@ -10,8 +10,14 @@ import {
   Music, 
   Calendar
 } from "lucide-react";
+import { User } from "@supabase/supabase-js";
 
-export const NavigationItems = () => {
+interface NavigationItemsProps {
+  user?: User | null;
+  isSimplifiedView?: boolean;
+}
+
+export const NavigationItems = ({ user, isSimplifiedView }: NavigationItemsProps) => {
   const navItems = [
     { to: "/", label: "Home", icon: <Home className="h-5 w-5" /> },
     { to: "/memory-lane", label: "Memory Lane", icon: <Music className="h-5 w-5" /> },

@@ -1,21 +1,22 @@
+
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from "@/components/ui/toaster"
 
-import { Index } from "./pages";
-import { Auth } from "./pages/Auth";
-import { Profile } from "./pages/Profile";
-import { Families } from "./pages/Families";
-import { CreateFamily } from "./pages/CreateFamily";
-import { FamilyCapsules } from "./pages/FamilyCapsules";
-import { ShareStories } from "./pages/ShareStories";
-import { MemoryLane } from "./pages/MemoryLane";
+import Index from "./pages/Index";
+import Auth from "./pages/Auth";
+import Profile from "./pages/Profile";
+import Families from "./pages/Families";
+import CreateFamily from "./pages/CreateFamily";
+import FamilyCapsules from "./pages/FamilyCapsules";
+import ShareStories from "./pages/ShareStories";
+import MemoryLane from "./pages/MemoryLane";
 import MemoryPost from "./pages/MemoryPost";
 import StoryDetailsPage from "./pages/StoryDetails";
 import CapsuleDetails from "./pages/CapsuleDetails";
 
-import { DesktopNav } from "./components/nav/desktop/DesktopNav";
+import { DesktopNav } from "./components/nav/DesktopNav";
 import { MobileTopNav } from "./components/nav/MobileTopNav";
 import { MobileBottomNav } from "./components/nav/MobileBottomNav";
 import Timeline from "./pages/Timeline";
