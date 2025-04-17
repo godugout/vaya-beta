@@ -13,6 +13,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 interface EmotionAnalysisSectionProps {
   text: string;
   audioBlob?: Blob | null;
+  audioUrl?: string;
   onEmotionChange?: (emotion: EmotionType) => void;
   initialEmotion?: EmotionType;
   className?: string;
@@ -21,6 +22,7 @@ interface EmotionAnalysisSectionProps {
 export const EmotionAnalysisSection: React.FC<EmotionAnalysisSectionProps> = ({
   text,
   audioBlob,
+  audioUrl,
   onEmotionChange,
   initialEmotion,
   className = ""

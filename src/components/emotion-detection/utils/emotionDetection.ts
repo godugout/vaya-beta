@@ -160,7 +160,13 @@ export function detectEmotions(
     return {
       primaryEmotion,
       confidenceScores: combinedScores,
-      keywords: textResults.keywords || {},
+      keywords: textResults.keywords || {
+        'joy': [],
+        'sadness': [],
+        'nostalgia': [],
+        'excitement': [],
+        'reverence': []
+      },
       audioFeatures
     };
   }
@@ -169,7 +175,13 @@ export function detectEmotions(
   return {
     primaryEmotion: textResults.primaryEmotion || 'nostalgia',
     confidenceScores: textResults.confidenceScores || {} as Record<EmotionType, number>,
-    keywords: textResults.keywords || {} as Record<EmotionType, string[]>
+    keywords: textResults.keywords || {
+      'joy': [],
+      'sadness': [],
+      'nostalgia': [],
+      'excitement': [],
+      'reverence': []
+    }
   };
 }
 
