@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
@@ -72,7 +73,7 @@ const FamilyMemoryGallery = ({ familyId, limit = 12, className = "" }: FamilyMem
             created_at,
             user_id,
             family_id,
-            profiles!user_id(id, full_name, avatar_url)
+            profiles:user_id(id, full_name, avatar_url)
           `)
           .order('created_at', { ascending: false });
 

@@ -10,13 +10,11 @@ import MemoryFeedLayout from "@/components/memory/MemoryFeedLayout";
 import { Memory } from "@/components/memory/types";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
-import { Button } from "@/components/ui/button";
-import { Mic, Plus, File, Image } from "lucide-react";
-import { motion } from "framer-motion";
-import AddMemoryButton from "@/components/memory/AddMemoryButton";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import FamilyMemoryGallery from "@/components/memory/FamilyMemoryGallery";
 import FamilyStoriesSection from "@/components/stories/FamilyStoriesSection";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import AddMemoryModal from "@/components/memory/AddMemoryModal";
+import MemoryCreationHub from "@/components/memory/MemoryCreationHub";
 
 const MemoryLane = () => {
   const { toast } = useToast();
@@ -36,6 +34,7 @@ const MemoryLane = () => {
   ]);
   const [session, setSession] = useState<any>(null);
   const [activeTab, setActiveTab] = useState<'feed' | 'gallery' | 'stories'>('feed');
+  const [showMemoryModal, setShowMemoryModal] = useState(false);
   
   // Check for auth session
   useEffect(() => {
@@ -164,77 +163,12 @@ const MemoryLane = () => {
             </div>
           </div>
           
-          {/* New Memory Actions Bar */}
-          <div className="bg-white/5 backdrop-blur-lg rounded-xl p-4 mb-8 border border-white/10 shadow-lg">
-            <div className="flex flex-col md:flex-row gap-4 items-stretch">
-              <div className="flex-1">
-                <h3 className="text-lg font-medium mb-2">Create New Memory</h3>
-                <p className="text-sm text-muted-foreground mb-4">Choose how you want to preserve your memories</p>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  <Button 
-                    onClick={() => startImmersiveRecording()}
-                    variant="default" 
-                    size="lg"
-                    className="flex items-center justify-center gap-2 h-auto py-6 bg-gradient-to-r from-forest to-water hover:from-forest/90 hover:to-water/90"
-                  >
-                    <Mic className="h-5 w-5" />
-                    <div className="text-left">
-                      <div className="font-medium">Voice Recording</div>
-                      <div className="text-xs opacity-90">Tell your story</div>
-                    </div>
-                  </Button>
-                  
-                  <Button 
-                    onClick={() => {
-                      /* Text memory handler */
-                    }}
-                    variant="secondary" 
-                    size="lg"
-                    className="flex items-center justify-center gap-2 h-auto py-6"
-                  >
-                    <File className="h-5 w-5" />
-                    <div className="text-left">
-                      <div className="font-medium">Text Memory</div>
-                      <div className="text-xs opacity-90">Write your memory</div>
-                    </div>
-                  </Button>
-                  
-                  <Button 
-                    onClick={() => {
-                      /* Photo memory handler */
-                    }}
-                    variant="outline" 
-                    size="lg"
-                    className="flex items-center justify-center gap-2 h-auto py-6"
-                  >
-                    <Image className="h-5 w-5" />
-                    <div className="text-left">
-                      <div className="font-medium">Photo Memory</div>
-                      <div className="text-xs opacity-90">Upload images</div>
-                    </div>
-                  </Button>
-                </div>
-              </div>
-              
-              {/* Quick Actions Column */}
-              <div className="md:w-64 flex flex-col justify-center items-center bg-gradient-to-b from-autumn/10 to-autumn/5 rounded-lg p-4">
-                <AddMemoryButton 
-                  size="lg"
-                  className="w-full mb-3"
-                />
-                
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={startImmersiveRecording}
-                  className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-gradient-to-r from-water to-forest text-white shadow-lg hover:shadow-xl transition-all"
-                >
-                  <Mic className="h-5 w-5" />
-                  <span>Quick Record</span>
-                </motion.button>
-              </div>
-            </div>
+          {/* Memory Creation Hub */}
+          <div className="mb-8">
+            <MemoryCreationHub 
+              onStartImmersiveRecording={startImmersiveRecording}
+              onOpenMemoryModal={() => setShowMemoryModal(true)}
+            />
           </div>
           
           {/* View Type Tabs */}
@@ -271,6 +205,14 @@ const MemoryLane = () => {
           )}
         </div>
       </div>
+      
+      {/* Memory Modal */}
+      {showMemoryModal && (
+        <AddMemoryModal
+          open={showMemoryModal}
+          onOpenChange={setShowMemoryModal}
+        />
+      )}
     </PageTransition>
   );
 };
