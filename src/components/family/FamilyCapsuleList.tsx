@@ -1,13 +1,10 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { format } from "date-fns";
-import { motion } from "framer-motion";
-import { Calendar, Gift, Archive, Clock, Unlock, Lock } from "lucide-react";
+import { CapsuleData } from "@/components/capsule/types";
 import { CapsuleListSkeleton } from "./capsule-list/CapsuleListSkeleton";
 import { EmptyCapsuleState } from "./capsule-list/EmptyCapsuleState";
 import { CapsuleListHeader } from "./capsule-list/CapsuleListHeader";
+import { CapsuleCard } from "./capsule-list/CapsuleCard";
 
 interface FamilyCapsuleListProps {
   familyId?: string;
@@ -16,7 +13,7 @@ interface FamilyCapsuleListProps {
 }
 
 const FamilyCapsuleList = ({ familyId, limit = 6, className = "" }: FamilyCapsuleListProps) => {
-  const [capsules, setCapsules] = useState<Capsule[]>([]);
+  const [capsules, setCapsules] = useState<CapsuleData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -83,41 +80,6 @@ const FamilyCapsuleList = ({ familyId, limit = 6, className = "" }: FamilyCapsul
     fetchCapsules();
   }, [familyId, limit]);
 
-  const getCapsuleStatusInfo = (status: Capsule['status'], revealDate: string | null) => {
-    switch(status) {
-      case 'upcoming':
-        return {
-          icon: <Calendar className="h-5 w-5 text-blue-500" />,
-          label: 'Upcoming',
-          badgeColor: 'bg-blue-100 text-blue-800'
-        };
-      case 'active':
-        return {
-          icon: <Gift className="h-5 w-5 text-green-500" />,
-          label: 'Active',
-          badgeColor: 'bg-green-100 text-green-800'
-        };
-      case 'locked':
-        return {
-          icon: <Lock className="h-5 w-5 text-amber-500" />,
-          label: 'Locked',
-          badgeColor: 'bg-amber-100 text-amber-800'
-        };
-      case 'revealed':
-        return {
-          icon: <Unlock className="h-5 w-5 text-purple-500" />,
-          label: 'Revealed',
-          badgeColor: 'bg-purple-100 text-purple-800'
-        };
-      default:
-        return {
-          icon: <Archive className="h-5 w-5 text-gray-500" />,
-          label: 'Unknown',
-          badgeColor: 'bg-gray-100 text-gray-800'
-        };
-    }
-  };
-
   if (isLoading) {
     return <CapsuleListSkeleton />;
   }
@@ -130,72 +92,13 @@ const FamilyCapsuleList = ({ familyId, limit = 6, className = "" }: FamilyCapsul
         <EmptyCapsuleState />
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {capsules.map(capsule => {
-            const statusInfo = getCapsuleStatusInfo(capsule.status, capsule.reveal_date);
-            
-            return (
-              <motion.div
-                key={capsule.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-                whileHover={{ y: -5 }}
-                className="cursor-pointer"
-                onClick={() => navigateToCapsule(capsule.id)}
-              >
-                <Card className="h-full hover:shadow-md transition-shadow duration-200 border-2 hover:border-forest/30">
-                  <CardHeader className="pb-2">
-                    <div className="flex justify-between items-center">
-                      <CardTitle className="text-lg">{capsule.title}</CardTitle>
-                      <Badge className={statusInfo.badgeColor}>
-                        {statusInfo.label}
-                      </Badge>
-                    </div>
-                    {capsule.family && (
-                      <CardDescription>
-                        {capsule.family.name}
-                      </CardDescription>
-                    )}
-                  </CardHeader>
-                  <CardContent className="pb-4">
-                    {capsule.description && (
-                      <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                        {capsule.description}
-                      </p>
-                    )}
-                    
-                    <div className="grid grid-cols-2 gap-2 text-sm">
-                      <div className="flex items-center gap-1.5 text-gray-500">
-                        <Calendar className="h-4 w-4" />
-                        <span>
-                          Created {format(new Date(capsule.created_at), "MMM d, yyyy")}
-                        </span>
-                      </div>
-                      
-                      {capsule.reveal_date && (
-                        <div className="flex items-center gap-1.5 text-gray-500">
-                          <Clock className="h-4 w-4" />
-                          <span>
-                            Opens {format(new Date(capsule.reveal_date), "MMM d, yyyy")}
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                  </CardContent>
-                  <CardFooter className="pt-0">
-                    <Button className="w-full gap-2">
-                      {statusInfo.icon}
-                      <span>
-                        {capsule.status === 'revealed' ? 'View Contents' : 
-                         capsule.status === 'locked' && new Date(capsule.reveal_date || '') <= new Date() ? 'Unlock Now' :
-                         'View Details'}
-                      </span>
-                    </Button>
-                  </CardFooter>
-                </Card>
-              </motion.div>
-            );
-          })}
+          {capsules.map((capsule, index) => (
+            <CapsuleCard 
+              key={capsule.id} 
+              capsule={capsule} 
+              index={index}
+            />
+          ))}
         </div>
       )}
     </div>
