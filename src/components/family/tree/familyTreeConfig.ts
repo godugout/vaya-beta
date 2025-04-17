@@ -1,6 +1,6 @@
 
-import FamilyTreeNode from './FamilyTreeNode';
-import FamilyTreeEdge from './FamilyTreeEdge';
+import { FamilyTreeNode } from './FamilyTreeNode';
+import { FamilyTreeEdge } from './FamilyTreeEdge';
 
 export const nodeTypes = {
   familyMember: FamilyTreeNode,
@@ -9,3 +9,4 @@ export const nodeTypes = {
 export const edgeTypes = {
   familyConnection: FamilyTreeEdge,
 };
+

@@ -1,10 +1,28 @@
 
-import SpouseEdge from './SpouseEdge';
-import ParentChildEdge from './ParentChildEdge';
-import FamilyTreeEdge from './FamilyTreeEdge';
+import { BaseEdge, getSmoothStepPath } from '@xyflow/react';
 
-export const edgeTypes = {
-  spouse: SpouseEdge,
-  parentChild: ParentChildEdge,
-  familyConnection: FamilyTreeEdge,
+export const FamilyTreeEdge = ({
+  id,
+  sourceX,
+  sourceY,
+  targetX,
+  targetY,
+  sourcePosition,
+  targetPosition,
+  style = {},
+  data,
+}: any) => {
+  const [edgePath] = getSmoothStepPath({
+    sourceX,
+    sourceY,
+    sourcePosition,
+    targetX,
+    targetY,
+    targetPosition,
+  });
+
+  return (
+    <BaseEdge path={edgePath} style={style} />
+  );
 };
+
