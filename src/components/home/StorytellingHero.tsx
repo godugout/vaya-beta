@@ -42,9 +42,9 @@ export const StorytellingHero = () => {
       >
         <div 
           className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1511895426328-dc8714191300?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjI5MjYyNjI5&dpr=2&h=1080')] bg-cover bg-center"
-          style={{ opacity: 0.15 }}
+          style={{ opacity: 0.4 }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-gray-100/80 to-white/60 dark:from-gray-900/80 dark:to-gray-800/60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-100/60 to-white/40 dark:from-gray-900/60 dark:to-gray-800/40" />
       </div>
       
       <div className="container mx-auto px-4 sm:px-6 md:px-8 relative z-10">
@@ -59,7 +59,7 @@ export const StorytellingHero = () => {
                 ease: isReduced || isMobile ? "easeOut" : "easeInOut"
               }}
             >
-              <span className="text-xl sm:text-2xl font-architects-daughter block mb-2 text-gray-800">
+              <span className="text-xl sm:text-2xl font-architects-daughter block mb-2 text-gray-900 dark:text-gray-100">
                 Every family has
               </span>
               <span className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight block mt-2">
@@ -75,7 +75,7 @@ export const StorytellingHero = () => {
               </span>
             </motion.h1>
             
-            <p className="text-lg sm:text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl md:text-2xl text-gray-700 dark:text-gray-200 max-w-2xl mx-auto">
               Create lasting memories, share cherished moments, and preserve your family's legacy for generations to come.
             </p>
             
