@@ -18,7 +18,12 @@ export const MinimizedHeader = ({ isMinimized }: MinimizedHeaderProps) => {
       <div className="flex items-center gap-3">
         {/* Logo */}
         <Link to="/" className="flex items-center" aria-label="Home">
-          <VayaLogo size="sm" animated={true} textClassName="text-forest dark:text-leaf ml-1" />
+          <VayaLogo 
+            size="sm" 
+            animated={true} 
+            autoAnimate={true}
+            textClassName="text-forest dark:text-leaf ml-1" 
+          />
         </Link>
         
         {/* Divider */}

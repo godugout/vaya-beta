@@ -4,35 +4,129 @@
   position: relative;
   cursor: pointer;
   overflow: hidden;
+  perspective: 1000px;
 }
 
 .logo-primary,
-.logo-hover {
+.logo-hover,
+.logo-orange,
+.logo-yellow {
   transition: all 0.4s var(--vaya-easing-bounce);
-}
-
-.logo-hover {
   position: absolute;
   top: 0;
   left: 0;
+  backface-visibility: hidden;
+}
+
+.logo-primary {
+  position: relative;
+  opacity: 1;
+}
+
+.logo-hover,
+.logo-orange,
+.logo-yellow {
   opacity: 0;
 }
 
+/* Logo animation sequence */
+@keyframes logoRotate {
+  0%, 20% {
+    opacity: 1;
+    transform: rotateY(0deg);
+  }
+  25%, 45% {
+    opacity: 0;
+    transform: rotateY(90deg);
+  }
+  50%, 70% {
+    opacity: 0;
+    transform: rotateY(270deg);
+  }
+  75%, 95% {
+    opacity: 1;
+    transform: rotateY(360deg);
+  }
+  100% {
+    opacity: 1;
+    transform: rotateY(360deg);
+  }
+}
+
+/* Spin animation for yellow logo */
+@keyframes logoSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Logo text color change */
+@keyframes textColorChange {
+  0%, 20% {
+    color: var(--color-text-primary);
+  }
+  25%, 45% {
+    color: var(--color-leaf);
+  }
+  50%, 70% {
+    color: #F97316; /* Orange */
+  }
+  75%, 95% {
+    color: #FEF08A; /* Yellow */
+  }
+  100% {
+    color: var(--color-text-primary);
+  }
+}
+
+/* Apply animations when container is hovered */
 .logo-container:hover .logo-primary {
-  opacity: 0;
-  transform: translateY(-5px);
+  animation: logoRotate 20s infinite ease-in-out;
 }
 
 .logo-container:hover .logo-hover {
-  opacity: 1;
-  transform: translateY(0);
+  animation: logoRotate 20s infinite ease-in-out 5s;
+}
+
+.logo-container:hover .logo-orange {
+  animation: logoRotate 20s infinite ease-in-out 10s;
+}
+
+.logo-container:hover .logo-yellow {
+  animation: logoRotate 20s infinite ease-in-out 15s;
+  animation-name: logoRotate, logoSpin;
 }
 
 .logo-container:hover .logo-text {
-  animation: pulse 1s ease-in-out;
+  animation: textColorChange 20s infinite ease-in-out;
 }
 
-/* Logo pulse animation on hover */
+/* Automatic animation when .auto-animate class is present */
+.logo-container.auto-animate .logo-primary {
+  animation: logoRotate 20s infinite ease-in-out;
+}
+
+.logo-container.auto-animate .logo-hover {
+  animation: logoRotate 20s infinite ease-in-out 5s;
+}
+
+.logo-container.auto-animate .logo-orange {
+  animation: logoRotate 20s infinite ease-in-out 10s;
+}
+
+.logo-container.auto-animate .logo-yellow {
+  animation: logoRotate 20s infinite ease-in-out 15s;
+  animation-name: logoRotate, logoSpin;
+}
+
+.logo-container.auto-animate .logo-text {
+  animation: textColorChange 20s infinite ease-in-out;
+}
+
+/* Pulse animation on hover */
 @keyframes pulse {
   0% { transform: scale(1); }
   50% { transform: scale(1.05); }
@@ -43,6 +137,8 @@
 @media (prefers-reduced-motion: reduce) {
   .logo-primary,
   .logo-hover,
+  .logo-orange,
+  .logo-yellow,
   .logo-text {
     transition: opacity 0.1s linear;
     animation: none !important;
