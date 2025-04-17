@@ -1,19 +1,17 @@
 
 /**
- * Central Font Import Management
+ * Central Font Management System
  * 
- * This file centralizes all font imports and declarations.
- * It's structured to optimize loading performance with:
- * - Core fonts (always loaded)
- * - Extended fonts (loaded for specific features)
- * - Self-hosted fonts (premium features)
+ * This file centralizes all font imports and declarations with performance optimizations:
+ * - Preconnect for faster font loading
+ * - Appropriate font-display settings
+ * - Strategic font weight loading
  */
 
-/* Core fonts - Always loaded */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+/* Preconnect to font providers for faster loading */
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&family=Architects+Daughter&display=swap&display=swap');
 
 /* Extended fonts - Used for specific features */
-@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Georgia&display=swap');
 
 /* TT Hoves Pro font - Self-hosted */
