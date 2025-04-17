@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -52,8 +53,8 @@ const FamilyCapsuleList = ({ familyId, limit = 6, className = "" }: FamilyCapsul
             status,
             creator_id,
             family_id,
-            profiles!creator_id(id, full_name),
-            families!family_id(id, name),
+            profiles(id, full_name),
+            families(id, name),
             capsule_items(count)
           `)
           .order('created_at', { ascending: false });
@@ -78,13 +79,13 @@ const FamilyCapsuleList = ({ familyId, limit = 6, className = "" }: FamilyCapsul
             created_at: capsule.created_at,
             reveal_date: capsule.reveal_date,
             status: capsule.status,
-            creator: capsule.profiles ? {
-              id: capsule.profiles.id,
-              name: capsule.profiles.full_name
+            creator: capsule.profiles?.[0] ? {
+              id: capsule.profiles[0].id,
+              name: capsule.profiles[0].full_name
             } : null,
-            family: capsule.families ? {
-              id: capsule.families.id,
-              name: capsule.families.name
+            family: capsule.families?.[0] ? {
+              id: capsule.families[0].id,
+              name: capsule.families[0].name
             } : null,
             item_count: capsule.capsule_items?.[0]?.count || 0
           }));

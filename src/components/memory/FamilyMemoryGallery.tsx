@@ -72,7 +72,7 @@ const FamilyMemoryGallery = ({ familyId, limit = 12, className = "" }: FamilyMem
             created_at,
             user_id,
             family_id,
-            profiles:user_id(id, full_name, avatar_url)
+            profiles(id, full_name, avatar_url)
           `)
           .order('created_at', { ascending: false });
 
@@ -102,10 +102,10 @@ const FamilyMemoryGallery = ({ familyId, limit = 12, className = "" }: FamilyMem
             created_at: memory.created_at,
             user_id: memory.user_id,
             family_id: memory.family_id,
-            user: memory.profiles ? {
-              id: memory.profiles.id,
-              name: memory.profiles.full_name,
-              avatar_url: memory.profiles.avatar_url
+            user: memory.profiles?.[0] ? {
+              id: memory.profiles[0].id,
+              name: memory.profiles[0].full_name,
+              avatar_url: memory.profiles[0].avatar_url
             } : undefined
           }));
           

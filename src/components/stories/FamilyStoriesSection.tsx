@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
@@ -70,7 +71,7 @@ const FamilyStoriesSection = ({ familyId, limit = 9, className = "" }: FamilySto
             created_at,
             user_id,
             family_id,
-            profiles:user_id(id, full_name, avatar_url)
+            profiles(id, full_name, avatar_url)
           `)
           .order('created_at', { ascending: false });
 
@@ -96,10 +97,10 @@ const FamilyStoriesSection = ({ familyId, limit = 9, className = "" }: FamilySto
             created_at: story.created_at,
             user_id: story.user_id,
             family_id: story.family_id,
-            user: story.profiles ? {
-              id: story.profiles.id,
-              name: story.profiles.full_name,
-              avatar_url: story.profiles.avatar_url
+            user: story.profiles?.[0] ? {
+              id: story.profiles[0].id,
+              name: story.profiles[0].full_name,
+              avatar_url: story.profiles[0].avatar_url
             } : undefined
           }));
           
