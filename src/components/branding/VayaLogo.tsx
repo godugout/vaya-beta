@@ -73,7 +73,7 @@ export const VayaLogo = ({
   return (
     <div 
       className={cn(
-        "flex items-center gap-1", // Reduced gap from gap-2 to gap-1
+        "flex items-center gap-1", 
         animated && "cursor-pointer transition-transform hover:scale-105 duration-300"
       )}
       onMouseEnter={handleMouseEnter}
@@ -100,7 +100,7 @@ export const VayaLogo = ({
               className={cn(
                 "absolute top-0 left-0 transition-opacity duration-300",
                 logoClassName,
-                isHovered ? "opacity-100 animate-logo-spin animate-logo-shimmer" : "opacity-0",
+                isHovered ? "opacity-100 animate-logo-flip animate-logo-shimmer" : "opacity-0",
               )}
             />
           )}

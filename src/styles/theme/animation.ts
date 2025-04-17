@@ -1,4 +1,3 @@
-
 export const animation = {
   keyframes: {
     "accordion-down": {
@@ -142,12 +141,12 @@ export const animation = {
         transform: "scale(0.95, 1.05)" 
       }
     },
-    "logo-spin": {
+    "logo-flip": {
       "0%": { 
-        transform: "rotate(0deg)" 
+        transform: "rotateY(0deg)" 
       },
       "100%": { 
-        transform: "rotate(360deg)" 
+        transform: "rotateY(360deg)" 
       }
     },
     "logo-shimmer": {
@@ -185,7 +184,7 @@ export const animation = {
     sparkle: "sparkle 2s infinite",
     bubbleUp: "bubbleUp 0.6s forwards cubic-bezier(0.34, 1.56, 0.64, 1)",
     jelly: "jelly 0.8s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-    "logo-spin": "logo-spin 8s linear infinite",
+    "logo-flip": "logo-flip 8s linear infinite",
     "logo-shimmer": "logo-shimmer 3s ease-in-out infinite"
   },
   duration: {
@@ -197,7 +196,7 @@ export const animation = {
   },
   transition: {
     default: "all 0.3s ease",
-    bounce: "all 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6)",
+    bounce: "all 0.4s cubic-bezier(0.68, -0.6, 0.32, 1)",
     smooth: "all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
     spring: "all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
     elastic: "all 0.6s cubic-bezier(0.5, 1.5, 0.5, 0.9)",
