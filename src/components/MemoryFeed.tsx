@@ -1,6 +1,7 @@
 
 import { StoryMemoryCard } from "./memory/StoryMemoryCard";
 import { PhotoMemoryCard } from "./memory/PhotoMemoryCard";
+import { AudioMemoryCard } from "./memory/AudioMemoryCard";
 import { useMemories } from "./memory/useMemories";
 import { Memory } from "./memory/types";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -33,6 +34,8 @@ const MemoryFeed = () => {
           return <StoryMemoryCard key={memory.id} memory={memory} isPlaceholder={true} />;
         } else if (memory.type === "photo") {
           return <PhotoMemoryCard key={memory.id} memory={memory} isPlaceholder={true} />;
+        } else if (memory.type === "audio") {
+          return <AudioMemoryCard key={memory.id} memory={memory} isPlaceholder={true} />;
         }
         return null;
       })}

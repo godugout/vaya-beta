@@ -2,6 +2,7 @@
 import { useEffect, useRef, useCallback } from "react";
 import { StoryMemoryCard } from "./StoryMemoryCard";
 import { PhotoMemoryCard } from "./PhotoMemoryCard";
+import { AudioMemoryCard } from "./AudioMemoryCard";
 import { Memory } from "./types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useInView } from "framer-motion";
@@ -123,9 +124,11 @@ const MemoryFeedLayout = ({
         <div key={memory.id} className="animate-fadeIn">
           {memory.type === "story" ? (
             <StoryMemoryCard memory={memory} isPlaceholder={true} />
-          ) : (
+          ) : memory.type === "photo" ? (
             <PhotoMemoryCard memory={memory} isPlaceholder={true} />
-          )}
+          ) : memory.type === "audio" ? (
+            <AudioMemoryCard memory={memory} isPlaceholder={true} />
+          ) : null}
         </div>
       ))}
       

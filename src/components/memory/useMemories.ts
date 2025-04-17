@@ -1,6 +1,6 @@
 
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { Memory, StoryMemory, PhotoMemory } from "./types";
+import { Memory, StoryMemory, PhotoMemory, AudioMemory } from "./types";
 
 const ITEMS_PER_PAGE = 5;
 
@@ -42,12 +42,12 @@ const sampleMemories: Memory[] = [
   },
   {
     id: "5",
-    type: "story",
+    type: "audio",
     content_url: "/path/to/sample-audio3.mp3",
     created_at: "2024-03-16T11:30:00Z",
-    title: "Our First Pura Vida Christmas",
-    description: "Mom recalls our first Christmas celebration in Costa Rica, blending our family traditions with local customs. From tamales making to the Festival de la Luz.",
-    duration: 300,
+    title: "Sounds of the Rainforest",
+    content: "Recorded the amazing wildlife sounds during our morning hike in Manuel Antonio National Park.",
+    duration: 180,
   },
   {
     id: "6",

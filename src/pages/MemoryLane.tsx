@@ -53,11 +53,11 @@ const MemoryLane = () => {
       addMemory({
         id: crypto.randomUUID(),
         type: "audio",
+        content_url: data.audioUrl || "",
+        created_at: new Date().toISOString(),
         title: data.transcription ? data.transcription.slice(0, 50) + "..." : "Audio Memory",
         content: data.transcription || "",
-        date: new Date().toISOString(),
-        media: data.audioUrl ? [{ type: "audio", url: data.audioUrl }] : [],
-        tags: ["audio", "memory"]
+        duration: 60, // Placeholder duration
       });
       
       // Show success message
