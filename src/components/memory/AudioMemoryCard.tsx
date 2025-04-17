@@ -12,7 +12,7 @@ interface AudioMemoryCardProps {
   isPlaceholder?: boolean;
 }
 
-export const AudioMemoryCard = ({ memory, isPlaceholder = true }: AudioMemoryCardProps) => {
+export const AudioMemoryCard = ({ memory, isPlaceholder = false }: AudioMemoryCardProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -32,7 +32,7 @@ export const AudioMemoryCard = ({ memory, isPlaceholder = true }: AudioMemoryCar
 
   return (
     <Link to={`/memory/${memory.id}`}>
-      <Card className={`bg-white hover:shadow-md transition-shadow duration-200 relative ${isPlaceholder ? 'opacity-70' : ''}`}>
+      <Card className={`bg-card dark:bg-gray-800 hover:shadow-md transition-shadow duration-200 relative ${isPlaceholder ? 'opacity-70' : ''}`}>
         {isPlaceholder && (
           <Badge 
             variant="outline" 
@@ -44,7 +44,7 @@ export const AudioMemoryCard = ({ memory, isPlaceholder = true }: AudioMemoryCar
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <div className="space-y-1">
             <h3 className="text-sm font-medium">Audio Memory</h3>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-muted-foreground">
               {new Date(memory.created_at).toLocaleDateString()}
             </p>
           </div>
@@ -56,7 +56,7 @@ export const AudioMemoryCard = ({ memory, isPlaceholder = true }: AudioMemoryCar
             )}
             
             {memory.content && (
-              <p className="text-sm text-gray-600">{memory.content}</p>
+              <p className="text-sm text-muted-foreground">{memory.content}</p>
             )}
             
             <Button
@@ -76,7 +76,7 @@ export const AudioMemoryCard = ({ memory, isPlaceholder = true }: AudioMemoryCar
             </Button>
             
             {memory.duration && (
-              <p className="text-xs text-gray-500 text-center">
+              <p className="text-xs text-muted-foreground text-center">
                 Duration: {Math.floor(memory.duration / 60)}:{(memory.duration % 60).toString().padStart(2, '0')}
               </p>
             )}

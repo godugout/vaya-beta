@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PageTransition } from "@/components/animation/PageTransition";
 import { useImmersiveRecording } from "@/hooks/useImmersiveRecording";
 import ImmersiveRecordingExperience from "@/components/immersive-recording/ImmersiveRecordingExperience";
@@ -9,9 +9,13 @@ import { useToast } from "@/components/ui/use-toast";
 import { useMemories } from "@/components/memory/useMemories";
 import MemoryFeedLayout from "@/components/memory/MemoryFeedLayout";
 import { Memory } from "@/components/memory/types";
+import { supabase } from "@/integrations/supabase/client";
+import { useQueryClient } from "@tanstack/react-query";
+import AddMemoryButton from "@/components/memory/AddMemoryButton";
 
 const MemoryLane = () => {
   const { toast } = useToast();
+  const queryClient = useQueryClient();
   const {
     data,
     fetchNextPage,
@@ -25,12 +29,76 @@ const MemoryLane = () => {
       content: "Welcome to Memory Lane. Share your memories and stories to preserve them for generations to come."
     }
   ]);
+  const [session, setSession] = useState<any>(null);
   
-  // Function to add a new memory
-  const addMemory = (memory: Memory) => {
-    // In a real app, this would make an API call to add the memory to the database
-    // For now, we'll just log it and show a success toast
-    console.log("Adding memory:", memory);
+  // Check for auth session
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+  
+  // Function to add a new memory to the database
+  const addMemory = async (memory: Partial<Memory>) => {
+    if (!session?.user) {
+      toast({
+        title: "Authentication Required",
+        description: "Please sign in to save memories.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    try {
+      // Convert Memory to database format
+      const dbMemory = {
+        user_id: session.user.id,
+        memory_type: memory.type,
+        title: memory.title || "New Memory",
+        description: memory.description || "",
+        content_url: memory.content_url,
+        metadata: {
+          ...(memory.type === 'audio' || memory.type === 'story' 
+            ? { duration: (memory as any).duration || 0 } 
+            : {})
+        }
+      };
+      
+      // Insert into database
+      const { data, error } = await supabase
+        .from('memories')
+        .insert(dbMemory)
+        .select()
+        .single();
+        
+      if (error) throw error;
+      
+      // Invalidate queries to refresh data
+      queryClient.invalidateQueries({ queryKey: ["memories"] });
+      
+      toast({
+        title: "Memory Saved",
+        description: "Your memory has been successfully saved.",
+      });
+      
+      return data;
+    } catch (error) {
+      console.error("Error saving memory:", error);
+      toast({
+        title: "Error Saving Memory",
+        description: "There was a problem saving your memory. Please try again.",
+        variant: "destructive",
+      });
+      return null;
+    }
   };
   
   const {
@@ -39,7 +107,7 @@ const MemoryLane = () => {
     stopImmersiveRecording,
     handleRecordingComplete
   } = useImmersiveRecording({
-    onSave: (data) => {
+    onSave: async (data) => {
       // Add to chat as a message
       const newMessage: Message = {
         role: "user",
@@ -50,20 +118,13 @@ const MemoryLane = () => {
       setChatMessages(prev => [...prev, newMessage]);
       
       // Add to memories collection
-      addMemory({
-        id: crypto.randomUUID(),
+      await addMemory({
         type: "audio",
         content_url: data.audioUrl || "",
-        created_at: new Date().toISOString(),
         title: data.transcription ? data.transcription.slice(0, 50) + "..." : "Audio Memory",
-        content: data.transcription || "",
-        duration: 60, // Placeholder duration
-      });
-      
-      // Show success message
-      toast({
-        title: "Memory Saved",
-        description: "Your memory has been saved and transcribed.",
+        description: data.transcription || "",
+        created_at: new Date().toISOString(),
+        metadata: { duration: 60 }, // Placeholder duration
       });
     }
   });
@@ -96,9 +157,12 @@ const MemoryLane = () => {
               <p className="text-muted-foreground">Preserve and explore your family memories</p>
             </div>
             
-            <ImmersiveRecordingButton 
-              onClick={startImmersiveRecording} 
-            />
+            <div className="space-x-2">
+              <AddMemoryButton />
+              <ImmersiveRecordingButton 
+                onClick={startImmersiveRecording} 
+              />
+            </div>
           </div>
           
           <MemoryFeedLayout 

@@ -6,8 +6,6 @@ import { AudioMemoryCard } from "./AudioMemoryCard";
 import { Memory } from "./types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useInView } from "framer-motion";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Info } from "lucide-react";
 import { Message } from "@/components/chat/types";
 
 interface MemoryFeedLayoutProps {
@@ -46,7 +44,7 @@ const MemoryFeedLayout = ({
     return (
       <div className="space-y-6">
         {[1, 2, 3].map((i) => (
-          <div key={i} className="bg-white rounded-lg shadow-sm p-4 space-y-4">
+          <div key={i} className="bg-card dark:bg-gray-800 rounded-lg shadow-sm p-4 space-y-4">
             <div className="flex items-center space-x-4">
               <Skeleton className="h-12 w-12 rounded-full" />
               <div className="space-y-2">
@@ -63,8 +61,8 @@ const MemoryFeedLayout = ({
 
   if (!memories.length) {
     return (
-      <div className="text-center py-12 bg-white rounded-lg shadow-sm">
-        <div className="mx-auto w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+      <div className="text-center py-12 bg-card dark:bg-gray-800 rounded-lg shadow-sm">
+        <div className="mx-auto w-24 h-24 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mb-4">
           <svg
             className="w-12 h-12 text-gray-400"
             fill="none"
@@ -79,21 +77,14 @@ const MemoryFeedLayout = ({
             />
           </svg>
         </div>
-        <h3 className="text-lg font-semibold text-gray-900 mb-2">No memories yet</h3>
-        <p className="text-gray-500 mb-6">Start capturing your family's precious moments</p>
+        <h3 className="text-lg font-semibold text-foreground mb-2">No memories yet</h3>
+        <p className="text-muted-foreground mb-6">Start capturing your family's precious moments</p>
       </div>
     );
   }
 
   return (
     <div className="space-y-6">
-      <Alert variant="default" className="bg-gray-100 border-gray-200 mb-4">
-        <AlertDescription className="flex items-center text-sm text-gray-600">
-          <Info className="h-4 w-4 mr-2" />
-          The content below is demo data. Connect to a real database for your actual memories.
-        </AlertDescription>
-      </Alert>
-      
       {/* Display chat messages if provided */}
       {chatMessages && chatMessages.length > 0 && (
         <div className="mb-8">
@@ -102,8 +93,8 @@ const MemoryFeedLayout = ({
               key={index} 
               className={`p-4 rounded-lg mb-3 ${
                 message.role === 'assistant' 
-                  ? 'bg-blue-50 border border-blue-100' 
-                  : 'bg-green-50 border border-green-100 ml-auto max-w-[80%]'
+                  ? 'bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800' 
+                  : 'bg-green-50 dark:bg-green-900/20 border border-green-100 dark:border-green-800 ml-auto max-w-[80%]'
               }`}
             >
               <p>{message.content}</p>
@@ -123,11 +114,11 @@ const MemoryFeedLayout = ({
       {memories.map((memory: Memory) => (
         <div key={memory.id} className="animate-fadeIn">
           {memory.type === "story" ? (
-            <StoryMemoryCard memory={memory} isPlaceholder={true} />
+            <StoryMemoryCard memory={memory} isPlaceholder={false} />
           ) : memory.type === "photo" ? (
-            <PhotoMemoryCard memory={memory} isPlaceholder={true} />
+            <PhotoMemoryCard memory={memory} isPlaceholder={false} />
           ) : memory.type === "audio" ? (
-            <AudioMemoryCard memory={memory} isPlaceholder={true} />
+            <AudioMemoryCard memory={memory} isPlaceholder={false} />
           ) : null}
         </div>
       ))}
@@ -136,7 +127,7 @@ const MemoryFeedLayout = ({
         <div ref={loadMoreRef} className="py-4">
           {isFetchingNextPage && (
             <div className="flex justify-center">
-              <div className="animate-pulse text-gray-400">Loading more memories...</div>
+              <div className="animate-pulse text-muted-foreground">Loading more memories...</div>
             </div>
           )}
         </div>

@@ -12,7 +12,7 @@ interface StoryMemoryCardProps {
   isPlaceholder?: boolean;
 }
 
-export const StoryMemoryCard = ({ memory, isPlaceholder = true }: StoryMemoryCardProps) => {
+export const StoryMemoryCard = ({ memory, isPlaceholder = false }: StoryMemoryCardProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -32,7 +32,7 @@ export const StoryMemoryCard = ({ memory, isPlaceholder = true }: StoryMemoryCar
 
   return (
     <Link to={`/memory/${memory.id}`}>
-      <Card className={`bg-white hover:shadow-md transition-shadow duration-200 relative ${isPlaceholder ? 'opacity-70' : ''}`}>
+      <Card className={`bg-card dark:bg-gray-800 hover:shadow-md transition-shadow duration-200 relative ${isPlaceholder ? 'opacity-70' : ''}`}>
         {isPlaceholder && (
           <Badge 
             variant="outline" 
@@ -43,28 +43,38 @@ export const StoryMemoryCard = ({ memory, isPlaceholder = true }: StoryMemoryCar
         )}
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <div className="space-y-1">
-            <h3 className="text-sm font-medium">Audio Memory</h3>
-            <p className="text-sm text-gray-500">
+            <h3 className="text-sm font-medium">Story Memory</h3>
+            <p className="text-sm text-muted-foreground">
               {new Date(memory.created_at).toLocaleDateString()}
             </p>
           </div>
         </CardHeader>
         <CardContent>
-          <Button
-            onClick={(e) => {
-              e.preventDefault();
-              togglePlayback();
-            }}
-            variant="outline"
-            className="w-full border-vaya-secondary text-vaya-secondary hover:bg-vaya-secondary hover:text-white"
-          >
-            {isPlaying ? (
-              <Pause className="mr-2 h-4 w-4" />
-            ) : (
-              <Play className="mr-2 h-4 w-4" />
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold">{memory.title}</h3>
+            
+            {memory.description && (
+              <p className="text-muted-foreground text-sm">
+                {memory.description}
+              </p>
             )}
-            {isPlaying ? "Pause" : "Play"} Story
-          </Button>
+            
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+                togglePlayback();
+              }}
+              variant="outline"
+              className="w-full border-vaya-secondary text-vaya-secondary hover:bg-vaya-secondary hover:text-white"
+            >
+              {isPlaying ? (
+                <Pause className="mr-2 h-4 w-4" />
+              ) : (
+                <Play className="mr-2 h-4 w-4" />
+              )}
+              {isPlaying ? "Pause" : "Play"} Story
+            </Button>
+          </div>
         </CardContent>
       </Card>
     </Link>

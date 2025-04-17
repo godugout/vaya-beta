@@ -7,59 +7,69 @@ import { StoryMemoryCard } from "@/components/memory/StoryMemoryCard";
 import { PhotoMemoryCard } from "@/components/memory/PhotoMemoryCard";
 import { AudioMemoryCard } from "@/components/memory/AudioMemoryCard";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Memory } from "@/components/memory/types";
+import { Memory, MemoryRecord } from "@/components/memory/types";
+import { supabase } from "@/integrations/supabase/client";
 
-// Sample memories for development
-const sampleMemories: Record<string, Memory> = {
-  "1": {
-    id: "1",
-    type: "story",
-    content_url: "/path/to/sample-audio.mp3",
-    created_at: "2024-03-20T10:00:00Z",
-    title: "Abuela's Secret Gallo Pinto Recipe",
-    description: "My grandmother shares the story behind our family's traditional Costa Rican breakfast, passed down through generations. She reveals her secret ingredient that makes her gallo pinto special and talks about morning traditions in our family.",
-    duration: 180,
-  },
-  "2": {
-    id: "2",
-    type: "photo",
-    content_url: "https://images.unsplash.com/photo-1472396961693-142e6e269027",
-    created_at: "2024-03-19T15:30:00Z",
-    photo_url: "https://images.unsplash.com/photo-1472396961693-142e6e269027",
-    caption: "Family trip to Monteverde Cloud Forest - The kids were amazed by the wildlife!",
-  },
-  "3": {
-    id: "3",
-    type: "audio",
-    content_url: "/path/to/audio-recording.mp3",
-    created_at: "2024-03-18T14:45:00Z",
-    title: "Sounds of the Rainforest",
-    content: "Audio recording of the amazing wildlife sounds during our morning hike.",
-    duration: 120,
+const convertToMemory = (record: MemoryRecord): Memory => {
+  const baseMemory: Memory = {
+    id: record.id,
+    type: record.memory_type,
+    content_url: record.content_url,
+    created_at: record.created_at,
+    title: record.title,
+    description: record.description,
+    metadata: record.metadata,
+  };
+
+  if (record.memory_type === 'photo') {
+    return {
+      ...baseMemory,
+      type: 'photo',
+      photo_url: record.content_url,
+      caption: record.description,
+    };
+  } else if (record.memory_type === 'audio') {
+    return {
+      ...baseMemory,
+      type: 'audio',
+      content: record.description || '',
+      duration: record.metadata?.duration || 0,
+    };
+  } else {
+    // Story type
+    return {
+      ...baseMemory,
+      type: 'story',
+      duration: record.metadata?.duration || 0,
+    };
   }
 };
 
 const MemoryPost = () => {
   const { id } = useParams();
 
-  const { data: memory, isLoading } = useQuery({
+  const { data: memory, isLoading, error } = useQuery({
     queryKey: ["memory", id],
     queryFn: async () => {
-      // Simulate API call with a delay
-      await new Promise(resolve => setTimeout(resolve, 800));
+      if (!id) throw new Error("Memory ID is required");
       
-      // Use sample data based on ID
-      const memoryData = sampleMemories[id || ""] || sampleMemories["1"];
-      if (!memoryData) throw new Error("Memory not found");
+      const { data, error } = await supabase
+        .from('memories')
+        .select('*')
+        .eq('id', id)
+        .single();
+        
+      if (error) throw error;
+      if (!data) throw new Error("Memory not found");
       
-      return memoryData;
+      return convertToMemory(data as unknown as MemoryRecord);
     },
   });
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <div className="border-b bg-white">
+      <div className="min-h-screen bg-background">
+        <div className="border-b bg-card">
           <div className="container mx-auto px-4">
             <div className="h-16 flex items-center">
               <Skeleton className="h-8 w-32" />
@@ -75,12 +85,12 @@ const MemoryPost = () => {
     );
   }
 
-  if (!memory) {
+  if (error || !memory) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-semibold text-gray-900 mb-2">Memory not found</h1>
-          <p className="text-gray-600 mb-4">This memory might have been removed or you don't have access to it.</p>
+          <h1 className="text-2xl font-semibold text-foreground mb-2">Memory not found</h1>
+          <p className="text-muted-foreground mb-4">This memory might have been removed or you don't have access to it.</p>
           <Link to="/memory-lane">
             <Button variant="outline">Return to Memory Lane</Button>
           </Link>
@@ -90,14 +100,14 @@ const MemoryPost = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="border-b bg-white">
+    <div className="min-h-screen bg-background">
+      <div className="border-b bg-card">
         <div className="container mx-auto px-4">
           <div className="h-16 flex items-center justify-between">
             <div className="flex items-center gap-4">
               <Link
                 to="/memory-lane"
-                className="flex items-center text-gray-600 hover:text-gray-900"
+                className="flex items-center text-muted-foreground hover:text-foreground"
               >
                 <ArrowLeft className="h-5 w-5 mr-2" />
                 Back to Memory Lane
@@ -107,21 +117,21 @@ const MemoryPost = () => {
               <Button
                 variant="ghost"
                 size="icon"
-                className="text-gray-600 hover:text-gray-900"
+                className="text-muted-foreground hover:text-foreground"
               >
                 <MessageSquare className="h-5 w-5" />
               </Button>
               <Button
                 variant="ghost"
                 size="icon"
-                className="text-gray-600 hover:text-gray-900"
+                className="text-muted-foreground hover:text-foreground"
               >
                 <Share2 className="h-5 w-5" />
               </Button>
               <Button
                 variant="ghost"
                 size="icon"
-                className="text-gray-600 hover:text-gray-900"
+                className="text-muted-foreground hover:text-foreground"
               >
                 <Bookmark className="h-5 w-5" />
               </Button>
@@ -134,9 +144,9 @@ const MemoryPost = () => {
           {memory.type === "story" ? (
             <StoryMemoryCard memory={memory} />
           ) : memory.type === "photo" ? (
-            <PhotoMemoryCard memory={memory} />
+            <PhotoMemoryCard memory={memory as any} />
           ) : memory.type === "audio" ? (
-            <AudioMemoryCard memory={memory} />
+            <AudioMemoryCard memory={memory as any} />
           ) : null}
         </div>
       </div>
