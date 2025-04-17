@@ -9,6 +9,80 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      capsule_items: {
+        Row: {
+          added_by: string
+          capsule_id: string
+          created_at: string
+          id: string
+          item_id: string
+          item_type: string
+        }
+        Insert: {
+          added_by: string
+          capsule_id: string
+          created_at?: string
+          id?: string
+          item_id: string
+          item_type: string
+        }
+        Update: {
+          added_by?: string
+          capsule_id?: string
+          created_at?: string
+          id?: string
+          item_id?: string
+          item_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "capsule_items_capsule_id_fkey"
+            columns: ["capsule_id"]
+            isOneToOne: false
+            referencedRelation: "capsules"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      capsules: {
+        Row: {
+          created_at: string
+          creator_id: string
+          description: string | null
+          family_id: string | null
+          id: string
+          metadata: Json | null
+          reveal_date: string | null
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          creator_id: string
+          description?: string | null
+          family_id?: string | null
+          id?: string
+          metadata?: Json | null
+          reveal_date?: string | null
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          creator_id?: string
+          description?: string | null
+          family_id?: string | null
+          id?: string
+          metadata?: Json | null
+          reveal_date?: string | null
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       cultural_events: {
         Row: {
           created_at: string | null
@@ -724,6 +798,7 @@ export type Database = {
           family_id: string | null
           id: string
           is_featured: boolean | null
+          metadata: Json | null
           story_type: string | null
           title: string
           updated_at: string | null
@@ -738,6 +813,7 @@ export type Database = {
           family_id?: string | null
           id?: string
           is_featured?: boolean | null
+          metadata?: Json | null
           story_type?: string | null
           title: string
           updated_at?: string | null
@@ -752,6 +828,7 @@ export type Database = {
           family_id?: string | null
           id?: string
           is_featured?: boolean | null
+          metadata?: Json | null
           story_type?: string | null
           title?: string
           updated_at?: string | null

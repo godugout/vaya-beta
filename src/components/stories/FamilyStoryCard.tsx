@@ -1,61 +1,88 @@
 
+import { useState, useRef } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Play, Pause } from "lucide-react";
 import { motion } from "framer-motion";
-import { CalendarDays } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface FamilyStoryCardProps {
   title: string;
   description: string;
   author: string;
-  imageSrc?: string;
-  date?: string;
-  storyCount?: number;
+  audioUrl?: string;
+  storyId?: string;
+  className?: string;
 }
 
 const FamilyStoryCard = ({ 
   title, 
   description, 
   author, 
-  imageSrc, 
-  date,
-  storyCount 
+  audioUrl,
+  storyId,
+  className 
 }: FamilyStoryCardProps) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  const togglePlayback = () => {
+    if (!audioRef.current && audioUrl) {
+      audioRef.current = new Audio(audioUrl);
+      audioRef.current.onended = () => setIsPlaying(false);
+    }
+
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play().catch(err => {
+          console.error("Error playing audio:", err);
+        });
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      whileHover={{ y: -5, transition: { duration: 0.2 } }}
-      className="h-full"
+      className={className}
     >
-      <Card className="h-full overflow-hidden hover:shadow-lg transition-shadow duration-300 border-gray-700 bg-gradient-to-br from-gray-800 to-gray-900">
-        {imageSrc && (
-          <div className="h-40 w-full overflow-hidden">
-            <img 
-              src={imageSrc} 
-              alt={title} 
-              className="w-full h-full object-cover object-center"
-            />
-          </div>
-        )}
-        <CardContent className="p-6">
-          <div className="flex justify-between items-start mb-2">
-            <h3 className="text-xl font-bold text-white">{title}</h3>
-            {storyCount !== undefined && (
-              <span className="px-2.5 py-0.5 bg-blue-600/30 text-blue-200 text-xs font-medium rounded-full">
-                {storyCount} {storyCount === 1 ? 'Story' : 'Stories'}
-              </span>
-            )}
-          </div>
-          <p className="text-gray-300 text-sm mb-4 line-clamp-3">{description}</p>
-          <div className="flex items-center justify-between text-sm">
-            <span className="text-gray-400">By {author}</span>
-            {date && (
-              <div className="flex items-center text-gray-400 text-xs">
-                <CalendarDays className="h-3.5 w-3.5 mr-1" />
-                {date}
-              </div>
-            )}
+      <Card className="h-full overflow-hidden hover:shadow-md transition-all duration-200">
+        <CardContent className="p-5">
+          <h3 className="font-medium text-lg mb-2 line-clamp-2">{title}</h3>
+          <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">{description}</p>
+          
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-gray-500">By {author}</span>
+            
+            <div className="flex items-center gap-2">
+              {audioUrl && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="flex items-center gap-1.5"
+                  onClick={togglePlayback}
+                >
+                  {isPlaying ? (
+                    <><Pause className="h-3.5 w-3.5" /> Pause</>
+                  ) : (
+                    <><Play className="h-3.5 w-3.5 ml-0.5" /> Play</>
+                  )}
+                </Button>
+              )}
+              
+              {storyId && (
+                <Link to={`/story/${storyId}`}>
+                  <Button variant="ghost" size="sm">
+                    View
+                  </Button>
+                </Link>
+              )}
+            </div>
           </div>
         </CardContent>
       </Card>

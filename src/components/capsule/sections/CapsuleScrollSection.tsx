@@ -1,88 +1,87 @@
-import { useState } from "react";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Camera } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import CreateCapsuleForm from "@/components/capsule/CreateCapsuleForm";
-import { CapsuleTable } from "@/components/capsule/CapsuleTable";
-import { CapsuleFilters } from "@/components/capsule/CapsuleFilters";
-import { Capsule, CapsuleStatus } from "@/types/capsule";
+
+import { useRef, useEffect } from "react";
+import { Card } from "@/components/ui/card";
+import { Capsule } from "@/types/capsule";
+import { motion } from "framer-motion";
+import { LoadingIndicator } from "@/components/animation/LoadingIndicator";
+import { useInView } from "framer-motion";
 
 interface CapsuleScrollSectionProps {
   capsules: Capsule[];
+  hasNextPage?: boolean;
+  fetchNextPage?: () => void;
+  isFetchingNextPage?: boolean;
 }
 
-export const CapsuleScrollSection = ({ capsules }: CapsuleScrollSectionProps) => {
-  const [sortField, setSortField] = useState<'date' | 'title' | 'status'>('date');
-  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
-  const [statusFilter, setStatusFilter] = useState<CapsuleStatus[]>([]);
-  const [searchQuery, setSearchQuery] = useState('');
+export const CapsuleScrollSection = ({ 
+  capsules, 
+  hasNextPage, 
+  fetchNextPage, 
+  isFetchingNextPage 
+}: CapsuleScrollSectionProps) => {
+  const loadMoreRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(loadMoreRef);
 
-  const handleSort = (field: 'date' | 'title' | 'status') => {
-    if (sortField === field) {
-      setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
-    } else {
-      setSortField(field);
-      setSortDirection('asc');
+  // Load more capsules when scrolling to the bottom
+  useEffect(() => {
+    if (isInView && hasNextPage && fetchNextPage && !isFetchingNextPage) {
+      fetchNextPage();
     }
-  };
-
-  const sortedAndFilteredCapsules = [...capsules]
-    .filter(capsule => 
-      (statusFilter.length === 0 || 
-      (capsule.metadata?.status && statusFilter.includes(capsule.metadata.status))) &&
-      capsule.title.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-    .sort((a, b) => {
-      if (sortField === 'date') {
-        const dateA = new Date(a.metadata?.date || '').getTime();
-        const dateB = new Date(b.metadata?.date || '').getTime();
-        return sortDirection === 'asc' ? dateA - dateB : dateB - dateA;
-      }
-      if (sortField === 'title') {
-        return sortDirection === 'asc' 
-          ? a.title.localeCompare(b.title)
-          : b.title.localeCompare(a.title);
-      }
-      if (sortField === 'status') {
-        return sortDirection === 'asc'
-          ? (a.metadata?.status || '').localeCompare(b.metadata?.status || '')
-          : (b.metadata?.status || '').localeCompare(a.metadata?.status || '');
-      }
-      return 0;
-    });
+  }, [isInView, hasNextPage, fetchNextPage, isFetchingNextPage]);
 
   return (
-    <div className="w-full bg-white">
-      <div className="max-w-[2000px] mx-auto">
-        <div className="bg-white rounded-lg border border-gray-100 shadow-sm">
-          <div className="p-6 border-b border-gray-100 bg-vaya-capsules/10 rounded-t-lg">
-            <div className="flex items-center justify-between gap-4 flex-wrap">
-              <h3 className="text-xl font-semibold text-gray-900 min-w-[200px]">Capsules</h3>
-              <div className="flex-1 max-w-md">
-                <Input
-                  type="search"
-                  placeholder="Search capsules..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-white/80 backdrop-blur-sm"
-                />
+    <div className="py-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {capsules.map((capsule, index) => (
+          <motion.div
+            key={capsule.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: index * 0.1 }}
+            className="h-full"
+          >
+            <Card className="h-full p-6 hover:shadow-md transition-all duration-200">
+              <div className="flex flex-col h-full">
+                <div className="mb-3">
+                  <span className={`text-xs font-medium px-2 py-1 rounded-full ${
+                    capsule.metadata?.status === 'upcoming' ? 'bg-blue-100 text-blue-700' :
+                    capsule.metadata?.status === 'active' ? 'bg-green-100 text-green-700' :
+                    capsule.metadata?.status === 'locked' ? 'bg-amber-100 text-amber-700' :
+                    'bg-purple-100 text-purple-700'
+                  }`}>
+                    {capsule.metadata?.status}
+                  </span>
+                </div>
+                <h3 className="text-lg font-medium mb-2">{capsule.title}</h3>
+                <p className="text-sm text-gray-600 mb-4 flex-grow">{capsule.description}</p>
+                <div className="flex items-center justify-between text-xs text-gray-500 mb-4">
+                  <span>{new Date(capsule.metadata?.date).toLocaleDateString()}</span>
+                  <span>{capsule.metadata?.itemCount} items</span>
+                </div>
+                <a 
+                  href={capsule.link} 
+                  className="text-sm text-blue-600 hover:text-blue-800 hover:underline"
+                >
+                  View Capsule →
+                </a>
               </div>
-              <CapsuleFilters 
-                statusFilter={statusFilter}
-                onFilterChange={setStatusFilter}
-              />
-            </div>
-          </div>
-          
-          <CapsuleTable 
-            capsules={sortedAndFilteredCapsules}
-            sortField={sortField}
-            sortDirection={sortDirection}
-            onSort={handleSort}
-          />
-        </div>
+            </Card>
+          </motion.div>
+        ))}
       </div>
+      
+      {hasNextPage && (
+        <div 
+          ref={loadMoreRef} 
+          className="flex justify-center items-center py-8"
+        >
+          {isFetchingNextPage ? (
+            <LoadingIndicator size="md" />
+          ) : (
+            <p className="text-gray-400 text-sm">Scroll to load more</p>
+          )}
+        </div>
+      )}
     </div>
   );
 };
