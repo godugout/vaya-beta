@@ -15,7 +15,7 @@ export const LogoSection = () => {
         size="xl" 
         animated={true}
         autoAnimate={true}
-        textClassName="text-forest dark:text-leaf hover:text-forest" 
+        textClassName="text-forest dark:text-leaf ml-1" 
       />
     </button>
   );

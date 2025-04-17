@@ -3,7 +3,7 @@
 .logo-container {
   position: relative;
   cursor: pointer;
-  overflow: hidden;
+  overflow: visible;
   perspective: 1000px;
 }
 
@@ -82,55 +82,171 @@
   }
 }
 
-/* Apply animations when container is hovered */
-.logo-container:hover .logo-primary {
-  animation: logoRotate 20s infinite ease-in-out;
-}
-
-.logo-container:hover .logo-hover {
-  animation: logoRotate 20s infinite ease-in-out 5s;
-}
-
-.logo-container:hover .logo-orange {
-  animation: logoRotate 20s infinite ease-in-out 10s;
-}
-
-.logo-container:hover .logo-yellow {
-  animation: logoRotate 20s infinite ease-in-out 15s;
-  animation-name: logoRotate, logoSpin;
-}
-
-.logo-container:hover .logo-text {
-  animation: textColorChange 20s infinite ease-in-out;
-}
-
-/* Automatic animation when .auto-animate class is present */
+/* Animation timing */
+.logo-container:hover .logo-primary,
 .logo-container.auto-animate .logo-primary {
-  animation: logoRotate 20s infinite ease-in-out;
+  animation: logoRotate 20s ease-in-out infinite;
 }
 
+.logo-container:hover .logo-hover,
 .logo-container.auto-animate .logo-hover {
-  animation: logoRotate 20s infinite ease-in-out 5s;
+  animation: logoRotate 20s ease-in-out infinite 5s;
 }
 
+.logo-container:hover .logo-orange,
 .logo-container.auto-animate .logo-orange {
-  animation: logoRotate 20s infinite ease-in-out 10s;
+  animation: logoRotate 20s ease-in-out infinite 10s;
 }
 
+.logo-container:hover .logo-yellow,
 .logo-container.auto-animate .logo-yellow {
-  animation: logoRotate 20s infinite ease-in-out 15s;
+  animation: logoRotate 20s ease-in-out infinite 15s;
   animation-name: logoRotate, logoSpin;
 }
 
+.logo-container:hover .logo-text,
 .logo-container.auto-animate .logo-text {
-  animation: textColorChange 20s infinite ease-in-out;
+  animation: textColorChange 20s ease-in-out infinite;
 }
 
-/* Pulse animation on hover */
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+/* Show only one logo at a time during animation */
+.logo-container:hover .logo-primary,
+.logo-container.auto-animate .logo-primary {
+  opacity: 1;
+  z-index: 4;
+}
+
+.logo-container:hover .logo-hover,
+.logo-container.auto-animate .logo-hover {
+  opacity: 0;
+  z-index: 3;
+}
+
+.logo-container:hover .logo-orange,
+.logo-container.auto-animate .logo-orange {
+  opacity: 0;
+  z-index: 2;
+}
+
+.logo-container:hover .logo-yellow,
+.logo-container.auto-animate .logo-yellow {
+  opacity: 0;
+  z-index: 1;
+}
+
+/* Active animations */
+.logo-container:hover .logo-primary:not(:hover),
+.logo-container.auto-animate .logo-primary:not(:hover) {
+  animation-play-state: running;
+}
+
+.logo-container:hover .logo-hover:not(:hover),
+.logo-container.auto-animate .logo-hover:not(:hover) {
+  animation-play-state: running;
+}
+
+.logo-container:hover .logo-orange:not(:hover),
+.logo-container.auto-animate .logo-orange:not(:hover) {
+  animation-play-state: running;
+}
+
+.logo-container:hover .logo-yellow:not(:hover),
+.logo-container.auto-animate .logo-yellow:not(:hover) {
+  animation-play-state: running;
+}
+
+/* Logo visibility during animation phases */
+@keyframes logoVisibility {
+  0%, 20% {
+    opacity: 1;
+    z-index: 4;
+  }
+  21%, 99% {
+    opacity: 0;
+    z-index: 1;
+  }
+  100% {
+    opacity: 1;
+    z-index: 4;
+  }
+}
+
+@keyframes logoVisibilitySecond {
+  0%, 20% {
+    opacity: 0;
+    z-index: 1;
+  }
+  25%, 45% {
+    opacity: 1;
+    z-index: 4;
+  }
+  46%, 99% {
+    opacity: 0;
+    z-index: 1;
+  }
+  100% {
+    opacity: 0;
+    z-index: 1;
+  }
+}
+
+@keyframes logoVisibilityThird {
+  0%, 45% {
+    opacity: 0;
+    z-index: 1;
+  }
+  50%, 70% {
+    opacity: 1;
+    z-index: 4;
+  }
+  71%, 99% {
+    opacity: 0;
+    z-index: 1;
+  }
+  100% {
+    opacity: 0;
+    z-index: 1;
+  }
+}
+
+@keyframes logoVisibilityFourth {
+  0%, 70% {
+    opacity: 0;
+    z-index: 1;
+  }
+  75%, 95% {
+    opacity: 1;
+    z-index: 4;
+  }
+  96%, 99% {
+    opacity: 0;
+    z-index: 1;
+  }
+  100% {
+    opacity: 0;
+    z-index: 1;
+  }
+}
+
+/* Apply visibility animations */
+.logo-container:hover .logo-primary,
+.logo-container.auto-animate .logo-primary {
+  animation: logoVisibility 20s infinite ease-in-out;
+}
+
+.logo-container:hover .logo-hover,
+.logo-container.auto-animate .logo-hover {
+  animation: logoVisibilitySecond 20s infinite ease-in-out;
+}
+
+.logo-container:hover .logo-orange,
+.logo-container.auto-animate .logo-orange {
+  animation: logoVisibilityThird 20s infinite ease-in-out;
+}
+
+.logo-container:hover .logo-yellow,
+.logo-container.auto-animate .logo-yellow {
+  animation: logoVisibilityFourth 20s infinite ease-in-out, logoSpin 5s infinite linear;
 }
 
 /* Accessibility considerations */
@@ -144,13 +260,23 @@
     animation: none !important;
     transform: none !important;
   }
+  
+  .logo-container:hover .logo-primary,
+  .logo-container.auto-animate .logo-primary {
+    opacity: 1;
+  }
+  
+  .logo-container:hover .logo-hover,
+  .logo-container:hover .logo-orange,
+  .logo-container:hover .logo-yellow,
+  .logo-container.auto-animate .logo-hover,
+  .logo-container.auto-animate .logo-orange,
+  .logo-container.auto-animate .logo-yellow {
+    opacity: 0;
+  }
 }
 
 /* Dark mode specific logo adjustments */
 .dark .logo-container .logo-text {
   color: var(--color-text-dark);
-}
-
-.dark .logo-container:hover .logo-text {
-  color: var(--color-leaf);
 }

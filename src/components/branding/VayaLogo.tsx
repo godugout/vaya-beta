@@ -84,27 +84,23 @@ export const VayaLogo = ({
     >
       {type !== "text-only" && (
         <div className={cn("relative", animated && "logo-container", autoAnimate && "auto-animate")}>
-          {/* Regular logo (Green) */}
+          {/* Primary logo (Green) */}
           <img
             src="/lovable-uploads/7a139c69-d8f3-4454-9eca-472016d74c47.png"
             alt="VAYA Logo"
             className={cn(
               logoClassName,
-              "logo-primary",
-              animated && "transition-opacity duration-300",
-              animated && isHovered ? "opacity-0" : "opacity-100"
+              "logo-primary"
             )}
           />
           
-          {/* White logo */}
+          {/* Hover logo (White) */}
           <img
             src="/lovable-uploads/1bafb5f7-e34b-442d-ae06-5d78bfd53965.png"
             alt="VAYA Logo Hover"
             className={cn(
-              "logo-hover",
               logoClassName,
-              animated && "transition-opacity duration-300",
-              animated && isHovered ? "opacity-100" : "opacity-0"
+              "logo-hover"
             )}
           />
           
@@ -113,8 +109,8 @@ export const VayaLogo = ({
             src="/lovable-uploads/386a5a45-bc05-405c-bcb2-847a92b01709.png"
             alt="VAYA Logo Orange"
             className={cn(
-              "logo-orange",
-              logoClassName
+              logoClassName,
+              "logo-orange"
             )}
           />
           
@@ -123,8 +119,8 @@ export const VayaLogo = ({
             src="/lovable-uploads/c8309244-d6ea-43e9-a380-9b4966cd0d70.png"
             alt="VAYA Logo Yellow"
             className={cn(
-              "logo-yellow",
-              logoClassName
+              logoClassName,
+              "logo-yellow"
             )}
           />
         </div>
@@ -135,9 +131,7 @@ export const VayaLogo = ({
           className={cn(
             "font-heading font-semibold logo-text", 
             textSize, 
-            textClassName,
-            animated && "transition-colors duration-300",
-            animated && isHovered ? "text-white" : ""
+            textClassName
           )}
         >
           VAYA
