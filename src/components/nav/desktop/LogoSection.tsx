@@ -13,9 +13,8 @@ export const LogoSection = () => {
     >
       <VayaLogo 
         size="xl" 
-        animated={true}
-        autoAnimate={true}
-        textClassName="text-forest dark:text-leaf ml-1" 
+        animated={true} 
+        textClassName="text-forest dark:text-leaf hover:text-forest" 
       />
     </button>
   );
