@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { ReactFlow, MiniMap, Controls, Background, Panel } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
@@ -9,7 +8,7 @@ import FamilyTreeEdge from './FamilyTreeEdge';
 import { FamilyTreeControls } from './FamilyTreeControls';
 import { Button } from '@/components/ui/button';
 import { Filter, Layout, ZoomIn, User, Users, Laptop, Smartphone } from 'lucide-react';
-import { useMobile } from '@/hooks/use-mobile';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Badge } from '@/components/ui/badge';
 
@@ -62,18 +61,16 @@ export const FamilyTreeView = ({
   onRemoveMember,
   onAddMembers,
 }: FamilyTreeViewProps) => {
-  const { isMobile } = useMobile();
+  const { isMobile } = useIsMobile();
   const [layoutType, setLayoutType] = useState<'vertical' | 'horizontal' | 'radial'>('vertical');
   const [filterOpen, setFilterOpen] = useState(false);
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
   const [focusModeEnabled, setFocusModeEnabled] = useState(false);
   
-  // Toggle focus mode to highlight direct lineage
   const toggleFocusMode = () => {
     setFocusModeEnabled(!focusModeEnabled);
   };
   
-  // Apply filters to the current view
   const toggleFilter = (filter: string) => {
     setActiveFilters(prev => 
       prev.includes(filter)
@@ -82,15 +79,12 @@ export const FamilyTreeView = ({
     );
   };
   
-  // Change layout based on device orientation and user preference
   useEffect(() => {
-    // Automatically switch to vertical layout on mobile
     if (isMobile) {
       setLayoutType('vertical');
     }
   }, [isMobile]);
   
-  // Determine the layout orientation class
   const getLayoutClass = () => {
     switch (layoutType) {
       case 'horizontal':
@@ -142,7 +136,6 @@ export const FamilyTreeView = ({
           onAddMembers={onAddMembers}
         />
         
-        {/* Layout switcher panel */}
         <Panel position="top-right" className="flex flex-col gap-2">
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-3 border border-gray-200 dark:border-gray-700">
             <h3 className="text-sm font-semibold mb-2 flex items-center">
@@ -179,7 +172,6 @@ export const FamilyTreeView = ({
             </div>
           </div>
           
-          {/* Focus mode toggle */}
           <Button 
             variant={focusModeEnabled ? "default" : "outline"}
             className="flex items-center justify-center gap-2"
@@ -189,7 +181,6 @@ export const FamilyTreeView = ({
             {focusModeEnabled ? "Exit Focus Mode" : "Focus Mode"}
           </Button>
           
-          {/* Filter panel */}
           <Collapsible open={filterOpen} onOpenChange={setFilterOpen}>
             <CollapsibleTrigger asChild>
               <Button variant="outline" className="flex items-center justify-center gap-2 w-full">

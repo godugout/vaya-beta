@@ -1,11 +1,10 @@
-
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { useNodesState, useEdgesState, Connection, Edge, Node, ReactFlowInstance, addEdge } from '@xyflow/react';
 import { v4 as uuidv4 } from 'uuid';
 import { useTreeLayout } from './useTreeLayout';
 import { useTreeOperations } from './useTreeOperations';
 import { useTreeExport } from './useTreeExport';
-import { useMobile } from '@/hooks/use-mobile';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface UseFamilyTreeProps {
   familyId: string;
@@ -13,7 +12,7 @@ interface UseFamilyTreeProps {
 }
 
 export function useFamilyTree({ familyId, initialMembers = [] }: UseFamilyTreeProps) {
-  const { isMobile } = useMobile();
+  const { isMobile } = useIsMobile();
   
   // Convert initial members to nodes if provided
   const initialNodes = initialMembers?.map((member) => ({

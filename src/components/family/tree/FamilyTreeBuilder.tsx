@@ -60,7 +60,14 @@ const FamilyTreeBuilder = ({ familyId, initialMembers = [] }: FamilyTreeBuilderP
     if (nodes.length > 0) {
       autoLayoutTree();
     }
-  }, [nodes.length]); // Only re-layout when node count changes
+  }, [nodes.length, autoLayoutTree]); // Added autoLayoutTree dependency
+
+  // Create a wrapper for handleAddMembers that doesn't require arguments when called from FamilyTreeView
+  const handleAddMembersWrapper = useCallback(() => {
+    // This wrapper can optionally show a UI for the user to select multiple members to add
+    // For now, we'll just add an empty array as a placeholder
+    handleAddMembers([]);
+  }, [handleAddMembers]);
 
   return (
     <div className="h-[calc(100vh-160px)] rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden bg-gray-50 dark:bg-gray-900 relative">
@@ -108,7 +115,7 @@ const FamilyTreeBuilder = ({ familyId, initialMembers = [] }: FamilyTreeBuilderP
         onImport={() => setImportDialogOpen(true)}
         onShare={handleShareTree}
         onRemoveMember={handleRemoveMember}
-        onAddMembers={handleAddMembers}
+        onAddMembers={handleAddMembersWrapper}
       />
       
       <FamilyTreeDialogs
