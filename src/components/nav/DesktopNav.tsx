@@ -22,8 +22,8 @@ export const DesktopNav = ({
   onVoiceToggle
 }: DesktopNavProps) => {
   return (
-    <div className="desktop-nav">
-      <div className="container mx-auto flex items-center justify-between gap-4">
+    <div className="desktop-nav h-full flex items-center">
+      <div className="container mx-auto flex items-center justify-between gap-4 h-full">
         {/* Left: Logo */}
         <div className="flex-shrink-0">
           <LogoSection />

@@ -2,12 +2,13 @@
 import { useNavigate } from "react-router-dom";
 import { useUserAuth } from "@/hooks/useUserAuth";
 import { useToast } from "@/hooks/use-toast";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { DesktopNav } from "@/components/nav/DesktopNav";
 import { MobileTopNav } from "@/components/nav/MobileTopNav";
 import { MobileBottomNav } from "@/components/nav/MobileBottomNav";
 import { BreadcrumbNav } from "@/components/nav/BreadcrumbNav";
+import { MinimizedHeader } from "@/components/nav/MinimizedHeader";
 
 export const MainNav = () => {
   const { user, handleSignOut } = useUserAuth();
@@ -15,8 +16,19 @@ export const MainNav = () => {
   const navigate = useNavigate();
   const [isSimplifiedView, setIsSimplifiedView] = useState(false);
   const [isVoiceActive, setIsVoiceActive] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
   
   const isMobile = useMediaQuery("(max-width: 1024px)");
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      setIsMinimized(scrollPosition > 100);
+    };
+    
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   
   const handleLogout = async () => {
     await handleSignOut();
@@ -47,36 +59,44 @@ export const MainNav = () => {
   };
 
   return (
-    <div className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      {isMobile ? (
+    <div className={`sticky top-0 z-40 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-all duration-300 border-b ${isMinimized ? 'h-12 border-border' : 'h-24 border-transparent'}`}>
+      {/* Minimized Header (shown when scrolled) */}
+      <MinimizedHeader isMinimized={isMinimized} />
+
+      {/* Regular Navigation (shown when not minimized) */}
+      {!isMinimized && (
         <>
-          <MobileTopNav 
-            user={user}
-            handleSignOut={handleLogout}
-            navigate={navigate}
-            isSimplifiedView={isSimplifiedView}
-            onSettingsToggle={toggleSimplifiedView}
-          />
-          <BreadcrumbNav isSimplifiedView={isSimplifiedView} />
-          <MobileBottomNav 
-            user={user}
-            navigate={navigate}
-            isSimplifiedView={isSimplifiedView}
-            isVoiceActive={isVoiceActive}
-            onVoiceToggle={toggleVoiceNavigation}
-          />
-        </>
-      ) : (
-        <>
-          <DesktopNav 
-            user={user}
-            handleSignOut={handleLogout}
-            navigate={navigate}
-            isSimplifiedView={isSimplifiedView}
-            isVoiceActive={isVoiceActive}
-            onVoiceToggle={toggleVoiceNavigation}
-          />
-          <BreadcrumbNav isSimplifiedView={isSimplifiedView} />
+          {isMobile ? (
+            <>
+              <MobileTopNav 
+                user={user}
+                handleSignOut={handleLogout}
+                navigate={navigate}
+                isSimplifiedView={isSimplifiedView}
+                onSettingsToggle={toggleSimplifiedView}
+              />
+              <BreadcrumbNav isSimplifiedView={isSimplifiedView} />
+              <MobileBottomNav 
+                user={user}
+                navigate={navigate}
+                isSimplifiedView={isSimplifiedView}
+                isVoiceActive={isVoiceActive}
+                onVoiceToggle={toggleVoiceNavigation}
+              />
+            </>
+          ) : (
+            <>
+              <DesktopNav 
+                user={user}
+                handleSignOut={handleLogout}
+                navigate={navigate}
+                isSimplifiedView={isSimplifiedView}
+                isVoiceActive={isVoiceActive}
+                onVoiceToggle={toggleVoiceNavigation}
+              />
+              <BreadcrumbNav isSimplifiedView={isSimplifiedView} />
+            </>
+          )}
         </>
       )}
     </div>

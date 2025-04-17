@@ -9,7 +9,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { Home } from "lucide-react";
+import { Home, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface BreadcrumbNavProps {
@@ -28,19 +28,25 @@ export const BreadcrumbNav = ({ isSimplifiedView = false, isMinimized = false }:
   if (pathSegments.length === 0) return null;
   
   return (
-    <div className={cn("mt-0 pt-0", isMinimized && "ml-1")}>
+    <div className={cn(
+      "container mx-auto px-4 py-1",
+      isMinimized ? "py-0 mt-0" : "py-1 mt-0",
+      isSimplifiedView && "text-base"
+    )}>
       <Breadcrumb>
-        <BreadcrumbList>
+        <BreadcrumbList className="text-muted-foreground">
           {!isMinimized && (
             <>
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  <Link to="/">
+                  <Link to="/" className="flex items-center hover:text-foreground transition-colors">
                     <Home className={cn("h-4 w-4", isSimplifiedView && "h-5 w-5")} />
                   </Link>
                 </BreadcrumbLink>
               </BreadcrumbItem>
-              <BreadcrumbSeparator />
+              <BreadcrumbSeparator>
+                <ChevronRight className="h-4 w-4" />
+              </BreadcrumbSeparator>
             </>
           )}
           
@@ -55,11 +61,15 @@ export const BreadcrumbNav = ({ isSimplifiedView = false, isMinimized = false }:
             
             return (
               <React.Fragment key={segment}>
-                {index > 0 && <BreadcrumbSeparator />}
+                {index > 0 && (
+                  <BreadcrumbSeparator>
+                    <ChevronRight className="h-4 w-4" />
+                  </BreadcrumbSeparator>
+                )}
                 <BreadcrumbItem>
                   {isLast ? (
                     <BreadcrumbPage className={cn(
-                      "font-medium",
+                      "font-medium text-foreground",
                       isSimplifiedView && "text-base"
                     )}>
                       {formattedSegment}
@@ -67,6 +77,7 @@ export const BreadcrumbNav = ({ isSimplifiedView = false, isMinimized = false }:
                   ) : (
                     <BreadcrumbLink asChild
                       className={cn(
+                        "hover:text-foreground transition-colors",
                         isSimplifiedView && "text-base"
                       )}
                     >
