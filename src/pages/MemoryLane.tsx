@@ -14,6 +14,9 @@ import { Button } from "@/components/ui/button";
 import { Mic, Plus, File, Image } from "lucide-react";
 import { motion } from "framer-motion";
 import AddMemoryButton from "@/components/memory/AddMemoryButton";
+import FamilyMemoryGallery from "@/components/memory/FamilyMemoryGallery";
+import FamilyStoriesSection from "@/components/stories/FamilyStoriesSection";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const MemoryLane = () => {
   const { toast } = useToast();
@@ -32,6 +35,7 @@ const MemoryLane = () => {
     }
   ]);
   const [session, setSession] = useState<any>(null);
+  const [activeTab, setActiveTab] = useState<'feed' | 'gallery' | 'stories'>('feed');
   
   // Check for auth session
   useEffect(() => {
@@ -233,14 +237,38 @@ const MemoryLane = () => {
             </div>
           </div>
           
-          <MemoryFeedLayout 
-            memories={memories}
-            chatMessages={chatMessages}
-            isLoading={isLoading}
-            hasNextPage={hasNextPage}
-            fetchNextPage={fetchNextPage}
-            isFetchingNextPage={isFetchingNextPage}
-          />
+          {/* View Type Tabs */}
+          <Tabs 
+            defaultValue="feed" 
+            value={activeTab} 
+            onValueChange={(value) => setActiveTab(value as 'feed' | 'gallery' | 'stories')}
+            className="mb-6"
+          >
+            <TabsList>
+              <TabsTrigger value="feed">Timeline Feed</TabsTrigger>
+              <TabsTrigger value="gallery">Memory Gallery</TabsTrigger>
+              <TabsTrigger value="stories">Family Stories</TabsTrigger>
+            </TabsList>
+          </Tabs>
+          
+          {activeTab === 'feed' && (
+            <MemoryFeedLayout 
+              memories={memories}
+              chatMessages={chatMessages}
+              isLoading={isLoading}
+              hasNextPage={hasNextPage}
+              fetchNextPage={fetchNextPage}
+              isFetchingNextPage={isFetchingNextPage}
+            />
+          )}
+          
+          {activeTab === 'gallery' && (
+            <FamilyMemoryGallery />
+          )}
+          
+          {activeTab === 'stories' && (
+            <FamilyStoriesSection limit={9} />
+          )}
         </div>
       </div>
     </PageTransition>
