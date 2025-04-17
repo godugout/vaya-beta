@@ -42,7 +42,10 @@ export const StorytellingHero = () => {
       >
         <div 
           className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1511895426328-dc8714191300?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjI5MjYyNjI5&dpr=2&h=1080')] bg-cover bg-center"
-          style={{ opacity: 0.7 }}
+          style={{ 
+            opacity: 0.7, 
+            backgroundPosition: 'center 30%'  // Shifts the background image up to crop more sky
+          }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-gray-100/40 to-white/20 dark:from-gray-900/40 dark:to-gray-800/20" />
       </div>
