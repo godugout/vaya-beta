@@ -172,7 +172,7 @@ const MemoryLane = () => {
                     onClick={() => startImmersiveRecording()}
                     variant="default" 
                     size="lg"
-                    className="flex items-center justify-center gap-2 h-auto py-6 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700"
+                    className="flex items-center justify-center gap-2 h-auto py-6 bg-gradient-to-r from-forest to-water hover:from-forest/90 hover:to-water/90"
                   >
                     <Mic className="h-5 w-5" />
                     <div className="text-left">
@@ -224,10 +224,10 @@ const MemoryLane = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={startImmersiveRecording}
-                  className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500 text-white shadow-lg hover:shadow-xl transition-all"
+                  className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-gradient-to-r from-water to-forest text-white shadow-lg hover:shadow-xl transition-all"
                 >
                   <Mic className="h-5 w-5" />
-                  <span>Immersive Recording</span>
+                  <span>Quick Record</span>
                 </motion.button>
               </div>
             </div>

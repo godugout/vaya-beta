@@ -37,7 +37,7 @@ const App = () => {
           showMinimizeButton={true} 
           onToggleMinimize={toggleMinimize} 
           isMinimized={isNavMinimized}
-          className="hidden md:flex h-16 border-b" 
+          className="hidden md:flex h-16 border-b w-full" 
         />
         <MobileTopNav className="md:hidden" />
         

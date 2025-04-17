@@ -41,7 +41,7 @@
 }
 
 .nav-item.active {
-  @apply bg-accent/20 text-accent;
+  @apply bg-forest/20 text-forest;
 }
 
 /* Responsive adjustments */

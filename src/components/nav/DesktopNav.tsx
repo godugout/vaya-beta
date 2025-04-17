@@ -30,8 +30,8 @@ export const DesktopNav = ({
   className
 }: DesktopNavProps) => {
   return (
-    <div className={`desktop-nav h-full flex items-center ${className || ''}`}>
-      <div className="container mx-auto px-4 flex items-center justify-between gap-4 h-full">
+    <div className={`desktop-nav ${className || ''}`}>
+      <div className="container mx-auto px-4 flex items-center justify-between h-full">
         {/* Left: Logo */}
         <div className="flex-shrink-0">
           <LogoSection />

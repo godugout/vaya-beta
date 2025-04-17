@@ -28,7 +28,7 @@ const AddMemoryButton = ({
       >
         <Button
           size={size}
-          className={`${variant === 'primary' ? 'bg-autumn hover:bg-autumn/90' : 'bg-gray-100 text-gray-800 hover:bg-gray-200'} shadow-lg hover:shadow-xl transition-all ${className}`}
+          className={`${variant === 'primary' ? 'bg-forest hover:bg-forest/90' : 'bg-gray-100 text-gray-800 hover:bg-gray-200'} shadow-lg hover:shadow-xl transition-all ${className}`}
           onClick={() => setShowModal(true)}
         >
           <Plus className="h-5 w-5 mr-2" />
