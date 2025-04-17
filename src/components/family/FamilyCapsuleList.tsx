@@ -1,31 +1,13 @@
-
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { motion } from "framer-motion";
-import { Badge } from "@/components/ui/badge";
 import { Calendar, Gift, Archive, Clock, Unlock, Lock } from "lucide-react";
-
-interface Capsule {
-  id: string;
-  title: string;
-  description: string | null;
-  created_at: string;
-  reveal_date: string | null;
-  status: 'upcoming' | 'active' | 'locked' | 'revealed';
-  creator: {
-    id: string;
-    name: string;
-  } | null;
-  family: {
-    id: string;
-    name: string;
-  } | null;
-  item_count: number;
-}
+import { CapsuleListSkeleton } from "./capsule-list/CapsuleListSkeleton";
+import { EmptyCapsuleState } from "./capsule-list/EmptyCapsuleState";
+import { CapsuleListHeader } from "./capsule-list/CapsuleListHeader";
 
 interface FamilyCapsuleListProps {
   familyId?: string;
@@ -34,7 +16,6 @@ interface FamilyCapsuleListProps {
 }
 
 const FamilyCapsuleList = ({ familyId, limit = 6, className = "" }: FamilyCapsuleListProps) => {
-  const navigate = useNavigate();
   const [capsules, setCapsules] = useState<Capsule[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -102,10 +83,6 @@ const FamilyCapsuleList = ({ familyId, limit = 6, className = "" }: FamilyCapsul
     fetchCapsules();
   }, [familyId, limit]);
 
-  const navigateToCapsule = (capsuleId: string) => {
-    navigate(`/capsule/${capsuleId}`);
-  };
-
   const getCapsuleStatusInfo = (status: Capsule['status'], revealDate: string | null) => {
     switch(status) {
       case 'upcoming':
@@ -142,56 +119,15 @@ const FamilyCapsuleList = ({ familyId, limit = 6, className = "" }: FamilyCapsul
   };
 
   if (isLoading) {
-    return (
-      <div className={`space-y-4 ${className}`}>
-        <h2 className="text-2xl font-semibold mb-4">Family Capsules</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[1, 2, 3].map(i => (
-            <Card key={i} className="animate-pulse">
-              <CardHeader className="pb-2">
-                <div className="h-5 w-3/4 bg-gray-200 rounded mb-2" />
-                <div className="h-4 w-1/2 bg-gray-200 rounded" />
-              </CardHeader>
-              <CardContent className="pb-2 space-y-3">
-                <div className="h-4 w-full bg-gray-200 rounded" />
-                <div className="h-4 w-full bg-gray-200 rounded" />
-                <div className="flex justify-between">
-                  <div className="h-4 w-24 bg-gray-200 rounded" />
-                  <div className="h-4 w-24 bg-gray-200 rounded" />
-                </div>
-              </CardContent>
-              <CardFooter className="pt-0">
-                <div className="h-10 w-full bg-gray-200 rounded" />
-              </CardFooter>
-            </Card>
-          ))}
-        </div>
-      </div>
-    );
+    return <CapsuleListSkeleton />;
   }
 
   return (
     <div className={className}>
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-semibold">Family Capsules</h2>
-        <Button 
-          variant="outline" 
-          onClick={() => navigate('/family-capsules')}
-        >
-          View All
-        </Button>
-      </div>
+      <CapsuleListHeader />
       
       {capsules.length === 0 ? (
-        <div className="text-center py-12 bg-card dark:bg-gray-800 rounded-lg shadow-sm">
-          <h3 className="text-lg font-semibold text-foreground mb-2">No capsules found</h3>
-          <p className="text-muted-foreground mb-6">
-            Create your first memory capsule to preserve special moments
-          </p>
-          <Button onClick={() => navigate('/create-capsule')}>
-            Create Your First Capsule
-          </Button>
-        </div>
+        <EmptyCapsuleState />
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {capsules.map(capsule => {
