@@ -1,0 +1,48 @@
+
+/* Component-specific animations */
+@keyframes typing {
+  0% { 
+    width: 0; 
+  }
+  100% { 
+    width: 100%; 
+  }
+}
+
+@keyframes blink {
+  0%, 100% { 
+    border-color: transparent; 
+  }
+  50% { 
+    border-color: #6C5CE7; 
+  }
+}
+
+@keyframes wavePattern {
+  0% { 
+    transform: translateX(0); 
+  }
+  100% { 
+    transform: translateX(-20%); 
+  }
+}
+
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0); 
+  }
+  50% { 
+    transform: translateY(-10px); 
+  }
+}
+
+@keyframes breathe {
+  0%, 100% { 
+    transform: scale(1); 
+    opacity: 1; 
+  }
+  50% { 
+    transform: scale(1.03); 
+    opacity: 0.9; 
+  }
+}
