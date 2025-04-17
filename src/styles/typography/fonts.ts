@@ -14,7 +14,7 @@ export const fontFamilies = {
   mono: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
   
   // Specialty fonts
-  architectsDaughter: 'Architects Daughter, cursive',
+  architectsDaughter: '"Architects Daughter", cursive',
   story: 'Georgia, serif',
   
   // Brand fonts (premium/licensed)
