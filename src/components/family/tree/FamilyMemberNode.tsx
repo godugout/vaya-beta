@@ -1,12 +1,13 @@
 
 import { memo } from 'react';
 import { Handle, Position } from '@xyflow/react';
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { MoreHorizontal, MessageCircle, Phone, BookOpen, Star } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { MoreHorizontal } from "lucide-react";
 import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { MemberAvatar } from './components/MemberAvatar';
+import { MemberBadges } from './components/MemberBadges';
+import { MemberActions } from './components/MemberActions';
 
 interface FamilyMemberNodeProps {
   data: {
@@ -24,7 +25,15 @@ interface FamilyMemberNodeProps {
   selected: boolean;
 }
 
-const FamilyMemberNode = ({ data, id, selected }: FamilyMemberNodeProps) => {
+const generationColors = [
+  'from-blue-600 to-blue-800',
+  'from-purple-600 to-purple-800',
+  'from-indigo-600 to-indigo-800',
+  'from-cyan-600 to-cyan-800',
+  'from-teal-600 to-teal-800'
+];
+
+const FamilyMemberNode = ({ data, selected }: FamilyMemberNodeProps) => {
   const { 
     full_name, 
     avatar_url, 
@@ -35,41 +44,18 @@ const FamilyMemberNode = ({ data, id, selected }: FamilyMemberNodeProps) => {
     generation = 0,
     isInDirectLineage = false
   } = data;
-  
-  const initials = full_name
-    .split(' ')
-    .map(name => name[0])
-    .join('')
-    .toUpperCase()
-    .substring(0, 2);
-    
-  // Scale memory richness indicator based on story count
-  const memoryRichness = storyCount === 0 ? 0 : Math.min(Math.log(storyCount + 1) / Math.log(10) * 3, 3);
-  
-  // Generation-based coloring for better visual hierarchy
-  const generationColors = [
-    'from-blue-600 to-blue-800', // Oldest generation
-    'from-purple-600 to-purple-800',
-    'from-indigo-600 to-indigo-800',
-    'from-cyan-600 to-cyan-800',
-    'from-teal-600 to-teal-800'  // Youngest generation
-  ];
-  
+
   const colorClass = generationColors[generation % generationColors.length];
+  const borderStyle = isInDirectLineage ? 'border-amber-400 border-2' : 'border-gray-700';
   
-  // Different border for direct lineage members
-  const borderStyle = isInDirectLineage 
-    ? 'border-amber-400 border-2' 
-    : 'border-gray-700';
+  const memoryRichness = storyCount === 0 ? 0 : Math.min(Math.log(storyCount + 1) / Math.log(10) * 3, 3);
 
   return (
     <TooltipProvider>
       <motion.div
         whileHover={{ y: -5 }}
         className={`flex flex-col items-center p-3 w-[180px] bg-gradient-to-b ${colorClass} rounded-lg ${borderStyle} transition-all shadow-lg ${
-          selected 
-            ? 'ring-2 ring-amber-400 shadow-amber-400/20' 
-            : 'ring-0'
+          selected ? 'ring-2 ring-amber-400 shadow-amber-400/20' : 'ring-0'
         }`}
       >
         <div className="absolute top-2 right-2 z-10">
@@ -85,7 +71,6 @@ const FamilyMemberNode = ({ data, id, selected }: FamilyMemberNodeProps) => {
           </Tooltip>
         </div>
         
-        {/* Memory richness indicator */}
         {memoryRichness > 0 && (
           <div 
             className="absolute -top-1 -right-1 rounded-full bg-amber-500"
@@ -98,89 +83,21 @@ const FamilyMemberNode = ({ data, id, selected }: FamilyMemberNodeProps) => {
           />
         )}
         
-        <Avatar className={`h-20 w-20 mx-auto mb-3 border-2 ${isInDirectLineage ? 'border-amber-400' : 'border-gray-700'}`}>
-          <AvatarImage src={avatar_url || ''} alt={full_name} />
-          <AvatarFallback className="bg-gray-800 text-white text-xl">{initials}</AvatarFallback>
-        </Avatar>
+        <MemberAvatar
+          full_name={full_name}
+          avatar_url={avatar_url}
+          isInDirectLineage={isInDirectLineage}
+        />
         
         <div className="text-center w-full mb-2">
           <p className="font-bold text-white truncate max-w-[160px] mx-auto">{full_name}</p>
-          {role && (
-            <p className="text-xs text-gray-200 mt-0.5">{role}</p>
-          )}
-          {birthdate && (
-            <p className="text-xs text-gray-300 mt-0.5">Birth: {new Date(birthdate).getFullYear()}</p>
-          )}
+          {role && <p className="text-xs text-gray-200 mt-0.5">{role}</p>}
+          {birthdate && <p className="text-xs text-gray-300 mt-0.5">Birth: {new Date(birthdate).getFullYear()}</p>}
         </div>
         
-        <div className="flex items-center gap-2 mt-1 mb-2">
-          {storyCount > 0 && (
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Badge 
-                  variant="secondary" 
-                  className="bg-amber-500/30 text-amber-100 border border-amber-500/30"
-                >
-                  <BookOpen className="h-3 w-3 mr-1" />
-                  {storyCount}
-                </Badge>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>{storyCount} {storyCount === 1 ? 'Story' : 'Stories'}</p>
-              </TooltipContent>
-            </Tooltip>
-          )}
-          
-          {hasNewStories && (
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Badge className="bg-orange-500 text-white flex items-center gap-1">
-                  <Star className="h-3 w-3" /> New
-                </Badge>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>New stories added recently</p>
-              </TooltipContent>
-            </Tooltip>
-          )}
-        </div>
+        <MemberBadges storyCount={storyCount} hasNewStories={hasNewStories} />
+        <MemberActions />
         
-        <div className="flex justify-center space-x-2 mt-1">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button size="icon" variant="ghost" className="h-7 w-7 rounded-full bg-gray-700/50 hover:bg-gray-700 text-gray-300">
-                <MessageCircle className="h-3.5 w-3.5" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Send message</p>
-            </TooltipContent>
-          </Tooltip>
-          
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button size="icon" variant="ghost" className="h-7 w-7 rounded-full bg-gray-700/50 hover:bg-gray-700 text-gray-300">
-                <Phone className="h-3.5 w-3.5" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Call</p>
-            </TooltipContent>
-          </Tooltip>
-          
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button size="icon" variant="ghost" className="h-7 w-7 rounded-full bg-gray-700/50 hover:bg-gray-700 text-gray-300">
-                <BookOpen className="h-3.5 w-3.5" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>View stories</p>
-            </TooltipContent>
-          </Tooltip>
-        </div>
-        
-        {/* Handles for connections */}
         <Handle 
           type="target" 
           position={Position.Top} 
