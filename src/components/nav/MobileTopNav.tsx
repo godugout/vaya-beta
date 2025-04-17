@@ -11,11 +11,12 @@ import { useState } from "react";
 import { NavButton } from "./NavButton";
 
 interface MobileTopNavProps {
-  user: User | null;
-  handleSignOut: () => Promise<void>;
-  navigate: (path: string) => void;
+  user?: User | null;
+  handleSignOut?: () => Promise<void>;
+  navigate?: (path: string) => void;
   isSimplifiedView?: boolean;
   onSettingsToggle?: () => void;
+  className?: string;
 }
 
 export const MobileTopNav = ({ 
@@ -23,12 +24,13 @@ export const MobileTopNav = ({
   handleSignOut, 
   navigate, 
   isSimplifiedView,
-  onSettingsToggle
+  onSettingsToggle,
+  className
 }: MobileTopNavProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   
   return (
-    <div className="mobile-top-nav">
+    <div className={`mobile-top-nav ${className || ''}`}>
       <div className="container mx-auto flex items-center justify-between gap-4">
         <div className="flex items-center gap-2">
           <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
@@ -82,7 +84,7 @@ export const MobileTopNav = ({
           </Sheet>
           
           <button 
-            onClick={() => navigate('/')} 
+            onClick={() => navigate && navigate('/')} 
             className={cn(
               "flex items-center gap-1",
               isSimplifiedView && "scale-110"
@@ -129,11 +131,11 @@ export const MobileTopNav = ({
             )} />
           </Button>
           
-          {user ? (
+          {user && handleSignOut && navigate ? (
             <UserMenu user={user} handleSignOut={handleSignOut} navigate={navigate} />
-          ) : (
+          ) : navigate ? (
             <GuestMenu navigate={navigate} />
-          )}
+          ) : null}
         </div>
       </div>
     </div>

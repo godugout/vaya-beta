@@ -2,12 +2,25 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { Home, Image, BookOpen, Package, Users, Clock } from "lucide-react";
+import { User } from "@supabase/supabase-js";
 
 interface MobileBottomNavProps {
   className?: string;
+  user?: User | null;
+  navigate?: (path: string) => void;
+  isSimplifiedView?: boolean;
+  isVoiceActive?: boolean;
+  onVoiceToggle?: () => void;
 }
 
-export const MobileBottomNav = ({ className = "" }: MobileBottomNavProps) => {
+export const MobileBottomNav = ({ 
+  className = "",
+  user,
+  navigate,
+  isSimplifiedView,
+  isVoiceActive,
+  onVoiceToggle
+}: MobileBottomNavProps) => {
   return (
     <div className={`border-t bg-background fixed bottom-0 left-0 right-0 z-10 ${className}`}>
       <div className="flex items-center justify-around h-16">

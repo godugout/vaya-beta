@@ -4,7 +4,6 @@ import { TimelineFilters } from './TimelineFilters';
 import { TimelineItemCard } from './TimelineItemCard';
 import { useTimeline } from './useTimeline';
 import { TimelinePeriod, TimelineFilters as FiltersType } from './types';
-import { format, parseISO, subDays, subMonths, subYears } from 'date-fns';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -14,7 +13,11 @@ export const TimelineView = () => {
     groupBy: 'month'
   });
   
-  const { isLoading, timelineGroups } = useTimeline(filters);
+  const timeline = useTimeline(filters);
+  const { isLoading, items } = timeline;
+  
+  // Group items by the selected period
+  const timelineGroups = timeline.groupItemsByPeriod(items, filters.groupBy);
 
   const handleFilterChange = (newFilters: FiltersType) => {
     setFilters(newFilters);
