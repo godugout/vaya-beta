@@ -1,6 +1,11 @@
 
 import { useMemo } from 'react';
-import { textStyles, fontFamilies, fontWeights, fontSizes, lineHeights, letterSpacings } from './fonts';
+import { textStyles } from './text-styles';
+import { fontFamilies } from './font-families';
+import { fontWeights } from './font-weights';
+import { fontSizes } from './font-sizes';
+import { lineHeights } from './line-heights';
+import { letterSpacings } from './letter-spacings';
 
 type TextStyleKey = keyof typeof textStyles;
 type CustomStyleOptions = {

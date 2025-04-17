@@ -6,8 +6,15 @@
  * utilities, constants, and configurations.
  */
 
-// Export font configuration and utilities
-export * from './fonts';
+// Export font configuration and utilities from modular files
+export { fontFamilies } from './font-families';
+export { fontWeights } from './font-weights';
+export { fontSizes, fluidTypography } from './font-sizes';
+export { lineHeights } from './line-heights';
+export { letterSpacings } from './letter-spacings';
+export { textStyles } from './text-styles';
+export { fontImports } from './font-imports';
+export { fontCustomProperties } from './custom-properties';
 
 // Export React hook for using typography styles in components
 export { default as useTypography } from './useTypography';
