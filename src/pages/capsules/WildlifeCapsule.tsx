@@ -6,16 +6,29 @@ import VoiceRecordingExperience from "@/components/voice-recording/VoiceRecordin
 import { useState } from "react";
 import { Leaf, Mic } from "lucide-react";
 import { motion } from "framer-motion";
+import { useMemories } from "@/components/memory/useMemories";
 
 const WildlifeCapsule = () => {
   const navigate = useNavigate();
   const [showRecordingExperience, setShowRecordingExperience] = useState(false);
+  
+  // Use the useMemories hook to get the required props for MemoryFeedLayout
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+  } = useMemories();
 
   const handleMemorySaved = (data: { audioUrl?: string; transcription?: string }) => {
     console.log("Memory saved:", data);
     setShowRecordingExperience(false);
     // Here you would typically refresh the memory feed or add the new memory to the list
   };
+
+  // Extract memories from all pages
+  const memories = data?.pages.flatMap((page) => page.memories) ?? [];
 
   return (
     <div className="min-h-screen bg-white">
@@ -84,7 +97,14 @@ const WildlifeCapsule = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-6">
-                <MemoryFeedLayout />
+                <MemoryFeedLayout 
+                  memories={memories}
+                  isLoading={isLoading}
+                  fetchNextPage={fetchNextPage}
+                  isFetchingNextPage={isFetchingNextPage}
+                  hasNextPage={hasNextPage || false}
+                  chatMessages={[]}
+                />
               </CardContent>
             </Card>
           </motion.div>
