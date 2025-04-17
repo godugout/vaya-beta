@@ -1,5 +1,6 @@
 
 import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 type LogoSize = "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl";
 type LogoColor = "default" | "primary" | "white" | "black" | "forest" | "purple" | "coral" | "grayscale";
@@ -12,6 +13,7 @@ interface VayaLogoProps {
   className?: string;
   withText?: boolean;
   textClassName?: string;
+  animated?: boolean;
 }
 
 const sizeMap = {
@@ -54,22 +56,67 @@ export const VayaLogo = ({
   className = "",
   withText = true,
   textClassName = "",
+  animated = false,
 }: VayaLogoProps) => {
+  const [isHovered, setIsHovered] = useState(false);
   const logoClassName = cn(sizeMap[size], colorMap[color], className);
   const textSize = textSizeMap[size];
   
+  const handleMouseEnter = () => {
+    if (animated) setIsHovered(true);
+  };
+  
+  const handleMouseLeave = () => {
+    if (animated) setIsHovered(false);
+  };
+  
   return (
-    <div className="flex items-center gap-2">
+    <div 
+      className={cn(
+        "flex items-center gap-2",
+        animated && "cursor-pointer transition-transform hover:scale-105 duration-300"
+      )}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       {type !== "text-only" && (
-        <img
-          src="/lovable-uploads/7a139c69-d8f3-4454-9eca-472016d74c47.png"
-          alt="VAYA Logo"
-          className={logoClassName}
-        />
+        <div className="relative">
+          {/* Regular logo */}
+          <img
+            src="/lovable-uploads/7a139c69-d8f3-4454-9eca-472016d74c47.png"
+            alt="VAYA Logo"
+            className={cn(
+              logoClassName,
+              animated && "transition-opacity duration-300",
+              animated && isHovered ? "opacity-0" : "opacity-100"
+            )}
+          />
+          
+          {/* Hover logo (white version) - positioned absolutely on top */}
+          {animated && (
+            <img
+              src="/lovable-uploads/1bafb5f7-e34b-442d-ae06-5d78bfd53965.png"
+              alt="VAYA Logo Hover"
+              className={cn(
+                "absolute top-0 left-0 transition-opacity duration-300",
+                logoClassName,
+                isHovered ? "opacity-100" : "opacity-0"
+              )}
+            />
+          )}
+        </div>
       )}
       
       {withText && (
-        <span className={cn("font-heading font-semibold", textSize, textClassName)}>
+        <span 
+          className={cn(
+            "font-heading font-semibold", 
+            textSize, 
+            textClassName,
+            animated && "transition-colors duration-300",
+            animated && isHovered ? "text-white" : ""
+          )}
+        >
           VAYA
         </span>
       )}

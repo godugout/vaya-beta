@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Home, Search } from "lucide-react";
 import { BreadcrumbNav } from "./BreadcrumbNav";
 import { cn } from "@/lib/utils";
+import { VayaLogo } from "@/components/branding/VayaLogo";
 
 interface MinimizedHeaderProps {
   isMinimized: boolean;
@@ -17,12 +18,7 @@ export const MinimizedHeader = ({ isMinimized }: MinimizedHeaderProps) => {
       <div className="flex items-center gap-3">
         {/* Logo */}
         <Link to="/" className="flex items-center" aria-label="Home">
-          <img 
-            src="/lovable-uploads/7a139c69-d8f3-4454-9eca-472016d74c47.png" 
-            alt="Vaya Logo" 
-            className="h-6" 
-          />
-          <span className="text-lg font-heading font-semibold text-forest dark:text-leaf ml-1">VAYA</span>
+          <VayaLogo size="sm" animated={true} textClassName="text-forest dark:text-leaf ml-1" />
         </Link>
         
         {/* Divider */}
