@@ -273,8 +273,8 @@ export const MainNav = () => {
           <DropdownMenuTrigger asChild>
             <button className="rounded-full overflow-hidden w-9 h-9 border-2 border-muted">
               <Avatar>
-                <AvatarImage src={user?.image} />
-                <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
+                <AvatarImage src={user?.user_metadata?.avatar_url} />
+                <AvatarFallback>{user?.user_metadata?.full_name?.charAt(0) || user?.email?.charAt(0) || 'U'}</AvatarFallback>
               </Avatar>
             </button>
           </DropdownMenuTrigger>
