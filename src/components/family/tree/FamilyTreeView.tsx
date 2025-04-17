@@ -5,8 +5,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { FilterPanel } from './components/FilterPanel';
 import { LayoutSelector } from './components/LayoutSelector';
 import { FocusModeToggle } from './components/FocusModeToggle';
-import { nodeTypes } from './FamilyTreeNode';
-import { edgeTypes } from './FamilyTreeEdge';
+import { nodeTypes, edgeTypes } from './familyTreeConfig';
 
 interface FamilyTreeViewProps {
   nodes: any[];
