@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useAdvancedAudioRecorder } from "@/hooks/useAdvancedAudioRecorder";
 import { useMultilingualTranscription, TranscriptionResult } from "@/hooks/useMultilingualTranscription";
@@ -12,11 +11,14 @@ import { Progress } from "@/components/ui/progress";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Languages, Wand2, User, Clock } from "lucide-react";
+import { EmotionAnalysisSection } from "@/components/emotion-detection/EmotionAnalysisSection";
+import { EmotionType } from "@/components/emotion-detection/types";
 
 interface VoiceTranscriptionSystemProps {
   onComplete?: (data: { 
     audioBlob: Blob | null, 
-    transcription: TranscriptionResult | null 
+    transcription: TranscriptionResult | null,
+    primaryEmotion?: EmotionType
   }) => void;
   initialLanguage?: 'en' | 'es' | 'hi' | 'gu' | 'auto';
   className?: string;
@@ -32,6 +34,7 @@ export function VoiceTranscriptionSystem({
   const [speakerIdentification, setSpeakerIdentification] = useState(true);
   const [enableTimestamps, setEnableTimestamps] = useState(true);
   const [enhanceWithAI, setEnhanceWithAI] = useState(true);
+  const [primaryEmotion, setPrimaryEmotion] = useState<EmotionType | undefined>();
   
   const {
     isRecording,
@@ -60,40 +63,38 @@ export function VoiceTranscriptionSystem({
     enhanceWithAI
   });
   
-  // Handle recording complete
   const handleRecordingComplete = (blob: Blob) => {
     setAudioBlob(blob);
-    // Don't auto-transcribe, let the user decide when to transcribe
   };
   
-  // Handle transcription
   const handleTranscribe = async () => {
     if (audioBlob) {
       await transcribeAudio(audioBlob);
     }
   };
   
-  // Handle segment edit
   const handleSegmentEdit = (index: number, text: string) => {
     updateSegment(index, text);
   };
   
-  // Handle speaker name change
   const handleSpeakerNameChange = (speakerId: string, name: string) => {
     assignSpeakerName(speakerId, name);
   };
   
-  // Handle completion
+  const handleEmotionChange = (emotion: EmotionType) => {
+    setPrimaryEmotion(emotion);
+  };
+  
   const handleComplete = () => {
     if (onComplete) {
       onComplete({
         audioBlob,
-        transcription
+        transcription,
+        primaryEmotion
       });
     }
   };
   
-  // Reset the system
   const handleReset = () => {
     setAudioBlob(null);
   };
@@ -107,7 +108,6 @@ export function VoiceTranscriptionSystem({
         <CardContent className="space-y-6">
           {!audioBlob ? (
             <div className="space-y-4">
-              {/* Language and settings */}
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <Label htmlFor="language" className="flex items-center gap-2">
@@ -170,7 +170,6 @@ export function VoiceTranscriptionSystem({
                 </div>
               </div>
               
-              {/* Recording interface */}
               <AdvancedAudioRecorder
                 onRecordingComplete={handleRecordingComplete}
                 className="mt-4"
@@ -178,7 +177,6 @@ export function VoiceTranscriptionSystem({
             </div>
           ) : (
             <div className="space-y-6">
-              {/* Audio preview and transcription */}
               <div className="bg-gray-50 border rounded-lg p-4">
                 <audio 
                   src={URL.createObjectURL(audioBlob)} 
@@ -205,17 +203,23 @@ export function VoiceTranscriptionSystem({
                 )}
               </div>
               
-              {/* Transcription editor */}
               {transcription && (
-                <TranscriptionEditor
-                  transcription={transcription}
-                  audioBlob={audioBlob}
-                  onSegmentEdit={handleSegmentEdit}
-                  onSpeakerNameChange={handleSpeakerNameChange}
-                />
+                <>
+                  <TranscriptionEditor
+                    transcription={transcription}
+                    audioBlob={audioBlob}
+                    onSegmentEdit={handleSegmentEdit}
+                    onSpeakerNameChange={handleSpeakerNameChange}
+                  />
+                  
+                  <EmotionAnalysisSection 
+                    text={transcription.fullText}
+                    audioBlob={audioBlob}
+                    onEmotionChange={handleEmotionChange}
+                  />
+                </>
               )}
               
-              {/* Action buttons */}
               <div className="flex justify-between gap-2">
                 <Button 
                   variant="outline" 
