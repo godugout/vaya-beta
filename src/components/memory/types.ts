@@ -1,4 +1,3 @@
-
 export type BaseMemory = {
   id: string;
   type: string;
@@ -19,11 +18,4 @@ export type PhotoMemory = BaseMemory & {
   caption?: string;
 };
 
-export type AudioMemory = BaseMemory & {
-  type: "audio";
-  title?: string;
-  transcription?: string;
-  duration?: number;
-};
-
-export type Memory = StoryMemory | PhotoMemory | AudioMemory;
+export type Memory = StoryMemory | PhotoMemory;
