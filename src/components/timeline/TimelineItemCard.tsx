@@ -74,7 +74,9 @@ export const TimelineItemCard = ({ item, compact = false }: TimelineItemCardProp
       case 'capsule':
         return 'Memory Capsule';
       default:
-        return item.type.charAt(0).toUpperCase() + item.type.slice(1);
+        // Fix: Handle the default case by returning the type as a string with proper capitalization
+        const itemType = item.type as string;
+        return itemType.charAt(0).toUpperCase() + itemType.slice(1);
     }
   };
   

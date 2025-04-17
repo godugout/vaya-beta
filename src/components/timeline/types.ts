@@ -6,7 +6,7 @@ export type TimelinePeriod = 'day' | 'week' | 'month' | 'year' | 'decade' | 'cus
 
 export interface TimelineItem {
   id: string;
-  type: 'story' | 'memory' | 'photo' | 'audio' | 'capsule';
+  type: 'story' | 'memory' | 'photo' | 'audio' | 'capsule' | string;
   title: string;
   description?: string;
   date: string;
