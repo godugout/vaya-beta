@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { CapsuleData } from "@/components/capsule/types";
@@ -27,6 +28,7 @@ const FamilyCapsuleList = ({ familyId, limit = 6, className = "" }: FamilyCapsul
             title, 
             description, 
             created_at, 
+            updated_at,
             reveal_date,
             status,
             creator_id,
@@ -50,13 +52,16 @@ const FamilyCapsuleList = ({ familyId, limit = 6, className = "" }: FamilyCapsul
         if (error) throw error;
         
         if (data) {
-          const formattedCapsules = data.map(capsule => ({
+          const formattedCapsules: CapsuleData[] = data.map(capsule => ({
             id: capsule.id,
             title: capsule.title,
             description: capsule.description,
             created_at: capsule.created_at,
+            updated_at: capsule.updated_at,
             reveal_date: capsule.reveal_date,
             status: capsule.status,
+            creator_id: capsule.creator_id,
+            family_id: capsule.family_id,
             creator: capsule.profiles?.[0] ? {
               id: capsule.profiles[0].id,
               name: capsule.profiles[0].full_name
