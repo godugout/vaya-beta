@@ -1,129 +1,69 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { MainNav } from './components/MainNav';
-import Index from './pages/Index';
-import Auth from './pages/Auth';
-import MemoryLane from './pages/MemoryLane';
-import ShareStories from './pages/ShareStories';
-import FamilyCapsules from './pages/FamilyCapsules';
-import Profile from './pages/Profile';
-import Account from './pages/Account';
-import Families from './pages/Families';
-import SetupAdmin from './pages/SetupAdmin';
-import CreateFamily from './pages/CreateFamily';
-import ComponentsDemo from './pages/ComponentsDemo';
-import ComponentsShowcase from './pages/ComponentsShowcase';
-import WeddingModeShowcase from './components/wedding-mode/WeddingModeShowcase';
-import DesignSystem from './pages/DesignSystem';
-import TypographyDocs from './pages/TypographyDocs';
-import { Toaster } from './components/ui/toaster';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Toaster } from "@/components/ui/toaster"
 
-function App() {
+import { Index } from "./pages";
+import { Auth } from "./pages/Auth";
+import { Profile } from "./pages/Profile";
+import { Families } from "./pages/Families";
+import { CreateFamily } from "./pages/CreateFamily";
+import { FamilyCapsules } from "./pages/FamilyCapsules";
+import { ShareStories } from "./pages/ShareStories";
+import { MemoryLane } from "./pages/MemoryLane";
+import MemoryPost from "./pages/MemoryPost";
+import StoryDetailsPage from "./pages/StoryDetails";
+import CapsuleDetails from "./pages/CapsuleDetails";
+
+import { DesktopNav } from "./components/nav/desktop/DesktopNav";
+import { MobileTopNav } from "./components/nav/MobileTopNav";
+import { MobileBottomNav } from "./components/nav/MobileBottomNav";
+import Timeline from "./pages/Timeline";
+
+const App = () => {
+  const [isNavMinimized, setIsNavMinimized] = useState(false);
+
+  const toggleMinimize = () => {
+    setIsNavMinimized(!isNavMinimized);
+  };
+
+  const queryClient = new QueryClient();
+
   return (
-    <>
-      <Routes>
-        <Route path="/auth" element={<Auth />} />
-        <Route path="/design-system/*" element={<DesignSystem />} />
-        <Route path="/typography-docs" element={<TypographyDocs />} />
-        
-        <Route path="/" element={
-          <>
-            <MainNav />
-            <Index />
-          </>
-        } />
-        
-        <Route path="/memory-lane" element={
-          <>
-            <MainNav />
-            <div className="page-content">
-              <MemoryLane />
-            </div>
-          </>
-        } />
-        <Route path="/share-stories" element={
-          <>
-            <MainNav />
-            <div className="page-content">
-              <ShareStories />
-            </div>
-          </>
-        } />
-        <Route path="/family-capsules" element={
-          <>
-            <MainNav />
-            <div className="page-content">
-              <FamilyCapsules />
-            </div>
-          </>
-        } />
-        <Route path="/profile" element={
-          <>
-            <MainNav />
-            <div className="page-content">
-              <Profile />
-            </div>
-          </>
-        } />
-        <Route path="/account" element={
-          <>
-            <MainNav />
-            <div className="page-content">
-              <Account />
-            </div>
-          </>
-        } />
-        <Route path="/families" element={
-          <>
-            <MainNav />
-            <div className="page-content">
-              <Families />
-            </div>
-          </>
-        } />
-        <Route path="/setup-admin" element={
-          <>
-            <MainNav />
-            <div className="page-content">
-              <SetupAdmin />
-            </div>
-          </>
-        } />
-        <Route path="/create-family" element={
-          <>
-            <MainNav />
-            <div className="page-content">
-              <CreateFamily />
-            </div>
-          </>
-        } />
-        <Route path="/components-demo" element={
-          <>
-            <MainNav />
-            <div className="page-content">
-              <ComponentsDemo />
-            </div>
-          </>
-        } />
-        <Route path="/components" element={
-          <>
-            <MainNav />
-            <div className="page-content">
-              <ComponentsShowcase />
-            </div>
-          </>
-        } />
-        <Route path="/wedding-mode" element={
-          <>
-            <MainNav />
-            <div className="page-content">
-              <WeddingModeShowcase />
-            </div>
-          </>
-        } />
-      </Routes>
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <div className="flex flex-col min-h-screen">
+          <DesktopNav 
+            className="hidden md:flex" 
+            showMinimizeButton={true} 
+            onToggleMinimize={toggleMinimize} 
+            isMinimized={isNavMinimized}
+          />
+          <MobileTopNav className="md:hidden" />
+          
+          <div className={`flex-grow transition-all ${isNavMinimized ? 'md:ml-16' : 'md:ml-64'}`}>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/families" element={<Families />} />
+              <Route path="/create-family" element={<CreateFamily />} />
+              <Route path="/family-capsules" element={<FamilyCapsules />} />
+              <Route path="/share-stories" element={<ShareStories />} />
+              <Route path="/memory-lane" element={<MemoryLane />} />
+              <Route path="/memory/:id" element={<MemoryPost />} />
+              <Route path="/story/:id" element={<StoryDetailsPage />} />
+              <Route path="/capsule/:id" element={<CapsuleDetails />} />
+              <Route path="/timeline" element={<Timeline />} />
+            </Routes>
+          </div>
+          
+          <MobileBottomNav className="md:hidden" />
+        </div>
+      </Router>
       <Toaster />
-    </>
+    </QueryClientProvider>
   );
-}
+};
 
 export default App;

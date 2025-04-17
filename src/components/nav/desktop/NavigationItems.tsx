@@ -1,71 +1,45 @@
 
-import { User } from "@supabase/supabase-js";
-import { NavButton } from "../NavButton";
-import { Home, Mic, Image, Archive, Users } from "lucide-react";
-import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
-import { cn } from "@/lib/utils";
+import { NavLink } from "react-router-dom";
+import { 
+  Home, 
+  Image, 
+  BookOpen, 
+  Package, 
+  Users, 
+  Clock,
+  Music, 
+  Calendar
+} from "lucide-react";
 
-interface NavigationItemsProps {
-  user: User | null;
-  isSimplifiedView: boolean;
-}
+export const NavigationItems = () => {
+  const navItems = [
+    { to: "/", label: "Home", icon: <Home className="h-5 w-5" /> },
+    { to: "/memory-lane", label: "Memory Lane", icon: <Music className="h-5 w-5" /> },
+    { to: "/share-stories", label: "Stories", icon: <BookOpen className="h-5 w-5" /> },
+    { to: "/family-capsules", label: "Capsules", icon: <Package className="h-5 w-5" /> },
+    { to: "/families", label: "Families", icon: <Users className="h-5 w-5" /> },
+    { to: "/timeline", label: "Timeline", icon: <Clock className="h-5 w-5" /> },
+  ];
 
-export const NavigationItems = ({ user, isSimplifiedView }: NavigationItemsProps) => {
   return (
-    <nav className={cn(
-      "hidden md:flex items-center gap-2",
-      isSimplifiedView && "gap-3"
-    )}>
-      <NavigationMenu>
-        <NavigationMenuList className="gap-2">
-          <NavigationMenuItem>
-            <NavButton 
-              to="/" 
-              icon={<Home size={isSimplifiedView ? 20 : 18} />} 
-              label="Home" 
-              isSimplified={isSimplifiedView}
-            />
-          </NavigationMenuItem>
-          
-          <NavigationMenuItem>
-            <NavButton 
-              to="/share-stories" 
-              icon={<Mic size={isSimplifiedView ? 20 : 18} />} 
-              label="Stories" 
-              isSimplified={isSimplifiedView}
-            />
-          </NavigationMenuItem>
-          
-          <NavigationMenuItem>
-            <NavButton 
-              to="/memory-lane" 
-              icon={<Image size={isSimplifiedView ? 20 : 18} />} 
-              label="Memories" 
-              isSimplified={isSimplifiedView}
-            />
-          </NavigationMenuItem>
-          
-          <NavigationMenuItem>
-            <NavButton 
-              to="/family-capsules" 
-              icon={<Archive size={isSimplifiedView ? 20 : 18} />} 
-              label="Capsules" 
-              isSimplified={isSimplifiedView}
-            />
-          </NavigationMenuItem>
-          
-          {user && (
-            <NavigationMenuItem>
-              <NavButton 
-                to="/families" 
-                icon={<Users size={isSimplifiedView ? 20 : 18} />} 
-                label="Family" 
-                isSimplified={isSimplifiedView}
-              />
-            </NavigationMenuItem>
-          )}
-        </NavigationMenuList>
-      </NavigationMenu>
+    <nav className="mt-6 space-y-1">
+      {navItems.map((item) => (
+        <NavLink
+          key={item.to}
+          to={item.to}
+          className={({ isActive }) =>
+            `flex items-center px-3 py-2 rounded-md transition-colors ${
+              isActive
+                ? "bg-primary/10 text-primary"
+                : "text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+            }`
+          }
+          end={item.to === "/"}
+        >
+          <span className="mr-3">{item.icon}</span>
+          <span className="text-sm font-medium">{item.label}</span>
+        </NavLink>
+      ))}
     </nav>
   );
 };
