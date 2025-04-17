@@ -1,51 +1,102 @@
 
-import { NavLink } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { User } from "@supabase/supabase-js";
+import { cn } from "@/lib/utils";
 import { 
   Home, 
-  Image, 
   BookOpen, 
   Package, 
   Users, 
   Clock,
-  Music, 
-  Calendar
+  FileAudio
 } from "lucide-react";
-import { User } from "@supabase/supabase-js";
 
 interface NavigationItemsProps {
   user?: User | null;
   isSimplifiedView?: boolean;
+  className?: string;
 }
 
-export const NavigationItems = ({ user, isSimplifiedView }: NavigationItemsProps) => {
-  const navItems = [
-    { to: "/", label: "Home", icon: <Home className="h-5 w-5" /> },
-    { to: "/memory-lane", label: "Memory Lane", icon: <Music className="h-5 w-5" /> },
-    { to: "/share-stories", label: "Stories", icon: <BookOpen className="h-5 w-5" /> },
-    { to: "/family-capsules", label: "Capsules", icon: <Package className="h-5 w-5" /> },
-    { to: "/families", label: "Families", icon: <Users className="h-5 w-5" /> },
-    { to: "/timeline", label: "Timeline", icon: <Clock className="h-5 w-5" /> },
-  ];
-
+export const NavigationItems = ({ 
+  user, 
+  isSimplifiedView, 
+  className 
+}: NavigationItemsProps) => {
+  const location = useLocation();
+  
+  const isActive = (path: string) => {
+    return location.pathname === path;
+  };
+  
   return (
-    <nav className="mt-6 space-y-1">
-      {navItems.map((item) => (
-        <NavLink
-          key={item.to}
-          to={item.to}
-          className={({ isActive }) =>
-            `flex items-center px-3 py-2 rounded-md transition-colors ${
-              isActive
-                ? "bg-primary/10 text-primary"
-                : "text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
-            }`
-          }
-          end={item.to === "/"}
+    <nav className={cn("flex items-center space-x-1", className)}>
+      <Link
+        to="/"
+        className={cn(
+          "nav-item flex items-center gap-2 px-3 py-2",
+          isActive("/") && "active"
+        )}
+      >
+        <Home className="h-5 w-5" />
+        <span className={isSimplifiedView ? "sr-only" : ""}>Home</span>
+      </Link>
+      
+      <Link
+        to="/memory-lane"
+        className={cn(
+          "nav-item flex items-center gap-2 px-3 py-2",
+          isActive("/memory-lane") && "active"
+        )}
+      >
+        <FileAudio className="h-5 w-5" />
+        <span className={isSimplifiedView ? "sr-only" : ""}>Memory Lane</span>
+      </Link>
+      
+      <Link
+        to="/share-stories"
+        className={cn(
+          "nav-item flex items-center gap-2 px-3 py-2",
+          isActive("/share-stories") && "active"
+        )}
+      >
+        <BookOpen className="h-5 w-5" />
+        <span className={isSimplifiedView ? "sr-only" : ""}>Stories</span>
+      </Link>
+      
+      <Link
+        to="/family-capsules"
+        className={cn(
+          "nav-item flex items-center gap-2 px-3 py-2",
+          isActive("/family-capsules") && "active"
+        )}
+      >
+        <Package className="h-5 w-5" />
+        <span className={isSimplifiedView ? "sr-only" : ""}>Capsules</span>
+      </Link>
+      
+      {user && (
+        <Link
+          to="/families"
+          className={cn(
+            "nav-item flex items-center gap-2 px-3 py-2",
+            isActive("/families") && "active"
+          )}
         >
-          <span className="mr-3">{item.icon}</span>
-          <span className="text-sm font-medium">{item.label}</span>
-        </NavLink>
-      ))}
+          <Users className="h-5 w-5" />
+          <span className={isSimplifiedView ? "sr-only" : ""}>Family</span>
+        </Link>
+      )}
+      
+      <Link
+        to="/timeline"
+        className={cn(
+          "nav-item flex items-center gap-2 px-3 py-2",
+          isActive("/timeline") && "active"
+        )}
+      >
+        <Clock className="h-5 w-5" />
+        <span className={isSimplifiedView ? "sr-only" : ""}>Timeline</span>
+      </Link>
     </nav>
   );
 };

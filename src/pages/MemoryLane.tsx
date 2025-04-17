@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { PageTransition } from "@/components/animation/PageTransition";
 import { useImmersiveRecording } from "@/hooks/useImmersiveRecording";
 import ImmersiveRecordingExperience from "@/components/immersive-recording/ImmersiveRecordingExperience";
-import ImmersiveRecordingButton from "@/components/immersive-recording/ImmersiveRecordingButton";
 import { Message } from "@/components/chat/types";
 import { useToast } from "@/components/ui/use-toast";
 import { useMemories } from "@/components/memory/useMemories";
@@ -11,6 +10,9 @@ import MemoryFeedLayout from "@/components/memory/MemoryFeedLayout";
 import { Memory } from "@/components/memory/types";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
+import { Button } from "@/components/ui/button";
+import { Mic, Plus, File, Image } from "lucide-react";
+import { motion } from "framer-motion";
 import AddMemoryButton from "@/components/memory/AddMemoryButton";
 
 const MemoryLane = () => {
@@ -150,18 +152,84 @@ const MemoryLane = () => {
         )}
         
         {/* Regular Memory Lane content */}
-        <div className="container mx-auto py-8">
+        <div className="container mx-auto py-8 px-4">
           <div className="flex justify-between items-center mb-8">
             <div>
               <h1 className="text-3xl font-bold">Memory Lane</h1>
               <p className="text-muted-foreground">Preserve and explore your family memories</p>
             </div>
-            
-            <div className="space-x-2">
-              <AddMemoryButton />
-              <ImmersiveRecordingButton 
-                onClick={startImmersiveRecording} 
-              />
+          </div>
+          
+          {/* New Memory Actions Bar */}
+          <div className="bg-white/5 backdrop-blur-lg rounded-xl p-4 mb-8 border border-white/10 shadow-lg">
+            <div className="flex flex-col md:flex-row gap-4 items-stretch">
+              <div className="flex-1">
+                <h3 className="text-lg font-medium mb-2">Create New Memory</h3>
+                <p className="text-sm text-muted-foreground mb-4">Choose how you want to preserve your memories</p>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <Button 
+                    onClick={() => startImmersiveRecording()}
+                    variant="default" 
+                    size="lg"
+                    className="flex items-center justify-center gap-2 h-auto py-6 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700"
+                  >
+                    <Mic className="h-5 w-5" />
+                    <div className="text-left">
+                      <div className="font-medium">Voice Recording</div>
+                      <div className="text-xs opacity-90">Tell your story</div>
+                    </div>
+                  </Button>
+                  
+                  <Button 
+                    onClick={() => {
+                      /* Text memory handler */
+                    }}
+                    variant="secondary" 
+                    size="lg"
+                    className="flex items-center justify-center gap-2 h-auto py-6"
+                  >
+                    <File className="h-5 w-5" />
+                    <div className="text-left">
+                      <div className="font-medium">Text Memory</div>
+                      <div className="text-xs opacity-90">Write your memory</div>
+                    </div>
+                  </Button>
+                  
+                  <Button 
+                    onClick={() => {
+                      /* Photo memory handler */
+                    }}
+                    variant="outline" 
+                    size="lg"
+                    className="flex items-center justify-center gap-2 h-auto py-6"
+                  >
+                    <Image className="h-5 w-5" />
+                    <div className="text-left">
+                      <div className="font-medium">Photo Memory</div>
+                      <div className="text-xs opacity-90">Upload images</div>
+                    </div>
+                  </Button>
+                </div>
+              </div>
+              
+              {/* Quick Actions Column */}
+              <div className="md:w-64 flex flex-col justify-center items-center bg-gradient-to-b from-autumn/10 to-autumn/5 rounded-lg p-4">
+                <AddMemoryButton 
+                  size="lg"
+                  className="w-full mb-3"
+                />
+                
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={startImmersiveRecording}
+                  className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500 text-white shadow-lg hover:shadow-xl transition-all"
+                >
+                  <Mic className="h-5 w-5" />
+                  <span>Immersive Recording</span>
+                </motion.button>
+              </div>
             </div>
           </div>
           

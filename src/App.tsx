@@ -37,11 +37,11 @@ const App = () => {
           showMinimizeButton={true} 
           onToggleMinimize={toggleMinimize} 
           isMinimized={isNavMinimized}
-          className="hidden md:flex" 
+          className="hidden md:flex h-16 border-b" 
         />
         <MobileTopNav className="md:hidden" />
         
-        <div className={`flex-grow transition-all ${isNavMinimized ? 'md:ml-16' : 'md:ml-64'}`}>
+        <main className={`flex-grow transition-all ${isNavMinimized ? 'md:pl-16' : 'md:pl-0'}`}>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
@@ -56,7 +56,7 @@ const App = () => {
             <Route path="/capsule/:id" element={<CapsuleDetails />} />
             <Route path="/timeline" element={<Timeline />} />
           </Routes>
-        </div>
+        </main>
         
         <MobileBottomNav className="md:hidden" />
       </div>
