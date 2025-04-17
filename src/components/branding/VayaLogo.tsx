@@ -1,4 +1,3 @@
-
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 
@@ -73,7 +72,7 @@ export const VayaLogo = ({
   return (
     <div 
       className={cn(
-        "flex items-center gap-2", // Reduced from gap-2 to gap-1 to bring logo closer
+        "flex items-center gap-1", // Reduced gap from gap-2 to gap-1
         animated && "cursor-pointer transition-transform hover:scale-105 duration-300"
       )}
       onMouseEnter={handleMouseEnter}
@@ -87,7 +86,6 @@ export const VayaLogo = ({
             alt="VAYA Logo"
             className={cn(
               logoClassName,
-              "mr-1", // Added margin to right to reduce gap
               animated && "transition-opacity duration-300",
               animated && isHovered ? "opacity-0" : "opacity-100"
             )}
@@ -101,7 +99,6 @@ export const VayaLogo = ({
               className={cn(
                 "absolute top-0 left-0 transition-opacity duration-300",
                 logoClassName,
-                "mr-1", // Added margin to right to reduce gap
                 isHovered ? "opacity-100" : "opacity-0"
               )}
             />
