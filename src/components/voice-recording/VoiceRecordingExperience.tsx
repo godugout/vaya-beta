@@ -1,6 +1,5 @@
 
 import { useState, useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { useVoiceRecorder } from "@/hooks/useVoiceRecorder";
 import { useAudioTranscription } from "@/components/voice-recording/hooks/useAudioTranscription";
@@ -11,15 +10,15 @@ import TranscriptionDisplay from "@/components/audio/TranscriptionDisplay";
 import AudioTimeline from "@/components/audio/AudioTimeline";
 
 // Import the extracted smaller components
-import { EnhancedRecordingButton } from "./EnhancedRecordingButton";
 import { FadeIn } from "@/components/animation/FadeIn";
 import { StaggeredContainer } from "@/components/animation/StaggeredContainer";
 import RecordingStatus from "./RecordingStatus";
 import AudioControls from "./AudioControls";
 import SaveMemoryButton from "./SaveMemoryButton";
 import ProcessingIndicator from "./ProcessingIndicator";
-import WaveformVisualizer from "./WaveformVisualizer";
 import SuccessMessage from "./SuccessMessage";
+import { Button } from "@/components/ui/button";
+import { Sparkles } from "lucide-react";
 
 interface VoiceRecordingExperienceProps {
   onMemorySaved?: (data: { 
@@ -87,13 +86,17 @@ const VoiceRecordingExperience = ({ onMemorySaved }: VoiceRecordingExperiencePro
       });
     }
   };
-
-  // Automatically transcribe when recording stops
-  useEffect(() => {
+  
+  const handleTranscribe = async () => {
     if (audioBlob && !transcription && !isTranscribing) {
-      transcribeAudio(audioBlob);
+      toast({
+        title: "Transcribing...",
+        description: "Your recording is being transcribed.",
+      });
+      
+      await transcribeAudio(audioBlob);
     }
-  }, [audioBlob, transcription, isTranscribing, transcribeAudio]);
+  };
 
   // Provide haptic feedback when recording starts/stops
   useEffect(() => {
@@ -162,7 +165,19 @@ const VoiceRecordingExperience = ({ onMemorySaved }: VoiceRecordingExperiencePro
             isProcessing={isProcessing || isTranscribing}
           />
           
-          {!hasSaved && !isProcessing && !isTranscribing && (
+          {!transcription && !isTranscribing && (
+            <Button 
+              onClick={handleTranscribe} 
+              variant="secondary"
+              className="w-full"
+              disabled={isProcessing}
+            >
+              <Sparkles className="mr-2 h-4 w-4" />
+              Transcribe Recording
+            </Button>
+          )}
+          
+          {!hasSaved && !isProcessing && (
             <SaveMemoryButton 
               handleSave={handleSave}
               isProcessing={isProcessing}

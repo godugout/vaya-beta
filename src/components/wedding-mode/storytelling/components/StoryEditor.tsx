@@ -8,6 +8,7 @@ import { useVoiceRecorder } from '@/hooks/useVoiceRecorder';
 import { useAudioTranscription } from '@/components/voice-recording/hooks/useAudioTranscription';
 import { useToast } from '@/components/ui/use-toast';
 import AudioPreview from '@/components/audio/AudioPreview';
+import TranscriptionDisplay from '@/components/audio/TranscriptionDisplay';
 
 interface StoryEditorProps {
   storyContent: string;
@@ -57,20 +58,6 @@ export const StoryEditor: React.FC<StoryEditorProps> = ({
     }
   }, [isRecording, isRecordingActive, startRecording, stopRecording]);
 
-  // Transcribe audio when recording stops
-  useEffect(() => {
-    const handleTranscription = async () => {
-      if (audioBlob && !isRecordingActive && !transcription) {
-        const text = await transcribeAudio(audioBlob);
-        if (text) {
-          onContentChange(storyContent ? `${storyContent}\n${text}` : text);
-        }
-      }
-    };
-    
-    handleTranscription();
-  }, [audioBlob, isRecordingActive, transcription, transcribeAudio, onContentChange, storyContent]);
-
   // Sync external recording state with internal state
   const handleToggleRecording = () => {
     if (isTranscribing) return;
@@ -80,6 +67,16 @@ export const StoryEditor: React.FC<StoryEditorProps> = ({
     if (audioBlob) {
       setAudioBlob(null);
       setTranscription(null);
+    }
+  };
+  
+  // Manually trigger transcription
+  const handleTranscribe = async () => {
+    if (audioBlob && !isRecordingActive && !transcription) {
+      const text = await transcribeAudio(audioBlob);
+      if (text) {
+        onContentChange(storyContent ? `${storyContent}\n${text}` : text);
+      }
     }
   };
 
@@ -98,11 +95,31 @@ export const StoryEditor: React.FC<StoryEditorProps> = ({
       {audioBlob && !isRecording && (
         <div className="mt-2 mb-4">
           <AudioPreview audioBlob={audioBlob} disabled={isTranscribing} />
+          
+          {!transcription && !isTranscribing && (
+            <Button 
+              onClick={handleTranscribe} 
+              variant="outline" 
+              size="sm" 
+              className="mt-2 w-full"
+              disabled={isTranscribing}
+            >
+              Transcribe Audio
+            </Button>
+          )}
+          
           {isTranscribing && (
             <div className="flex items-center justify-center mt-2 text-sm text-muted-foreground">
               <Loader size={14} className="animate-spin mr-2" />
               Transcribing your audio...
             </div>
+          )}
+          
+          {transcription && (
+            <TranscriptionDisplay 
+              transcription={transcription} 
+              isGenerating={isTranscribing} 
+            />
           )}
         </div>
       )}

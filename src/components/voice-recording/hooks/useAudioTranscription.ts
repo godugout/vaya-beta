@@ -57,8 +57,6 @@ export const useAudioTranscription = (options: TranscriptionOptions = {}) => {
     try {
       // For now, we return the original blob since browser APIs don't 
       // provide direct audio preprocessing capabilities
-      // In a real implementation, we might use Web Audio API or
-      // send the audio to a preprocessing service
       return audioBlob;
     } catch (error) {
       console.warn("Audio preprocessing failed:", error);
@@ -99,7 +97,6 @@ export const useAudioTranscription = (options: TranscriptionOptions = {}) => {
       const audioBase64 = await audioBase64Promise;
       
       // Call Supabase Edge Function for transcription with options
-      // Removed the 'signal' property as it's not supported in FunctionInvokeOptions
       const { data, error } = await supabase.functions.invoke('transcribe-audio', {
         body: { 
           audio: audioBase64,
