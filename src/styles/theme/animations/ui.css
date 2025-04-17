@@ -1,117 +1,105 @@
 
-/* UI interaction animations */
-@keyframes shimmer {
-  0% { 
-    background-position: -500px 0; 
-  }
-  100% { 
-    background-position: 500px 0; 
-  }
+/* UI-specific animations for consistent experience across components */
+
+/* Page transition effects */
+.page-enter {
+  opacity: 0;
+  transform: translateY(10px);
 }
 
-@keyframes gradientFlow {
-  0% { 
-    background-position: 0% 50%; 
-  }
-  50% { 
-    background-position: 100% 50%; 
-  }
-  100% { 
-    background-position: 0% 50%; 
-  }
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity var(--transition-duration-default) var(--transition-easing-standard),
+              transform var(--transition-duration-default) var(--transition-easing-standard);
 }
 
-@keyframes growShrink {
-  0%, 100% { 
-    transform: scale(1); 
-  }
-  50% { 
-    transform: scale(1.1); 
-  }
+.page-exit {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-@keyframes recordingPulse {
-  0% { 
-    transform: scale(1); 
-    box-shadow: 0 0 0 0 rgba(255, 118, 117, 0.7); 
-  }
-  70% { 
-    transform: scale(1.05); 
-    box-shadow: 0 0 0 10px rgba(255, 118, 117, 0); 
-  }
-  100% { 
-    transform: scale(1); 
-    box-shadow: 0 0 0 0 rgba(255, 118, 117, 0); 
-  }
+.page-exit-active {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity var(--transition-duration-default) var(--transition-easing-standard),
+              transform var(--transition-duration-default) var(--transition-easing-standard);
 }
 
-@keyframes successPulse {
-  0% { 
-    box-shadow: 0 0 0 0 rgba(0, 206, 201, 0.7); 
-  }
-  70% { 
-    box-shadow: 0 0 0 10px rgba(0, 206, 201, 0); 
-  }
-  100% { 
-    box-shadow: 0 0 0 0 rgba(0, 206, 201, 0); 
-  }
+/* Button hover effects */
+.button-hover-effect {
+  transition: all var(--transition-duration-fast) var(--transition-easing-standard);
 }
 
-@keyframes shine {
-  0% { 
-    background-position: -200px 0; 
-  }
-  100% { 
-    background-position: calc(200px + 100%) 0; 
-  }
+.button-hover-effect:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-@keyframes reveal {
-  0% { 
-    clip-path: inset(0 100% 0 0); 
-  }
-  100% { 
-    clip-path: inset(0 0 0 0); 
-  }
+.dark .button-hover-effect:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-@keyframes sparkle {
-  0%, 100% { 
-    opacity: 0; 
-    transform: scale(0); 
-  }
-  50% { 
-    opacity: 1; 
-    transform: scale(1); 
-  }
+/* Card hover effects */
+.card-hover-effect {
+  transition: all var(--transition-duration-default) var(--transition-easing-standard);
 }
 
-@keyframes bubbleUp {
-  0% { 
-    opacity: 0; 
-    transform: translateY(20px) scale(0.8); 
-  }
-  70% { 
-    opacity: 1; 
-    transform: translateY(-5px) scale(1.05); 
-  }
-  100% { 
-    opacity: 1; 
-    transform: translateY(0) scale(1); 
-  }
+.card-hover-effect:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
-@keyframes jelly {
-  0%, 100% { 
-    transform: scale(1, 1); 
-  }
-  25% { 
-    transform: scale(0.95, 1.05); 
-  }
-  50% { 
-    transform: scale(1.05, 0.95); 
-  }
-  75% { 
-    transform: scale(0.95, 1.05); 
-  }
+.dark .card-hover-effect:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Input focus animations */
+.input-focus-animation {
+  transition: border-color var(--transition-duration-fast) var(--transition-easing-standard),
+              box-shadow var(--transition-duration-fast) var(--transition-easing-standard);
+}
+
+.input-focus-animation:focus {
+  border-color: rgb(var(--color-water));
+  box-shadow: 0 0 0 2px rgba(var(--color-water), 0.2);
+}
+
+/* Modal animations */
+.modal-appear {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.modal-appear-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity var(--transition-duration-default) var(--transition-easing-standard),
+              transform var(--transition-duration-default) var(--transition-easing-bounce);
+}
+
+/* Capsule and memory card animations */
+.capsule-appear {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.capsule-appear-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity var(--transition-duration-default) var(--transition-easing-standard),
+              transform var(--transition-duration-default) var(--transition-easing-standard);
+}
+
+/* Consistent hover effects for all interactive elements */
+.interactive-element {
+  transition: all var(--transition-duration-fast) var(--transition-easing-standard);
+}
+
+.interactive-element:hover {
+  filter: brightness(1.05);
+}
+
+.dark .interactive-element:hover {
+  filter: brightness(1.2);
 }

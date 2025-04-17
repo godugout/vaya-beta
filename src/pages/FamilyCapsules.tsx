@@ -20,7 +20,7 @@ const FamilyCapsules = () => {
   }));
 
   return (
-    <div className="relative min-h-screen bg-white dark:bg-gray-900">
+    <div className="relative min-h-screen bg-background text-foreground">
       <div className="container mx-auto pt-24 px-4 sm:px-6 lg:px-8">
         <h1 className="text-3xl md:text-4xl font-heading font-medium mb-8 text-center">Family Capsules</h1>
         <ExampleCapsules />

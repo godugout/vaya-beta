@@ -26,34 +26,36 @@ export const BasePill = ({
 
   const colors = {
     memories: {
-      outline: "border-black dark:border-white",
-      bg: "bg-black/5 dark:bg-white/10"
+      outline: "border-black dark:border-white/30",
+      bg: "bg-white/90 dark:bg-black/40"
     },
     stories: {
-      outline: "border-black dark:border-white",
-      bg: "bg-black/5 dark:bg-white/10"
+      outline: "border-black dark:border-white/30",
+      bg: "bg-white/90 dark:bg-black/40"
     },
     capsules: {
-      outline: "border-black dark:border-white", 
-      bg: "bg-black/5 dark:bg-white/10"
+      outline: "border-black dark:border-white/30", 
+      bg: "bg-white/90 dark:bg-black/40"
     },
     narra: {
-      outline: "border-black dark:border-white",
-      bg: "bg-black/5 dark:bg-white/10"
+      outline: "border-black dark:border-white/30",
+      bg: "bg-white/90 dark:bg-black/40"
     },
     default: {
-      outline: "border-black dark:border-white",
-      bg: "bg-black/5 dark:bg-white/10"
+      outline: "border-black dark:border-white/30",
+      bg: "bg-white/90 dark:bg-black/40"
     }
   };
 
   const pillBaseClasses = cn(
     "relative overflow-hidden",
     "min-h-[100px] w-[400px]",
-    "border border-black dark:border-white",
-    isDetailed ? "bg-black/5 dark:bg-white/10" : "bg-white dark:bg-black",
+    colors[colorKey as keyof typeof colors]?.outline || colors.default.outline,
+    isDetailed ? 
+      (isDark ? "bg-dark-background-surface" : "bg-muted/50") : 
+      (isDark ? "bg-dark-background-elevated" : "bg-white"),
     isDark ? 
-      "shadow-[0_4px_12px_-2px_rgba(0,0,0,0.2)]" :
+      "shadow-[0_4px_12px_-2px_rgba(0,0,0,0.4)]" :
       "shadow-[0_4px_12px_-2px_rgba(0,0,0,0.06)]",
     "transition-all duration-300 group",
     className
@@ -65,7 +67,7 @@ export const BasePill = ({
         <div 
           className={cn(
             "absolute inset-0 transition-opacity duration-300",
-            `bg-black/5 dark:bg-white/10`,
+            isDark ? "bg-white/5" : "bg-black/5",
             isHovered ? "opacity-100" : "opacity-0"
           )}
         />

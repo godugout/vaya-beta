@@ -73,7 +73,7 @@ const MemoryLane = () => {
 
   return (
     <PageTransition location="memory-lane">
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background text-foreground">
         {/* Display immersive recording experience when active */}
         {isImmersiveMode && (
           <ImmersiveRecordingExperience
