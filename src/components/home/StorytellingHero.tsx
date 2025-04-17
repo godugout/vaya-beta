@@ -15,7 +15,7 @@ export const StorytellingHero = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-white/80 to-white/40 dark:from-gray-900/80 dark:to-gray-900/40" />
       </div>
       
-      <div className="container relative z-10 flex flex-col items-center justify-center px-4 sm:px-6 md:px-8 -mt-24">
+      <div className="container relative z-10 flex flex-col items-center justify-center px-4 sm:px-6 md:px-8 -mt-32">
         <div className="text-center max-w-4xl mx-auto agencs-hero staggered-fade-in">
           <motion.h1 
             className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-white"
