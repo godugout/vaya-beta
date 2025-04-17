@@ -7,17 +7,31 @@ import ImmersiveRecordingButton from "@/components/immersive-recording/Immersive
 import { Message } from "@/components/chat/types";
 import { useToast } from "@/components/ui/use-toast";
 import { useMemories } from "@/components/memory/useMemories";
-import { MemoryFeedLayout } from "@/components/memory/MemoryFeedLayout";
+import MemoryFeedLayout from "@/components/memory/MemoryFeedLayout";
+import { Memory } from "@/components/memory/types";
 
 const MemoryLane = () => {
   const { toast } = useToast();
-  const { memories, addMemory } = useMemories();
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+  } = useMemories();
   const [chatMessages, setChatMessages] = useState<Message[]>([
     {
       role: "assistant",
       content: "Welcome to Memory Lane. Share your memories and stories to preserve them for generations to come."
     }
   ]);
+  
+  // Function to add a new memory
+  const addMemory = (memory: Memory) => {
+    // In a real app, this would make an API call to add the memory to the database
+    // For now, we'll just log it and show a success toast
+    console.log("Adding memory:", memory);
+  };
   
   const {
     isImmersiveMode,
@@ -54,6 +68,9 @@ const MemoryLane = () => {
     }
   });
 
+  // Extract memories from all pages
+  const memories = data?.pages.flatMap((page) => page.memories) ?? [];
+
   return (
     <PageTransition location="memory-lane">
       <div className="min-h-screen bg-background">
@@ -87,6 +104,10 @@ const MemoryLane = () => {
           <MemoryFeedLayout 
             memories={memories}
             chatMessages={chatMessages}
+            isLoading={isLoading}
+            hasNextPage={hasNextPage}
+            fetchNextPage={fetchNextPage}
+            isFetchingNextPage={isFetchingNextPage}
           />
         </div>
       </div>

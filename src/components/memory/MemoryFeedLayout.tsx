@@ -2,22 +2,30 @@
 import { useEffect, useRef, useCallback } from "react";
 import { StoryMemoryCard } from "./StoryMemoryCard";
 import { PhotoMemoryCard } from "./PhotoMemoryCard";
-import { useMemories } from "./useMemories";
 import { Memory } from "./types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useInView } from "framer-motion";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Info } from "lucide-react";
+import { Message } from "@/components/chat/types";
 
-const MemoryFeedLayout = () => {
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-  } = useMemories();
+interface MemoryFeedLayoutProps {
+  memories: Memory[];
+  chatMessages?: Message[];
+  isLoading: boolean;
+  hasNextPage?: boolean;
+  fetchNextPage: () => void;
+  isFetchingNextPage: boolean;
+}
 
+const MemoryFeedLayout = ({
+  memories,
+  chatMessages,
+  isLoading,
+  hasNextPage,
+  fetchNextPage,
+  isFetchingNextPage
+}: MemoryFeedLayoutProps) => {
   const loadMoreRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(loadMoreRef);
 
@@ -52,8 +60,6 @@ const MemoryFeedLayout = () => {
     );
   }
 
-  const memories = data?.pages.flatMap((page) => page.memories) ?? [];
-
   if (!memories.length) {
     return (
       <div className="text-center py-12 bg-white rounded-lg shadow-sm">
@@ -86,6 +92,32 @@ const MemoryFeedLayout = () => {
           The content below is demo data. Connect to a real database for your actual memories.
         </AlertDescription>
       </Alert>
+      
+      {/* Display chat messages if provided */}
+      {chatMessages && chatMessages.length > 0 && (
+        <div className="mb-8">
+          {chatMessages.map((message, index) => (
+            <div 
+              key={index} 
+              className={`p-4 rounded-lg mb-3 ${
+                message.role === 'assistant' 
+                  ? 'bg-blue-50 border border-blue-100' 
+                  : 'bg-green-50 border border-green-100 ml-auto max-w-[80%]'
+              }`}
+            >
+              <p>{message.content}</p>
+              {message.attachments && message.attachments.map((attachment, i) => (
+                attachment.type === 'audio' && (
+                  <audio key={i} controls className="mt-2 w-full">
+                    <source src={attachment.url} type="audio/webm" />
+                    Your browser does not support the audio element.
+                  </audio>
+                )
+              ))}
+            </div>
+          ))}
+        </div>
+      )}
       
       {memories.map((memory: Memory) => (
         <div key={memory.id} className="animate-fadeIn">
