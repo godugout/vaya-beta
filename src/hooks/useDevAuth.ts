@@ -1,11 +1,9 @@
 
 import { useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "@/hooks/use-toast";
 
 export function useDevAuth() {
-  const { toast } = useToast();
-
   useEffect(() => {
     const autoLogin = async () => {
       try {
@@ -13,50 +11,22 @@ export function useDevAuth() {
         
         // Only auto-login if there's no existing session
         if (!session) {
-          // First try to sign up a test user if they don't exist
-          const { error: signUpError } = await supabase.auth.signUp({
-            email: 'test@vaya.family',
-            password: 'testpassword123',
-            options: {
-              data: {
-                full_name: 'Test User',
-              },
-            },
-          });
-
-          // We don't mind if the sign up fails (user might already exist)
-          
-          // Then try to log in with those credentials
           const { error } = await supabase.auth.signInWithPassword({
-            email: 'test@vaya.family',
-            password: 'testpassword123'
+            email: 'admin@vaya.family',
+            password: 'admin123'
           });
 
           if (error) {
             console.error('Dev auto-login failed:', error.message);
-            
-            // As a fallback, try with another set of credentials
-            const { error: secondError } = await supabase.auth.signInWithPassword({
-              email: 'dev@vaya.family',
-              password: 'devpassword123'
+            toast({
+              title: "Auto-login failed",
+              description: "Please sign in manually",
+              variant: "destructive"
             });
-            
-            if (secondError) {
-              toast({
-                title: "Auto-login failed",
-                description: "Please sign in manually",
-                variant: "destructive"
-              });
-            } else {
-              toast({
-                title: "Dev mode",
-                description: "Auto-logged in as dev user",
-              });
-            }
           } else {
             toast({
               title: "Dev mode",
-              description: "Auto-logged in as test user",
+              description: "Auto-logged in as admin",
             });
           }
         }
@@ -68,5 +38,5 @@ export function useDevAuth() {
     if (import.meta.env.DEV) {
       autoLogin();
     }
-  }, [toast]);
+  }, []);
 }
