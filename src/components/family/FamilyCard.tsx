@@ -8,7 +8,6 @@ import { EditFamilyDialog } from "@/components/family/EditFamilyDialog";
 
 interface FamilyMember {
   id: string;
-  user_id: string;
   role: string;
   profile: {
     full_name: string;

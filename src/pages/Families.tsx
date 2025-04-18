@@ -14,7 +14,6 @@ interface Family {
   description: string | null;
   members: {
     id: string;
-    user_id: string;
     role: string;
     profile: {
       full_name: string;
@@ -39,7 +38,8 @@ export default function Families() {
       setLoading(true);
       console.log("Fetching families data...");
       
-      const { data, error } = await supabase
+      // First, fetch the families with their members
+      const { data: familiesData, error: familiesError } = await supabase
         .from('families')
         .select(`
           id,
@@ -47,52 +47,36 @@ export default function Families() {
           description,
           members:family_members(
             id,
-            user_id,
+            name,
             role
           )
         `);
 
-      if (error) throw error;
+      if (familiesError) throw familiesError;
       
       // Log the raw data to help debug
-      console.log("Raw families data:", data);
+      console.log("Raw families data:", familiesData);
       
-      if (data && Array.isArray(data)) {
-        // For each family member, separately fetch their profile
-        const processedFamilies = await Promise.all(data.map(async (family) => {
-          const membersWithProfiles = await Promise.all((family.members || []).map(async (member) => {
-            if (!member.user_id) {
-              return {
-                ...member,
-                profile: { full_name: "Unknown", avatar_url: null }
-              };
-            }
-            
-            const { data: profileData, error: profileError } = await supabase
-              .from('profiles')
-              .select('full_name, avatar_url')
-              .eq('id', member.user_id)
-              .single();
-              
-            if (profileError) {
-              console.error("Error fetching profile:", profileError);
-              return {
-                ...member,
-                profile: { full_name: "Unknown", avatar_url: null }
-              };
-            }
-            
+      if (familiesData && Array.isArray(familiesData)) {
+        // Process each family to add profile information
+        const processedFamilies = familiesData.map(family => {
+          // Map each member with a default profile until we implement user associations
+          const membersWithProfiles = (family.members || []).map(member => {
             return {
-              ...member,
-              profile: profileData
+              id: member.id,
+              role: member.role || 'member',
+              profile: {
+                full_name: member.name || 'Unknown',
+                avatar_url: null
+              }
             };
-          }));
+          });
           
           return {
             ...family,
             members: membersWithProfiles
           };
-        }));
+        });
         
         console.log("Processed families data:", processedFamilies);
         setFamilies(processedFamilies);

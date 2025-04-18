@@ -11,7 +11,6 @@ interface Family {
   description: string | null;
   members: {
     id: string;
-    user_id: string;
     role: string;
     profile: {
       full_name: string;
