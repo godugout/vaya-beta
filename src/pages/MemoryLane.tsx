@@ -15,6 +15,8 @@ import FamilyMemoryGallery from "@/components/memory/FamilyMemoryGallery";
 import FamilyStoriesSection from "@/components/stories/FamilyStoriesSection";
 import AddMemoryModal from "@/components/memory/AddMemoryModal";
 import MemoryCreationHub from "@/components/memory/MemoryCreationHub";
+import { Plus } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const MemoryLane = () => {
   const { toast } = useToast();
@@ -154,15 +156,28 @@ const MemoryLane = () => {
           />
         )}
         
-        {/* Regular Memory Lane content */}
-        <div className="container mx-auto py-8 px-4">
-          <div className="flex justify-between items-center mb-8">
-            <div>
-              <h1 className="text-3xl font-bold">Memory Lane</h1>
-              <p className="text-muted-foreground">Preserve and explore your family memories</p>
+        {/* Memory Lane Header */}
+        <div className="w-full pt-16 pb-8 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted/50">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex justify-between items-center gap-4">
+              <div>
+                <h1 className="text-3xl font-bold mb-2">Memory Lane</h1>
+                <p className="text-muted-foreground">Preserve and explore your family memories</p>
+              </div>
+              <Button 
+                onClick={() => setShowMemoryModal(true)}
+                className="bg-water hover:bg-water/90 shadow-md"
+                size="lg"
+              >
+                <Plus className="h-5 w-5 mr-2" />
+                New Memory
+              </Button>
             </div>
           </div>
-          
+        </div>
+        
+        {/* Regular Memory Lane content */}
+        <div className="container mx-auto py-8 px-4">
           {/* Memory Creation Hub */}
           <div className="mb-8">
             <MemoryCreationHub 

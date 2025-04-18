@@ -75,22 +75,7 @@ export const MemoryCreationHub = ({
   return (
     <div className="space-y-4">
       <Card className="border border-slate-200 dark:border-slate-800 shadow-sm">
-        <CardHeader className="pb-2">
-          <div className="flex items-center justify-between">
-            <div>
-              <CardTitle className="text-xl font-bold">Create a Memory</CardTitle>
-              <CardDescription className="text-sm">Preserve your family stories and moments</CardDescription>
-            </div>
-            <Button 
-              onClick={onOpenMemoryModal}
-              className="bg-forest hover:bg-forest/90 shadow-md"
-            >
-              <PlusCircle className="h-4 w-4 mr-2" />
-              New Memory
-            </Button>
-          </div>
-        </CardHeader>
-        <CardContent>
+        <CardContent className="p-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             {memoryTypes.map((type) => (
               <motion.div
