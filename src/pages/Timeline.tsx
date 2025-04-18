@@ -9,7 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
-import { Users } from "lucide-react";
+import { Users, Plus } from "lucide-react";
 import { ModernCard } from "@/components/ui/modern-card";
 import { PatternBackground } from "@/components/ui/pattern-background";
 
@@ -52,6 +52,12 @@ const Timeline = () => {
           title="Family Timeline"
           description="Explore your family's journey through cherished memories and stories"
           background="autumn"
+          actions={
+            <Button onClick={() => window.location.href = "/families"} size="lg" variant="autumn">
+              <Plus className="h-4 w-4 mr-2" />
+              Add Family
+            </Button>
+          }
         />
         
         <SectionContainer maxWidth="7xl" className="space-y-6">

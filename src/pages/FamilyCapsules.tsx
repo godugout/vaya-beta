@@ -70,9 +70,9 @@ const FamilyCapsules = () => {
         <PageHeader
           title="Family Capsules"
           description="Create and manage your family's digital time capsules"
-          background="forest"
+          background="autumn"
           actions={
-            <Button onClick={handleCreateCapsule} size="lg" variant="forest">
+            <Button onClick={handleCreateCapsule} size="lg" variant="autumn">
               <Plus className="h-4 w-4 mr-2" />
               Create Capsule
             </Button>
