@@ -17,7 +17,7 @@ export const CapsuleTableFooter = () => {
             </div>
             <Dialog>
               <DialogTrigger asChild>
-                <Button variant="capsules" className="text-base">
+                <Button variant="autumn" className="text-base">
                   <Plus className="h-5 w-5 mr-2" />
                   Create Capsule
                 </Button>

@@ -13,6 +13,12 @@ export interface Story {
   description?: string;
   cultural_prompt_id?: string;
   metadata?: Record<string, any>;
+  image_url?: string;
+  language?: string;
+  author?: {
+    name: string;
+    avatar_url?: string;
+  };
 }
 
 export interface StoryTag {

@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -128,7 +127,7 @@ export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
         audio_url: audioUrl,
         story_type: audioUrl ? "audio" : "text",
         author_id: user.user.id,
-        language: language,
+        metadata: { language: language },
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
       });
