@@ -75,7 +75,7 @@ const HomeHero = ({ isSpanish }: HomeHeroProps) => {
         >
           <a 
             href="#features" 
-            className="inline-flex items-center gap-2 text-gray-500 hover:text-gray-800 transition-colors"
+            className="inline-flex items-center gap-2 text-gray-500 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 transition-colors"
           >
             <span className="font-medium">
               {isSpanish ? "Descubre Más" : "Discover More"}

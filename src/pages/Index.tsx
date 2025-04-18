@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -78,10 +77,10 @@ const Index = () => {
         <div className="max-w-7xl mx-auto relative z-10">
           <FadeIn>
             <div className="text-center">
-              <h1 className="text-4xl md:text-6xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-forest to-autumn">
+              <h1 className="text-4xl md:text-6xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-forest to-autumn dark:text-white">
                 Preserve Your Family Legacy
               </h1>
-              <p className="mt-6 text-xl max-w-3xl mx-auto text-muted-foreground">
+              <p className="mt-6 text-xl max-w-3xl mx-auto text-muted-foreground dark:text-gray-300">
                 Capture the moments, memories, and stories that make your family unique. Keep your family history alive for generations to come.
               </p>
               <div className="mt-10 flex flex-wrap gap-4 justify-center">
@@ -112,20 +111,20 @@ const Index = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="bg-gray-50 dark:bg-gray-700 p-6 rounded-xl shadow-sm text-center">
                 <Users className="h-10 w-10 mx-auto text-forest mb-4" />
-                <h3 className="text-3xl font-bold">{isLoading ? '...' : familyCount}</h3>
-                <p className="text-muted-foreground">Families</p>
+                <h3 className="text-3xl font-bold text-gray-900 dark:text-white">{isLoading ? '...' : familyCount}</h3>
+                <p className="text-muted-foreground dark:text-gray-300">Families</p>
               </div>
               
               <div className="bg-gray-50 dark:bg-gray-700 p-6 rounded-xl shadow-sm text-center">
                 <Camera className="h-10 w-10 mx-auto text-forest mb-4" />
-                <h3 className="text-3xl font-bold">{isLoading ? '...' : memoryCount}</h3>
-                <p className="text-muted-foreground">Memories Preserved</p>
+                <h3 className="text-3xl font-bold text-gray-900 dark:text-white">{isLoading ? '...' : memoryCount}</h3>
+                <p className="text-muted-foreground dark:text-gray-300">Memories Preserved</p>
               </div>
               
               <div className="bg-gray-50 dark:bg-gray-700 p-6 rounded-xl shadow-sm text-center">
                 <Book className="h-10 w-10 mx-auto text-forest mb-4" />
-                <h3 className="text-3xl font-bold">{isLoading ? '...' : storyCount}</h3>
-                <p className="text-muted-foreground">Stories Shared</p>
+                <h3 className="text-3xl font-bold text-gray-900 dark:text-white">{isLoading ? '...' : storyCount}</h3>
+                <p className="text-muted-foreground dark:text-gray-300">Stories Shared</p>
               </div>
             </div>
           </FadeIn>
@@ -150,30 +149,31 @@ const Index = () => {
       <section className="py-16 px-4 sm:px-6 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
         <div className="max-w-7xl mx-auto">
           <FadeIn>
-            <h2 className="text-3xl font-bold text-center mb-12">
+            <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">
               Preserve What Matters Most
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {/* Feature cards with improved text visibility */}
               <div className="bg-white dark:bg-gray-700 p-6 rounded-xl shadow-sm text-center">
                 <Heart className="h-10 w-10 mx-auto text-forest mb-4" />
-                <h3 className="text-xl font-semibold mb-2">Family Memories</h3>
-                <p className="text-muted-foreground">
+                <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Family Memories</h3>
+                <p className="text-muted-foreground dark:text-gray-300">
                   Save photos, audio recordings, and written memories in one secure place.
                 </p>
               </div>
               
               <div className="bg-white dark:bg-gray-700 p-6 rounded-xl shadow-sm text-center">
                 <Clock className="h-10 w-10 mx-auto text-forest mb-4" />
-                <h3 className="text-xl font-semibold mb-2">Time Capsules</h3>
-                <p className="text-muted-foreground">
+                <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Time Capsules</h3>
+                <p className="text-muted-foreground dark:text-gray-300">
                   Create digital time capsules to be opened on special occasions.
                 </p>
               </div>
               
               <div className="bg-white dark:bg-gray-700 p-6 rounded-xl shadow-sm text-center">
                 <Calendar className="h-10 w-10 mx-auto text-forest mb-4" />
-                <h3 className="text-xl font-semibold mb-2">Family Timeline</h3>
-                <p className="text-muted-foreground">
+                <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Family Timeline</h3>
+                <p className="text-muted-foreground dark:text-gray-300">
                   Organize memories and stories chronologically across generations.
                 </p>
               </div>

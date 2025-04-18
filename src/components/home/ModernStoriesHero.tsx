@@ -27,12 +27,12 @@ export const ModernStoriesHero = () => {
             />
             
             <motion.h1 
-              className="text-4xl md:text-5xl font-bold leading-tight tracking-tight"
+              className="text-4xl md:text-5xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              Family Stories That
+              Stories That
               <span className="relative inline-block ml-3">
                 Last Forever
                 <motion.span 
