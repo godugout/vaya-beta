@@ -36,9 +36,9 @@ const MemoryTabs = ({
         className="mb-6"
       >
         <TabsList>
-          <TabsTrigger value="feed">Timeline</TabsTrigger>
-          <TabsTrigger value="gallery">Gallery</TabsTrigger>
-          <TabsTrigger value="stories">Stories</TabsTrigger>
+          <TabsTrigger value="feed">Timeline Feed</TabsTrigger>
+          <TabsTrigger value="gallery">Memory Gallery</TabsTrigger>
+          <TabsTrigger value="stories">Family Stories</TabsTrigger>
         </TabsList>
       </Tabs>
       
