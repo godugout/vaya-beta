@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { PageTransition } from "@/components/animation/PageTransition";
 import { Button } from "@/components/ui/button";
@@ -9,7 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { StaggeredContainer } from "@/components/animation/StaggeredContainer";
 import { FadeIn } from "@/components/animation/FadeIn";
 import VoiceRecordingExperience from "@/components/voice-recording/VoiceRecordingExperience";
-import { HanumanEditionOnboarding } from "@/components/onboarding/HanumanEditionOnboarding";
+import { FamilyTapestry } from "@/components/family/FamilyTapestry";
 import FamilyStoryCard from "@/components/stories/FamilyStoryCard";
 import ShareStoriesComponent from "@/components/stories/ShareStories";
 import { useStories } from "@/components/stories/useStories";
@@ -19,7 +18,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
 const ShareStories = () => {
-  const [showOnboarding, setShowOnboarding] = useState(false);
+  const [showTapestry, setShowTapestry] = useState(false);
   const [preferredEdition, setPreferredEdition] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const { toast } = useToast();
@@ -35,14 +34,12 @@ const ShareStories = () => {
   } = useCapsules(["upcoming", "active"]);
   
   useEffect(() => {
-    // Check if user has a preferred edition
     const edition = localStorage.getItem("preferredEdition");
     setPreferredEdition(edition);
   }, []);
   
   const handleMemorySaved = async (data: { audioUrl?: string; transcription?: string }) => {
     try {
-      // Check if user is authenticated
       const { data: userData } = await supabase.auth.getUser();
       
       if (!userData || !userData.user) {
@@ -55,7 +52,6 @@ const ShareStories = () => {
       }
 
       if (data.audioUrl && data.transcription) {
-        // Save as story
         const { error } = await supabase
           .from('stories')
           .insert({
@@ -85,7 +81,6 @@ const ShareStories = () => {
     }
   };
 
-  // Filter stories based on search query
   const stories = storiesData?.pages.flatMap(page => page.stories) || [];
   const filteredStories = searchQuery
     ? stories.filter(story => 
@@ -94,14 +89,12 @@ const ShareStories = () => {
       )
     : stories;
 
-  // Get active capsules
   const capsules = capsulesData?.pages.flatMap(page => page.capsules) || [];
 
   return (
     <PageTransition location="share-stories" mode="fade">
       <LanguageProvider>
         <div className="min-h-screen bg-background text-foreground">
-          {/* Hero Section */}
           <div className="w-full pt-16 pb-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted/50">
             <div className="max-w-7xl mx-auto">
               <div className="flex justify-between items-center mb-8">
@@ -111,11 +104,11 @@ const ShareStories = () => {
                 <Button 
                   variant="outline" 
                   size="sm"
-                  onClick={() => setShowOnboarding(true)}
+                  onClick={() => setShowTapestry(true)}
                   className="flex items-center gap-2"
                 >
                   <Settings className="w-4 h-4" />
-                  <span>Family Settings</span>
+                  <span>Family Tapestry</span>
                 </Button>
               </div>
               
@@ -139,7 +132,6 @@ const ShareStories = () => {
             </div>
           </div>
           
-          {/* Capsules Section */}
           <div className="w-full py-8 px-4 sm:px-6 lg:px-8 bg-muted/30">
             <div className="max-w-7xl mx-auto">
               <div className="mb-6">
@@ -200,7 +192,6 @@ const ShareStories = () => {
             </div>
           </div>
           
-          {/* Recording Section */}
           <div className="w-full py-12 px-4 sm:px-6 lg:px-8 bg-background">
             <div className="max-w-7xl mx-auto">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -217,7 +208,6 @@ const ShareStories = () => {
             </div>
           </div>
           
-          {/* Recent Family Stories */}
           <div className="w-full py-12 px-4 sm:px-6 lg:px-8 bg-muted/30">
             <div className="max-w-7xl mx-auto">
               <div className="flex justify-between items-center mb-6">
@@ -260,10 +250,9 @@ const ShareStories = () => {
             </div>
           </div>
           
-          {/* Hanuman Edition Onboarding */}
-          <HanumanEditionOnboarding 
-            open={showOnboarding} 
-            onOpenChange={setShowOnboarding} 
+          <FamilyTapestry 
+            isOpen={showTapestry} 
+            onClose={() => setShowTapestry(false)} 
           />
         </div>
       </LanguageProvider>
