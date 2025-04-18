@@ -4,7 +4,7 @@ import { VoiceControlButton } from "./VoiceControlButton";
 import { UserMenu } from "../UserMenu";
 import { GuestMenu } from "../GuestMenu";
 import { Button } from "@/components/ui/button";
-import { Bell, Search } from "lucide-react";
+import { Bell, Search, PlusCircle } from "lucide-react";
 
 interface UserControlsProps {
   user: User | null;
@@ -33,9 +33,24 @@ export const UserControls = ({
       </div>
       
       {user && (
-        <Button variant="ghost" size="icon" className="hidden md:flex rounded-full h-10 w-10">
-          <Bell className="h-5 w-5 text-muted-foreground" />
-        </Button>
+        <>
+          <Button 
+            variant="outline" 
+            size="icon" 
+            className="hidden md:flex rounded-full h-10 w-10"
+            onClick={() => navigate('/create')}
+          >
+            <PlusCircle className="h-5 w-5 text-muted-foreground" />
+          </Button>
+          
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="hidden md:flex rounded-full h-10 w-10"
+          >
+            <Bell className="h-5 w-5 text-muted-foreground" />
+          </Button>
+        </>
       )}
       
       <VoiceControlButton 
@@ -43,11 +58,11 @@ export const UserControls = ({
         onToggle={onVoiceToggle}
       />
       
-      {user ? (
+      {user && handleSignOut && navigate ? (
         <UserMenu user={user} handleSignOut={handleSignOut} navigate={navigate} />
-      ) : (
+      ) : navigate ? (
         <GuestMenu navigate={navigate} />
-      )}
+      ) : null}
     </div>
   );
 };
