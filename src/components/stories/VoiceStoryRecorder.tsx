@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -56,7 +55,6 @@ export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
   const createStory = useCreateStory();
   const { toast } = useToast();
 
-  // Handle recording toggle
   const handleToggleRecording = () => {
     if (isRecordingActive) {
       stopRecording();
@@ -68,7 +66,6 @@ export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
     }
   };
 
-  // Handle transcription
   const handleTranscribe = async () => {
     if (!audioBlob) return;
     
@@ -77,7 +74,6 @@ export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
       const text = await transcribeAudio(audioBlob);
       if (text && !storyContent) {
         setStoryContent(text);
-        // Extract title from first sentence if available
         const firstSentence = text.split('.')[0];
         if (firstSentence && !storyTitle) {
           setStoryTitle(firstSentence.length > 50 
@@ -98,12 +94,10 @@ export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
     }
   };
 
-  // Handle story submission
   const handleSubmit = async () => {
     try {
       setIsProcessing(true);
       
-      // Check if user is authenticated
       const { data: user } = await supabase.auth.getUser();
       
       if (!user || !user.user) {
@@ -118,7 +112,6 @@ export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
       
       let audioUrl = null;
       
-      // Upload audio if available
       if (audioBlob) {
         const fileName = `${Date.now()}_${Math.random().toString(36).substr(2, 9)}.webm`;
         
@@ -135,7 +128,6 @@ export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
         audioUrl = publicUrl;
       }
       
-      // Create story
       await createStory.mutateAsync({
         title: storyTitle || "Untitled Story",
         description: storyContent,
@@ -147,7 +139,6 @@ export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
         updated_at: new Date().toISOString()
       });
       
-      // Reset form
       setStoryTitle("");
       setStoryContent("");
       setAudioBlob(null);
@@ -172,7 +163,6 @@ export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
     }
   };
 
-  // Check if form can be submitted
   const canSubmit = (storyTitle.trim() !== "" || storyContent.trim() !== "") && !isProcessing && !isTranscribing;
 
   return (

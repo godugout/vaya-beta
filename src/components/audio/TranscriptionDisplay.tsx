@@ -24,7 +24,9 @@ const TranscriptionDisplay = ({
             ? "The transcription service is not properly configured. Please contact the administrator."
             : error.includes("Edge Function returned a 502") 
               ? "The transcription service is temporarily unavailable. Please try again later."
-              : error}
+              : error.includes("returned a 500")
+                ? "There was a server error processing your request. Please try again later."
+                : error}
         </AlertDescription>
       </Alert>
     );

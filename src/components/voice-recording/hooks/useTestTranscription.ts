@@ -30,6 +30,7 @@ export const useTestTranscription = () => {
         toast({
           title: "API Connection Successful",
           description: "Your OpenAI API key is valid and working correctly.",
+          variant: "default"
         });
       } else {
         throw new Error(data.message || "Unknown error testing API connection");
