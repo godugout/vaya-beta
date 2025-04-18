@@ -7,7 +7,7 @@ import { TimelinePeriod, TimelineFilters as FiltersType } from './types';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ModernCard } from '@/components/ui/modern-card';
 import { PatternBackground } from '@/components/ui/pattern-background';
-import { AlertCircle, Users } from 'lucide-react';
+import { AlertCircle, Users, RefreshCcw } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
@@ -18,25 +18,36 @@ export const TimelineView = () => {
     groupBy: 'month'
   });
   
-  const [hasFamilies, setHasFamilies] = useState<boolean>(false);
+  const [hasFamilies, setHasFamilies] = useState<boolean | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [familyError, setFamilyError] = useState<Error | null>(null);
+  const [retryCount, setRetryCount] = useState(0);
   
   useEffect(() => {
     const checkFamilies = async () => {
       try {
+        setLoading(true);
+        setFamilyError(null);
+        
         const { data, error } = await supabase
           .from('families')
-          .select('id');
+          .select('id')
+          .limit(1);
         
         if (error) throw error;
         
         setHasFamilies(data && data.length > 0);
-      } catch (error) {
+      } catch (error: any) {
         console.error('Error checking families:', error);
+        setFamilyError(error);
+        setHasFamilies(null);
+      } finally {
+        setLoading(false);
       }
     };
     
     checkFamilies();
-  }, []);
+  }, [retryCount]);
   
   const timeline = useTimeline(filters);
   const { isLoading, items, error } = timeline;
@@ -57,7 +68,41 @@ export const TimelineView = () => {
     }));
   }, []);
 
-  if (!hasFamilies) {
+  const handleRetry = useCallback(() => {
+    setRetryCount(count => count + 1);
+  }, []);
+
+  if (loading) {
+    return (
+      <ModernCard variant="modern" className="p-8 text-center">
+        <div className="animate-pulse">
+          <div className="h-8 w-1/3 mx-auto bg-gray-200 dark:bg-gray-700 rounded mb-4"></div>
+          <div className="h-4 w-2/3 mx-auto bg-gray-200 dark:bg-gray-700 rounded mb-6"></div>
+          <div className="flex justify-center">
+            <div className="h-10 w-32 bg-gray-200 dark:bg-gray-700 rounded"></div>
+          </div>
+        </div>
+      </ModernCard>
+    );
+  }
+
+  if (familyError) {
+    return (
+      <ModernCard variant="modern" className="p-8 text-center">
+        <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
+        <h3 className="text-xl font-semibold mb-2">Connection Error</h3>
+        <p className="text-muted-foreground mb-6">
+          We encountered an error connecting to the database. This might be due to network issues.
+        </p>
+        <Button onClick={handleRetry} variant="outline" className="gap-2">
+          <RefreshCcw className="h-4 w-4" />
+          Retry Connection
+        </Button>
+      </ModernCard>
+    );
+  }
+
+  if (hasFamilies === false) {
     return (
       <ModernCard variant="modern" className="p-12 text-center">
         <PatternBackground pattern="family-languages" opacity="light" />

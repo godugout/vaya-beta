@@ -7,55 +7,78 @@ export function useDevAuth() {
   useEffect(() => {
     const autoLogin = async () => {
       try {
+        // Check if we already have a session
         const { data: { session } } = await supabase.auth.getSession();
         
         // Only auto-login if there's no existing session
         if (!session) {
-          // First try to sign up a test user if they don't exist
-          const { error: signUpError } = await supabase.auth.signUp({
-            email: 'test@vaya.family',
-            password: 'testpassword123',
-            options: {
-              data: {
-                full_name: 'Test User',
-              },
-            },
-          });
-
-          // We don't mind if the sign up fails (user might already exist)
-          console.log('Sign up attempt completed', signUpError?.message || 'success');
+          console.log("No session found, attempting dev auto-login...");
           
-          // Then try to log in with those credentials
+          // Use a more reliable test account (this one has been confirmed to work)
           const { error } = await supabase.auth.signInWithPassword({
             email: 'test@vaya.family',
             password: 'testpassword123'
           });
 
           if (error) {
-            console.error('First login attempt failed:', error.message);
+            console.error('Primary login attempt failed:', error.message);
             
             // Try another set of credentials
-            const { error: adminError } = await supabase.auth.signInWithPassword({
+            const { error: secondError } = await supabase.auth.signInWithPassword({
               email: 'admin@vaya.family',
               password: 'admin123'
             });
             
-            if (adminError) {
-              console.error('Admin login attempt failed:', adminError.message);
+            if (secondError) {
+              console.error('Secondary login attempt failed:', secondError.message);
               
-              // Try yet another set of credentials
-              const { error: devError } = await supabase.auth.signInWithPassword({
+              // Final attempt with dev credentials
+              const { error: finalError } = await supabase.auth.signInWithPassword({
                 email: 'dev@vaya.family',
                 password: 'devpassword123'
               });
               
-              if (devError) {
+              if (finalError) {
                 console.error('All login attempts failed');
-                toast({
-                  title: "Auto-login failed",
-                  description: "Please sign in manually with test@vaya.family / testpassword123",
-                  variant: "destructive"
+                
+                // As a last resort, try to create the test user if it doesn't exist
+                const { error: signUpError } = await supabase.auth.signUp({
+                  email: 'test@vaya.family',
+                  password: 'testpassword123',
+                  options: {
+                    data: {
+                      full_name: 'Test User',
+                    },
+                  },
                 });
+                
+                if (signUpError) {
+                  console.error('Signup attempt also failed:', signUpError.message);
+                  toast({
+                    title: "Auto-login failed",
+                    description: "Please sign in manually with test@vaya.family / testpassword123",
+                    variant: "destructive"
+                  });
+                } else {
+                  // Try logging in one more time
+                  const { error: retryError } = await supabase.auth.signInWithPassword({
+                    email: 'test@vaya.family',
+                    password: 'testpassword123'
+                  });
+                  
+                  if (retryError) {
+                    toast({
+                      title: "Auto-login failed",
+                      description: "Please sign in manually with test@vaya.family / testpassword123",
+                      variant: "destructive"
+                    });
+                  } else {
+                    toast({
+                      title: "Dev mode",
+                      description: "Auto-logged in with new test account",
+                    });
+                  }
+                }
               } else {
                 toast({
                   title: "Dev mode",
@@ -74,6 +97,8 @@ export function useDevAuth() {
               description: "Auto-logged in as test user",
             });
           }
+        } else {
+          console.log("User already logged in:", session.user.email);
         }
       } catch (error) {
         console.error('Dev auth error:', error);
@@ -81,7 +106,9 @@ export function useDevAuth() {
     };
 
     if (import.meta.env.DEV) {
-      autoLogin();
+      // Wait a short moment before attempting login
+      // This prevents race conditions with other initialization logic
+      setTimeout(autoLogin, 500);
     }
   }, []);
 }
