@@ -1,16 +1,12 @@
 
 import { useState, useCallback } from 'react';
 import { 
-  ReactFlow, 
-  MiniMap, 
-  Controls, 
-  Background, 
+  Connection,
+  MarkerType,
+  Panel,
   useNodesState, 
   useEdgesState, 
   addEdge,
-  Connection,
-  MarkerType,
-  Panel
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { useToast } from "@/components/ui/use-toast";
@@ -165,6 +161,7 @@ export const FamilyTreeMain = () => {
           onZoomIn={handleZoomIn}
           onZoomOut={handleZoomOut}
           onFitView={handleFitView}
+          className="h-full"
         >
           <Panel position="top-left" className="p-4">
             <FamilyTreeControlPanel 

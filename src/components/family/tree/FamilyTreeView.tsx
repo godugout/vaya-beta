@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, ReactNode } from 'react';
 import { ReactFlow, MiniMap, Controls, Background, Panel } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -27,6 +27,7 @@ interface FamilyTreeViewProps {
   onRemoveMember?: () => void;
   onAddMembers?: () => void;
   className?: string;
+  children?: ReactNode;
 }
 
 export const FamilyTreeView = ({
@@ -48,6 +49,7 @@ export const FamilyTreeView = ({
   onRemoveMember,
   onAddMembers,
   className,
+  children,
 }: FamilyTreeViewProps) => {
   const isMobile = useIsMobile();
   const [layoutType, setLayoutType] = useState<'vertical' | 'horizontal' | 'radial'>('vertical');
@@ -109,6 +111,8 @@ export const FamilyTreeView = ({
             toggleFilter={toggleFilter}
           />
         </Panel>
+        
+        {children}
       </ReactFlow>
     </div>
   );
