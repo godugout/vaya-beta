@@ -1,5 +1,5 @@
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { TimelineFilters } from './TimelineFilters';
 import { TimelineItemCard } from './TimelineItemCard';
 import { useTimeline } from './useTimeline';
@@ -7,8 +7,10 @@ import { TimelinePeriod, TimelineFilters as FiltersType } from './types';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ModernCard } from '@/components/ui/modern-card';
 import { PatternBackground } from '@/components/ui/pattern-background';
-import { AlertCircle } from 'lucide-react';
+import { AlertCircle, Users } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { supabase } from '@/integrations/supabase/client';
+import { Button } from '@/components/ui/button';
 
 export const TimelineView = () => {
   const [filters, setFilters] = useState<FiltersType>({
@@ -16,11 +18,33 @@ export const TimelineView = () => {
     groupBy: 'month'
   });
   
+  const [hasFamilies, setHasFamilies] = useState<boolean>(false);
+  
+  useEffect(() => {
+    const checkFamilies = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('families')
+          .select('id');
+        
+        if (error) throw error;
+        
+        setHasFamilies(data && data.length > 0);
+      } catch (error) {
+        console.error('Error checking families:', error);
+      }
+    };
+    
+    checkFamilies();
+  }, []);
+  
   const timeline = useTimeline(filters);
-  const { isLoading, items } = timeline;
+  const { isLoading, items, error } = timeline;
   
   // Memoize the result of groupItemsByPeriod to prevent unnecessary recalculations
-  const timelineGroups = timeline.groupItemsByPeriod(items, filters.groupBy);
+  const timelineGroups = timeline.groupItemsByPeriod ? 
+    timeline.groupItemsByPeriod(items, filters.groupBy) : 
+    [];
   
   const handleFilterChange = useCallback((newFilters: FiltersType) => {
     setFilters(newFilters);
@@ -32,6 +56,22 @@ export const TimelineView = () => {
       groupBy: period
     }));
   }, []);
+
+  if (!hasFamilies) {
+    return (
+      <ModernCard variant="modern" className="p-12 text-center">
+        <PatternBackground pattern="family-languages" opacity="light" />
+        <h3 className="text-xl font-semibold mb-2">No Families Found</h3>
+        <p className="text-muted-foreground mb-6">
+          You need to create or join a family to see your timeline
+        </p>
+        <Button onClick={() => window.location.href = "/families"}>
+          <Users className="h-4 w-4 mr-2" />
+          Go to Families
+        </Button>
+      </ModernCard>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -87,7 +127,7 @@ export const TimelineView = () => {
       ) : (
         <ModernCard variant="modern" className="p-12 text-center">
           <PatternBackground pattern="family-languages" opacity="light" />
-          <h3 className="text-xl font-semibold mb-2">No matching items found</h3>
+          <h3 className="text-xl font-semibold mb-2">No timeline items found</h3>
           <p className="text-muted-foreground">
             Try adjusting your filters or add more family memories to your timeline
           </p>
@@ -95,7 +135,7 @@ export const TimelineView = () => {
       )}
 
       {/* Error handling */}
-      {timeline.error && (
+      {error && (
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
           <AlertDescription>
