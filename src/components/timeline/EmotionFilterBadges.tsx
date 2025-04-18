@@ -1,11 +1,18 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 import { useTimeline } from './useTimeline';
 import { cn } from '@/lib/utils';
+import { EmotionType } from './types';
 
-const emotions = [
+interface EmotionColor {
+  id: EmotionType;
+  label: string;
+  color: string;
+}
+
+const emotions: EmotionColor[] = [
   { id: 'joy', label: 'Joy', color: 'bg-amber-100 text-amber-900 hover:bg-amber-200 border-amber-200' },
   { id: 'nostalgia', label: 'Nostalgia', color: 'bg-blue-100 text-blue-900 hover:bg-blue-200 border-blue-200' },
   { id: 'reverence', label: 'Reverence', color: 'bg-purple-100 text-purple-900 hover:bg-purple-200 border-purple-200' },
@@ -15,11 +22,20 @@ const emotions = [
 
 interface EmotionFilterBadgesProps {
   className?: string;
+  onChange?: (selectedEmotions: string[]) => void;
 }
 
-export const EmotionFilterBadges = ({ className }: EmotionFilterBadgesProps) => {
+export const EmotionFilterBadges = ({ className, onChange }: EmotionFilterBadgesProps) => {
   const [selectedEmotions, setSelectedEmotions] = useState<string[]>([]);
   const { setEmotionFilters } = useTimeline();
+  
+  // Update emotion filters when selection changes
+  useEffect(() => {
+    setEmotionFilters(selectedEmotions);
+    if (onChange) {
+      onChange(selectedEmotions);
+    }
+  }, [selectedEmotions, setEmotionFilters, onChange]);
   
   const toggleEmotion = (emotionId: string) => {
     const newSelected = selectedEmotions.includes(emotionId)
@@ -27,7 +43,6 @@ export const EmotionFilterBadges = ({ className }: EmotionFilterBadgesProps) => 
       : [...selectedEmotions, emotionId];
     
     setSelectedEmotions(newSelected);
-    setEmotionFilters(newSelected);
   };
 
   return (

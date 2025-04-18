@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -15,21 +15,22 @@ interface TimelineFiltersProps {
 
 export const TimelineFilters = ({ filters, onFilterChange }: TimelineFiltersProps) => {
   const contentTypes = [
-    { id: 'story', label: 'Stories' },
-    { id: 'memory', label: 'Memories' },
-    { id: 'photo', label: 'Photos' },
-    { id: 'audio', label: 'Audio' },
-    { id: 'capsule', label: 'Capsules' },
+    { id: 'story' as ContentType, label: 'Stories' },
+    { id: 'memory' as ContentType, label: 'Memories' },
+    { id: 'photo' as ContentType, label: 'Photos' },
+    { id: 'audio' as ContentType, label: 'Audio' },
+    { id: 'event' as ContentType, label: 'Events' },
+    { id: 'capsule' as ContentType, label: 'Capsules' },
   ];
   
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     onFilterChange({
       ...filters,
       searchQuery: e.target.value
     });
-  };
+  }, [filters, onFilterChange]);
   
-  const handleContentTypeChange = (type: ContentType, checked: boolean) => {
+  const handleContentTypeChange = useCallback((type: ContentType, checked: boolean) => {
     const currentTypes = filters.contentTypes || [];
     const newTypes = checked 
       ? [...currentTypes, type]
@@ -39,9 +40,9 @@ export const TimelineFilters = ({ filters, onFilterChange }: TimelineFiltersProp
       ...filters,
       contentTypes: newTypes
     });
-  };
+  }, [filters, onFilterChange]);
   
-  const handleStartDateChange = (date: Date | undefined) => {
+  const handleStartDateChange = useCallback((date: Date | undefined) => {
     onFilterChange({
       ...filters,
       dateRange: {
@@ -49,9 +50,9 @@ export const TimelineFilters = ({ filters, onFilterChange }: TimelineFiltersProp
         start: date
       }
     });
-  };
+  }, [filters, onFilterChange]);
   
-  const handleEndDateChange = (date: Date | undefined) => {
+  const handleEndDateChange = useCallback((date: Date | undefined) => {
     onFilterChange({
       ...filters,
       dateRange: {
@@ -59,16 +60,16 @@ export const TimelineFilters = ({ filters, onFilterChange }: TimelineFiltersProp
         end: date
       }
     });
-  };
+  }, [filters, onFilterChange]);
   
-  const handleClearFilters = () => {
+  const handleClearFilters = useCallback(() => {
     onFilterChange({
       contentTypes: [],
       searchQuery: '',
       dateRange: undefined,
       groupBy: filters.groupBy
     });
-  };
+  }, [filters.groupBy, onFilterChange]);
 
   return (
     <div className="space-y-4">
@@ -90,9 +91,9 @@ export const TimelineFilters = ({ filters, onFilterChange }: TimelineFiltersProp
               <div key={type.id} className="flex items-center space-x-2">
                 <Checkbox
                   id={`type-${type.id}`}
-                  checked={filters.contentTypes?.includes(type.id as ContentType) || false}
+                  checked={filters.contentTypes?.includes(type.id) || false}
                   onCheckedChange={(checked) => 
-                    handleContentTypeChange(type.id as ContentType, checked === true)
+                    handleContentTypeChange(type.id, checked === true)
                   }
                 />
                 <Label htmlFor={`type-${type.id}`} className="text-sm font-normal">
@@ -107,7 +108,9 @@ export const TimelineFilters = ({ filters, onFilterChange }: TimelineFiltersProp
           <div>
             <Label className="mb-2 block">Start Date</Label>
             <DatePicker
-              date={filters.dateRange?.start ? new Date(filters.dateRange.start) : undefined}
+              date={filters.dateRange?.start instanceof Date ? 
+                filters.dateRange.start : 
+                (filters.dateRange?.start ? new Date(filters.dateRange.start) : undefined)}
               setDate={handleStartDateChange}
               className="w-full"
             />
@@ -116,7 +119,9 @@ export const TimelineFilters = ({ filters, onFilterChange }: TimelineFiltersProp
           <div>
             <Label className="mb-2 block">End Date</Label>
             <DatePicker
-              date={filters.dateRange?.end ? new Date(filters.dateRange.end) : undefined}
+              date={filters.dateRange?.end instanceof Date ? 
+                filters.dateRange.end : 
+                (filters.dateRange?.end ? new Date(filters.dateRange.end) : undefined)}
               setDate={handleEndDateChange}
               className="w-full"
             />
@@ -138,6 +143,7 @@ export const TimelineFilters = ({ filters, onFilterChange }: TimelineFiltersProp
         <Button
           size="sm"
           className="flex items-center gap-1"
+          type="button"
         >
           <Filter className="h-4 w-4" />
           Apply Filters

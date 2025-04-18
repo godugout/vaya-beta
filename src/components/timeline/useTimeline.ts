@@ -1,5 +1,6 @@
-import { useState, useCallback } from 'react';
-import { TimelineFilters, TimelineItem, TimelinePeriod, TimelineGroup } from './types';
+
+import { useState, useCallback, useMemo } from 'react';
+import { TimelineFilters, TimelineItem, TimelinePeriod, TimelineGroup, EmotionType } from './types';
 
 // Mock items for development, this would be replaced with real data from Supabase
 const mockItems: TimelineItem[] = [
@@ -50,6 +51,9 @@ const mockItems: TimelineItem[] = [
   },
 ];
 
+/**
+ * Custom hook for timeline data handling and filtering
+ */
 export const useTimeline = (initialFilters?: TimelineFilters) => {
   const [filters, setFilters] = useState<TimelineFilters>(initialFilters || {
     contentTypes: [],
@@ -59,29 +63,47 @@ export const useTimeline = (initialFilters?: TimelineFilters) => {
   const [emotionFilters, setEmotionFilters] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  // In a real app, this would fetch from Supabase
-  const items = mockItems.filter(item => {
-    // Apply content type filters
-    if (filters.contentTypes.length > 0 && !filters.contentTypes.includes(item.type)) {
-      return false;
-    }
-    
-    // Apply emotion filters
-    if (emotionFilters.length > 0) {
-      return item.emotions?.some(emotion => emotionFilters.includes(emotion));
-    }
-    
-    // Apply search query
-    if (filters.searchQuery && filters.searchQuery.trim() !== '') {
-      const query = filters.searchQuery.toLowerCase();
-      return item.title.toLowerCase().includes(query) || 
-             item.content.toLowerCase().includes(query);
-    }
-    
-    return true;
-  });
+  // Apply filters to items - extracted to a separate memoized function for performance
+  const filteredItems = useMemo(() => {
+    return mockItems.filter(item => {
+      // Apply content type filters
+      if (filters.contentTypes.length > 0 && !filters.contentTypes.includes(item.type)) {
+        return false;
+      }
+      
+      // Apply emotion filters
+      if (emotionFilters.length > 0) {
+        return item.emotions?.some(emotion => emotionFilters.includes(emotion));
+      }
+      
+      // Apply search query
+      if (filters.searchQuery && filters.searchQuery.trim() !== '') {
+        const query = filters.searchQuery.toLowerCase();
+        return item.title.toLowerCase().includes(query) || 
+              item.content.toLowerCase().includes(query);
+      }
+      
+      // Apply date range filters
+      if (filters.dateRange?.start) {
+        const startDate = new Date(filters.dateRange.start);
+        const itemDate = new Date(item.date);
+        if (itemDate < startDate) return false;
+      }
+      
+      if (filters.dateRange?.end) {
+        const endDate = new Date(filters.dateRange.end);
+        const itemDate = new Date(item.date);
+        if (itemDate > endDate) return false;
+      }
+      
+      return true;
+    });
+  }, [filters, emotionFilters]);
 
-  const formatDateByPeriod = (date: Date, period: TimelinePeriod): string => {
+  /**
+   * Format a date according to the specified time period
+   */
+  const formatDateByPeriod = useCallback((date: Date, period: TimelinePeriod): string => {
     switch (period) {
       case 'day':
         return date.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
@@ -101,18 +123,26 @@ export const useTimeline = (initialFilters?: TimelineFilters) => {
       default:
         return date.toLocaleDateString();
     }
-  };
+  }, []);
 
+  /**
+   * Group timeline items by the specified time period
+   */
   const groupItemsByPeriod = useCallback(
     (items: TimelineItem[], period: TimelinePeriod): TimelineGroup[] => {
       const groups: Record<string, TimelineItem[]> = {};
       
       // Sort items by date, newest first
-      const sortedItems = [...items].sort((a, b) => b.date.getTime() - a.date.getTime());
+      const sortedItems = [...items].sort((a, b) => {
+        const dateA = a.date instanceof Date ? a.date : new Date(a.date);
+        const dateB = b.date instanceof Date ? b.date : new Date(b.date);
+        return dateB.getTime() - dateA.getTime();
+      });
       
       // Group items by the specified period
       sortedItems.forEach((item) => {
-        const periodLabel = formatDateByPeriod(item.date, period);
+        const itemDate = item.date instanceof Date ? item.date : new Date(item.date);
+        const periodLabel = formatDateByPeriod(itemDate, period);
         if (!groups[periodLabel]) {
           groups[periodLabel] = [];
         }
@@ -120,18 +150,24 @@ export const useTimeline = (initialFilters?: TimelineFilters) => {
       });
       
       // Convert the groups object to an array
-      return Object.entries(groups).map(([label, items]) => ({
-        label,
-        startDate: items[items.length - 1].date.toISOString(), // Earliest date in the group
-        items,
-      }));
+      return Object.entries(groups).map(([label, items]) => {
+        const firstItemDate = items[0].date instanceof Date ? 
+          items[0].date : new Date(items[0].date);
+        
+        return {
+          label,
+          startDate: firstItemDate.toISOString(),
+          items,
+          period
+        };
+      });
     },
-    []
+    [formatDateByPeriod]
   );
 
   return {
     isLoading,
-    items,
+    items: filteredItems,
     filters,
     setFilters,
     emotionFilters,
