@@ -1,282 +1,135 @@
 
-import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { TimelineFilters, TimelineItem, TimelineGroup, TimelinePeriod } from "./types";
-import { format, parseISO, isValid, startOfMonth, endOfMonth, startOfYear, endOfYear, addMonths, addYears } from "date-fns";
+import { useState, useCallback } from 'react';
+import { TimelineFilters, TimelineItem, TimelinePeriod, TimelineGroup } from './types';
+
+// Mock items for development, this would be replaced with real data from Supabase
+const mockItems: TimelineItem[] = [
+  {
+    id: '1',
+    title: 'Wedding Anniversary',
+    date: new Date('2023-06-15'),
+    type: 'event',
+    content: 'Our 25th wedding anniversary celebration',
+    image: '/placeholder.svg',
+    emotions: ['joy', 'reverence']
+  },
+  {
+    id: '2',
+    title: 'Graduation Day',
+    date: new Date('2022-05-20'),
+    type: 'memory',
+    content: 'When Emma graduated from college',
+    image: '/placeholder.svg',
+    emotions: ['pride', 'excitement']
+  },
+  {
+    id: '3',
+    title: 'First Family Reunion',
+    date: new Date('2021-07-10'),
+    type: 'story',
+    content: 'The first time all siblings got together in 10 years',
+    image: '/placeholder.svg',
+    emotions: ['nostalgia', 'joy']
+  },
+  {
+    id: '4',
+    title: 'Moving to New Home',
+    date: new Date('2020-03-15'),
+    type: 'memory',
+    content: 'When we moved into our current home',
+    image: '/placeholder.svg',
+    emotions: ['excitement', 'nostalgia']
+  },
+  {
+    id: '5',
+    title: 'Grandpa\'s Stories',
+    date: new Date('2019-12-25'),
+    type: 'story',
+    content: 'Recording of grandpa telling his childhood stories',
+    image: '/placeholder.svg',
+    emotions: ['nostalgia', 'reverence']
+  },
+];
 
 export const useTimeline = (initialFilters?: TimelineFilters) => {
-  const [filters, setFilters] = useState<TimelineFilters>(initialFilters || {});
+  const [filters, setFilters] = useState<TimelineFilters>(initialFilters || {
+    contentTypes: [],
+    groupBy: 'month',
+  });
+  
+  const [emotionFilters, setEmotionFilters] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["timeline", filters],
-    queryFn: async () => {
-      // For now, we'll simulate fetching mixed content by getting memories
-      // In a real implementation, we would fetch from multiple tables based on filters
-      const { contentTypes = ['story', 'memory', 'photo'], dateRange, tags, searchQuery } = filters;
-      
-      let timelineItems: TimelineItem[] = [];
-      
-      // Fetch memories
-      if (contentTypes.includes('memory')) {
-        const query = supabase
-          .from('memories')
-          .select('*, memory_tags(tag, id)')
-          .order('created_at', { ascending: false });
-          
-        // Apply filters
-        if (dateRange?.start) {
-          query.gte('created_at', dateRange.start);
-        }
-        if (dateRange?.end) {
-          query.lte('created_at', dateRange.end);
-        }
-        if (searchQuery) {
-          query.or(`title.ilike.%${searchQuery}%,description.ilike.%${searchQuery}%`);
-        }
-        
-        const { data: memories, error } = await query;
-        
-        if (error) throw error;
-        
-        if (memories) {
-          const memoryItems = memories.map(memory => ({
-            id: memory.id,
-            type: 'memory' as const,
-            title: memory.title,
-            description: memory.description || '',
-            date: memory.created_at,
-            content_url: memory.content_url,
-            tags: memory.memory_tags || [],
-            metadata: memory.metadata || {}
-          }));
-          
-          timelineItems = [...timelineItems, ...memoryItems];
-        }
-      }
-      
-      // Fetch stories
-      if (contentTypes.includes('story')) {
-        const query = supabase
-          .from('stories')
-          .select('*, story_tags(tag, id)')
-          .order('created_at', { ascending: false });
-          
-        // Apply filters
-        if (dateRange?.start) {
-          query.gte('created_at', dateRange.start);
-        }
-        if (dateRange?.end) {
-          query.lte('created_at', dateRange.end);
-        }
-        if (searchQuery) {
-          query.or(`title.ilike.%${searchQuery}%,description.ilike.%${searchQuery}%`);
-        }
-        
-        const { data: stories, error } = await query;
-        
-        if (error) throw error;
-        
-        if (stories) {
-          const storyItems = stories.map(story => ({
-            id: story.id,
-            type: 'story' as const,
-            title: story.title,
-            description: story.description || '',
-            date: story.created_at,
-            content_url: story.audio_url,
-            tags: story.story_tags || [],
-            metadata: story.metadata || {}
-          }));
-          
-          timelineItems = [...timelineItems, ...storyItems];
-        }
-      }
-
-      // Fetch photos
-      if (contentTypes.includes('photo')) {
-        const query = supabase
-          .from('photos')
-          .select('*')
-          .order('created_at', { ascending: false });
-          
-        // Apply filters
-        if (dateRange?.start) {
-          query.gte('created_at', dateRange.start);
-        }
-        if (dateRange?.end) {
-          query.lte('created_at', dateRange.end);
-        }
-        
-        const { data: photos, error } = await query;
-        
-        if (error) throw error;
-        
-        if (photos) {
-          const photoItems = photos.map(photo => ({
-            id: photo.id,
-            type: 'photo' as const,
-            title: photo.caption || 'Photo',
-            date: photo.taken_at || photo.created_at,
-            content_url: photo.photo_url,
-            metadata: {}
-          }));
-          
-          timelineItems = [...timelineItems, ...photoItems];
-        }
-      }
-      
-      // Filter by tags if needed
-      if (tags && tags.length > 0) {
-        timelineItems = timelineItems.filter(item => {
-          if (!item.tags) return false;
-          return tags.some(tag => item.tags?.some(t => t.tag === tag));
-        });
-      }
-      
-      // Sort all items by date (newest first)
-      timelineItems.sort((a, b) => {
-        return new Date(b.date).getTime() - new Date(a.date).getTime();
-      });
-      
-      return timelineItems;
+  // In a real app, this would fetch from Supabase
+  const items = mockItems.filter(item => {
+    // Apply content type filters
+    if (filters.contentTypes.length > 0 && !filters.contentTypes.includes(item.type)) {
+      return false;
     }
+    
+    // Apply emotion filters
+    if (emotionFilters.length > 0) {
+      return item.emotions?.some(emotion => emotionFilters.includes(emotion));
+    }
+    
+    return true;
   });
 
-  const updateFilters = (newFilters: Partial<TimelineFilters>) => {
-    setFilters(prev => ({ ...prev, ...newFilters }));
-  };
-
-  // Group items by time period
-  const groupItemsByPeriod = (items: TimelineItem[] = [], groupBy: TimelinePeriod = 'month'): TimelineGroup[] => {
-    if (!items.length) return [];
-    
-    const groups: Record<string, TimelineGroup> = {};
-    
-    items.forEach(item => {
-      const date = parseISO(item.date);
-      if (!isValid(date)) return;
-      
-      let groupKey: string;
-      let label: string;
-      let startDate: Date;
-      let endDate: Date;
-      
-      switch (groupBy) {
-        case 'day':
-          groupKey = format(date, 'yyyy-MM-dd');
-          label = format(date, 'MMMM d, yyyy');
-          startDate = date;
-          endDate = date;
-          break;
-        case 'month':
-          groupKey = format(date, 'yyyy-MM');
-          label = format(date, 'MMMM yyyy');
-          startDate = startOfMonth(date);
-          endDate = endOfMonth(date);
-          break;
-        case 'year':
-          groupKey = format(date, 'yyyy');
-          label = format(date, 'yyyy');
-          startDate = startOfYear(date);
-          endDate = endOfYear(date);
-          break;
-        case 'decade':
-          const decade = Math.floor(date.getFullYear() / 10) * 10;
-          groupKey = `${decade}`;
-          label = `${decade}s`;
-          startDate = new Date(decade, 0, 1);
-          endDate = new Date(decade + 9, 11, 31);
-          break;
-        default:
-          groupKey = format(date, 'yyyy-MM');
-          label = format(date, 'MMMM yyyy');
-          startDate = startOfMonth(date);
-          endDate = endOfMonth(date);
-      }
-      
-      if (!groups[groupKey]) {
-        groups[groupKey] = {
-          label,
-          period: groupBy,
-          startDate: startDate.toISOString(),
-          endDate: endDate.toISOString(),
-          items: []
-        };
-      }
-      
-      groups[groupKey].items.push(item);
-    });
-    
-    // Convert to array and sort by date (newest first)
-    return Object.values(groups).sort((a, b) => {
-      return new Date(b.startDate).getTime() - new Date(a.startDate).getTime();
-    });
-  };
-
-  // Generate time periods for navigation
-  const generateTimePeriods = (
-    startDate: Date, 
-    endDate: Date, 
-    period: TimelinePeriod
-  ): { label: string; value: { start: string; end: string } }[] => {
-    const periods = [];
-    let current = startDate;
-    
-    while (current <= endDate) {
-      let periodEndDate: Date;
-      let label: string;
-      
-      switch (period) {
-        case 'month':
-          label = format(current, 'MMMM yyyy');
-          periodEndDate = endOfMonth(current);
-          periods.push({
-            label,
-            value: {
-              start: current.toISOString(),
-              end: periodEndDate.toISOString()
-            }
-          });
-          current = addMonths(current, 1);
-          break;
-        case 'year':
-          label = format(current, 'yyyy');
-          periodEndDate = endOfYear(current);
-          periods.push({
-            label,
-            value: {
-              start: current.toISOString(),
-              end: periodEndDate.toISOString()
-            }
-          });
-          current = addYears(current, 1);
-          break;
-        // Add other period types as needed
-        default:
-          label = format(current, 'MMMM yyyy');
-          periodEndDate = endOfMonth(current);
-          periods.push({
-            label,
-            value: {
-              start: current.toISOString(),
-              end: periodEndDate.toISOString()
-            }
-          });
-          current = addMonths(current, 1);
-      }
+  const formatDateByPeriod = (date: Date, period: TimelinePeriod): string => {
+    switch (period) {
+      case 'day':
+        return date.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+      case 'week':
+        // Getting the week number
+        const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
+        const pastDaysOfYear = (date.getTime() - firstDayOfYear.getTime()) / 86400000;
+        const weekNum = Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+        return `Week ${weekNum}, ${date.getFullYear()}`;
+      case 'month':
+        return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+      case 'year':
+        return date.getFullYear().toString();
+      case 'decade':
+        const decade = Math.floor(date.getFullYear() / 10) * 10;
+        return `${decade}s`;
+      default:
+        return date.toLocaleDateString();
     }
-    
-    return periods;
   };
+
+  const groupItemsByPeriod = useCallback(
+    (items: TimelineItem[], period: TimelinePeriod): TimelineGroup[] => {
+      const groups: Record<string, TimelineItem[]> = {};
+      
+      // Sort items by date, newest first
+      const sortedItems = [...items].sort((a, b) => b.date.getTime() - a.date.getTime());
+      
+      // Group items by the specified period
+      sortedItems.forEach((item) => {
+        const periodLabel = formatDateByPeriod(item.date, period);
+        if (!groups[periodLabel]) {
+          groups[periodLabel] = [];
+        }
+        groups[periodLabel].push(item);
+      });
+      
+      // Convert the groups object to an array
+      return Object.entries(groups).map(([label, items]) => ({
+        label,
+        startDate: items[items.length - 1].date.toISOString(), // Earliest date in the group
+        items,
+      }));
+    },
+    []
+  );
 
   return {
-    items: data || [],
     isLoading,
-    error,
+    items,
     filters,
-    updateFilters,
+    setFilters,
+    emotionFilters,
+    setEmotionFilters,
     groupItemsByPeriod,
-    generateTimePeriods
   };
 };

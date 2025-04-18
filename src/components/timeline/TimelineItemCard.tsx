@@ -1,145 +1,112 @@
 
-import { Link } from "react-router-dom";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { format, parseISO } from "date-fns";
-import { TimelineItem } from "./types";
-import { 
-  BookOpen, 
-  Image, 
-  FileText, 
-  Music, 
-  Package,
-  Clock,
-  Calendar,
-  Tag as TagIcon
-} from "lucide-react";
+import { useState } from 'react';
+import { TimelineItem } from './types';
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import { Calendar, Clock, Bookmark, Image, FileText, CalendarClock } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 interface TimelineItemCardProps {
   item: TimelineItem;
-  compact?: boolean;
 }
 
-export const TimelineItemCard = ({ item, compact = false }: TimelineItemCardProps) => {
-  const getIcon = () => {
-    switch (item.type) {
-      case 'story':
-        return <BookOpen className="h-4 w-4 text-blue-500" />;
-      case 'photo':
-        return <Image className="h-4 w-4 text-green-500" />;
-      case 'memory':
-        return <FileText className="h-4 w-4 text-amber-500" />;
-      case 'audio':
-        return <Music className="h-4 w-4 text-purple-500" />;
-      case 'capsule':
-        return <Package className="h-4 w-4 text-pink-500" />;
-      default:
-        return <FileText className="h-4 w-4 text-gray-500" />;
-    }
-  };
-
-  const getItemUrl = () => {
-    switch (item.type) {
-      case 'story':
-        return `/story/${item.id}`;
-      case 'memory':
-        return `/memory/${item.id}`;
-      case 'photo':
-        return `/photo/${item.id}`;
-      case 'capsule':
-        return `/capsule/${item.id}`;
-      default:
-        return `/${item.type}/${item.id}`;
-    }
-  };
+export const TimelineItemCard = ({ item }: TimelineItemCardProps) => {
+  const [expanded, setExpanded] = useState(false);
   
-  const getFormattedDate = () => {
-    try {
-      return format(parseISO(item.date), "MMM d, yyyy");
-    } catch (e) {
-      return "Unknown date";
-    }
-  };
+  const typeIcon = {
+    memory: <Image className="h-4 w-4" />,
+    story: <FileText className="h-4 w-4" />,
+    event: <Calendar className="h-4 w-4" />,
+    photo: <Image className="h-4 w-4" />
+  }[item.type];
   
-  const getContentTypeLabel = () => {
-    switch (item.type) {
-      case 'story':
-        return 'Story';
-      case 'photo':
-        return 'Photo';
-      case 'memory':
-        return 'Memory';
-      case 'audio':
-        return 'Audio Recording';
-      case 'capsule':
-        return 'Memory Capsule';
-      default:
-        // Fix: Handle the default case by returning the type as a string with proper capitalization
-        const itemType = item.type as string;
-        return itemType.charAt(0).toUpperCase() + itemType.slice(1);
-    }
+  const emotionColors = {
+    'joy': 'bg-amber-100 text-amber-800 border-amber-200',
+    'sadness': 'bg-slate-100 text-slate-800 border-slate-200',
+    'nostalgia': 'bg-blue-100 text-blue-800 border-blue-200',
+    'excitement': 'bg-green-100 text-green-800 border-green-200',
+    'reverence': 'bg-purple-100 text-purple-800 border-purple-200',
+    'pride': 'bg-rose-100 text-rose-800 border-rose-200',
   };
-  
-  if (compact) {
-    return (
-      <Link to={getItemUrl()}>
-        <Card className="hover:bg-accent hover:text-accent-foreground transition-colors">
-          <CardContent className="p-3 flex justify-between items-center">
-            <div className="flex items-center gap-2">
-              {getIcon()}
-              <span className="font-medium truncate">{item.title}</span>
-            </div>
-            <div className="text-sm text-muted-foreground">
-              {getFormattedDate()}
-            </div>
-          </CardContent>
-        </Card>
-      </Link>
-    );
-  }
 
   return (
-    <Link to={getItemUrl()}>
-      <Card className="hover:bg-accent hover:text-accent-foreground transition-colors">
-        <CardContent className="p-4">
-          <div className="flex justify-between items-start mb-2">
-            <div className="flex items-center gap-2">
-              {getIcon()}
-              <span className="font-medium">{item.title}</span>
-            </div>
-            <Badge variant="outline">{getContentTypeLabel()}</Badge>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+      whileHover={{ scale: 1.02 }}
+      className="h-full"
+    >
+      <Card className="h-full overflow-hidden hover:shadow-md transition-shadow bg-background/80 backdrop-blur-sm border-[1.5px]">
+        <CardHeader className="pb-2">
+          <div className="flex justify-between items-start">
+            <h3 className="text-lg font-semibold">{item.title}</h3>
+            <Badge variant="outline" className="capitalize">
+              <span className="flex items-center gap-1">
+                {typeIcon}
+                {item.type}
+              </span>
+            </Badge>
           </div>
-          
-          {item.description && (
-            <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
-              {item.description}
-            </p>
-          )}
-          
-          <div className="flex flex-wrap gap-2 items-center text-xs text-muted-foreground">
-            <div className="flex items-center gap-1">
-              <Clock className="h-3 w-3" />
-              <span>{getFormattedDate()}</span>
+        </CardHeader>
+        
+        <CardContent className="pb-3">
+          <div className="space-y-2">
+            <div className="flex items-center text-sm text-muted-foreground">
+              <CalendarClock className="mr-2 h-4 w-4" />
+              <span>{item.date.toLocaleDateString('en-US', { 
+                day: 'numeric', 
+                month: 'long', 
+                year: 'numeric' 
+              })}</span>
             </div>
             
-            {item.tags && item.tags.length > 0 && (
-              <div className="flex items-center gap-1">
-                <TagIcon className="h-3 w-3" />
-                <div className="flex gap-1">
-                  {item.tags.slice(0, 3).map((tag) => (
-                    <Badge key={tag.id} variant="secondary" className="text-xs px-1 py-0">
-                      {tag.tag}
-                    </Badge>
-                  ))}
-                  {item.tags.length > 3 && (
-                    <span>+{item.tags.length - 3}</span>
-                  )}
-                </div>
+            <p className={cn(
+              "text-sm text-muted-foreground mt-2 transition-all", 
+              expanded ? "" : "line-clamp-2"
+            )}>
+              {item.content}
+            </p>
+            
+            {item.image && (
+              <div className="mt-3 overflow-hidden rounded-md">
+                <img 
+                  src={item.image} 
+                  alt={item.title} 
+                  className="h-auto w-full object-cover transition-all hover:scale-105"
+                />
+              </div>
+            )}
+            
+            {item.emotions && item.emotions.length > 0 && (
+              <div className="flex flex-wrap gap-1 mt-2">
+                {item.emotions.map(emotion => (
+                  <Badge 
+                    key={emotion} 
+                    variant="outline"
+                    className={cn(
+                      "text-xs",
+                      emotionColors[emotion as keyof typeof emotionColors] || 'bg-gray-100 text-gray-800'
+                    )}
+                  >
+                    {emotion}
+                  </Badge>
+                ))}
               </div>
             )}
           </div>
         </CardContent>
+        
+        <CardFooter className="pt-0">
+          <button 
+            className="text-xs text-muted-foreground hover:text-foreground"
+            onClick={() => setExpanded(!expanded)}
+          >
+            {expanded ? "Show less" : "Show more"}
+          </button>
+        </CardFooter>
       </Card>
-    </Link>
+    </motion.div>
   );
 };

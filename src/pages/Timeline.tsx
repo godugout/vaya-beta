@@ -3,6 +3,7 @@ import { PageTransition } from "@/components/animation/PageTransition";
 import { TimelineView } from "@/components/timeline";
 import { PatternBackground } from "@/components/ui/pattern-background";
 import { SlideFade } from "@/components/animation/SlideFade";
+import { EmotionFilterBadges } from "@/components/timeline/EmotionFilterBadges";
 
 const Timeline = () => {
   return (
@@ -21,6 +22,7 @@ const Timeline = () => {
               </div>
             </header>
             
+            <EmotionFilterBadges className="mb-6" />
             <TimelineView />
           </SlideFade>
         </div>
