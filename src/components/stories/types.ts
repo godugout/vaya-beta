@@ -8,7 +8,7 @@ export interface Story {
   title: string;
   created_at: string;
   updated_at: string;
-  story_type?: string;
+  story_type?: "audio" | "photo" | "text" | "transcript";
   author_id?: string;
   description?: string;
   cultural_prompt_id?: string;

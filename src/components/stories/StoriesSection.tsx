@@ -4,7 +4,7 @@ import { Story } from "./types";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { StoryCard } from "@/components/content/StoryCard";
+import { StoryCard, StoryType } from "@/components/content/StoryCard";
 import { Search, Mic, ArrowUpDown, FileText, AudioLines, Image } from "lucide-react";
 import { LoadingIndicator } from "@/components/animation/LoadingIndicator";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
@@ -119,7 +119,7 @@ export const StoriesSection = ({
                 id={story.id}
                 title={story.title || "Untitled Story"}
                 content={story.description || ""}
-                type={story.story_type as "audio" | "photo" | "transcript" || "text"}
+                type={(story.story_type || "text") as StoryType}
                 audioUrl={story.audio_url}
                 imageUrl={story.image_url}
                 date={story.created_at || new Date().toISOString()}

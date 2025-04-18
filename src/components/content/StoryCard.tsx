@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 
-export type StoryType = "audio" | "photo" | "transcript";
+export type StoryType = "audio" | "photo" | "text" | "transcript";
 
 export interface StoryCardProps {
   id: string;
