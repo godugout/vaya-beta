@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
 import { PageTransition } from "@/components/animation/PageTransition";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { useStories } from "@/components/stories/useStories";
@@ -13,6 +13,7 @@ import { StoriesSection } from "@/components/stories/StoriesSection";
 const ShareStories = () => {
   const [showTapestry, setShowTapestry] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const recordingSectionRef = useRef<HTMLDivElement>(null);
   
   const { 
     data: storiesData, 
@@ -27,20 +28,35 @@ const ShareStories = () => {
   const stories = storiesData?.pages.flatMap(page => page.stories) || [];
   const filteredStories = searchQuery
     ? stories.filter(story => 
-        story.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        story.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
         (story.description && story.description.toLowerCase().includes(searchQuery.toLowerCase()))
       )
     : stories;
 
   const capsules = capsulesData?.pages.flatMap(page => page.capsules) || [];
+  
+  const handleStartRecording = () => {
+    recordingSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
     <PageTransition location="share-stories" mode="fade">
       <LanguageProvider>
         <div className="min-h-screen bg-background text-foreground">
-          <ShareStoriesHeader onOpenTapestry={() => setShowTapestry(true)} />
-          <CapsuleSection capsules={capsules} isLoading={isLoadingCapsules} />
-          <RecordingSection />
+          <ShareStoriesHeader 
+            onOpenTapestry={() => setShowTapestry(true)} 
+            onStartRecording={handleStartRecording}
+          />
+          
+          <CapsuleSection 
+            capsules={capsules} 
+            isLoading={isLoadingCapsules} 
+          />
+          
+          <div ref={recordingSectionRef}>
+            <RecordingSection />
+          </div>
+          
           <StoriesSection 
             stories={filteredStories}
             isLoading={isLoadingStories}
