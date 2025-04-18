@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { PageTransition } from "@/components/animation/PageTransition";
 import { Button } from "@/components/ui/button";
-import { Settings, Search } from "lucide-react";
+import { Settings, Search, PlusCircle } from "lucide-react";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
@@ -95,39 +95,32 @@ const ShareStories = () => {
     <PageTransition location="share-stories" mode="fade">
       <LanguageProvider>
         <div className="min-h-screen bg-background text-foreground">
-          <div className="w-full pt-16 pb-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted/50">
+          <div className="w-full pt-16 pb-8 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted/50">
             <div className="max-w-7xl mx-auto">
-              <div className="flex justify-between items-center mb-8">
-                <h1 className="text-3xl font-bold">
-                  Share Your Stories
-                </h1>
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  onClick={() => setShowTapestry(true)}
-                  className="flex items-center gap-2"
-                >
-                  <Settings className="w-4 h-4" />
-                  <span>Family Tapestry</span>
-                </Button>
-              </div>
-              
-              <div className="mt-16 mb-16 text-center max-w-3xl mx-auto">
-                <FadeIn>
-                  <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                    Your Family's Story Matters
-                  </h2>
-                  <p className="text-lg mb-8 text-muted-foreground">
-                    Share and preserve your cherished memories with voice recordings, photos, and written stories 
-                    that will be treasured for generations.
+              <div className="flex justify-between items-center gap-4">
+                <div>
+                  <h1 className="text-3xl font-bold mb-2">Share Your Stories</h1>
+                  <p className="text-muted-foreground">
+                    Share and preserve your cherished memories with voice recordings, photos, and written stories.
                   </p>
+                </div>
+                <div className="flex items-center gap-2">
                   <Button 
                     size="lg" 
                     className="bg-primary hover:bg-primary/90 text-primary-foreground"
                   >
+                    <PlusCircle className="mr-2 h-5 w-5" />
                     Start Recording
                   </Button>
-                </FadeIn>
+                  <Button 
+                    variant="outline" 
+                    size="icon"
+                    onClick={() => setShowTapestry(true)}
+                    className="h-10 w-10"
+                  >
+                    <Settings className="h-5 w-5" />
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
