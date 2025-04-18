@@ -4,6 +4,7 @@ import { LogoSection } from "./desktop/LogoSection";
 import { NavigationItems } from "./desktop/NavigationItems";
 import { UserControls } from "./desktop/UserControls";
 import { useNavigate } from "react-router-dom";
+import { cn } from "@/lib/utils";
 
 interface DesktopNavProps {
   user?: User | null;
@@ -36,7 +37,10 @@ export const DesktopNav = ({
   const navigateFunction = navigate || ((path: string) => defaultNavigate(path));
 
   return (
-    <div className={`desktop-nav ${className || ''}`}>
+    <div className={cn(
+      "desktop-nav w-full",
+      className
+    )}>
       <div className="container mx-auto px-4 flex items-center justify-between h-full">
         {/* Left: Logo */}
         <div className="flex-shrink-0">
@@ -50,15 +54,13 @@ export const DesktopNav = ({
         
         {/* Right: User controls */}
         <div className="flex-shrink-0">
-          {isVoiceActive !== undefined && onVoiceToggle && (
-            <UserControls 
-              user={user || null}
-              handleSignOut={handleSignOut || (async () => {})}
-              navigate={navigateFunction}
-              isVoiceActive={isVoiceActive}
-              onVoiceToggle={onVoiceToggle}
-            />
-          )}
+          <UserControls 
+            user={user || null}
+            handleSignOut={handleSignOut || (async () => {})}
+            navigate={navigateFunction}
+            isVoiceActive={isVoiceActive || false}
+            onVoiceToggle={onVoiceToggle || (() => {})}
+          />
         </div>
       </div>
     </div>

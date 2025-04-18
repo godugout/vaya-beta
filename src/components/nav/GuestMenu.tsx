@@ -34,7 +34,7 @@ export const GuestMenu = ({ navigate }: GuestMenuProps) => {
           <span className="hidden sm:inline">Sign In</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56">
+      <DropdownMenuContent align="end" className="w-56 z-[200]">
         <div className="p-2">
           <DropdownMenuItem 
             onClick={() => navigate('/auth')}

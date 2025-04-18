@@ -42,7 +42,7 @@ export const UserControls = ({
   };
 
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-3 relative z-50">
       {/* Search Bar */}
       <div className="relative hidden md:flex items-center">
         <Search className="absolute left-3 h-4 w-4 text-muted-foreground" />
@@ -94,11 +94,11 @@ export const UserControls = ({
       />
       
       {/* User Menu */}
-      {user && handleSignOut && navigate ? (
+      {user ? (
         <UserMenu user={user} handleSignOut={handleSignOut} navigate={navigate} />
-      ) : navigate ? (
+      ) : (
         <GuestMenu navigate={navigate} />
-      ) : null}
+      )}
 
       {/* Memory Creation Modal */}
       {showMemoryModal && (

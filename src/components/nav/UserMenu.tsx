@@ -56,7 +56,7 @@ export const UserMenu = ({ user, handleSignOut, navigate }: UserMenuProps) => {
         </Button>
       </DropdownMenuTrigger>
       
-      <DropdownMenuContent align="end" className="w-64">
+      <DropdownMenuContent align="end" className="w-64 z-[200]">
         <DropdownMenuLabel className="p-4 border-b">
           <div className="flex flex-col space-y-1">
             <p className="text-base font-semibold">{userDisplayName}</p>

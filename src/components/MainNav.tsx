@@ -63,9 +63,9 @@ export const MainNav = () => {
   };
 
   return (
-    <div className={`sticky top-0 z-40 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-all duration-300 border-b ${isMinimized ? 'h-12 border-border' : 'h-24 border-transparent'}`}>
+    <div className="sticky top-0 z-[100] w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-all duration-300 border-b shadow-sm h-auto">
       {/* Minimized Header (shown when scrolled) */}
-      <MinimizedHeader isMinimized={isMinimized} />
+      {isMinimized && <MinimizedHeader isMinimized={isMinimized} />}
 
       {/* Regular Navigation (shown when not minimized) */}
       {!isMinimized && (

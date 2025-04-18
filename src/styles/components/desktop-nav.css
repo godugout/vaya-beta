@@ -1,7 +1,7 @@
 
 /* Desktop Navigation Styles */
 .desktop-nav {
-  @apply hidden lg:flex items-center justify-between py-2; /* Reduced padding */
+  @apply flex items-center justify-between py-2 z-50; /* Added z-50 to ensure it stays on top */
   height: 64px;
 }
 
@@ -17,7 +17,7 @@
 
 /* User Controls Area */
 .user-controls {
-  @apply flex items-center gap-3; /* Reduced gap */
+  @apply flex items-center gap-3 z-50; /* Added z-50 to ensure it stays on top */
 }
 
 /* Voice Navigation Button */

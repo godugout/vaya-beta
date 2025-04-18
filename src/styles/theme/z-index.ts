@@ -8,4 +8,6 @@ export const zIndex = {
   tooltip: 50,
   nav: 100,
   floating: 50,
+  userControls: 110,
+  dropdown: 120,
 };
