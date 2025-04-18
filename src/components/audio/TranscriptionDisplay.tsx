@@ -1,7 +1,7 @@
 
 import { motion } from "framer-motion";
 import { Sparkles, AlertCircle } from "lucide-react";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 interface TranscriptionDisplayProps {
   transcription: string | null;
@@ -16,9 +16,14 @@ const TranscriptionDisplay = ({
 }: TranscriptionDisplayProps) => {
   if (error) {
     return (
-      <Alert variant="destructive">
+      <Alert variant="destructive" className="mb-4">
         <AlertCircle className="h-4 w-4" />
-        <AlertDescription>{error}</AlertDescription>
+        <AlertTitle>Transcription Failed</AlertTitle>
+        <AlertDescription>
+          {error.includes("OpenAI API key not configured") 
+            ? "The transcription service is not properly configured. Please contact the administrator."
+            : error}
+        </AlertDescription>
       </Alert>
     );
   }
