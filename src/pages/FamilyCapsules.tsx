@@ -8,11 +8,32 @@ import { CapsuleFilters } from "@/components/capsule/CapsuleFilters";
 import { CapsuleScrollSection } from "@/components/capsule/sections/CapsuleScrollSection";
 import { useCapsules } from "@/components/capsule/useCapsules";
 import { CapsuleStatus } from "@/types/capsule";
-import { Plus, MicrophoneIcon } from "lucide-react";
+import { Plus, Mic } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LoadingIndicator } from "@/components/animation/LoadingIndicator";
 import { ModernCard } from "@/components/ui/modern-card";
 import { PatternBackground } from "@/components/ui/pattern-background";
+
+// Helper functions for capsule status styling
+const getIconForStatus = (status: CapsuleStatus) => {
+  // Return the appropriate icon based on status
+  return Mic;
+};
+
+const getColorKeyForStatus = (status: CapsuleStatus): string => {
+  switch (status) {
+    case "upcoming":
+      return "hanuman";
+    case "active":
+      return "kelly";
+    case "locked":
+      return "sacred-teal";
+    case "revealed":
+      return "sunshine";
+    default:
+      return "hanuman";
+  }
+};
 
 const FamilyCapsules = () => {
   const navigate = useNavigate();
@@ -42,7 +63,7 @@ const FamilyCapsules = () => {
           actions={
             <div className="flex gap-4">
               <Button onClick={handleCreateCapsule} size="lg" variant="hanuman">
-                <MicrophoneIcon className="h-5 w-5 mr-2" />
+                <Mic className="h-5 w-5 mr-2" />
                 Record Story
               </Button>
               <Button onClick={handleCreateCapsule} size="lg" variant="sacred-teal">
@@ -67,9 +88,9 @@ const FamilyCapsules = () => {
             </div>
           ) : allCapsules.length === 0 ? (
             <ModernCard variant="modern" className="p-12 text-center">
-              <PatternBackground pattern="sacred" opacity="light" />
+              <PatternBackground pattern="sanskrit" opacity="light" />
               <div className="mx-auto w-24 h-24 bg-hanuman/10 dark:bg-hanuman/20 rounded-full flex items-center justify-center mb-4">
-                <MicrophoneIcon className="w-12 h-12 text-hanuman" />
+                <Mic className="w-12 h-12 text-hanuman" />
               </div>
               <h3 className="text-xl font-semibold mb-2">Start Your Family Legacy</h3>
               <p className="text-muted-foreground mb-6">
