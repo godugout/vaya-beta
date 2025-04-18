@@ -106,8 +106,9 @@ export const toast = (props: ToastProps) => {
     return sonnerToast(props);
   } 
   
+  // Remove the variant property when passing to sonnerToast as it's not supported
   return sonnerToast(props.title as string, {
     description: props.description,
-    variant: props.variant
+    // Don't pass variant to sonnerToast as it's not part of ExternalToast type
   });
 };
