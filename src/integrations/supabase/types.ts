@@ -247,6 +247,7 @@ export type Database = {
           birth_place: string | null
           created_at: string | null
           description: string | null
+          family_id: string | null
           glyph_type: string
           id: string
           name: string
@@ -261,6 +262,7 @@ export type Database = {
           birth_place?: string | null
           created_at?: string | null
           description?: string | null
+          family_id?: string | null
           glyph_type: string
           id?: string
           name: string
@@ -275,6 +277,7 @@ export type Database = {
           birth_place?: string | null
           created_at?: string | null
           description?: string | null
+          family_id?: string | null
           glyph_type?: string
           id?: string
           name?: string
@@ -285,6 +288,13 @@ export type Database = {
           updated_at?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "family_members_family_id_fkey"
+            columns: ["family_id"]
+            isOneToOne: false
+            referencedRelation: "families"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "family_members_parent_id_fkey"
             columns: ["parent_id"]
