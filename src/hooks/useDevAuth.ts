@@ -1,11 +1,9 @@
 
 import { useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "@/hooks/use-toast";
 
 export function useDevAuth() {
-  const { toast } = useToast();
-
   useEffect(() => {
     const autoLogin = async () => {
       try {

@@ -1,8 +1,6 @@
 
 import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Toaster } from "@/components/ui/toaster"
 import { useDevAuth } from "@/hooks/useDevAuth";
 
 import Index from "./pages/Index";
@@ -29,42 +27,37 @@ const App = () => {
     setIsNavMinimized(!isNavMinimized);
   };
 
-  const queryClient = new QueryClient();
-
   useDevAuth(); // Add this line for development auto-login
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <div className="flex flex-col min-h-screen bg-background text-foreground">
-        <DesktopNav 
-          showMinimizeButton={true} 
-          onToggleMinimize={toggleMinimize} 
-          isMinimized={isNavMinimized}
-          className="hidden md:flex h-16 border-b w-full" 
-        />
-        <MobileTopNav className="md:hidden" />
-        
-        <main className={`flex-grow transition-all ${isNavMinimized ? 'md:pl-16' : 'md:pl-0'}`}>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/families" element={<Families />} />
-            <Route path="/create-family" element={<CreateFamily />} />
-            <Route path="/family-capsules" element={<FamilyCapsules />} />
-            <Route path="/share-stories" element={<ShareStories />} />
-            <Route path="/memory-lane" element={<MemoryLane />} />
-            <Route path="/memory/:id" element={<MemoryPost />} />
-            <Route path="/story/:id" element={<StoryDetailsPage />} />
-            <Route path="/capsule/:id" element={<CapsuleDetails />} />
-            <Route path="/timeline" element={<Timeline />} />
-          </Routes>
-        </main>
-        
-        <MobileBottomNav className="md:hidden" />
-      </div>
-      <Toaster />
-    </QueryClientProvider>
+    <div className="flex flex-col min-h-screen bg-background text-foreground">
+      <DesktopNav 
+        showMinimizeButton={true} 
+        onToggleMinimize={toggleMinimize} 
+        isMinimized={isNavMinimized}
+        className="hidden md:flex h-16 border-b w-full" 
+      />
+      <MobileTopNav className="md:hidden" />
+      
+      <main className={`flex-grow transition-all ${isNavMinimized ? 'md:pl-16' : 'md:pl-0'}`}>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/families" element={<Families />} />
+          <Route path="/create-family" element={<CreateFamily />} />
+          <Route path="/family-capsules" element={<FamilyCapsules />} />
+          <Route path="/share-stories" element={<ShareStories />} />
+          <Route path="/memory-lane" element={<MemoryLane />} />
+          <Route path="/memory/:id" element={<MemoryPost />} />
+          <Route path="/story/:id" element={<StoryDetailsPage />} />
+          <Route path="/capsule/:id" element={<CapsuleDetails />} />
+          <Route path="/timeline" element={<Timeline />} />
+        </Routes>
+      </main>
+      
+      <MobileBottomNav className="md:hidden" />
+    </div>
   );
 };
 
