@@ -16,10 +16,10 @@ interface Family {
     id: string;
     user_id: string;
     role: string;
-    profiles: {
+    profile: {
       full_name: string;
       avatar_url: string | null;
-    };
+    } | null;
   }[];
 }
 
@@ -36,6 +36,9 @@ export default function Families() {
 
   const getFamilies = async () => {
     try {
+      setLoading(true);
+      console.log("Fetching families data...");
+      
       const { data, error } = await supabase
         .from('families')
         .select(`
@@ -45,50 +48,64 @@ export default function Families() {
           members:family_members(
             id,
             user_id,
-            role,
-            profiles:profiles!user_id(
-              full_name,
-              avatar_url
-            )
+            role
           )
         `);
 
       if (error) throw error;
       
-      // Type safety check to ensure we have valid data
+      // Log the raw data to help debug
+      console.log("Raw families data:", data);
+      
       if (data && Array.isArray(data)) {
-        // Properly map the data to match the Family type structure
-        const safeData = data.map(item => ({
-          id: item.id as string,
-          name: item.name as string,
-          description: item.description as string | null,
-          members: (item.members || []).map((member: any) => ({
-            id: member.id as string,
-            user_id: member.user_id as string,
-            role: member.role as string,
-            // Ensure profiles is properly mapped as a single object, not an array
-            profiles: member.profiles && member.profiles.length > 0 
-              ? {
-                  full_name: member.profiles[0].full_name as string,
-                  avatar_url: member.profiles[0].avatar_url as string | null
-                }
-              : {
-                  full_name: "Unknown",
-                  avatar_url: null
-                }
-          }))
+        // For each family member, separately fetch their profile
+        const processedFamilies = await Promise.all(data.map(async (family) => {
+          const membersWithProfiles = await Promise.all((family.members || []).map(async (member) => {
+            if (!member.user_id) {
+              return {
+                ...member,
+                profile: { full_name: "Unknown", avatar_url: null }
+              };
+            }
+            
+            const { data: profileData, error: profileError } = await supabase
+              .from('profiles')
+              .select('full_name, avatar_url')
+              .eq('id', member.user_id)
+              .single();
+              
+            if (profileError) {
+              console.error("Error fetching profile:", profileError);
+              return {
+                ...member,
+                profile: { full_name: "Unknown", avatar_url: null }
+              };
+            }
+            
+            return {
+              ...member,
+              profile: profileData
+            };
+          }));
+          
+          return {
+            ...family,
+            members: membersWithProfiles
+          };
         }));
         
-        setFamilies(safeData);
+        console.log("Processed families data:", processedFamilies);
+        setFamilies(processedFamilies);
         
         // Set the first family as selected if available
-        if (safeData.length > 0 && !selectedFamilyId) {
-          setSelectedFamilyId(safeData[0].id);
+        if (processedFamilies.length > 0 && !selectedFamilyId) {
+          setSelectedFamilyId(processedFamilies[0].id);
         }
       } else {
         setFamilies([]);
       }
     } catch (error: any) {
+      console.error("Error loading families:", error);
       toast({
         title: "Error loading families",
         description: error.message,

@@ -3,6 +3,7 @@ import React from 'react';
 import { motion } from "framer-motion";
 import { FamilyCard } from "./FamilyCard";
 import { EmptyFamiliesState } from "./EmptyFamiliesState";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Family {
   id: string;
@@ -12,10 +13,10 @@ interface Family {
     id: string;
     user_id: string;
     role: string;
-    profiles: {
+    profile: {
       full_name: string;
       avatar_url: string | null;
-    };
+    } | null;
   }[];
 }
 
@@ -41,6 +42,18 @@ export const FamiliesGridView = ({
       }
     }
   };
+
+  if (loading) {
+    return (
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {[1, 2, 3].map((index) => (
+          <div key={`skeleton-${index}`} className="h-64">
+            <Skeleton className="h-full w-full rounded-xl" />
+          </div>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <motion.div 

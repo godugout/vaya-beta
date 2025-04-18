@@ -10,10 +10,10 @@ interface FamilyMember {
   id: string;
   user_id: string;
   role: string;
-  profiles: {
+  profile: {
     full_name: string;
     avatar_url: string | null;
-  };
+  } | null;
 }
 
 interface FamilyCardProps {
@@ -60,7 +60,7 @@ export const FamilyCard = ({ family, onFamilySelected, onFamilyUpdated }: Family
                     className="h-8 w-8 rounded-full bg-gray-200 dark:bg-gray-700 border-2 border-white dark:border-black flex items-center justify-center text-xs font-medium"
                     style={{ zIndex: 10 - index }}
                   >
-                    {member.profiles.full_name.charAt(0)}
+                    {member.profile?.full_name.charAt(0) || '?'}
                   </div>
                 ))}
                 {family.members.length > 3 && (
