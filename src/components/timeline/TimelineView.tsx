@@ -1,11 +1,12 @@
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { TimelineFilters } from './TimelineFilters';
 import { TimelineItemCard } from './TimelineItemCard';
 import { useTimeline } from './useTimeline';
 import { TimelinePeriod, TimelineFilters as FiltersType } from './types';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Skeleton } from '@/components/ui/skeleton';
+import { ModernCard } from '@/components/ui/modern-card';
+import { PatternBackground } from '@/components/ui/pattern-background';
 
 export const TimelineView = () => {
   const [filters, setFilters] = useState<FiltersType>({
@@ -15,10 +16,8 @@ export const TimelineView = () => {
   
   const timeline = useTimeline(filters);
   const { isLoading, items } = timeline;
-  
-  // Group items by the selected period
   const timelineGroups = timeline.groupItemsByPeriod(items, filters.groupBy);
-
+  
   const handleFilterChange = (newFilters: FiltersType) => {
     setFilters(newFilters);
   };
@@ -32,19 +31,19 @@ export const TimelineView = () => {
 
   return (
     <div className="space-y-6">
-      <div className="bg-card border rounded-lg p-4">
+      <ModernCard variant="modern" withPattern className="overflow-visible">
         <TimelineFilters 
           filters={filters} 
           onFilterChange={handleFilterChange} 
         />
-      </div>
+      </ModernCard>
       
       <div className="flex justify-center mb-4">
         <Tabs 
           defaultValue={filters.groupBy} 
           value={filters.groupBy}
           onValueChange={(value) => handlePeriodChange(value as TimelinePeriod)}
-          className="w-full max-w-md"
+          className="w-full max-w-md bg-background/80 backdrop-blur-sm rounded-full p-1 border"
         >
           <TabsList className="grid grid-cols-5 w-full">
             <TabsTrigger value="day">Day</TabsTrigger>
@@ -56,38 +55,34 @@ export const TimelineView = () => {
         </Tabs>
       </div>
       
-      {isLoading ? (
-        <div className="space-y-4">
-          {[1, 2, 3].map((_, i) => (
-            <div key={i} className="space-y-2">
-              <Skeleton className="h-8 w-48" />
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <Skeleton className="h-32" />
-                <Skeleton className="h-32" />
-                <Skeleton className="h-32" />
-              </div>
+      <div className="space-y-16">
+        {timelineGroups.map((group) => (
+          <section key={group.startDate} className="relative">
+            <div className="sticky top-20 z-10 mb-8 flex items-center gap-4">
+              <h3 className="text-2xl font-bold bg-gradient-to-r from-autumn to-leaf bg-clip-text text-transparent">
+                {group.label}
+              </h3>
+              <div className="h-0.5 flex-1 bg-gradient-to-r from-autumn/20 to-leaf/20 rounded-full" />
             </div>
-          ))}
-        </div>
-      ) : timelineGroups.length === 0 ? (
-        <div className="text-center py-10">
-          <h3 className="text-lg font-medium">No timeline items found</h3>
-          <p className="text-muted-foreground">Try adjusting your filters or add some new memories.</p>
-        </div>
-      ) : (
-        <div className="space-y-8">
-          {timelineGroups.map((group) => (
-            <div key={group.startDate} className="space-y-3">
-              <h3 className="text-lg font-semibold border-b pb-2">{group.label}</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {group.items.map((item) => (
-                  <TimelineItemCard key={`${item.type}-${item.id}`} item={item} />
-                ))}
-              </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {group.items.map((item) => (
+                <TimelineItemCard key={`${item.type}-${item.id}`} item={item} />
+              ))}
             </div>
-          ))}
-        </div>
-      )}
+          </section>
+        ))}
+        
+        {timelineGroups.length === 0 && !isLoading && (
+          <ModernCard variant="modern" className="p-12 text-center">
+            <PatternBackground pattern="family-languages" opacity="light" />
+            <h3 className="text-xl font-semibold mb-2">No memories yet</h3>
+            <p className="text-muted-foreground">
+              Start capturing your family's precious moments to build your timeline
+            </p>
+          </ModernCard>
+        )}
+      </div>
     </div>
   );
 };
