@@ -24,11 +24,11 @@ const ToastContext = createContext<{
   dismissAll: () => void;
 } | null>(null);
 
-export function ToastProvider({
-  children,
-}: {
+interface ToastProviderProps {
   children: React.ReactNode;
-}) {
+}
+
+export function ToastProvider(props: ToastProviderProps) {
   const [toasts, setToasts] = useState<ToasterToast[]>([]);
 
   const addToast = React.useCallback(
@@ -49,17 +49,18 @@ export function ToastProvider({
     setToasts([]);
   }, [setToasts]);
 
-  return (
-    <ToastContext.Provider
-      value={{
-        toasts,
-        addToast,
-        dismissToast,
-        dismissAll,
-      }}
-    >
-      {children}
-    </ToastContext.Provider>
+  const contextValue = {
+    toasts,
+    addToast,
+    dismissToast,
+    dismissAll
+  };
+
+  // We're returning a regular object here, not JSX
+  return React.createElement(
+    ToastContext.Provider,
+    { value: contextValue },
+    props.children
   );
 }
 
