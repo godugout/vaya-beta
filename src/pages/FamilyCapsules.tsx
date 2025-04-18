@@ -1,14 +1,18 @@
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { PageTransition } from "@/components/animation/PageTransition";
+import { PageHeader } from "@/components/ui/page-header";
+import { SectionContainer } from "@/components/ui/section-container";
+import { CapsuleFilters } from "@/components/capsule/CapsuleFilters";
 import { CapsuleScrollSection } from "@/components/capsule/sections/CapsuleScrollSection";
-import { CapsulePills } from "@/components/capsule/sections/CapsulePills";
 import { useCapsules } from "@/components/capsule/useCapsules";
-import { CapsuleData } from "@/components/capsule/types";
 import { CapsuleStatus } from "@/types/capsule";
-import { Button } from "@/components/ui/button";
 import { Plus, Package, Calendar, Gift } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { LoadingIndicator } from "@/components/animation/LoadingIndicator";
+import { ModernCard } from "@/components/ui/modern-card";
+import { PatternBackground } from "@/components/ui/pattern-background";
 
 const FamilyCapsules = () => {
   const navigate = useNavigate();
@@ -25,7 +29,6 @@ const FamilyCapsules = () => {
   };
 
   const handleCreateCapsule = () => {
-    // Navigate to create capsule page
     navigate("/create-capsule");
   };
 
@@ -62,64 +65,64 @@ const FamilyCapsules = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-background text-foreground">
-      <div className="container mx-auto pt-24 px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row justify-between items-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-heading font-medium mb-4 sm:mb-0">Family Capsules</h1>
-          <Button onClick={handleCreateCapsule} className="flex items-center gap-2">
-            <Plus className="h-4 w-4" />
-            Create Capsule
-          </Button>
-        </div>
-        
-        <CapsulePills statusFilter={statusFilter} onFilterChange={handleFilterChange} />
-        
-        {isLoading ? (
-          <div className="flex justify-center items-center min-h-[200px]">
-            <LoadingIndicator size="lg" />
-          </div>
-        ) : allCapsules.length === 0 ? (
-          <div className="text-center py-12 bg-card dark:bg-gray-800 rounded-lg shadow-sm">
-            <div className="mx-auto w-24 h-24 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mb-4">
-              <svg
-                className="w-12 h-12 text-gray-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                />
-              </svg>
+    <PageTransition location="family-capsules">
+      <div className="min-h-screen bg-background">
+        <PageHeader
+          title="Family Capsules"
+          description="Create and manage your family's digital time capsules"
+          background="forest"
+          actions={
+            <Button onClick={handleCreateCapsule} size="lg" variant="forest">
+              <Plus className="h-4 w-4 mr-2" />
+              Create Capsule
+            </Button>
+          }
+        />
+
+        <SectionContainer maxWidth="7xl" className="space-y-6">
+          <ModernCard variant="modern" withPattern className="overflow-visible">
+            <CapsuleFilters 
+              statusFilter={statusFilter} 
+              onFilterChange={handleFilterChange} 
+            />
+          </ModernCard>
+
+          {isLoading ? (
+            <div className="flex justify-center items-center min-h-[200px]">
+              <LoadingIndicator size="lg" />
             </div>
-            <h3 className="text-lg font-semibold text-foreground mb-2">No capsules found</h3>
-            <p className="text-muted-foreground mb-6">Start creating memory capsules for your family</p>
-            <Button onClick={handleCreateCapsule}>Create Your First Capsule</Button>
-          </div>
-        ) : (
-          <CapsuleScrollSection 
-            capsules={allCapsules.map((capsule: CapsuleData) => ({
-              ...capsule,
-              link: `/capsule/${capsule.id}`,
-              icon: getIconForStatus(capsule.status as CapsuleStatus),
-              colorKey: getColorKeyForStatus(capsule.status as CapsuleStatus),
-              metadata: {
-                creatorInitials: "FV", // This would need to be fetched from user profile
-                itemCount: capsule.itemCount || 0,
-                status: capsule.status as CapsuleStatus,
-                date: capsule.reveal_date || capsule.created_at
-              }
-            }))} 
-            hasNextPage={hasNextPage}
-            fetchNextPage={fetchNextPage}
-            isFetchingNextPage={isFetchingNextPage}
-          />
-        )}
+          ) : allCapsules.length === 0 ? (
+            <ModernCard variant="modern" className="p-12 text-center">
+              <PatternBackground pattern="family-languages" opacity="light" />
+              <div className="mx-auto w-24 h-24 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mb-4">
+                <Package className="w-12 h-12 text-gray-400" />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">No capsules found</h3>
+              <p className="text-muted-foreground mb-6">Start creating memory capsules for your family</p>
+              <Button onClick={handleCreateCapsule}>Create Your First Capsule</Button>
+            </ModernCard>
+          ) : (
+            <CapsuleScrollSection 
+              capsules={allCapsules.map((capsule) => ({
+                ...capsule,
+                link: `/capsule/${capsule.id}`,
+                icon: getIconForStatus(capsule.status as CapsuleStatus),
+                colorKey: getColorKeyForStatus(capsule.status as CapsuleStatus),
+                metadata: {
+                  creatorInitials: capsule.creator?.name?.substring(0, 2).toUpperCase() || "?",
+                  itemCount: capsule.item_count || 0,
+                  status: capsule.status as CapsuleStatus,
+                  date: capsule.reveal_date || capsule.created_at
+                }
+              }))} 
+              hasNextPage={hasNextPage}
+              fetchNextPage={fetchNextPage}
+              isFetchingNextPage={isFetchingNextPage}
+            />
+          )}
+        </SectionContainer>
       </div>
-    </div>
+    </PageTransition>
   );
 };
 

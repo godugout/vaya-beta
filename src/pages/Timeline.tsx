@@ -1,15 +1,17 @@
 
 import { useEffect, useState } from "react";
 import { PageTransition } from "@/components/animation/PageTransition";
+import { PageHeader } from "@/components/ui/page-header";
+import { SectionContainer } from "@/components/ui/section-container";
 import { TimelineView } from "@/components/timeline";
-import { PatternBackground } from "@/components/ui/pattern-background";
-import { SlideFade } from "@/components/animation/SlideFade";
 import { EmotionFilterBadges } from "@/components/timeline/EmotionFilterBadges";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
-import { FamilyTimelineView } from "@/components/family/FamilyTimelineView";
+import { Users } from "lucide-react";
+import { ModernCard } from "@/components/ui/modern-card";
+import { PatternBackground } from "@/components/ui/pattern-background";
 
 const Timeline = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -45,47 +47,43 @@ const Timeline = () => {
 
   return (
     <PageTransition location="timeline">
-      <PatternBackground pattern="sanskrit" opacity="light" className="min-h-screen">
-        <div className="container mx-auto py-8 px-4">
-          <SlideFade>
-            <header className="mb-8 text-center md:text-left">
-              <div className="max-w-2xl">
-                <h1 className="text-3xl font-bold bg-gradient-to-r from-autumn to-leaf bg-clip-text text-transparent">
-                  Family Timeline
-                </h1>
-                <p className="text-muted-foreground mt-2">
-                  Explore your family's journey through cherished memories and stories
-                </p>
+      <div className="min-h-screen bg-background">
+        <PageHeader
+          title="Family Timeline"
+          description="Explore your family's journey through cherished memories and stories"
+          background="autumn"
+        />
+        
+        <SectionContainer maxWidth="7xl" className="space-y-6">
+          {isLoading ? (
+            <div className="space-y-6">
+              <Skeleton className="h-12 w-full max-w-xl" />
+              <Skeleton className="h-64 w-full" />
+            </div>
+          ) : hasFamilies ? (
+            <>
+              <ModernCard variant="modern" withPattern>
+                <EmotionFilterBadges className="mb-0" />
+              </ModernCard>
+              <TimelineView />
+            </>
+          ) : (
+            <ModernCard variant="modern" className="p-12 text-center">
+              <PatternBackground pattern="family-languages" opacity="light" />
+              <div className="mx-auto w-24 h-24 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mb-4">
+                <Users className="w-12 h-12 text-gray-400" />
               </div>
-            </header>
-            
-            {isLoading ? (
-              <div className="space-y-6">
-                <Skeleton className="h-12 w-full max-w-xl" />
-                <Skeleton className="h-64 w-full" />
-              </div>
-            ) : hasFamilies ? (
-              <>
-                <EmotionFilterBadges className="mb-6" />
-                <FamilyTimelineView />
-              </>
-            ) : (
-              <div className="bg-white dark:bg-gray-900 p-8 rounded-lg shadow-sm border border-gray-100 dark:border-gray-800 text-center max-w-lg mx-auto">
-                <h3 className="text-lg font-semibold mb-2">No Families Found</h3>
-                <p className="text-gray-500 dark:text-gray-400 mb-6">
-                  You need to create or join a family before you can see your timeline.
-                </p>
-                <Button 
-                  onClick={() => window.location.href = "/families"} 
-                  className="bg-autumn hover:bg-autumn/90 text-white"
-                >
-                  Go to Families
-                </Button>
-              </div>
-            )}
-          </SlideFade>
-        </div>
-      </PatternBackground>
+              <h3 className="text-xl font-semibold mb-2">No Families Found</h3>
+              <p className="text-muted-foreground mb-6">
+                You need to create or join a family before you can see your timeline.
+              </p>
+              <Button onClick={() => window.location.href = "/families"}>
+                Go to Families
+              </Button>
+            </ModernCard>
+          )}
+        </SectionContainer>
+      </div>
     </PageTransition>
   );
 };
