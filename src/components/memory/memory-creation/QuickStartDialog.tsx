@@ -1,10 +1,10 @@
-
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Image, AudioRecorder } from "@/components/voice-recording/AudioRecorder";
+import { AudioRecorder } from "@/components/voice-recording/AudioRecorder";
+import { Image } from "lucide-react";
 
 interface QuickStartDialogProps {
   isOpen: boolean;

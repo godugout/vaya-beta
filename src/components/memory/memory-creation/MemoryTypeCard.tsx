@@ -30,21 +30,21 @@ const MemoryTypeCard = ({
     <motion.div
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
-      className="cursor-pointer"
+      className="cursor-pointer group"
       onClick={onCardClick}
     >
-      <div className="flex flex-col h-full overflow-hidden rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm transition-all">
-        <div className={cn("p-4 flex items-center gap-4", color)}>
-          <div className="rounded-full bg-white/20 p-2 backdrop-blur-sm">
-            <Icon className={cn("h-5 w-5", iconClass)} />
+      <div className="flex flex-col h-full overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm transition-all">
+        <div className={cn("p-6 flex items-start gap-4", color)}>
+          <div className="rounded-full bg-white/20 p-3 backdrop-blur-sm transition-transform group-hover:scale-110">
+            <Icon className={cn("h-6 w-6", iconClass)} />
           </div>
           <div className="text-white">
-            <h3 className="font-medium leading-none mb-1">{name}</h3>
-            <p className="text-xs text-white/80">{description}</p>
+            <h3 className="font-semibold text-lg leading-none mb-2">{name}</h3>
+            <p className="text-sm text-white/90">{description}</p>
           </div>
         </div>
         
-        <div className="bg-background p-3 flex justify-between items-center mt-auto">
+        <div className="bg-background p-4 flex justify-between items-center mt-auto border-t border-slate-200 dark:border-slate-800">
           <Button 
             variant="ghost" 
             size="sm" 
@@ -52,11 +52,11 @@ const MemoryTypeCard = ({
               e.stopPropagation();
               onQuickStart();
             }}
-            className="text-xs opacity-90 hover:opacity-100"
+            className="text-xs font-medium opacity-90 hover:opacity-100"
           >
             Quick Start
           </Button>
-          <ChevronRight className="h-4 w-4 text-muted-foreground" />
+          <ChevronRight className="h-4 w-4 text-muted-foreground transition-transform group-hover:translate-x-1" />
         </div>
       </div>
     </motion.div>
