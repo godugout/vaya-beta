@@ -45,7 +45,41 @@ serve(async (req) => {
   try {
     console.log('Transcribe audio function invoked');
     
-    const { audio } = await req.json()
+    const requestData = await req.json();
+    
+    // Check if this is a test request
+    if (requestData.test === true) {
+      console.log('Test mode: Validating API key');
+      const apiKey = Deno.env.get('OPENAI_API_KEY');
+      
+      if (!apiKey) {
+        throw new Error('OpenAI API key not configured. Please add it to the Supabase Edge Function Secrets.')
+      }
+      
+      // Test the OpenAI API connection with a minimal request
+      const testResponse = await fetch('https://api.openai.com/v1/models', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+        },
+      });
+      
+      if (!testResponse.ok) {
+        const errorData = await testResponse.json();
+        throw new Error(`OpenAI API test failed: ${JSON.stringify(errorData)}`);
+      }
+      
+      console.log('API key validation successful');
+      return new Response(
+        JSON.stringify({ 
+          success: true, 
+          message: "OpenAI API key is valid and connection is working" 
+        }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+    
+    const { audio } = requestData;
     
     if (!audio) {
       console.error('Error: No audio data provided');

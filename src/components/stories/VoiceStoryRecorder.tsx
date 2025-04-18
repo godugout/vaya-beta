@@ -7,10 +7,11 @@ import { TranscriptionInput } from "@/components/input/TranscriptionInput";
 import { VoiceRecorderButton } from "@/components/input/VoiceRecorderButton";
 import { useVoiceRecorder } from "@/hooks/useVoiceRecorder";
 import { useAudioTranscription } from "@/components/voice-recording/hooks/useAudioTranscription";
+import { useTestTranscription } from "@/components/voice-recording/hooks/useTestTranscription";
 import { useToast } from "@/components/ui/use-toast";
 import { useCreateStory } from "./useStories";
 import { supabase } from "@/integrations/supabase/client";
-import { Mic, FileText, Send, Loader, Globe, AlertCircle } from "lucide-react";
+import { Mic, FileText, Send, Loader, Globe, AlertCircle, CheckCircle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import AudioPreview from "@/components/audio/AudioPreview";
 import TranscriptionDisplay from "@/components/audio/TranscriptionDisplay";
@@ -45,6 +46,12 @@ export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
   } = useAudioTranscription({
     language
   });
+  
+  const {
+    testOpenAIConnection,
+    isRunningTest,
+    testResults
+  } = useTestTranscription();
   
   const createStory = useCreateStory();
   const { toast } = useToast();
@@ -214,6 +221,40 @@ export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
                     ? "Recording... Tap to stop" 
                     : "Tap the microphone to start recording your story"}
                 </p>
+                
+                <div className="w-full flex justify-center mt-4">
+                  <Button
+                    onClick={testOpenAIConnection}
+                    variant="outline"
+                    size="sm"
+                    disabled={isRunningTest}
+                    className="text-xs flex items-center gap-1"
+                  >
+                    {isRunningTest ? (
+                      <>
+                        <Loader className="h-3 w-3 animate-spin" />
+                        Testing API connection...
+                      </>
+                    ) : (
+                      <>
+                        {testResults?.success === true ? (
+                          <CheckCircle className="h-3 w-3 text-green-500" />
+                        ) : testResults?.success === false ? (
+                          <AlertCircle className="h-3 w-3 text-red-500" />
+                        ) : (
+                          <Globe className="h-3 w-3" />
+                        )}
+                        Test Transcription API
+                      </>
+                    )}
+                  </Button>
+                </div>
+                
+                {testResults && (
+                  <div className={`text-sm ${testResults.success ? 'text-green-500' : 'text-red-500'} text-center max-w-md`}>
+                    {testResults.message}
+                  </div>
+                )}
               </div>
             ) : (
               <div className="space-y-4">

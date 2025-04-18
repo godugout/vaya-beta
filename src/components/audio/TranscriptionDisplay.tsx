@@ -22,7 +22,9 @@ const TranscriptionDisplay = ({
         <AlertDescription>
           {error.includes("OpenAI API key not configured") 
             ? "The transcription service is not properly configured. Please contact the administrator."
-            : error}
+            : error.includes("Edge Function returned a 502") 
+              ? "The transcription service is temporarily unavailable. Please try again later."
+              : error}
         </AlertDescription>
       </Alert>
     );
