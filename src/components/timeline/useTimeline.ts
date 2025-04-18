@@ -62,6 +62,7 @@ export const useTimeline = (initialFilters?: TimelineFilters) => {
   
   const [emotionFilters, setEmotionFilters] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
 
   // Apply filters to items - extracted to a separate memoized function for performance
   const filteredItems = useMemo(() => {
@@ -167,6 +168,7 @@ export const useTimeline = (initialFilters?: TimelineFilters) => {
 
   return {
     isLoading,
+    error,
     items: filteredItems,
     filters,
     setFilters,

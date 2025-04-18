@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { 
@@ -27,11 +26,13 @@ export const useTimeline = (filters: TimelineFilters = {}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [items, setItems] = useState<TimelineItem[]>([]);
   const [timelineGroups, setTimelineGroups] = useState<TimelineGroup[]>([]);
+  const [error, setError] = useState<Error | null>(null);
   
   // Fetch data from multiple sources based on filters
   useEffect(() => {
     const fetchTimelineData = async () => {
       setIsLoading(true);
+      setError(null);
       
       try {
         // Example: Fetch data from memories, stories, and capsules tables
@@ -49,6 +50,10 @@ export const useTimeline = (filters: TimelineFilters = {}) => {
           memoriesPromise,
           storiesPromise
         ]);
+        
+        // Check for errors in responses
+        if (memoriesResult.error) throw new Error(memoriesResult.error.message);
+        if (storiesResult.error) throw new Error(storiesResult.error.message);
         
         const memoriesData = memoriesResult.data || [];
         const storiesData = storiesResult.data || [];
@@ -97,8 +102,9 @@ export const useTimeline = (filters: TimelineFilters = {}) => {
         
         setItems(allItems);
         setTimelineGroups(groupedItems);
-      } catch (error) {
-        console.error('Error fetching timeline data:', error);
+      } catch (err) {
+        console.error('Error fetching timeline data:', err);
+        setError(err instanceof Error ? err : new Error('Failed to fetch timeline data'));
       } finally {
         setIsLoading(false);
       }
@@ -107,7 +113,7 @@ export const useTimeline = (filters: TimelineFilters = {}) => {
     fetchTimelineData();
   }, [filters]);
   
-  return { isLoading, items, timelineGroups };
+  return { isLoading, items, timelineGroups, error };
 };
 
 // Helper function to group items by time period
