@@ -1,7 +1,7 @@
 
-/* Base variables with Agencs theme */
+/* Base variables with sacred color palette for Vaya: Hanuman Edition */
 :root {
-  /* Agencs color palette - minimalist black/white with subtle grays */
+  /* Core brand colors */
   --color-black: #000000;
   --color-white: #FFFFFF;
   --color-gray-100: #F4F4F4;
@@ -14,27 +14,28 @@
   --color-gray-800: #403E43;
   --color-gray-900: #221F26;
   
-  /* Forest Stream color palette - from the digital painting */
-  --color-sky: 134 202 233;       /* #86CAE9 - Sky blue */
-  --color-forest: 21 71 52;       /* #154734 - Dark forest green */
-  --color-water: 68 158 186;      /* #449EBA - Stream water */
-  --color-mountain: 94 172 186;   /* #5EACBA - Blue mountains */
-  --color-leaf: 148 193 30;       /* #94C11E - Vibrant leaf green */
-  --color-autumn: 242 153 45;     /* #F2992D - Autumn orange */
-  --color-sand: 196 178 149;      /* #C4B295 - Sandy stone */
+  /* Sacred colors for Hanuman Edition */
+  --color-sky: 91 178 217;       /* #5BB2D9 - Sky blue */
+  --color-forest: 30 57 42;      /* #1E392A - Deep forest green */
+  --color-water: 30 156 149;     /* #1E9C95 - Sacred teal */
+  --color-mountain: 94 172 186;  /* #5EACBA - Blue mountains */
+  --color-leaf: 46 204 113;      /* #2ECC71 - Kelly green */
+  --color-autumn: 255 122 0;     /* #FF7A00 - Hanuman orange */
+  --color-sand: 230 215 185;     /* #E6D7B9 - Sandstone */
   
-  /* UI Color interpretation based on forest stream */
-  --color-ui-orange: 242 153 45;   /* #F2992D - Autumn orange */
-  --color-ui-green: 148 193 30;    /* #94C11E - Vibrant leaf green */
-  --color-ui-purple: 111 86 175;   /* #6F56AF - Added as accent */
-  --color-ui-teal: 68 158 186;     /* #449EBA - Stream water */
-  --color-ui-red: 217 72 67;       /* #D94843 - Added for warnings */
+  /* UI Color interpretation based on Hanuman Edition */
+  --color-ui-orange: 255 122 0;   /* #FF7A00 - Hanuman orange */
+  --color-ui-green: 46 204 113;   /* #2ECC71 - Kelly green */
+  --color-ui-purple: 111 86 175;  /* #6F56AF - Added as accent */
+  --color-ui-teal: 30 156 149;    /* #1E9C95 - Sacred teal */
+  --color-ui-red: 231 76 60;      /* #E74C3C - Terracotta red */
+  --color-ui-yellow: 255 221 89;  /* #FFDD59 - Sunshine yellow */
   
   /* Semantic colors */
-  --color-ui-error: #DC2626;
-  --color-ui-success: #10B981;
-  --color-ui-warning: #F59E0B;
-  --color-ui-info: #0EA5E9;
+  --color-ui-error: #E74C3C;      /* Terracotta red */
+  --color-ui-success: #2ECC71;    /* Kelly green */
+  --color-ui-warning: #FF7A00;    /* Hanuman orange */
+  --color-ui-info: #1E9C95;       /* Sacred teal */
   
   /* Text colors with improved contrast ratios */
   --color-text-dark: var(--color-black);
@@ -44,20 +45,20 @@
   
   /* Gradients with accessible contrast */
   --gradient-fade: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 100%);
-  --gradient-sky-water: linear-gradient(to bottom, rgb(134, 202, 233) 0%, rgb(68, 158, 186) 100%);
-  --gradient-autumn: linear-gradient(135deg, rgb(242, 153, 45) 0%, rgb(217, 72, 67) 100%);
-  --gradient-forest: linear-gradient(135deg, rgb(148, 193, 30) 0%, rgb(21, 71, 52) 100%);
-  --gradient-purple: linear-gradient(135deg, rgb(111, 86, 175) 0%, rgb(155, 135, 245) 100%);
+  --gradient-sky-water: linear-gradient(to bottom, rgb(91, 178, 217) 0%, rgb(30, 156, 149) 100%);
+  --gradient-autumn: linear-gradient(135deg, rgb(255, 122, 0) 0%, rgb(255, 221, 89) 100%);
+  --gradient-forest: linear-gradient(135deg, rgb(46, 204, 113) 0%, rgb(30, 57, 42) 100%);
+  --gradient-hanuman: linear-gradient(135deg, rgb(255, 122, 0) 0%, rgb(231, 76, 60) 100%);
   
   /* Card and surface colors */
   --card-background: var(--color-white);
   --card-shadow: rgba(0, 0, 0, 0.05);
   
   /* Family Tree colors */
-  --tree-node-border: var(--color-black);
+  --tree-node-border: var(--color-autumn);
   --tree-node-background: var(--color-white);
-  --tree-edge-color: var(--color-black);
-  --tree-selected-color: #449EBA;
+  --tree-edge-color: var(--color-leaf);
+  --tree-selected-color: var(--color-water);
 }
 
 /* Dark theme variables with improved contrast ratios */
@@ -78,9 +79,9 @@
   --card-shadow: rgba(255, 255, 255, 0.05);
   
   /* Family tree colors for dark mode */
-  --tree-node-border: var(--color-white);
-  --tree-node-background: var(--color-black);
-  --tree-edge-color: var(--color-white);
+  --tree-node-border: var(--color-autumn);
+  --tree-node-background: var(--color-gray-900);
+  --tree-edge-color: var(--color-leaf);
 }
 
 /* Accessible focus styles */

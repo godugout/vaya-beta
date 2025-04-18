@@ -21,6 +21,7 @@ export const CapsuleFilters = ({ statusFilter, onFilterChange }: CapsuleFiltersP
       <FilterButton 
         active={statusFilter.includes("upcoming")} 
         onClick={() => toggleFilter("upcoming")}
+        variant="sacred-teal"
       >
         Upcoming
       </FilterButton>
@@ -28,6 +29,7 @@ export const CapsuleFilters = ({ statusFilter, onFilterChange }: CapsuleFiltersP
       <FilterButton 
         active={statusFilter.includes("active")} 
         onClick={() => toggleFilter("active")}
+        variant="kelly"
       >
         Active
       </FilterButton>
@@ -35,6 +37,7 @@ export const CapsuleFilters = ({ statusFilter, onFilterChange }: CapsuleFiltersP
       <FilterButton 
         active={statusFilter.includes("locked")} 
         onClick={() => toggleFilter("locked")}
+        variant="hanuman"
       >
         Locked
       </FilterButton>
@@ -42,6 +45,7 @@ export const CapsuleFilters = ({ statusFilter, onFilterChange }: CapsuleFiltersP
       <FilterButton 
         active={statusFilter.includes("revealed")} 
         onClick={() => toggleFilter("revealed")}
+        variant="sunshine"
       >
         Revealed
       </FilterButton>

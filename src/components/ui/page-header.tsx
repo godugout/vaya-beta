@@ -6,7 +6,7 @@ interface PageHeaderProps {
   title: string;
   description?: string;
   actions?: React.ReactNode;
-  background?: "default" | "gradient" | "forest" | "water" | "autumn" | "leaf";
+  background?: "default" | "gradient" | "forest" | "water" | "autumn" | "leaf" | "hanuman" | "sacred-teal" | "sunshine";
   className?: string;
 }
 
@@ -24,6 +24,9 @@ export function PageHeader({
     water: "bg-gradient-to-b from-water/10 to-background",
     autumn: "bg-gradient-to-b from-autumn/10 to-background",
     leaf: "bg-gradient-to-b from-leaf/10 to-background",
+    hanuman: "bg-gradient-to-b from-autumn/10 to-background",
+    "sacred-teal": "bg-gradient-to-b from-water/10 to-background",
+    sunshine: "bg-gradient-to-b from-ui-yellow/10 to-background",
   };
 
   return (

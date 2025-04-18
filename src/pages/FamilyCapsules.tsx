@@ -52,15 +52,15 @@ const FamilyCapsules = () => {
   const getColorKeyForStatus = (status: CapsuleStatus) => {
     switch (status) {
       case 'upcoming':
-        return 'blue';
+        return 'sacred-teal';
       case 'locked':
-        return 'amber';
+        return 'hanuman';
       case 'active':
-        return 'green';
+        return 'kelly';
       case 'revealed':
-        return 'purple';
+        return 'sunshine';
       default:
-        return 'blue';
+        return 'sacred-teal';
     }
   };
 
@@ -70,9 +70,9 @@ const FamilyCapsules = () => {
         <PageHeader
           title="Family Capsules"
           description="Create and manage your family's digital time capsules"
-          background="autumn"
+          background="hanuman"
           actions={
-            <Button onClick={handleCreateCapsule} size="lg" variant="autumn">
+            <Button onClick={handleCreateCapsule} size="lg" variant="hanuman">
               <Plus className="h-4 w-4 mr-2" />
               Create Capsule
             </Button>
@@ -99,7 +99,7 @@ const FamilyCapsules = () => {
               </div>
               <h3 className="text-xl font-semibold mb-2">No capsules found</h3>
               <p className="text-muted-foreground mb-6">Start creating memory capsules for your family</p>
-              <Button onClick={handleCreateCapsule}>Create Your First Capsule</Button>
+              <Button onClick={handleCreateCapsule} variant="hanuman">Create Your First Capsule</Button>
             </ModernCard>
           ) : (
             <CapsuleScrollSection 

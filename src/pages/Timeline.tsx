@@ -51,9 +51,9 @@ const Timeline = () => {
         <PageHeader
           title="Family Timeline"
           description="Explore your family's journey through cherished memories and stories"
-          background="autumn"
+          background="sunshine"
           actions={
-            <Button onClick={() => window.location.href = "/families"} size="lg" variant="autumn">
+            <Button onClick={() => window.location.href = "/families"} size="lg" variant="sunshine">
               <Plus className="h-4 w-4 mr-2" />
               Add Family
             </Button>
@@ -83,7 +83,7 @@ const Timeline = () => {
               <p className="text-muted-foreground mb-6">
                 You need to create or join a family before you can see your timeline.
               </p>
-              <Button onClick={() => window.location.href = "/families"}>
+              <Button onClick={() => window.location.href = "/families"} variant="sunshine">
                 Go to Families
               </Button>
             </ModernCard>

@@ -16,12 +16,18 @@ const buttonVariants = cva(
         ghost: "hover:bg-gray-100 text-black dark:text-white dark:hover:bg-white/10",
         link: "text-black dark:text-white underline-offset-4 hover:underline p-0 h-auto",
         
-        // Forest Stream variants
+        // Sacred Color Variants
         forest: "bg-forest text-white hover:bg-forest/90 dark:bg-forest dark:text-white dark:hover:bg-forest/80",
         water: "bg-water text-white hover:bg-water/90 dark:bg-water dark:text-white dark:hover:bg-water/80",
         leaf: "bg-leaf text-black hover:bg-leaf/90 dark:bg-leaf dark:text-black dark:hover:bg-leaf/80",
-        autumn: "bg-autumn text-black hover:bg-autumn/90 dark:bg-autumn dark:text-black dark:hover:bg-autumn/80",
+        autumn: "bg-autumn text-white hover:bg-autumn/90 dark:bg-autumn dark:text-white dark:hover:bg-autumn/80",
         mountain: "bg-mountain text-white hover:bg-mountain/90 dark:bg-mountain dark:text-white dark:hover:bg-mountain/80",
+        
+        // Hanuman Edition Sacred Colors
+        hanuman: "bg-autumn text-white hover:bg-autumn/90 dark:bg-autumn dark:text-white dark:hover:bg-autumn/80",
+        "sacred-teal": "bg-water text-white hover:bg-water/90 dark:bg-water dark:text-white dark:hover:bg-water/80",
+        "sunshine": "bg-ui-yellow text-black hover:bg-ui-yellow/90 dark:bg-ui-yellow dark:text-black dark:hover:bg-ui-yellow/80",
+        "kelly": "bg-leaf text-black hover:bg-leaf/90 dark:bg-leaf dark:text-black dark:hover:bg-leaf/80",
         
         // Modern variants
         modern: "bg-black text-white hover:bg-black/90 dark:bg-white dark:text-black dark:hover:bg-white/90",
@@ -31,15 +37,16 @@ const buttonVariants = cva(
         // Feature-specific variants
         stories: "bg-forest text-white hover:bg-forest/90 dark:bg-forest dark:text-white dark:hover:bg-forest/80",
         memories: "bg-water text-white hover:bg-water/90 dark:bg-water dark:text-white dark:hover:bg-water/80", 
-        capsules: "bg-autumn text-black hover:bg-autumn/90 dark:bg-autumn dark:text-black dark:hover:bg-autumn/80",
+        capsules: "bg-autumn text-white hover:bg-autumn/90 dark:bg-autumn dark:text-white dark:hover:bg-autumn/80",
         narra: "bg-leaf text-black hover:bg-leaf/90 dark:bg-leaf dark:text-black dark:hover:bg-leaf/80",
+        timeline: "bg-ui-yellow text-black hover:bg-ui-yellow/90 dark:bg-ui-yellow dark:text-black dark:hover:bg-ui-yellow/80",
         
         // Additional accent variants
         accent: "bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200",
-        coral: "bg-autumn text-black hover:bg-autumn/90 dark:bg-autumn dark:text-black dark:hover:bg-autumn/80",
+        coral: "bg-autumn text-white hover:bg-autumn/90 dark:bg-autumn dark:text-white dark:hover:bg-autumn/80",
         purple: "bg-purple-500 text-white hover:bg-purple-600 dark:bg-purple-500 dark:text-white dark:hover:bg-purple-600",
-        yellow: "bg-yellow-400 text-black hover:bg-yellow-500 dark:bg-yellow-400 dark:text-black dark:hover:bg-yellow-500",
-        orange: "bg-autumn text-black hover:bg-autumn/90 dark:bg-autumn dark:text-black dark:hover:bg-autumn/80",
+        yellow: "bg-ui-yellow text-black hover:bg-ui-yellow/90 dark:bg-ui-yellow dark:text-black dark:hover:bg-ui-yellow/80",
+        orange: "bg-autumn text-white hover:bg-autumn/90 dark:bg-autumn dark:text-white dark:hover:bg-autumn/80",
         green: "bg-leaf text-black hover:bg-leaf/90 dark:bg-leaf dark:text-black dark:hover:bg-leaf/80",
         blue: "bg-water text-white hover:bg-water/90 dark:bg-water dark:text-white dark:hover:bg-water/80",
       },

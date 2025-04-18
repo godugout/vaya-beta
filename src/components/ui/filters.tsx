@@ -1,7 +1,7 @@
 
 import React from "react";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { Button, ButtonProps } from "@/components/ui/button";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
@@ -41,11 +41,12 @@ export function Filters({
   );
 }
 
-interface FilterButtonProps {
+interface FilterButtonProps extends Omit<ButtonProps, 'variant'> {
   children: React.ReactNode;
   active?: boolean;
   onClick?: () => void;
   className?: string;
+  variant?: "hanuman" | "sacred-teal" | "kelly" | "sunshine" | "forest" | "water" | "leaf" | "autumn";
 }
 
 export function FilterButton({
@@ -53,13 +54,16 @@ export function FilterButton({
   active = false,
   onClick,
   className,
+  variant = "sacred-teal",
+  ...props
 }: FilterButtonProps) {
   return (
     <Button
-      variant={active ? "forest" : "outline"}
+      variant={active ? variant : "outline"}
       size="sm"
       onClick={onClick}
       className={cn("rounded-full", className)}
+      {...props}
     >
       {children}
     </Button>
