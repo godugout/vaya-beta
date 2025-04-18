@@ -8,7 +8,7 @@ import { CapsuleFilters } from "@/components/capsule/CapsuleFilters";
 import { CapsuleScrollSection } from "@/components/capsule/sections/CapsuleScrollSection";
 import { useCapsules } from "@/components/capsule/useCapsules";
 import { CapsuleStatus } from "@/types/capsule";
-import { Plus, Package, Calendar, Gift } from "lucide-react";
+import { Plus, MicrophoneIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LoadingIndicator } from "@/components/animation/LoadingIndicator";
 import { ModernCard } from "@/components/ui/modern-card";
@@ -32,55 +32,29 @@ const FamilyCapsules = () => {
     navigate("/create-capsule");
   };
 
-  // Helper function to get appropriate icon for capsule status
-  const getIconForStatus = (status: CapsuleStatus) => {
-    switch (status) {
-      case 'upcoming':
-        return Calendar;
-      case 'locked':
-        return Package;
-      case 'active':
-        return Gift;
-      case 'revealed':
-        return Gift;
-      default:
-        return Package;
-    }
-  };
-
-  // Helper function to get color key for capsule status
-  const getColorKeyForStatus = (status: CapsuleStatus) => {
-    switch (status) {
-      case 'upcoming':
-        return 'sacred-teal';
-      case 'locked':
-        return 'hanuman';
-      case 'active':
-        return 'kelly';
-      case 'revealed':
-        return 'sunshine';
-      default:
-        return 'sacred-teal';
-    }
-  };
-
   return (
     <PageTransition location="family-capsules">
       <div className="min-h-screen bg-background">
         <PageHeader
-          title="Family Capsules"
-          description="Create and manage your family's digital time capsules"
+          title="Family Memory Capsules"
+          description="Preserve and share your cherished family memories through voice stories"
           background="hanuman"
           actions={
-            <Button onClick={handleCreateCapsule} size="lg" variant="hanuman">
-              <Plus className="h-4 w-4 mr-2" />
-              Create Capsule
-            </Button>
+            <div className="flex gap-4">
+              <Button onClick={handleCreateCapsule} size="lg" variant="hanuman">
+                <MicrophoneIcon className="h-5 w-5 mr-2" />
+                Record Story
+              </Button>
+              <Button onClick={handleCreateCapsule} size="lg" variant="sacred-teal">
+                <Plus className="h-5 w-5 mr-2" />
+                Create Capsule
+              </Button>
+            </div>
           }
         />
 
         <SectionContainer maxWidth="7xl" className="space-y-6">
-          <ModernCard variant="modern" withPattern className="overflow-visible">
+          <ModernCard variant="modern" withPattern>
             <CapsuleFilters 
               statusFilter={statusFilter} 
               onFilterChange={handleFilterChange} 
@@ -93,13 +67,17 @@ const FamilyCapsules = () => {
             </div>
           ) : allCapsules.length === 0 ? (
             <ModernCard variant="modern" className="p-12 text-center">
-              <PatternBackground pattern="family-languages" opacity="light" />
-              <div className="mx-auto w-24 h-24 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mb-4">
-                <Package className="w-12 h-12 text-gray-400" />
+              <PatternBackground pattern="sacred" opacity="light" />
+              <div className="mx-auto w-24 h-24 bg-hanuman/10 dark:bg-hanuman/20 rounded-full flex items-center justify-center mb-4">
+                <MicrophoneIcon className="w-12 h-12 text-hanuman" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">No capsules found</h3>
-              <p className="text-muted-foreground mb-6">Start creating memory capsules for your family</p>
-              <Button onClick={handleCreateCapsule} variant="hanuman">Create Your First Capsule</Button>
+              <h3 className="text-xl font-semibold mb-2">Start Your Family Legacy</h3>
+              <p className="text-muted-foreground mb-6">
+                Begin preserving your family memories by recording your first story
+              </p>
+              <Button onClick={handleCreateCapsule} variant="hanuman">
+                Record Your First Story
+              </Button>
             </ModernCard>
           ) : (
             <CapsuleScrollSection 

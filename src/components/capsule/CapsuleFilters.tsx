@@ -17,13 +17,13 @@ export const CapsuleFilters = ({ statusFilter, onFilterChange }: CapsuleFiltersP
   };
 
   return (
-    <Filters searchPlaceholder="Search capsules...">
+    <Filters searchPlaceholder="Search family stories...">
       <FilterButton 
         active={statusFilter.includes("upcoming")} 
         onClick={() => toggleFilter("upcoming")}
-        variant="sacred-teal"
+        variant="hanuman"
       >
-        Upcoming
+        Not Started
       </FilterButton>
       
       <FilterButton 
@@ -31,15 +31,15 @@ export const CapsuleFilters = ({ statusFilter, onFilterChange }: CapsuleFiltersP
         onClick={() => toggleFilter("active")}
         variant="kelly"
       >
-        Active
+        Recording
       </FilterButton>
       
       <FilterButton 
         active={statusFilter.includes("locked")} 
         onClick={() => toggleFilter("locked")}
-        variant="hanuman"
+        variant="sacred-teal"
       >
-        Locked
+        In Progress
       </FilterButton>
       
       <FilterButton 
@@ -47,7 +47,7 @@ export const CapsuleFilters = ({ statusFilter, onFilterChange }: CapsuleFiltersP
         onClick={() => toggleFilter("revealed")}
         variant="sunshine"
       >
-        Revealed
+        Complete
       </FilterButton>
     </Filters>
   );
