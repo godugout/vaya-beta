@@ -2,7 +2,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 
-type PatternType = 'dots' | 'grid' | 'sanskrit' | 'circles' | 'lines' | 'waves';
+type PatternType = 'dots' | 'grid' | 'sanskrit' | 'circles' | 'lines' | 'waves' | 'family-languages';
 type PatternSize = 'sm' | 'md' | 'lg';
 type PatternOpacity = 'light' | 'medium' | 'dark';
 
@@ -37,6 +37,7 @@ export const PatternBackground: React.FC<PatternBackgroundProps> = ({
       circles: "bg-pattern-circles bg-repeat",
       lines: "bg-pattern-lines bg-repeat",
       waves: "bg-pattern-waves bg-repeat",
+      'family-languages': "bg-pattern-languages bg-repeat",
     }[pattern];
     
     const sizeClass = {
