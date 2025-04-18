@@ -5,8 +5,9 @@ import { VoiceControlButton } from "./VoiceControlButton";
 import { UserMenu } from "../UserMenu";
 import { GuestMenu } from "../GuestMenu";
 import { Button } from "@/components/ui/button";
-import { Bell, Search, PlusCircle } from "lucide-react";
+import { Bell, Search, PlusCircle, Globe } from "lucide-react";
 import AddMemoryModal from "@/components/memory/AddMemoryModal";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 
 interface UserControlsProps {
   user: User | null;
@@ -36,12 +37,22 @@ export const UserControls = ({
         />
       </div>
       
+      <ThemeToggle variant="icon" />
+      
+      <Button
+        variant="ghost"
+        size="icon"
+        className="rounded-full h-9 w-9 flex md:hidden"
+      >
+        <Globe className="h-4 w-4 text-muted-foreground" />
+      </Button>
+      
       {user && (
         <>
           <Button 
             variant="outline" 
             size="icon" 
-            className="hidden md:flex rounded-full h-10 w-10"
+            className="hidden md:flex rounded-full h-10 w-10 hover:bg-autumn/10 hover:text-autumn hover:border-autumn transition-colors"
             onClick={() => setShowMemoryModal(true)}
           >
             <PlusCircle className="h-5 w-5 text-muted-foreground" />
@@ -50,7 +61,7 @@ export const UserControls = ({
           <Button 
             variant="ghost" 
             size="icon" 
-            className="hidden md:flex rounded-full h-10 w-10"
+            className="hidden md:flex rounded-full h-10 w-10 hover:bg-leaf/10 hover:text-leaf transition-colors"
           >
             <Bell className="h-5 w-5 text-muted-foreground" />
           </Button>

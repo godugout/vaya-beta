@@ -1,0 +1,35 @@
+
+/* Base background patterns */
+.bg-pattern-dots {
+  background-image: radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0);
+}
+
+.bg-pattern-grid {
+  background-image: linear-gradient(to right, rgba(var(--color-ui-teal), 0.1) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(var(--color-ui-teal), 0.1) 1px, transparent 1px);
+}
+
+/* Sanskrit pattern using pseudo text elements */
+.bg-pattern-sanskrit {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Ctext x='50%25' y='25%25' font-family='Arial' font-size='24' fill='currentColor' text-anchor='middle'%3Eॐ%3C/text%3E%3Ctext x='25%25' y='50%25' font-family='Arial' font-size='24' fill='currentColor' text-anchor='middle'%3Eनमस्ते%3C/text%3E%3Ctext x='75%25' y='50%25' font-family='Arial' font-size='24' fill='currentColor' text-anchor='middle'%3Eपरिवार%3C/text%3E%3Ctext x='50%25' y='75%25' font-family='Arial' font-size='24' fill='currentColor' text-anchor='middle'%3Eस्मृति%3C/text%3E%3C/svg%3E");
+}
+
+/* Circle patterns */
+.bg-pattern-circles {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='80' stroke='currentColor' stroke-width='1' fill='none'/%3E%3Ccircle cx='100' cy='100' r='40' stroke='currentColor' stroke-width='1' fill='none'/%3E%3Ccircle cx='100' cy='100' r='20' stroke='currentColor' stroke-width='1' fill='none'/%3E%3C/svg%3E");
+}
+
+/* Line patterns */
+.bg-pattern-lines {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cline x1='0' y1='0' x2='200' y2='200' stroke='currentColor' stroke-width='1'/%3E%3Cline x1='200' y1='0' x2='0' y2='200' stroke='currentColor' stroke-width='1'/%3E%3C/svg%3E");
+}
+
+/* Wave patterns */
+.bg-pattern-waves {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cpath d='M0,50 C50,30 50,70 100,50 C150,30 150,70 200,50' stroke='currentColor' stroke-width='1' fill='none'/%3E%3Cpath d='M0,100 C50,80 50,120 100,100 C150,80 150,120 200,100' stroke='currentColor' stroke-width='1' fill='none'/%3E%3Cpath d='M0,150 C50,130 50,170 100,150 C150,130 150,170 200,150' stroke='currentColor' stroke-width='1' fill='none'/%3E%3C/svg%3E");
+}
+
+/* Multi-language pattern */
+.bg-pattern-languages {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Ctext x='50' y='50' font-family='Arial' font-size='14' fill='currentColor'%3EFamily%3C/text%3E%3Ctext x='150' y='50' font-family='Arial' font-size='14' fill='currentColor'%3E家族%3C/text%3E%3Ctext x='250' y='50' font-family='Arial' font-size='14' fill='currentColor'%3EFamilie%3C/text%3E%3Ctext x='50' y='100' font-family='Arial' font-size='14' fill='currentColor'%3E famiglia%3C/text%3E%3Ctext x='150' y='100' font-family='Arial' font-size='14' fill='currentColor'%3Eपरिवार%3C/text%3E%3Ctext x='250' y='100' font-family='Arial' font-size='14' fill='currentColor'%3E가족%3C/text%3E%3Ctext x='50' y='150' font-family='Arial' font-size='14' fill='currentColor'%3Efamille%3C/text%3E%3Ctext x='150' y='150' font-family='Arial' font-size='14' fill='currentColor'%3Eсемья%3C/text%3E%3Ctext x='250' y='150' font-family='Arial' font-size='14' fill='currentColor'%3E家庭%3C/text%3E%3Ctext x='50' y='200' font-family='Arial' font-size='14' fill='currentColor'%3Eครอบครัว%3C/text%3E%3Ctext x='150' y='200' font-family='Arial' font-size='14' fill='currentColor'%3Efamília%3C/text%3E%3Ctext x='250' y='200' font-family='Arial' font-size='14' fill='currentColor'%3Eعائلة%3C/text%3E%3C/svg%3E");
+}

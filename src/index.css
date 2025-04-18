@@ -7,8 +7,10 @@
 @import './styles/components/index.css';
 @import './styles/utilities/index.css';
 @import './styles/theme/dark.css';
+@import './styles/modern-theme.css';
+@import './styles/components/background-patterns.css';
 
-@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&family=Architects+Daughter&display=swap');
 
 @layer base {
   :root {
@@ -230,4 +232,38 @@
 [data-route="index"] .page-container,
 [data-route="index"] .page-content {
   @apply p-0 m-0;
+}
+
+/* Modern styling for react flow */
+.react-flow__node {
+  @apply rounded-xl shadow-md transition-shadow duration-300;
+}
+
+.react-flow__node:hover {
+  @apply shadow-lg;
+}
+
+.react-flow__edge path {
+  @apply stroke-2;
+}
+
+/* Modern Cards */
+.modern-memory-card {
+  @apply rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm transition-all duration-300;
+}
+
+.modern-memory-card:hover {
+  @apply shadow-md -translate-y-1;
+}
+
+.modern-memory-card__header {
+  @apply p-4 border-b border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50;
+}
+
+.modern-memory-card__body {
+  @apply p-4;
+}
+
+.modern-memory-card__footer {
+  @apply p-4 pt-0 flex justify-end gap-2;
 }

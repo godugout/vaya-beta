@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
 
@@ -35,6 +36,18 @@ export default {
         "ui-purple": "rgb(var(--color-ui-purple) / <alpha-value>)",
         "ui-teal": "rgb(var(--color-ui-teal) / <alpha-value>)",
         "ui-red": "rgb(var(--color-ui-red) / <alpha-value>)",
+        
+        // Vaya colors for modern design
+        "vaya": {
+          red: "#FF5252",
+          orange: "#FF7675",
+          yellow: "#FFD166",
+          green: "#06D6A0",
+          blue: "#118AB2",
+          purple: "#6C5CE7",
+          black: "#222222",
+          white: "#FFFFFF",
+        },
         
         // Dark mode specific colors
         "dark-background": {
@@ -94,11 +107,18 @@ export default {
         lg: "var(--radius-lg)",
         md: "var(--radius-md)",
         sm: "var(--radius-sm)",
+        "modern-sm": "0.5rem",
+        "modern-md": "1rem",
+        "modern-lg": "1.5rem",
+        "modern-xl": "2rem",
       },
       backgroundImage: {
         "forest-stream": "url('/lovable-uploads/bc413ab4-a49c-4baa-8d14-e2f0d6b00ac5.png')",
         "gradient-coral": "linear-gradient(135deg, #FF7675 0%, #FFA05A 100%)",
         "gradient-purple": "linear-gradient(135deg, #6C5CE7 0%, #8F84EB 100%)",
+        "pattern-dots": "radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)",
+        "pattern-grid": "linear-gradient(to right, rgba(0,0,0,0.1) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.1) 1px, transparent 1px)",
+        "pattern-sanskrit": "url('data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" width=\"200\" height=\"200\" viewBox=\"0 0 200 200\"%3E%3Ctext x=\"50%25\" y=\"50%25\" font-family=\"Arial\" font-size=\"20\" fill=\"currentColor\" text-anchor=\"middle\" opacity=\"0.07\"%3Eॐ%3C/text%3E%3C/svg%3E')",
       },
       animation: {
         "wave-pattern": "wavePattern 50s linear infinite",
@@ -139,6 +159,10 @@ export default {
           "0%": { filter: "brightness(1) drop-shadow(0 0 0 rgba(255, 255, 255, 0.7))" },
           "50%": { filter: "brightness(1.3) drop-shadow(0 0 5px rgba(255, 255, 255, 0.9))" },
           "100%": { filter: "brightness(1) drop-shadow(0 0 0 rgba(255, 255, 255, 0.7))" }
+        },
+        highlight: {
+          "0%": { backgroundPosition: "-100% 0" },
+          "100%": { backgroundPosition: "200% 0" }
         }
       },
       zIndex: {

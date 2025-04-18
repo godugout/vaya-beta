@@ -7,6 +7,8 @@ import { FilterPanel } from './components/FilterPanel';
 import { LayoutSelector } from './components/LayoutSelector';
 import { FocusModeToggle } from './components/FocusModeToggle';
 import { nodeTypes, edgeTypes } from './familyTreeConfig';
+import { PatternBackground } from '@/components/ui/pattern-background';
+import { cn } from '@/lib/utils';
 
 interface FamilyTreeViewProps {
   nodes: any[];
@@ -76,7 +78,12 @@ export const FamilyTreeView = ({
   }, [isMobile]);
   
   return (
-    <div className={`relative h-full ${getLayoutClass(layoutType)} ${className || ''}`}>
+    <PatternBackground 
+      pattern="sanskrit" 
+      size="lg" 
+      opacity="light" 
+      className={cn(`relative h-full ${getLayoutClass(layoutType)}`, className)}
+    >
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -90,14 +97,17 @@ export const FamilyTreeView = ({
         fitView
         minZoom={0.2}
         maxZoom={2}
-        className="bg-gray-50 dark:bg-gray-900"
+        className="bg-gray-50/30 dark:bg-gray-900/50 rounded-xl backdrop-blur-sm"
       >
-        <Controls showInteractive={false} className="bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 shadow-md" />
+        <Controls 
+          showInteractive={false} 
+          className="bg-white/90 dark:bg-gray-800/90 border border-gray-300 dark:border-gray-700 shadow-md rounded-xl" 
+        />
         <MiniMap
           nodeStrokeWidth={3}
           zoomable
           pannable
-          className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 shadow-md hidden md:block"
+          className="bg-white/90 dark:bg-gray-800/90 border border-gray-300 dark:border-gray-700 shadow-md rounded-xl hidden md:block"
         />
         <Background color="#aaa" gap={16} />
         
@@ -114,7 +124,7 @@ export const FamilyTreeView = ({
         
         {children}
       </ReactFlow>
-    </div>
+    </PatternBackground>
   );
 };
 
