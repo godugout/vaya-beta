@@ -13,9 +13,9 @@ export const ShareStoriesHeader = ({ onOpenTapestry, onStartRecording }: ShareSt
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center gap-4">
           <div>
-            <h1 className="text-3xl font-bold mb-2 text-foreground">Family Stories</h1>
+            <h1 className="text-3xl font-bold mb-2 text-foreground">Stories</h1>
             <p className="text-muted-foreground">
-              Record, transcribe, and preserve your family's heritage through voice and written stories.
+              Record, transcribe, and preserve your heritage through voice and written stories.
             </p>
           </div>
           <div className="flex items-center gap-2">
