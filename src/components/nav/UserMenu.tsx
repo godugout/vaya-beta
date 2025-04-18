@@ -17,14 +17,12 @@ import {
   LogOut, 
   Moon, 
   Sun, 
-  Phone,
-  Palette,
-  HelpCircle,
-  Bookmark,
-  Archive
+  Book, 
+  Users,
+  Archive,
+  Home
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { motion } from "framer-motion";
 
 interface UserMenuProps {
   user: User | null;
@@ -42,29 +40,22 @@ export const UserMenu = ({ user, handleSignOut, navigate }: UserMenuProps) => {
     ? user.user_metadata.full_name.substring(0, 2).toUpperCase()
     : user.email 
       ? user.email.substring(0, 2).toUpperCase() 
-      : "VA";
+      : "U";
   
   const userDisplayName = user.user_metadata?.full_name || "User";
-  const userEmail = user.email || "user@example.com";
+  const userEmail = user.email || "";
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-10 w-10 rounded-full p-0 overflow-hidden">
+        <Button variant="ghost" className="relative h-10 w-10 rounded-full">
           <Avatar className="h-10 w-10 border-2 border-autumn">
             <AvatarImage src={user.user_metadata?.avatar_url} />
-            <AvatarFallback className="bg-autumn text-white">
-              {userInitials}
-            </AvatarFallback>
+            <AvatarFallback>{userInitials}</AvatarFallback>
           </Avatar>
-          <motion.span 
-            className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-white dark:border-gray-900"
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.2, delay: 0.1 }}
-          />
         </Button>
       </DropdownMenuTrigger>
+      
       <DropdownMenuContent align="end" className="w-64">
         <DropdownMenuLabel className="p-4 border-b">
           <div className="flex flex-col space-y-1">
@@ -74,33 +65,43 @@ export const UserMenu = ({ user, handleSignOut, navigate }: UserMenuProps) => {
         </DropdownMenuLabel>
         
         <div className="p-2">
-          <DropdownMenuItem onClick={() => navigate('/profile')} className="p-2 cursor-pointer">
+          <DropdownMenuItem onClick={() => navigate('/')} className="p-2">
+            <Home className="mr-3 h-4 w-4" />
+            <span>Home</span>
+          </DropdownMenuItem>
+          
+          <DropdownMenuItem onClick={() => navigate('/profile')} className="p-2">
             <UserIcon className="mr-3 h-4 w-4" />
             <span>Profile</span>
           </DropdownMenuItem>
           
-          <DropdownMenuItem onClick={() => navigate('/saved-stories')} className="p-2 cursor-pointer">
-            <Bookmark className="mr-3 h-4 w-4" />
-            <span>Saved Stories</span>
+          <DropdownMenuItem onClick={() => navigate('/memory-lane')} className="p-2">
+            <Book className="mr-3 h-4 w-4" />
+            <span>Memories</span>
           </DropdownMenuItem>
           
-          <DropdownMenuItem onClick={() => navigate('/family-capsules')} className="p-2 cursor-pointer">
+          <DropdownMenuItem onClick={() => navigate('/families')} className="p-2">
+            <Users className="mr-3 h-4 w-4" />
+            <span>Families</span>
+          </DropdownMenuItem>
+          
+          <DropdownMenuItem onClick={() => navigate('/capsules')} className="p-2">
             <Archive className="mr-3 h-4 w-4" />
-            <span>My Capsules</span>
-          </DropdownMenuItem>
-          
-          <DropdownMenuItem onClick={() => navigate('/account')} className="p-2 cursor-pointer">
-            <Settings className="mr-3 h-4 w-4" />
-            <span>Account Settings</span>
+            <span>Time Capsules</span>
           </DropdownMenuItem>
         </div>
         
         <DropdownMenuSeparator />
         
         <div className="p-2">
+          <DropdownMenuItem onClick={() => navigate('/settings')} className="p-2">
+            <Settings className="mr-3 h-4 w-4" />
+            <span>Settings</span>
+          </DropdownMenuItem>
+          
           <DropdownMenuItem 
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className="p-2 cursor-pointer"
+            className="p-2"
           >
             {theme === 'dark' ? (
               <>
@@ -114,27 +115,14 @@ export const UserMenu = ({ user, handleSignOut, navigate }: UserMenuProps) => {
               </>
             )}
           </DropdownMenuItem>
-          
-          <DropdownMenuItem onClick={() => navigate('/theme')} className="p-2 cursor-pointer">
-            <Palette className="mr-3 h-4 w-4" />
-            <span>Theme Settings</span>
-          </DropdownMenuItem>
-          
-          <DropdownMenuItem onClick={() => navigate('/help')} className="p-2 cursor-pointer">
-            <HelpCircle className="mr-3 h-4 w-4" />
-            <span>Help & Support</span>
-          </DropdownMenuItem>
         </div>
         
         <DropdownMenuSeparator />
         
         <div className="p-2">
           <DropdownMenuItem 
-            onClick={async () => {
-              setOpen(false);
-              await handleSignOut();
-            }}
-            className="p-2 cursor-pointer text-red-500 dark:text-red-400 focus:text-red-500 dark:focus:text-red-400"
+            onClick={handleSignOut}
+            className="p-2 text-red-500 dark:text-red-400"
           >
             <LogOut className="mr-3 h-4 w-4" />
             <span>Sign Out</span>

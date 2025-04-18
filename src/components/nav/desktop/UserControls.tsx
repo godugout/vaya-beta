@@ -5,9 +5,9 @@ import { VoiceControlButton } from "./VoiceControlButton";
 import { UserMenu } from "../UserMenu";
 import { GuestMenu } from "../GuestMenu";
 import { Button } from "@/components/ui/button";
-import { Bell, Search, PlusCircle, Globe } from "lucide-react";
-import AddMemoryModal from "@/components/memory/AddMemoryModal";
+import { Bell, Search, PlusCircle, Settings, Mic } from "lucide-react";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
+import AddMemoryModal from "@/components/memory/AddMemoryModal";
 
 interface UserControlsProps {
   user: User | null;
@@ -28,57 +28,66 @@ export const UserControls = ({
 
   return (
     <div className="flex items-center gap-3">
+      {/* Search Bar */}
       <div className="relative hidden md:flex items-center">
         <Search className="absolute left-3 h-4 w-4 text-muted-foreground" />
         <input 
           type="text" 
-          placeholder="Search..." 
+          placeholder="Search memories..." 
           className="h-10 rounded-full bg-background/80 border border-border pl-9 pr-3 text-sm focus:outline-none focus:ring-1 focus:ring-autumn w-[180px] lg:w-[220px] focus:w-[240px] transition-all duration-300"
         />
       </div>
       
+      {/* Theme Toggle */}
       <ThemeToggle variant="icon" />
-      
-      <Button
-        variant="ghost"
-        size="icon"
-        className="rounded-full h-9 w-9 flex md:hidden"
-      >
-        <Globe className="h-4 w-4 text-muted-foreground" />
-      </Button>
       
       {user && (
         <>
+          {/* Create Button */}
           <Button 
-            variant="outline" 
-            size="icon" 
-            className="hidden md:flex rounded-full h-10 w-10 hover:bg-autumn/10 hover:text-autumn hover:border-autumn transition-colors"
+            variant="autumn"
+            onClick={() => setShowMemoryModal(true)}
+            className="hidden md:flex items-center gap-2"
+          >
+            <PlusCircle className="h-4 w-4" />
+            <span>Create Story</span>
+          </Button>
+
+          {/* Quick Record Button */}
+          <Button 
+            variant="ghost"
+            size="icon"
+            className="md:hidden rounded-full h-10 w-10"
             onClick={() => setShowMemoryModal(true)}
           >
-            <PlusCircle className="h-5 w-5 text-muted-foreground" />
+            <Mic className="h-5 w-5 text-autumn" />
           </Button>
           
+          {/* Notifications */}
           <Button 
             variant="ghost" 
             size="icon" 
-            className="hidden md:flex rounded-full h-10 w-10 hover:bg-leaf/10 hover:text-leaf transition-colors"
+            className="hidden md:flex rounded-full h-10 w-10"
           >
             <Bell className="h-5 w-5 text-muted-foreground" />
           </Button>
         </>
       )}
       
+      {/* Voice Navigation */}
       <VoiceControlButton 
         isActive={isVoiceActive}
         onToggle={onVoiceToggle}
       />
       
+      {/* User Menu */}
       {user && handleSignOut && navigate ? (
         <UserMenu user={user} handleSignOut={handleSignOut} navigate={navigate} />
       ) : navigate ? (
         <GuestMenu navigate={navigate} />
       ) : null}
 
+      {/* Memory Creation Modal */}
       {showMemoryModal && (
         <AddMemoryModal
           open={showMemoryModal}
