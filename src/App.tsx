@@ -1,8 +1,8 @@
-
 import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from "@/components/ui/toaster"
+import { useDevAuth } from "@/hooks/useDevAuth";
 
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
@@ -29,6 +29,8 @@ const App = () => {
   };
 
   const queryClient = new QueryClient();
+
+  useDevAuth(); // Add this line for development auto-login
 
   return (
     <QueryClientProvider client={queryClient}>
