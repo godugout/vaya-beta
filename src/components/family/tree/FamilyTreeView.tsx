@@ -19,13 +19,14 @@ interface FamilyTreeViewProps {
   onZoomIn: () => void;
   onZoomOut: () => void;
   onFitView: () => void;
-  onAddMember: () => void;
-  onOpenConnectDialog: () => void;
-  onRemoveConnection: () => void;
-  onImport: () => void;
-  onShare: () => void;
-  onRemoveMember: () => void;
-  onAddMembers: () => void;
+  onAddMember?: () => void;
+  onOpenConnectDialog?: () => void;
+  onRemoveConnection?: () => void;
+  onImport?: () => void;
+  onShare?: () => void;
+  onRemoveMember?: () => void;
+  onAddMembers?: () => void;
+  className?: string;
 }
 
 export const FamilyTreeView = ({
@@ -46,6 +47,7 @@ export const FamilyTreeView = ({
   onShare,
   onRemoveMember,
   onAddMembers,
+  className,
 }: FamilyTreeViewProps) => {
   const isMobile = useIsMobile();
   const [layoutType, setLayoutType] = useState<'vertical' | 'horizontal' | 'radial'>('vertical');
@@ -72,7 +74,7 @@ export const FamilyTreeView = ({
   }, [isMobile]);
   
   return (
-    <div className={`relative h-full ${getLayoutClass(layoutType)}`}>
+    <div className={`relative h-full ${getLayoutClass(layoutType)} ${className || ''}`}>
       <ReactFlow
         nodes={nodes}
         edges={edges}

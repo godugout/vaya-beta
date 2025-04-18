@@ -20,6 +20,7 @@ import { nodeTypes, edgeTypes } from './tree/familyTreeConfig';
 import { TreeUploadDialog } from './tree/TreeUploadDialog';
 import { UploadCloud } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { FamilyTreeView } from './tree/FamilyTreeView';
 
 export const FamilyTreeMain = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
@@ -153,26 +154,18 @@ export const FamilyTreeMain = () => {
           </div>
         </div>
       ) : (
-        <ReactFlow
+        <FamilyTreeView
           nodes={nodes}
           edges={edges}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
-          nodeTypes={nodeTypes}
-          edgeTypes={edgeTypes}
-          onInit={setReactFlowInstance}
-          fitView
+          setReactFlowInstance={setReactFlowInstance}
+          onNodeClick={() => {}}
+          onZoomIn={handleZoomIn}
+          onZoomOut={handleZoomOut}
+          onFitView={handleFitView}
         >
-          <Controls showInteractive={false} className="bg-gray-800 border border-gray-700 shadow-md" />
-          <MiniMap
-            nodeStrokeWidth={3}
-            zoomable
-            pannable
-            className="bg-gray-800 border border-gray-700 shadow-md"
-          />
-          <Background color="#444" gap={16} />
-          
           <Panel position="top-left" className="p-4">
             <FamilyTreeControlPanel 
               handleZoomIn={handleZoomIn}
@@ -185,7 +178,7 @@ export const FamilyTreeMain = () => {
               onOpenUploadDialog={() => setIsUploadDialogOpen(true)}
             />
           </Panel>
-        </ReactFlow>
+        </FamilyTreeView>
       )}
       
       <TreeUploadDialog

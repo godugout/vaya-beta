@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { TreeDeciduous } from "lucide-react";
 import FamilyTreeBuilder from "@/components/family/tree/FamilyTreeBuilder";
@@ -22,6 +22,7 @@ export const FamilyTreeViewComponent = ({
   onBackToFamilies 
 }: FamilyTreeViewProps) => {
   const selectedFamily = families.find(f => f.id === selectedFamilyId);
+  const [expandedView, setExpandedView] = useState(false);
 
   if (!selectedFamilyId) {
     return (
@@ -36,6 +37,10 @@ export const FamilyTreeViewComponent = ({
     );
   }
 
+  const toggleExpandedView = () => {
+    setExpandedView(!expandedView);
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
@@ -46,16 +51,25 @@ export const FamilyTreeViewComponent = ({
           <Button
             variant="outline"
             size="sm"
+            onClick={toggleExpandedView}
+          >
+            {expandedView ? "Compact View" : "Expanded View"}
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
             onClick={onBackToFamilies}
           >
             Back to Families
           </Button>
         </div>
       </div>
-      <FamilyTreeBuilder 
-        familyId={selectedFamilyId}
-        initialMembers={selectedFamily?.members}
-      />
+      <div className={expandedView ? "h-[calc(100vh-200px)]" : "h-[600px]"}>
+        <FamilyTreeBuilder 
+          familyId={selectedFamilyId}
+          initialMembers={selectedFamily?.members}
+        />
+      </div>
     </div>
   );
 };
