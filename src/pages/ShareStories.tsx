@@ -3,10 +3,8 @@ import { useState, useRef } from "react";
 import { PageTransition } from "@/components/animation/PageTransition";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { useStories } from "@/components/stories/useStories";
-import { useCapsules } from "@/components/capsule/useCapsules";
 import { FamilyTapestry } from "@/components/family/FamilyTapestry";
 import { ShareStoriesHeader } from "@/components/stories/ShareStoriesHeader";
-import { CapsuleSection } from "@/components/stories/CapsuleSection";
 import { RecordingSection } from "@/components/stories/RecordingSection";
 import { StoriesSection } from "@/components/stories/StoriesSection";
 
@@ -20,11 +18,6 @@ const ShareStories = () => {
     isLoading: isLoadingStories 
   } = useStories();
   
-  const { 
-    data: capsulesData, 
-    isLoading: isLoadingCapsules 
-  } = useCapsules(["upcoming", "active"]);
-  
   const stories = storiesData?.pages.flatMap(page => page.stories) || [];
   const filteredStories = searchQuery
     ? stories.filter(story => 
@@ -32,8 +25,6 @@ const ShareStories = () => {
         (story.description && story.description.toLowerCase().includes(searchQuery.toLowerCase()))
       )
     : stories;
-
-  const capsules = capsulesData?.pages.flatMap(page => page.capsules) || [];
   
   const handleStartRecording = () => {
     recordingSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -46,11 +37,6 @@ const ShareStories = () => {
           <ShareStoriesHeader 
             onOpenTapestry={() => setShowTapestry(true)} 
             onStartRecording={handleStartRecording}
-          />
-          
-          <CapsuleSection 
-            capsules={capsules} 
-            isLoading={isLoadingCapsules} 
           />
           
           <div ref={recordingSectionRef}>
