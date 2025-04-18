@@ -7,6 +7,7 @@ import { FamilyTapestry } from "@/components/family/FamilyTapestry";
 import { ShareStoriesHeader } from "@/components/stories/ShareStoriesHeader";
 import { RecordingSection } from "@/components/stories/RecordingSection";
 import { StoriesSection } from "@/components/stories/StoriesSection";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 
 const ShareStories = () => {
   const [showTapestry, setShowTapestry] = useState(false);
@@ -54,6 +55,10 @@ const ShareStories = () => {
             isOpen={showTapestry} 
             onClose={() => setShowTapestry(false)} 
           />
+          
+          <div className="fixed bottom-4 right-4 z-50">
+            <ThemeToggle />
+          </div>
         </div>
       </LanguageProvider>
     </PageTransition>

@@ -1,3 +1,3 @@
 
-// Re-export theme from the new organization
+// Export theme from the theme folder
 export * from './theme/index';
