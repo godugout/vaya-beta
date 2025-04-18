@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { PageTransition } from "@/components/animation/PageTransition";
 import { TimelineView } from "@/components/timeline";
@@ -8,6 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
+import { FamilyTimelineView } from "@/components/family/FamilyTimelineView";
 
 const Timeline = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -20,16 +22,12 @@ const Timeline = () => {
         setIsLoading(true);
         const { data, error } = await supabase
           .from('families')
-          .select('count');
+          .select('id')
+          .limit(1);
         
-        if (error) {
-          throw error;
-        }
+        if (error) throw error;
         
-        // Check if there are any families
-        if (data && data[0]?.count > 0) {
-          setHasFamilies(true);
-        }
+        setHasFamilies(data && data.length > 0);
       } catch (error: any) {
         console.error("Error checking families:", error);
         toast({
@@ -69,7 +67,7 @@ const Timeline = () => {
             ) : hasFamilies ? (
               <>
                 <EmotionFilterBadges className="mb-6" />
-                <TimelineView />
+                <FamilyTimelineView />
               </>
             ) : (
               <div className="bg-white dark:bg-gray-900 p-8 rounded-lg shadow-sm border border-gray-100 dark:border-gray-800 text-center max-w-lg mx-auto">

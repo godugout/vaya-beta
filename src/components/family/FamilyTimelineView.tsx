@@ -13,43 +13,61 @@ interface Family {
   description: string | null;
 }
 
+interface FamilyMember {
+  id: string;
+  name: string;
+  title: string;
+  description: string | null;
+  birth_date: string | null;
+}
+
 export const FamilyTimelineView = () => {
   const [selectedFamily, setSelectedFamily] = useState<Family | null>(null);
-  const [families, setFamilies] = useState<Family[]>([]);
+  const [familyMembers, setFamilyMembers] = useState<FamilyMember[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
   useEffect(() => {
-    fetchFamilies();
-  }, []);
+    const fetchFamilyDetails = async () => {
+      try {
+        setLoading(true);
+        
+        // Fetch first family
+        const { data: familiesData, error: familyError } = await supabase
+          .from('families')
+          .select('id, name, description')
+          .limit(1);
 
-  const fetchFamilies = async () => {
-    try {
-      setLoading(true);
-      
-      const { data: familiesData, error } = await supabase
-        .from('families')
-        .select('id, name, description');
+        if (familyError) throw familyError;
+        
+        if (familiesData && familiesData.length > 0) {
+          const family = familiesData[0];
+          setSelectedFamily(family);
 
-      if (error) throw error;
-      
-      console.log("Families loaded for timeline:", familiesData);
-      
-      if (familiesData && familiesData.length > 0) {
-        setFamilies(familiesData);
-        setSelectedFamily(familiesData[0]);
+          // Fetch family members for this family
+          const { data: membersData, error: membersError } = await supabase
+            .from('family_members')
+            .select('id, name, title, description, birth_date')
+            .eq('family_id', family.id);
+
+          if (membersError) throw membersError;
+          
+          setFamilyMembers(membersData || []);
+        }
+      } catch (error: any) {
+        console.error("Error loading family details:", error);
+        toast({
+          title: "Error loading family details",
+          description: error.message,
+          variant: "destructive",
+        });
+      } finally {
+        setLoading(false);
       }
-    } catch (error: any) {
-      console.error("Error loading families for timeline:", error);
-      toast({
-        title: "Error loading families",
-        description: error.message,
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
+
+    fetchFamilyDetails();
+  }, [toast]);
 
   if (loading) {
     return (
@@ -65,7 +83,7 @@ export const FamilyTimelineView = () => {
     );
   }
 
-  if (families.length === 0) {
+  if (!selectedFamily) {
     return (
       <div className="bg-white dark:bg-gray-900 p-8 rounded-lg shadow-sm border border-gray-100 dark:border-gray-800 text-center">
         <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
@@ -83,22 +101,39 @@ export const FamilyTimelineView = () => {
 
   return (
     <div className="bg-white dark:bg-gray-900 p-8 rounded-lg shadow-sm border border-gray-100 dark:border-gray-800">
-      {selectedFamily && (
-        <div className="mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-              {selectedFamily.name} Timeline
-            </h2>
-            <Button variant="outline" size="sm" onClick={() => window.location.href = "/families"}>
-              <ChevronLeft className="h-4 w-4 mr-2" />
-              Back to Families
-            </Button>
-          </div>
-          {selectedFamily.description && (
-            <p className="text-gray-600 dark:text-gray-400 mb-4">{selectedFamily.description}</p>
-          )}
+      <div className="mb-6">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+            {selectedFamily.name} Timeline
+          </h2>
+          <Button variant="outline" size="sm" onClick={() => window.location.href = "/families"}>
+            <ChevronLeft className="h-4 w-4 mr-2" />
+            Back to Families
+          </Button>
         </div>
-      )}
+        {selectedFamily.description && (
+          <p className="text-gray-600 dark:text-gray-400 mb-4">{selectedFamily.description}</p>
+        )}
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+          {familyMembers.map(member => (
+            <div key={member.id} className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg">
+              <h3 className="font-semibold">{member.name}</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">{member.title}</p>
+              {member.birth_date && (
+                <p className="text-xs text-gray-500 dark:text-gray-500">
+                  Born: {new Date(member.birth_date).getFullYear()}
+                </p>
+              )}
+              {member.description && (
+                <p className="text-xs mt-2 text-gray-500 dark:text-gray-500">
+                  {member.description}
+                </p>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
       
       <MemoryCapsuleTimeline 
         onCreateCapsule={() => window.location.href = "/family-capsules"}
@@ -107,3 +142,5 @@ export const FamilyTimelineView = () => {
     </div>
   );
 };
+
+export default FamilyTimelineView;
