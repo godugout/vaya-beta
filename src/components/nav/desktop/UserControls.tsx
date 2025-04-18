@@ -42,7 +42,7 @@ export const UserControls = ({
   };
 
   return (
-    <div className="user-controls" style={{ position: 'relative', zIndex: 210 }}>
+    <div className="user-controls flex items-center gap-2" style={{ position: 'relative', zIndex: 210 }}>
       {/* Search Bar */}
       <div className="relative hidden md:flex items-center">
         <Search className="absolute left-3 h-4 w-4 text-muted-foreground" />
