@@ -63,7 +63,7 @@ export const MainNav = () => {
   };
 
   return (
-    <div className="sticky top-0 z-[100] w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-all duration-300 border-b shadow-sm h-auto">
+    <div className="sticky top-0 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-all duration-300 border-b shadow-sm h-auto" style={{ zIndex: 100 }}>
       {/* Minimized Header (shown when scrolled) */}
       {isMinimized && <MinimizedHeader isMinimized={isMinimized} />}
 

@@ -48,7 +48,7 @@ export const UserMenu = ({ user, handleSignOut, navigate }: UserMenuProps) => {
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+        <Button variant="ghost" className="relative h-10 w-10 rounded-full" style={{ zIndex: 210 }}>
           <Avatar className="h-10 w-10 border-2 border-autumn">
             <AvatarImage src={user.user_metadata?.avatar_url} />
             <AvatarFallback>{userInitials}</AvatarFallback>
@@ -56,7 +56,7 @@ export const UserMenu = ({ user, handleSignOut, navigate }: UserMenuProps) => {
         </Button>
       </DropdownMenuTrigger>
       
-      <DropdownMenuContent align="end" className="w-64 z-[200]">
+      <DropdownMenuContent align="end" className="w-64" style={{ zIndex: 220, backgroundColor: 'var(--background)', border: '1px solid var(--border)' }}>
         <DropdownMenuLabel className="p-4 border-b">
           <div className="flex flex-col space-y-1">
             <p className="text-base font-semibold">{userDisplayName}</p>

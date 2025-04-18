@@ -29,12 +29,12 @@ export const GuestMenu = ({ navigate }: GuestMenuProps) => {
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm" className="rounded-full">
+        <Button variant="outline" size="sm" className="rounded-full" style={{ zIndex: 210 }}>
           <UserIcon className="h-4 w-4 mr-2" />
           <span className="hidden sm:inline">Sign In</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56 z-[200]">
+      <DropdownMenuContent align="end" className="w-56" style={{ zIndex: 220, backgroundColor: 'var(--background)', border: '1px solid var(--border)' }}>
         <div className="p-2">
           <DropdownMenuItem 
             onClick={() => navigate('/auth')}

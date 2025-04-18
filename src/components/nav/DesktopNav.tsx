@@ -40,20 +40,20 @@ export const DesktopNav = ({
     <div className={cn(
       "desktop-nav w-full",
       className
-    )}>
+    )} style={{ position: 'relative', zIndex: 100 }}>
       <div className="container mx-auto px-4 flex items-center justify-between h-full">
         {/* Left: Logo */}
-        <div className="flex-shrink-0">
+        <div className="flex-shrink-0" style={{ zIndex: 100 }}>
           <LogoSection />
         </div>
         
         {/* Center: Main navigation */}
-        <div className="flex-grow flex justify-center">
+        <div className="flex-grow flex justify-center" style={{ zIndex: 100 }}>
           <NavigationItems user={user} isSimplifiedView={isSimplifiedView} />
         </div>
         
         {/* Right: User controls */}
-        <div className="flex-shrink-0">
+        <div className="flex-shrink-0" style={{ zIndex: 210 }}>
           <UserControls 
             user={user || null}
             handleSignOut={handleSignOut || (async () => {})}

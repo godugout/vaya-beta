@@ -7,7 +7,8 @@ export const zIndex = {
   toast: 40,
   tooltip: 50,
   nav: 100,
-  floating: 50,
-  userControls: 110,
-  dropdown: 120,
+  floating: 200,
+  userControls: 210,
+  dropdown: 220,
 };
+

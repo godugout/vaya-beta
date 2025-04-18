@@ -1,7 +1,7 @@
 
 /* Desktop Navigation Styles */
 .desktop-nav {
-  @apply flex items-center justify-between py-2 z-50; /* Added z-50 to ensure it stays on top */
+  @apply flex items-center justify-between py-2 z-[100]; /* Using z-index from theme */
   height: 64px;
 }
 
@@ -17,7 +17,7 @@
 
 /* User Controls Area */
 .user-controls {
-  @apply flex items-center gap-3 z-50; /* Added z-50 to ensure it stays on top */
+  @apply flex items-center gap-3 z-[210]; /* Increased to match userControls in z-index theme */
 }
 
 /* Voice Navigation Button */

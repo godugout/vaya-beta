@@ -42,7 +42,7 @@ export const UserControls = ({
   };
 
   return (
-    <div className="flex items-center gap-3 relative z-50">
+    <div className="user-controls" style={{ position: 'relative', zIndex: 210 }}>
       {/* Search Bar */}
       <div className="relative hidden md:flex items-center">
         <Search className="absolute left-3 h-4 w-4 text-muted-foreground" />
@@ -61,6 +61,7 @@ export const UserControls = ({
         variant="autumn"
         onClick={handleCreateMemory}
         className="hidden md:flex items-center gap-2"
+        style={{ zIndex: 210 }}
       >
         <PlusCircle className="h-4 w-4" />
         <span>Create Story</span>
@@ -72,6 +73,7 @@ export const UserControls = ({
         size="icon"
         className="md:hidden rounded-full h-10 w-10"
         onClick={handleCreateMemory}
+        style={{ zIndex: 210 }}
       >
         <Mic className="h-5 w-5 text-autumn" />
       </Button>
@@ -82,6 +84,7 @@ export const UserControls = ({
           variant="ghost" 
           size="icon" 
           className="hidden md:flex rounded-full h-10 w-10"
+          style={{ zIndex: 210 }}
         >
           <Bell className="h-5 w-5 text-muted-foreground" />
         </Button>
