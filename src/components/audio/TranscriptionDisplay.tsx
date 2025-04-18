@@ -1,16 +1,28 @@
 
 import { motion } from "framer-motion";
-import { Sparkles } from "lucide-react";
+import { Sparkles, AlertCircle } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface TranscriptionDisplayProps {
   transcription: string | null;
   isGenerating?: boolean;
+  error?: string | null;
 }
 
 const TranscriptionDisplay = ({ 
   transcription, 
-  isGenerating = false 
+  isGenerating = false,
+  error = null
 }: TranscriptionDisplayProps) => {
+  if (error) {
+    return (
+      <Alert variant="destructive">
+        <AlertCircle className="h-4 w-4" />
+        <AlertDescription>{error}</AlertDescription>
+      </Alert>
+    );
+  }
+  
   if (!transcription && !isGenerating) return null;
   
   return (

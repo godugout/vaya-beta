@@ -1,3 +1,4 @@
+
 import "https://deno.land/x/xhr@0.1.0/mod.ts"
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 
@@ -36,37 +37,56 @@ function processBase64Chunks(base64String: string, chunkSize = 32768) {
 }
 
 serve(async (req) => {
+  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
   }
 
   try {
+    console.log('Transcribe audio function invoked');
+    
     const { audio } = await req.json()
     
     if (!audio) {
+      console.error('Error: No audio data provided');
       throw new Error('No audio data provided')
     }
 
+    console.log(`Received audio data of length: ${audio.length}`);
+    
+    // Process audio in chunks to prevent memory issues
     const binaryAudio = processBase64Chunks(audio)
+    console.log(`Processed binary audio of size: ${binaryAudio.length}`);
     
     const formData = new FormData()
     const blob = new Blob([binaryAudio], { type: 'audio/webm' })
     formData.append('file', blob, 'audio.webm')
     formData.append('model', 'whisper-1')
 
+    console.log('Sending request to OpenAI API');
+    const apiKey = Deno.env.get('OPENAI_API_KEY');
+    
+    if (!apiKey) {
+      console.error('OpenAI API key not found in environment variables');
+      throw new Error('OpenAI API key not configured. Please add it to the Supabase Edge Function Secrets.')
+    }
+    
     const response = await fetch('https://api.openai.com/v1/audio/transcriptions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${Deno.env.get('OPENAI_API_KEY')}`,
+        'Authorization': `Bearer ${apiKey}`,
       },
       body: formData,
     })
 
     if (!response.ok) {
-      throw new Error(`OpenAI API error: ${await response.text()}`)
+      const errorText = await response.text();
+      console.error(`OpenAI API error: ${errorText}`);
+      throw new Error(`OpenAI API error: ${errorText}`)
     }
 
     const result = await response.json()
+    console.log('Successfully received transcription:', result.text?.substring(0, 30) + '...');
 
     return new Response(
       JSON.stringify({ text: result.text }),
@@ -74,8 +94,12 @@ serve(async (req) => {
     )
 
   } catch (error) {
+    console.error('Transcription error:', error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ 
+        error: error.message,
+        details: typeof error === 'object' ? JSON.stringify(error) : 'Unknown error'
+      }),
       {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

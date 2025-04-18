@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,11 +10,12 @@ import { useAudioTranscription } from "@/components/voice-recording/hooks/useAud
 import { useToast } from "@/components/ui/use-toast";
 import { useCreateStory } from "./useStories";
 import { supabase } from "@/integrations/supabase/client";
-import { Mic, FileText, Send, Loader, Globe } from "lucide-react";
+import { Mic, FileText, Send, Loader, Globe, AlertCircle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import AudioPreview from "@/components/audio/AudioPreview";
 import TranscriptionDisplay from "@/components/audio/TranscriptionDisplay";
 import { motion } from "framer-motion";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface VoiceStoryRecorderProps {
   onSuccess?: () => void;
@@ -26,6 +28,7 @@ export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
   const [storyContent, setStoryContent] = useState("");
   const [language, setLanguage] = useState<"en" | "hi" | "gu">("en");
   const [isProcessing, setIsProcessing] = useState(false);
+  const [transcriptionError, setTranscriptionError] = useState<string | null>(null);
   
   const {
     isRecordingActive,
@@ -52,6 +55,7 @@ export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
       stopRecording();
       setIsRecording(false);
     } else {
+      setTranscriptionError(null);
       startRecording();
       setIsRecording(true);
     }
@@ -62,6 +66,7 @@ export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
     if (!audioBlob) return;
     
     try {
+      setTranscriptionError(null);
       const text = await transcribeAudio(audioBlob);
       if (text && !storyContent) {
         setStoryContent(text);
@@ -72,13 +77,16 @@ export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
             ? firstSentence.substring(0, 47) + '...' 
             : firstSentence);
         }
+      } else if (!text) {
+        setTranscriptionError("Transcription failed. Try speaking more clearly or use the text input instead.");
       }
     } catch (error) {
       console.error("Transcription error:", error);
+      setTranscriptionError((error as Error).message || "Transcription failed. The server may be busy or the audio format is not supported.");
       toast({
         variant: "destructive",
         title: "Transcription failed",
-        description: "There was a problem transcribing your recording."
+        description: "There was a problem transcribing your recording. You can still save it or try again.",
       });
     }
   };
@@ -136,6 +144,7 @@ export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
       setStoryTitle("");
       setStoryContent("");
       setAudioBlob(null);
+      setTranscriptionError(null);
       
       toast({
         title: "Story saved",
@@ -213,7 +222,7 @@ export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
                   disabled={isProcessing || isTranscribing}
                 />
                 
-                {!transcription && !isTranscribing && (
+                {!transcription && !isTranscribing && !transcriptionError && (
                   <Button 
                     onClick={handleTranscribe} 
                     variant="outline" 
@@ -230,6 +239,15 @@ export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
                     <Loader size={14} className="animate-spin mr-2" />
                     Transcribing your recording...
                   </div>
+                )}
+                
+                {transcriptionError && (
+                  <Alert variant="destructive" className="mt-4">
+                    <AlertCircle className="h-4 w-4" />
+                    <AlertDescription>
+                      {transcriptionError}
+                    </AlertDescription>
+                  </Alert>
                 )}
                 
                 {transcription && (
