@@ -1,10 +1,12 @@
 
+import { useState } from "react";
 import { User } from "@supabase/supabase-js";
 import { VoiceControlButton } from "./VoiceControlButton";
 import { UserMenu } from "../UserMenu";
 import { GuestMenu } from "../GuestMenu";
 import { Button } from "@/components/ui/button";
 import { Bell, Search, PlusCircle } from "lucide-react";
+import AddMemoryModal from "@/components/memory/AddMemoryModal";
 
 interface UserControlsProps {
   user: User | null;
@@ -21,6 +23,8 @@ export const UserControls = ({
   isVoiceActive,
   onVoiceToggle 
 }: UserControlsProps) => {
+  const [showMemoryModal, setShowMemoryModal] = useState(false);
+
   return (
     <div className="flex items-center gap-3">
       <div className="relative hidden md:flex items-center">
@@ -38,7 +42,7 @@ export const UserControls = ({
             variant="outline" 
             size="icon" 
             className="hidden md:flex rounded-full h-10 w-10"
-            onClick={() => navigate('/create')}
+            onClick={() => setShowMemoryModal(true)}
           >
             <PlusCircle className="h-5 w-5 text-muted-foreground" />
           </Button>
@@ -63,6 +67,13 @@ export const UserControls = ({
       ) : navigate ? (
         <GuestMenu navigate={navigate} />
       ) : null}
+
+      {showMemoryModal && (
+        <AddMemoryModal
+          open={showMemoryModal}
+          onOpenChange={setShowMemoryModal}
+        />
+      )}
     </div>
   );
 };
