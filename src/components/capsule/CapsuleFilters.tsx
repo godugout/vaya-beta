@@ -1,4 +1,5 @@
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+
+import { Filters, FilterButton } from "@/components/ui/filters";
 import { CapsuleStatus } from "@/types/capsule";
 
 interface CapsuleFiltersProps {
@@ -7,25 +8,43 @@ interface CapsuleFiltersProps {
 }
 
 export const CapsuleFilters = ({ statusFilter, onFilterChange }: CapsuleFiltersProps) => {
+  const toggleFilter = (status: CapsuleStatus) => {
+    if (statusFilter.includes(status)) {
+      onFilterChange(statusFilter.filter(s => s !== status));
+    } else {
+      onFilterChange([...statusFilter, status]);
+    }
+  };
+
   return (
-    <ToggleGroup 
-      type="multiple" 
-      value={statusFilter}
-      onValueChange={(value) => onFilterChange(value as CapsuleStatus[])}
-      className="bg-white border rounded-lg p-1"
-    >
-      <ToggleGroupItem value="upcoming" aria-label="Show upcoming capsules">
+    <Filters searchPlaceholder="Search capsules...">
+      <FilterButton 
+        active={statusFilter.includes("upcoming")} 
+        onClick={() => toggleFilter("upcoming")}
+      >
         Upcoming
-      </ToggleGroupItem>
-      <ToggleGroupItem value="active" aria-label="Show active capsules">
+      </FilterButton>
+      
+      <FilterButton 
+        active={statusFilter.includes("active")} 
+        onClick={() => toggleFilter("active")}
+      >
         Active
-      </ToggleGroupItem>
-      <ToggleGroupItem value="locked" aria-label="Show locked capsules">
+      </FilterButton>
+      
+      <FilterButton 
+        active={statusFilter.includes("locked")} 
+        onClick={() => toggleFilter("locked")}
+      >
         Locked
-      </ToggleGroupItem>
-      <ToggleGroupItem value="revealed" aria-label="Show revealed capsules">
+      </FilterButton>
+      
+      <FilterButton 
+        active={statusFilter.includes("revealed")} 
+        onClick={() => toggleFilter("revealed")}
+      >
         Revealed
-      </ToggleGroupItem>
-    </ToggleGroup>
+      </FilterButton>
+    </Filters>
   );
 };

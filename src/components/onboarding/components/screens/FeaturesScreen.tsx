@@ -1,5 +1,7 @@
 
 import { FadeIn } from "@/components/animation/FadeIn";
+import { ModernCard, ModernCardContent, ModernCardHeader, ModernCardTitle } from "@/components/ui/modern-card";
+import { CheckCircle2 } from "lucide-react";
 
 interface FeaturesScreenProps {
   lang: 'en' | 'es';
@@ -8,40 +10,29 @@ interface FeaturesScreenProps {
 export const FeaturesScreen = ({ lang }: FeaturesScreenProps) => {
   return (
     <FadeIn>
-      <div className="space-y-4 p-6">
-        <div className="space-y-2">
-          <h4 className="font-medium">
+      <ModernCard variant="modern" withHover className="mx-auto max-w-3xl">
+        <ModernCardHeader className="bg-gradient-to-r from-water/10 to-mountain/10 border-b">
+          <ModernCardTitle className="text-xl font-medium text-water dark:text-mountain">
             {lang === 'es' ? "Indicaciones culturalmente resonantes:" : "Culturally resonant prompts:"}
-          </h4>
-          <ul className="list-disc pl-5 space-y-1">
-            <li>
-              {lang === 'es' 
-                ? "Exploración del patrimonio familiar"
-                : "Family heritage exploration"}
-            </li>
-            <li>
-              {lang === 'es' 
-                ? "Tradiciones y celebraciones"
-                : "Traditions and celebrations"}
-            </li>
-            <li>
-              {lang === 'es' 
-                ? "Sabiduría de los mayores"
-                : "Wisdom from elders"}
-            </li>
-            <li>
-              {lang === 'es' 
-                ? "Historias de migración y transición"
-                : "Migration and transition stories"}
-            </li>
-            <li>
-              {lang === 'es' 
-                ? "Valores y enseñanzas culturales"
-                : "Cultural values and teachings"}
-            </li>
+          </ModernCardTitle>
+        </ModernCardHeader>
+        <ModernCardContent className="space-y-4">
+          <ul className="space-y-3">
+            {[
+              lang === 'es' ? "Exploración del patrimonio familiar" : "Family heritage exploration",
+              lang === 'es' ? "Tradiciones y celebraciones" : "Traditions and celebrations",
+              lang === 'es' ? "Sabiduría de los mayores" : "Wisdom from elders",
+              lang === 'es' ? "Historias de migración y transición" : "Migration and transition stories",
+              lang === 'es' ? "Valores y enseñanzas culturales" : "Cultural values and teachings"
+            ].map((feature, index) => (
+              <li key={index} className="flex items-start gap-3">
+                <CheckCircle2 className="h-5 w-5 text-leaf flex-shrink-0 mt-0.5" />
+                <span className="text-foreground">{feature}</span>
+              </li>
+            ))}
           </ul>
-        </div>
-      </div>
+        </ModernCardContent>
+      </ModernCard>
     </FadeIn>
   );
 };
