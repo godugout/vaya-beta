@@ -1,4 +1,3 @@
-
 import { useState, useCallback } from 'react';
 import { TimelineFilters, TimelineItem, TimelinePeriod, TimelineGroup } from './types';
 
@@ -70,6 +69,13 @@ export const useTimeline = (initialFilters?: TimelineFilters) => {
     // Apply emotion filters
     if (emotionFilters.length > 0) {
       return item.emotions?.some(emotion => emotionFilters.includes(emotion));
+    }
+    
+    // Apply search query
+    if (filters.searchQuery && filters.searchQuery.trim() !== '') {
+      const query = filters.searchQuery.toLowerCase();
+      return item.title.toLowerCase().includes(query) || 
+             item.content.toLowerCase().includes(query);
     }
     
     return true;

@@ -6,7 +6,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { DatePicker } from '@/components/ui/date-picker';
 import { Search, Filter, X } from 'lucide-react';
-import { TimelineFilters as FiltersType } from './types';
+import { TimelineFilters as FiltersType, ContentType } from './types';
 
 interface TimelineFiltersProps {
   filters: FiltersType;
@@ -29,7 +29,7 @@ export const TimelineFilters = ({ filters, onFilterChange }: TimelineFiltersProp
     });
   };
   
-  const handleContentTypeChange = (type: string, checked: boolean) => {
+  const handleContentTypeChange = (type: ContentType, checked: boolean) => {
     const currentTypes = filters.contentTypes || [];
     const newTypes = checked 
       ? [...currentTypes, type]
@@ -46,7 +46,7 @@ export const TimelineFilters = ({ filters, onFilterChange }: TimelineFiltersProp
       ...filters,
       dateRange: {
         ...filters.dateRange,
-        start: date ? date.toISOString() : undefined
+        start: date
       }
     });
   };
@@ -56,7 +56,7 @@ export const TimelineFilters = ({ filters, onFilterChange }: TimelineFiltersProp
       ...filters,
       dateRange: {
         ...filters.dateRange,
-        end: date ? date.toISOString() : undefined
+        end: date
       }
     });
   };
@@ -65,7 +65,7 @@ export const TimelineFilters = ({ filters, onFilterChange }: TimelineFiltersProp
     onFilterChange({
       contentTypes: [],
       searchQuery: '',
-      dateRange: {},
+      dateRange: undefined,
       groupBy: filters.groupBy
     });
   };
@@ -90,9 +90,9 @@ export const TimelineFilters = ({ filters, onFilterChange }: TimelineFiltersProp
               <div key={type.id} className="flex items-center space-x-2">
                 <Checkbox
                   id={`type-${type.id}`}
-                  checked={filters.contentTypes?.includes(type.id) || false}
+                  checked={filters.contentTypes?.includes(type.id as ContentType) || false}
                   onCheckedChange={(checked) => 
-                    handleContentTypeChange(type.id, checked === true)
+                    handleContentTypeChange(type.id as ContentType, checked === true)
                   }
                 />
                 <Label htmlFor={`type-${type.id}`} className="text-sm font-normal">

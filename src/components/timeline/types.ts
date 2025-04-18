@@ -1,13 +1,14 @@
 
 export type TimelinePeriod = 'day' | 'week' | 'month' | 'year' | 'decade';
-export type ContentType = 'memory' | 'story' | 'event' | 'photo';
+export type ContentType = 'memory' | 'story' | 'event' | 'photo' | 'audio' | 'capsule';
 
 export interface TimelineFilters {
   contentTypes: ContentType[];
   groupBy: TimelinePeriod;
+  searchQuery?: string;
   dateRange?: {
-    from: Date;
-    to: Date;
+    start?: Date | string;
+    end?: Date | string;
   };
 }
 
