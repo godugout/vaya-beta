@@ -38,7 +38,7 @@ export default function Families() {
       setLoading(true);
       console.log("Fetching families data...");
       
-      // First, fetch the families with their members
+      // First, fetch the families without trying to get the role column
       const { data: familiesData, error: familiesError } = await supabase
         .from('families')
         .select(`
@@ -47,8 +47,7 @@ export default function Families() {
           description,
           members:family_members(
             id,
-            name,
-            role
+            name
           )
         `);
 
@@ -60,11 +59,11 @@ export default function Families() {
       if (familiesData && Array.isArray(familiesData)) {
         // Process each family to add profile information
         const processedFamilies = familiesData.map(family => {
-          // Map each member with a default profile until we implement user associations
+          // Map each member with a default profile and role
           const membersWithProfiles = (family.members || []).map(member => {
             return {
               id: member.id,
-              role: member.role || 'member',
+              role: 'member', // Default role since role column doesn't exist
               profile: {
                 full_name: member.name || 'Unknown',
                 avatar_url: null

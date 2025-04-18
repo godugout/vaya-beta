@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -31,7 +32,7 @@ export function EditFamilyDialog({ family, onFamilyUpdated }: EditFamilyDialogPr
     setLoading(true);
     try {
       const { error } = await supabase
-        .from('vaya_families')
+        .from('families') // Changed from 'vaya_families' to 'families'
         .update({
           name: formData.name,
           description: formData.description,
