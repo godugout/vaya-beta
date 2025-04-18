@@ -58,6 +58,10 @@ export const MainNav = () => {
     });
   };
 
+  const navigateTo = (path: string) => {
+    navigate(path);
+  };
+
   return (
     <div className={`sticky top-0 z-40 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-all duration-300 border-b ${isMinimized ? 'h-12 border-border' : 'h-24 border-transparent'}`}>
       {/* Minimized Header (shown when scrolled) */}
@@ -71,14 +75,14 @@ export const MainNav = () => {
               <MobileTopNav 
                 user={user}
                 handleSignOut={handleLogout}
-                navigate={navigate}
+                navigate={navigateTo}
                 isSimplifiedView={isSimplifiedView}
                 onSettingsToggle={toggleSimplifiedView}
               />
               <BreadcrumbNav isSimplifiedView={isSimplifiedView} />
               <MobileBottomNav 
                 user={user}
-                navigate={navigate}
+                navigate={navigateTo}
                 isSimplifiedView={isSimplifiedView}
                 isVoiceActive={isVoiceActive}
                 onVoiceToggle={toggleVoiceNavigation}
@@ -89,7 +93,7 @@ export const MainNav = () => {
               <DesktopNav 
                 user={user}
                 handleSignOut={handleLogout}
-                navigate={navigate}
+                navigate={navigateTo}
                 isSimplifiedView={isSimplifiedView}
                 isVoiceActive={isVoiceActive}
                 onVoiceToggle={toggleVoiceNavigation}

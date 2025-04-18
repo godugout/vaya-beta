@@ -3,6 +3,7 @@ import { User } from "@supabase/supabase-js";
 import { LogoSection } from "./desktop/LogoSection";
 import { NavigationItems } from "./desktop/NavigationItems";
 import { UserControls } from "./desktop/UserControls";
+import { useNavigate } from "react-router-dom";
 
 interface DesktopNavProps {
   user?: User | null;
@@ -29,6 +30,11 @@ export const DesktopNav = ({
   isMinimized,
   className
 }: DesktopNavProps) => {
+  const defaultNavigate = useNavigate();
+  
+  // Use the provided navigate function or the default from useNavigate
+  const navigateFunction = navigate || ((path: string) => defaultNavigate(path));
+
   return (
     <div className={`desktop-nav ${className || ''}`}>
       <div className="container mx-auto px-4 flex items-center justify-between h-full">
@@ -44,11 +50,11 @@ export const DesktopNav = ({
         
         {/* Right: User controls */}
         <div className="flex-shrink-0">
-          {user && handleSignOut && navigate && isVoiceActive !== undefined && onVoiceToggle && (
+          {isVoiceActive !== undefined && onVoiceToggle && (
             <UserControls 
-              user={user}
-              handleSignOut={handleSignOut}
-              navigate={navigate}
+              user={user || null}
+              handleSignOut={handleSignOut || (async () => {})}
+              navigate={navigateFunction}
               isVoiceActive={isVoiceActive}
               onVoiceToggle={onVoiceToggle}
             />

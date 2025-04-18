@@ -5,9 +5,10 @@ import { VoiceControlButton } from "./VoiceControlButton";
 import { UserMenu } from "../UserMenu";
 import { GuestMenu } from "../GuestMenu";
 import { Button } from "@/components/ui/button";
-import { Bell, Search, PlusCircle, Settings, Mic } from "lucide-react";
+import { Bell, Search, PlusCircle, Mic } from "lucide-react";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import AddMemoryModal from "@/components/memory/AddMemoryModal";
+import { useToast } from "@/components/ui/use-toast";
 
 interface UserControlsProps {
   user: User | null;
@@ -25,6 +26,20 @@ export const UserControls = ({
   onVoiceToggle 
 }: UserControlsProps) => {
   const [showMemoryModal, setShowMemoryModal] = useState(false);
+  const { toast } = useToast();
+
+  const handleCreateMemory = () => {
+    if (!user) {
+      toast({
+        title: "Authentication Required",
+        description: "Please sign in to create memories",
+        variant: "destructive"
+      });
+      navigate("/auth");
+      return;
+    }
+    setShowMemoryModal(true);
+  };
 
   return (
     <div className="flex items-center gap-3">
@@ -41,37 +56,35 @@ export const UserControls = ({
       {/* Theme Toggle */}
       <ThemeToggle variant="icon" />
       
-      {user && (
-        <>
-          {/* Create Button */}
-          <Button 
-            variant="autumn"
-            onClick={() => setShowMemoryModal(true)}
-            className="hidden md:flex items-center gap-2"
-          >
-            <PlusCircle className="h-4 w-4" />
-            <span>Create Story</span>
-          </Button>
+      {/* Create Button */}
+      <Button 
+        variant="autumn"
+        onClick={handleCreateMemory}
+        className="hidden md:flex items-center gap-2"
+      >
+        <PlusCircle className="h-4 w-4" />
+        <span>Create Story</span>
+      </Button>
 
-          {/* Quick Record Button */}
-          <Button 
-            variant="ghost"
-            size="icon"
-            className="md:hidden rounded-full h-10 w-10"
-            onClick={() => setShowMemoryModal(true)}
-          >
-            <Mic className="h-5 w-5 text-autumn" />
-          </Button>
-          
-          {/* Notifications */}
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            className="hidden md:flex rounded-full h-10 w-10"
-          >
-            <Bell className="h-5 w-5 text-muted-foreground" />
-          </Button>
-        </>
+      {/* Quick Record Button */}
+      <Button 
+        variant="ghost"
+        size="icon"
+        className="md:hidden rounded-full h-10 w-10"
+        onClick={handleCreateMemory}
+      >
+        <Mic className="h-5 w-5 text-autumn" />
+      </Button>
+      
+      {/* Notifications - Only show if logged in */}
+      {user && (
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          className="hidden md:flex rounded-full h-10 w-10"
+        >
+          <Bell className="h-5 w-5 text-muted-foreground" />
+        </Button>
       )}
       
       {/* Voice Navigation */}
