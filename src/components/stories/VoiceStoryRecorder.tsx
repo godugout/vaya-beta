@@ -11,7 +11,7 @@ import { useTestTranscription } from "@/components/voice-recording/hooks/useTest
 import { useToast } from "@/components/ui/use-toast";
 import { useCreateStory } from "./useStories";
 import { supabase } from "@/integrations/supabase/client";
-import { Mic, FileText, Send, Loader, Globe, AlertCircle, CheckCircle, User, Users } from "lucide-react";
+import { Mic, FileText, Send, Loader, Globe, AlertCircle, CheckCircle, User, Users, AudioWaveform } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import AudioPreview from "@/components/audio/AudioPreview";
 import TranscriptionDisplay from "@/components/audio/TranscriptionDisplay";

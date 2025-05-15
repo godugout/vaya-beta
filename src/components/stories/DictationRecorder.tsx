@@ -1,9 +1,10 @@
+
 import React, { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
-import { Mic, Waveform, AlertCircle, Check } from "lucide-react";
+import { Mic, AudioWaveform, AlertCircle, Check } from "lucide-react";
 import { useDictation } from "@/hooks/useDictation";
 import AudioPreview from "@/components/audio/AudioPreview";
 import TranscriptionDisplay from "@/components/audio/TranscriptionDisplay";
@@ -105,7 +106,7 @@ const DictationRecorder = ({
           
           {isTranscribing ? (
             <Alert className="my-4">
-              <Waveform className="h-4 w-4" />
+              <AudioWaveform className="h-4 w-4" />
               <AlertDescription>
                 Transcribing your recording...
               </AlertDescription>
