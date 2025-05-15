@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,19 +11,20 @@ import { useTestTranscription } from "@/components/voice-recording/hooks/useTest
 import { useToast } from "@/components/ui/use-toast";
 import { useCreateStory } from "./useStories";
 import { supabase } from "@/integrations/supabase/client";
-import { Mic, FileText, Send, Loader, Globe, AlertCircle, CheckCircle } from "lucide-react";
+import { Mic, FileText, Send, Loader, Globe, AlertCircle, CheckCircle, MicVoiceOn } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import AudioPreview from "@/components/audio/AudioPreview";
 import TranscriptionDisplay from "@/components/audio/TranscriptionDisplay";
 import { motion } from "framer-motion";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import DictationRecorder from "./DictationRecorder";
 
 interface VoiceStoryRecorderProps {
   onSuccess?: () => void;
 }
 
 export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
-  const [activeTab, setActiveTab] = useState<"voice" | "text">("voice");
+  const [activeTab, setActiveTab] = useState<"voice" | "text" | "dictation">("dictation");
   const [isRecording, setIsRecording] = useState(false);
   const [storyTitle, setStoryTitle] = useState("");
   const [storyContent, setStoryContent] = useState("");
@@ -92,6 +94,28 @@ export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
         description: "There was a problem transcribing your recording. You can still save it or try again.",
       });
     }
+  };
+
+  const handleDictationSubmit = async (data: { audioBlob: Blob | null; content: string }) => {
+    if (!data.content) {
+      toast({
+        title: "Empty content",
+        description: "Please record and transcribe your story before submitting.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    // Update content and submit
+    setStoryContent(data.content);
+    if (data.audioBlob) {
+      setAudioBlob(data.audioBlob);
+    }
+    
+    // Submit after a brief delay to ensure state is updated
+    setTimeout(() => {
+      handleSubmit();
+    }, 100);
   };
 
   const handleSubmit = async () => {
@@ -179,17 +203,62 @@ export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
         </CardTitle>
       </CardHeader>
       <CardContent className="p-0">
-        <Tabs defaultValue="voice" value={activeTab} onValueChange={(v) => setActiveTab(v as "voice" | "text")} className="w-full">
-          <TabsList className="w-full grid grid-cols-2 rounded-none">
+        <Tabs defaultValue="dictation" value={activeTab} onValueChange={(v) => setActiveTab(v as "voice" | "text" | "dictation")} className="w-full">
+          <TabsList className="w-full grid grid-cols-3 rounded-none">
+            <TabsTrigger value="dictation" className="flex items-center gap-2 data-[state=active]:bg-amber-500/10 data-[state=active]:text-amber-500">
+              <MicVoiceOn className="h-4 w-4" />
+              Dictation
+            </TabsTrigger>
             <TabsTrigger value="voice" className="flex items-center gap-2 data-[state=active]:bg-autumn/10 data-[state=active]:text-autumn">
               <Mic className="h-4 w-4" />
-              Voice Story
+              Voice
             </TabsTrigger>
             <TabsTrigger value="text" className="flex items-center gap-2 data-[state=active]:bg-forest/10 data-[state=active]:text-forest">
               <FileText className="h-4 w-4" />
-              Text Story
+              Text
             </TabsTrigger>
           </TabsList>
+          
+          <TabsContent value="dictation" className="p-4 space-y-4">
+            <div className="space-y-4">
+              <div className="grid gap-2">
+                <label htmlFor="dictation-story-title" className="text-sm font-medium">
+                  Story Title
+                </label>
+                <input
+                  id="dictation-story-title"
+                  value={storyTitle}
+                  onChange={(e) => setStoryTitle(e.target.value)}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  placeholder="Give your story a title"
+                />
+              </div>
+              
+              <DictationRecorder
+                onContentChange={setStoryContent}
+                onTitleChange={(title) => !storyTitle && setStoryTitle(title)}
+                onSave={handleDictationSubmit}
+                language={language}
+              />
+              
+              {storyContent && (
+                <div className="space-y-3 mt-4">
+                  <div className="grid gap-2">
+                    <label htmlFor="dictation-story-content" className="text-sm font-medium">
+                      Story Content
+                    </label>
+                    <textarea
+                      id="dictation-story-content"
+                      value={storyContent}
+                      onChange={(e) => setStoryContent(e.target.value)}
+                      className="flex min-h-[120px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                      placeholder="Edit your transcribed story here"
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+          </TabsContent>
           
           <TabsContent value="voice" className="p-4 space-y-4">
             {!audioBlob ? (
