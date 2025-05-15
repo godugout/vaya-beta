@@ -10,175 +10,163 @@ import AudioPreview from "@/components/audio/AudioPreview";
 import TranscriptionDisplay from "@/components/audio/TranscriptionDisplay";
 
 interface DictationRecorderProps {
-  onContentChange: (content: string) => void;
-  onTitleChange: (title: string) => void;
-  onSave: (data: { audioBlob: Blob | null; content: string }) => void;
-  language: 'en' | 'hi' | 'gu';
+  onContentChange?: (content: string) => void;
+  onTitleChange?: (title: string) => void;
+  onSave?: (data: { audioBlob: Blob | null; content: string }) => void;
+  language?: 'en' | 'hi' | 'gu';
 }
 
-const DictationRecorder = ({
+const DictationRecorder: React.FC<DictationRecorderProps> = ({
   onContentChange,
   onTitleChange,
   onSave,
-  language
-}: DictationRecorderProps) => {
-  const [transcription, setTranscription] = useState<string | null>(null);
+  language = 'en'
+}) => {
+  const [content, setContent] = useState('');
   const {
     isRecording,
     audioBlob,
-    audioUrl,
-    recordingDuration,
-    formattedDuration,
-    volumeLevel,
-    waveformData,
-    isTranscribing,
-    transcribe,
+    transcription,
+    isProcessing,
+    transcriptionError,
     startRecording,
     stopRecording,
-    reset
-  } = useDictation({
-    language: language,
-    onTranscriptionComplete: (text) => {
-      setTranscription(text);
-      onContentChange(text);
-      onTitleChange(text.split('.')[0]);
-    }
-  });
-  
-  const handleSave = async () => {
-    if (!transcription && audioBlob) {
-      const text = await transcribe();
-      if (text) {
-        onSave({ audioBlob: audioBlob, content: text });
+    toggleRecording,
+    resetRecording,
+    transcribe
+  } = useDictation({ language });
+
+  // Update parent component when transcription changes
+  useEffect(() => {
+    if (transcription) {
+      setContent(transcription);
+      onContentChange?.(transcription);
+      
+      // Extract first sentence for title suggestion
+      const firstSentence = transcription.split('.')[0];
+      if (firstSentence && onTitleChange) {
+        onTitleChange(firstSentence.length > 50 
+          ? firstSentence.substring(0, 47) + '...' 
+          : firstSentence);
       }
-    } else if (transcription) {
-      onSave({ audioBlob: audioBlob, content: transcription });
+    }
+  }, [transcription, onContentChange, onTitleChange]);
+
+  // Handle save action
+  const handleSave = async () => {
+    if (onSave) {
+      // If we don't have a transcription yet but we have audio, try to transcribe
+      if (!transcription && audioBlob && !isProcessing) {
+        try {
+          await transcribe(audioBlob);
+        } catch (error) {
+          console.error("Error transcribing:", error);
+          // Continue with save even if transcription fails
+        }
+      }
+      
+      onSave({
+        audioBlob,
+        content: content || transcription || ''
+      });
     }
   };
-  
-  const handleReset = () => {
-    reset();
-    setTranscription(null);
-  };
-  
+
   return (
     <div className="space-y-4">
-      <div className="relative">
-        <Button
-          variant="outline"
-          size="lg"
-          className="w-full justify-start gap-2"
-          onClick={isRecording ? stopRecording : startRecording}
-          disabled={isTranscribing}
-        >
-          <Mic className="h-5 w-5" />
-          {isRecording ? (
-            <>
-              Recording... ({formattedDuration})
-            </>
-          ) : (
-            <>
-              Start Recording
-            </>
-          )}
-        </Button>
+      <div className="flex items-center gap-2">
+        <Badge variant={
+          isRecording ? "destructive" : 
+          audioBlob ? "secondary" : 
+          "outline"
+        }>
+          {isRecording 
+            ? "Recording..." 
+            : audioBlob 
+              ? "Recorded" 
+              : "Ready"
+          }
+        </Badge>
         
-        {volumeLevel > 0 && (
-          <div
-            className="absolute left-2 top-1/2 transform -translate-y-1/2 w-2 h-2 rounded-full bg-green-500"
-            style={{
-              transform: `translateY(-50%) scale(${volumeLevel})`,
-              opacity: volumeLevel,
-            }}
-          />
-        )}
+        <Badge variant="outline" className="ml-auto">
+          {language === 'en' ? 'English' : language === 'hi' ? 'Hindi' : 'Gujarati'}
+        </Badge>
       </div>
       
-      {waveformData && (
-        <div className="relative h-10">
-          <WaveformVisualization waveformData={waveformData} isRecording={isRecording} />
-        </div>
-      )}
-      
-      {audioBlob && (
-        <div className="space-y-2">
-          <AudioPreview audioBlob={audioBlob} disabled={isTranscribing} />
+      {!audioBlob ? (
+        <Card className={`p-8 flex flex-col items-center justify-center text-center space-y-4 border-dashed ${
+          isRecording ? 'border-red-500 bg-red-500/5 animate-pulse' : 'border-gray-300'
+        }`}>
+          <Button
+            onClick={toggleRecording}
+            size="lg"
+            className={`rounded-full h-16 w-16 ${
+              isRecording ? 'bg-red-500 hover:bg-red-600' : ''
+            }`}
+          >
+            <Mic className={`h-6 w-6 ${isRecording ? 'animate-pulse' : ''}`} />
+          </Button>
           
-          {isTranscribing ? (
+          <p className="text-sm text-muted-foreground">
+            {isRecording 
+              ? "Tap to stop recording" 
+              : "Tap to start recording your story"
+            }
+          </p>
+        </Card>
+      ) : (
+        <div className="space-y-4">
+          <AudioPreview 
+            audioBlob={audioBlob} 
+            disabled={isProcessing}
+          />
+          
+          {isProcessing ? (
             <Alert className="my-4">
               <AudioWaveform className="h-4 w-4" />
               <AlertDescription>
                 Transcribing your recording...
               </AlertDescription>
             </Alert>
+          ) : transcriptionError ? (
+            <TranscriptionDisplay 
+              transcription={null}
+              error={transcriptionError}
+            />
           ) : transcription ? (
             <TranscriptionDisplay transcription={transcription} />
           ) : (
             <Button 
+              onClick={() => transcribe(audioBlob)} 
               variant="secondary" 
-              size="sm" 
               className="w-full"
-              onClick={handleSave}
-              disabled={isTranscribing}
             >
-              Transcribe
+              <AudioWaveform className="mr-2 h-4 w-4" />
+              Transcribe Recording
             </Button>
           )}
           
-          <Button 
-            variant="destructive" 
-            size="sm" 
-            className="w-full"
-            onClick={handleReset}
-            disabled={isTranscribing}
-          >
-            Reset
-          </Button>
+          <div className="flex space-x-2">
+            <Button 
+              variant="outline" 
+              onClick={resetRecording}
+              className="w-full"
+            >
+              Record Again
+            </Button>
+            
+            <Button 
+              onClick={handleSave}
+              className="w-full"
+            >
+              <Check className="mr-2 h-4 w-4" />
+              Use {transcription ? 'Transcription' : 'Recording'}
+            </Button>
+          </div>
         </div>
       )}
     </div>
   );
-};
-
-interface WaveformVisualizationProps {
-  waveformData: Uint8Array;
-  isRecording: boolean;
-}
-
-const WaveformVisualization: React.FC<WaveformVisualizationProps> = ({ waveformData, isRecording }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const canvasWidth = canvas?.offsetWidth || 0;
-    const canvasHeight = canvas?.offsetHeight || 0;
-    
-    if (!canvas) return;
-    
-    canvas.width = canvasWidth;
-    canvas.height = canvasHeight;
-    
-    const context = canvas.getContext('2d');
-    if (!context) return;
-    
-    context.clearRect(0, 0, canvasWidth, canvasHeight);
-    
-    const barCount = waveformData.length;
-    const barWidth = (canvasWidth / barCount) * 2.5;
-    
-    let x = 0;
-    
-    for (let i = 0; i < barCount; i++) {
-      const barHeight = waveformData[i] * (canvasHeight / 255);
-      
-      context.fillStyle = 'rgb(100,149,237)';
-      context.fillRect(x, canvasHeight - barHeight / 2, barWidth, barHeight / 2);
-      
-      x += barWidth + 1;
-    }
-  }, [waveformData, isRecording]);
-  
-  return <canvas ref={canvasRef} className="w-full h-full" />;
 };
 
 export default DictationRecorder;

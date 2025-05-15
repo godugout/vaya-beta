@@ -20,8 +20,8 @@ const TranscriptionDisplay = ({
         <AlertCircle className="h-4 w-4" />
         <AlertTitle>Transcription Failed</AlertTitle>
         <AlertDescription>
-          {error.includes("OpenAI API key not configured") 
-            ? "The transcription service is not properly configured. Please contact the administrator."
+          {error.includes("OpenAI API quota exceeded") 
+            ? "The transcription service has reached its usage limit. Please try again later or switch to manual text entry."
             : error.includes("Edge Function returned a 502") 
               ? "The transcription service is temporarily unavailable. Please try again later."
               : error.includes("returned a 500")

@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useToast } from '@/components/ui/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -10,6 +11,7 @@ export interface TranscriptionOptions {
 export const useAudioTranscription = (options: TranscriptionOptions = {}) => {
   const [transcription, setTranscription] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
 
   const transcribeAudio = async (audioBlob: Blob): Promise<string | null> => {
@@ -17,6 +19,7 @@ export const useAudioTranscription = (options: TranscriptionOptions = {}) => {
 
     try {
       setIsProcessing(true);
+      setError(null);
       
       // Convert blob to base64
       const reader = new FileReader();
@@ -40,7 +43,15 @@ export const useAudioTranscription = (options: TranscriptionOptions = {}) => {
         }
       });
       
-      if (error) throw error;
+      if (error) {
+        // Check if it's a quota error
+        const errorMessage = error.message || '';
+        if (errorMessage.includes('non-2xx') || errorMessage.includes('quota')) {
+          setError('OpenAI API quota exceeded. Please try again later or contact support.');
+          throw new Error('OpenAI API quota exceeded. Please try again later or contact support.');
+        }
+        throw error;
+      }
       
       if (data && data.text) {
         setTranscription(data.text);
@@ -50,10 +61,26 @@ export const useAudioTranscription = (options: TranscriptionOptions = {}) => {
       return null;
     } catch (error) {
       console.error('Transcription error:', error);
+      
+      // Set appropriate error message based on the error
+      const errorMessage = error instanceof Error ? error.message : "Could not transcribe audio";
+      
+      // Check for quota error in the error message
+      if (typeof errorMessage === 'string' && 
+         (errorMessage.includes('quota') || 
+          errorMessage.includes('insufficient_quota') || 
+          errorMessage.includes('billing'))) {
+        setError('OpenAI API quota exceeded. Please try again later or contact support.');
+      } else if (typeof errorMessage === 'string' && errorMessage.includes('non-2xx')) {
+        setError('Transcription service unavailable. Please try again later.');
+      } else {
+        setError(errorMessage);
+      }
+      
       toast({
         variant: "destructive",
         title: "Transcription failed",
-        description: error instanceof Error ? error.message : "Could not transcribe audio",
+        description: errorMessage,
       });
       return null;
     } finally {
@@ -65,6 +92,7 @@ export const useAudioTranscription = (options: TranscriptionOptions = {}) => {
     transcription,
     isProcessing,
     transcribeAudio,
-    setTranscription
+    setTranscription,
+    error
   };
 };
