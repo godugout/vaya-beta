@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,26 +11,29 @@ import { useTestTranscription } from "@/components/voice-recording/hooks/useTest
 import { useToast } from "@/components/ui/use-toast";
 import { useCreateStory } from "./useStories";
 import { supabase } from "@/integrations/supabase/client";
-import { Mic, FileText, Send, Loader, Globe, AlertCircle, CheckCircle } from "lucide-react";
+import { Mic, FileText, Send, Loader, Globe, AlertCircle, CheckCircle, User, Users } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import AudioPreview from "@/components/audio/AudioPreview";
 import TranscriptionDisplay from "@/components/audio/TranscriptionDisplay";
 import { motion } from "framer-motion";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import DictationRecorder from "./DictationRecorder";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 interface VoiceStoryRecorderProps {
   onSuccess?: () => void;
 }
 
 export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
-  const [activeTab, setActiveTab] = useState<"voice" | "text" | "dictation">("dictation");
+  const [activeTab, setActiveTab] = useState<"voice" | "text">("voice");
   const [isRecording, setIsRecording] = useState(false);
   const [storyTitle, setStoryTitle] = useState("");
   const [storyContent, setStoryContent] = useState("");
   const [language, setLanguage] = useState<"en" | "hi" | "gu">("en");
   const [isProcessing, setIsProcessing] = useState(false);
   const [transcriptionError, setTranscriptionError] = useState<string | null>(null);
+  const [isPersonalMode, setIsPersonalMode] = useState(false);
   
   const {
     isRecordingActive,
@@ -44,7 +48,8 @@ export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
     isProcessing: isTranscribing,
     transcribeAudio
   } = useAudioTranscription({
-    language
+    language,
+    enhanceWithAI: true
   });
   
   const {
@@ -157,7 +162,10 @@ export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
         audio_url: audioUrl,
         story_type: audioUrl ? "audio" : "text",
         author_id: user.user.id,
-        metadata: { language: language },
+        metadata: { 
+          language: language,
+          isPersonal: isPersonalMode 
+        },
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
       });
@@ -169,7 +177,7 @@ export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
       
       toast({
         title: "Story saved",
-        description: "Your story has been saved successfully.",
+        description: `Your ${isPersonalMode ? 'personal' : 'family'} story has been saved successfully.`,
       });
       
       onSuccess?.();
@@ -202,15 +210,11 @@ export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
         </CardTitle>
       </CardHeader>
       <CardContent className="p-0">
-        <Tabs defaultValue="dictation" value={activeTab} onValueChange={(v) => setActiveTab(v as "voice" | "text" | "dictation")} className="w-full">
-          <TabsList className="w-full grid grid-cols-3 rounded-none">
-            <TabsTrigger value="dictation" className="flex items-center gap-2 data-[state=active]:bg-amber-500/10 data-[state=active]:text-amber-500">
-              <Mic className="h-4 w-4" />
-              Dictation
-            </TabsTrigger>
+        <Tabs defaultValue="voice" value={activeTab} onValueChange={(v) => setActiveTab(v as "voice" | "text")} className="w-full">
+          <TabsList className="w-full grid grid-cols-2 rounded-none">
             <TabsTrigger value="voice" className="flex items-center gap-2 data-[state=active]:bg-autumn/10 data-[state=active]:text-autumn">
               <Mic className="h-4 w-4" />
-              Voice
+              Voice Recording
             </TabsTrigger>
             <TabsTrigger value="text" className="flex items-center gap-2 data-[state=active]:bg-forest/10 data-[state=active]:text-forest">
               <FileText className="h-4 w-4" />
@@ -218,7 +222,30 @@ export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
             </TabsTrigger>
           </TabsList>
           
-          <TabsContent value="dictation" className="p-4 space-y-4">
+          <TabsContent value="voice" className="p-4 space-y-4">
+            <div className="flex items-center justify-between mb-4 p-2 bg-muted/30 rounded-md">
+              <div className="flex items-center space-x-2">
+                <Label htmlFor="story-mode" className="text-sm font-medium flex items-center gap-1">
+                  {isPersonalMode ? (
+                    <>
+                      <User className="h-4 w-4 text-blue-500" />
+                      Personal Mode
+                    </>
+                  ) : (
+                    <>
+                      <Users className="h-4 w-4 text-amber-500" />
+                      Family Mode
+                    </>
+                  )}
+                </Label>
+              </div>
+              <Switch 
+                id="story-mode"
+                checked={isPersonalMode}
+                onCheckedChange={setIsPersonalMode}
+              />
+            </div>
+
             <div className="space-y-4">
               <div className="grid gap-2">
                 <label htmlFor="dictation-story-title" className="text-sm font-medium">
@@ -259,132 +286,30 @@ export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
             </div>
           </TabsContent>
           
-          <TabsContent value="voice" className="p-4 space-y-4">
-            {!audioBlob ? (
-              <div className="flex flex-col items-center justify-center py-8 space-y-6">
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <VoiceRecorderButton
-                    state={isRecordingActive ? "recording" : "idle"}
-                    size="lg"
-                    onStart={handleToggleRecording}
-                    onStop={handleToggleRecording}
-                    className="bg-autumn hover:bg-autumn/90"
-                  />
-                </motion.div>
-                <p className="text-center text-muted-foreground">
-                  {isRecordingActive 
-                    ? "Recording... Tap to stop" 
-                    : "Tap the microphone to start recording your story"}
-                </p>
-                
-                <div className="w-full flex justify-center mt-4">
-                  <Button
-                    onClick={testOpenAIConnection}
-                    variant="outline"
-                    size="sm"
-                    disabled={isRunningTest}
-                    className="text-xs flex items-center gap-1"
-                  >
-                    {isRunningTest ? (
-                      <>
-                        <Loader className="h-3 w-3 animate-spin" />
-                        Testing API connection...
-                      </>
-                    ) : (
-                      <>
-                        {testResults?.success === true ? (
-                          <CheckCircle className="h-3 w-3 text-green-500" />
-                        ) : testResults?.success === false ? (
-                          <AlertCircle className="h-3 w-3 text-red-500" />
-                        ) : (
-                          <Globe className="h-3 w-3" />
-                        )}
-                        Test Transcription API
-                      </>
-                    )}
-                  </Button>
-                </div>
-                
-                {testResults && (
-                  <div className={`text-sm ${testResults.success ? 'text-green-500' : 'text-red-500'} text-center max-w-md`}>
-                    {testResults.message}
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div className="space-y-4">
-                <AudioPreview 
-                  audioBlob={audioBlob} 
-                  disabled={isProcessing || isTranscribing}
-                />
-                
-                {!transcription && !isTranscribing && !transcriptionError && (
-                  <Button 
-                    onClick={handleTranscribe} 
-                    variant="outline" 
-                    size="sm" 
-                    className="w-full"
-                    disabled={isProcessing}
-                  >
-                    Transcribe Recording
-                  </Button>
-                )}
-                
-                {isTranscribing && (
-                  <div className="flex items-center justify-center py-2 text-sm text-muted-foreground">
-                    <Loader size={14} className="animate-spin mr-2" />
-                    Transcribing your recording...
-                  </div>
-                )}
-                
-                {transcriptionError && (
-                  <Alert variant="destructive" className="mt-4">
-                    <AlertCircle className="h-4 w-4" />
-                    <AlertDescription>
-                      {transcriptionError}
-                    </AlertDescription>
-                  </Alert>
-                )}
-                
-                {transcription && (
-                  <TranscriptionDisplay transcription={transcription} />
-                )}
-                
-                <div className="space-y-3">
-                  <div className="grid gap-2">
-                    <label htmlFor="story-title" className="text-sm font-medium">
-                      Story Title
-                    </label>
-                    <input
-                      id="story-title"
-                      value={storyTitle}
-                      onChange={(e) => setStoryTitle(e.target.value)}
-                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                      placeholder="Give your story a title"
-                    />
-                  </div>
-                  
-                  <div className="grid gap-2">
-                    <label htmlFor="story-content" className="text-sm font-medium">
-                      Story Content
-                    </label>
-                    <textarea
-                      id="story-content"
-                      value={storyContent}
-                      onChange={(e) => setStoryContent(e.target.value)}
-                      className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                      placeholder="Add details to your story or edit the transcription"
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
-          </TabsContent>
-          
           <TabsContent value="text" className="p-4 space-y-4">
+            <div className="flex items-center justify-between mb-4 p-2 bg-muted/30 rounded-md">
+              <div className="flex items-center space-x-2">
+                <Label htmlFor="text-story-mode" className="text-sm font-medium flex items-center gap-1">
+                  {isPersonalMode ? (
+                    <>
+                      <User className="h-4 w-4 text-blue-500" />
+                      Personal Mode
+                    </>
+                  ) : (
+                    <>
+                      <Users className="h-4 w-4 text-amber-500" />
+                      Family Mode
+                    </>
+                  )}
+                </Label>
+              </div>
+              <Switch 
+                id="text-story-mode"
+                checked={isPersonalMode}
+                onCheckedChange={setIsPersonalMode}
+              />
+            </div>
+            
             <div className="space-y-4">
               <div className="grid gap-2">
                 <label htmlFor="text-story-title" className="text-sm font-medium">
@@ -425,7 +350,7 @@ export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
           <Button
             onClick={handleSubmit}
             disabled={!canSubmit}
-            className="bg-autumn hover:bg-autumn/90 text-white"
+            className={`text-white ${isPersonalMode ? 'bg-blue-600 hover:bg-blue-700' : 'bg-autumn hover:bg-autumn/90'}`}
           >
             {isProcessing ? (
               <>
@@ -435,7 +360,7 @@ export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
             ) : (
               <>
                 <Send className="mr-2 h-4 w-4" />
-                Share Story
+                {isPersonalMode ? 'Save Personal Story' : 'Share Family Story'}
               </>
             )}
           </Button>
