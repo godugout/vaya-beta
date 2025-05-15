@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TranscriptionInput } from "@/components/input/TranscriptionInput";
 import { VoiceRecorderButton } from "@/components/input/VoiceRecorderButton";
 import { useVoiceRecorder } from "@/hooks/useVoiceRecorder";
-import { useAudioTranscription } from "@/components/voice-recording/hooks/useAudioTranscription";
+import { useTranscriptionService } from "@/components/voice-recording/hooks/useTranscriptionService";
 import { useTestTranscription } from "@/components/voice-recording/hooks/useTestTranscription";
 import { useToast } from "@/components/ui/use-toast";
 import { useCreateStory } from "./useStories";
@@ -34,6 +33,7 @@ export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [transcriptionError, setTranscriptionError] = useState<string | null>(null);
   const [isPersonalMode, setIsPersonalMode] = useState(false);
+  const [transcriptionService, setTranscriptionService] = useState<'vosk' | 'openai'>('vosk');
   
   const {
     isRecordingActive,
@@ -47,7 +47,8 @@ export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
     transcription,
     isProcessing: isTranscribing,
     transcribeAudio
-  } = useAudioTranscription({
+  } = useTranscriptionService({
+    service: transcriptionService,
     language,
     enhanceWithAI: true
   });
@@ -244,6 +245,25 @@ export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
                 checked={isPersonalMode}
                 onCheckedChange={setIsPersonalMode}
               />
+            </div>
+
+            <div className="flex items-center justify-between mb-4 p-2 bg-muted/30 rounded-md">
+              <div className="flex items-center space-x-2">
+                <Label htmlFor="transcription-service" className="text-sm font-medium flex items-center gap-1">
+                  <AudioWaveform className="h-4 w-4 text-purple-500" />
+                  Transcription Service
+                </Label>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-muted-foreground">
+                  {transcriptionService === 'vosk' ? 'Offline (Vosk)' : 'OpenAI API'}
+                </span>
+                <Switch 
+                  id="transcription-service"
+                  checked={transcriptionService === 'openai'}
+                  onCheckedChange={(checked) => setTranscriptionService(checked ? 'openai' : 'vosk')}
+                />
+              </div>
             </div>
 
             <div className="space-y-4">
