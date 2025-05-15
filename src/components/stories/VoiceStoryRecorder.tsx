@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,7 +10,7 @@ import { useTestTranscription } from "@/components/voice-recording/hooks/useTest
 import { useToast } from "@/components/ui/use-toast";
 import { useCreateStory } from "./useStories";
 import { supabase } from "@/integrations/supabase/client";
-import { Mic, FileText, Send, Loader, Globe, AlertCircle, CheckCircle, MicVoiceOn } from "lucide-react";
+import { Mic, FileText, Send, Loader, Globe, AlertCircle, CheckCircle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import AudioPreview from "@/components/audio/AudioPreview";
 import TranscriptionDisplay from "@/components/audio/TranscriptionDisplay";
@@ -206,7 +205,7 @@ export const VoiceStoryRecorder = ({ onSuccess }: VoiceStoryRecorderProps) => {
         <Tabs defaultValue="dictation" value={activeTab} onValueChange={(v) => setActiveTab(v as "voice" | "text" | "dictation")} className="w-full">
           <TabsList className="w-full grid grid-cols-3 rounded-none">
             <TabsTrigger value="dictation" className="flex items-center gap-2 data-[state=active]:bg-amber-500/10 data-[state=active]:text-amber-500">
-              <MicVoiceOn className="h-4 w-4" />
+              <Mic className="h-4 w-4" />
               Dictation
             </TabsTrigger>
             <TabsTrigger value="voice" className="flex items-center gap-2 data-[state=active]:bg-autumn/10 data-[state=active]:text-autumn">

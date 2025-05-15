@@ -1,11 +1,10 @@
-
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useToast } from '@/components/ui/use-toast';
 import { useDictation } from '@/hooks/useDictation';
-import { Play, Square, MicVoiceOn, Sparkles, Send } from 'lucide-react';
+import { Play, Square, Mic, Sparkles, Send } from 'lucide-react';
 import LiveWaveform from '@/components/voice-recording/LiveWaveform';
 import RecordingTimer from '@/components/voice-recording/RecordingTimer';
 
@@ -157,7 +156,7 @@ export const DictationRecorder = ({
           {isRecording ? (
             <Square className="h-6 w-6 text-white" />
           ) : (
-            <MicVoiceOn className="h-6 w-6 text-white" />
+            <Mic className="h-6 w-6 text-white" />
           )}
         </motion.button>
         
