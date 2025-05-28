@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils';
 import { EnhancedAudioPlayer } from '@/components/audio/EnhancedAudioPlayer';
 import { StoryComments } from '@/components/stories/StoryComments';
 import { StoryPrivacySettings } from '@/components/privacy/StoryPrivacySettings';
+import { Comment, ReactionType } from '@/components/stories/types/comments';
 import { 
   DropdownMenu,
   DropdownMenuContent,
@@ -52,14 +53,14 @@ export const MemoryCapsule = ({
   const memberName = member?.name || 'Unknown';
 
   // Mock data - in real app this would come from props or context
-  const [comments, setComments] = useState([
+  const [comments, setComments] = useState<Comment[]>([
     {
       id: '1',
       author: { name: 'Grandmother Rosa', relationship: 'Grandmother' },
       content: 'This brings back so many memories of when I was young!',
       timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
       reactions: { heart: 3, smile: 1, wow: 0 },
-      userReaction: 'heart' as const
+      userReaction: 'heart'
     }
   ]);
 
@@ -72,7 +73,7 @@ export const MemoryCapsule = ({
   });
 
   const handleAddComment = (content: string) => {
-    const newComment = {
+    const newComment: Comment = {
       id: crypto.randomUUID(),
       author: { name: 'You', relationship: 'Family Member' },
       content,
@@ -82,7 +83,7 @@ export const MemoryCapsule = ({
     setComments(prev => [...prev, newComment]);
   };
 
-  const handleReact = (commentId: string, reaction: 'heart' | 'smile' | 'wow') => {
+  const handleReact = (commentId: string, reaction: ReactionType) => {
     setComments(prev => prev.map(comment => {
       if (comment.id === commentId) {
         const newReactions = { ...comment.reactions };

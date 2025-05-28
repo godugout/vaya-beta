@@ -9,29 +9,13 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { useAccessibilityContext } from '@/contexts/AccessibilityContext';
 import { cn } from '@/lib/utils';
-
-interface Comment {
-  id: string;
-  author: {
-    name: string;
-    avatar?: string;
-    relationship?: string;
-  };
-  content: string;
-  timestamp: Date;
-  reactions: {
-    heart: number;
-    smile: number;
-    wow: number;
-  };
-  userReaction?: 'heart' | 'smile' | 'wow';
-}
+import { Comment, ReactionType } from './types/comments';
 
 interface StoryCommentsProps {
   storyId: string;
   comments: Comment[];
   onAddComment: (content: string) => void;
-  onReact: (commentId: string, reaction: 'heart' | 'smile' | 'wow') => void;
+  onReact: (commentId: string, reaction: ReactionType) => void;
   className?: string;
 }
 
@@ -140,7 +124,7 @@ export const StoryComments = ({
                               'h-8 px-2 text-xs',
                               comment.userReaction === reaction && 'bg-blue-100 text-blue-600'
                             )}
-                            onClick={() => onReact(comment.id, reaction as 'heart' | 'smile' | 'wow')}
+                            onClick={() => onReact(comment.id, reaction as ReactionType)}
                           >
                             {getReactionEmoji(reaction)} {count}
                           </Button>
