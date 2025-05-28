@@ -17,6 +17,18 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
+// Import the PrivacySettings type from StoryPrivacySettings
+type PrivacyLevel = 'private' | 'family' | 'selected' | 'public';
+
+interface PrivacySettings {
+  level: PrivacyLevel;
+  allowedMembers: string[];
+  allowComments: boolean;
+  allowDownload: boolean;
+  allowSharing: boolean;
+  expiresAt?: Date;
+}
+
 interface MemoryCapsuleProps {
   story: {
     id: string;
@@ -64,8 +76,8 @@ export const MemoryCapsule = ({
     }
   ]);
 
-  const [privacySettings, setPrivacySettings] = useState({
-    level: 'family' as const,
+  const [privacySettings, setPrivacySettings] = useState<PrivacySettings>({
+    level: 'family',
     allowedMembers: members.map(m => m.id),
     allowComments: true,
     allowDownload: true,
