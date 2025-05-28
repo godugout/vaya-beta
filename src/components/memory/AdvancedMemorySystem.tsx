@@ -263,7 +263,7 @@ export const AdvancedMemorySystem = ({ className }: AdvancedMemorySystemProps) =
               <div className="text-gray-500">
                 {searchTerm || selectedTag 
                   ? 'Try adjusting your search or filters'
-                  : 'Start recording your family\'s stories to see them here'
+                  : "Start recording your family's stories to see them here"
                 }
               </div>
               {(searchTerm || selectedTag) && (
