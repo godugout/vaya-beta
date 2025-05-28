@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, lazy } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { AccessibleButton } from '@/components/foundation/AccessibleButton';
@@ -6,16 +6,21 @@ import { useFamilyContext } from '@/contexts/FamilyContext';
 import { useAccessibilityContext } from '@/contexts/AccessibilityContext';
 import { Play, Pause, Heart, Share, MessageCircle, MoreHorizontal, Download } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { EnhancedAudioPlayer } from '@/components/audio/EnhancedAudioPlayer';
-import { StoryComments } from '@/components/stories/StoryComments';
-import { StoryPrivacySettings } from '@/components/privacy/StoryPrivacySettings';
-import { Comment, ReactionType } from '@/components/stories/types/comments';
+import { LazyWrapper } from '@/components/loading/LazyWrapper';
+import { usePlugins } from '@/hooks/usePlugins';
+import { PluginSlot } from '@/components/plugins/PluginSlot';
+import { useAsyncOperation } from '@/hooks/useAsyncOperation';
 import { 
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+
+// Lazy load heavy components
+const EnhancedAudioPlayer = lazy(() => import('@/components/audio/EnhancedAudioPlayer').then(module => ({ default: module.EnhancedAudioPlayer })));
+const StoryComments = lazy(() => import('@/components/stories/StoryComments').then(module => ({ default: module.StoryComments })));
+const StoryPrivacySettings = lazy(() => import('@/components/privacy/StoryPrivacySettings').then(module => ({ default: module.StoryPrivacySettings })));
 
 // Import the PrivacySettings type from StoryPrivacySettings
 type PrivacyLevel = 'private' | 'family' | 'selected' | 'public';
@@ -57,6 +62,7 @@ export const MemoryCapsule = ({
 }: MemoryCapsuleProps) => {
   const { members } = useFamilyContext();
   const { getTextSizeClass, announceToScreenReader } = useAccessibilityContext();
+  const { executeHook } = usePlugins();
   const [showComments, setShowComments] = useState(false);
   const [showPrivacySettings, setShowPrivacySettings] = useState(false);
   const [showEnhancedPlayer, setShowEnhancedPlayer] = useState(false);
@@ -65,14 +71,14 @@ export const MemoryCapsule = ({
   const memberName = member?.name || 'Unknown';
 
   // Mock data - in real app this would come from props or context
-  const [comments, setComments] = useState<Comment[]>([
+  const [comments, setComments] = useState([
     {
       id: '1',
       author: { name: 'Grandmother Rosa', relationship: 'Grandmother' },
       content: 'This brings back so many memories of when I was young!',
       timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
       reactions: { heart: 3, smile: 1, wow: 0 },
-      userReaction: 'heart'
+      userReaction: 'heart' as const
     }
   ]);
 
@@ -84,34 +90,66 @@ export const MemoryCapsule = ({
     allowSharing: true
   });
 
-  const handleAddComment = (content: string) => {
-    const newComment: Comment = {
-      id: crypto.randomUUID(),
-      author: { name: 'You', relationship: 'Family Member' },
-      content,
-      timestamp: new Date(),
-      reactions: { heart: 0, smile: 0, wow: 0 }
-    };
-    setComments(prev => [...prev, newComment]);
+  // Async operations with error handling
+  const { execute: executeComment, loading: addingComment } = useAsyncOperation({
+    showToast: true,
+    successMessage: 'Comment added successfully',
+    errorMessage: 'Failed to add comment'
+  });
+
+  const { execute: executeReaction, loading: reactingToComment } = useAsyncOperation({
+    showToast: false
+  });
+
+  const handleAddComment = async (content: string) => {
+    await executeComment(async () => {
+      const processedContent = executeHook('beforeCommentAdd', { content, storyId: story.id });
+      
+      const newComment = {
+        id: crypto.randomUUID(),
+        author: { name: 'You', relationship: 'Family Member' },
+        content: processedContent?.content || content,
+        timestamp: new Date(),
+        reactions: { heart: 0, smile: 0, wow: 0 }
+      };
+      
+      setComments(prev => [...prev, newComment]);
+      
+      executeHook('afterCommentAdd', newComment);
+      return newComment;
+    });
   };
 
-  const handleReact = (commentId: string, reaction: ReactionType) => {
-    setComments(prev => prev.map(comment => {
-      if (comment.id === commentId) {
-        const newReactions = { ...comment.reactions };
-        if (comment.userReaction === reaction) {
-          newReactions[reaction]--;
-          return { ...comment, reactions: newReactions, userReaction: undefined };
-        } else {
-          if (comment.userReaction) {
-            newReactions[comment.userReaction]--;
+  const handleReact = async (commentId: string, reaction: string) => {
+    await executeReaction(async () => {
+      setComments(prev => prev.map(comment => {
+        if (comment.id === commentId) {
+          const newReactions = { ...comment.reactions };
+          if (comment.userReaction === reaction) {
+            newReactions[reaction as keyof typeof newReactions]--;
+            return { ...comment, reactions: newReactions, userReaction: undefined };
+          } else {
+            if (comment.userReaction) {
+              newReactions[comment.userReaction as keyof typeof newReactions]--;
+            }
+            newReactions[reaction as keyof typeof newReactions]++;
+            return { ...comment, reactions: newReactions, userReaction: reaction as any };
           }
-          newReactions[reaction]++;
-          return { ...comment, reactions: newReactions, userReaction: reaction };
         }
-      }
-      return comment;
-    }));
+        return comment;
+      }));
+    });
+  };
+
+  const handlePlay = () => {
+    executeHook('onAudioPlaybackStart', { story, audioUrl: story.audioUrl });
+    onPlay?.();
+  };
+
+  const handleShare = () => {
+    const processedStory = executeHook('beforeStoryShare', story);
+    onShare?.();
+    executeHook('afterStoryShare', processedStory || story);
   };
 
   const formatDate = (dateString: string) => {
@@ -189,13 +227,15 @@ export const MemoryCapsule = ({
 
         {/* Enhanced Audio Player */}
         {story.type === 'audio' && showEnhancedPlayer && story.audioUrl && (
-          <EnhancedAudioPlayer
-            audioUrl={story.audioUrl}
-            title={story.title}
-            duration={story.duration}
-            onDownload={privacySettings.allowDownload ? () => console.log('Download') : undefined}
-            onShare={privacySettings.allowSharing ? onShare : undefined}
-          />
+          <LazyWrapper>
+            <EnhancedAudioPlayer
+              audioUrl={story.audioUrl}
+              title={story.title}
+              duration={story.duration}
+              onDownload={privacySettings.allowDownload ? () => console.log('Download') : undefined}
+              onShare={privacySettings.allowSharing ? handleShare : undefined}
+            />
+          </LazyWrapper>
         )}
 
         {/* Tags */}
@@ -224,6 +264,12 @@ export const MemoryCapsule = ({
                 <span>{showEnhancedPlayer ? 'Simple' : 'Enhanced'} Player</span>
               </AccessibleButton>
             )}
+            
+            {/* Plugin Actions */}
+            <PluginSlot 
+              slot="memory-actions" 
+              props={{ story, onAction: () => console.log('Plugin action triggered') }}
+            />
           </div>
 
           <div className="flex items-center space-x-2">
@@ -245,6 +291,7 @@ export const MemoryCapsule = ({
                 onClick={() => setShowComments(!showComments)}
                 ariaLabel="Toggle comments"
                 className="flex items-center space-x-1"
+                disabled={addingComment}
               >
                 <MessageCircle className="h-4 w-4" />
                 <span className="text-xs">{comments.length}</span>
@@ -255,7 +302,7 @@ export const MemoryCapsule = ({
               <AccessibleButton
                 variant="ghost"
                 size="sm"
-                onClick={onShare}
+                onClick={handleShare}
                 ariaLabel="Share this story"
               >
                 <Share className="h-4 w-4" />
@@ -266,27 +313,31 @@ export const MemoryCapsule = ({
 
         {/* Privacy Settings */}
         {showPrivacySettings && (
-          <StoryPrivacySettings
-            storyId={story.id}
-            currentSettings={privacySettings}
-            familyMembers={members.map(m => ({
-              id: m.id,
-              name: m.name,
-              relationship: m.metadata.culturalRole || 'Family Member'
-            }))}
-            onSettingsChange={setPrivacySettings}
-            onGenerateShareLink={() => `https://vaya.app/story/${story.id}?token=${crypto.randomUUID()}`}
-          />
+          <LazyWrapper>
+            <StoryPrivacySettings
+              storyId={story.id}
+              currentSettings={privacySettings}
+              familyMembers={members.map(m => ({
+                id: m.id,
+                name: m.name,
+                relationship: m.metadata.culturalRole || 'Family Member'
+              }))}
+              onSettingsChange={setPrivacySettings}
+              onGenerateShareLink={() => `https://vaya.app/story/${story.id}?token=${crypto.randomUUID()}`}
+            />
+          </LazyWrapper>
         )}
 
         {/* Comments Section */}
         {showComments && privacySettings.allowComments && (
-          <StoryComments
-            storyId={story.id}
-            comments={comments}
-            onAddComment={handleAddComment}
-            onReact={handleReact}
-          />
+          <LazyWrapper>
+            <StoryComments
+              storyId={story.id}
+              comments={comments}
+              onAddComment={handleAddComment}
+              onReact={handleReact}
+            />
+          </LazyWrapper>
         )}
       </CardContent>
     </Card>
