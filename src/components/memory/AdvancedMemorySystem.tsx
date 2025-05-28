@@ -252,8 +252,6 @@ export const AdvancedMemorySystem = ({ className }: AdvancedMemorySystemProps) =
       {/* Stories Display */}
       <div className="space-y-8">
         {Object.keys(groupedStories).length === 0 ? (
-          
-          {/* Empty State */}
           <Card>
             <CardContent className="py-12 text-center">
               <div className="text-6xl mb-4">📚</div>
@@ -281,8 +279,6 @@ export const AdvancedMemorySystem = ({ className }: AdvancedMemorySystemProps) =
             </CardContent>
           </Card>
         ) : (
-          
-          {/* Grouped Stories */}
           Object.entries(groupedStories).map(([period, stories]) => (
             <motion.div
               key={period}
