@@ -1,12 +1,20 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { AccessibleButton } from '@/components/foundation/AccessibleButton';
 import { useFamilyContext } from '@/contexts/FamilyContext';
 import { useAccessibilityContext } from '@/contexts/AccessibilityContext';
-import { Play, Pause, Heart, Share } from 'lucide-react';
+import { Play, Pause, Heart, Share, MessageCircle, MoreHorizontal, Download } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { EnhancedAudioPlayer } from '@/components/audio/EnhancedAudioPlayer';
+import { StoryComments } from '@/components/stories/StoryComments';
+import { StoryPrivacySettings } from '@/components/privacy/StoryPrivacySettings';
+import { 
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 interface MemoryCapsuleProps {
   story: {
@@ -36,15 +44,61 @@ export const MemoryCapsule = ({
 }: MemoryCapsuleProps) => {
   const { members } = useFamilyContext();
   const { getTextSizeClass, announceToScreenReader } = useAccessibilityContext();
-  const [isPlaying, setIsPlaying] = React.useState(false);
+  const [showComments, setShowComments] = useState(false);
+  const [showPrivacySettings, setShowPrivacySettings] = useState(false);
+  const [showEnhancedPlayer, setShowEnhancedPlayer] = useState(false);
 
   const member = members.find(m => m.id === memberId);
   const memberName = member?.name || 'Unknown';
 
-  const handlePlay = () => {
-    setIsPlaying(!isPlaying);
-    onPlay?.();
-    announceToScreenReader(isPlaying ? 'Paused story' : 'Playing story');
+  // Mock data - in real app this would come from props or context
+  const [comments, setComments] = useState([
+    {
+      id: '1',
+      author: { name: 'Grandmother Rosa', relationship: 'Grandmother' },
+      content: 'This brings back so many memories of when I was young!',
+      timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
+      reactions: { heart: 3, smile: 1, wow: 0 },
+      userReaction: 'heart' as const
+    }
+  ]);
+
+  const [privacySettings, setPrivacySettings] = useState({
+    level: 'family' as const,
+    allowedMembers: members.map(m => m.id),
+    allowComments: true,
+    allowDownload: true,
+    allowSharing: true
+  });
+
+  const handleAddComment = (content: string) => {
+    const newComment = {
+      id: crypto.randomUUID(),
+      author: { name: 'You', relationship: 'Family Member' },
+      content,
+      timestamp: new Date(),
+      reactions: { heart: 0, smile: 0, wow: 0 }
+    };
+    setComments(prev => [...prev, newComment]);
+  };
+
+  const handleReact = (commentId: string, reaction: 'heart' | 'smile' | 'wow') => {
+    setComments(prev => prev.map(comment => {
+      if (comment.id === commentId) {
+        const newReactions = { ...comment.reactions };
+        if (comment.userReaction === reaction) {
+          newReactions[reaction]--;
+          return { ...comment, reactions: newReactions, userReaction: undefined };
+        } else {
+          if (comment.userReaction) {
+            newReactions[comment.userReaction]--;
+          }
+          newReactions[reaction]++;
+          return { ...comment, reactions: newReactions, userReaction: reaction };
+        }
+      }
+      return comment;
+    }));
   };
 
   const formatDate = (dateString: string) => {
@@ -79,11 +133,36 @@ export const MemoryCapsule = ({
             </div>
           </div>
           
-          {story.type === 'audio' && story.duration && (
-            <Badge variant="secondary" className="text-xs">
-              {formatDuration(story.duration)}
-            </Badge>
-          )}
+          <div className="flex items-center space-x-2">
+            {story.type === 'audio' && story.duration && (
+              <Badge variant="secondary" className="text-xs">
+                {formatDuration(story.duration)}
+              </Badge>
+            )}
+            
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <AccessibleButton
+                  variant="ghost"
+                  size="sm"
+                  ariaLabel="More options"
+                >
+                  <MoreHorizontal className="h-4 w-4" />
+                </AccessibleButton>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={() => setShowPrivacySettings(!showPrivacySettings)}>
+                  Privacy Settings
+                </DropdownMenuItem>
+                {privacySettings.allowDownload && (
+                  <DropdownMenuItem>
+                    <Download className="h-4 w-4 mr-2" />
+                    Download
+                  </DropdownMenuItem>
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
       </CardHeader>
 
@@ -93,6 +172,17 @@ export const MemoryCapsule = ({
           <div className={cn('text-gray-700 line-clamp-3', getTextSizeClass())}>
             {story.content}
           </div>
+        )}
+
+        {/* Enhanced Audio Player */}
+        {story.type === 'audio' && showEnhancedPlayer && story.audioUrl && (
+          <EnhancedAudioPlayer
+            audioUrl={story.audioUrl}
+            title={story.title}
+            duration={story.duration}
+            onDownload={privacySettings.allowDownload ? () => console.log('Download') : undefined}
+            onShare={privacySettings.allowSharing ? onShare : undefined}
+          />
         )}
 
         {/* Tags */}
@@ -113,36 +203,78 @@ export const MemoryCapsule = ({
               <AccessibleButton
                 variant="outline"
                 size="sm"
-                onClick={handlePlay}
-                ariaLabel={isPlaying ? 'Pause story' : 'Play story'}
+                onClick={() => setShowEnhancedPlayer(!showEnhancedPlayer)}
+                ariaLabel={showEnhancedPlayer ? 'Show simple player' : 'Show enhanced player'}
                 className="flex items-center space-x-2"
               >
-                {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
-                <span>{isPlaying ? 'Pause' : 'Play'}</span>
+                {showEnhancedPlayer ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+                <span>{showEnhancedPlayer ? 'Simple' : 'Enhanced'} Player</span>
               </AccessibleButton>
             )}
           </div>
 
-          <div className="flex space-x-2">
+          <div className="flex items-center space-x-2">
             <AccessibleButton
               variant="ghost"
               size="sm"
               onClick={onLike}
               ariaLabel="Like this story"
+              className="flex items-center space-x-1"
             >
               <Heart className="h-4 w-4" />
+              <span className="text-xs">Like</span>
             </AccessibleButton>
             
-            <AccessibleButton
-              variant="ghost"
-              size="sm"
-              onClick={onShare}
-              ariaLabel="Share this story"
-            >
-              <Share className="h-4 w-4" />
-            </AccessibleButton>
+            {privacySettings.allowComments && (
+              <AccessibleButton
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowComments(!showComments)}
+                ariaLabel="Toggle comments"
+                className="flex items-center space-x-1"
+              >
+                <MessageCircle className="h-4 w-4" />
+                <span className="text-xs">{comments.length}</span>
+              </AccessibleButton>
+            )}
+            
+            {privacySettings.allowSharing && (
+              <AccessibleButton
+                variant="ghost"
+                size="sm"
+                onClick={onShare}
+                ariaLabel="Share this story"
+              >
+                <Share className="h-4 w-4" />
+              </AccessibleButton>
+            )}
           </div>
         </div>
+
+        {/* Privacy Settings */}
+        {showPrivacySettings && (
+          <StoryPrivacySettings
+            storyId={story.id}
+            currentSettings={privacySettings}
+            familyMembers={members.map(m => ({
+              id: m.id,
+              name: m.name,
+              relationship: m.metadata.culturalRole || 'Family Member'
+            }))}
+            onSettingsChange={setPrivacySettings}
+            onGenerateShareLink={() => `https://vaya.app/story/${story.id}?token=${crypto.randomUUID()}`}
+          />
+        )}
+
+        {/* Comments Section */}
+        {showComments && privacySettings.allowComments && (
+          <StoryComments
+            storyId={story.id}
+            comments={comments}
+            onAddComment={handleAddComment}
+            onReact={handleReact}
+          />
+        )}
       </CardContent>
     </Card>
   );
