@@ -1,7 +1,9 @@
-
 import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { useDevAuth } from "@/hooks/useDevAuth";
+import { FamilyProvider } from "@/contexts/FamilyContext";
+import { CultureProvider } from "@/contexts/CultureContext";
+import { AccessibilityProvider } from "@/contexts/AccessibilityContext";
 
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
@@ -15,6 +17,7 @@ import MemoryPost from "./pages/MemoryPost";
 import StoryDetailsPage from "./pages/StoryDetails";
 import CapsuleDetails from "./pages/CapsuleDetails";
 import Timeline from "./pages/Timeline";
+import Foundation from "./pages/Foundation";
 
 import { DesktopNav } from "./components/nav/DesktopNav";
 import { MobileTopNav } from "./components/nav/MobileTopNav";
@@ -27,37 +30,52 @@ const App = () => {
     setIsNavMinimized(!isNavMinimized);
   };
 
-  useDevAuth(); // Add this line for development auto-login
+  useDevAuth();
 
   return (
-    <div className="flex flex-col min-h-screen bg-background text-foreground">
-      <DesktopNav 
-        showMinimizeButton={true} 
-        onToggleMinimize={toggleMinimize} 
-        isMinimized={isNavMinimized}
-        className="hidden md:flex h-16 border-b w-full" 
-      />
-      <MobileTopNav className="md:hidden" />
-      
-      <main className={`flex-grow transition-all ${isNavMinimized ? 'md:pl-16' : 'md:pl-0'}`}>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/families" element={<Families />} />
-          <Route path="/create-family" element={<CreateFamily />} />
-          <Route path="/family-capsules" element={<FamilyCapsules />} />
-          <Route path="/share-stories" element={<ShareStories />} />
-          <Route path="/memory-lane" element={<MemoryLane />} />
-          <Route path="/memory/:id" element={<MemoryPost />} />
-          <Route path="/story/:id" element={<StoryDetailsPage />} />
-          <Route path="/capsule/:id" element={<CapsuleDetails />} />
-          <Route path="/timeline" element={<Timeline />} />
-        </Routes>
-      </main>
-      
-      <MobileBottomNav className="md:hidden" />
-    </div>
+    <AccessibilityProvider>
+      <CultureProvider>
+        <FamilyProvider>
+          <div className="flex flex-col min-h-screen bg-background text-foreground">
+            {/* Skip link for accessibility */}
+            <a href="#main-content" className="skip-link focus-visible">
+              Skip to main content
+            </a>
+            
+            <DesktopNav 
+              showMinimizeButton={true} 
+              onToggleMinimize={toggleMinimize} 
+              isMinimized={isNavMinimized}
+              className="hidden md:flex h-16 border-b w-full" 
+            />
+            <MobileTopNav className="md:hidden" />
+            
+            <main 
+              id="main-content"
+              className={`flex-grow transition-all ${isNavMinimized ? 'md:pl-16' : 'md:pl-0'}`}
+            >
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/foundation" element={<Foundation />} />
+                <Route path="/auth" element={<Auth />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/families" element={<Families />} />
+                <Route path="/create-family" element={<CreateFamily />} />
+                <Route path="/family-capsules" element={<FamilyCapsules />} />
+                <Route path="/share-stories" element={<ShareStories />} />
+                <Route path="/memory-lane" element={<MemoryLane />} />
+                <Route path="/memory/:id" element={<MemoryPost />} />
+                <Route path="/story/:id" element={<StoryDetailsPage />} />
+                <Route path="/capsule/:id" element={<CapsuleDetails />} />
+                <Route path="/timeline" element={<Timeline />} />
+              </Routes>
+            </main>
+            
+            <MobileBottomNav className="md:hidden" />
+          </div>
+        </FamilyProvider>
+      </CultureProvider>
+    </AccessibilityProvider>
   );
 };
 
