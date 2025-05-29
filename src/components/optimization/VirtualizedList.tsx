@@ -7,6 +7,7 @@ interface VirtualizedListProps<T> {
   items: T[];
   height: number;
   itemHeight: number;
+  width?: number;
   renderItem: (item: T, index: number) => React.ReactNode;
   className?: string;
 }
@@ -15,6 +16,7 @@ export const VirtualizedList = <T,>({
   items,
   height,
   itemHeight,
+  width = 300,
   renderItem,
   className
 }: VirtualizedListProps<T>) => {
@@ -40,6 +42,7 @@ export const VirtualizedList = <T,>({
     <List
       className={className}
       height={height}
+      width={width}
       itemCount={items.length}
       itemSize={itemHeight}
       itemData={items}

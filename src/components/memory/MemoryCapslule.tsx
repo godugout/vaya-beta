@@ -1,3 +1,4 @@
+
 import React, { useState, lazy } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -10,6 +11,7 @@ import { LazyWrapper } from '@/components/loading/LazyWrapper';
 import { usePlugins } from '@/hooks/usePlugins';
 import { PluginSlot } from '@/components/plugins/PluginSlot';
 import { useAsyncOperation } from '@/hooks/useAsyncOperation';
+import { Comment, ReactionType } from '@/components/comments/types';
 import { 
   DropdownMenu,
   DropdownMenuContent,
@@ -22,7 +24,6 @@ const EnhancedAudioPlayer = lazy(() => import('@/components/audio/EnhancedAudioP
 const StoryComments = lazy(() => import('@/components/stories/StoryComments').then(module => ({ default: module.StoryComments })));
 const StoryPrivacySettings = lazy(() => import('@/components/privacy/StoryPrivacySettings').then(module => ({ default: module.StoryPrivacySettings })));
 
-// Import the PrivacySettings type from StoryPrivacySettings
 type PrivacyLevel = 'private' | 'family' | 'selected' | 'public';
 
 interface PrivacySettings {
@@ -71,14 +72,14 @@ export const MemoryCapsule = ({
   const memberName = member?.name || 'Unknown';
 
   // Mock data - in real app this would come from props or context
-  const [comments, setComments] = useState([
+  const [comments, setComments] = useState<Comment[]>([
     {
       id: '1',
       author: { name: 'Grandmother Rosa', relationship: 'Grandmother' },
       content: 'This brings back so many memories of when I was young!',
       timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
       reactions: { heart: 3, smile: 1, wow: 0 },
-      userReaction: 'heart' as const
+      userReaction: 'heart'
     }
   ]);
 
@@ -105,7 +106,7 @@ export const MemoryCapsule = ({
     await executeComment(async () => {
       const processedContent = executeHook('beforeCommentAdd', { content, storyId: story.id });
       
-      const newComment = {
+      const newComment: Comment = {
         id: crypto.randomUUID(),
         author: { name: 'You', relationship: 'Family Member' },
         content: processedContent?.content || content,
@@ -120,20 +121,20 @@ export const MemoryCapsule = ({
     });
   };
 
-  const handleReact = async (commentId: string, reaction: string) => {
+  const handleReact = async (commentId: string, reaction: ReactionType) => {
     await executeReaction(async () => {
       setComments(prev => prev.map(comment => {
         if (comment.id === commentId) {
           const newReactions = { ...comment.reactions };
           if (comment.userReaction === reaction) {
-            newReactions[reaction as keyof typeof newReactions]--;
+            newReactions[reaction]--;
             return { ...comment, reactions: newReactions, userReaction: undefined };
           } else {
             if (comment.userReaction) {
-              newReactions[comment.userReaction as keyof typeof newReactions]--;
+              newReactions[comment.userReaction]--;
             }
-            newReactions[reaction as keyof typeof newReactions]++;
-            return { ...comment, reactions: newReactions, userReaction: reaction as any };
+            newReactions[reaction]++;
+            return { ...comment, reactions: newReactions, userReaction: reaction };
           }
         }
         return comment;
